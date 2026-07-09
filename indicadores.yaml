@@ -11,7 +11,7 @@
 #
 #  Para AGREGAR indicadores de datos.gob.ar (M1, M2, reservas, empleo,
 #  presupuesto, pobreza, etc.) necesitás el "id" exacto de la serie.
-#  Corré:   python src/buscar_series.py "reservas internacionales"
+#  Corré:   python buscar_series.py "reservas internacionales"
 #  y pegá el id que te devuelva en la sección correspondiente de abajo.
 # ============================================================================
 
@@ -81,7 +81,7 @@ indicadores:
     unidad: "puntos básicos"
     graficos: [nivel]
 
-  # ---- COMPLETAR con: python src/buscar_series.py "..." --------------------
+  # ---- COMPLETAR con: python buscar_series.py "..." --------------------
   # Descomentá y pegá el id correcto que te devuelva el buscador.
   #
   # - nombre: "Base monetaria"

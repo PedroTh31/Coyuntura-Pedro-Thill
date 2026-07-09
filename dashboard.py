@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
 
-OUT = Path(__file__).resolve().parent.parent / "output"
+OUT = Path(__file__).resolve().parent / "output"
 IMG = OUT / "img"
 
 # --- paleta por bloque (un acento por sección, resto en gris tinta) ----------

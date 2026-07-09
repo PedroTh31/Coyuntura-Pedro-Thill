@@ -15,7 +15,7 @@ from __future__ import annotations
 from pathlib import Path
 import pandas as pd
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DATA_DIR = Path(__file__).resolve().parent / "data"
 LARGO = DATA_DIR / "series_largo.csv"
 ANCHO = DATA_DIR / "series_ancho.csv"
 
@@ -37,6 +37,8 @@ def actualizar(nuevos: pd.DataFrame) -> pd.DataFrame:
 
     combinado = pd.concat([previo, nuevos], ignore_index=True)
     combinado["fecha"] = pd.to_datetime(combinado["fecha"])
+    combinado["valor"] = pd.to_numeric(combinado["valor"], errors="coerce")
+    combinado = combinado.dropna(subset=["valor"])
 
     # dedup: nos quedamos con la última aparición de cada (fecha, indicador)
     combinado = (combinado
