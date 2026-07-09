@@ -1,0 +1,165 @@
+# ============================================================================
+#  CONFIGURACIÓN DE INDICADORES DE COYUNTURA
+# ----------------------------------------------------------------------------
+#  Cada indicador tiene:
+#    nombre     : cómo se llama en el CSV y en el dashboard
+#    bloque     : real | monetario_financiero | fiscal | social | precios
+#    fuente     : datos_gob | argentinadatos | dolar
+#    id/casa    : identificador según la fuente
+#    unidad     : etiqueta para los gráficos
+#    graficos   : lista -> [nivel] y/o [interanual]
+#
+#  Para AGREGAR indicadores de datos.gob.ar (M1, M2, reservas, empleo,
+#  presupuesto, pobreza, etc.) necesitás el "id" exacto de la serie.
+#  Corré:   python src/buscar_series.py "reservas internacionales"
+#  y pegá el id que te devuelva en la sección correspondiente de abajo.
+# ============================================================================
+
+start_date: "2018-01-01"   # desde cuándo traer historia la primera vez
+
+indicadores:
+
+  # -------------------------------------------------------------------------
+  # PRECIOS  (funciona out-of-the-box)
+  # -------------------------------------------------------------------------
+  - nombre: "Inflación mensual (IPC)"
+    bloque: precios
+    fuente: argentinadatos
+    endpoint: "finanzas/indices/inflacion"
+    unidad: "% mensual"
+    graficos: [nivel]
+
+  - nombre: "Inflación interanual (IPC)"
+    bloque: precios
+    fuente: argentinadatos
+    endpoint: "finanzas/indices/inflacion-interanual"
+    unidad: "% i.a."
+    graficos: [nivel]
+
+  - nombre: "IPC Nacional - Nivel general (índice)"
+    bloque: precios
+    fuente: datos_gob
+    id: "148.3_INIVELNAL_DICI_M_26"
+    unidad: "índice"
+    graficos: [nivel, interanual]
+
+  # -------------------------------------------------------------------------
+  # MONETARIO / FINANCIERO  (dólar y riesgo país funcionan out-of-the-box)
+  # -------------------------------------------------------------------------
+  - nombre: "Dólar oficial"
+    bloque: monetario_financiero
+    fuente: dolar
+    casa: oficial
+    unidad: "$/USD (venta)"
+    graficos: [nivel]
+
+  - nombre: "Dólar blue"
+    bloque: monetario_financiero
+    fuente: dolar
+    casa: blue
+    unidad: "$/USD (venta)"
+    graficos: [nivel, interanual]
+
+  - nombre: "Dólar MEP"
+    bloque: monetario_financiero
+    fuente: dolar
+    casa: bolsa
+    unidad: "$/USD (venta)"
+    graficos: [nivel]
+
+  - nombre: "Dólar CCL"
+    bloque: monetario_financiero
+    fuente: dolar
+    casa: contadoconliqui
+    unidad: "$/USD (venta)"
+    graficos: [nivel]
+
+  - nombre: "Riesgo país (EMBI)"
+    bloque: monetario_financiero
+    fuente: argentinadatos
+    endpoint: "finanzas/indices/riesgo-pais"
+    unidad: "puntos básicos"
+    graficos: [nivel]
+
+  # ---- COMPLETAR con: python src/buscar_series.py "..." --------------------
+  # Descomentá y pegá el id correcto que te devuelva el buscador.
+  #
+  # - nombre: "Base monetaria"
+  #   bloque: monetario_financiero
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "base monetaria"
+  #   unidad: "millones de $"
+  #   graficos: [nivel, interanual]
+  #
+  # - nombre: "M2 privado"
+  #   bloque: monetario_financiero
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "M2 privado"
+  #   unidad: "millones de $"
+  #   graficos: [nivel, interanual]
+  #
+  # - nombre: "Reservas internacionales brutas"
+  #   bloque: monetario_financiero
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "reservas internacionales"
+  #   unidad: "millones de USD"
+  #   graficos: [nivel]
+  #
+  # - nombre: "Tasa de política monetaria"
+  #   bloque: monetario_financiero
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "tasa politica monetaria"
+  #   unidad: "% TNA"
+  #   graficos: [nivel]
+
+  # -------------------------------------------------------------------------
+  # ACTIVIDAD REAL  (EMAE funciona out-of-the-box)
+  # -------------------------------------------------------------------------
+  - nombre: "EMAE (actividad económica)"
+    bloque: real
+    fuente: datos_gob
+    id: "143.3_NO_PR_2004_A_21"
+    unidad: "índice 2004=100"
+    graficos: [nivel, interanual]
+
+  # ---- COMPLETAR --------------------------------------------------------
+  # - nombre: "Producción industrial (IPI manufacturero)"
+  #   bloque: real
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "IPI manufacturero"
+  #   unidad: "índice"
+  #   graficos: [nivel, interanual]
+
+  # -------------------------------------------------------------------------
+  # FISCAL  (COMPLETAR)
+  # -------------------------------------------------------------------------
+  # - nombre: "Resultado primario SPN"
+  #   bloque: fiscal
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "resultado primario"
+  #   unidad: "millones de $"
+  #   graficos: [nivel]
+  #
+  # - nombre: "Recaudación tributaria"
+  #   bloque: fiscal
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "recaudacion tributaria"
+  #   unidad: "millones de $"
+  #   graficos: [nivel, interanual]
+
+  # -------------------------------------------------------------------------
+  # SOCIAL / EMPLEO  (COMPLETAR)
+  # -------------------------------------------------------------------------
+  # - nombre: "Tasa de desempleo (EPH)"
+  #   bloque: social
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "tasa de desempleo"
+  #   unidad: "% PEA"
+  #   graficos: [nivel]
+  #
+  # - nombre: "Índice de salarios (total)"
+  #   bloque: social
+  #   fuente: datos_gob
+  #   id: "PEGAR_ID"          # buscar: "indice de salarios"
+  #   unidad: "índice"
+  #   graficos: [nivel, interanual]
