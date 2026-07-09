@@ -163,3 +163,24 @@ indicadores:
   #   id: "PEGAR_ID"          # buscar: "indice de salarios"
   #   unidad: "índice"
   #   graficos: [nivel, interanual]
+
+  # =========================================================================
+  # EMAE POR SECTOR  ->  alimentan el SEMÁFORO (no generan gráfico de línea)
+  # IDs verificados desde la ficha oficial del dataset (datos.gob.ar sspm_11.3)
+  # =========================================================================
+  - {nombre: "EMAE · Agricultura, ganadería y silvicultura", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_ISOM_2004_M_39", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Pesca", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_VIPAA_2004_M_5", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Explotación de minas y canteras", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_ISD_2004_M_26", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Industria manufacturera", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_VMASD_2004_M_23", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Electricidad, gas y agua", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_ITC_2004_M_21", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Construcción", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_VMATC_2004_M_12", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Comercio mayorista y minorista", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_AGCS_2004_M_41", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Hoteles y restaurantes", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_P_2004_M_20", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Transporte y comunicaciones", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_EMC_2004_M_25", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Intermediación financiera", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_IM_2004_M_25", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Inmobiliarias y empresariales", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_SEGA_2004_M_48", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Administración pública y defensa", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_C_2004_M_60", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Enseñanza", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_CMMR_2004_M_10", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Servicios sociales y de salud", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_HR_2004_M_24", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Otros servicios comunitarios", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_TAC_2004_M_60", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Impuestos netos de subsidios", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_IF_2004_M_25", unidad: "índice 2004=100", semaforo: true, graficos: []}
