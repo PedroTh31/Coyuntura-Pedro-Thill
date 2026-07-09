@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitor de coyuntura · Argentina</title>
+<style>
+  :root { --papel:#FBFAF7; --tinta:#1A1A1A; --gris:#9A968C; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--papel); color:var(--tinta);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height:1.4; }
+  .wrap { max-width:1100px; margin:0 auto; padding:32px 20px 80px; }
+  header { border-bottom:2px solid var(--tinta); padding-bottom:14px; margin-bottom:26px; }
+  header h1 { font-size:26px; margin:0; letter-spacing:-.02em; }
+  header .sub { color:var(--gris); font-size:13px; margin-top:4px;
+    font-variant-numeric:tabular-nums; }
+  .tablero { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:12px; margin-bottom:40px; }
+  .card { border:1px solid #E4E0D4; border-left:3px solid var(--acc);
+    border-radius:6px; padding:12px 14px; background:#fff; }
+  .card-nombre { font-size:11px; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--gris); min-height:28px; }
+  .card-valor { font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+    font-size:24px; font-weight:600; margin:2px 0; }
+  .card-meta { display:flex; justify-content:space-between; align-items:baseline;
+    font-size:11px; }
+  .chg { font-family: ui-monospace, monospace; font-weight:600; }
+  .chg.up { color:#B4341F; } .chg.down { color:#256D5B; } .chg.flat { color:var(--gris); }
+  .uni { color:var(--gris); }
+  .bloque { margin-bottom:40px; }
+  .bloque h2 { font-size:17px; display:flex; align-items:center; gap:9px;
+    border-bottom:1px solid #E4E0D4; padding-bottom:8px; }
+  .dot { width:11px; height:11px; border-radius:2px; display:inline-block; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:16px; }
+  figure { margin:0; border:1px solid #ECE8DC; border-radius:8px; overflow:hidden; background:#fff; }
+  figure img { width:100%; display:block; }
+  footer { color:var(--gris); font-size:12px; border-top:1px solid #E4E0D4;
+    padding-top:14px; margin-top:20px; }
+  footer code { background:#F0EDE3; padding:1px 5px; border-radius:3px; }
+</style></head>
+<body><div class="wrap">
+  <header>
+    <h1>Monitor de coyuntura · Argentina</h1>
+    <div class="sub">Actualizado 09/07/2026 19:47 · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div>
+  </header>
+
+  <div class="tablero">
+        <div class="card" style="--acc:#B4341F">
+          <div class="card-nombre">Inflación mensual (IPC)</div>
+          <div class="card-valor">2,10</div>
+          <div class="card-meta">
+            <span class="chg down">▼ 19.2%</span>
+            <span class="uni">% mensual · 31/05/2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="--acc:#B4341F">
+          <div class="card-nombre">IPC Nacional - Nivel general (índice)</div>
+          <div class="card-valor">11.607</div>
+          <div class="card-meta">
+            <span class="chg up">▲ 2.1%</span>
+            <span class="uni">índice · 01/05/2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="--acc:#1D4E89">
+          <div class="card-nombre">Dólar oficial</div>
+          <div class="card-valor">1.510</div>
+          <div class="card-meta">
+            <span class="chg down">▼ 0.3%</span>
+            <span class="uni">$/USD (venta) · 08/07/2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="--acc:#1D4E89">
+          <div class="card-nombre">Dólar blue</div>
+          <div class="card-valor">1.510</div>
+          <div class="card-meta">
+            <span class="chg down">▼ 0.3%</span>
+            <span class="uni">$/USD (venta) · 08/07/2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="--acc:#1D4E89">
+          <div class="card-nombre">Dólar MEP</div>
+          <div class="card-valor">1.532</div>
+          <div class="card-meta">
+            <span class="chg flat">• 0.0%</span>
+            <span class="uni">$/USD (venta) · 08/07/2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="--acc:#1D4E89">
+          <div class="card-nombre">Dólar CCL</div>
+          <div class="card-valor">1.566</div>
+          <div class="card-meta">
+            <span class="chg down">▼ 0.5%</span>
+            <span class="uni">$/USD (venta) · 08/07/2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="--acc:#1D4E89">
+          <div class="card-nombre">Riesgo país (EMBI)</div>
+          <div class="card-valor">405,0</div>
+          <div class="card-meta">
+            <span class="chg down">▼ 0.7%</span>
+            <span class="uni">puntos básicos · 07/07/2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="--acc:#256D5B">
+          <div class="card-nombre">EMAE (actividad económica)</div>
+          <div class="card-valor">161,5</div>
+          <div class="card-meta">
+            <span class="chg up">▲ 1.0%</span>
+            <span class="uni">índice 2004=100 · 01/04/2026</span>
+          </div>
+        </div></div>
+
+  
+        <section class="bloque">
+          <h2><span class="dot" style="background:#B4341F"></span>Precios</h2>
+          <div class="grid"><figure><img src="img/inflacion_mensual_ipc_nivel.png" alt="Inflación mensual (IPC)" loading="lazy"></figure>
+<figure><img src="img/ipc_nacional_nivel_general_indice_nivel.png" alt="IPC Nacional - Nivel general (índice)" loading="lazy"></figure>
+<figure><img src="img/ipc_nacional_nivel_general_indice_ia.png" alt="IPC Nacional - Nivel general (índice)" loading="lazy"></figure>
+</div>
+        </section>
+        <section class="bloque">
+          <h2><span class="dot" style="background:#1D4E89"></span>Monetario y financiero</h2>
+          <div class="grid"><figure><img src="img/dolar_oficial_nivel.png" alt="Dólar oficial" loading="lazy"></figure>
+<figure><img src="img/dolar_blue_nivel.png" alt="Dólar blue" loading="lazy"></figure>
+<figure><img src="img/dolar_blue_ia.png" alt="Dólar blue" loading="lazy"></figure>
+<figure><img src="img/dolar_mep_nivel.png" alt="Dólar MEP" loading="lazy"></figure>
+<figure><img src="img/dolar_ccl_nivel.png" alt="Dólar CCL" loading="lazy"></figure>
+<figure><img src="img/riesgo_pais_embi_nivel.png" alt="Riesgo país (EMBI)" loading="lazy"></figure>
+</div>
+        </section>
+        <section class="bloque">
+          <h2><span class="dot" style="background:#256D5B"></span>Actividad real</h2>
+          <div class="grid"><figure><img src="img/emae_actividad_economica_nivel.png" alt="EMAE (actividad económica)" loading="lazy"></figure>
+<figure><img src="img/emae_actividad_economica_ia.png" alt="EMAE (actividad económica)" loading="lazy"></figure>
+</div>
+        </section>
+
+  <footer>
+    En las tarjetas, la variación es respecto de la observación anterior de cada serie
+    (rojo = suba, verde = baja; los colores están pensados para inflación/dólar, no implican
+    juicio de valor). Para agregar indicadores, editá <code>config/indicadores.yaml</code>.
+  </footer>
+</div></body></html>
