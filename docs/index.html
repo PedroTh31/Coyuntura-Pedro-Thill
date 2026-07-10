@@ -29,17 +29,21 @@
   .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:16px; }
   figure { margin:0; border:1px solid #ECE8DC; border-radius:8px; overflow:hidden; background:#fff; }
   figure img { width:100%; display:block; }
-  .sem-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; }
-  .sem { border-radius:6px; padding:11px 13px; }
-  .sem-n { font-size:12px; line-height:1.25; min-height:44px; }
-  .sem-v { font-family:ui-monospace,monospace; font-size:20px; font-weight:700; margin-top:4px; }
+  .sem-tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; }
+  .sem-tabla th { text-align:right; color:var(--gris); font-weight:600; font-size:11px;
+    text-transform:uppercase; letter-spacing:.03em; padding:4px 10px; }
+  .sem-tabla th:first-child { text-align:left; }
+  .sem-tabla td { padding:8px 10px; text-align:right; border-radius:5px;
+    font-family:ui-monospace,monospace; font-weight:600; font-variant-numeric:tabular-nums; }
+  .sem-tabla td.sec { text-align:left; background:#fff; font-family:system-ui,sans-serif;
+    font-weight:400; border:1px solid #ECE8DC; }
   footer { color:var(--gris); font-size:12px; border-top:1px solid #E4E0D4; padding-top:14px; margin-top:20px; }
   footer code { background:#F0EDE3; padding:1px 5px; border-radius:3px; }
 </style></head>
 <body><div class="wrap">
   <header><h1>Monitor de coyuntura · Argentina</h1>
-  <div class="sub">Actualizado 09/07/2026 20:33 · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div></header>
-  <nav><a href="#semaforo">Semáforo sectorial</a><a href="#precios">Precios</a><a href="#monetario_financiero">Monetario y financiero</a><a href="#real">Actividad real</a></nav>
+  <div class="sub">Actualizado 10/07/2026 03:02 · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div></header>
+  <nav><a href="#semaforo">Semáforo sectorial</a><a href="#precios">Precios</a><a href="#monetario_financiero">Monetario y financiero</a><a href="#real">Actividad real</a><a href="#social">Social y empleo</a></nav>
   <div class="tablero"><div class="card" style="--acc:#B4341F">
           <div class="cn">Inflación mensual (IPC)</div>
           <div class="cv">2,10</div>
@@ -53,70 +57,87 @@
 <div class="card" style="--acc:#1D4E89">
           <div class="cn">Dólar oficial</div>
           <div class="cv">1.510</div>
-          <div class="cm"><span class="chg down">▼ 0.3%</span><span class="uni">$/USD (venta) · 08/07/2026</span></div>
+          <div class="cm"><span class="chg flat">• 0.0%</span><span class="uni">$/USD (venta) · 09/07/2026</span></div>
         </div>
 <div class="card" style="--acc:#1D4E89">
           <div class="cn">Dólar blue</div>
           <div class="cv">1.510</div>
-          <div class="cm"><span class="chg down">▼ 0.3%</span><span class="uni">$/USD (venta) · 08/07/2026</span></div>
+          <div class="cm"><span class="chg flat">• 0.0%</span><span class="uni">$/USD (venta) · 09/07/2026</span></div>
         </div>
 <div class="card" style="--acc:#1D4E89">
           <div class="cn">Dólar MEP</div>
           <div class="cv">1.532</div>
-          <div class="cm"><span class="chg flat">• 0.0%</span><span class="uni">$/USD (venta) · 08/07/2026</span></div>
+          <div class="cm"><span class="chg flat">• 0.0%</span><span class="uni">$/USD (venta) · 09/07/2026</span></div>
         </div>
 <div class="card" style="--acc:#1D4E89">
           <div class="cn">Dólar CCL</div>
           <div class="cv">1.566</div>
-          <div class="cm"><span class="chg down">▼ 0.5%</span><span class="uni">$/USD (venta) · 08/07/2026</span></div>
+          <div class="cm"><span class="chg flat">• 0.0%</span><span class="uni">$/USD (venta) · 09/07/2026</span></div>
         </div>
 <div class="card" style="--acc:#1D4E89">
           <div class="cn">Riesgo país (EMBI)</div>
-          <div class="cv">405,0</div>
-          <div class="cm"><span class="chg down">▼ 0.7%</span><span class="uni">puntos básicos · 07/07/2026</span></div>
+          <div class="cv">408,0</div>
+          <div class="cm"><span class="chg up">▲ 0.7%</span><span class="uni">puntos básicos · 08/07/2026</span></div>
         </div>
 <div class="card" style="--acc:#256D5B">
           <div class="cn">EMAE (actividad económica)</div>
           <div class="cv">161,5</div>
           <div class="cm"><span class="chg up">▲ 1.0%</span><span class="uni">índice 2004=100 · 01/04/2026</span></div>
+        </div>
+<div class="card" style="--acc:#1D4E89">
+          <div class="cn">Reservas internacionales</div>
+          <div class="cv">46.436</div>
+          <div class="cm"><span class="chg up">▲ 2.4%</span><span class="uni">millones de USD · 01/05/2026</span></div>
+        </div>
+<div class="card" style="--acc:#1D4E89">
+          <div class="cn">Base monetaria</div>
+          <div class="cv">42.771.702</div>
+          <div class="cm"><span class="chg up">▲ 3.3%</span><span class="uni">millones de $ · 01/06/2026</span></div>
+        </div>
+<div class="card" style="--acc:#1D4E89">
+          <div class="cn">M2 (agregado total)</div>
+          <div class="cv">83.353.360</div>
+          <div class="cm"><span class="chg up">▲ 3.4%</span><span class="uni">millones de $ · 01/05/2026</span></div>
+        </div>
+<div class="card" style="--acc:#1D4E89">
+          <div class="cn">M3 (agregado amplio)</div>
+          <div class="cv">170.194.574</div>
+          <div class="cm"><span class="chg up">▲ 3.3%</span><span class="uni">millones de $ · 01/05/2026</span></div>
+        </div>
+<div class="card" style="--acc:#B26B00">
+          <div class="cn">Tasa de desempleo</div>
+          <div class="cv">0,08</div>
+          <div class="cm"><span class="chg up">▲ 4.0%</span><span class="uni">% de la PEA · 01/01/2026</span></div>
+        </div>
+<div class="card" style="--acc:#1D4E89">
+          <div class="cn">M1 (calculado: circulante + cta. cte.)</div>
+          <div class="cv">34.373.724</div>
+          <div class="cm"><span class="chg up">▲ 1.9%</span><span class="uni">millones de $ · 01/05/2026</span></div>
+        </div>
+<div class="card" style="--acc:#1D4E89">
+          <div class="cn">Tasa BADLAR (mayorista)</div>
+          <div class="cv">21,0</div>
+          <div class="cm"><span class="chg up">▲ 1.2%</span><span class="uni">% TNA · 18/06/2026</span></div>
+        </div>
+<div class="card" style="--acc:#1D4E89">
+          <div class="cn">Tasa de política monetaria</div>
+          <div class="cv">29,0</div>
+          <div class="cm"><span class="chg flat">• 0.0%</span><span class="uni">% TNA · 10/07/2025</span></div>
+        </div>
+<div class="card" style="--acc:#B26B00">
+          <div class="cn">Salario real (INDEC deflactado por IPC)</div>
+          <div class="cv">75,7</div>
+          <div class="cm"><span class="chg up">▲ 1.1%</span><span class="uni">índice base 100 al inicio · 01/04/2026</span></div>
         </div></div>
   
         <section class="bloque" id="semaforo">
-          <h2><span class="dot" style="background:#256D5B"></span>EMAE por sector — variación interanual <span class="ref">(04/2026)</span></h2>
-          <p class="nota">Verde: crece más de 1% i.a. · Amarillo: entre -1% y +1% · Rojo: cae más de 1% i.a. Ordenado de mayor a menor.</p>
-          <div class="sem-grid"><div class="sem" style="background:#DCEEDD;color:#1E5C2E">
-              <div class="sem-n">Explotación de minas y canteras</div>
-              <div class="sem-v">+17.1%</div></div><div class="sem" style="background:#DCEEDD;color:#1E5C2E">
-              <div class="sem-n">Agricultura, ganadería y silvicultura</div>
-              <div class="sem-v">+10.9%</div></div><div class="sem" style="background:#DCEEDD;color:#1E5C2E">
-              <div class="sem-n">Electricidad, gas y agua</div>
-              <div class="sem-v">+6.4%</div></div><div class="sem" style="background:#DCEEDD;color:#1E5C2E">
-              <div class="sem-n">Intermediación financiera</div>
-              <div class="sem-v">+4.5%</div></div><div class="sem" style="background:#DCEEDD;color:#1E5C2E">
-              <div class="sem-n">Impuestos netos de subsidios</div>
-              <div class="sem-v">+2.1%</div></div><div class="sem" style="background:#DCEEDD;color:#1E5C2E">
-              <div class="sem-n">Transporte y comunicaciones</div>
-              <div class="sem-v">+2.0%</div></div><div class="sem" style="background:#FBF0D5;color:#7A5A10">
-              <div class="sem-n">Servicios sociales y de salud</div>
-              <div class="sem-v">+0.8%</div></div><div class="sem" style="background:#FBF0D5;color:#7A5A10">
-              <div class="sem-n">Hoteles y restaurantes</div>
-              <div class="sem-v">+0.0%</div></div><div class="sem" style="background:#FBF0D5;color:#7A5A10">
-              <div class="sem-n">Enseñanza</div>
-              <div class="sem-v">-0.1%</div></div><div class="sem" style="background:#FBF0D5;color:#7A5A10">
-              <div class="sem-n">Inmobiliarias y empresariales</div>
-              <div class="sem-v">-0.2%</div></div><div class="sem" style="background:#F6DCD8;color:#8A2A1C">
-              <div class="sem-n">Administración pública y defensa</div>
-              <div class="sem-v">-1.3%</div></div><div class="sem" style="background:#F6DCD8;color:#8A2A1C">
-              <div class="sem-n">Otros servicios comunitarios</div>
-              <div class="sem-v">-1.7%</div></div><div class="sem" style="background:#F6DCD8;color:#8A2A1C">
-              <div class="sem-n">Construcción</div>
-              <div class="sem-v">-1.8%</div></div><div class="sem" style="background:#F6DCD8;color:#8A2A1C">
-              <div class="sem-n">Industria manufacturera</div>
-              <div class="sem-v">-2.9%</div></div><div class="sem" style="background:#F6DCD8;color:#8A2A1C">
-              <div class="sem-n">Comercio mayorista y minorista</div>
-              <div class="sem-v">-3.2%</div></div><div class="sem" style="background:#F6DCD8;color:#8A2A1C">
-              <div class="sem-n">Pesca</div>
-              <div class="sem-v">-28.4%</div></div></div>
+          <h2><span class="dot" style="background:#256D5B"></span>EMAE por sector <span class="ref">(04/2026)</span></h2>
+          <p class="nota">Verde: sube más de 1% · Amarillo: entre -1% y +1% · Rojo: baja más de 1%. Ordenado por variación interanual.
+          <br>Nota: la variación <b>mensual</b> es sobre la serie original, así que arrastra estacionalidad; leé sobre todo la interanual y el acumulado.</p>
+          <table class="sem-tabla">
+            <thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>
+            <tbody><tr><td class="sec">Explotación de minas y canteras</td><td style="background:#DCEEDD;color:#1E5C2E">+17.1%</td><td style="background:#FBF0D5;color:#7A5A10">-0.2%</td><td style="background:#DCEEDD;color:#1E5C2E">+13.5%</td></tr><tr><td class="sec">Agricultura, ganadería y silvicultura</td><td style="background:#DCEEDD;color:#1E5C2E">+10.9%</td><td style="background:#DCEEDD;color:#1E5C2E">+34.2%</td><td style="background:#DCEEDD;color:#1E5C2E">+15.2%</td></tr><tr><td class="sec">Electricidad, gas y agua</td><td style="background:#DCEEDD;color:#1E5C2E">+6.4%</td><td style="background:#F6DCD8;color:#8A2A1C">-10.7%</td><td style="background:#FBF0D5;color:#7A5A10">+0.6%</td></tr><tr><td class="sec">Intermediación financiera</td><td style="background:#DCEEDD;color:#1E5C2E">+4.5%</td><td style="background:#F6DCD8;color:#8A2A1C">-3.2%</td><td style="background:#DCEEDD;color:#1E5C2E">+6.7%</td></tr><tr><td class="sec">Impuestos netos de subsidios</td><td style="background:#DCEEDD;color:#1E5C2E">+2.1%</td><td style="background:#DCEEDD;color:#1E5C2E">+2.0%</td><td style="background:#DCEEDD;color:#1E5C2E">+1.7%</td></tr><tr><td class="sec">Transporte y comunicaciones</td><td style="background:#DCEEDD;color:#1E5C2E">+2.0%</td><td style="background:#FBF0D5;color:#7A5A10">-0.5%</td><td style="background:#DCEEDD;color:#1E5C2E">+2.2%</td></tr><tr><td class="sec">Servicios sociales y de salud</td><td style="background:#FBF0D5;color:#7A5A10">+0.8%</td><td style="background:#DCEEDD;color:#1E5C2E">+2.2%</td><td style="background:#FBF0D5;color:#7A5A10">+0.6%</td></tr><tr><td class="sec">Hoteles y restaurantes</td><td style="background:#FBF0D5;color:#7A5A10">+0.0%</td><td style="background:#F6DCD8;color:#8A2A1C">-19.0%</td><td style="background:#DCEEDD;color:#1E5C2E">+2.3%</td></tr><tr><td class="sec">Enseñanza</td><td style="background:#FBF0D5;color:#7A5A10">-0.1%</td><td style="background:#FBF0D5;color:#7A5A10">-0.6%</td><td style="background:#FBF0D5;color:#7A5A10">+0.0%</td></tr><tr><td class="sec">Inmobiliarias y empresariales</td><td style="background:#FBF0D5;color:#7A5A10">-0.2%</td><td style="background:#DCEEDD;color:#1E5C2E">+1.1%</td><td style="background:#FBF0D5;color:#7A5A10">+0.6%</td></tr><tr><td class="sec">Administración pública y defensa</td><td style="background:#F6DCD8;color:#8A2A1C">-1.3%</td><td style="background:#FBF0D5;color:#7A5A10">-0.4%</td><td style="background:#F6DCD8;color:#8A2A1C">-1.4%</td></tr><tr><td class="sec">Otros servicios comunitarios</td><td style="background:#F6DCD8;color:#8A2A1C">-1.7%</td><td style="background:#F6DCD8;color:#8A2A1C">-13.8%</td><td style="background:#FBF0D5;color:#7A5A10">+0.1%</td></tr><tr><td class="sec">Construcción</td><td style="background:#F6DCD8;color:#8A2A1C">-1.8%</td><td style="background:#F6DCD8;color:#8A2A1C">-8.7%</td><td style="background:#DCEEDD;color:#1E5C2E">+1.5%</td></tr><tr><td class="sec">Industria manufacturera</td><td style="background:#F6DCD8;color:#8A2A1C">-2.9%</td><td style="background:#F6DCD8;color:#8A2A1C">-5.4%</td><td style="background:#F6DCD8;color:#8A2A1C">-2.0%</td></tr><tr><td class="sec">Comercio mayorista y minorista</td><td style="background:#F6DCD8;color:#8A2A1C">-3.2%</td><td style="background:#F6DCD8;color:#8A2A1C">-3.9%</td><td style="background:#F6DCD8;color:#8A2A1C">-1.0%</td></tr><tr><td class="sec">Pesca</td><td style="background:#F6DCD8;color:#8A2A1C">-28.4%</td><td style="background:#F6DCD8;color:#8A2A1C">-35.6%</td><td style="background:#DCEEDD;color:#1E5C2E">+14.7%</td></tr></tbody>
+          </table>
         </section>
   
         <section class="bloque" id="precios">
@@ -134,12 +155,30 @@
 <figure><img src="img/dolar_mep.png" alt="Dólar MEP" loading="lazy"></figure>
 <figure><img src="img/dolar_ccl.png" alt="Dólar CCL" loading="lazy"></figure>
 <figure><img src="img/riesgo_pais_embi.png" alt="Riesgo país (EMBI)" loading="lazy"></figure>
+<figure><img src="img/reservas_internacionales.png" alt="Reservas internacionales" loading="lazy"></figure>
+<figure><img src="img/base_monetaria.png" alt="Base monetaria" loading="lazy"></figure>
+<figure><img src="img/base_monetaria_ia.png" alt="Base monetaria" loading="lazy"></figure>
+<figure><img src="img/m2_agregado_total.png" alt="M2 (agregado total)" loading="lazy"></figure>
+<figure><img src="img/m2_agregado_total_ia.png" alt="M2 (agregado total)" loading="lazy"></figure>
+<figure><img src="img/m3_agregado_amplio.png" alt="M3 (agregado amplio)" loading="lazy"></figure>
+<figure><img src="img/m3_agregado_amplio_ia.png" alt="M3 (agregado amplio)" loading="lazy"></figure>
+<figure><img src="img/m1_calculado_circulante_cta_cte.png" alt="M1 (calculado: circulante + cta. cte.)" loading="lazy"></figure>
+<figure><img src="img/m1_calculado_circulante_cta_cte_ia.png" alt="M1 (calculado: circulante + cta. cte.)" loading="lazy"></figure>
+<figure><img src="img/tasa_badlar_mayorista.png" alt="Tasa BADLAR (mayorista)" loading="lazy"></figure>
+<figure><img src="img/tasa_de_politica_monetaria.png" alt="Tasa de política monetaria" loading="lazy"></figure>
 </div>
         </section>
         <section class="bloque" id="real">
           <h2><span class="dot" style="background:#256D5B"></span>Actividad real</h2>
           <div class="grid"><figure><img src="img/emae_actividad_economica.png" alt="EMAE (actividad económica)" loading="lazy"></figure>
 <figure><img src="img/emae_actividad_economica_ia.png" alt="EMAE (actividad económica)" loading="lazy"></figure>
+</div>
+        </section>
+        <section class="bloque" id="social">
+          <h2><span class="dot" style="background:#B26B00"></span>Social y empleo</h2>
+          <div class="grid"><figure><img src="img/tasa_de_desempleo.png" alt="Tasa de desempleo" loading="lazy"></figure>
+<figure><img src="img/salario_real_indec_deflactado_por_ipc.png" alt="Salario real (INDEC deflactado por IPC)" loading="lazy"></figure>
+<figure><img src="img/salario_real_indec_deflactado_por_ipc_ia.png" alt="Salario real (INDEC deflactado por IPC)" loading="lazy"></figure>
 </div>
         </section>
   <footer>En las tarjetas, la variación es respecto de la observación anterior de cada serie.
