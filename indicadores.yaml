@@ -1,200 +1,81 @@
 # ============================================================================
-#  CONFIGURACIÓN DE INDICADORES DE COYUNTURA
-# ----------------------------------------------------------------------------
-#  Cada indicador tiene:
-#    nombre     : cómo se llama en el CSV y en el dashboard
-#    bloque     : real | monetario_financiero | fiscal | social | precios
-#    fuente     : datos_gob | argentinadatos | dolar
-#    id/casa    : identificador según la fuente
-#    unidad     : etiqueta para los gráficos
-#    graficos   : lista -> [nivel] y/o [interanual]
-#
-#  Para AGREGAR indicadores de datos.gob.ar (M1, M2, reservas, empleo,
-#  presupuesto, pobreza, etc.) necesitás el "id" exacto de la serie.
-#  Corré:   python buscar_series.py "reservas internacionales"
-#  y pegá el id que te devuelva en la sección correspondiente de abajo.
+#  INDICADORES DE COYUNTURA  ·  agrupados por 'grupo' (subtítulo en el tablero)
+#  - 'desde' controla desde cuándo se ve cada gráfico (default: 2024)
+#  - los sectores del EMAE alimentan el SEMÁFORO (no hacen gráfico de línea)
 # ============================================================================
-
-start_date: "2018-01-01"   # desde cuándo traer historia la primera vez
+start_date: "2004-01-01"   # se baja historia larga; cada gráfico se recorta con 'desde'
 
 indicadores:
 
-  # -------------------------------------------------------------------------
-  # PRECIOS  (funciona out-of-the-box)
-  # -------------------------------------------------------------------------
-  - nombre: "Inflación mensual (IPC)"
-    bloque: precios
-    fuente: argentinadatos
-    endpoint: "finanzas/indices/inflacion"
-    unidad: "% mensual"
-    graficos: [nivel]
+  # ---------------- PRECIOS ----------------
+  - {nombre: "Inflación mensual (IPC)", bloque: precios, grupo: "Precios", fuente: argentinadatos, endpoint: "finanzas/indices/inflacion", unidad: "% mensual", graficos: [nivel]}
+  - {nombre: "Inflación interanual (IPC)", bloque: precios, grupo: "Precios", fuente: argentinadatos, endpoint: "finanzas/indices/inflacion-interanual", unidad: "% i.a.", graficos: [nivel]}
+  - {nombre: "IPC Nacional - Nivel general", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice", graficos: [nivel]}
 
-  - nombre: "Inflación interanual (IPC)"
-    bloque: precios
-    fuente: argentinadatos
-    endpoint: "finanzas/indices/inflacion-interanual"
-    unidad: "% i.a."
-    graficos: [nivel]
+  # ---------------- DÓLAR ----------------
+  - {nombre: "Dólar oficial", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: oficial, unidad: "$/USD (venta)", graficos: [nivel]}
+  - {nombre: "Dólar blue", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: blue, unidad: "$/USD (venta)", graficos: [nivel]}
+  - {nombre: "Dólar MEP", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: bolsa, unidad: "$/USD (venta)", graficos: [nivel]}
+  - {nombre: "Dólar CCL", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: contadoconliqui, unidad: "$/USD (venta)", graficos: [nivel]}
 
-  - nombre: "IPC Nacional - Nivel general (índice)"
-    bloque: precios
-    fuente: datos_gob
-    id: "148.3_INIVELNAL_DICI_M_26"
-    unidad: "índice"
-    graficos: [nivel, interanual]
+  # ---------------- RIESGO PAÍS ----------------
+  - {nombre: "Riesgo país (EMBI)", bloque: monetario_financiero, grupo: "Riesgo país", fuente: argentinadatos, endpoint: "finanzas/indices/riesgo-pais", unidad: "puntos básicos", graficos: [nivel]}
 
-  # -------------------------------------------------------------------------
-  # MONETARIO / FINANCIERO  (dólar y riesgo país funcionan out-of-the-box)
-  # -------------------------------------------------------------------------
-  - nombre: "Dólar oficial"
-    bloque: monetario_financiero
-    fuente: dolar
-    casa: oficial
-    unidad: "$/USD (venta)"
-    graficos: [nivel]
+  # ---------------- RESERVAS (compra/venta + stock) ----------------
+  - {nombre: "Reservas internacionales (BCRA)", bloque: monetario_financiero, grupo: "Reservas", fuente: bcra, id_variable: 1, unidad: "millones de USD", vista: reservas_combo, graficos: [nivel]}
 
-  - nombre: "Dólar blue"
-    bloque: monetario_financiero
-    fuente: dolar
-    casa: blue
-    unidad: "$/USD (venta)"
-    graficos: [nivel, interanual]
+  # ---------------- AGREGADOS MONETARIOS (orden BM · M1 · M2 · M3, desde 2026) ----------------
+  - {nombre: "Base monetaria", bloque: monetario_financiero, grupo: "Agregados monetarios", fuente: datos_gob, id: "90.1_BMT_0_0_20", unidad: "millones de $", desde: "2026-01-01", graficos: [nivel]}
+  - {nombre: "M1 (circulante + cta. cte.)", bloque: monetario_financiero, grupo: "Agregados monetarios", calculo: suma, componentes: ["90.1_BMCMP_0_0_44", "90.1_DCCT_0_0_32"], unidad: "millones de $", desde: "2026-01-01", graficos: [nivel]}
+  - {nombre: "M2 (agregado total)", bloque: monetario_financiero, grupo: "Agregados monetarios", fuente: datos_gob, id: "90.1_AMTM2_0_0_31", unidad: "millones de $", desde: "2026-01-01", graficos: [nivel]}
+  - {nombre: "M3 (agregado amplio)", bloque: monetario_financiero, grupo: "Agregados monetarios", fuente: datos_gob, id: "90.1_AMTM3_0_0_31", unidad: "millones de $", desde: "2026-01-01", graficos: [nivel]}
 
-  - nombre: "Dólar MEP"
-    bloque: monetario_financiero
-    fuente: dolar
-    casa: bolsa
-    unidad: "$/USD (venta)"
-    graficos: [nivel]
+  # ---------------- TASAS DE INTERÉS (desde 2026) ----------------
+  - {nombre: "Tasa BADLAR (mayorista)", bloque: monetario_financiero, grupo: "Tasas de interés", fuente: datos_gob, id: "89.2_TS_INTELAR_0_D_20", unidad: "% TNA", desde: "2026-01-01", graficos: [nivel]}
+  - {nombre: "Tasa de política monetaria", bloque: monetario_financiero, grupo: "Tasas de interés", fuente: datos_gob, id: "89.2_TS_INTE_PM_0_D_16", unidad: "% TNA", desde: "2026-01-01", graficos: [nivel]}
 
-  - nombre: "Dólar CCL"
-    bloque: monetario_financiero
-    fuente: dolar
-    casa: contadoconliqui
-    unidad: "$/USD (venta)"
-    graficos: [nivel]
+  # ---------------- ACTIVIDAD REAL (EMAE con serie larga + semáforo) ----------------
+  - {nombre: "EMAE (actividad económica)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "143.3_NO_PR_2004_A_21", unidad: "índice 2004=100", desde: "2004-01-01", graficos: [nivel]}
 
-  - nombre: "Riesgo país (EMBI)"
-    bloque: monetario_financiero
-    fuente: argentinadatos
-    endpoint: "finanzas/indices/riesgo-pais"
-    unidad: "puntos básicos"
-    graficos: [nivel]
+  # ---------------- SOCIAL ----------------
+  - {nombre: "Tasa de desempleo", bloque: social, grupo: "Social", fuente: datos_gob, id: "45.2_ECTDT_0_T_33", unidad: "% de la PEA", graficos: [nivel]}
+  - {nombre: "Salario real (deflactado por IPC)", bloque: social, grupo: "Social", calculo: real, nominal_id: "149.1_TL_INDIIOS_OCTU_0_21", deflactor_id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice base 100 al inicio", graficos: [nivel]}
 
-  # ---- COMPLETAR con: python buscar_series.py "..." --------------------
-  # Descomentá y pegá el id correcto que te devuelva el buscador.
-  #
-  # - nombre: "Base monetaria, desde: "2026-01-01"}
-  #   bloque: monetario_financiero
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "base monetaria"
-  #   unidad: "millones de $"
-  #   graficos: [nivel, interanual]
-  #
-  # - nombre: "M2 privado"
-  #   bloque: monetario_financiero
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "M2 privado"
-  #   unidad: "millones de $"
-  #   graficos: [nivel, interanual]
-  #
-  # - nombre: "Reservas internacionales brutas"
-  #   bloque: monetario_financiero
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "reservas internacionales"
-  #   unidad: "millones de USD"
-  #   graficos: [nivel]
-  #
-  # - nombre: "Tasa de política monetaria, desde: "2026-01-01"}
-  #   bloque: monetario_financiero
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "tasa politica monetaria"
-  #   unidad: "% TNA"
-  #   graficos: [nivel]
+  # ---------------- PRODUCCIÓN / CRÉDITO (nuevos, verificados) ----------------
+  - {nombre: "IPI manufacturero (industria)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "453.1_SERIE_ORIGNAL_0_0_14_46", unidad: "índice 2004=100", desde: "2017-01-01", graficos: [nivel]}
+  - {nombre: "Préstamos al sector privado", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "91.1_PEFPC_0_0_35", unidad: "millones de $", graficos: [nivel]}
 
-  # -------------------------------------------------------------------------
-  # ACTIVIDAD REAL  (EMAE funciona out-of-the-box)
-  # -------------------------------------------------------------------------
-  - nombre: "EMAE (actividad económica)"
-    bloque: real
-    fuente: datos_gob
-    id: "143.3_NO_PR_2004_A_21"
-    unidad: "índice 2004=100"
-    graficos: [nivel, interanual]
+  # ---------------- EMAE POR SECTOR (semáforo) ----------------
+  - {nombre: "EMAE · Agricultura, ganadería y silvicultura", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_ISOM_2004_M_39", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Pesca", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_VIPAA_2004_M_5", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Explotación de minas y canteras", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_ISD_2004_M_26", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Industria manufacturera", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_VMASD_2004_M_23", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Electricidad, gas y agua", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_ITC_2004_M_21", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Construcción", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_VMATC_2004_M_12", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Comercio mayorista y minorista", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_AGCS_2004_M_41", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Hoteles y restaurantes", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_P_2004_M_20", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Transporte y comunicaciones", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_EMC_2004_M_25", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Intermediación financiera", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_IM_2004_M_25", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Inmobiliarias y empresariales", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_SEGA_2004_M_48", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Administración pública y defensa", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_C_2004_M_60", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Enseñanza", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_CMMR_2004_M_10", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Servicios sociales y de salud", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_HR_2004_M_24", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Otros servicios comunitarios", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_TAC_2004_M_60", semaforo: true, graficos: []}
+  - {nombre: "EMAE · Impuestos netos de subsidios", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_IF_2004_M_25", semaforo: true, graficos: []}
 
-  # ---- COMPLETAR --------------------------------------------------------
-  # - nombre: "Producción industrial (IPI manufacturero)"
-  #   bloque: real
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "IPI manufacturero"
-  #   unidad: "índice"
-  #   graficos: [nivel, interanual]
-
-  # -------------------------------------------------------------------------
-  # FISCAL  (COMPLETAR)
-  # -------------------------------------------------------------------------
-  # - nombre: "Resultado primario SPN"
-  #   bloque: fiscal
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "resultado primario"
-  #   unidad: "millones de $"
-  #   graficos: [nivel]
-  #
-  # - nombre: "Recaudación tributaria"
-  #   bloque: fiscal
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "recaudacion tributaria"
-  #   unidad: "millones de $"
-  #   graficos: [nivel, interanual]
-
-  # -------------------------------------------------------------------------
-  # SOCIAL / EMPLEO  (COMPLETAR)
-  # -------------------------------------------------------------------------
-  # - nombre: "Tasa de desempleo (EPH)"
-  #   bloque: social
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "tasa de desempleo"
-  #   unidad: "% PEA"
-  #   graficos: [nivel]
-  #
-  # - nombre: "Índice de salarios (total)"
-  #   bloque: social
-  #   fuente: datos_gob
-  #   id: "PEGAR_ID"          # buscar: "indice de salarios"
-  #   unidad: "índice"
-  #   graficos: [nivel, interanual]
-
-  # -------------------------------------------------------------------------
-  # NUEVOS (IDs verificados desde la ficha oficial de cada dataset)
-  # -------------------------------------------------------------------------
-  - {nombre: "Reservas internacionales (saldo diario, BCRA)", bloque: monetario_financiero, fuente: bcra, id_variable: 1, unidad: "millones de USD", graficos: [nivel]}
-  - {nombre: "Base monetaria", bloque: monetario_financiero, fuente: datos_gob, id: "90.1_BMT_0_0_20", unidad: "millones de $", graficos: [nivel, interanual], desde: "2026-01-01"}
-  - {nombre: "M2 (agregado total)", bloque: monetario_financiero, fuente: datos_gob, id: "90.1_AMTM2_0_0_31", unidad: "millones de $", graficos: [nivel, interanual], desde: "2026-01-01"}
-  - {nombre: "M3 (agregado amplio)", bloque: monetario_financiero, fuente: datos_gob, id: "90.1_AMTM3_0_0_31", unidad: "millones de $", graficos: [nivel, interanual], desde: "2026-01-01"}
-  - {nombre: "Tasa de desempleo", bloque: social, fuente: datos_gob, id: "45.2_ECTDT_0_T_33", unidad: "% de la PEA", graficos: [nivel]}
-
-  - {nombre: "M1 (calculado: circulante + cta. cte.)", bloque: monetario_financiero, calculo: suma, componentes: ["90.1_BMCMP_0_0_44", "90.1_DCCT_0_0_32"], unidad: "millones de $", graficos: [nivel, interanual], desde: "2026-01-01"}
-  - {nombre: "Tasa BADLAR (mayorista)", bloque: monetario_financiero, fuente: datos_gob, id: "89.2_TS_INTELAR_0_D_20", unidad: "% TNA", graficos: [nivel], desde: "2026-01-01"}
-  - {nombre: "Tasa de política monetaria", bloque: monetario_financiero, fuente: datos_gob, id: "89.2_TS_INTE_PM_0_D_16", unidad: "% TNA", graficos: [nivel], desde: "2026-01-01"}
-  - {nombre: "Salario real (INDEC deflactado por IPC)", bloque: social, calculo: real, nominal_id: "149.1_TL_INDIIOS_OCTU_0_21", deflactor_id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice base 100 al inicio", graficos: [nivel, interanual]}
-
-  # =========================================================================
-  # EMAE POR SECTOR  ->  alimentan el SEMÁFORO (no generan gráfico de línea)
-  # IDs verificados desde la ficha oficial del dataset (datos.gob.ar sspm_11.3)
-  # =========================================================================
-  - {nombre: "EMAE · Agricultura, ganadería y silvicultura", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_ISOM_2004_M_39", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Pesca", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_VIPAA_2004_M_5", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Explotación de minas y canteras", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_ISD_2004_M_26", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Industria manufacturera", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_VMASD_2004_M_23", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Electricidad, gas y agua", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_ITC_2004_M_21", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Construcción", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_VMATC_2004_M_12", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Comercio mayorista y minorista", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_AGCS_2004_M_41", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Hoteles y restaurantes", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_P_2004_M_20", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Transporte y comunicaciones", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_EMC_2004_M_25", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Intermediación financiera", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_IM_2004_M_25", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Inmobiliarias y empresariales", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_SEGA_2004_M_48", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Administración pública y defensa", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_C_2004_M_60", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Enseñanza", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_CMMR_2004_M_10", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Servicios sociales y de salud", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_HR_2004_M_24", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Otros servicios comunitarios", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_TAC_2004_M_60", unidad: "índice 2004=100", semaforo: true, graficos: []}
-  - {nombre: "EMAE · Impuestos netos de subsidios", bloque: actividad_sectorial, fuente: datos_gob, id: "11.3_IF_2004_M_25", unidad: "índice 2004=100", semaforo: true, graficos: []}
+  # ---------------- SECTOR EXTERNO (INDEC · ICA, mensual) ----------------
+  - {nombre: "Exportaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IET_0_M_16", unidad: "millones de USD", graficos: [nivel]}
+  - {nombre: "Importaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IIT_0_M_25", unidad: "millones de USD", graficos: [nivel]}
+  - {nombre: "Saldo comercial", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_ISC_0_M_19", unidad: "millones de USD", graficos: [nivel]}
+  # -- exportaciones por gran rubro (tabla) --
+  - {nombre: "Productos primarios", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IEPP_0_M_35", unidad: "millones de USD"}
+  - {nombre: "Manufacturas de origen agropecuario (MOA)", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IEMOA_0_M_48", unidad: "millones de USD"}
+  - {nombre: "Manufacturas de origen industrial (MOI)", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IEMOI_0_M_46", unidad: "millones de USD"}
+  - {nombre: "Combustibles y energía", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IECE_0_M_35", unidad: "millones de USD"}
+  # -- importaciones por uso económico (tabla) --
+  - {nombre: "Bienes de capital", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIBCA_0_M_32", unidad: "millones de USD"}
+  - {nombre: "Bienes intermedios", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIBI_0_M_36", unidad: "millones de USD"}
+  - {nombre: "Combustibles y lubricantes", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IICL_0_M_42", unidad: "millones de USD"}
+  - {nombre: "Piezas y accesorios para bienes de capital", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIPABC_0_M_50", unidad: "millones de USD"}
+  - {nombre: "Bienes de consumo", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIBCO_0_M_32", unidad: "millones de USD"}
+  - {nombre: "Vehículos automotores de pasajeros", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIVAP_0_M_49", unidad: "millones de USD"}
