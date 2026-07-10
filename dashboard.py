@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
 
+DESDE_GRAFICO = "2024-01-01"   # los gráficos "serie completa" arrancan acá (editable)
 OUT = Path(__file__).resolve().parent / "docs"
 IMG = OUT / "img"
 
@@ -80,7 +81,10 @@ def _grafico_doble(serie, nombre, unidad, color, path):
     """Un PNG con dos paneles: serie completa (izq) y ultimo anio (der)."""
     _estilo()
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.2, 3.0), dpi=130)
-    _panel(a1, serie, color, "Serie completa")
+    desde = serie[serie["fecha"] >= pd.to_datetime(DESDE_GRAFICO)]
+    if len(desde) < 2:
+        desde = serie
+    _panel(a1, desde, color, "Desde 2024")
     corte = serie["fecha"].max() - pd.Timedelta(days=380)
     ult_anio = serie[serie["fecha"] >= corte]
     if len(ult_anio) >= 2:
@@ -105,6 +109,44 @@ def _grafico_simple(serie, titulo, unidad, color, path):
     plt.close(fig)
 
 
+def _grafico_reservas(serie, nombre, unidad, color, path):
+    """Combo: barras = variación mensual (compra/venta) + línea = stock (acumulación)."""
+    _estilo()
+    s = serie.sort_values("fecha").copy()
+    s = s[s["fecha"] >= pd.to_datetime(DESDE_GRAFICO)]
+    if len(s) < 2:
+        s = serie.sort_values("fecha").copy()
+    sm = s.set_index("fecha")["valor"].resample("MS").last()
+    flujo = sm.diff()
+
+    fig, ax = plt.subplots(figsize=(9.2, 3.4), dpi=130)
+    colores = ["#256D5B" if (x or 0) >= 0 else "#B4341F" for x in flujo]
+    ax.bar(flujo.index, flujo.values, width=22, color=colores, alpha=0.5)
+    ax.axhline(0, color=GRIS, linewidth=0.6)
+    ax.set_ylabel("Variación mensual (compra/venta)", fontsize=8, color=GRIS)
+
+    ax2 = ax.twinx()
+    ax2.plot(sm.index, sm.values, color=color, linewidth=1.9)
+    ax2.set_ylabel("Stock (acumulación)", fontsize=8, color=color)
+    ax2.grid(False)
+    ult = sm.dropna()
+    if len(ult):
+        ax2.annotate(_fmt_num(ult.iloc[-1]), (ult.index[-1], ult.iloc[-1]),
+                     textcoords="offset points", xytext=(5, 5),
+                     fontsize=9, fontweight="bold", color=color)
+    ax.set_title(f"{nombre} · {unidad}", fontsize=11, fontweight="bold", loc="left", pad=8)
+    # leyenda manual
+    from matplotlib.patches import Patch
+    from matplotlib.lines import Line2D
+    ax.legend(handles=[Patch(color="#256D5B", alpha=0.5, label="Compra/acumulación mensual"),
+                       Patch(color="#B4341F", alpha=0.5, label="Venta/pérdida mensual"),
+                       Line2D([0], [0], color=color, lw=2, label="Stock de reservas")],
+              fontsize=7, loc="upper left", framealpha=0.9)
+    fig.tight_layout()
+    fig.savefig(path, bbox_inches="tight", facecolor=PAPEL)
+    plt.close(fig)
+
+
 def _interanual(serie: pd.DataFrame) -> pd.DataFrame:
     s = serie.sort_values("fecha").copy()
     prev = s.rename(columns={"valor": "valor_prev"})[["fecha", "valor_prev"]].copy()
@@ -114,6 +156,26 @@ def _interanual(serie: pd.DataFrame) -> pd.DataFrame:
     m = m.dropna(subset=["valor_prev"]); m = m[m["valor_prev"] != 0]
     m["valor"] = (m["valor"] / m["valor_prev"] - 1) * 100
     return m[["fecha", "valor"]].dropna().reset_index(drop=True)
+
+
+def _metricas_sector(serie: pd.DataFrame):
+    """Devuelve (interanual, mensual, acumulado_del_anio) en % para una serie mensual."""
+    s = serie.sort_values("fecha").reset_index(drop=True)
+    # interanual
+    ia = _interanual(s)
+    v_ia = ia["valor"].iloc[-1] if not ia.empty else None
+    # mensual (vs mes anterior) — sobre serie original, leer con cuidado (estacionalidad)
+    v_men = None
+    if len(s) >= 2 and s["valor"].iloc[-2] != 0:
+        v_men = (s["valor"].iloc[-1] / s["valor"].iloc[-2] - 1) * 100
+    # acumulado del año: promedio ene..mes actual vs mismos meses del año pasado
+    v_acum = None
+    ult = s["fecha"].iloc[-1]
+    este = s[(s["fecha"].dt.year == ult.year) & (s["fecha"].dt.month <= ult.month)]
+    prev = s[(s["fecha"].dt.year == ult.year - 1) & (s["fecha"].dt.month <= ult.month)]
+    if len(este) and len(prev) and prev["valor"].mean() != 0:
+        v_acum = (este["valor"].mean() / prev["valor"].mean() - 1) * 100
+    return v_ia, v_men, v_acum
 
 
 def _variacion(serie):
@@ -147,16 +209,19 @@ def generar(historico: pd.DataFrame, config_indicadores: list[dict]):
 
         # --- sectores del EMAE -> van a la tabla semaforo, no a graficos ---
         if ind.get("semaforo"):
-            ia = _interanual(serie)
-            yoy = ia["valor"].iloc[-1] if not ia.empty else None
+            ia, men, acum = _metricas_sector(serie)
             fecha = serie["fecha"].iloc[-1].strftime("%m/%Y")
             semaforo.append(dict(nombre=nombre.replace("EMAE · ", ""),
-                                 yoy=yoy, fecha=fecha))
+                                 ia=ia, men=men, acum=acum, fecha=fecha))
             continue
 
         graficos = ind.get("graficos", ["nivel"])
         imgs = []
-        if "nivel" in graficos:
+        if ind.get("vista") == "reservas_combo":
+            p = IMG / f"{_slug(nombre)}.png"
+            _grafico_reservas(serie, nombre, unidad, color, p)
+            imgs.append(p.name)
+        elif "nivel" in graficos:
             p = IMG / f"{_slug(nombre)}.png"
             _grafico_doble(serie, nombre, unidad, color, p)
             imgs.append(p.name)
@@ -204,20 +269,27 @@ def _escribir_html(tarjetas, secciones, semaforo):
     # --- semaforo sectorial ---
     semaforo_html = ""
     if semaforo:
-        orden = sorted(semaforo, key=lambda x: (x["yoy"] is None, -(x["yoy"] or -999)))
-        celdas = ""
+        orden = sorted(semaforo, key=lambda x: (x["ia"] is None, -(x["ia"] or -999)))
+
+        def celda(v):
+            bg, fg = _color_semaforo(v)
+            txt = f"{v:+.1f}%" if v is not None else "s/d"
+            return f'<td style="background:{bg};color:{fg}">{txt}</td>'
+
+        filas = ""
         for s in orden:
-            bg, fg = _color_semaforo(s["yoy"])
-            val = f'{s["yoy"]:+.1f}%' if s["yoy"] is not None else "s/d"
-            celdas += f"""<div class="sem" style="background:{bg};color:{fg}">
-              <div class="sem-n">{s['nombre']}</div>
-              <div class="sem-v">{val}</div></div>"""
+            filas += (f'<tr><td class="sec">{s["nombre"]}</td>'
+                      f'{celda(s["ia"])}{celda(s["men"])}{celda(s["acum"])}</tr>')
         fecha_ref = orden[0]["fecha"] if orden else ""
         semaforo_html = f"""
         <section class="bloque" id="semaforo">
-          <h2><span class="dot" style="background:{ACENTO['real']}"></span>EMAE por sector — variación interanual <span class="ref">({fecha_ref})</span></h2>
-          <p class="nota">Verde: crece más de 1% i.a. · Amarillo: entre -1% y +1% · Rojo: cae más de 1% i.a. Ordenado de mayor a menor.</p>
-          <div class="sem-grid">{celdas}</div>
+          <h2><span class="dot" style="background:{ACENTO['real']}"></span>EMAE por sector <span class="ref">({fecha_ref})</span></h2>
+          <p class="nota">Verde: sube más de 1% · Amarillo: entre -1% y +1% · Rojo: baja más de 1%. Ordenado por variación interanual.
+          <br>Nota: la variación <b>mensual</b> es sobre la serie original, así que arrastra estacionalidad; leé sobre todo la interanual y el acumulado.</p>
+          <table class="sem-tabla">
+            <thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>
+            <tbody>{filas}</tbody>
+          </table>
         </section>"""
 
     # --- secciones por bloque ---
@@ -266,10 +338,14 @@ def _escribir_html(tarjetas, secciones, semaforo):
   .grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:16px; }}
   figure {{ margin:0; border:1px solid #ECE8DC; border-radius:8px; overflow:hidden; background:#fff; }}
   figure img {{ width:100%; display:block; }}
-  .sem-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; }}
-  .sem {{ border-radius:6px; padding:11px 13px; }}
-  .sem-n {{ font-size:12px; line-height:1.25; min-height:44px; }}
-  .sem-v {{ font-family:ui-monospace,monospace; font-size:20px; font-weight:700; margin-top:4px; }}
+  .sem-tabla {{ width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; }}
+  .sem-tabla th {{ text-align:right; color:var(--gris); font-weight:600; font-size:11px;
+    text-transform:uppercase; letter-spacing:.03em; padding:4px 10px; }}
+  .sem-tabla th:first-child {{ text-align:left; }}
+  .sem-tabla td {{ padding:8px 10px; text-align:right; border-radius:5px;
+    font-family:ui-monospace,monospace; font-weight:600; font-variant-numeric:tabular-nums; }}
+  .sem-tabla td.sec {{ text-align:left; background:#fff; font-family:system-ui,sans-serif;
+    font-weight:400; border:1px solid #ECE8DC; }}
   footer {{ color:var(--gris); font-size:12px; border-top:1px solid #E4E0D4; padding-top:14px; margin-top:20px; }}
   footer code {{ background:#F0EDE3; padding:1px 5px; border-radius:3px; }}
 </style></head>
