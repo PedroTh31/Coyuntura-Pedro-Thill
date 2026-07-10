@@ -1,14 +1,14 @@
 """
 dashboard.py
 ------------
-Genera en docs/:
-  - docs/img/*.png   : por cada indicador, un panel con "serie completa" + "ultimo anio"
-  - docs/index.html  : tablero reorganizado con:
-        * fila de titulares (valor ultimo + variacion)
-        * SEMAFORO sectorial del EMAE (tabla verde/amarillo/rojo por variacion i.a.)
-        * secciones por bloque con los graficos
+Genera docs/index.html + docs/img/*.png
 
-Sin dependencias de red: solo lee el CSV historico ya guardado.
+Criterios de diseño:
+  - UN gráfico por indicador (no paneles partidos), todos del MISMO tamaño.
+  - Cada gráfico anota máximo, mínimo y último valor.
+  - Orden fijo de secciones: Precios · Monetario y financiero · Actividad real · Social.
+  - "Actividad real" agrupa el EMAE general + el SEMÁFORO por sector.
+  - Ventana temporal por defecto desde 2024; cada indicador puede pedir otra con 'desde'.
 """
 from __future__ import annotations
 from pathlib import Path
@@ -19,26 +19,20 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
 
-DESDE_GRAFICO = "2024-01-01"   # los gráficos "serie completa" arrancan acá (editable)
+DESDE_GENERAL = "2024-01-01"          # arranque por defecto de los gráficos
 OUT = Path(__file__).resolve().parent / "docs"
 IMG = OUT / "img"
 
 ACENTO = {
-    "precios":               "#B4341F",
-    "monetario_financiero":  "#1D4E89",
-    "real":                  "#256D5B",
-    "actividad_sectorial":   "#256D5B",
-    "fiscal":                "#7A5195",
-    "social":                "#B26B00",
+    "precios": "#B4341F", "monetario_financiero": "#1D4E89",
+    "real": "#256D5B", "actividad_sectorial": "#256D5B",
+    "fiscal": "#7A5195", "social": "#B26B00",
 }
 TINTA = "#1A1A1A"; PAPEL = "#FBFAF7"; GRIS = "#9A968C"
-
+ORDEN_BLOQUES = ["precios", "monetario_financiero", "real", "social", "fiscal"]
 TITULO_BLOQUE = {
-    "precios": "Precios",
-    "monetario_financiero": "Monetario y financiero",
-    "real": "Actividad real",
-    "fiscal": "Fiscal",
-    "social": "Social y empleo",
+    "precios": "Precios", "monetario_financiero": "Monetario y financiero",
+    "real": "Actividad real", "social": "Social y empleo", "fiscal": "Fiscal",
 }
 
 
@@ -50,7 +44,7 @@ def _estilo():
         "axes.spines.top": False, "axes.spines.right": False,
         "text.color": TINTA, "axes.labelcolor": TINTA,
         "xtick.color": GRIS, "ytick.color": GRIS,
-        "font.family": "DejaVu Sans", "font.size": 9,
+        "font.family": "DejaVu Sans", "font.size": 10,
     })
 
 
@@ -63,85 +57,46 @@ def _fmt_num(v) -> str:
     return s.replace(",", "@").replace(".", ",").replace("@", ".")
 
 
-def _panel(ax, serie, color, titulo):
-    ax.plot(serie["fecha"], serie["valor"], color=color, linewidth=1.6)
-    ax.fill_between(serie["fecha"], serie["valor"], serie["valor"].min(),
-                    color=color, alpha=0.06)
-    ult = serie.iloc[-1]
-    ax.scatter([ult["fecha"]], [ult["valor"]], color=color, s=18, zorder=5)
-    ax.annotate(_fmt_num(ult["valor"]), (ult["fecha"], ult["valor"]),
-                textcoords="offset points", xytext=(5, 5),
-                fontsize=8, fontweight="bold", color=color)
-    ax.set_title(titulo, fontsize=9, color=GRIS, loc="left", pad=6)
+def _slug(s: str) -> str:
+    import re
+    s = s.lower()
+    for a, b in [("á","a"),("é","e"),("í","i"),("ó","o"),("ú","u"),("ñ","n")]:
+        s = s.replace(a, b)
+    return re.sub(r"[^a-z0-9]+", "_", s).strip("_")
+
+
+def _grafico(serie, nombre, unidad, color, desde, path):
+    """Un solo gráfico, tamaño uniforme, con etiquetas de máx / mín / último."""
+    _estilo()
+    s = serie[serie["fecha"] >= pd.to_datetime(desde)].sort_values("fecha")
+    if len(s) < 2:
+        s = serie.sort_values("fecha")
+
+    fig, ax = plt.subplots(figsize=(7.4, 3.6), dpi=130)
+    ax.plot(s["fecha"], s["valor"], color=color, linewidth=1.9)
+    ax.fill_between(s["fecha"], s["valor"], s["valor"].min(), color=color, alpha=0.06)
+
+    imax = s["valor"].idxmax(); imin = s["valor"].idxmin()
+    fmax, vmax = s.loc[imax, "fecha"], s.loc[imax, "valor"]
+    fmin, vmin = s.loc[imin, "fecha"], s.loc[imin, "valor"]
+    ful, vul = s["fecha"].iloc[-1], s["valor"].iloc[-1]
+
+    # máximo y mínimo (gris, discretos)
+    for f, v, etq, dy in [(fmax, vmax, f"máx {_fmt_num(vmax)}", 10),
+                          (fmin, vmin, f"mín {_fmt_num(vmin)}", -16)]:
+        ax.scatter([f], [v], s=16, facecolor="white", edgecolor=GRIS, zorder=5)
+        ax.annotate(etq, (f, v), textcoords="offset points", xytext=(0, dy),
+                    ha="center", fontsize=8, color="#6B6B6B")
+    # último (color, destacado)
+    ax.scatter([ful], [vul], s=26, color=color, zorder=6)
+    ax.annotate(_fmt_num(vul), (ful, vul), textcoords="offset points", xytext=(7, 6),
+                fontsize=9.5, fontweight="bold", color=color)
+
+    ax.set_title(nombre, fontsize=12, fontweight="bold", loc="left", pad=8)
+    ax.set_ylabel(unidad, fontsize=8, color=GRIS)
+    ax.margins(x=0.02)
     ax.xaxis.set_major_locator(mdates.AutoDateLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%y"))
-
-
-def _grafico_doble(serie, nombre, unidad, color, path):
-    """Un PNG con dos paneles: serie completa (izq) y ultimo anio (der)."""
-    _estilo()
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.2, 3.0), dpi=130)
-    desde = serie[serie["fecha"] >= pd.to_datetime(DESDE_GRAFICO)]
-    if len(desde) < 2:
-        desde = serie
-    _panel(a1, desde, color, "Desde 2024")
-    corte = serie["fecha"].max() - pd.Timedelta(days=380)
-    ult_anio = serie[serie["fecha"] >= corte]
-    if len(ult_anio) >= 2:
-        _panel(a2, ult_anio, color, "Ultimo anio")
-    else:
-        a2.axis("off")
-    fig.suptitle(f"{nombre}   ·   {unidad}", fontsize=11, fontweight="bold",
-                 x=0.01, ha="left")
-    fig.tight_layout(rect=[0, 0, 1, 0.94])
-    fig.savefig(path, bbox_inches="tight", facecolor=PAPEL)
-    plt.close(fig)
-
-
-def _grafico_simple(serie, titulo, unidad, color, path):
-    _estilo()
-    fig, ax = plt.subplots(figsize=(6.2, 3.0), dpi=130)
-    _panel(ax, serie, color, "")
-    ax.set_title(titulo, fontsize=11, fontweight="bold", loc="left", pad=8)
-    ax.set_ylabel(unidad, fontsize=8, color=GRIS)
-    fig.tight_layout()
-    fig.savefig(path, bbox_inches="tight", facecolor=PAPEL)
-    plt.close(fig)
-
-
-def _grafico_reservas(serie, nombre, unidad, color, path):
-    """Combo: barras = variación mensual (compra/venta) + línea = stock (acumulación)."""
-    _estilo()
-    s = serie.sort_values("fecha").copy()
-    s = s[s["fecha"] >= pd.to_datetime(DESDE_GRAFICO)]
-    if len(s) < 2:
-        s = serie.sort_values("fecha").copy()
-    sm = s.set_index("fecha")["valor"].resample("MS").last()
-    flujo = sm.diff()
-
-    fig, ax = plt.subplots(figsize=(9.2, 3.4), dpi=130)
-    colores = ["#256D5B" if (x or 0) >= 0 else "#B4341F" for x in flujo]
-    ax.bar(flujo.index, flujo.values, width=22, color=colores, alpha=0.5)
-    ax.axhline(0, color=GRIS, linewidth=0.6)
-    ax.set_ylabel("Variación mensual (compra/venta)", fontsize=8, color=GRIS)
-
-    ax2 = ax.twinx()
-    ax2.plot(sm.index, sm.values, color=color, linewidth=1.9)
-    ax2.set_ylabel("Stock (acumulación)", fontsize=8, color=color)
-    ax2.grid(False)
-    ult = sm.dropna()
-    if len(ult):
-        ax2.annotate(_fmt_num(ult.iloc[-1]), (ult.index[-1], ult.iloc[-1]),
-                     textcoords="offset points", xytext=(5, 5),
-                     fontsize=9, fontweight="bold", color=color)
-    ax.set_title(f"{nombre} · {unidad}", fontsize=11, fontweight="bold", loc="left", pad=8)
-    # leyenda manual
-    from matplotlib.patches import Patch
-    from matplotlib.lines import Line2D
-    ax.legend(handles=[Patch(color="#256D5B", alpha=0.5, label="Compra/acumulación mensual"),
-                       Patch(color="#B4341F", alpha=0.5, label="Venta/pérdida mensual"),
-                       Line2D([0], [0], color=color, lw=2, label="Stock de reservas")],
-              fontsize=7, loc="upper left", framealpha=0.9)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight", facecolor=PAPEL)
     plt.close(fig)
@@ -159,16 +114,12 @@ def _interanual(serie: pd.DataFrame) -> pd.DataFrame:
 
 
 def _metricas_sector(serie: pd.DataFrame):
-    """Devuelve (interanual, mensual, acumulado_del_anio) en % para una serie mensual."""
     s = serie.sort_values("fecha").reset_index(drop=True)
-    # interanual
     ia = _interanual(s)
     v_ia = ia["valor"].iloc[-1] if not ia.empty else None
-    # mensual (vs mes anterior) — sobre serie original, leer con cuidado (estacionalidad)
     v_men = None
     if len(s) >= 2 and s["valor"].iloc[-2] != 0:
         v_men = (s["valor"].iloc[-1] / s["valor"].iloc[-2] - 1) * 100
-    # acumulado del año: promedio ene..mes actual vs mismos meses del año pasado
     v_acum = None
     ult = s["fecha"].iloc[-1]
     este = s[(s["fecha"].dt.year == ult.year) & (s["fecha"].dt.month <= ult.month)]
@@ -186,18 +137,10 @@ def _variacion(serie):
     return ult, pct
 
 
-def _slug(s: str) -> str:
-    import re
-    s = s.lower()
-    for a, b in [("á","a"),("é","e"),("í","i"),("ó","o"),("ú","u"),("ñ","n")]:
-        s = s.replace(a, b)
-    return re.sub(r"[^a-z0-9]+", "_", s).strip("_")
-
-
-# ---------------------------------------------------------------------------
 def generar(historico: pd.DataFrame, config_indicadores: list[dict]):
     IMG.mkdir(parents=True, exist_ok=True)
     tarjetas, secciones, semaforo = [], {}, []
+    fecha_sem = ""
 
     for ind in config_indicadores:
         nombre = ind["nombre"]; bloque = ind["bloque"]
@@ -207,49 +150,58 @@ def generar(historico: pd.DataFrame, config_indicadores: list[dict]):
         if serie.empty:
             continue
 
-        # --- sectores del EMAE -> van a la tabla semaforo, no a graficos ---
         if ind.get("semaforo"):
             ia, men, acum = _metricas_sector(serie)
-            fecha = serie["fecha"].iloc[-1].strftime("%m/%Y")
+            fecha_sem = serie["fecha"].iloc[-1].strftime("%m/%Y")
             semaforo.append(dict(nombre=nombre.replace("EMAE · ", ""),
-                                 ia=ia, men=men, acum=acum, fecha=fecha))
+                                 ia=ia, men=men, acum=acum))
             continue
 
-        graficos = ind.get("graficos", ["nivel"])
-        imgs = []
-        if ind.get("vista") == "reservas_combo":
-            p = IMG / f"{_slug(nombre)}.png"
-            _grafico_reservas(serie, nombre, unidad, color, p)
-            imgs.append(p.name)
-        elif "nivel" in graficos:
-            p = IMG / f"{_slug(nombre)}.png"
-            _grafico_doble(serie, nombre, unidad, color, p)
-            imgs.append(p.name)
-        if "interanual" in graficos:
-            ia = _interanual(serie)
-            if not ia.empty:
-                p = IMG / f"{_slug(nombre)}_ia.png"
-                _grafico_simple(ia, f"{nombre} — var. % interanual", "% i.a.", color, p)
-                imgs.append(p.name)
+        desde = ind.get("desde", DESDE_GENERAL)
+        p = IMG / f"{_slug(nombre)}.png"
+        _grafico(serie, nombre, unidad, color, desde, p)
 
         ult, pct = _variacion(serie)
         tarjetas.append(dict(nombre=nombre, color=color, valor=_fmt_num(ult),
                              unidad=unidad, pct=pct,
                              fecha=serie["fecha"].iloc[-1].strftime("%d/%m/%Y")))
-        secciones.setdefault(bloque, []).append(dict(nombre=nombre, imgs=imgs))
+        secciones.setdefault(bloque, []).append(dict(nombre=nombre, img=p.name))
 
-    _escribir_html(tarjetas, secciones, semaforo)
+    _escribir_html(tarjetas, secciones, semaforo, fecha_sem)
 
 
-def _color_semaforo(yoy):
-    if yoy is None or pd.isna(yoy):
+def _color_semaforo(v):
+    if v is None or pd.isna(v):
         return "#E7E3D8", TINTA
-    if yoy > 1:   return "#DCEEDD", "#1E5C2E"    # verde
-    if yoy < -1:  return "#F6DCD8", "#8A2A1C"    # rojo
-    return "#FBF0D5", "#7A5A10"                  # amarillo
+    if v > 1:   return "#DCEEDD", "#1E5C2E"
+    if v < -1:  return "#F6DCD8", "#8A2A1C"
+    return "#FBF0D5", "#7A5A10"
 
 
-def _escribir_html(tarjetas, secciones, semaforo):
+def _tabla_semaforo(semaforo, fecha_sem):
+    if not semaforo:
+        return ""
+    orden = sorted(semaforo, key=lambda x: (x["ia"] is None, -(x["ia"] or -999)))
+
+    def celda(v):
+        bg, fg = _color_semaforo(v)
+        t = f"{v:+.1f}%" if v is not None else "s/d"
+        return f'<td style="background:{bg};color:{fg}">{t}</td>'
+
+    filas = "".join(
+        f'<tr><td class="sec">{s["nombre"]}</td>{celda(s["ia"])}{celda(s["men"])}{celda(s["acum"])}</tr>'
+        for s in orden)
+    return f"""
+      <h3 class="sub">EMAE por sector <span class="ref">({fecha_sem})</span></h3>
+      <p class="nota">Variación interanual (i.a.), mensual (serie original, con estacionalidad) y acumulada del año.
+      Verde: sube +1% o más · Amarillo: entre -1% y +1% · Rojo: baja -1% o más.</p>
+      <table class="sem-tabla">
+        <thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>
+        <tbody>{filas}</tbody>
+      </table>"""
+
+
+def _escribir_html(tarjetas, secciones, semaforo, fecha_sem):
     ahora = datetime.now().strftime("%d/%m/%Y %H:%M")
 
     def card(t):
@@ -259,52 +211,28 @@ def _escribir_html(tarjetas, secciones, semaforo):
         else: fl, cls = "•", "flat"
         chg = f'{fl} {abs(t["pct"]):.1f}%' if t["pct"] is not None else "—"
         return f"""<div class="card" style="--acc:{t['color']}">
-          <div class="cn">{t['nombre']}</div>
-          <div class="cv">{t['valor']}</div>
-          <div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{t['unidad']} · {t['fecha']}</span></div>
+          <div class="cn">{t['nombre']}</div><div class="cv">{t['valor']}</div>
+          <div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{t['unidad']}</span></div>
         </div>"""
 
     tablero = "\n".join(card(t) for t in tarjetas)
 
-    # --- semaforo sectorial ---
-    semaforo_html = ""
-    if semaforo:
-        orden = sorted(semaforo, key=lambda x: (x["ia"] is None, -(x["ia"] or -999)))
-
-        def celda(v):
-            bg, fg = _color_semaforo(v)
-            txt = f"{v:+.1f}%" if v is not None else "s/d"
-            return f'<td style="background:{bg};color:{fg}">{txt}</td>'
-
-        filas = ""
-        for s in orden:
-            filas += (f'<tr><td class="sec">{s["nombre"]}</td>'
-                      f'{celda(s["ia"])}{celda(s["men"])}{celda(s["acum"])}</tr>')
-        fecha_ref = orden[0]["fecha"] if orden else ""
-        semaforo_html = f"""
-        <section class="bloque" id="semaforo">
-          <h2><span class="dot" style="background:{ACENTO['real']}"></span>EMAE por sector <span class="ref">({fecha_ref})</span></h2>
-          <p class="nota">Verde: sube más de 1% · Amarillo: entre -1% y +1% · Rojo: baja más de 1%. Ordenado por variación interanual.
-          <br>Nota: la variación <b>mensual</b> es sobre la serie original, así que arrastra estacionalidad; leé sobre todo la interanual y el acumulado.</p>
-          <table class="sem-tabla">
-            <thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>
-            <tbody>{filas}</tbody>
-          </table>
-        </section>"""
-
-    # --- secciones por bloque ---
-    nav = '<a href="#semaforo">Semáforo sectorial</a>' if semaforo else ""
-    bloques_html = ""
-    for bloque, items in secciones.items():
+    nav, bloques_html = "", ""
+    for bloque in ORDEN_BLOQUES:
+        items = secciones.get(bloque)
+        tiene_sem = (bloque == "real" and semaforo)
+        if not items and not tiene_sem:
+            continue
         nav += f'<a href="#{bloque}">{TITULO_BLOQUE.get(bloque, bloque)}</a>'
-        graf = ""
-        for it in items:
-            for img in it["imgs"]:
-                graf += f'<figure><img src="img/{img}" alt="{it["nombre"]}" loading="lazy"></figure>\n'
+        figs = "".join(
+            f'<figure><img src="img/{it["img"]}" alt="{it["nombre"]}" loading="lazy"></figure>\n'
+            for it in (items or []))
+        extra = _tabla_semaforo(semaforo, fecha_sem) if tiene_sem else ""
         bloques_html += f"""
         <section class="bloque" id="{bloque}">
           <h2><span class="dot" style="background:{ACENTO.get(bloque,'#1D4E89')}"></span>{TITULO_BLOQUE.get(bloque, bloque)}</h2>
-          <div class="grid">{graf}</div>
+          <div class="grid">{figs}</div>
+          {extra}
         </section>"""
 
     html = f"""<!doctype html><html lang="es"><head>
@@ -315,37 +243,35 @@ def _escribir_html(tarjetas, secciones, semaforo):
   * {{ box-sizing:border-box; }}
   body {{ margin:0; background:var(--papel); color:var(--tinta);
     font-family: system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.4; }}
-  .wrap {{ max-width:1120px; margin:0 auto; padding:32px 20px 80px; }}
+  .wrap {{ max-width:1180px; margin:0 auto; padding:32px 22px 80px; }}
   header {{ border-bottom:2px solid var(--tinta); padding-bottom:14px; margin-bottom:18px; }}
-  header h1 {{ font-size:26px; margin:0; letter-spacing:-.02em; }}
+  header h1 {{ font-size:27px; margin:0; letter-spacing:-.02em; }}
   header .sub {{ color:var(--gris); font-size:13px; margin-top:4px; font-variant-numeric:tabular-nums; }}
-  nav {{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:28px; font-size:13px; }}
+  nav {{ display:flex; flex-wrap:wrap; gap:16px; margin-bottom:30px; font-size:13px; }}
   nav a {{ color:#1D4E89; text-decoration:none; border-bottom:1px solid transparent; }}
   nav a:hover {{ border-bottom-color:#1D4E89; }}
-  .tablero {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(185px,1fr)); gap:12px; margin-bottom:40px; }}
+  .tablero {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; margin-bottom:44px; }}
   .card {{ border:1px solid #E4E0D4; border-left:3px solid var(--acc); border-radius:6px; padding:11px 13px; background:#fff; }}
-  .cn {{ font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--gris); min-height:26px; }}
-  .cv {{ font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:23px; font-weight:600; margin:2px 0; }}
+  .cn {{ font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--gris); min-height:30px; }}
+  .cv {{ font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:22px; font-weight:600; margin:2px 0; }}
   .cm {{ display:flex; justify-content:space-between; align-items:baseline; font-size:11px; }}
   .chg {{ font-family:ui-monospace,monospace; font-weight:600; }}
   .chg.up {{ color:#B4341F; }} .chg.down {{ color:#256D5B; }} .chg.flat {{ color:var(--gris); }}
   .uni {{ color:var(--gris); }}
-  .bloque {{ margin-bottom:42px; scroll-margin-top:16px; }}
-  .bloque h2 {{ font-size:17px; display:flex; align-items:center; gap:9px; border-bottom:1px solid #E4E0D4; padding-bottom:8px; }}
+  .bloque {{ margin-bottom:46px; scroll-margin-top:16px; }}
+  .bloque h2 {{ font-size:18px; display:flex; align-items:center; gap:9px; border-bottom:1px solid #E4E0D4; padding-bottom:8px; }}
+  .sub {{ font-size:15px; margin:26px 0 2px; }}
   .ref {{ color:var(--gris); font-weight:400; font-size:13px; }}
-  .nota {{ color:var(--gris); font-size:12px; margin:6px 0 16px; }}
+  .nota {{ color:var(--gris); font-size:12px; margin:6px 0 14px; }}
   .dot {{ width:11px; height:11px; border-radius:2px; display:inline-block; }}
-  .grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:16px; }}
+  .grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(430px,1fr)); gap:18px; }}
   figure {{ margin:0; border:1px solid #ECE8DC; border-radius:8px; overflow:hidden; background:#fff; }}
   figure img {{ width:100%; display:block; }}
   .sem-tabla {{ width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; }}
-  .sem-tabla th {{ text-align:right; color:var(--gris); font-weight:600; font-size:11px;
-    text-transform:uppercase; letter-spacing:.03em; padding:4px 10px; }}
+  .sem-tabla th {{ text-align:right; color:var(--gris); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.03em; padding:4px 10px; }}
   .sem-tabla th:first-child {{ text-align:left; }}
-  .sem-tabla td {{ padding:8px 10px; text-align:right; border-radius:5px;
-    font-family:ui-monospace,monospace; font-weight:600; font-variant-numeric:tabular-nums; }}
-  .sem-tabla td.sec {{ text-align:left; background:#fff; font-family:system-ui,sans-serif;
-    font-weight:400; border:1px solid #ECE8DC; }}
+  .sem-tabla td {{ padding:8px 10px; text-align:right; border-radius:5px; font-family:ui-monospace,monospace; font-weight:600; font-variant-numeric:tabular-nums; }}
+  .sem-tabla td.sec {{ text-align:left; background:#fff; font-family:system-ui,sans-serif; font-weight:400; border:1px solid #ECE8DC; }}
   footer {{ color:var(--gris); font-size:12px; border-top:1px solid #E4E0D4; padding-top:14px; margin-top:20px; }}
   footer code {{ background:#F0EDE3; padding:1px 5px; border-radius:3px; }}
 </style></head>
@@ -354,10 +280,9 @@ def _escribir_html(tarjetas, secciones, semaforo):
   <div class="sub">Actualizado {ahora} · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div></header>
   <nav>{nav}</nav>
   <div class="tablero">{tablero}</div>
-  {semaforo_html}
   {bloques_html}
-  <footer>En las tarjetas, la variación es respecto de la observación anterior de cada serie.
-  Para agregar indicadores, editá <code>indicadores.yaml</code>.</footer>
+  <footer>Cada gráfico marca máximo, mínimo y último valor. Para editar indicadores o su ventana temporal,
+  cambiá <code>indicadores.yaml</code>.</footer>
 </div></body></html>"""
 
     OUT.mkdir(exist_ok=True)
