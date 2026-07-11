@@ -17,6 +17,9 @@ indicadores:
   - {nombre: "Dólar blue", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: blue, unidad: "$/USD (venta)", graficos: [nivel]}
   - {nombre: "Dólar MEP", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: bolsa, unidad: "$/USD (venta)", graficos: [nivel]}
   - {nombre: "Dólar CCL", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: contadoconliqui, unidad: "$/USD (venta)", graficos: [nivel]}
+  # ---------------- BRECHA Y TIPO DE CAMBIO REAL ----------------
+  - {nombre: "Brecha cambiaria (CCL/oficial)", bloque: monetario_financiero, grupo: "Brecha y TCR", calculo: brecha, casa_alta: contadoconliqui, casa_base: oficial, unidad: "%", graficos: [nivel]}
+  - {nombre: "Tipo de cambio real multilateral", bloque: monetario_financiero, grupo: "Brecha y TCR", fuente: datos_gob, id: "116.3_TCRMA_0_M_36", unidad: "índice", graficos: [nivel]}
 
   # ---------------- RIESGO PAÍS ----------------
   - {nombre: "Riesgo país (EMBI)", bloque: monetario_financiero, grupo: "Riesgo país", fuente: argentinadatos, endpoint: "finanzas/indices/riesgo-pais", unidad: "puntos básicos", graficos: [nivel]}

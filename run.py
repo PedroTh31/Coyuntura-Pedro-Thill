@@ -12,7 +12,7 @@ from pathlib import Path
 import yaml
 import pandas as pd
 
-from fetchers import traer, fetch_datos_gob
+from fetchers import traer, fetch_datos_gob, fetch_dolar
 import storage
 import dashboard
 
@@ -47,6 +47,14 @@ def _calcular(ind, start):
             return s.assign(valor=[])[["fecha", "valor"]]
         s["valor"] = s["nom"] / s["ipc"]
         s["valor"] = s["valor"] / s["valor"].iloc[0] * 100   # base 100 al inicio de la serie
+        return s[["fecha", "valor"]]
+    if tipo == "brecha":
+        # brecha = (paralelo / oficial - 1) * 100, sobre cotizaciones diarias
+        alto = fetch_dolar(ind["casa_alta"], start).rename(columns={"valor": "alto"})
+        base = fetch_dolar(ind["casa_base"], start).rename(columns={"valor": "base"})
+        s = alto.merge(base, on="fecha", how="inner").sort_values("fecha")
+        s = s[s["base"] > 0]
+        s["valor"] = (s["alto"] / s["base"] - 1) * 100
         return s[["fecha", "valor"]]
     raise ValueError(f"cálculo desconocido: {tipo}")
 
