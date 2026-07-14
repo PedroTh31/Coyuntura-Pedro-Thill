@@ -56,6 +56,23 @@ def _calcular(ind, start):
         s = s[s["base"] > 0]
         s["valor"] = (s["alto"] / s["base"] - 1) * 100
         return s[["fecha", "valor"]]
+    if tipo == "interanual":
+        # Variación interanual: (valor_t / valor_t-12m - 1) * 100 (o -1año si frecuencia no es mensual)
+        base_id = ind.get("base_id")
+        if not base_id:
+            raise ValueError(f"Cálculo 'interanual' requiere 'base_id' en {ind['nombre']}")
+        s = fetch_datos_gob(base_id, start).sort_values("fecha").copy()
+        s = s[s["valor"] > 0]
+        if len(s) < 2:
+            return s.assign(valor=[])[["fecha", "valor"]]
+        # Crear serie lagged (12 meses antes)
+        s_prev = s.rename(columns={"valor": "valor_prev"})[["fecha", "valor_prev"]].copy()
+        s_prev["fecha"] = s_prev["fecha"] + pd.DateOffset(years=1)
+        m = pd.merge_asof(s, s_prev, on="fecha", direction="nearest", tolerance=pd.Timedelta(days=20))
+        m = m.dropna(subset=["valor_prev"])
+        m = m[m["valor_prev"] > 0]
+        m["valor"] = (m["valor"] / m["valor_prev"] - 1) * 100
+        return m[["fecha", "valor"]].dropna().reset_index(drop=True)
     raise ValueError(f"cálculo desconocido: {tipo}")
 
 

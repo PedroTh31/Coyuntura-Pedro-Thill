@@ -82,10 +82,12 @@ def generar(historico, config_indicadores):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
+    notas_dict = {}  # {numero_nota: {"texto": ..., "indicadores": [...]}}
     idx = 0
     for ind in config_indicadores:
         nombre = ind["nombre"]; bloque = ind["bloque"]; grupo = ind.get("grupo", "Otros")
         unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, "#1D4E89")
+        nota = ind.get("nota")
         serie = historico[historico["indicador"] == nombre].sort_values("fecha").reset_index(drop=True)
         if serie.empty:
             continue
@@ -106,14 +108,24 @@ def generar(historico, config_indicadores):
         if len(s) < 2:
             s = serie
         ult, pct = _variacion(serie)
+        # Registrar nota si existe
+        nota_num = None
+        if nota:
+            nota_key = nota  # usar el texto de la nota como clave para deduplicar
+            if nota_key not in notas_dict:
+                nota_num = len(notas_dict) + 1
+                notas_dict[nota_key] = {"numero": nota_num, "indicadores": [nombre]}
+            else:
+                nota_num = notas_dict[nota_key]["numero"]
+                notas_dict[nota_key]["indicadores"].append(nombre)
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
             unidad=unidad, valor=_fmt_num(ult), pct=pct,
-            maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min())))
+            maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num))
         series_js.append(dict(i=idx, color=color, unidad=unidad,
             x=[d.strftime("%d/%m/%y") for d in s["fecha"]],
             y=[round(float(v), 2) for v in s["valor"]]))
         idx += 1
-    _escribir_html(charts, series_js, semaforo, fecha_sem, tablas)
+    _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict)
 
 
 def _color_semaforo(v):
@@ -158,19 +170,35 @@ def _card_cell(c):
     elif c["pct"] < -0.05: fl, cls = "▼", "down"
     else: fl, cls = "•", "flat"
     chg = f'{fl} {abs(c["pct"]):.1f}%' if c["pct"] is not None else "—"
+    # Renderizar asterisco si hay nota
+    nota_mark = ""
+    if c.get("nota_num"):
+        nota_asterisco = "*" * c["nota_num"]
+        nota_mark = f'<div class="nota-ref">{nota_asterisco}</div>'
     return (f'<div class="cell"><div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div><div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div></div>'
-            f'<div class="cbox"><canvas id="ch{c["i"]}"></canvas></div></div>')
+            f'<div class="cbox"><canvas id="ch{c["i"]}"></canvas></div>{nota_mark}</div>')
 
 
-def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas):
+def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
     ahora = datetime.now().strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
     for titulo, filas in tablas.items():
         if filas:
             grupo_tabla[filas[0]["grupo"]] = (titulo, filas)
+
+    # Construir sección de notas metodológicas
+    notas_html = ""
+    if notas_dict:
+        notas_ordenadas = sorted(notas_dict.items(), key=lambda x: x[1]["numero"])
+        notas_items = []
+        for nota_texto, nota_info in notas_ordenadas:
+            num = nota_info["numero"]
+            asterisco = "*" * num
+            notas_items.append(f'<li><strong>{asterisco}</strong> {nota_texto}</li>')
+        notas_html = '<h3 class="sub">Notas metodológicas y fuentes</h3><ul class="notas-list">' + "".join(notas_items) + '</ul>'
 
     nav, secciones = "", ""
     for bloque in ORDEN_BLOQUES:
@@ -218,6 +246,10 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas):
   .sub { font-size:14px; margin:24px 0 12px; color:#444; }
   .ref { color:var(--gris); font-weight:400; font-size:13px; }
   .nota { color:var(--gris); font-size:12px; margin:6px 0 14px; }
+  .nota-ref { font-size:10px; color:#B4341F; font-weight:600; margin-top:4px; text-align:center; }
+  .notas-list { margin:10px 0 14px 20px; font-size:12px; color:var(--gris); }
+  .notas-list li { margin:6px 0; }
+  .notas-list strong { color:#1A1A1A; }
   .dot { width:11px; height:11px; border-radius:2px; display:inline-block; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,460px)); justify-content:start; gap:18px; margin-bottom:8px; }
   .cell { border:1px solid #ECE8DC; border-radius:10px; overflow:hidden; background:#fff; }
@@ -243,6 +275,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas):
   <div class="sub">Actualizado __AHORA__ · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div></header>
   <nav>__NAV__</nav>
   __SECCIONES__
+  __NOTAS__
   <footer>Pasá el cursor sobre cualquier gráfico para ver el valor. Editá indicadores en indicadores.yaml.</footer>
 </div>
 <script>
@@ -268,6 +301,7 @@ SERIES.forEach(s => {
 
     html = (plantilla.replace("__AHORA__", ahora).replace("__NAV__", nav)
             .replace("__SECCIONES__", secciones)
+            .replace("__NOTAS__", notas_html)
             .replace("__DATA__", json.dumps(series_js, ensure_ascii=False)))
     OUT.mkdir(exist_ok=True)
     (OUT / "index.html").write_text(html, encoding="utf-8")

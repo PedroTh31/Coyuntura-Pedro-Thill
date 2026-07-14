@@ -12,6 +12,7 @@ Fuentes soportadas:
   - datos_gob      -> apis.datos.gob.ar/series (EMAE, IPC, monetarias, fiscal, empleo...)
   - argentinadatos -> api.argentinadatos.com   (inflación, riesgo país)
   - dolar          -> api.argentinadatos.com/v1/cotizaciones/dolares (histórico por casa)
+  - bcra           -> api.bcra.gob.ar/estadisticas (reservas diarias, etc.)
 """
 from __future__ import annotations
 import time
@@ -110,6 +111,97 @@ def fetch_dolar(casa: str, start_date: str | None = None) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
+# 4) BCRA -> reservas internacionales diarias, otros datos diarios
+# ---------------------------------------------------------------------------
+def fetch_bcra(id_variable: int, start_date: str | None = None) -> pd.DataFrame:
+    """
+    Trae datos de la API del BCRA (Estadísticas Monetarias).
+    Usa v4.0 (preferido), con fallbacks a v3.0 y v2.0.
+
+    id_variable: número de variable (ej: 1 para reservas internacionales diarias)
+    Devuelve DataFrame con fecha (diaria) y valor.
+    Maneja SSL con fallback a verify=False si la conexión falla.
+    """
+    # Calcular fechas para parámetros (últimos ~2 años para ser seguros)
+    end_date = pd.Timestamp.today()
+    begin_date = end_date - pd.DateOffset(years=2)
+    desde = begin_date.strftime("%Y-%m-%d")
+    hasta = end_date.strftime("%Y-%m-%d")
+    
+    versiones = ["v4.0", "v3.0", "v2.0"]
+    filas = []
+    
+    for version in versiones:
+        try:
+            url = f"https://api.bcra.gob.ar/estadisticas/{version}/monetarias/{id_variable}"
+            params = {
+                "desde": desde,
+                "hasta": hasta,
+                "limit": 1000
+            }
+            
+            # Intentar con verify=True primero
+            try:
+                r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=True)
+                r.raise_for_status()
+            except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
+                # Fallback a verify=False si hay problemas SSL
+                r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=False)
+                r.raise_for_status()
+            
+            data = r.json()
+            
+            # Parsear estructura de respuesta según versión
+            # v4.0 y v3.0 tienen: {"results": [{"idVariable": 1, "detalle": [{fecha, valor}, ...]}]}
+            # v2.0 y anteriores pueden tener otra estructura
+            
+            if "results" in data and data["results"]:
+                results = data["results"]
+                
+                # Si results es una lista de objetos con "detalle"
+                if isinstance(results, list) and len(results) > 0 and results[0].get("detalle"):
+                    # Estructura v4.0/v3.0
+                    for item in results:
+                        for detalle_item in item.get("detalle", []):
+                            try:
+                                fecha_str = detalle_item.get("fecha")
+                                valor = detalle_item.get("valor")
+                                if fecha_str and valor is not None:
+                                    filas.append({"fecha": fecha_str, "valor": float(valor)})
+                            except (ValueError, KeyError, TypeError):
+                                pass
+                else:
+                    # Estructura alternativa: results es lista directa de {fecha, valor}
+                    for item in results:
+                        try:
+                            fecha_str = item.get("fecha")
+                            valor = item.get("valor")
+                            if fecha_str and valor is not None:
+                                filas.append({"fecha": fecha_str, "valor": float(valor)})
+                        except (ValueError, KeyError, TypeError):
+                            pass
+                
+                if filas:
+                    break  # Si obtenemos datos, salir del loop de versiones
+        
+        except (requests.RequestException, ValueError, KeyError, TypeError) as e:
+            # Intentar siguiente versión
+            continue
+    
+    if not filas:
+        return pd.DataFrame(columns=["fecha", "valor"])
+    
+    df = pd.DataFrame(filas)
+    df["fecha"] = pd.to_datetime(df["fecha"], errors="coerce")
+    df["valor"] = pd.to_numeric(df["valor"], errors="coerce")
+    df = df.dropna().sort_values("fecha")
+    if start_date:
+        df = df[df["fecha"] >= pd.to_datetime(start_date)]
+    return df[["fecha", "valor"]].reset_index(drop=True)
+
+
+
+# ---------------------------------------------------------------------------
 # Dispatcher: elige el fetcher según el config del indicador
 # ---------------------------------------------------------------------------
 def traer(indicador: dict, start_date: str | None = None,
@@ -121,4 +213,6 @@ def traer(indicador: dict, start_date: str | None = None,
         return fetch_argentinadatos(indicador["endpoint"], start_date)
     if fuente == "dolar":
         return fetch_dolar(indicador["casa"], start_date)
+    if fuente == "bcra":
+        return fetch_bcra(indicador["id_variable"], start_date)
     raise ValueError(f"Fuente desconocida: {fuente}")
