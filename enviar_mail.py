@@ -30,15 +30,23 @@ INDICADORES_MAIL = [
     "EMAE (actividad económica)", "Saldo comercial",
 ]
 
-CONSULTAS_NOTICIAS = ["economía argentina", "dólar inflación argentina", "BCRA reservas tasas"]
+Q_ARGENTINA = ["economía argentina", "dólar blue inflación argentina",
+               "BCRA reservas tasas Argentina", "Milei economía medidas"]
+Q_INTERNACIONAL = ["Reserva Federal tasas inflación", "economía China Estados Unidos",
+                   "FMI economía mundial", "precio petróleo soja commodities"]
 
-# feeds de medios que SÍ traen bajada (si alguno cambia su URL, se ignora sin romper)
+# feeds de medios argentinos que SÍ traen bajada (si alguno cambia su URL, se ignora sin romper)
 FEEDS_MEDIOS = [
     "https://www.pagina12.com.ar/rss/secciones/economia/notas",
     "https://www.ambito.com/rss/economia.xml",
     "https://www.cronista.com/files/rss/economia.xml",
     "https://www.iprofesional.com/rss/economia.xml",
 ]
+
+# si el título contiene alguna de estas, se considera internacional (no va al bloque argentino)
+KW_INTERNACIONAL = ["trump", "china", "ee.uu", "eeuu", "estados unidos", "wall street",
+    "reserva federal", " fed ", "europa", "alemania", "japón", "brasil", "lula",
+    "nvidia", "apple", "petróleo brent", "unión europea", "rusia", "israel", "bitcoin"]
 
 
 def _limpiar(texto):
@@ -47,23 +55,26 @@ def _limpiar(texto):
     import html as _html
     if not texto:
         return ""
-    t = re.sub(r"<[^>]+>", " ", texto)          # sacar etiquetas
-    t = _html.unescape(t)                        # decodificar &amp; etc.
+    t = re.sub(r"<[^>]+>", " ", texto)
+    t = _html.unescape(t)
     t = re.sub(r"\s+", " ", t).strip()
     if len(t) > 220:
         t = t[:220].rsplit(" ", 1)[0] + "…"
     return t
 
 
-def obtener_noticias(n=6):
-    try:
-        import feedparser
-    except Exception:
-        return []
+def _es_internacional(titulo):
+    t = " " + titulo.lower() + " "
+    return any(k in t for k in KW_INTERNACIONAL)
+
+
+def _recolectar(feeds, queries):
+    """Junta notas de una lista de feeds + consultas a Google News, con bajada y fecha."""
+    import feedparser
     limite = datetime.now() - timedelta(days=7)
     vistos, items = set(), []
 
-    def procesar(feed, fuente_default=""):
+    def procesar(feed):
         for e in getattr(feed, "entries", []):
             t = getattr(e, "title", "").strip()
             if not t or t in vistos:
@@ -75,34 +86,43 @@ def obtener_noticias(n=6):
             if pub < limite:
                 continue
             bajada = _limpiar(getattr(e, "summary", "") or getattr(e, "description", ""))
-            # en Google News la "bajada" suele ser sólo la fuente: la descartamos
             if bajada.lower().startswith(t.lower()[:25]) or len(bajada) < 40:
                 bajada = ""
-            fuente = fuente_default
+            fuente = ""
             src = getattr(e, "source", None)
             if src is not None:
-                fuente = getattr(src, "title", "") or (src.get("title", "") if isinstance(src, dict) else "") or fuente
+                fuente = getattr(src, "title", "") or (src.get("title", "") if isinstance(src, dict) else "")
             vistos.add(t)
             items.append(dict(titulo=t, link=getattr(e, "link", "#"),
                               fuente=fuente, bajada=bajada, pub=pub))
 
-    # 1) medios (traen bajada real)
-    for url in FEEDS_MEDIOS:
+    for url in feeds:
         try:
             procesar(feedparser.parse(url))
         except Exception:
             continue
-    # 2) Google News como respaldo (garantiza que no quede vacío)
-    for q in CONSULTAS_NOTICIAS:
+    for q in queries:
         url = f"https://news.google.com/rss/search?q={quote(q)}&hl=es-419&gl=AR&ceid=AR:es"
         try:
             procesar(feedparser.parse(url))
         except Exception:
             continue
 
-    # priorizar las que tienen bajada, y ordenar por fecha
     items.sort(key=lambda x: (x["bajada"] == "", -x["pub"].timestamp()))
-    return items[:n]
+    return items
+
+
+def obtener_noticias(n=6):
+    """Devuelve (argentinas, internacionales), n de cada una."""
+    try:
+        import feedparser  # noqa: F401
+    except Exception:
+        return [], []
+    arg = [x for x in _recolectar(FEEDS_MEDIOS, Q_ARGENTINA) if not _es_internacional(x["titulo"])]
+    arg = arg[:n]
+    titulos_arg = {x["titulo"] for x in arg}
+    intl = [x for x in _recolectar([], Q_INTERNACIONAL) if x["titulo"] not in titulos_arg][:n]
+    return arg, intl
 
 
 def _fmt(v):
@@ -130,7 +150,23 @@ def resumen_indicadores(df):
     return filas
 
 
-def armar_html(indicadores, noticias):
+def _render_noticias(lista):
+    if not lista:
+        return '<p style="color:#999">Sin novedades esta semana.</p>'
+    bloques = []
+    for x in lista:
+        bajada = f'<div style="color:#444;font-size:13px;margin:2px 0 3px">{x["bajada"]}</div>' if x.get("bajada") else ""
+        fuente = f'<span style="color:#999;font-size:11px">{x["fuente"]}</span> · ' if x.get("fuente") else ""
+        bloques.append(
+            f'<div style="margin-bottom:14px">'
+            f'<div style="font-weight:600;font-size:14px">{x["titulo"]}</div>'
+            f'{bajada}'
+            f'<div>{fuente}<a href="{x["link"]}" style="color:#1D4E89;text-decoration:none;font-size:13px">Leer nota →</a></div>'
+            f'</div>')
+    return "".join(bloques)
+
+
+def armar_html(indicadores, argentinas, internacionales):
     hoy = datetime.now().strftime("%d/%m/%Y")
     filas_ind = ""
     for f in indicadores:
@@ -147,27 +183,14 @@ def armar_html(indicadores, noticias):
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:monospace;text-align:right"><b>{f["valor"]}</b> <span style="color:#999;font-size:11px">{f["unidad"]}</span></td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right;color:{color};font-family:monospace">{chg}</td></tr>')
 
-    if noticias:
-        bloques = []
-        for x in noticias:
-            bajada = f'<div style="color:#444;font-size:13px;margin:2px 0 3px">{x["bajada"]}</div>' if x.get("bajada") else ""
-            fuente = f'<span style="color:#999;font-size:11px">{x["fuente"]}</span> · ' if x.get("fuente") else ""
-            bloques.append(
-                f'<div style="margin-bottom:14px">'
-                f'<div style="font-weight:600;font-size:14px">{x["titulo"]}</div>'
-                f'{bajada}'
-                f'<div>{fuente}<a href="{x["link"]}" style="color:#1D4E89;text-decoration:none;font-size:13px">Leer nota →</a></div>'
-                f'</div>')
-        bloque_news = "".join(bloques)
-    else:
-        bloque_news = '<p style="color:#999">No se pudieron recuperar titulares esta semana.</p>'
-
     return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:#1A1A1A">
       <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · semana del {hoy}</h2>
       <h3 style="margin-top:22px">Indicadores clave <span style="color:#999;font-weight:400;font-size:13px">(variación vs. 7 días atrás)</span></h3>
       <table style="width:100%;border-collapse:collapse;font-size:14px">{filas_ind}</table>
-      <h3 style="margin-top:26px">Noticias de la semana</h3>
-      {bloque_news}
+      <h3 style="margin-top:26px">🇦🇷 Noticias argentinas</h3>
+      {_render_noticias(argentinas)}
+      <h3 style="margin-top:26px">🌎 Noticias internacionales</h3>
+      {_render_noticias(internacionales)}
       <p style="margin-top:26px"><a href="{DASHBOARD_URL}" style="background:#1D4E89;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none">Ver el dashboard completo →</a></p>
       <p style="color:#999;font-size:12px;margin-top:20px">Generado automáticamente. Fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA · Google News.</p>
     </div>"""
@@ -192,8 +215,8 @@ def enviar(html):
 def main():
     df = pd.read_csv(CSV, parse_dates=["fecha"])
     indicadores = resumen_indicadores(df)
-    noticias = obtener_noticias()
-    html = armar_html(indicadores, noticias)
+    argentinas, internacionales = obtener_noticias()
+    html = armar_html(indicadores, argentinas, internacionales)
     enviar(html)
 
 
