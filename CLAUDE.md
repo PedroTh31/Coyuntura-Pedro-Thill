@@ -32,6 +32,11 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
 - `calculo: interanual` + `base_id` → variación % interanual de una serie de datos_gob.
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
+- `vista: overlay` + `series: ["Nombre indicador 1", "Nombre indicador 2", ...]` → líneas
+  superpuestas de varios indicadores YA definidos (mismo nombre que su `nombre:`), un solo eje,
+  leyenda para prender/apagar cada serie. La tarjeta resume con la ÚLTIMA serie de la lista.
+- `solo_overlay: true` → el indicador se trae y guarda en el histórico normalmente, pero no
+  genera tarjeta/gráfico propio: sólo alimenta un `vista: overlay` que lo referencia en `series`.
 - `semaforo: true` → alimenta la tabla-semáforo del EMAE (no hace gráfico de línea).
 - `tabla: "Nombre"` → va a una tabla de valores (comercio exterior desagregado).
 - `desde: "AAAA-MM-DD"` → desde cuándo se ve ese gráfico (default 2024).

@@ -70,6 +70,7 @@ indicadores:
   - {nombre: "Exportaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IET_0_M_16", unidad: "millones de USD"}
   - {nombre: "Importaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IIT_0_M_25", unidad: "millones de USD"}
   - {nombre: "Saldo comercial", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_ISC_0_M_19", unidad: "millones de USD"}
+  - {nombre: "Comercio exterior (expo/impo/saldo)", bloque: externo, grupo: "Comercio exterior", vista: overlay, series: ["Exportaciones totales", "Importaciones totales", "Saldo comercial"], unidad: "millones de USD"}
   # -- exportaciones por gran rubro (tabla) --
   - {nombre: "Productos primarios", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IEPP_0_M_35", unidad: "millones de USD"}
   - {nombre: "Manufacturas de origen agropecuario (MOA)", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IEMOA_0_M_48", unidad: "millones de USD"}
@@ -82,3 +83,15 @@ indicadores:
   - {nombre: "Piezas y accesorios para bienes de capital", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIPABC_0_M_50", unidad: "millones de USD"}
   - {nombre: "Bienes de consumo", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIBCO_0_M_32", unidad: "millones de USD"}
   - {nombre: "Vehículos automotores de pasajeros", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIVAP_0_M_49", unidad: "millones de USD"}
+  - {nombre: "Resto (importaciones por uso)", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIR_0_M_23", unidad: "millones de USD"}
+
+  # -- exportaciones a principales destinos (ICA, dataset 77: verificado por país, NO se usan los
+  #    campos "total_X" por bloque/región de este dataset: se comprobó que al menos uno (total UE-28,
+  #    77.3_IETU_0_A_26) está mal agregado en la fuente — reporta 1/26 de la suma real de sus propios
+  #    países miembro. Por eso se listan países individuales, cada uno una serie propia verificada) --
+  - {nombre: "Exportaciones a China", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEC_0_A_23", unidad: "millones de USD", solo_overlay: true}
+  - {nombre: "Exportaciones a Brasil", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEB_0_A_24", unidad: "millones de USD", solo_overlay: true}
+  - {nombre: "Exportaciones a Estados Unidos", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEEU_0_A_32", unidad: "millones de USD", solo_overlay: true}
+  - {nombre: "Exportaciones a Chile", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IECH_0_A_23", unidad: "millones de USD", solo_overlay: true}
+  - {nombre: "Exportaciones a India", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEI_0_A_23", unidad: "millones de USD", solo_overlay: true}
+  - {nombre: "Exportaciones a principales destinos", bloque: externo, grupo: "Exportaciones por destino", vista: overlay, series: ["Exportaciones a China", "Exportaciones a Brasil", "Exportaciones a Estados Unidos", "Exportaciones a Chile", "Exportaciones a India"], unidad: "millones de USD", nota: "Los 5 mayores destinos de exportación verificados individualmente (dataset ICA 77.3, INDEC). No se usan los totales por bloque/región de ese dataset: se detectó que al menos el campo 'total UE-28' está mal agregado en la fuente (reporta valores ~26 veces menores a la suma de sus propios países miembro)."}

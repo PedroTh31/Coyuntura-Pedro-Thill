@@ -34,7 +34,7 @@ TITULO_BLOQUE = {"precios": "Precios", "monetario_financiero": "Monetario y fina
                  "social": "Social y empleo", "fiscal": "Fiscal"}
 ORDEN_GRUPOS = ["Precios", "Dólar", "Brecha y TCR", "Riesgo país", "Reservas",
                 "Agregados monetarios", "Tasas de interés", "Crédito",
-                "Comercio exterior", "Exportaciones por rubro", "Importaciones por uso",
+                "Comercio exterior", "Exportaciones por rubro", "Exportaciones por destino", "Importaciones por uso",
                 "Actividad", "Social"]
 
 
@@ -109,6 +109,58 @@ def _serie_reservas_combo(idx, color, unidad, serie, desde):
         min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat())
 
 
+COLORES_OVERLAY = ["#0767A7", "#C62828", "#2E7D33", "#8D2D04", "#6A1B99", "#EF6C00"]
+
+
+def _serie_overlay(idx, ind, historico):
+    """
+    Gráfico de líneas superpuestas a partir de varios indicadores YA
+    presentes en 'historico' (ind['series']: sus nombres tal cual figuran
+    ahí). Comparten un solo eje — sólo tiene sentido si todos comparten
+    unidad — y llevan leyenda para prender/apagar cada serie.
+    La tarjeta muestra como "valor" principal la ÚLTIMA serie de la lista
+    (por convención: la métrica resumen, ej. saldo comercial).
+    """
+    partes = []
+    fechas_todas = set()
+    for nombre_serie in ind["series"]:
+        g = historico[historico["indicador"] == nombre_serie].sort_values("fecha")
+        if g.empty:
+            continue
+        partes.append((nombre_serie, g))
+        fechas_todas.update(g["fecha"])
+    if not partes:
+        return None
+    fechas_full = sorted(fechas_todas)
+
+    desde = ind.get("desde", DESDE_GENERAL)
+    fechas_default = [d for d in fechas_full if d >= pd.to_datetime(desde)]
+    if len(fechas_default) < 2:
+        fechas_default = fechas_full
+
+    datasets = []
+    for i, (nombre_serie, g) in enumerate(partes):
+        valores_por_fecha = dict(zip(g["fecha"], g["valor"]))
+        def _en(fechas_, vpf=valores_por_fecha):
+            return [round(float(vpf[d]), 2) if d in vpf else None for d in fechas_]
+        datasets.append(dict(label=nombre_serie, color=COLORES_OVERLAY[i % len(COLORES_OVERLAY)],
+            y=_en(fechas_default), full_y=_en(fechas_full)))
+
+    nombre_resumen, g_resumen = partes[-1]
+    ult, pct = _variacion(g_resumen)
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        valor=_fmt_num(ult), pct=pct, marca_fecha=None,
+        maxv=_fmt_num(g_resumen["valor"].max()), minv=_fmt_num(g_resumen["valor"].min()), nota_num=None)
+
+    serie_js = dict(i=idx, kind="overlay", unidad=ind.get("unidad", ""),
+        x=[d.strftime("%m/%y") for d in fechas_default],
+        full_x=[d.strftime("%m/%y") for d in fechas_full],
+        full_dates=[d.isoformat() for d in fechas_full],
+        datasets=datasets)
+    return card, serie_js
+
+
 def generar(historico, config_indicadores):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
@@ -119,6 +171,26 @@ def generar(historico, config_indicadores):
         nombre = ind["nombre"]; bloque = ind["bloque"]; grupo = ind.get("grupo", "Otros")
         unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
         nota = ind.get("nota")
+        if ind.get("solo_overlay"):
+            continue  # sólo alimenta un gráfico 'vista: overlay'; no tiene tarjeta propia
+        if ind.get("vista") == "overlay":
+            entrada = _serie_overlay(idx, ind, historico)
+            if entrada is None:
+                continue
+            card, serie_js_overlay = entrada
+            nota_num = None
+            if nota:
+                if nota not in notas_dict:
+                    nota_num = len(notas_dict) + 1
+                    notas_dict[nota] = {"numero": nota_num, "indicadores": [nombre]}
+                else:
+                    nota_num = notas_dict[nota]["numero"]
+                    notas_dict[nota]["indicadores"].append(nombre)
+            card["nota_num"] = nota_num
+            charts.append(card)
+            series_js.append(serie_js_overlay)
+            idx += 1
+            continue
         serie = historico[historico["indicador"] == nombre].sort_values("fecha").reset_index(drop=True)
         if serie.empty:
             continue
@@ -387,6 +459,20 @@ function calcFechaCorte(rango) {
 }
 
 function filtrarDatos(s, rango) {
+  if (s.kind === 'overlay') {
+    if (rango === 'default') {
+      return { x: s.x, datasets: s.datasets.map(d => ({ label: d.label, y: d.y })) };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, datasets: s.datasets.map(d => ({ label: d.label, y: d.y })) };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      datasets: s.datasets.map(d => ({ label: d.label, y: indices.map(i => d.full_y[i]) }))
+    };
+  }
   if (rango === 'default') {
     return { x: s.x, y: s.y, flujo: s.flujo };
   }
@@ -401,6 +487,16 @@ function filtrarDatos(s, rango) {
     flujo: s.full_flujo ? indices.map(i => s.full_flujo[i]) : undefined
   };
 }
+
+const overlayOpts = (unidad) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
+    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}` } } },
+  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
+  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+});
 
 const comboOpts = (unidad) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
@@ -423,6 +519,10 @@ SERIES.forEach(s => {
         { type:'bar', label:'Variación mensual', data:s.flujo, backgroundColor:coloresBarras, yAxisID:'y' },
         { type:'line', label:'Stock', data:s.y, borderColor:s.color, backgroundColor:s.color+'14', yAxisID:'y1', fill:false }
       ]}, options: comboOpts(s.unidad) });
+  } else if (s.kind === 'overlay') {
+    charts[s.i] = new Chart(ctx, { type:'line', data:{ labels:s.x, datasets: s.datasets.map(d => (
+        { label:d.label, data:d.y, borderColor:d.color, backgroundColor:d.color+'10', fill:false }
+      )) }, options: overlayOpts(s.unidad) });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
@@ -453,6 +553,8 @@ document.querySelectorAll('.filtro').forEach(btn => {
       charts[idx].data.datasets[0].data = datFiltrados.flujo;
       charts[idx].data.datasets[0].backgroundColor = coloresBarras;
       charts[idx].data.datasets[1].data = datFiltrados.y;
+    } else if (serie.kind === 'overlay') {
+      datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
     } else {
       charts[idx].data.datasets[0].data = datFiltrados.y;
     }

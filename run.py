@@ -206,6 +206,8 @@ def main():
 
     for ind in indicadores:
         nombre = ind["nombre"]
+        if ind.get("vista") == "overlay":
+            continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         try:
             if "calculo" in ind:
                 serie = _calcular(ind, start)
