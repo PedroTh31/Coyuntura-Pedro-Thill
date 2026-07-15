@@ -6017,6 +6017,7 @@
 2026-07-11,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.7019867549668906
 2026-07-12,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.7019867549668906
 2026-07-13,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.8079470198675525
+2026-07-14,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.986622073578583
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -11496,6 +11497,7 @@
 2026-07-11,Dólar CCL,monetario_financiero,$/USD (venta),1565.9
 2026-07-12,Dólar CCL,monetario_financiero,$/USD (venta),1565.9
 2026-07-13,Dólar CCL,monetario_financiero,$/USD (venta),1567.5
+2026-07-14,Dólar CCL,monetario_financiero,$/USD (venta),1554.6
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -14311,6 +14313,7 @@
 2026-07-11,Dólar MEP,monetario_financiero,$/USD (venta),1532.7
 2026-07-12,Dólar MEP,monetario_financiero,$/USD (venta),1532.7
 2026-07-13,Dólar MEP,monetario_financiero,$/USD (venta),1523.3
+2026-07-14,Dólar MEP,monetario_financiero,$/USD (venta),1509.9
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -19982,6 +19985,7 @@
 2026-07-11,Dólar blue,monetario_financiero,$/USD (venta),1510.0
 2026-07-12,Dólar blue,monetario_financiero,$/USD (venta),1510.0
 2026-07-13,Dólar blue,monetario_financiero,$/USD (venta),1525.0
+2026-07-14,Dólar blue,monetario_financiero,$/USD (venta),1520.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -25653,6 +25657,7 @@
 2026-07-11,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
 2026-07-12,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
 2026-07-13,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
+2026-07-14,Dólar oficial,monetario_financiero,$/USD (venta),1495.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -30592,107 +30597,6 @@
 2026-03-01,IPC Nacional - Nivel general,precios,índice,11077.0608
 2026-04-01,IPC Nacional - Nivel general,precios,índice,11363.0904
 2026-05-01,IPC Nacional - Nivel general,precios,índice,11607.3937
-2018-01-01,IPC Nacional - Nivel general (índice),precios,índice,126.9887
-2018-02-01,IPC Nacional - Nivel general (índice),precios,índice,130.0606
-2018-03-01,IPC Nacional - Nivel general (índice),precios,índice,133.1054
-2018-04-01,IPC Nacional - Nivel general (índice),precios,índice,136.7512
-2018-05-01,IPC Nacional - Nivel general (índice),precios,índice,139.5893
-2018-06-01,IPC Nacional - Nivel general (índice),precios,índice,144.8053
-2018-07-01,IPC Nacional - Nivel general (índice),precios,índice,149.2966
-2018-08-01,IPC Nacional - Nivel general (índice),precios,índice,155.1034
-2018-09-01,IPC Nacional - Nivel general (índice),precios,índice,165.2383
-2018-10-01,IPC Nacional - Nivel general (índice),precios,índice,174.1473
-2018-11-01,IPC Nacional - Nivel general (índice),precios,índice,179.6388
-2018-12-01,IPC Nacional - Nivel general (índice),precios,índice,184.2552
-2019-01-01,IPC Nacional - Nivel general (índice),precios,índice,189.6101
-2019-02-01,IPC Nacional - Nivel general (índice),precios,índice,196.7501
-2019-03-01,IPC Nacional - Nivel general (índice),precios,índice,205.9571
-2019-04-01,IPC Nacional - Nivel general (índice),precios,índice,212.9596414
-2019-05-01,IPC Nacional - Nivel general (índice),precios,índice,219.5691
-2019-06-01,IPC Nacional - Nivel general (índice),precios,índice,225.537
-2019-07-01,IPC Nacional - Nivel general (índice),precios,índice,230.494
-2019-08-01,IPC Nacional - Nivel general (índice),precios,índice,239.6077
-2019-09-01,IPC Nacional - Nivel general (índice),precios,índice,253.7102
-2019-10-01,IPC Nacional - Nivel general (índice),precios,índice,262.0661
-2019-11-01,IPC Nacional - Nivel general (índice),precios,índice,273.2158
-2019-12-01,IPC Nacional - Nivel general (índice),precios,índice,283.4442
-2020-01-01,IPC Nacional - Nivel general (índice),precios,índice,289.8299
-2020-02-01,IPC Nacional - Nivel general (índice),precios,índice,295.666
-2020-03-01,IPC Nacional - Nivel general (índice),precios,índice,305.5515
-2020-04-01,IPC Nacional - Nivel general (índice),precios,índice,310.1243
-2020-05-01,IPC Nacional - Nivel general (índice),precios,índice,314.9087
-2020-06-01,IPC Nacional - Nivel general (índice),precios,índice,321.9738
-2020-07-01,IPC Nacional - Nivel general (índice),precios,índice,328.2014
-2020-08-01,IPC Nacional - Nivel general (índice),precios,índice,337.0632
-2020-09-01,IPC Nacional - Nivel general (índice),precios,índice,346.6207
-2020-10-01,IPC Nacional - Nivel general (índice),precios,índice,359.657
-2020-11-01,IPC Nacional - Nivel general (índice),precios,índice,371.0211
-2020-12-01,IPC Nacional - Nivel general (índice),precios,índice,385.8826
-2021-01-01,IPC Nacional - Nivel general (índice),precios,índice,401.5071
-2021-02-01,IPC Nacional - Nivel general (índice),precios,índice,415.8595
-2021-03-01,IPC Nacional - Nivel general (índice),precios,índice,435.8657
-2021-04-01,IPC Nacional - Nivel general (índice),precios,índice,453.6503
-2021-05-01,IPC Nacional - Nivel general (índice),precios,índice,468.725
-2021-06-01,IPC Nacional - Nivel general (índice),precios,índice,483.6049
-2021-07-01,IPC Nacional - Nivel general (índice),precios,índice,498.0987
-2021-08-01,IPC Nacional - Nivel general (índice),precios,índice,510.3942
-2021-09-01,IPC Nacional - Nivel general (índice),precios,índice,528.4968
-2021-10-01,IPC Nacional - Nivel general (índice),precios,índice,547.0802
-2021-11-01,IPC Nacional - Nivel general (índice),precios,índice,560.9184
-2021-12-01,IPC Nacional - Nivel general (índice),precios,índice,582.4575
-2022-01-01,IPC Nacional - Nivel general (índice),precios,índice,605.0317
-2022-02-01,IPC Nacional - Nivel general (índice),precios,índice,633.4341
-2022-03-01,IPC Nacional - Nivel general (índice),precios,índice,676.0566
-2022-04-01,IPC Nacional - Nivel general (índice),precios,índice,716.9399
-2022-05-01,IPC Nacional - Nivel general (índice),precios,índice,753.147
-2022-06-01,IPC Nacional - Nivel general (índice),precios,índice,793.0278
-2022-07-01,IPC Nacional - Nivel general (índice),precios,índice,851.761
-2022-08-01,IPC Nacional - Nivel general (índice),precios,índice,911.1316
-2022-09-01,IPC Nacional - Nivel general (índice),precios,índice,967.3076
-2022-10-01,IPC Nacional - Nivel general (índice),precios,índice,1028.706
-2022-11-01,IPC Nacional - Nivel general (índice),precios,índice,1079.2787
-2022-12-01,IPC Nacional - Nivel general (índice),precios,índice,1134.5875
-2023-01-01,IPC Nacional - Nivel general (índice),precios,índice,1202.979
-2023-02-01,IPC Nacional - Nivel general (índice),precios,índice,1282.7091
-2023-03-01,IPC Nacional - Nivel general (índice),precios,índice,1381.1601
-2023-04-01,IPC Nacional - Nivel general (índice),precios,índice,1497.2147
-2023-05-01,IPC Nacional - Nivel general (índice),precios,índice,1613.5895
-2023-06-01,IPC Nacional - Nivel general (índice),precios,índice,1709.6115
-2023-07-01,IPC Nacional - Nivel general (índice),precios,índice,1818.0838
-2023-08-01,IPC Nacional - Nivel general (índice),precios,índice,2044.2832
-2023-09-01,IPC Nacional - Nivel general (índice),precios,índice,2304.9242
-2023-10-01,IPC Nacional - Nivel general (índice),precios,índice,2496.273
-2023-11-01,IPC Nacional - Nivel general (índice),precios,índice,2816.0628
-2023-12-01,IPC Nacional - Nivel general (índice),precios,índice,3533.1922
-2024-01-01,IPC Nacional - Nivel general (índice),precios,índice,4261.5324
-2024-02-01,IPC Nacional - Nivel general (índice),precios,índice,4825.7881
-2024-03-01,IPC Nacional - Nivel general (índice),precios,índice,5357.0929
-2024-04-01,IPC Nacional - Nivel general (índice),precios,índice,5830.2271
-2024-05-01,IPC Nacional - Nivel general (índice),precios,índice,6073.7
-2024-06-01,IPC Nacional - Nivel general (índice),precios,índice,6351.7145
-2024-07-01,IPC Nacional - Nivel general (índice),precios,índice,6607.7479
-2024-08-01,IPC Nacional - Nivel general (índice),precios,índice,6883.4412
-2024-09-01,IPC Nacional - Nivel general (índice),precios,índice,7122.2421
-2024-10-01,IPC Nacional - Nivel general (índice),precios,índice,7313.9542
-2024-11-01,IPC Nacional - Nivel general (índice),precios,índice,7491.4314
-2024-12-01,IPC Nacional - Nivel general (índice),precios,índice,7694.0075
-2025-01-01,IPC Nacional - Nivel general (índice),precios,índice,7864.1257
-2025-02-01,IPC Nacional - Nivel general (índice),precios,índice,8052.9927
-2025-03-01,IPC Nacional - Nivel general (índice),precios,índice,8353.3158
-2025-04-01,IPC Nacional - Nivel general (índice),precios,índice,8585.6078
-2025-05-01,IPC Nacional - Nivel general (índice),precios,índice,8714.4871
-2025-06-01,IPC Nacional - Nivel general (índice),precios,índice,8855.5681
-2025-07-01,IPC Nacional - Nivel general (índice),precios,índice,9023.973
-2025-08-01,IPC Nacional - Nivel general (índice),precios,índice,9193.2441
-2025-09-01,IPC Nacional - Nivel general (índice),precios,índice,9384.0922
-2025-10-01,IPC Nacional - Nivel general (índice),precios,índice,9603.8623
-2025-11-01,IPC Nacional - Nivel general (índice),precios,índice,9841.3581
-2025-12-01,IPC Nacional - Nivel general (índice),precios,índice,10121.3715
-2026-01-01,IPC Nacional - Nivel general (índice),precios,índice,10413.0309
-2026-02-01,IPC Nacional - Nivel general (índice),precios,índice,10714.6255
-2026-03-01,IPC Nacional - Nivel general (índice),precios,índice,11077.0608
-2026-04-01,IPC Nacional - Nivel general (índice),precios,índice,11363.0904
-2026-05-01,IPC Nacional - Nivel general (índice),precios,índice,11607.3937
 2016-01-01,IPI manufacturero (industria),real,índice 2004=100,117.05119421077302
 2016-02-01,IPI manufacturero (industria),real,índice 2004=100,118.90029357259574
 2016-03-01,IPI manufacturero (industria),real,índice 2004=100,136.80623010580314
@@ -31458,107 +31362,7 @@
 2026-03-31,Inflación mensual (IPC),precios,% mensual,3.4
 2026-04-30,Inflación mensual (IPC),precios,% mensual,2.6
 2026-05-31,Inflación mensual (IPC),precios,% mensual,2.1
-2018-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,891603.3063870969
-2018-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,868499.1675714288
-2018-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,855949.2863548391
-2018-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,847061.2456666668
-2018-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,899130.0776129032
-2018-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,979772.5553333334
-2018-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,936332.9620645158
-2018-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,921383.8194838708
-2018-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1012719.9666666666
-2018-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,856600.3564516129
-2018-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,838751.2653333332
-2018-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,916923.3917419352
-2019-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,929278.547967742
-2019-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,906688.8821428572
-2019-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,883828.6967741937
-2019-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,884781.0666666665
-2019-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,919536.5483870968
-2019-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,937619.9333333336
-2019-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,996552.2903225808
-2019-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1014859.3870967742
-2019-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1001030.1
-2019-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1034935.5483870968
-2019-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1007497.4
-2019-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1147808.322580645
-2020-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1252007.3870967743
-2020-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1230031.5862068967
-2020-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1266835.6774193551
-2020-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1387521.666666667
-2020-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1518617.2580645164
-2020-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1647161.1
-2020-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1728082.032258065
-2020-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1822425.4193548388
-2020-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1841534.8
-2020-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1868391.161290323
-2020-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,1866981.066666667
-2020-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2013700.290322581
-2021-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2097313.93548387
-2021-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2032462.5
-2021-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2050897.8709677416
-2021-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2102455.0
-2021-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2215875.032258064
-2021-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2233011.466666667
-2021-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2312361.612903226
-2021-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2382101.387096774
-2021-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2448611.899999999
-2021-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2543284.580645162
-2021-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2701339.700000001
-2021-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,2945207.774193549
-2022-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3241382.822580645
-2022-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3106858.357142858
-2022-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3136190.161290322
-2022-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3109494.099999999
-2022-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3192414.387096774
-2022-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3414637.5
-2022-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3658486.0967741935
-2022-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3712740.741935482
-2022-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,3788524.333333333
-2022-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,4049246.374193547
-2022-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,4013629.5733333337
-2022-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,4424313.290322581
-2023-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,4877905.322580645
-2023-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,4645995.085714286
-2023-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,4650565.225806452
-2023-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,4711954.566666666
-2023-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,5054938.0
-2023-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,5351451.966666666
-2023-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,5861855.193548388
-2023-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,6235943.322580645
-2023-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,6514768.1
-2023-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,7350931.129032257
-2023-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,7990565.433333334
-2023-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,8758592.000000004
-2024-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,10155344.35483871
-2024-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,10648106.448275868
-2024-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,11513805.419354836
-2024-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,12565499.499999996
-2024-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,14292480.870967744
-2024-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,16458231.43333333
-2024-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,17646369.548387103
-2024-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,18653037.6451613
-2024-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,19602203.700000003
-2024-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,21504441.032258064
-2024-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,22834870.50000001
-2024-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,25237150.83870968
-2025-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,26336673.516129028
-2025-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,25770871.285714284
-2025-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,26689901.3548387
-2025-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,27334090.69999999
-2025-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,28450961.90322581
-2025-06-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,29331920.666666668
-2025-07-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,30689776.516129028
-2025-08-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,32132454.93548388
-2025-09-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,31713349.866666667
-2025-10-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,31877353.32258065
-2025-11-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,32895874.433333334
-2025-12-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,33466329.0
-2026-01-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,34170353.96774193
-2026-02-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,33199135.07142857
-2026-03-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,33818590.93548387
-2026-04-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,33732985.1
-2026-05-01,M1 (calculado: circulante + cta. cte.),monetario_financiero,millones de $,34373723.67741935
+2026-06-30,Inflación mensual (IPC),precios,% mensual,1.9
 2004-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33405.13591167097
 2004-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33915.87767978622
 2004-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32706.647277332588
@@ -33711,107 +33515,107 @@
 2026-03-01,Préstamos al sector privado,monetario_financiero,millones de $,121116580.4784549
 2026-04-01,Préstamos al sector privado,monetario_financiero,millones de $,124592608.0556
 2026-05-01,Préstamos al sector privado,monetario_financiero,millones de $,128427889.4528871
-2018-01-01,Reservas internacionales,monetario_financiero,millones de USD,60625.74838709678
-2018-02-01,Reservas internacionales,monetario_financiero,millones de USD,62300.26785714285
-2018-03-01,Reservas internacionales,monetario_financiero,millones de USD,61756.30645161288
-2018-04-01,Reservas internacionales,monetario_financiero,millones de USD,60762.77666666666
-2018-05-01,Reservas internacionales,monetario_financiero,millones de USD,54008.86451612905
-2018-06-01,Reservas internacionales,monetario_financiero,millones de USD,53347.16666666666
-2018-07-01,Reservas internacionales,monetario_financiero,millones de USD,60102.848387096754
-2018-08-01,Reservas internacionales,monetario_financiero,millones de USD,55909.90322580645
-2018-09-01,Reservas internacionales,monetario_financiero,millones de USD,50302.67666666666
-2018-10-01,Reservas internacionales,monetario_financiero,millones de USD,48951.9258064516
-2018-11-01,Reservas internacionales,monetario_financiero,millones de USD,52631.34666666666
-2018-12-01,Reservas internacionales,monetario_financiero,millones de USD,56977.6677419355
-2019-01-01,Reservas internacionales,monetario_financiero,millones de USD,66171.57419354838
-2019-02-01,Reservas internacionales,monetario_financiero,millones de USD,66984.04642857141
-2019-03-01,Reservas internacionales,monetario_financiero,millones de USD,67958.42580645162
-2019-04-01,Reservas internacionales,monetario_financiero,millones de USD,72678.57333333332
-2019-05-01,Reservas internacionales,monetario_financiero,millones de USD,67700.96774193548
-2019-06-01,Reservas internacionales,monetario_financiero,millones de USD,64400.75666666668
-2019-07-01,Reservas internacionales,monetario_financiero,millones de USD,66133.21612903227
-2019-08-01,Reservas internacionales,monetario_financiero,millones de USD,62324.97419354838
-2019-09-01,Reservas internacionales,monetario_financiero,millones de USD,50273.33666666668
-2019-10-01,Reservas internacionales,monetario_financiero,millones de USD,46674.48064516129
-2019-11-01,Reservas internacionales,monetario_financiero,millones de USD,43488.15333333333
-2019-12-01,Reservas internacionales,monetario_financiero,millones de USD,44357.24838709678
-2020-01-01,Reservas internacionales,monetario_financiero,millones de USD,45197.9806451613
-2020-02-01,Reservas internacionales,monetario_financiero,millones de USD,44731.22413793104
-2020-03-01,Reservas internacionales,monetario_financiero,millones de USD,44262.89032258064
-2020-04-01,Reservas internacionales,monetario_financiero,millones de USD,43734.670000000006
-2020-05-01,Reservas internacionales,monetario_financiero,millones de USD,43084.11935483872
-2020-06-01,Reservas internacionales,monetario_financiero,millones de USD,43051.15666666666
-2020-07-01,Reservas internacionales,monetario_financiero,millones de USD,43312.84516129033
-2020-08-01,Reservas internacionales,monetario_financiero,millones de USD,43152.29354838709
-2020-09-01,Reservas internacionales,monetario_financiero,millones de USD,42350.33333333333
-2020-10-01,Reservas internacionales,monetario_financiero,millones de USD,40739.42903225807
-2020-11-01,Reservas internacionales,monetario_financiero,millones de USD,39164.24
-2020-12-01,Reservas internacionales,monetario_financiero,millones de USD,38898.25483870968
-2021-01-01,Reservas internacionales,monetario_financiero,millones de USD,39610.43548387096
-2021-02-01,Reservas internacionales,monetario_financiero,millones de USD,39377.26071428573
-2021-03-01,Reservas internacionales,monetario_financiero,millones de USD,39710.66129032258
-2021-04-01,Reservas internacionales,monetario_financiero,millones de USD,40005.41666666666
-2021-05-01,Reservas internacionales,monetario_financiero,millones de USD,41106.88387096774
-2021-06-01,Reservas internacionales,monetario_financiero,millones de USD,42420.66333333334
-2021-07-01,Reservas internacionales,monetario_financiero,millones de USD,42835.170967741935
-2021-08-01,Reservas internacionales,monetario_financiero,millones de USD,43306.796774193564
-2021-09-01,Reservas internacionales,monetario_financiero,millones de USD,44928.77333333334
-2021-10-01,Reservas internacionales,monetario_financiero,millones de USD,42919.70967741936
-2021-11-01,Reservas internacionales,monetario_financiero,millones de USD,42463.72
-2021-12-01,Reservas internacionales,monetario_financiero,millones de USD,40584.36451612903
-2022-01-01,Reservas internacionales,monetario_financiero,millones de USD,38963.63548387096
-2022-02-01,Reservas internacionales,monetario_financiero,millones de USD,37252.314285714274
-2022-03-01,Reservas internacionales,monetario_financiero,millones de USD,38511.49032258063
-2022-04-01,Reservas internacionales,monetario_financiero,millones de USD,43011.12666666667
-2022-05-01,Reservas internacionales,monetario_financiero,millones de USD,41619.83870967741
-2022-06-01,Reservas internacionales,monetario_financiero,millones de USD,40779.70666666667
-2022-07-01,Reservas internacionales,monetario_financiero,millones de USD,40335.07741935483
-2022-08-01,Reservas internacionales,monetario_financiero,millones de USD,37116.22258064516
-2022-09-01,Reservas internacionales,monetario_financiero,millones de USD,37173.99666666667
-2022-10-01,Reservas internacionales,monetario_financiero,millones de USD,38732.15806451612
-2022-11-01,Reservas internacionales,monetario_financiero,millones de USD,37897.11666666667
-2022-12-01,Reservas internacionales,monetario_financiero,millones de USD,40650.34516129032
-2023-01-01,Reservas internacionales,monetario_financiero,millones de USD,43198.67096774193
-2023-02-01,Reservas internacionales,monetario_financiero,millones de USD,39842.78571428572
-2023-03-01,Reservas internacionales,monetario_financiero,millones de USD,37952.32258064516
-2023-04-01,Reservas internacionales,monetario_financiero,millones de USD,37169.1
-2023-05-01,Reservas internacionales,monetario_financiero,millones de USD,33525.0
-2023-06-01,Reservas internacionales,monetario_financiero,millones de USD,31931.2
-2023-07-01,Reservas internacionales,monetario_financiero,millones de USD,26140.322580645163
-2023-08-01,Reservas internacionales,monetario_financiero,millones de USD,25131.35483870968
-2023-09-01,Reservas internacionales,monetario_financiero,millones de USD,27489.9
-2023-10-01,Reservas internacionales,monetario_financiero,millones de USD,25264.612903225807
-2023-11-01,Reservas internacionales,monetario_financiero,millones de USD,21435.066666666666
-2023-12-01,Reservas internacionales,monetario_financiero,millones de USD,21903.0
-2024-01-01,Reservas internacionales,monetario_financiero,millones de USD,24302.25806451613
-2024-02-01,Reservas internacionales,monetario_financiero,millones de USD,26929.62068965517
-2024-03-01,Reservas internacionales,monetario_financiero,millones de USD,27872.870967741936
-2024-04-01,Reservas internacionales,monetario_financiero,millones de USD,29203.4
-2024-05-01,Reservas internacionales,monetario_financiero,millones de USD,28583.516129032258
-2024-06-01,Reservas internacionales,monetario_financiero,millones de USD,29491.13333333333
-2024-07-01,Reservas internacionales,monetario_financiero,millones de USD,28163.70967741936
-2024-08-01,Reservas internacionales,monetario_financiero,millones de USD,27537.70967741936
-2024-09-01,Reservas internacionales,monetario_financiero,millones de USD,27580.83333333333
-2024-10-01,Reservas internacionales,monetario_financiero,millones de USD,28706.35483870968
-2024-11-01,Reservas internacionales,monetario_financiero,millones de USD,30272.566666666666
-2024-12-01,Reservas internacionales,monetario_financiero,millones de USD,31753.548387096773
-2025-01-01,Reservas internacionales,monetario_financiero,millones de USD,30734.83870967742
-2025-02-01,Reservas internacionales,monetario_financiero,millones de USD,28735.85714285714
-2025-03-01,Reservas internacionales,monetario_financiero,millones de USD,27251.225806451614
-2025-04-01,Reservas internacionales,monetario_financiero,millones de USD,32301.2
-2025-05-01,Reservas internacionales,monetario_financiero,millones de USD,38325.29032258064
-2025-06-01,Reservas internacionales,monetario_financiero,millones de USD,39759.53333333333
-2025-07-01,Reservas internacionales,monetario_financiero,millones de USD,40286.03225806452
-2025-08-01,Reservas internacionales,monetario_financiero,millones de USD,41569.67741935484
-2025-09-01,Reservas internacionales,monetario_financiero,millones de USD,40158.4
-2025-10-01,Reservas internacionales,monetario_financiero,millones de USD,41563.29032258064
-2025-11-01,Reservas internacionales,monetario_financiero,millones de USD,40653.333333333336
-2025-12-01,Reservas internacionales,monetario_financiero,millones de USD,42206.03225806452
-2026-01-01,Reservas internacionales,monetario_financiero,millones de USD,44599.6129032258
-2026-02-01,Reservas internacionales,monetario_financiero,millones de USD,45475.71428571428
-2026-03-01,Reservas internacionales,monetario_financiero,millones de USD,44817.0
-2026-04-01,Reservas internacionales,monetario_financiero,millones de USD,45356.73333333333
-2026-05-01,Reservas internacionales,monetario_financiero,millones de USD,46436.41935483871
+2018-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,60625.74838709678
+2018-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,62300.26785714285
+2018-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,61756.30645161288
+2018-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,60762.77666666666
+2018-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,54008.86451612905
+2018-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,53347.16666666666
+2018-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,60102.848387096754
+2018-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,55909.90322580645
+2018-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50302.67666666666
+2018-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,48951.9258064516
+2018-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,52631.34666666666
+2018-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,56977.6677419355
+2019-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,66171.57419354838
+2019-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,66984.04642857141
+2019-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,67958.42580645162
+2019-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,72678.57333333332
+2019-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,67700.96774193548
+2019-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,64400.75666666668
+2019-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,66133.21612903227
+2019-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,62324.97419354838
+2019-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50273.33666666668
+2019-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,46674.48064516129
+2019-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43488.15333333333
+2019-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,44357.24838709678
+2020-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,45197.9806451613
+2020-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,44731.22413793104
+2020-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,44262.89032258064
+2020-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43734.670000000006
+2020-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43084.11935483872
+2020-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43051.15666666666
+2020-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43312.84516129033
+2020-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43152.29354838709
+2020-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,42350.33333333333
+2020-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40739.42903225807
+2020-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,39164.24
+2020-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,38898.25483870968
+2021-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,39610.43548387096
+2021-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,39377.26071428573
+2021-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,39710.66129032258
+2021-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40005.41666666666
+2021-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,41106.88387096774
+2021-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,42420.66333333334
+2021-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,42835.170967741935
+2021-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43306.796774193564
+2021-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,44928.77333333334
+2021-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,42919.70967741936
+2021-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,42463.72
+2021-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40584.36451612903
+2022-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,38963.63548387096
+2022-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,37252.314285714274
+2022-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,38511.49032258063
+2022-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43011.12666666667
+2022-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,41619.83870967741
+2022-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40779.70666666667
+2022-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40335.07741935483
+2022-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,37116.22258064516
+2022-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,37173.99666666667
+2022-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,38732.15806451612
+2022-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,37897.11666666667
+2022-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40650.34516129032
+2023-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,43198.67096774193
+2023-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,39842.78571428572
+2023-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,37952.32258064516
+2023-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,37169.1
+2023-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,33525.0
+2023-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,31931.2
+2023-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,26140.322580645163
+2023-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,25131.35483870968
+2023-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,27489.9
+2023-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,25264.612903225807
+2023-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,21435.066666666666
+2023-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,21903.0
+2024-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,24302.25806451613
+2024-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,26929.62068965517
+2024-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,27872.870967741936
+2024-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,29203.4
+2024-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,28583.516129032258
+2024-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,29491.13333333333
+2024-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,28163.70967741936
+2024-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,27537.70967741936
+2024-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,27580.83333333333
+2024-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,28706.35483870968
+2024-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,30272.566666666666
+2024-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,31753.548387096773
+2025-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,30734.83870967742
+2025-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,28735.85714285714
+2025-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,27251.225806451614
+2025-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,32301.2
+2025-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,38325.29032258064
+2025-06-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,39759.53333333333
+2025-07-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40286.03225806452
+2025-08-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,41569.67741935484
+2025-09-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40158.4
+2025-10-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,41563.29032258064
+2025-11-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,40653.333333333336
+2025-12-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,42206.03225806452
+2026-01-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,44599.6129032258
+2026-02-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,45475.71428571428
+2026-03-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,44817.0
+2026-04-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,45356.73333333333
+2026-05-01,Reservas internacionales (BCRA),monetario_financiero,millones de USD,46436.41935483871
 2004-01-02,Riesgo país (EMBI),monetario_financiero,puntos básicos,5580.0
 2004-01-05,Riesgo país (EMBI),monetario_financiero,puntos básicos,5459.0
 2004-01-06,Riesgo país (EMBI),monetario_financiero,puntos básicos,5260.0
@@ -40198,106 +40002,6 @@
 2026-07-09,Riesgo país (EMBI),monetario_financiero,puntos básicos,404.0
 2026-07-10,Riesgo país (EMBI),monetario_financiero,puntos básicos,402.0
 2026-07-13,Riesgo país (EMBI),monetario_financiero,puntos básicos,405.0
-2018-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,100.0
-2018-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,98.45617386547929
-2018-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,98.04034463627526
-2018-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,97.99904591600188
-2018-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,97.46233931588876
-2018-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,94.75263866594668
-2018-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,94.3162741580274
-2018-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,93.34996714405465
-2018-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,90.17098778356063
-2018-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,88.684447668879
-2018-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,88.48664180180205
-2018-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,88.4078071440922
-2019-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,88.56509711795252
-2019-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,87.61653822287681
-2019-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,87.00420201861277
-2019-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,86.02028230583345
-2019-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,85.78832566455257
-2019-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,85.18857480061703
-2019-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,87.29061869829134
-2019-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,86.01869410200518
-2019-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,83.40976312116706
-2019-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,83.36549791001488
-2019-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,81.85795951599945
-2019-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.97368186420162
-2020-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,83.93226900936045
-2020-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,85.44298111469446
-2020-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,85.19774925016594
-2020-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,84.08059229364929
-2020-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,82.74532389618659
-2020-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,81.4149040210898
-2020-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,81.3011629734391
-2020-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.74198174927916
-2020-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.47909781878701
-2020-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.7389061948637
-2020-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.8443122377494
-2020-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.09697959583293
-2021-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.50659977650608
-2021-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.07482037609054
-2021-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.23229176372004
-2021-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.56871708735711
-2021-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.20548924284014
-2021-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,77.53155648125436
-2021-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.97233040552032
-2021-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.51885870095735
-2021-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.86574255600226
-2021-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.25934491311952
-2021-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,81.36214218052004
-2021-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.36443976697643
-2022-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.27316563771632
-2022-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.07687196224869
-2022-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.56432953346854
-2022-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.75074573417963
-2022-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.62557344186531
-2022-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,79.28489609002969
-2022-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,77.91191603003877
-2022-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,77.58399124052944
-2022-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,77.99540810343134
-2022-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,77.11031548507437
-2022-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.42804053647686
-2022-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.53336211914682
-2023-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,77.55784707059833
-2023-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,77.1004388951813
-2023-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,78.843220832927
-2023-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.85802532217465
-2023-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.65954655981808
-2023-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.74123209712938
-2023-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,80.11273622928584
-2023-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.67946995426534
-2023-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,75.95001277518774
-2023-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,75.96944908531233
-2023-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,73.44623231950465
-2023-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,63.722335387880335
-2024-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,61.51790400378989
-2024-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,61.559645903746194
-2024-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,61.146805085636
-2024-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,61.88752719163061
-2024-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,64.34817266069304
-2024-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,65.34187988564858
-2024-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,67.50230638343541
-2024-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,68.46014426714811
-2024-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,69.2793272230523
-2024-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,70.56093809612346
-2024-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,71.53843631524963
-2024-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,71.82938400982437
-2025-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,72.33462760290243
-2025-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,73.34074461490285
-2025-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,72.8072250534291
-2025-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,73.23216420919205
-2025-05-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,74.30403938561163
-2025-06-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,75.29855168706744
-2025-07-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,75.72843597543758
-2025-08-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.68237852996477
-2025-09-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.79386855881852
-2025-10-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.91146343627337
-2025-11-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,76.3923183548236
-2025-12-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,75.47652844648557
-2026-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,75.22252187181292
-2026-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,74.87990680851517
-2026-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,74.89568354791227
-2026-04-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,75.73606458259017
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083

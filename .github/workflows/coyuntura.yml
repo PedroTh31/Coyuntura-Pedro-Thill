@@ -2,7 +2,7 @@ name: Actualizar coyuntura
 
 on:
   schedule:
-    - cron: "0 12 * * 1"
+    - cron: "0 12 * * *"
   workflow_dispatch:
 
 permissions:
@@ -26,7 +26,7 @@ jobs:
           git config user.email "actions@github.com"
           git add data/ docs/
           if git diff --staged --quiet; then
-            echo "Sin cambios esta semana."
+            echo "Sin cambios hoy."
           else
             git commit -m "Datos coyuntura $(date +'%Y-%m-%d')"
             git push

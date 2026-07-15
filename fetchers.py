@@ -40,16 +40,13 @@ def _get(url: str, params: dict | None = None, reintentos: int = 3) -> requests.
 # ---------------------------------------------------------------------------
 # 1) apis.datos.gob.ar/series  -> el backbone: +30.000 series oficiales
 # ---------------------------------------------------------------------------
-def fetch_datos_gob(serie_id: str, start_date: str | None = None,
-                    interanual: bool = False) -> pd.DataFrame:
+def fetch_datos_gob(serie_id: str, start_date: str | None = None) -> pd.DataFrame:
     """
     Trae una serie de la API de Series de Tiempo de la Nación.
 
-    serie_id   : id de la serie (ej '143.3_NO_PR_2004_A_21'). Buscalos con buscar_series.py
-    interanual : si True, pide la transformación de variación % interanual nativa de la API
+    serie_id : id de la serie (ej '143.3_NO_PR_2004_A_21'). Buscalos con buscar_series.py
     """
-    ids = serie_id + (":percent_change_a_year_ago" if interanual else "")
-    params = {"ids": ids, "format": "json", "limit": 5000}
+    params = {"ids": serie_id, "format": "json", "limit": 5000}
     if start_date:
         params["start_date"] = start_date
 
@@ -113,6 +110,28 @@ def fetch_dolar(casa: str, start_date: str | None = None) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 # 4) BCRA -> reservas internacionales diarias, otros datos diarios
 # ---------------------------------------------------------------------------
+def _parsear_respuesta_bcra(data: dict) -> list[dict]:
+    """Extrae filas {fecha, valor} de una respuesta de la API de estadísticas del BCRA."""
+    filas = []
+    results = data.get("results")
+    if not results:
+        return filas
+    # v4.0/v3.0: [{"idVariable":1,"detalle":[{fecha,valor},...]}]. v2.0: lista directa de {fecha,valor}.
+    if isinstance(results, list) and len(results) > 0 and results[0].get("detalle"):
+        items = [d for item in results for d in item.get("detalle", [])]
+    else:
+        items = results
+    for item in items:
+        try:
+            fecha_str = item.get("fecha")
+            valor = item.get("valor")
+            if fecha_str and valor is not None:
+                filas.append({"fecha": fecha_str, "valor": float(valor)})
+        except (ValueError, KeyError, TypeError):
+            pass
+    return filas
+
+
 def fetch_bcra(id_variable: int, start_date: str | None = None) -> pd.DataFrame:
     """
     Trae datos de la API del BCRA (Estadísticas Monetarias).
@@ -120,77 +139,51 @@ def fetch_bcra(id_variable: int, start_date: str | None = None) -> pd.DataFrame:
 
     id_variable: número de variable (ej: 1 para reservas internacionales diarias)
     Devuelve DataFrame con fecha (diaria) y valor.
-    Maneja SSL con fallback a verify=False si la conexión falla.
+
+    Resiliente a la inestabilidad conocida de api.bcra.gob.ar (502 intermitentes):
+    para cada versión de la API, prueba ventanas de fecha cada vez más cortas
+    (2 años · 6 meses · 1 mes) y reintenta cada una con backoff antes de pasar
+    a la siguiente. Si todo falla, loguea el error y devuelve un DataFrame vacío
+    SIN tocar el histórico ya guardado (storage.py sólo agrega, nunca borra).
     """
-    # Calcular fechas para parámetros (últimos ~2 años para ser seguros)
     end_date = pd.Timestamp.today()
-    begin_date = end_date - pd.DateOffset(years=2)
-    desde = begin_date.strftime("%Y-%m-%d")
-    hasta = end_date.strftime("%Y-%m-%d")
-    
+    ventanas_dias = [730, 180, 30]  # 2 años, 6 meses, 1 mes
     versiones = ["v4.0", "v3.0", "v2.0"]
+    reintentos_por_ventana = 2
     filas = []
-    
+    ultimo_error = None
+
     for version in versiones:
-        try:
+        for dias in ventanas_dias:
+            desde = (end_date - pd.Timedelta(days=dias)).strftime("%Y-%m-%d")
+            hasta = end_date.strftime("%Y-%m-%d")
             url = f"https://api.bcra.gob.ar/estadisticas/{version}/monetarias/{id_variable}"
-            params = {
-                "desde": desde,
-                "hasta": hasta,
-                "limit": 1000
-            }
-            
-            # Intentar con verify=True primero
-            try:
-                r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=True)
-                r.raise_for_status()
-            except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
-                # Fallback a verify=False si hay problemas SSL
-                r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=False)
-                r.raise_for_status()
-            
-            data = r.json()
-            
-            # Parsear estructura de respuesta según versión
-            # v4.0 y v3.0 tienen: {"results": [{"idVariable": 1, "detalle": [{fecha, valor}, ...]}]}
-            # v2.0 y anteriores pueden tener otra estructura
-            
-            if "results" in data and data["results"]:
-                results = data["results"]
-                
-                # Si results es una lista de objetos con "detalle"
-                if isinstance(results, list) and len(results) > 0 and results[0].get("detalle"):
-                    # Estructura v4.0/v3.0
-                    for item in results:
-                        for detalle_item in item.get("detalle", []):
-                            try:
-                                fecha_str = detalle_item.get("fecha")
-                                valor = detalle_item.get("valor")
-                                if fecha_str and valor is not None:
-                                    filas.append({"fecha": fecha_str, "valor": float(valor)})
-                            except (ValueError, KeyError, TypeError):
-                                pass
-                else:
-                    # Estructura alternativa: results es lista directa de {fecha, valor}
-                    for item in results:
-                        try:
-                            fecha_str = item.get("fecha")
-                            valor = item.get("valor")
-                            if fecha_str and valor is not None:
-                                filas.append({"fecha": fecha_str, "valor": float(valor)})
-                        except (ValueError, KeyError, TypeError):
-                            pass
-                
-                if filas:
-                    break  # Si obtenemos datos, salir del loop de versiones
-        
-        except (requests.RequestException, ValueError, KeyError, TypeError) as e:
-            # Intentar siguiente versión
-            continue
-    
+            params = {"desde": desde, "hasta": hasta, "limit": 1000}
+
+            for intento in range(reintentos_por_ventana):
+                try:
+                    try:
+                        r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=True)
+                        r.raise_for_status()
+                    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
+                        r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=False)
+                        r.raise_for_status()
+                    filas = _parsear_respuesta_bcra(r.json())
+                    if filas:
+                        break
+                except (requests.RequestException, ValueError, KeyError, TypeError) as e:
+                    ultimo_error = f"{version} desde={desde}: {e}"
+                    time.sleep(2 * (intento + 1))  # backoff antes del próximo reintento
+            if filas:
+                break
+        if filas:
+            break
+
     if not filas:
+        print(f"  [ADVERTENCIA] fetch_bcra id_variable={id_variable}: sin datos tras probar "
+              f"{len(versiones)} versiones x {len(ventanas_dias)} ventanas. Último error: {ultimo_error}")
         return pd.DataFrame(columns=["fecha", "valor"])
-    
+
     df = pd.DataFrame(filas)
     df["fecha"] = pd.to_datetime(df["fecha"], errors="coerce")
     df["valor"] = pd.to_numeric(df["valor"], errors="coerce")
@@ -204,11 +197,10 @@ def fetch_bcra(id_variable: int, start_date: str | None = None) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 # Dispatcher: elige el fetcher según el config del indicador
 # ---------------------------------------------------------------------------
-def traer(indicador: dict, start_date: str | None = None,
-          interanual: bool = False) -> pd.DataFrame:
+def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
     fuente = indicador["fuente"]
     if fuente == "datos_gob":
-        return fetch_datos_gob(indicador["id"], start_date, interanual=interanual)
+        return fetch_datos_gob(indicador["id"], start_date)
     if fuente == "argentinadatos":
         return fetch_argentinadatos(indicador["endpoint"], start_date)
     if fuente == "dolar":

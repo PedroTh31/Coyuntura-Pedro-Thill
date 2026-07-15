@@ -76,11 +76,19 @@ def _calcular(ind, start):
     raise ValueError(f"cálculo desconocido: {tipo}")
 
 
+def _avisar(nombre: str, motivo: str):
+    """Advertencia visible: imprime en el log Y emite una anotación de GitHub
+    Actions (aparece en el resumen del run, sin tener que abrir el log)."""
+    print(f"  [ADVERTENCIA]  {nombre}: {motivo}")
+    print(f"::warning title=Indicador sin datos::{nombre} — {motivo}")
+
+
 def main():
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     start = cfg.get("start_date")
     indicadores = cfg["indicadores"]
     filas = []
+    problemas = []  # (nombre, motivo) de indicadores que no trajeron datos
 
     for ind in indicadores:
         nombre = ind["nombre"]
@@ -90,12 +98,20 @@ def main():
             else:
                 serie = traer(ind, start_date=start)
             if serie.empty:
-                print(f"  [vacio]  {nombre}")
+                _avisar(nombre, "la fuente no devolvió datos (serie vacía)")
+                problemas.append((nombre, "vacío"))
                 continue
             filas.append(_fila(serie, ind))
             print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()})")
         except Exception as e:
-            print(f"  [ERROR]  {nombre}: {e}")
+            _avisar(nombre, f"error al traer/calcular la serie: {e}")
+            problemas.append((nombre, f"error: {e}"))
+
+    if problemas:
+        print(f"\n{len(problemas)} indicador(es) sin datos en esta corrida:")
+        for nombre, motivo in problemas:
+            print(f"  - {nombre}: {motivo}")
+        print("(el histórico ya guardado de esos indicadores NO se toca; se reintentará en la próxima corrida)")
 
     if not filas:
         print("No se trajo ningun dato.")

@@ -79,6 +79,30 @@ def _variacion(serie):
     return ult, (((ult - prev) / prev * 100) if prev else None)
 
 
+def _serie_reservas_combo(idx, color, unidad, serie, desde):
+    """
+    Arma los datos para el gráfico combo de reservas: barras = variación
+    mensual del stock, línea = stock. Ambas series comparten el mismo eje
+    de fechas (fin de cada mes) para poder graficarse juntas en Chart.js.
+    """
+    sm_full = serie.sort_values("fecha").set_index("fecha")["valor"].resample("MS").last()
+    flujo_full = sm_full.diff()
+
+    sm_s = sm_full[sm_full.index >= pd.to_datetime(desde)]
+    if len(sm_s) < 2:
+        sm_s = sm_full
+    flujo_s = flujo_full.reindex(sm_s.index)
+
+    def _vals(serie_valores):
+        return [round(float(v), 2) if pd.notna(v) else None for v in serie_valores]
+
+    return dict(i=idx, color=color, unidad=unidad, kind="combo",
+        x=[d.strftime("%m/%y") for d in sm_s.index], y=_vals(sm_s), flujo=_vals(flujo_s),
+        full_x=[d.strftime("%m/%y") for d in sm_full.index], full_y=_vals(sm_full),
+        full_flujo=_vals(flujo_full), full_dates=[d.isoformat() for d in sm_full.index],
+        min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat())
+
+
 def generar(historico, config_indicadores):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
@@ -122,27 +146,30 @@ def generar(historico, config_indicadores):
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
             unidad=unidad, valor=_fmt_num(ult), pct=pct,
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num))
-        # Embeber los datos históricos para permitir filtrado client-side.
-        # El tramo reciente (últimos 2 años) queda a resolución diaria completa
-        # (así "1A" no pierde detalle); el tramo viejo se submuestrea si es muy
-        # largo, para no inflar el HTML en series diarias de décadas (dólar, tasas).
-        corte_reciente = serie["fecha"].max() - pd.DateOffset(years=2)
-        reciente = serie[serie["fecha"] >= corte_reciente]
-        vieja = serie[serie["fecha"] < corte_reciente]
-        if len(vieja) > MAX_PUNTOS_VIEJOS:
-            paso = -(-len(vieja) // MAX_PUNTOS_VIEJOS)  # ceil division
-            vieja = vieja.iloc[::paso]
-        full = pd.concat([vieja, reciente]).sort_values("fecha")
-        full_x = [d.strftime("%d/%m/%y") for d in full["fecha"]]
-        full_y = [round(float(v), 2) for v in full["valor"]]
-        full_dates = [d.isoformat() for d in full["fecha"]]  # ISO para comparación
-        # Datos filtrados (para vista por defecto)
-        s_x = [d.strftime("%d/%m/%y") for d in s["fecha"]]
-        s_y = [round(float(v), 2) for v in s["valor"]]
-        series_js.append(dict(i=idx, color=color, unidad=unidad,
-            x=s_x, y=s_y,  # Datos filtrados (default)
-            full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
-            min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat()))
+        if ind.get("vista") == "reservas_combo":
+            series_js.append(_serie_reservas_combo(idx, color, unidad, serie, desde))
+        else:
+            # Embeber los datos históricos para permitir filtrado client-side.
+            # El tramo reciente (últimos 2 años) queda a resolución diaria completa
+            # (así "1A" no pierde detalle); el tramo viejo se submuestrea si es muy
+            # largo, para no inflar el HTML en series diarias de décadas (dólar, tasas).
+            corte_reciente = serie["fecha"].max() - pd.DateOffset(years=2)
+            reciente = serie[serie["fecha"] >= corte_reciente]
+            vieja = serie[serie["fecha"] < corte_reciente]
+            if len(vieja) > MAX_PUNTOS_VIEJOS:
+                paso = -(-len(vieja) // MAX_PUNTOS_VIEJOS)  # ceil division
+                vieja = vieja.iloc[::paso]
+            full = pd.concat([vieja, reciente]).sort_values("fecha")
+            full_x = [d.strftime("%d/%m/%y") for d in full["fecha"]]
+            full_y = [round(float(v), 2) for v in full["valor"]]
+            full_dates = [d.isoformat() for d in full["fecha"]]  # ISO para comparación
+            # Datos filtrados (para vista por defecto)
+            s_x = [d.strftime("%d/%m/%y") for d in s["fecha"]]
+            s_y = [round(float(v), 2) for v in s["valor"]]
+            series_js.append(dict(i=idx, color=color, unidad=unidad,
+                x=s_x, y=s_y,  # Datos filtrados (default)
+                full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
+                min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat()))
         idx += 1
     _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict)
 
@@ -333,26 +360,46 @@ function calcFechaCorte(rango) {
 
 function filtrarDatos(s, rango) {
   if (rango === 'default') {
-    return { x: s.x, y: s.y };
+    return { x: s.x, y: s.y, flujo: s.flujo };
   }
   const fechaCorte = calcFechaCorte(rango);
   const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
   if (indices.length === 0) {
-    return { x: s.x, y: s.y };
+    return { x: s.x, y: s.y, flujo: s.flujo };
   }
   return {
     x: indices.map(i => s.full_x[i]),
-    y: indices.map(i => s.full_y[i])
+    y: indices.map(i => s.full_y[i]),
+    flujo: s.full_flujo ? indices.map(i => s.full_flujo[i]) : undefined
   };
 }
+
+const comboOpts = (unidad) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#5A564C'}},
+    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${c.dataset.yAxisID==='y1' ? unidad : ''}` } } },
+  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#9A968C', font:{size:10} }, grid:{display:false} },
+           y:{ position:'left', ticks:{ color:'#9A968C', font:{size:9} }, grid:{color:'#EDEAE0'}, title:{display:true, text:'Var. mensual', font:{size:9}, color:'#9A968C'} },
+           y1:{ position:'right', ticks:{ color:'#9A968C', font:{size:9} }, grid:{display:false}, title:{display:true, text:'Stock', font:{size:9}, color:'#9A968C'} } },
+  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+});
 
 SERIES.forEach(s => {
   const el = document.getElementById('ch'+s.i);
   if(!el) return;
   const ctx = el.getContext('2d');
-  charts[s.i] = new Chart(ctx, { type:'line',
-    data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
-    options: baseOpts(s.unidad) });
+  if (s.kind === 'combo') {
+    const coloresBarras = s.flujo.map(v => (v||0) >= 0 ? '#256D5B' : '#B4341F');
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label:'Variación mensual', data:s.flujo, backgroundColor:coloresBarras, yAxisID:'y' },
+        { type:'line', label:'Stock', data:s.y, borderColor:s.color, backgroundColor:s.color+'14', yAxisID:'y1', fill:false }
+      ]}, options: comboOpts(s.unidad) });
+  } else {
+    charts[s.i] = new Chart(ctx, { type:'line',
+      data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
+      options: baseOpts(s.unidad) });
+  }
 });
 
 // Event listeners para botones de filtro
@@ -363,17 +410,24 @@ document.querySelectorAll('.filtro').forEach(btn => {
     const rango = this.dataset.rango;
     const serie = SERIES[idx];
     if (!serie || !charts[idx]) return;
-    
+
     // Actualizar estado del botón
     filtrosContainer.querySelectorAll('.filtro').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
-    
+
     // Filtrar datos
     const datFiltrados = filtrarDatos(serie, rango);
-    
+
     // Redibujar gráfico
     charts[idx].data.labels = datFiltrados.x;
-    charts[idx].data.datasets[0].data = datFiltrados.y;
+    if (serie.kind === 'combo') {
+      const coloresBarras = datFiltrados.flujo.map(v => (v||0) >= 0 ? '#256D5B' : '#B4341F');
+      charts[idx].data.datasets[0].data = datFiltrados.flujo;
+      charts[idx].data.datasets[0].backgroundColor = coloresBarras;
+      charts[idx].data.datasets[1].data = datFiltrados.y;
+    } else {
+      charts[idx].data.datasets[0].data = datFiltrados.y;
+    }
     charts[idx].update('none');
   });
 });
