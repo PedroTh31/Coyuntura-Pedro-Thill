@@ -8,9 +8,38 @@ start_date: "2004-01-01"   # se baja historia larga; cada gráfico se recorta co
 indicadores:
 
   # ---------------- PRECIOS ----------------
-  - {nombre: "Inflación mensual (IPC)", bloque: precios, grupo: "Precios", fuente: argentinadatos, endpoint: "finanzas/indices/inflacion", unidad: "% mensual"}
+  - {nombre: "Inflación mensual (IPC)", bloque: precios, grupo: "Precios", fuente: argentinadatos, endpoint: "finanzas/indices/inflacion", unidad: "% mensual", barras: true}
   - {nombre: "Inflación interanual (IPC)", bloque: precios, grupo: "Precios", calculo: interanual, base_id: "148.3_INIVELNAL_DICI_M_26", unidad: "% i.a.", nota: "Variación interanual calculada como (IPC_t / IPC_t-12m - 1) × 100 a partir del IPC Nacional Nivel general de datos.gob.ar."}
   - {nombre: "IPC Nacional - Nivel general", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice"}
+
+  # -- IPC por categoría analítica: Núcleo / Regulados / Estacionales (INDEC no publica
+  #    ponderadores para esta clasificación específica -> variación % simple, sin ponderar) --
+  - {nombre: "IPC Núcleo (var. mensual)", bloque: precios, grupo: "Precios", calculo: mensual, base_id: "148.3_INUCLEONAL_DICI_M_19", unidad: "% mensual", solo_componente: true}
+  - {nombre: "IPC Regulados (var. mensual)", bloque: precios, grupo: "Precios", calculo: mensual, base_id: "148.3_IREGULANAL_DICI_M_22", unidad: "% mensual", solo_componente: true}
+  - {nombre: "IPC Estacionales (var. mensual)", bloque: precios, grupo: "Precios", calculo: mensual, base_id: "148.3_IESTACINAL_DICI_M_25", unidad: "% mensual", solo_componente: true}
+  - {nombre: "Inflación mensual por categoría (Núcleo/Regulados/Estacionales)", bloque: precios, grupo: "Precios", vista: overlay, series: ["IPC Núcleo (var. mensual)", "IPC Regulados (var. mensual)", "IPC Estacionales (var. mensual)"], unidad: "% mensual", nota: "Variación % mensual de cada categoría (dataset 148, INDEC/datos.gob.ar), SIN ponderar: a diferencia de las divisiones de consumo (que sí tienen ponderador publicado, ver Cuadro 7), el INDEC no publica un ponderador específico para la clasificación Núcleo/Regulados/Estacionales. No representa incidencia, sólo la variación de precios propia de cada categoría."}
+
+  # -- Incidencia en inflación por división de consumo (barras apiladas, ponderada) --
+  # Ponderador nacional = Σ (peso de la región en el gasto total × peso de la división en esa
+  # región), fórmula (14)/(15) de INDEC, "Metodología del IPC" N°32 (nov-2019), pág. 23 (Cuadro 6:
+  # pesos regionales GBA 0,447 / Pampeana 0,342 / NEA 0,045 / NOA 0,069 / Cuyo 0,052 / Patagonia
+  # 0,046) aplicada a la estructura de ponderaciones regionales por división del Cuadro 7 (pág.
+  # 45-47, base dic-2016). PDF guardado en fuentes/indec_metodologia_ipc_nacional_2019.pdf.
+  # Validado: la suma de incidencias mensuales de las 12 divisiones reproduce la variación real
+  # del nivel general con una brecha de ~0,03pp (aproximación de ponderador fijo base dic-2016).
+  - {nombre: "IPC división: Alimentos y bebidas no alcohólicas", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IALIMENNAL_DICI_M_45", unidad: "índice", peso_nacional: 0.2700, solo_componente: true}
+  - {nombre: "IPC división: Bebidas alcohólicas y tabaco", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IBEBIDANAL_DICI_M_39", unidad: "índice", peso_nacional: 0.0349, solo_componente: true}
+  - {nombre: "IPC división: Prendas de vestir y calzado", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IPRENDANAL_DICI_M_35", unidad: "índice", peso_nacional: 0.0992, solo_componente: true}
+  - {nombre: "IPC división: Vivienda, agua, electricidad y otros combustibles", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IVIVIENNAL_DICI_M_52", unidad: "índice", peso_nacional: 0.0941, solo_componente: true}
+  - {nombre: "IPC división: Equipamiento y mantenimiento del hogar", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IEQUIPANAL_DICI_M_46", unidad: "índice", peso_nacional: 0.0637, solo_componente: true}
+  - {nombre: "IPC división: Salud", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_ISALUDNAL_DICI_M_18", unidad: "índice", peso_nacional: 0.0801, solo_componente: true}
+  - {nombre: "IPC división: Transporte", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_ITRANSPNAL_DICI_M_23", unidad: "índice", peso_nacional: 0.1100, solo_componente: true}
+  - {nombre: "IPC división: Comunicación", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_ICOMUNINAL_DICI_M_27", unidad: "índice", peso_nacional: 0.0282, solo_componente: true}
+  - {nombre: "IPC división: Recreación y cultura", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IRECREANAL_DICI_M_31", unidad: "índice", peso_nacional: 0.0726, solo_componente: true}
+  - {nombre: "IPC división: Educación", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IEDUCACNAL_DICI_M_22", unidad: "índice", peso_nacional: 0.0232, solo_componente: true}
+  - {nombre: "IPC división: Restaurantes y hoteles", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IRESTAUNAL_DICI_M_33", unidad: "índice", peso_nacional: 0.0898, solo_componente: true}
+  - {nombre: "IPC división: Bienes y servicios varios", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IBIENESNAL_DICI_M_36", unidad: "índice", peso_nacional: 0.0353, solo_componente: true}
+  - {nombre: "Incidencia en inflación por división de consumo", bloque: precios, grupo: "Precios", vista: incidencia_stack, series: ["IPC división: Alimentos y bebidas no alcohólicas", "IPC división: Bebidas alcohólicas y tabaco", "IPC división: Prendas de vestir y calzado", "IPC división: Vivienda, agua, electricidad y otros combustibles", "IPC división: Equipamiento y mantenimiento del hogar", "IPC división: Salud", "IPC división: Transporte", "IPC división: Comunicación", "IPC división: Recreación y cultura", "IPC división: Educación", "IPC división: Restaurantes y hoteles", "IPC división: Bienes y servicios varios"], unidad: "p.p.", nota: "Incidencia mensual = variación % de cada división × ponderador nacional de la división. Ponderador nacional calculado como Σ (peso de la región en el gasto total × peso de la división en esa región), fórmula oficial del INDEC (Metodología del IPC N°32, nov-2019, fórmulas 14/15, pág. 23), con los pesos regionales del Cuadro 6 y la estructura de ponderaciones por división del Cuadro 7 (base diciembre 2016). PDF fuente en fuentes/indec_metodologia_ipc_nacional_2019.pdf. La suma de las 12 incidencias reproduce la variación real del nivel general con una brecha de ~0,03 puntos porcentuales, propia de usar un ponderador fijo de base dic-2016 en vez del encadenamiento más fino que aplica el INDEC internamente."}
 
   # ---------------- DÓLAR ----------------
   - {nombre: "Dólar oficial", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: oficial, unidad: "$/USD (venta)"}
@@ -89,9 +118,9 @@ indicadores:
   #    campos "total_X" por bloque/región de este dataset: se comprobó que al menos uno (total UE-28,
   #    77.3_IETU_0_A_26) está mal agregado en la fuente — reporta 1/26 de la suma real de sus propios
   #    países miembro. Por eso se listan países individuales, cada uno una serie propia verificada) --
-  - {nombre: "Exportaciones a China", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEC_0_A_23", unidad: "millones de USD", solo_overlay: true}
-  - {nombre: "Exportaciones a Brasil", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEB_0_A_24", unidad: "millones de USD", solo_overlay: true}
-  - {nombre: "Exportaciones a Estados Unidos", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEEU_0_A_32", unidad: "millones de USD", solo_overlay: true}
-  - {nombre: "Exportaciones a Chile", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IECH_0_A_23", unidad: "millones de USD", solo_overlay: true}
-  - {nombre: "Exportaciones a India", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEI_0_A_23", unidad: "millones de USD", solo_overlay: true}
+  - {nombre: "Exportaciones a China", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEC_0_A_23", unidad: "millones de USD", solo_componente: true}
+  - {nombre: "Exportaciones a Brasil", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEB_0_A_24", unidad: "millones de USD", solo_componente: true}
+  - {nombre: "Exportaciones a Estados Unidos", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEEU_0_A_32", unidad: "millones de USD", solo_componente: true}
+  - {nombre: "Exportaciones a Chile", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IECH_0_A_23", unidad: "millones de USD", solo_componente: true}
+  - {nombre: "Exportaciones a India", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEI_0_A_23", unidad: "millones de USD", solo_componente: true}
   - {nombre: "Exportaciones a principales destinos", bloque: externo, grupo: "Exportaciones por destino", vista: overlay, series: ["Exportaciones a China", "Exportaciones a Brasil", "Exportaciones a Estados Unidos", "Exportaciones a Chile", "Exportaciones a India"], unidad: "millones de USD", nota: "Los 5 mayores destinos de exportación verificados individualmente (dataset ICA 77.3, INDEC). No se usan los totales por bloque/región de ese dataset: se detectó que al menos el campo 'total UE-28' está mal agregado en la fuente (reporta valores ~26 veces menores a la suma de sus propios países miembro)."}

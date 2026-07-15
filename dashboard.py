@@ -161,34 +161,102 @@ def _serie_overlay(idx, ind, historico):
     return card, serie_js
 
 
+COLORES_INCIDENCIA = ["#C62828", "#0767A7", "#EF6C00", "#50B7B2", "#6A1B99", "#8D2D04",
+                       "#2E7D33", "#EC407A", "#F79D00", "#3A3796", "#C2185B", "#6EA015"]
+
+
+def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
+    """
+    Barras apiladas de incidencia mensual: para cada indicador listado en
+    ind['series'] (un índice de nivel, ej. una división del IPC), calcula su
+    variación % mes a mes y la multiplica por su 'peso_nacional' declarado en
+    el yaml. La suma de las barras apiladas de un mes aproxima la variación
+    del total (ver 'nota' del indicador para la fuente del ponderador).
+    """
+    partes = []
+    fechas_todas = set()
+    for nombre_serie in ind["series"]:
+        peso = indicadores_por_nombre.get(nombre_serie, {}).get("peso_nacional")
+        g = historico[historico["indicador"] == nombre_serie].sort_values("fecha")
+        if g.empty or peso is None:
+            continue
+        g = g.copy()
+        g["incidencia"] = g["valor"].pct_change() * 100 * peso
+        g = g.dropna(subset=["incidencia"])
+        partes.append((nombre_serie, g))
+        fechas_todas.update(g["fecha"])
+    if not partes:
+        return None
+    fechas_full = sorted(fechas_todas)
+
+    desde = ind.get("desde", DESDE_GENERAL)
+    fechas_default = [d for d in fechas_full if d >= pd.to_datetime(desde)]
+    if len(fechas_default) < 2:
+        fechas_default = fechas_full
+
+    datasets = []
+    for i, (nombre_serie, g) in enumerate(partes):
+        etiqueta = nombre_serie.replace("IPC división: ", "")
+        valores_por_fecha = dict(zip(g["fecha"], g["incidencia"]))
+        def _en(fechas_, vpf=valores_por_fecha):
+            return [round(float(vpf[d]), 3) if d in vpf else None for d in fechas_]
+        datasets.append(dict(label=etiqueta, color=COLORES_INCIDENCIA[i % len(COLORES_INCIDENCIA)],
+            y=_en(fechas_default), full_y=_en(fechas_full)))
+
+    # tarjeta: suma de incidencias del último mes (aproxima la variación del nivel general)
+    ultima_fecha = fechas_full[-1]
+    total_ultimo = sum(d["y"][-1] or 0 for d in datasets if fechas_default and fechas_default[-1] == ultima_fecha)
+    valores_totales = [sum(v or 0 for v in vals) for vals in zip(*[d["y"] for d in datasets])] if datasets else []
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        valor=_fmt_num(total_ultimo), pct=None, marca_fecha=None,
+        maxv=_fmt_num(max(valores_totales)) if valores_totales else "s/d",
+        minv=_fmt_num(min(valores_totales)) if valores_totales else "s/d", nota_num=None)
+
+    serie_js = dict(i=idx, kind="incidencia", unidad=ind.get("unidad", ""),
+        x=[d.strftime("%m/%y") for d in fechas_default],
+        full_x=[d.strftime("%m/%y") for d in fechas_full],
+        full_dates=[d.isoformat() for d in fechas_full],
+        datasets=datasets)
+    return card, serie_js
+
+
+def _registrar_nota(nota, nombre, notas_dict):
+    """Registra (o encuentra) el número de asterisco de una nota, dedupe por texto."""
+    if not nota:
+        return None
+    if nota not in notas_dict:
+        nota_num = len(notas_dict) + 1
+        notas_dict[nota] = {"numero": nota_num, "indicadores": [nombre]}
+    else:
+        nota_num = notas_dict[nota]["numero"]
+        notas_dict[nota]["indicadores"].append(nombre)
+    return nota_num
+
+
 def generar(historico, config_indicadores):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
     notas_dict = {}  # {numero_nota: {"texto": ..., "indicadores": [...]}}
+    indicadores_por_nombre = {i["nombre"]: i for i in config_indicadores}
     idx = 0
     for ind in config_indicadores:
         nombre = ind["nombre"]; bloque = ind["bloque"]; grupo = ind.get("grupo", "Otros")
         unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
         nota = ind.get("nota")
-        if ind.get("solo_overlay"):
-            continue  # sólo alimenta un gráfico 'vista: overlay'; no tiene tarjeta propia
-        if ind.get("vista") == "overlay":
-            entrada = _serie_overlay(idx, ind, historico)
+        if ind.get("solo_componente"):
+            continue  # sólo alimenta un 'vista: overlay'/'incidencia_stack'; no tiene tarjeta propia
+        if ind.get("vista") in ("overlay", "incidencia_stack"):
+            constructor = _serie_overlay if ind["vista"] == "overlay" else _serie_incidencia
+            args = (idx, ind, historico) if ind["vista"] == "overlay" else (idx, ind, historico, indicadores_por_nombre)
+            entrada = constructor(*args)
             if entrada is None:
                 continue
-            card, serie_js_overlay = entrada
-            nota_num = None
-            if nota:
-                if nota not in notas_dict:
-                    nota_num = len(notas_dict) + 1
-                    notas_dict[nota] = {"numero": nota_num, "indicadores": [nombre]}
-                else:
-                    nota_num = notas_dict[nota]["numero"]
-                    notas_dict[nota]["indicadores"].append(nombre)
-            card["nota_num"] = nota_num
+            card, serie_js_compuesta = entrada
+            card["nota_num"] = _registrar_nota(nota, nombre, notas_dict)
             charts.append(card)
-            series_js.append(serie_js_overlay)
+            series_js.append(serie_js_compuesta)
             idx += 1
             continue
         serie = historico[historico["indicador"] == nombre].sort_values("fecha").reset_index(drop=True)
@@ -211,16 +279,7 @@ def generar(historico, config_indicadores):
         if len(s) < 2:
             s = serie
         ult, pct = _variacion(serie)
-        # Registrar nota si existe
-        nota_num = None
-        if nota:
-            nota_key = nota  # usar el texto de la nota como clave para deduplicar
-            if nota_key not in notas_dict:
-                nota_num = len(notas_dict) + 1
-                notas_dict[nota_key] = {"numero": nota_num, "indicadores": [nombre]}
-            else:
-                nota_num = notas_dict[nota_key]["numero"]
-                notas_dict[nota_key]["indicadores"].append(nombre)
+        nota_num = _registrar_nota(nota, nombre, notas_dict)
         # Marca de "datos hasta MM/AAAA" para series que pueden discontinuarse (ej. tasa
         # de política monetaria). Se calcula de la última fecha REAL de la serie en cada
         # corrida: si la fuente retoma la publicación, la marca se actualiza o desaparece
@@ -254,6 +313,7 @@ def generar(historico, config_indicadores):
             s_x = [d.strftime("%d/%m/%y") for d in s["fecha"]]
             s_y = [round(float(v), 2) for v in s["valor"]]
             series_js.append(dict(i=idx, color=color, unidad=unidad,
+                kind="bar" if ind.get("barras") else "line",
                 x=s_x, y=s_y,  # Datos filtrados (default)
                 full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
                 min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat()))
@@ -459,7 +519,7 @@ function calcFechaCorte(rango) {
 }
 
 function filtrarDatos(s, rango) {
-  if (s.kind === 'overlay') {
+  if (s.kind === 'overlay' || s.kind === 'incidencia') {
     if (rango === 'default') {
       return { x: s.x, datasets: s.datasets.map(d => ({ label: d.label, y: d.y })) };
     }
@@ -509,6 +569,15 @@ const comboOpts = (unidad) => ({
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
+const incidenciaOpts = (unidad) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:9}, color:'#555555'}},
+    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}` } } },
+  scales:{ x:{ stacked:true, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ stacked:true, ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
+});
+
 SERIES.forEach(s => {
   const el = document.getElementById('ch'+s.i);
   if(!el) return;
@@ -523,6 +592,14 @@ SERIES.forEach(s => {
     charts[s.i] = new Chart(ctx, { type:'line', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, borderColor:d.color, backgroundColor:d.color+'10', fill:false }
       )) }, options: overlayOpts(s.unidad) });
+  } else if (s.kind === 'incidencia') {
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
+        { label:d.label, data:d.y, backgroundColor:d.color, stack:'incidencia' }
+      )) }, options: incidenciaOpts(s.unidad) });
+  } else if (s.kind === 'bar') {
+    charts[s.i] = new Chart(ctx, { type:'bar',
+      data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:s.color, borderRadius:2 }] },
+      options: baseOpts(s.unidad) });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
@@ -553,7 +630,7 @@ document.querySelectorAll('.filtro').forEach(btn => {
       charts[idx].data.datasets[0].data = datFiltrados.flujo;
       charts[idx].data.datasets[0].backgroundColor = coloresBarras;
       charts[idx].data.datasets[1].data = datFiltrados.y;
-    } else if (serie.kind === 'overlay') {
+    } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
       datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
     } else {
       charts[idx].data.datasets[0].data = datFiltrados.y;

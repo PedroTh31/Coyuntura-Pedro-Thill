@@ -73,6 +73,15 @@ def _calcular(ind, start):
         m = m[m["valor_prev"] > 0]
         m["valor"] = (m["valor"] / m["valor_prev"] - 1) * 100
         return m[["fecha", "valor"]].dropna().reset_index(drop=True)
+    if tipo == "mensual":
+        # Variación mes a mes: (valor_t / valor_t-1 - 1) * 100, de un índice de nivel
+        base_id = ind.get("base_id")
+        if not base_id:
+            raise ValueError(f"Cálculo 'mensual' requiere 'base_id' en {ind['nombre']}")
+        s = fetch_datos_gob(base_id, start).sort_values("fecha").copy()
+        s = s[s["valor"] > 0]
+        s["valor"] = s["valor"].pct_change() * 100
+        return s[["fecha", "valor"]].dropna().reset_index(drop=True)
     raise ValueError(f"cálculo desconocido: {tipo}")
 
 
@@ -206,7 +215,7 @@ def main():
 
     for ind in indicadores:
         nombre = ind["nombre"]
-        if ind.get("vista") == "overlay":
+        if ind.get("vista") in ("overlay", "incidencia_stack"):
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         try:
             if "calculo" in ind:
