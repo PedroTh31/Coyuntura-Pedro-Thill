@@ -20,9 +20,14 @@ OUT = Path(__file__).resolve().parent / "docs"
 MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diarias largas
 UMBRAL_DISCONTINUADA_DIAS = 90  # a partir de cuántos días sin datos se marca "sin datos nuevos desde..."
 
-ACENTO = {"precios": "#B4341F", "monetario_financiero": "#1D4E89",
-          "real": "#256D5B", "externo": "#0E7C86", "social": "#B26B00", "fiscal": "#7A5195"}
-TINTA = "#1A1A1A"; PAPEL = "#FBFAF7"; GRIS = "#9A968C"
+# Paleta institucional (Ministerio de Economía / argentina.gob.ar, sistema "Poncho"):
+# tokens oficiales tomados de poncho.min.css (--arg-azul, --arg-enlace, --arg-rojo, etc.),
+# elegidos para separarse bien entre sí incluso con daltonismo (protanopia/deuteranopia).
+ACENTO = {"precios": "#C62828", "monetario_financiero": "#0767A7",
+          "externo": "#EF6C00", "real": "#50B7B2", "social": "#6A1B99", "fiscal": "#8D2D04"}
+AZUL_MARCA = "#232D4F"     # --arg-azul: navy institucional (header, footer, texto fuerte)
+AZUL_ENLACE = "#0767A7"    # --arg-enlace: azul de interacción (links, botón activo)
+TINTA = "#141414"; PAPEL = "#FFFFFF"; GRIS = "#555555"
 ORDEN_BLOQUES = ["precios", "monetario_financiero", "externo", "real", "social", "fiscal"]
 TITULO_BLOQUE = {"precios": "Precios", "monetario_financiero": "Monetario y financiero",
                  "real": "Actividad real", "externo": "Sector externo",
@@ -112,7 +117,7 @@ def generar(historico, config_indicadores):
     idx = 0
     for ind in config_indicadores:
         nombre = ind["nombre"]; bloque = ind["bloque"]; grupo = ind.get("grupo", "Otros")
-        unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, "#1D4E89")
+        unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
         nota = ind.get("nota")
         serie = historico[historico["indicador"] == nombre].sort_values("fecha").reset_index(drop=True)
         if serie.empty:
@@ -186,7 +191,7 @@ def generar(historico, config_indicadores):
 
 def _color_semaforo(v):
     if v is None or pd.isna(v):
-        return "#E7E3D8", TINTA
+        return "#F0F0F0", TINTA
     if v > 1:  return "#DCEEDD", "#1E5C2E"
     if v < -1: return "#F6DCD8", "#8A2A1C"
     return "#FBF0D5", "#7A5A10"
@@ -284,60 +289,70 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
         if tiene_sem:
             cuerpo += _tabla_semaforo(semaforo, fecha_sem)
         secciones += (f'<section class="bloque" id="{bloque}"><h2>'
-                      f'<span class="dot" style="background:{ACENTO.get(bloque,"#1D4E89")}"></span>'
+                      f'<span class="dot" style="background:{ACENTO.get(bloque,AZUL_ENLACE)}"></span>'
                       f'{TITULO_BLOQUE.get(bloque, bloque)}</h2>{cuerpo}</section>')
 
     plantilla = """<!doctype html><html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monitor de coyuntura · Argentina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-  :root { --papel:#FBFAF7; --tinta:#1A1A1A; --gris:#9A968C; }
+  /* Paleta institucional (argentina.gob.ar / Ministerio de Economía, sistema "Poncho") */
+  :root {
+    --papel:#FFFFFF; --fondo:#F4F6F8; --tinta:#141414; --gris:#555555; --gris-claro:#838383;
+    --borde:#DEE2E6; --hover:#F0F0F0; --azul-marca:#232D4F; --azul-enlace:#0767A7; --azul-claro:#68C3EF;
+  }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--papel); color:var(--tinta); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.4; }
-  .wrap { max-width:1180px; margin:0 auto; padding:32px 22px 80px; }
-  header { border-bottom:2px solid var(--tinta); padding-bottom:14px; margin-bottom:18px; }
-  header h1 { font-size:27px; margin:0; letter-spacing:-.02em; }
-  header .sub { color:var(--gris); font-size:13px; margin-top:4px; }
-  nav { display:flex; flex-wrap:wrap; gap:16px; margin-bottom:26px; font-size:13px; }
-  nav a { color:#1D4E89; text-decoration:none; } nav a:hover { text-decoration:underline; }
+  body { margin:0; background:var(--fondo); color:var(--tinta); font-family:"Encode Sans",system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.45; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 22px 80px; }
+  header.masthead { background:var(--azul-marca); color:#fff; margin-bottom:22px; }
+  .masthead-inner { max-width:1180px; margin:0 auto; padding:26px 22px; }
+  header h1 { font-size:26px; margin:0; font-weight:700; letter-spacing:-.01em; }
+  header .sub { color:#C8D0DA; font-size:13px; margin-top:6px; }
+  nav { display:flex; flex-wrap:wrap; gap:18px; margin:0 0 28px; padding-bottom:14px; border-bottom:1px solid var(--borde); font-size:13px; }
+  nav a { color:var(--azul-enlace); text-decoration:none; font-weight:600; } nav a:hover { text-decoration:underline; }
   .bloque { margin:40px 0; scroll-margin-top:16px; }
-  .bloque h2 { font-size:18px; display:flex; align-items:center; gap:9px; border-bottom:1px solid #E4E0D4; padding-bottom:8px; }
-  .sub { font-size:14px; margin:24px 0 12px; color:#444; }
+  .bloque h2 { font-size:18px; font-weight:700; display:flex; align-items:center; gap:9px; border-bottom:2px solid var(--azul-marca); padding-bottom:8px; color:var(--azul-marca); }
+  .sub { font-size:14px; font-weight:600; margin:24px 0 12px; color:var(--azul-marca); }
   .ref { color:var(--gris); font-weight:400; font-size:13px; }
   .nota { color:var(--gris); font-size:12px; margin:6px 0 14px; }
-  .nota-ref { font-size:10px; color:#B4341F; font-weight:600; margin-top:4px; text-align:center; }
+  .nota-ref { font-size:10px; color:var(--azul-enlace); font-weight:600; margin-top:4px; text-align:center; }
   .notas-list { margin:10px 0 14px 20px; font-size:12px; color:var(--gris); }
   .notas-list li { margin:6px 0; }
-  .notas-list strong { color:#1A1A1A; }
+  .notas-list strong { color:var(--tinta); }
   .dot { width:11px; height:11px; border-radius:2px; display:inline-block; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,460px)); justify-content:start; gap:18px; margin-bottom:8px; }
-  .cell { border:1px solid #ECE8DC; border-radius:10px; overflow:hidden; background:#fff; }
-  .card { border-left:3px solid var(--acc); padding:12px 14px 8px; }
+  .cell { border:1px solid var(--borde); border-radius:10px; overflow:hidden; background:var(--papel); box-shadow:0 1px 2px rgba(20,20,20,.04); }
+  .card { border-left:4px solid var(--acc); padding:12px 14px 8px; }
   .cn { font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--gris); min-height:28px; }
   .cv { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:24px; font-weight:600; margin:2px 0; }
   .cm { display:flex; justify-content:space-between; align-items:baseline; font-size:11px; }
   .chg { font-family:ui-monospace,monospace; font-weight:600; }
-  .chg.up { color:#B4341F; } .chg.down { color:#256D5B; } .chg.flat { color:var(--gris); }
+  .chg.up { color:#C62828; } .chg.down { color:#2E7D33; } .chg.flat { color:var(--gris); }
   .uni { color:var(--gris); }
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
-  .marca-fecha { color:#B26B00; background:#FBF0D5; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
+  .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
   .cbox { height:200px; padding:8px 10px 12px; }
   .tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; margin-bottom:8px; }
   .tabla th { text-align:right; color:var(--gris); font-weight:600; font-size:11px; text-transform:uppercase; padding:4px 10px; }
   .tabla th:first-child { text-align:left; }
   .tabla td { padding:8px 10px; text-align:right; border-radius:5px; font-family:ui-monospace,monospace; font-weight:600; }
-  .tabla td.sec { text-align:left; background:#fff; font-family:system-ui,sans-serif; font-weight:400; border:1px solid #ECE8DC; }
-  .tabla td.num { background:#fff; color:#333; border:1px solid #ECE8DC; }
+  .tabla td.sec { text-align:left; background:var(--papel); font-family:"Encode Sans",system-ui,sans-serif; font-weight:400; border:1px solid var(--borde); }
+  .tabla td.num { background:var(--papel); color:#333; border:1px solid var(--borde); }
   .filtros { display:flex; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
-  .filtro { background:#F5F2EB; border:1px solid #D8D3C9; color:#1A1A1A; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
-  .filtro:hover { background:#E8E3D6; border-color:#C4BDAC; }
-  .filtro.active { background:#1D4E89; color:#fff; border-color:#1D4E89; }
-  footer { color:var(--gris); font-size:12px; border-top:1px solid #E4E0D4; padding-top:14px; margin-top:20px; }
+  .filtro { background:var(--fondo); border:1px solid var(--borde); color:var(--tinta); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
+  .filtro:hover { background:var(--hover); border-color:var(--gris-claro); }
+  .filtro.active { background:var(--azul-enlace); color:#fff; border-color:var(--azul-enlace); }
+  footer { color:var(--gris); font-size:12px; border-top:1px solid var(--borde); padding-top:14px; margin-top:20px; }
 </style></head>
-<body><div class="wrap">
-  <header><h1>Monitor de coyuntura · Argentina</h1>
-  <div class="sub">Actualizado __AHORA__ · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div></header>
+<body>
+<header class="masthead"><div class="masthead-inner">
+  <h1>Monitor de coyuntura · Argentina</h1>
+  <div class="sub">Actualizado __AHORA__ · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div>
+</div></header>
+<div class="wrap">
   <nav>__NAV__</nav>
   __SECCIONES__
   __NOTAS__
@@ -351,8 +366,8 @@ const baseOpts = (unidad) => ({
   interaction:{ mode:'index', intersect:false },
   plugins:{ legend:{display:false}, tooltip:{
     callbacks:{ label:(c)=> c.parsed.y.toLocaleString('es-AR') + (unidad? ' '+unidad:'') } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#9A968C', font:{size:10} }, grid:{display:false} },
-           y:{ ticks:{ color:'#9A968C', font:{size:10} }, grid:{color:'#EDEAE0'} } },
+  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
@@ -390,11 +405,11 @@ function filtrarDatos(s, rango) {
 const comboOpts = (unidad) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#5A564C'}},
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
     tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${c.dataset.yAxisID==='y1' ? unidad : ''}` } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#9A968C', font:{size:10} }, grid:{display:false} },
-           y:{ position:'left', ticks:{ color:'#9A968C', font:{size:9} }, grid:{color:'#EDEAE0'}, title:{display:true, text:'Var. mensual', font:{size:9}, color:'#9A968C'} },
-           y1:{ position:'right', ticks:{ color:'#9A968C', font:{size:9} }, grid:{display:false}, title:{display:true, text:'Stock', font:{size:9}, color:'#9A968C'} } },
+  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:'Var. mensual', font:{size:9}, color:'#838383'} },
+           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:'Stock', font:{size:9}, color:'#838383'} } },
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
@@ -403,7 +418,7 @@ SERIES.forEach(s => {
   if(!el) return;
   const ctx = el.getContext('2d');
   if (s.kind === 'combo') {
-    const coloresBarras = s.flujo.map(v => (v||0) >= 0 ? '#256D5B' : '#B4341F');
+    const coloresBarras = s.flujo.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
         { type:'bar', label:'Variación mensual', data:s.flujo, backgroundColor:coloresBarras, yAxisID:'y' },
         { type:'line', label:'Stock', data:s.y, borderColor:s.color, backgroundColor:s.color+'14', yAxisID:'y1', fill:false }
@@ -434,7 +449,7 @@ document.querySelectorAll('.filtro').forEach(btn => {
     // Redibujar gráfico
     charts[idx].data.labels = datFiltrados.x;
     if (serie.kind === 'combo') {
-      const coloresBarras = datFiltrados.flujo.map(v => (v||0) >= 0 ? '#256D5B' : '#B4341F');
+      const coloresBarras = datFiltrados.flujo.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
       charts[idx].data.datasets[0].data = datFiltrados.flujo;
       charts[idx].data.datasets[0].backgroundColor = coloresBarras;
       charts[idx].data.datasets[1].data = datFiltrados.y;
