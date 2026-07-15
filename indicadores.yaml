@@ -19,7 +19,7 @@ indicadores:
   - {nombre: "Dólar CCL", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: contadoconliqui, unidad: "$/USD (venta)"}
   # ---------------- BRECHA Y TIPO DE CAMBIO REAL ----------------
   - {nombre: "Brecha cambiaria (CCL/oficial)", bloque: monetario_financiero, grupo: "Brecha y TCR", calculo: brecha, casa_alta: contadoconliqui, casa_base: oficial, unidad: "%", nota: "Brecha calculada como (CCL/oficial - 1) × 100 a partir de cotizaciones diarias de ArgentinaDatos."}
-  - {nombre: "Tipo de cambio real multilateral", bloque: monetario_financiero, grupo: "Brecha y TCR", fuente: datos_gob, id: "116.4_TCRZE_2015_D_36_4", unidad: "índice", nota: "Serie diaria (116.4_TCRZE_2015_D_36_4). Reemplaza a la mensual 116.3_TCRMA_0_M_36, discontinuada por el BCRA en datos.gob.ar desde 12/2024. La serie diaria también se publica con rezago (~5-6 meses) porque depende de IPC de varios países."}
+  - {nombre: "Tipo de cambio real multilateral", bloque: monetario_financiero, grupo: "Brecha y TCR", fuente: datos_gob, id: "116.4_TCRZE_2015_D_36_4", unidad: "índice", rezago_normal_dias: 210, nota: "Serie diaria (116.4_TCRZE_2015_D_36_4). Reemplaza a la mensual 116.3_TCRMA_0_M_36, discontinuada por el BCRA en datos.gob.ar desde 12/2024. La serie diaria también se publica con rezago (~5-6 meses) porque depende de IPC de varios países."}
 
   # ---------------- RIESGO PAÍS ----------------
   - {nombre: "Riesgo país (EMBI)", bloque: monetario_financiero, grupo: "Riesgo país", fuente: argentinadatos, endpoint: "finanzas/indices/riesgo-pais", unidad: "puntos básicos"}

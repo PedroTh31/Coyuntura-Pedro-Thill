@@ -76,11 +76,66 @@ def _calcular(ind, start):
     raise ValueError(f"cálculo desconocido: {tipo}")
 
 
-def _avisar(nombre: str, motivo: str):
+def _avisar(nombre: str, motivo: str, titulo: str = "Indicador sin datos"):
     """Advertencia visible: imprime en el log Y emite una anotación de GitHub
     Actions (aparece en el resumen del run, sin tener que abrir el log)."""
     print(f"  [ADVERTENCIA]  {nombre}: {motivo}")
-    print(f"::warning title=Indicador sin datos::{nombre} — {motivo}")
+    print(f"::warning title={titulo}::{nombre} — {motivo}")
+
+
+MULTIPLICADOR_REZAGO = 4  # tolerancia: n veces el intervalo típico entre observaciones
+PISO_DIAS_REZAGO = 14     # nunca avisar antes de esto, ni para series diarias
+
+
+def chequear_frescura(historico: pd.DataFrame, indicadores: list[dict]):
+    """
+    Compara la última fecha de cada serie contra su propia frecuencia habitual
+    (mediana de intervalos entre observaciones en los últimos 2 años) y avisa
+    si el rezago actual supera esa frecuencia por un margen amplio. Data-driven
+    por indicador (no una frecuencia fija por nombre) para tolerar los rezagos
+    normales de publicación de INDEC/BCRA (ej. EMAE suele publicarse con ~2-3
+    meses de rezago) sin generar falsos positivos.
+
+    Los indicadores marcados 'marca_fecha: true' en el yaml (discontinuaciones
+    ya documentadas y con nota, ej. tasa de política monetaria) se excluyen:
+    ya avisan de otra forma (nota + badge en el dashboard) y no deben generar
+    ruido repetido en cada corrida.
+
+    Un indicador puede declarar 'rezago_normal_dias: N' si tiene un rezago de
+    publicación estructural conocido y documentado en su 'nota' (ej. el TCR
+    multilateral depende del IPC de varios países y llega ~5-6 meses tarde
+    de forma sistemática, no por una falla puntual); ese valor pone un piso
+    adicional al umbral para no repetir la misma alerta todos los días.
+    """
+    hoy = pd.Timestamp.today().normalize()
+    nombres_excluidos = {ind["nombre"] for ind in indicadores if ind.get("marca_fecha")}
+    rezago_normal = {ind["nombre"]: ind["rezago_normal_dias"] for ind in indicadores if ind.get("rezago_normal_dias")}
+    rezagados = []
+
+    for nombre, g in historico.groupby("indicador"):
+        if nombre in nombres_excluidos:
+            continue
+        g = g.sort_values("fecha")
+        ultima = g["fecha"].max()
+        dias_atraso = (hoy - ultima).days
+
+        reciente = g[g["fecha"] >= ultima - pd.DateOffset(years=2)]
+        gaps = reciente["fecha"].diff().dt.days.dropna()
+        gap_tipico = gaps.median() if len(gaps) >= 2 else None
+        umbral = max(gap_tipico * MULTIPLICADOR_REZAGO, PISO_DIAS_REZAGO) if gap_tipico else 45
+        umbral = max(umbral, rezago_normal.get(nombre, 0))
+
+        if dias_atraso > umbral:
+            motivo = (f"último dato del {ultima.date()}, {dias_atraso} días de rezago "
+                      f"(umbral tolerado ~{round(umbral)} días para su frecuencia habitual)")
+            _avisar(nombre, motivo, titulo="Serie con rezago anormal")
+            rezagados.append((nombre, dias_atraso, round(umbral)))
+
+    if rezagados:
+        print(f"\n{len(rezagados)} indicador(es) con rezago mayor al esperado (chequeo de frescura):")
+        for nombre, dias, umbral in rezagados:
+            print(f"  - {nombre}: {dias} días de rezago (umbral ~{umbral})")
+    return rezagados
 
 
 def main():
@@ -121,6 +176,7 @@ def main():
     historico = storage.actualizar(nuevos)
     print(f"\nHistorico total: {len(historico)} filas, "
           f"{historico['indicador'].nunique()} indicadores.")
+    chequear_frescura(historico, indicadores)
     dashboard.generar(historico, indicadores)
     print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
 
