@@ -40,25 +40,44 @@ def _get(url: str, params: dict | None = None, reintentos: int = 3) -> requests.
 # ---------------------------------------------------------------------------
 # 1) apis.datos.gob.ar/series  -> el backbone: +30.000 series oficiales
 # ---------------------------------------------------------------------------
+LIMITE_PAGINA_DATOS_GOB = 5000  # tope máximo de filas por página que acepta la API (400 si se pide más)
+
+
 def fetch_datos_gob(serie_id: str, start_date: str | None = None) -> pd.DataFrame:
     """
-    Trae una serie de la API de Series de Tiempo de la Nación.
+    Trae una serie de la API de Series de Tiempo de la Nación, paginando con
+    el parámetro 'start' (offset de filas) hasta cubrir el 'count' total que
+    informa la API. Necesario para series diarias largas (BADLAR, etc.) que
+    ya superan las 5000 observaciones: sin paginar, quedan cortadas para
+    siempre en la fila 5000 y el indicador se congela en silencio.
 
     serie_id : id de la serie (ej '143.3_NO_PR_2004_A_21'). Buscalos con buscar_series.py
     """
-    params = {"ids": serie_id, "format": "json", "limit": 5000}
-    if start_date:
-        params["start_date"] = start_date
+    url = "https://apis.datos.gob.ar/series/api/series/"
+    data = []
+    offset = 0
+    total = None
+    while total is None or offset < total:
+        params = {"ids": serie_id, "format": "json", "limit": LIMITE_PAGINA_DATOS_GOB, "start": offset}
+        if start_date:
+            params["start_date"] = start_date
+        payload = _get(url, params=params).json()
+        pagina = payload.get("data", [])
+        if not pagina:
+            break
+        data.extend(pagina)
+        total = payload.get("count", len(data))
+        offset += len(pagina)
+        if len(pagina) < LIMITE_PAGINA_DATOS_GOB:
+            break  # última página (vino incompleta)
 
-    r = _get("https://apis.datos.gob.ar/series/api/series/", params=params)
-    data = r.json().get("data", [])
     if not data:
         return pd.DataFrame(columns=["fecha", "valor"])
 
     df = pd.DataFrame(data, columns=["fecha", "valor"])
     df["fecha"] = pd.to_datetime(df["fecha"])
     df["valor"] = pd.to_numeric(df["valor"], errors="coerce")
-    return df.dropna().sort_values("fecha").reset_index(drop=True)
+    return df.dropna().drop_duplicates(subset="fecha").sort_values("fecha").reset_index(drop=True)
 
 
 # ---------------------------------------------------------------------------

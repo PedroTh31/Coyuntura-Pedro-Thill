@@ -18,6 +18,7 @@ import pandas as pd
 DESDE_GENERAL = "2024-01-01"
 OUT = Path(__file__).resolve().parent / "docs"
 MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diarias largas
+UMBRAL_DISCONTINUADA_DIAS = 90  # a partir de cuántos días sin datos se marca "sin datos nuevos desde..."
 
 ACENTO = {"precios": "#B4341F", "monetario_financiero": "#1D4E89",
           "real": "#256D5B", "externo": "#0E7C86", "social": "#B26B00", "fiscal": "#7A5195"}
@@ -143,8 +144,17 @@ def generar(historico, config_indicadores):
             else:
                 nota_num = notas_dict[nota_key]["numero"]
                 notas_dict[nota_key]["indicadores"].append(nombre)
+        # Marca de "datos hasta MM/AAAA" para series que pueden discontinuarse (ej. tasa
+        # de política monetaria). Se calcula de la última fecha REAL de la serie en cada
+        # corrida: si la fuente retoma la publicación, la marca se actualiza o desaparece
+        # sola (no queda un texto fijo desactualizado).
+        marca_fecha = None
+        if ind.get("marca_fecha"):
+            dias_atraso = (pd.Timestamp.today().normalize() - serie["fecha"].max()).days
+            if dias_atraso > UMBRAL_DISCONTINUADA_DIAS:
+                marca_fecha = f"Sin datos nuevos desde {serie['fecha'].max().strftime('%m/%Y')}"
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
-            unidad=unidad, valor=_fmt_num(ult), pct=pct,
+            unidad=unidad, valor=_fmt_num(ult), pct=pct, marca_fecha=marca_fecha,
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num))
         if ind.get("vista") == "reservas_combo":
             series_js.append(_serie_reservas_combo(idx, color, unidad, serie, desde))
@@ -221,12 +231,14 @@ def _card_cell(c):
     if c.get("nota_num"):
         nota_asterisco = "*" * c["nota_num"]
         nota_mark = f'<div class="nota-ref">{nota_asterisco}</div>'
+    # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar())
+    marca_html = f'<div class="marca-fecha">{c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
     # Botones de filtro
     filtros = f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button></div>'
     return (f'<div class="cell"><div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div><div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
-            f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div></div>'
+            f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
             f'<div class="cbox"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
 
 
@@ -309,6 +321,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .chg.up { color:#B4341F; } .chg.down { color:#256D5B; } .chg.flat { color:var(--gris); }
   .uni { color:var(--gris); }
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
+  .marca-fecha { color:#B26B00; background:#FBF0D5; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
   .cbox { height:200px; padding:8px 10px 12px; }
   .tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; margin-bottom:8px; }
   .tabla th { text-align:right; color:var(--gris); font-weight:600; font-size:11px; text-transform:uppercase; padding:4px 10px; }
