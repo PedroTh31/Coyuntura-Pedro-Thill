@@ -41,7 +41,7 @@ indicadores:
   - {nombre: "EMAE (actividad económica)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "143.3_NO_PR_2004_A_21", unidad: "índice 2004=100", desde: "2004-01-01"}
 
   # ---------------- SOCIAL ----------------
-  - {nombre: "Tasa de desempleo", bloque: social, grupo: "Social", fuente: datos_gob, id: "45.2_ECTDT_0_T_33", unidad: "% de la PEA"}
+  - {nombre: "Tasa de desempleo", bloque: social, grupo: "Social", fuente: datos_gob, id: "45.2_ECTDT_0_T_33", unidad: "% de la PEA", factor: 100, nota: "La fuente (datos.gob.ar) publica esta serie como fracción (0-1) pese a declararla 'Porcentaje'; se multiplica por 100 (factor: 100) para expresarla en puntos porcentuales."}
   - {nombre: "Salario real (deflactado por IPC)", bloque: social, grupo: "Social", calculo: real, nominal_id: "149.1_TL_INDIIOS_OCTU_0_21", deflactor_id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice base 100 al inicio", nota: "Salario real = salario nominal (149.1_TL_INDIIOS_OCTU_0_21) deflactado por IPC (148.3_INIVELNAL_DICI_M_26), rebased a 100 en el primer período disponible."}
 
   # ---------------- PRODUCCIÓN / CRÉDITO (nuevos, verificados) ----------------

@@ -138,6 +138,65 @@ def chequear_frescura(historico: pd.DataFrame, indicadores: list[dict]):
     return rezagados
 
 
+UMBRAL_FRACCION_SIN_ESCALAR = 1.5  # si una serie en "%" nunca supera esto, probablemente es 0-1 sin *100
+UMBRAL_CAMBIO_ESCALA = 50          # ratio (o su inverso) a partir del cual se avisa un salto de orden de magnitud
+
+
+def chequear_plausibilidad(historico: pd.DataFrame, indicadores: list[dict]):
+    """
+    Detecta el mismo tipo de error que 'Tasa de desempleo' tenía (fuente publica una
+    tasa como fracción 0-1 pese a declararla en '%'), para que no haga falta encontrarlo
+    a mano de nuevo. Dos chequeos:
+
+    1. Fracción sin escalar: si 'unidad' contiene '%' y el máximo histórico absoluto de
+       la serie nunca supera ~1.5, es sospechoso — una serie realmente en puntos
+       porcentuales casi siempre cruza el 1% alguna vez en su historia.
+    2. Cambio abrupto de escala entre corridas: si la fuente cambia de convención (ej.
+       empieza a publicar en otra unidad) el valor de una misma fecha ya existente puede
+       aparecer multiplicado/dividido por ~100 respecto a lo que ya teníamos guardado.
+    """
+    sospechosos = []
+    for ind in indicadores:
+        unidad = (ind.get("unidad") or "")
+        if "%" not in unidad:
+            continue
+        nombre = ind["nombre"]
+        g = historico[historico["indicador"] == nombre]
+        if g.empty:
+            continue
+        maximo = g["valor"].abs().max()
+        if maximo < UMBRAL_FRACCION_SIN_ESCALAR:
+            motivo = (f"unidad declarada '{unidad}' pero el máximo histórico es {maximo:.4g} "
+                      f"(nunca superó {UMBRAL_FRACCION_SIN_ESCALAR}) — probable fracción sin escalar (¿falta 'factor: 100'?)")
+            _avisar(nombre, motivo, titulo="Posible fracción sin escalar")
+            sospechosos.append(nombre)
+    return sospechosos
+
+
+def chequear_cambio_escala(previo: pd.DataFrame, nuevos: pd.DataFrame):
+    """
+    Compara, para las fechas que YA estaban guardadas y volvieron a traerse esta
+    corrida, el valor viejo contra el nuevo. Si difieren por un factor grande
+    (~100x, ~0.01x, etc.) en vez de ser iguales o levemente distintos (una fuente
+    puede corregir un dato), es señal de que la fuente cambió de escala/unidad de
+    un día para el otro.
+    """
+    saltos = []
+    comunes = previo.merge(nuevos, on=["fecha", "indicador"], suffixes=("_previo", "_nuevo"))
+    comunes = comunes[(comunes["valor_previo"].abs() > 1e-9) & (comunes["valor_nuevo"].abs() > 1e-9)]
+    if comunes.empty:
+        return saltos
+    comunes["ratio"] = comunes["valor_nuevo"] / comunes["valor_previo"]
+    for nombre, g in comunes.groupby("indicador"):
+        ratio_mediana = g["ratio"].median()
+        if ratio_mediana > UMBRAL_CAMBIO_ESCALA or ratio_mediana < 1 / UMBRAL_CAMBIO_ESCALA:
+            motivo = (f"el valor de fechas ya guardadas cambió ~{ratio_mediana:.3g}x respecto a lo que "
+                      f"había ({len(g)} fecha(s) comparada(s)) — posible cambio de escala/unidad en la fuente")
+            _avisar(nombre, motivo, titulo="Cambio abrupto de escala")
+            saltos.append(nombre)
+    return saltos
+
+
 def main():
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     start = cfg.get("start_date")
@@ -156,6 +215,8 @@ def main():
                 _avisar(nombre, "la fuente no devolvió datos (serie vacía)")
                 problemas.append((nombre, "vacío"))
                 continue
+            if ind.get("factor"):
+                serie = serie.assign(valor=serie["valor"] * ind["factor"])
             filas.append(_fila(serie, ind))
             print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()})")
         except Exception as e:
@@ -173,10 +234,13 @@ def main():
         return
 
     nuevos = pd.concat(filas, ignore_index=True)
+    previo = storage.cargar_largo()
+    chequear_cambio_escala(previo, nuevos)
     historico = storage.actualizar(nuevos)
     print(f"\nHistorico total: {len(historico)} filas, "
           f"{historico['indicador'].nunique()} indicadores.")
     chequear_frescura(historico, indicadores)
+    chequear_plausibilidad(historico, indicadores)
     dashboard.generar(historico, indicadores)
     print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
 

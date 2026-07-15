@@ -20,7 +20,7 @@ LARGO = DATA_DIR / "series_largo.csv"
 ANCHO = DATA_DIR / "series_ancho.csv"
 
 
-def _cargar_largo() -> pd.DataFrame:
+def cargar_largo() -> pd.DataFrame:
     if LARGO.exists():
         df = pd.read_csv(LARGO, parse_dates=["fecha"])
         return df
@@ -33,7 +33,7 @@ def actualizar(nuevos: pd.DataFrame) -> pd.DataFrame:
     Devuelve el histórico completo actualizado (formato largo).
     """
     DATA_DIR.mkdir(exist_ok=True)
-    previo = _cargar_largo()
+    previo = cargar_largo()
 
     combinado = pd.concat([previo, nuevos], ignore_index=True)
     combinado["fecha"] = pd.to_datetime(combinado["fecha"])

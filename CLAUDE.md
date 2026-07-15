@@ -30,13 +30,25 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `calculo: suma` + `componentes: [id1, id2]` → suma de series (ej. M1).
 - `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real).
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
+- `calculo: interanual` + `base_id` → variación % interanual de una serie de datos_gob.
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
 - `semaforo: true` → alimenta la tabla-semáforo del EMAE (no hace gráfico de línea).
 - `tabla: "Nombre"` → va a una tabla de valores (comercio exterior desagregado).
 - `desde: "AAAA-MM-DD"` → desde cuándo se ve ese gráfico (default 2024).
 - `grupo: "..."` → subtítulo bajo el que se agrupa en el dashboard.
+- `factor: N` → multiplica el valor crudo de la fuente por N antes de guardarlo (ej. `factor:
+  100` cuando la fuente publica una tasa como fracción 0-1 pese a declararla "Porcentaje").
+  Usar siempre esto en vez de parchear el número a mano en el código.
+- `marca_fecha: true` → si la serie lleva más de `UMBRAL_DISCONTINUADA_DIAS` sin datos
+  nuevos, el dashboard muestra un badge dinámico "Sin datos nuevos desde MM/AAAA" (se
+  recalcula cada corrida; desaparece solo si la fuente retoma la publicación). También
+  excluye al indicador del chequeo de frescura de `run.py` (ya avisa por otra vía).
+- `rezago_normal_dias: N` → para series con un rezago de publicación estructural conocido
+  (ej. el TCR multilateral depende del IPC de varios países); pone un piso al umbral del
+  chequeo de frescura para no repetir la misma alerta todos los días.
 - `nota: "..."` → aclaración metodológica; se muestra como asterisco bajo el gráfico y en el
-  pie de la página. Obligatoria en toda serie calculada, estimada, proxy o rascada de Excel.
+  pie de la página. Obligatoria en toda serie calculada, estimada, proxy o rascada de Excel,
+  o con `factor` aplicado.
 
 ## REGLAS DURAS (no negociables)
 1. **NUNCA inventar IDs de series.** Antes de agregar un indicador de datos.gob.ar,
