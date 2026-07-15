@@ -6016,6 +6016,7 @@
 2026-07-10,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.7019867549668906
 2026-07-11,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.7019867549668906
 2026-07-12,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.7019867549668906
+2026-07-13,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.8079470198675525
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -11494,6 +11495,7 @@
 2026-07-10,Dólar CCL,monetario_financiero,$/USD (venta),1565.9
 2026-07-11,Dólar CCL,monetario_financiero,$/USD (venta),1565.9
 2026-07-12,Dólar CCL,monetario_financiero,$/USD (venta),1565.9
+2026-07-13,Dólar CCL,monetario_financiero,$/USD (venta),1567.5
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -14308,6 +14310,7 @@
 2026-07-10,Dólar MEP,monetario_financiero,$/USD (venta),1532.7
 2026-07-11,Dólar MEP,monetario_financiero,$/USD (venta),1532.7
 2026-07-12,Dólar MEP,monetario_financiero,$/USD (venta),1532.7
+2026-07-13,Dólar MEP,monetario_financiero,$/USD (venta),1523.3
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -19978,6 +19981,7 @@
 2026-07-10,Dólar blue,monetario_financiero,$/USD (venta),1510.0
 2026-07-11,Dólar blue,monetario_financiero,$/USD (venta),1510.0
 2026-07-12,Dólar blue,monetario_financiero,$/USD (venta),1510.0
+2026-07-13,Dólar blue,monetario_financiero,$/USD (venta),1525.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -25648,6 +25652,7 @@
 2026-07-10,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
 2026-07-11,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
 2026-07-12,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
+2026-07-13,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -31082,6 +31087,108 @@
 2026-03-01,Importaciones totales,externo,millones de USD,6115.8952783
 2026-04-01,Importaciones totales,externo,millones de USD,6203.13971368
 2026-05-01,Importaciones totales,externo,millones de USD,6032.84377079
+2017-12-01,Inflación interanual (IPC),precios,% i.a.,24.795599999999986
+2018-01-01,Inflación interanual (IPC),precios,% i.a.,25.006226257777907
+2018-02-01,Inflación interanual (IPC),precios,% i.a.,25.437113435867364
+2018-03-01,Inflación interanual (IPC),precios,% i.a.,25.396523331662713
+2018-04-01,Inflación interanual (IPC),precios,% i.a.,25.498156776336266
+2018-05-01,Inflación interanual (IPC),precios,% i.a.,26.290756997415187
+2018-06-01,Inflación interanual (IPC),precios,% i.a.,29.466497746489196
+2018-07-01,Inflación interanual (IPC),precios,% i.a.,31.20915549649692
+2018-08-01,Inflación interanual (IPC),precios,% i.a.,34.42611016112578
+2018-09-01,Inflación interanual (IPC),precios,% i.a.,40.54234047421197
+2018-10-01,Inflación interanual (IPC),precios,% i.a.,45.90968959253574
+2018-11-01,Inflación interanual (IPC),precios,% i.a.,48.46918028993174
+2018-12-01,Inflación interanual (IPC),precios,% i.a.,47.64559006888065
+2019-01-01,Inflación interanual (IPC),precios,% i.a.,49.31257663083408
+2019-02-01,Inflación interanual (IPC),precios,% i.a.,51.275713013779736
+2019-03-01,Inflación interanual (IPC),precios,% i.a.,54.73233993511908
+2019-04-01,Inflación interanual (IPC),precios,% i.a.,55.727804509210884
+2019-05-01,Inflación interanual (IPC),precios,% i.a.,57.29651198193557
+2019-06-01,Inflación interanual (IPC),precios,% i.a.,55.75189582149274
+2019-07-01,Inflación interanual (IPC),precios,% i.a.,54.38663707010072
+2019-08-01,Inflación interanual (IPC),precios,% i.a.,54.48255808705677
+2019-09-01,Inflación interanual (IPC),precios,% i.a.,53.54200569722636
+2019-10-01,Inflación interanual (IPC),precios,% i.a.,50.485307552858984
+2019-11-01,Inflación interanual (IPC),precios,% i.a.,52.09175300658877
+2019-12-01,Inflación interanual (IPC),precios,% i.a.,53.83240201633388
+2020-01-01,Inflación interanual (IPC),precios,% i.a.,52.85572867690067
+2020-02-01,Inflación interanual (IPC),precios,% i.a.,50.27489185520109
+2020-03-01,Inflación interanual (IPC),precios,% i.a.,48.3568665513352
+2020-04-01,Inflación interanual (IPC),precios,% i.a.,45.625855660367385
+2020-05-01,Inflación interanual (IPC),precios,% i.a.,43.42122821471692
+2020-06-01,Inflación interanual (IPC),precios,% i.a.,42.75874911876987
+2020-07-01,Inflación interanual (IPC),precios,% i.a.,42.390430987357576
+2020-08-01,Inflación interanual (IPC),precios,% i.a.,40.6729416458653
+2020-09-01,Inflación interanual (IPC),precios,% i.a.,36.62071923005068
+2020-10-01,Inflación interanual (IPC),precios,% i.a.,37.23904007424079
+2020-11-01,Inflación interanual (IPC),precios,% i.a.,35.79781989182178
+2020-12-01,Inflación interanual (IPC),precios,% i.a.,36.140587812345416
+2021-01-01,Inflación interanual (IPC),precios,% i.a.,38.531980309830004
+2021-02-01,Inflación interanual (IPC),precios,% i.a.,40.651782754865295
+2021-03-01,Inflación interanual (IPC),precios,% i.a.,42.64884970291425
+2021-04-01,Inflación interanual (IPC),precios,% i.a.,46.280152829043075
+2021-05-01,Inflación interanual (IPC),precios,% i.a.,48.84472864674745
+2021-06-01,Inflación interanual (IPC),precios,% i.a.,50.20007839147161
+2021-07-01,Inflación interanual (IPC),precios,% i.a.,51.76617162510582
+2021-08-01,Inflación interanual (IPC),precios,% i.a.,51.423887270992516
+2021-09-01,Inflación interanual (IPC),precios,% i.a.,52.4712170969593
+2021-10-01,Inflación interanual (IPC),precios,% i.a.,52.11165082286735
+2021-11-01,Inflación interanual (IPC),precios,% i.a.,51.18234515503297
+2021-12-01,Inflación interanual (IPC),precios,% i.a.,50.941633543466324
+2022-01-01,Inflación interanual (IPC),precios,% i.a.,50.69016214159103
+2022-02-01,Inflación interanual (IPC),precios,% i.a.,52.31925686439769
+2022-03-01,Inflación interanual (IPC),precios,% i.a.,55.10663032213823
+2022-04-01,Inflación interanual (IPC),precios,% i.a.,58.03800857180077
+2022-05-01,Inflación interanual (IPC),precios,% i.a.,60.67992959624513
+2022-06-01,Inflación interanual (IPC),precios,% i.a.,63.982581648779814
+2022-07-01,Inflación interanual (IPC),precios,% i.a.,71.00245393131924
+2022-08-01,Inflación interanual (IPC),precios,% i.a.,78.51527309675541
+2022-09-01,Inflación interanual (IPC),precios,% i.a.,83.02998239535225
+2022-10-01,Inflación interanual (IPC),precios,% i.a.,88.03568471313712
+2022-11-01,Inflación interanual (IPC),precios,% i.a.,92.41278232270504
+2022-12-01,Inflación interanual (IPC),precios,% i.a.,94.79318233519184
+2023-01-01,Inflación interanual (IPC),precios,% i.a.,98.82908614540362
+2023-02-01,Inflación interanual (IPC),precios,% i.a.,102.5007968469017
+2023-03-01,Inflación interanual (IPC),precios,% i.a.,104.29651896009892
+2023-04-01,Inflación interanual (IPC),precios,% i.a.,108.83405987029037
+2023-05-01,Inflación interanual (IPC),precios,% i.a.,114.2462892370281
+2023-06-01,Inflación interanual (IPC),precios,% i.a.,115.58027347843294
+2023-07-01,Inflación interanual (IPC),precios,% i.a.,113.44999360149153
+2023-08-01,Inflación interanual (IPC),precios,% i.a.,124.36750080888426
+2023-09-01,Inflación interanual (IPC),precios,% i.a.,138.2824450050842
+2023-10-01,Inflación interanual (IPC),precios,% i.a.,142.6614601256336
+2023-11-01,Inflación interanual (IPC),precios,% i.a.,160.92081683813458
+2023-12-01,Inflación interanual (IPC),precios,% i.a.,211.4076437471768
+2024-01-01,Inflación interanual (IPC),precios,% i.a.,254.2482786482557
+2024-02-01,Inflación interanual (IPC),precios,% i.a.,276.2184348735032
+2024-03-01,Inflación interanual (IPC),precios,% i.a.,287.86907470031895
+2024-04-01,Inflación interanual (IPC),precios,% i.a.,289.40487960744707
+2024-05-01,Inflación interanual (IPC),precios,% i.a.,276.4092416317781
+2024-06-01,Inflación interanual (IPC),precios,% i.a.,271.529701338579
+2024-07-01,Inflación interanual (IPC),precios,% i.a.,263.4457278591889
+2024-08-01,Inflación interanual (IPC),precios,% i.a.,236.71661538870933
+2024-09-01,Inflación interanual (IPC),precios,% i.a.,209.00114198983206
+2024-10-01,Inflación interanual (IPC),precios,% i.a.,192.99496489366348
+2024-11-01,Inflación interanual (IPC),precios,% i.a.,166.02501194220528
+2024-12-01,Inflación interanual (IPC),precios,% i.a.,117.76362746413854
+2025-01-01,Inflación interanual (IPC),precios,% i.a.,84.53750815082385
+2025-02-01,Inflación interanual (IPC),precios,% i.a.,66.87414642180414
+2025-03-01,Inflación interanual (IPC),precios,% i.a.,55.93001569937308
+2025-04-01,Inflación interanual (IPC),precios,% i.a.,47.260263669660475
+2025-05-01,Inflación interanual (IPC),precios,% i.a.,43.47905066104683
+2025-06-01,Inflación interanual (IPC),precios,% i.a.,39.42012192141193
+2025-07-01,Inflación interanual (IPC),precios,% i.a.,36.56654485864994
+2025-08-01,Inflación interanual (IPC),precios,% i.a.,33.555932750613174
+2025-09-01,Inflación interanual (IPC),precios,% i.a.,31.757557076022437
+2025-10-01,Inflación interanual (IPC),precios,% i.a.,31.30875634960908
+2025-11-01,Inflación interanual (IPC),precios,% i.a.,31.368193533748425
+2025-12-01,Inflación interanual (IPC),precios,% i.a.,31.548760512645725
+2026-01-01,Inflación interanual (IPC),precios,% i.a.,32.41180643895354
+2026-02-01,Inflación interanual (IPC),precios,% i.a.,33.05147414327099
+2026-03-01,Inflación interanual (IPC),precios,% i.a.,32.60675239884981
+2026-04-01,Inflación interanual (IPC),precios,% i.a.,32.350448153478425
+2026-05-01,Inflación interanual (IPC),precios,% i.a.,33.19652168628491
 2004-01-31,Inflación mensual (IPC),precios,% mensual,0.4
 2004-02-29,Inflación mensual (IPC),precios,% mensual,0.1
 2004-03-31,Inflación mensual (IPC),precios,% mensual,0.6
@@ -40090,6 +40197,7 @@
 2026-07-08,Riesgo país (EMBI),monetario_financiero,puntos básicos,408.0
 2026-07-09,Riesgo país (EMBI),monetario_financiero,puntos básicos,404.0
 2026-07-10,Riesgo país (EMBI),monetario_financiero,puntos básicos,402.0
+2026-07-13,Riesgo país (EMBI),monetario_financiero,puntos básicos,405.0
 2018-01-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,100.0
 2018-02-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,98.45617386547929
 2018-03-01,Salario real (INDEC deflactado por IPC),social,índice base 100 al inicio,98.04034463627526

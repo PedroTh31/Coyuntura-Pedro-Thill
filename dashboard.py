@@ -17,6 +17,7 @@ import pandas as pd
 
 DESDE_GENERAL = "2024-01-01"
 OUT = Path(__file__).resolve().parent / "docs"
+MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diarias largas
 
 ACENTO = {"precios": "#B4341F", "monetario_financiero": "#1D4E89",
           "real": "#256D5B", "externo": "#0E7C86", "social": "#B26B00", "fiscal": "#7A5195"}
@@ -121,9 +122,27 @@ def generar(historico, config_indicadores):
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
             unidad=unidad, valor=_fmt_num(ult), pct=pct,
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num))
+        # Embeber los datos históricos para permitir filtrado client-side.
+        # El tramo reciente (últimos 2 años) queda a resolución diaria completa
+        # (así "1A" no pierde detalle); el tramo viejo se submuestrea si es muy
+        # largo, para no inflar el HTML en series diarias de décadas (dólar, tasas).
+        corte_reciente = serie["fecha"].max() - pd.DateOffset(years=2)
+        reciente = serie[serie["fecha"] >= corte_reciente]
+        vieja = serie[serie["fecha"] < corte_reciente]
+        if len(vieja) > MAX_PUNTOS_VIEJOS:
+            paso = -(-len(vieja) // MAX_PUNTOS_VIEJOS)  # ceil division
+            vieja = vieja.iloc[::paso]
+        full = pd.concat([vieja, reciente]).sort_values("fecha")
+        full_x = [d.strftime("%d/%m/%y") for d in full["fecha"]]
+        full_y = [round(float(v), 2) for v in full["valor"]]
+        full_dates = [d.isoformat() for d in full["fecha"]]  # ISO para comparación
+        # Datos filtrados (para vista por defecto)
+        s_x = [d.strftime("%d/%m/%y") for d in s["fecha"]]
+        s_y = [round(float(v), 2) for v in s["valor"]]
         series_js.append(dict(i=idx, color=color, unidad=unidad,
-            x=[d.strftime("%d/%m/%y") for d in s["fecha"]],
-            y=[round(float(v), 2) for v in s["valor"]]))
+            x=s_x, y=s_y,  # Datos filtrados (default)
+            full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
+            min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat()))
         idx += 1
     _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict)
 
@@ -175,11 +194,13 @@ def _card_cell(c):
     if c.get("nota_num"):
         nota_asterisco = "*" * c["nota_num"]
         nota_mark = f'<div class="nota-ref">{nota_asterisco}</div>'
+    # Botones de filtro
+    filtros = f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button></div>'
     return (f'<div class="cell"><div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div><div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div></div>'
-            f'<div class="cbox"><canvas id="ch{c["i"]}"></canvas></div>{nota_mark}</div>')
+            f'<div class="cbox"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
 
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
@@ -268,6 +289,10 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .tabla td { padding:8px 10px; text-align:right; border-radius:5px; font-family:ui-monospace,monospace; font-weight:600; }
   .tabla td.sec { text-align:left; background:#fff; font-family:system-ui,sans-serif; font-weight:400; border:1px solid #ECE8DC; }
   .tabla td.num { background:#fff; color:#333; border:1px solid #ECE8DC; }
+  .filtros { display:flex; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
+  .filtro { background:#F5F2EB; border:1px solid #D8D3C9; color:#1A1A1A; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
+  .filtro:hover { background:#E8E3D6; border-color:#C4BDAC; }
+  .filtro.active { background:#1D4E89; color:#fff; border-color:#1D4E89; }
   footer { color:var(--gris); font-size:12px; border-top:1px solid #E4E0D4; padding-top:14px; margin-top:20px; }
 </style></head>
 <body><div class="wrap">
@@ -280,6 +305,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
 </div>
 <script>
 const SERIES = __DATA__;
+const charts = {};
 const baseOpts = (unidad) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
@@ -289,12 +315,67 @@ const baseOpts = (unidad) => ({
            y:{ ticks:{ color:'#9A968C', font:{size:10} }, grid:{color:'#EDEAE0'} } },
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
+
+function calcFechaCorte(rango) {
+  const hoy = new Date();
+  const hace1a = new Date(hoy.getFullYear()-1, hoy.getMonth(), hoy.getDate());
+  const hace5a = new Date(hoy.getFullYear()-5, hoy.getMonth(), hoy.getDate());
+  const desde2008 = new Date(2008, 0, 1);
+  
+  switch(rango) {
+    case '1a': return hace1a.toISOString().split('T')[0];
+    case '5a': return hace5a.toISOString().split('T')[0];
+    case '2008': return '2008-01-01';
+    case 'todo': return '1900-01-01';
+    default: return null;
+  }
+}
+
+function filtrarDatos(s, rango) {
+  if (rango === 'default') {
+    return { x: s.x, y: s.y };
+  }
+  const fechaCorte = calcFechaCorte(rango);
+  const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+  if (indices.length === 0) {
+    return { x: s.x, y: s.y };
+  }
+  return {
+    x: indices.map(i => s.full_x[i]),
+    y: indices.map(i => s.full_y[i])
+  };
+}
+
 SERIES.forEach(s => {
   const el = document.getElementById('ch'+s.i);
   if(!el) return;
-  new Chart(el, { type:'line',
+  const ctx = el.getContext('2d');
+  charts[s.i] = new Chart(ctx, { type:'line',
     data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
     options: baseOpts(s.unidad) });
+});
+
+// Event listeners para botones de filtro
+document.querySelectorAll('.filtro').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const filtrosContainer = this.closest('.filtros');
+    const idx = parseInt(filtrosContainer.dataset.idx);
+    const rango = this.dataset.rango;
+    const serie = SERIES[idx];
+    if (!serie || !charts[idx]) return;
+    
+    // Actualizar estado del botón
+    filtrosContainer.querySelectorAll('.filtro').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    
+    // Filtrar datos
+    const datFiltrados = filtrarDatos(serie, rango);
+    
+    // Redibujar gráfico
+    charts[idx].data.labels = datFiltrados.x;
+    charts[idx].data.datasets[0].data = datFiltrados.y;
+    charts[idx].update('none');
+  });
 });
 </script>
 </body></html>"""
