@@ -110,6 +110,44 @@ indicadores:
   - {nombre: "EMAE · Otros servicios comunitarios", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_TAC_2004_M_60", semaforo: true}
   - {nombre: "EMAE · Impuestos netos de subsidios", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_IF_2004_M_25", semaforo: true}
 
+  # ---------------- ACTIVIDAD Y EMPLEO POR SECTOR (burbujas) ----------------
+  # Empleo registrado (SIPA vía datos.gob.ar, "Insumo de mano de obra por sector de actividad
+  # económica", id 324.1_*, trimestral). La apertura por códigos CIIU (A-P) calza 1 a 1 con
+  # 15 de los 16 sectores del EMAE (verificado); "Impuestos netos de subsidios" no tiene
+  # contraparte de empleo (no es una actividad productiva) y queda fuera del gráfico.
+  - {nombre: "Empleo registrado: Agricultura, ganadería y silvicultura", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_A_AGRICULTREG__58", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Pesca", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_B_PESCA_PUADO__45", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Explotación de minas y canteras", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_C_EXPLOTACREG__59", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Industria manufacturera", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_D_INDUSTRIREG__56", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Electricidad, gas y agua", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_E_ELECT_GAADO__54", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Construcción", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_F_CONSTRUCADO__52", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Comercio mayorista y minorista", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_G_COMERCIOADO__48", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Hoteles y restaurantes", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_H_HOTELES_ADO__60", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Transporte y comunicaciones", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_I_TRANSPORREG__58", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Intermediación financiera", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_J_INTERMEDADO__65", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Inmobiliarias y empresariales", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_K_ACT_INMOADO__57", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Administración pública y defensa", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_L_ADM_PUB_REG__59", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Enseñanza", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_M_ENSENIANZADO__49", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Servicios sociales y de salud", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_N_SERVICIOREG__57", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Empleo registrado: Otros servicios comunitarios", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "324.1_O_OTRAS_ACREG__51", unidad: "miles de puestos", solo_componente: true}
+  - {nombre: "Actividad y empleo por sector", bloque: real, grupo: "Actividad", vista: burbujas, sectores: [
+      {emae: "EMAE · Agricultura, ganadería y silvicultura", empleo: "Empleo registrado: Agricultura, ganadería y silvicultura"},
+      {emae: "EMAE · Pesca", empleo: "Empleo registrado: Pesca"},
+      {emae: "EMAE · Explotación de minas y canteras", empleo: "Empleo registrado: Explotación de minas y canteras"},
+      {emae: "EMAE · Industria manufacturera", empleo: "Empleo registrado: Industria manufacturera"},
+      {emae: "EMAE · Electricidad, gas y agua", empleo: "Empleo registrado: Electricidad, gas y agua"},
+      {emae: "EMAE · Construcción", empleo: "Empleo registrado: Construcción"},
+      {emae: "EMAE · Comercio mayorista y minorista", empleo: "Empleo registrado: Comercio mayorista y minorista"},
+      {emae: "EMAE · Hoteles y restaurantes", empleo: "Empleo registrado: Hoteles y restaurantes"},
+      {emae: "EMAE · Transporte y comunicaciones", empleo: "Empleo registrado: Transporte y comunicaciones"},
+      {emae: "EMAE · Intermediación financiera", empleo: "Empleo registrado: Intermediación financiera"},
+      {emae: "EMAE · Inmobiliarias y empresariales", empleo: "Empleo registrado: Inmobiliarias y empresariales"},
+      {emae: "EMAE · Administración pública y defensa", empleo: "Empleo registrado: Administración pública y defensa"},
+      {emae: "EMAE · Enseñanza", empleo: "Empleo registrado: Enseñanza"},
+      {emae: "EMAE · Servicios sociales y de salud", empleo: "Empleo registrado: Servicios sociales y de salud"},
+      {emae: "EMAE · Otros servicios comunitarios", empleo: "Empleo registrado: Otros servicios comunitarios"},
+    ], nota: "Eje X: variación % interanual de actividad (EMAE por sector). Eje Y: variación % interanual de empleo registrado (SIPA, dataset 'Insumo de mano de obra por sector de actividad económica', datos.gob.ar). Tamaño de burbuja: % del empleo registrado total que representa el sector, al último trimestre común. El EMAE (mensual) se remuestrea a trimestres calendario (ene-mar/abr-jun/jul-sep/oct-dic, igual definición que usa la fuente de empleo) promediando sus 3 meses, para poder compararlo con el empleo (nativamente trimestral) sobre el mismo período — por eso la actividad se ve 'más lenta'/suavizada en este gráfico que en su gráfico de línea mensual habitual. 'Impuestos netos de subsidios' no tiene contraparte de empleo y queda fuera."}
+
   # ---------------- SECTOR EXTERNO (INDEC · ICA, mensual) ----------------
   - {nombre: "Exportaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IET_0_M_16", unidad: "millones de USD"}
   - {nombre: "Importaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IIT_0_M_25", unidad: "millones de USD"}

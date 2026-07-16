@@ -240,7 +240,7 @@ def main():
 
     for ind in indicadores:
         nombre = ind["nombre"]
-        if ind.get("vista") in ("overlay", "incidencia_stack"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "burbujas"):
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         try:
             if "calculo" in ind:

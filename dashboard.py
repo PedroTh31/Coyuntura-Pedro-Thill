@@ -221,6 +221,65 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
     return card, serie_js
 
 
+COLORES_BURBUJAS = COLORES_INCIDENCIA + ["#3B8681", "#9284BE", "#F48EAB"]
+
+
+def _serie_bubble(idx, ind, historico):
+    """
+    Gráfico de burbujas: eje X = variación % interanual de actividad (EMAE por
+    sector), eje Y = variación % interanual de empleo registrado (SIPA), tamaño
+    = % del empleo total. El EMAE (mensual) se remuestrea a trimestres
+    calendario (misma definición que usa la fuente de empleo, nativamente
+    trimestral: ene-mar/abr-jun/jul-sep/oct-dic) antes de comparar, para que
+    ambos ejes representen el mismo período exacto.
+    """
+    pares = []
+    for par in ind["sectores"]:
+        g_emae = historico[historico["indicador"] == par["emae"]].sort_values("fecha")
+        g_emp = historico[historico["indicador"] == par["empleo"]].sort_values("fecha")
+        if g_emae.empty or g_emp.empty:
+            continue
+        emae_q = g_emae.set_index("fecha")["valor"].resample("QS").mean()
+        emp_q = g_emp.set_index("fecha")["valor"]
+        pares.append((par["emae"].replace("EMAE · ", ""), emae_q, emp_q))
+    if not pares:
+        return None
+
+    # último trimestre presente en TODOS los sectores (para comparar todos al mismo período)
+    fecha_comun = min(min(emae_q.index.max(), emp_q.index.max()) for _, emae_q, emp_q in pares)
+    fecha_prev = fecha_comun - pd.DateOffset(years=1)
+
+    puntos = []
+    for nombre_sector, emae_q, emp_q in pares:
+        if fecha_comun not in emae_q.index or fecha_prev not in emae_q.index:
+            continue
+        if fecha_comun not in emp_q.index or fecha_prev not in emp_q.index:
+            continue
+        if emae_q[fecha_prev] <= 0 or emp_q[fecha_prev] <= 0:
+            continue
+        var_actividad = (emae_q[fecha_comun] / emae_q[fecha_prev] - 1) * 100
+        var_empleo = (emp_q[fecha_comun] / emp_q[fecha_prev] - 1) * 100
+        puntos.append(dict(nombre=nombre_sector, x=var_actividad, y=var_empleo, empleo=float(emp_q[fecha_comun])))
+    if not puntos:
+        return None
+
+    total_empleo = sum(p["empleo"] for p in puntos)
+    for i, p in enumerate(puntos):
+        p["r"] = round(p["empleo"] / total_empleo * 100, 2)
+        p["color"] = COLORES_BURBUJAS[i % len(COLORES_BURBUJAS)]
+        p["x"] = round(p["x"], 2)
+        p["y"] = round(p["y"], 2)
+
+    trimestre = f"T{(fecha_comun.month - 1) // 3 + 1} {fecha_comun.year}"
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad="",
+        valor=trimestre, pct=None, marca_fecha=None, maxv="s/d", minv="s/d", nota_num=None,
+        sin_filtros=True)
+
+    serie_js = dict(i=idx, kind="bubble", fecha=fecha_comun.strftime("%m/%Y"), puntos=puntos)
+    return card, serie_js
+
+
 def _registrar_nota(nota, nombre, notas_dict):
     """Registra (o encuentra) el número de asterisco de una nota, dedupe por texto."""
     if not nota:
@@ -246,11 +305,14 @@ def generar(historico, config_indicadores):
         unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
         nota = ind.get("nota")
         if ind.get("solo_componente"):
-            continue  # sólo alimenta un 'vista: overlay'/'incidencia_stack'; no tiene tarjeta propia
-        if ind.get("vista") in ("overlay", "incidencia_stack"):
-            constructor = _serie_overlay if ind["vista"] == "overlay" else _serie_incidencia
-            args = (idx, ind, historico) if ind["vista"] == "overlay" else (idx, ind, historico, indicadores_por_nombre)
-            entrada = constructor(*args)
+            continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
+        if ind.get("vista") in ("overlay", "incidencia_stack", "burbujas"):
+            if ind["vista"] == "overlay":
+                entrada = _serie_overlay(idx, ind, historico)
+            elif ind["vista"] == "incidencia_stack":
+                entrada = _serie_incidencia(idx, ind, historico, indicadores_por_nombre)
+            else:
+                entrada = _serie_bubble(idx, ind, historico)
             if entrada is None:
                 continue
             card, serie_js_compuesta = entrada
@@ -370,13 +432,17 @@ def _card_cell(c):
         nota_mark = f'<div class="nota-ref">{nota_asterisco}</div>'
     # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar())
     marca_html = f'<div class="marca-fecha">{c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
-    # Botones de filtro
-    filtros = f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button></div>'
-    return (f'<div class="cell"><div class="card" style="--acc:{c["color"]}">'
+    # Botones de filtro (no aplican a gráficos de un solo período, ej. burbujas)
+    filtros = ""
+    if not c.get("sin_filtros"):
+        filtros = f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button></div>'
+    cell_cls = "cell cell-ancha" if c.get("sin_filtros") else "cell"
+    cbox_cls = "cbox cbox-grande" if c.get("sin_filtros") else "cbox"
+    return (f'<div class="{cell_cls}"><div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div><div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
-            f'<div class="cbox"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
+            f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
 
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
@@ -467,6 +533,8 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
   .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
   .cbox { height:200px; padding:8px 10px 12px; }
+  .cbox-grande { height:340px; }
+  .cell-ancha { grid-column: span 2; }
   .tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; margin-bottom:8px; }
   .tabla th { text-align:right; color:var(--gris); font-weight:600; font-size:11px; text-transform:uppercase; padding:4px 10px; }
   .tabla th:first-child { text-align:left; }
@@ -578,6 +646,61 @@ const incidenciaOpts = (unidad) => ({
            y:{ stacked:true, ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
 });
 
+// Plugin liviano (sin librería externa) para poner el nombre corto del sector
+// al lado de cada burbuja — con 15 puntos y sin serie temporal, una leyenda
+// tradicional no alcanza para identificarlos; mejor una etiqueta directa.
+const etiquetasBurbujaPlugin = {
+  // Anti-colisión simple (sin librería externa): ordena las burbujas de mayor a
+  // menor radio (más prominente visualmente = más prioridad) y sólo dibuja la
+  // etiqueta si su caja de texto no se superpone con una ya colocada. Los
+  // sectores que quedan sin etiqueta fija (el cluster apretado del centro)
+  // siguen identificables con el tooltip al pasar el mouse.
+  id: 'etiquetasBurbuja',
+  afterDatasetsDraw(chart) {
+    if (chart.config.type !== 'bubble') return;
+    const { ctx } = chart;
+    ctx.save();
+    ctx.font = '9px "Encode Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#444444';
+    ctx.textBaseline = 'middle';
+
+    const items = chart.data.datasets.map((ds, i) => {
+      const meta = chart.getDatasetMeta(i);
+      const punto = meta.data[0];
+      return punto ? { ds, punto } : null;
+    }).filter(Boolean).sort((a, b) => b.punto.options.radius - a.punto.options.radius);
+
+    const ocupadas = [];
+    items.forEach(({ ds, punto }) => {
+      const corto = ds.label.length > 16 ? ds.label.slice(0, 15) + '…' : ds.label;
+      const x = punto.x + punto.options.radius + 4;
+      const y = punto.y;
+      const caja = { x, y: y - 6, w: ctx.measureText(corto).width + 3, h: 12 };
+      const choca = ocupadas.some(o =>
+        caja.x < o.x + o.w && caja.x + caja.w > o.x && caja.y < o.y + o.h && caja.y + caja.h > o.y);
+      if (choca) return;
+      ctx.fillText(corto, x, y);
+      ocupadas.push(caja);
+    });
+    ctx.restore();
+  }
+};
+
+const bubbleOpts = () => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  layout:{ padding:{ right:70, top:10 } },
+  plugins:{ legend:{display:false},
+    tooltip:{ callbacks:{
+      title:(items)=> items[0].raw.label,
+      label:(c)=> [`Actividad (EMAE, i.a.): ${c.raw.x > 0 ? '+' : ''}${c.raw.x.toFixed(1)}%`,
+                   `Empleo registrado (i.a.): ${c.raw.y > 0 ? '+' : ''}${c.raw.y.toFixed(1)}%`,
+                   `% del empleo total: ${c.raw.r_pct.toFixed(1)}%`] } } },
+  scales:{ x:{ title:{display:true, text:'Variación % interanual de actividad', font:{size:10}, color:'#555555'},
+               ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} },
+           y:{ title:{display:true, text:'Variación % interanual de empleo', font:{size:10}, color:'#555555'},
+               ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
+});
+
 SERIES.forEach(s => {
   const el = document.getElementById('ch'+s.i);
   if(!el) return;
@@ -600,6 +723,13 @@ SERIES.forEach(s => {
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:s.color, borderRadius:2 }] },
       options: baseOpts(s.unidad) });
+  } else if (s.kind === 'bubble') {
+    // Radio en px escalado desde el % de empleo (sin piso artificial: un sector con
+    // 0,1% del empleo se ve casi invisible a propósito, es la realidad del dato).
+    charts[s.i] = new Chart(ctx, { type:'bubble', data:{ datasets: s.puntos.map(p => (
+        { label:p.nombre, data:[{ x:p.x, y:p.y, r:p.r*1.1, r_pct:p.r, label:p.nombre }],
+          backgroundColor:p.color+'B0', borderColor:p.color }
+      )) }, options: bubbleOpts(), plugins:[etiquetasBurbujaPlugin] });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },

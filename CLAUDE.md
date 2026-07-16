@@ -38,12 +38,24 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   leyenda para prender/apagar cada serie. La tarjeta resume con la ÚLTIMA serie de la lista.
 - `vista: incidencia_stack` + `series: [...]` → barras apiladas de incidencia mensual (variación %
   × `peso_nacional` de cada indicador referenciado) sobre un total (ej. divisiones del IPC).
+- `vista: burbujas` + `sectores: [{emae: "...", empleo: "..."}, ...]` → gráfico de burbujas
+  (Chart.js `bubble`): eje X = variación % interanual del primer indicador de cada par, eje Y =
+  variación % interanual del segundo, tamaño = % que representa sobre el total del segundo
+  indicador al último período común. Si las frecuencias no coinciden (ej. EMAE mensual vs.
+  empleo trimestral), el más frecuente se remuestrea al calendario del menos frecuente antes de
+  comparar — documentarlo en la `nota`. Sin botones de filtro (es una foto de un período, no una
+  serie temporal); usa anti-colisión de etiquetas en JS (prioriza burbujas grandes, omite la
+  etiqueta de las que chocan con una ya puesta — esas quedan identificables sólo por tooltip).
+- `calculo: combinado` + `componentes: [{id, peso}, ...]` + `rebase_fecha` (opcional) +
+  `media_movil` (opcional, meses) → promedio ponderado de varios índices de nivel (los pesos se
+  renormalizan solos, no hace falta que sumen 1), con rebase y/o media móvil. Ej.: EMAE
+  Urbano/No urbano agrupando sectores.
 - `barras: true` → un indicador normal (una sola serie) se grafica en barras en vez de línea.
 - `peso_nacional: N` → ponderador fijo (0-1) de un indicador para `vista: incidencia_stack`.
   Documentar SIEMPRE la fuente y fecha base del ponderador en la `nota`.
 - `solo_componente: true` → el indicador se trae y guarda en el histórico normalmente, pero no
-  genera tarjeta/gráfico propio: sólo alimenta un `vista: overlay` o `vista: incidencia_stack`
-  que lo referencia en `series`.
+  genera tarjeta/gráfico propio: sólo alimenta un `vista: overlay`, `incidencia_stack` o
+  `burbujas` que lo referencia.
 - `semaforo: true` → alimenta la tabla-semáforo del EMAE (no hace gráfico de línea).
 - `tabla: "Nombre"` → va a una tabla de valores (comercio exterior desagregado).
 - `desde: "AAAA-MM-DD"` → desde cuándo se ve ese gráfico (default 2024).
