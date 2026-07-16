@@ -258,11 +258,35 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
         maxv=_fmt_num(max(valores_totales)) if valores_totales else "s/d",
         minv=_fmt_num(min(valores_totales)) if valores_totales else "s/d", nota_num=None)
 
+    # Autoescala robusta: el eje "normal" se calcula sobre el percentil 95 de la incidencia
+    # total mensual (positiva y negativa por separado, con margen del 15%), no sobre el máximo
+    # histórico. Así un pico aislado (ej. el shock devaluatorio de comienzos de 2024, con varias
+    # divisiones subiendo 15-25% en un solo mes) no aplasta la lectura de todos los demás meses
+    # -- y el mecanismo es genérico: si en el futuro aparece otro pico grande, se vuelve a marcar
+    # solo, sin volver a romper la escala. Los meses que superan ese rango no se pierden: quedan
+    # en 'atipicos' (con su valor real) para que el gráfico los señale aparte en vez de estirar
+    # el eje para incluirlos.
+    totales_por_fecha = {}
+    for i, fecha in enumerate(fechas_full):
+        vals = [d["full_y"][i] for d in datasets]
+        pos = sum(v for v in vals if v and v > 0)
+        neg = sum(v for v in vals if v and v < 0)
+        totales_por_fecha[fecha] = (pos, neg)
+    positivos = [p for p, n in totales_por_fecha.values() if p > 0]
+    negativos = [abs(n) for p, n in totales_por_fecha.values() if n < 0]
+    MARGEN_EJE = 1.15
+    y_max = round(float(pd.Series(positivos).quantile(0.95)) * MARGEN_EJE, 2) if positivos else None
+    y_min = round(-float(pd.Series(negativos).quantile(0.95)) * MARGEN_EJE, 2) if negativos else None
+    atipicos = {}
+    for fecha, (pos, neg) in totales_por_fecha.items():
+        if (y_max is not None and pos > y_max) or (y_min is not None and neg < y_min):
+            atipicos[fecha.strftime("%m/%y")] = round(pos + neg, 2)
+
     serie_js = dict(i=idx, kind="incidencia", unidad=ind.get("unidad", ""),
         x=[d.strftime("%m/%y") for d in fechas_default],
         full_x=[d.strftime("%m/%y") for d in fechas_full],
         full_dates=[d.isoformat() for d in fechas_full],
-        datasets=datasets)
+        datasets=datasets, y_max=y_max, y_min=y_min, atipicos=atipicos)
     return card, serie_js
 
 
@@ -690,14 +714,45 @@ const comboOpts = (unidad) => ({
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
-const incidenciaOpts = (unidad) => ({
+const incidenciaOpts = (unidad, yMax, yMin, atipicos) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
+  layout:{ padding:{ top:18, bottom:8 } },
   plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:9}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}` } } },
+    tooltip:{ callbacks:{
+      label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}`,
+      afterBody:(items)=> {
+        const total = items.length && atipicos ? atipicos[items[0].label] : undefined;
+        if (total === undefined) return [];
+        return [`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${total.toLocaleString('es-AR')} ${unidad}`];
+      } } } },
   scales:{ x:{ stacked:true, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ stacked:true, ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
+           y:{ stacked:true, max:yMax ?? undefined, min:yMin ?? undefined, ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
 });
+
+// Marca los meses "atípicos" (fuera del rango normal del eje, ver y_max/y_min en Python) con
+// un ⚠ arriba o abajo de la barra recortada, para no perder el dato aunque el eje ya no se
+// estire para incluirlo. 'atipicos' queda cerrado sobre la función (no una opción de Chart.js)
+// porque se arma una instancia del plugin por gráfico, con su propio diccionario fecha->valor.
+function atipicosIncidenciaPlugin(atipicos) {
+  return {
+    id: 'atipicosIncidencia',
+    afterDatasetsDraw(chart) {
+      if (!atipicos || !Object.keys(atipicos).length) return;
+      const { ctx, chartArea, scales } = chart;
+      ctx.save();
+      ctx.font = 'bold 12px "Encode Sans", system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      chart.data.labels.forEach((label, i) => {
+        if (atipicos[label] === undefined) return;
+        const x = scales.x.getPixelForValue(i);
+        const arriba = atipicos[label] >= 0;
+        ctx.fillText('⚠', x, arriba ? chartArea.top - 2 : chartArea.bottom + 16);
+      });
+      ctx.restore();
+    }
+  };
+}
 
 // Plugin liviano (sin librería externa) para poner el nombre corto del sector
 // al lado de cada burbuja — con 15 puntos y sin serie temporal, una leyenda
@@ -771,7 +826,8 @@ SERIES.forEach(s => {
   } else if (s.kind === 'incidencia') {
     charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, backgroundColor:d.color, stack:'incidencia' }
-      )) }, options: incidenciaOpts(s.unidad) });
+      )) }, options: incidenciaOpts(s.unidad, s.y_max, s.y_min, s.atipicos),
+      plugins: [atipicosIncidenciaPlugin(s.atipicos)] });
   } else if (s.kind === 'bar') {
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:s.color, borderRadius:2 }] },
