@@ -41,6 +41,15 @@ indicadores:
   - {nombre: "IPC división: Bienes y servicios varios", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "146.3_IBIENESNAL_DICI_M_36", unidad: "índice", peso_nacional: 0.0353, solo_componente: true}
   - {nombre: "Incidencia en inflación por división de consumo", bloque: precios, grupo: "Precios", vista: incidencia_stack, series: ["IPC división: Alimentos y bebidas no alcohólicas", "IPC división: Bebidas alcohólicas y tabaco", "IPC división: Prendas de vestir y calzado", "IPC división: Vivienda, agua, electricidad y otros combustibles", "IPC división: Equipamiento y mantenimiento del hogar", "IPC división: Salud", "IPC división: Transporte", "IPC división: Comunicación", "IPC división: Recreación y cultura", "IPC división: Educación", "IPC división: Restaurantes y hoteles", "IPC división: Bienes y servicios varios"], unidad: "p.p.", nota: "Incidencia mensual = variación % de cada división × ponderador nacional de la división. Ponderador nacional calculado como Σ (peso de la región en el gasto total × peso de la división en esa región), fórmula oficial del INDEC (Metodología del IPC N°32, nov-2019, fórmulas 14/15, pág. 23), con los pesos regionales del Cuadro 6 y la estructura de ponderaciones por división del Cuadro 7 (base diciembre 2016). PDF fuente en fuentes/indec_metodologia_ipc_nacional_2019.pdf. La suma de las 12 incidencias reproduce la variación real del nivel general con una brecha de ~0,03 puntos porcentuales, propia de usar un ponderador fijo de base dic-2016 en vez del encadenamiento más fino que aplica el INDEC internamente."}
 
+  # -- REM (BCRA): expectativa de mercado a un mes vista, siempre la encuesta más reciente
+  #    disponible para cada mes (ver fetch_rem_variable en fetchers.py). Fuente: único Excel
+  #    histórico que publica el BCRA en una URL fija (se actualiza una vez por mes, con cada
+  #    encuesta nueva). El Excel pesa ~1,5 MB: para no descargarlo de nuevo en cada corrida
+  #    diaria del pipeline sin necesidad, se cachea en data/_cache_rem.csv y sólo se vuelve a
+  #    descargar si la caché tiene más de REM_FRESCURA_DIAS (7) días --
+  - {nombre: "Inflación esperada (REM, próximo mes)", bloque: precios, grupo: "Precios", fuente: rem_bcra, variable: "Precios minoristas (IPC nivel general; INDEC)", referencia: "var. % mensual", unidad: "% mensual", solo_componente: true}
+  - {nombre: "Inflación efectiva vs. esperada (REM)", bloque: precios, grupo: "Precios", vista: overlay, series: ["Inflación mensual (IPC)", "Inflación esperada (REM, próximo mes)"], unidad: "% mensual", nota: "Relevamiento de Expectativas de Mercado (REM, BCRA), variable 'Precios minoristas (IPC nivel general; INDEC)', referencia 'var. % mensual'. Cada punto de 'Inflación esperada' es la mediana de la encuesta hecha a fin del mes ANTERIOR para el mes en cuestión (horizonte de 1 mes) -- siempre la expectativa más fresca disponible para ese mes, nunca una proyección vieja de varios meses atrás -- para poder comparar de forma honesta qué esperaba el mercado en cada momento contra lo que efectivamente pasó después. Fuente: único archivo Excel histórico del BCRA (bcra.gob.ar), que se actualiza una vez por mes; el pipeline lo recachea como máximo una vez por semana (no en cada corrida diaria) para no generar tráfico innecesario contra el servidor del BCRA."}
+
   # ---------------- DÓLAR ----------------
   - {nombre: "Dólar oficial", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: oficial, unidad: "$/USD (venta)"}
   - {nombre: "Dólar blue", bloque: monetario_financiero, grupo: "Dólar", fuente: dolar, casa: blue, unidad: "$/USD (venta)"}
@@ -91,6 +100,20 @@ indicadores:
   # ---------------- SOCIAL ----------------
   - {nombre: "Tasa de desempleo", bloque: social, grupo: "Social", fuente: datos_gob, id: "45.2_ECTDT_0_T_33", unidad: "% de la PEA", factor: 100, nota: "La fuente (datos.gob.ar) publica esta serie como fracción (0-1) pese a declararla 'Porcentaje'; se multiplica por 100 (factor: 100) para expresarla en puntos porcentuales."}
   - {nombre: "Salario real (deflactado por IPC)", bloque: social, grupo: "Social", calculo: real, nominal_id: "149.1_TL_INDIIOS_OCTU_0_21", deflactor_id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice base 100 al inicio", nota: "Salario real = salario nominal (149.1_TL_INDIIOS_OCTU_0_21) deflactado por IPC (148.3_INIVELNAL_DICI_M_26), rebased a 100 en el primer período disponible."}
+  # -- Informalidad laboral: dataset 52.2 (EPH continua, trimestral), sigue vigente. Existe una
+  #    versión regional del mismo indicador (dataset 303, por región/tamaño de aglomerado) pero
+  #    está discontinuada desde 2020-T1 -- se usa la 52.2 (total nacional), que sigue publicándose
+  #    (último dato 2026-T1) --
+  - {nombre: "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)", bloque: social, grupo: "Social", fuente: datos_gob, id: "52.2_ASDJ_0_0_37", unidad: "%", factor: 100, nota: "Porcentaje de asalariados sin descuento jubilatorio sobre el total de asalariados (EPH continua, INDEC/datos.gob.ar, dataset 52.2), el indicador estándar de informalidad laboral en Argentina. La fuente publica esta serie como fracción (0-1) pese a declararla 'Porcentaje'; se multiplica por 100 (factor: 100)."}
+  # -- Salarios por tipo de empleo: mismo dataset que 'Salario real' (149, Índice de Salarios,
+  #    base oct-2016), desagregado por tipo -- no estaba usado, hoy sólo se toma el índice
+  #    general. Cada serie se deflacta y rebasa a 100 de forma independiente (mismo 'calculo:
+  #    real' que ya usa 'Salario real'), así que el overlay compara TRAYECTORIAS relativas desde
+  #    el mismo punto de partida, no la brecha de nivel en pesos entre grupos --
+  - {nombre: "Salario real registrado - sector privado", bloque: social, grupo: "Social", calculo: real, nominal_id: "149.1_SOR_PRIADO_OCTU_0_25", deflactor_id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice base 100 al inicio", solo_componente: true}
+  - {nombre: "Salario real registrado - sector público", bloque: social, grupo: "Social", calculo: real, nominal_id: "149.1_SOR_PUBICO_OCTU_0_14", deflactor_id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice base 100 al inicio", solo_componente: true}
+  - {nombre: "Salario real no registrado - sector privado", bloque: social, grupo: "Social", calculo: real, nominal_id: "149.1_SOR_PRIADO_OCTU_0_28", deflactor_id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice base 100 al inicio", solo_componente: true}
+  - {nombre: "Salario real por tipo de empleo (privado registrado / público / no registrado)", bloque: social, grupo: "Social", vista: overlay, series: ["Salario real registrado - sector privado", "Salario real registrado - sector público", "Salario real no registrado - sector privado"], unidad: "índice base 100 al inicio", nota: "Índice de Salarios de INDEC (dataset 149, base oct-2016) por tipo de empleo, deflactado por IPC Nacional Nivel general (148.3_INIVELNAL_DICI_M_26). 'No registrado' es la aproximación estándar de salario informal (empleo no registrado, sector privado). Cada serie se rebasa a 100 de forma independiente en su primer período disponible: el gráfico compara la TRAYECTORIA relativa de cada grupo desde el mismo punto de partida (¿a quién le fue mejor/peor en términos reales?), no la brecha de nivel en pesos entre formal e informal."}
 
   # ---------------- PRODUCCIÓN / CRÉDITO (nuevos, verificados) ----------------
   - {nombre: "IPI manufacturero (industria)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "453.1_SERIE_ORIGNAL_0_0_14_46", unidad: "índice 2004=100", desde: "2017-01-01"}
@@ -116,6 +139,19 @@ indicadores:
   - {nombre: "Morosidad: bancos públicos", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "332.2_BANCOS_PUBADA__55", unidad: "%", solo_componente: true}
   - {nombre: "Morosidad: bancos privados", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "332.2_BANCOS_PRIADA__51", unidad: "%", solo_componente: true}
   - {nombre: "Morosidad del crédito (irregularidad de cartera)", bloque: monetario_financiero, grupo: "Crédito", vista: overlay, series: ["Morosidad: sistema financiero", "Morosidad: bancos públicos", "Morosidad: bancos privados"], unidad: "%", nota: "Ratio de cartera irregular sobre financiaciones al sector privado (BCRA, dataset 332). La fuente etiqueta la unidad como 'millones de pesos' en su metadata; es un error, se trata de un ratio %."}
+
+  # ---------------- CONSUMO DURABLE (proxy de patentamientos) ----------------
+  # No existe API abierta de "patentamientos" (altas/transferencias registrales que releva el
+  # Registro Nacional de la Propiedad del Automotor y publica ACARA mensualmente): ACARA es un
+  # sitio JS sin datos abiertos, con reportes mensuales en PDF detrás de URLs no predecibles
+  # (nombres de archivo distintos cada mes). ADEFA (fabricantes) sí tiene URL predecible para su
+  # informe de prensa mensual, pero ese informe reporta producción/exportaciones/ventas
+  # mayoristas, no patentamientos. En su lugar se usa la venta de vehículos 0km al mercado
+  # interno que reporta ADEFA vía datos.gob.ar (dataset 330, "Datos históricos de la industria
+  # automotriz"): verificado que nacional (14.311) + importado (29.785) = 44.096 unidades en
+  # jun-2026, coincide exacto con "Ventas Mayoristas" del informe de prensa oficial de ADEFA de
+  # ese mes -- misma cifra, vía API en vez de PDF.
+  - {nombre: "Venta de vehículos 0km al mercado interno", bloque: real, grupo: "Consumo", calculo: suma, componentes: ["330.3_VENTAS_MERTAL__49", "330.3_VENTAS_MERTAL_III__49"], unidad: "unidades", nota: "Ventas de vehículos 0km al mercado interno (nacional + importado), fuente ADEFA vía datos.gob.ar (dataset 330). Es un PROXY de consumo de bienes durables, no 'patentamientos': mide ventas de la industria automotriz al mercado interno (equivalente a las 'ventas mayoristas a concesionarios' del informe de prensa mensual de ADEFA), distinto de las altas/transferencias registrales que releva el Registro Nacional de la Propiedad del Automotor y publica ACARA mensualmente (esa fuente no tiene datos abiertos ni un formato estable para incorporar acá). Ambas series suelen moverse de forma parecida pero no son intercambiables."}
 
   # ---------------- EMAE POR SECTOR (semáforo) ----------------
   - {nombre: "EMAE · Agricultura, ganadería y silvicultura", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_ISOM_2004_M_39", semaforo: true}

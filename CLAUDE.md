@@ -27,6 +27,17 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `fuente: bcra` + `id_variable: N` → api.bcra.gob.ar (reservas diarias, etc.).
 - `fuente: argentinadatos` + `endpoint: "..."` → api.argentinadatos.com (inflación, riesgo país).
 - `fuente: dolar` + `casa: ...` → cotizaciones de dólar por casa (ArgentinaDatos).
+- `fuente: rem_bcra` + `variable: "..."` + `referencia: "..."` → Relevamiento de Expectativas de
+  Mercado (BCRA), a partir del único Excel histórico que publica el BCRA en una URL fija. Arma la
+  serie de "expectativa a un mes vista, siempre la encuesta más reciente disponible para cada
+  mes": para cada encuesta se queda con el pronóstico cuyo Período es el mes inmediato siguiente
+  al de la encuesta, indexado por ese Período (no por la fecha de la encuesta), normalizado a fin
+  de mes. `variable`/`referencia` deben coincidir exactamente con las columnas "Variable"/
+  "Referencia" de la hoja "Base de Datos Completa" del Excel (ej. "Precios minoristas (IPC nivel
+  general; INDEC)" / "var. % mensual"). El Excel (~1,5 MB) se cachea en `data/_cache_rem.csv`
+  (todas las variables de una sola descarga) y sólo se vuelve a bajar si la caché tiene más de
+  `REM_FRESCURA_DIAS` (7) días — el BCRA lo actualiza una vez por mes, no hace falta pegarle todos
+  los días.
 - `calculo: suma` + `componentes: [id1, id2]` → suma de series (ej. M1).
 - `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real).
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
@@ -93,15 +104,19 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 5. **Merge idempotente:** no tocar la lógica de `storage.py` que preserva el histórico.
 
 ## Estado actual (ya implementado)
-Precios (inflación mensual/interanual, IPC nivel general); Dólar (oficial/blue/MEP/CCL);
-Brecha cambiaria; Tipo de cambio real (mensual, 116.3_TCRMA_0_M_36); Riesgo país; Reservas
-(BCRA diario, combo); Agregados (base, M1 calculado, M2, M3); Tasas (BADLAR, política);
-Crédito (préstamos al sector privado, 91.1_PEFPC_0_0_35); EMAE general + semáforo por 16
-sectores; IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo (expo/impo/saldo
-74.3_* + tablas de desagregado por rubro y por uso); Social (desempleo 45.2_ECTDT_0_T_33,
-salario real).
+Precios (inflación mensual/interanual, IPC nivel general, incidencia por división de consumo,
+inflación efectiva vs. esperada REM); Dólar (oficial/blue/MEP/CCL); Brecha cambiaria; Tipo de
+cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diario, combo,
+compras netas de divisas por contraparte); Agregados (base, M1 calculado, M2, M3); Tasas
+(BADLAR, política); Crédito (préstamos al sector privado, variación % real mensual, por tipo de
+deudor Familias/Empresas, morosidad por tipo de banco); EMAE general + semáforo por 16 sectores +
+EMAE Urbano vs. No urbano (ponderado por VAB) + burbujas actividad×empleo por sector (SIPA); IPI
+manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo (expo/impo/saldo + tablas de
+desagregado por rubro y por uso + exportaciones a principales destinos); Social (desempleo,
+salario real, tasa de informalidad laboral, salario real por tipo de empleo); Consumo (venta de
+vehículos 0km al mercado interno, proxy de patentamientos).
 
 ## Pendientes / a mejorar
-Ver el prompt de tareas. En general: filtros de años por gráfico, estética MinEco, más
-desagregados, y varias series que hay que rastrear (ISAC, depósitos, IPC por categoría,
-empleo/salarios por tipo, morosidad, proyecciones).
+Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
+todavía no tienen fuente confiable identificada: patentamientos exactos (ACARA, sin datos
+abiertos), turismo, escrituras, ISAC, depósitos.

@@ -35,7 +35,7 @@ TITULO_BLOQUE = {"precios": "Precios", "monetario_financiero": "Monetario y fina
 ORDEN_GRUPOS = ["Precios", "Dólar", "Brecha y TCR", "Riesgo país", "Reservas",
                 "Agregados monetarios", "Tasas de interés", "Crédito",
                 "Comercio exterior", "Exportaciones por rubro", "Exportaciones por destino", "Importaciones por uso",
-                "Actividad", "Social"]
+                "Actividad", "Consumo", "Social"]
 
 
 def _fmt_num(v) -> str:
