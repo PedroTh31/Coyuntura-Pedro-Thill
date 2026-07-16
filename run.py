@@ -82,6 +82,31 @@ def _calcular(ind, start):
         s = s[s["valor"] > 0]
         s["valor"] = s["valor"].pct_change() * 100
         return s[["fecha", "valor"]].dropna().reset_index(drop=True)
+    if tipo == "combinado":
+        # Promedio ponderado de varios índices de nivel (ej. sectores del EMAE agrupados en
+        # "Urbano"/"Rural"), con rebase opcional a una fecha y media móvil opcional.
+        # 'componentes': [{"id": "...", "peso": 0.58}, ...] — los pesos NO necesitan sumar 1
+        # (se renormalizan acá), así se puede pasar el peso ya ponderado dentro del grupo.
+        componentes = ind.get("componentes")
+        if not componentes:
+            raise ValueError(f"Cálculo 'combinado' requiere 'componentes' en {ind['nombre']}")
+        suma_pesos = sum(c["peso"] for c in componentes)
+        partes = [fetch_datos_gob(c["id"], start).rename(columns={"valor": "v"}) for c in componentes]
+        s = partes[0][["fecha", "v"]].rename(columns={"v": "v0"})
+        for k, d in enumerate(partes[1:], 1):
+            s = s.merge(d.rename(columns={"v": f"v{k}"}), on="fecha", how="inner")
+        s["valor"] = sum(s[f"v{k}"] * (componentes[k]["peso"] / suma_pesos) for k in range(len(componentes)))
+        s = s[["fecha", "valor"]].sort_values("fecha")
+        ventana = ind.get("media_movil")
+        if ventana:
+            s["valor"] = s["valor"].rolling(ventana, min_periods=ventana).mean()
+            s = s.dropna(subset=["valor"])
+        rebase_fecha = ind.get("rebase_fecha")
+        if rebase_fecha:
+            ref = s.loc[s["fecha"] == pd.to_datetime(rebase_fecha), "valor"]
+            if len(ref):
+                s["valor"] = s["valor"] / ref.iloc[0] * 100
+        return s[["fecha", "valor"]].dropna().reset_index(drop=True)
     raise ValueError(f"cálculo desconocido: {tipo}")
 
 
