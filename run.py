@@ -82,6 +82,23 @@ def _calcular(ind, start):
         s = s[s["valor"] > 0]
         s["valor"] = s["valor"].pct_change() * 100
         return s[["fecha", "valor"]].dropna().reset_index(drop=True)
+    if tipo == "variacion_real_mensual":
+        # Variación % mensual REAL: deflacta la serie nominal por IPC antes de calcular la
+        # variación mes a mes, con media móvil opcional (en meses) para suavizar.
+        nominal_id = ind.get("nominal_id")
+        deflactor_id = ind.get("deflactor_id")
+        if not nominal_id or not deflactor_id:
+            raise ValueError(f"Cálculo 'variacion_real_mensual' requiere 'nominal_id' y 'deflactor_id' en {ind['nombre']}")
+        nom = fetch_datos_gob(nominal_id, start).rename(columns={"valor": "nom"})
+        ipc = fetch_datos_gob(deflactor_id, start).rename(columns={"valor": "ipc"})
+        s = nom.merge(ipc, on="fecha", how="inner").sort_values("fecha")
+        s = s[s["ipc"] > 0]
+        s["real"] = s["nom"] / s["ipc"]
+        s["valor"] = s["real"].pct_change() * 100
+        ventana = ind.get("media_movil")
+        if ventana:
+            s["valor"] = s["valor"].rolling(ventana, min_periods=ventana).mean()
+        return s[["fecha", "valor"]].dropna().reset_index(drop=True)
     if tipo == "combinado":
         # Promedio ponderado de varios índices de nivel (ej. sectores del EMAE agrupados en
         # "Urbano"/"Rural"), con rebase opcional a una fecha y media móvil opcional.

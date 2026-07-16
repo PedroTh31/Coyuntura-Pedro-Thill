@@ -91,6 +91,27 @@ indicadores:
   # ---------------- PRODUCCIÓN / CRÉDITO (nuevos, verificados) ----------------
   - {nombre: "IPI manufacturero (industria)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "453.1_SERIE_ORIGNAL_0_0_14_46", unidad: "índice 2004=100", desde: "2017-01-01"}
   - {nombre: "Préstamos al sector privado", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "91.1_PEFPC_0_0_35", unidad: "millones de $"}
+  - {nombre: "Préstamos al sector privado, variación % real mensual", bloque: monetario_financiero, grupo: "Crédito", calculo: variacion_real_mensual, nominal_id: "91.1_PEFPC_0_0_35", deflactor_id: "148.3_INIVELNAL_DICI_M_26", media_movil: 3, unidad: "% mensual (real)", nota: "Préstamos al sector privado (91.1_PEFPC_0_0_35) deflactados por IPC Nacional Nivel general (148.3_INIVELNAL_DICI_M_26), variación mes a mes, promedio móvil de 3 meses."}
+  # -- apertura Familias/Empresas: el BCRA no publica esta clasificación por tipo de deudor
+  #    en datos.gob.ar, sólo por línea de crédito. Se aproxima con la convención habitual del
+  #    propio BCRA/prensa económica: Consumo + Garantía real ≈ Familias (productos casi
+  #    exclusivos de personas físicas), Comerciales ≈ Empresas (adelantos y documentos, casi
+  #    exclusivos de firmas). Verificado: Consumo + Comerciales + Garantía real = Préstamos al
+  #    sector privado total, exacto (partición completa, sin residuo) al último dato (05/2026) --
+  - {nombre: "Préstamos a Familias (Consumo + Garantía real)", bloque: monetario_financiero, grupo: "Crédito", calculo: suma, componentes: ["91.1_PEFPC_0_0_41", "91.1_DETALLE_PRDOC_0_0_47"], unidad: "millones de $", solo_componente: true}
+  - {nombre: "Préstamos a Empresas (Comerciales)", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "91.1_PEFPD_0_0_45", unidad: "millones de $", solo_componente: true}
+  - {nombre: "Préstamos por tipo de deudor (aprox. Familias/Empresas)", bloque: monetario_financiero, grupo: "Crédito", vista: overlay, series: ["Préstamos a Familias (Consumo + Garantía real)", "Préstamos a Empresas (Comerciales)"], unidad: "millones de $", nota: "El BCRA no publica en datos.gob.ar una apertura oficial de préstamos por tipo de deudor (Familias/Empresas); se aproxima sumando líneas de crédito por su uso habitual: Familias ≈ Consumo (personales + tarjetas) + Garantía real (hipotecarios + prendarios); Empresas ≈ Comerciales (adelantos + documentos). Verificado: la suma de las 3 líneas reproduce exactamente el total de 'Préstamos al sector privado' (91.1_PEFPC_0_0_35), sin residuo."}
+
+  # -- Morosidad (irregularidad de cartera): serie directa del BCRA (dataset 332, "Principales
+  #    Indicadores del Sistema Financiero"), no hace falta rascar Excel. La fuente etiqueta la
+  #    unidad como "millones de pesos" pero es un error de metadata: es un ratio %, verificado
+  #    con 16 años de historia (2010-2026) siempre acotada entre 1,4% y 7,3% (nunca escaló a
+  #    miles/millones pese a la inflación acumulada del período, como sí lo hacen las series
+  #    realmente en pesos de este proyecto) --
+  - {nombre: "Morosidad: sistema financiero", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "332.2_SISTEMA_FIADA__53", unidad: "%", solo_componente: true}
+  - {nombre: "Morosidad: bancos públicos", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "332.2_BANCOS_PUBADA__55", unidad: "%", solo_componente: true}
+  - {nombre: "Morosidad: bancos privados", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "332.2_BANCOS_PRIADA__51", unidad: "%", solo_componente: true}
+  - {nombre: "Morosidad del crédito (irregularidad de cartera)", bloque: monetario_financiero, grupo: "Crédito", vista: overlay, series: ["Morosidad: sistema financiero", "Morosidad: bancos públicos", "Morosidad: bancos privados"], unidad: "%", nota: "Ratio de cartera irregular sobre financiaciones al sector privado (BCRA, dataset 332). La fuente etiqueta la unidad como 'millones de pesos' en su metadata; es un error, se trata de un ratio %."}
 
   # ---------------- EMAE POR SECTOR (semáforo) ----------------
   - {nombre: "EMAE · Agricultura, ganadería y silvicultura", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_ISOM_2004_M_39", semaforo: true}

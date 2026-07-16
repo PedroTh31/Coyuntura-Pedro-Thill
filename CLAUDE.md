@@ -32,6 +32,8 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
 - `calculo: interanual` + `base_id` → variación % interanual de una serie de datos_gob.
 - `calculo: mensual` + `base_id` → variación % mes a mes de una serie de datos_gob (nivel → tasa).
+- `calculo: variacion_real_mensual` + `nominal_id` + `deflactor_id` + `media_movil` (opcional,
+  meses) → deflacta por IPC, variación % mes a mes, con media móvil opcional.
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
 - `vista: overlay` + `series: ["Nombre indicador 1", "Nombre indicador 2", ...]` → líneas
   superpuestas de varios indicadores YA definidos (mismo nombre que su `nombre:`), un solo eje,
