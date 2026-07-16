@@ -34,7 +34,7 @@ TITULO_BLOQUE = {"precios": "Precios", "monetario_financiero": "Monetario y fina
                  "social": "Social y empleo", "fiscal": "Fiscal"}
 ORDEN_GRUPOS = ["Precios", "Dólar", "Brecha y TCR", "Riesgo país", "Reservas",
                 "Agregados monetarios", "Tasas de interés", "Crédito",
-                "Comercio exterior", "Exportaciones por rubro", "Exportaciones por destino", "Importaciones por uso",
+                "Comercio exterior", "Exportaciones por rubro", "Importaciones por uso",
                 "Actividad", "Consumo", "Social"]
 
 
@@ -107,6 +107,51 @@ def _serie_reservas_combo(idx, color, unidad, serie, desde):
         full_x=[d.strftime("%m/%y") for d in sm_full.index], full_y=_vals(sm_full),
         full_flujo=_vals(flujo_full), full_dates=[d.isoformat() for d in sm_full.index],
         min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat())
+
+
+def _serie_balance_cambiario(idx, ind, historico):
+    """
+    Combo de DOS indicadores YA presentes en 'historico' (a diferencia de
+    _serie_reservas_combo, que deriva barras y línea de una sola serie propia):
+    barras = ind['series'][0] (ej. compras netas de divisas del BCRA, ya
+    mensual), línea = ind['series'][1] (ej. stock de reservas brutas, diario
+    -> resampleado a fin de mes para poder graficarlo junto a la serie
+    mensual). Reusa el mismo formato 'combo' que ya entiende el JS.
+    """
+    nombre_barras, nombre_linea = ind["series"]
+    g_barras = historico[historico["indicador"] == nombre_barras].sort_values("fecha")
+    g_linea = historico[historico["indicador"] == nombre_linea].sort_values("fecha")
+    if g_barras.empty or g_linea.empty:
+        return None
+
+    linea_full = g_linea.set_index("fecha")["valor"].resample("MS").last()
+    barras_full = g_barras.set_index("fecha")["valor"].resample("MS").last()
+    fechas_full = linea_full.index.union(barras_full.index).sort_values()
+    linea_full = linea_full.reindex(fechas_full)
+    barras_full = barras_full.reindex(fechas_full)
+
+    desde = ind.get("desde", DESDE_GENERAL)
+    fechas_s = fechas_full[fechas_full >= pd.to_datetime(desde)]
+    if len(fechas_s) < 2:
+        fechas_s = fechas_full
+    linea_s = linea_full.reindex(fechas_s)
+    barras_s = barras_full.reindex(fechas_s)
+
+    def _vals(s):
+        return [round(float(v), 2) if pd.notna(v) else None for v in s]
+
+    ult, pct = _variacion(g_linea)
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        valor=_fmt_num(ult), pct=pct, marca_fecha=None,
+        maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None)
+
+    serie_js = dict(i=idx, color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""), kind="combo",
+        x=[d.strftime("%m/%y") for d in fechas_s], y=_vals(linea_s), flujo=_vals(barras_s),
+        full_x=[d.strftime("%m/%y") for d in fechas_full], full_y=_vals(linea_full),
+        full_flujo=_vals(barras_full), full_dates=[d.isoformat() for d in fechas_full],
+        min_date=fechas_full.min().isoformat(), max_date=fechas_full.max().isoformat())
+    return card, serie_js
 
 
 COLORES_OVERLAY = ["#0767A7", "#C62828", "#2E7D33", "#8D2D04", "#6A1B99", "#EF6C00"]
@@ -306,11 +351,13 @@ def generar(historico, config_indicadores):
         nota = ind.get("nota")
         if ind.get("solo_componente"):
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
-        if ind.get("vista") in ("overlay", "incidencia_stack", "burbujas"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "burbujas", "balance_cambiario"):
             if ind["vista"] == "overlay":
                 entrada = _serie_overlay(idx, ind, historico)
             elif ind["vista"] == "incidencia_stack":
                 entrada = _serie_incidencia(idx, ind, historico, indicadores_por_nombre)
+            elif ind["vista"] == "balance_cambiario":
+                entrada = _serie_balance_cambiario(idx, ind, historico)
             else:
                 entrada = _serie_bubble(idx, ind, historico)
             if entrada is None:
@@ -353,7 +400,8 @@ def generar(historico, config_indicadores):
                 marca_fecha = f"Sin datos nuevos desde {serie['fecha'].max().strftime('%m/%Y')}"
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
             unidad=unidad, valor=_fmt_num(ult), pct=pct, marca_fecha=marca_fecha,
-            maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num))
+            maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num,
+            sube_es_bueno=ind.get("sube_es_bueno", False)))
         if ind.get("vista") == "reservas_combo":
             series_js.append(_serie_reservas_combo(idx, color, unidad, serie, desde))
         else:
@@ -420,16 +468,20 @@ def _tabla_valores(titulo, filas):
 
 
 def _card_cell(c):
-    if c["pct"] is None: fl, cls = "•", "flat"
-    elif c["pct"] > 0.05: fl, cls = "▲", "up"
-    elif c["pct"] < -0.05: fl, cls = "▼", "down"
-    else: fl, cls = "•", "flat"
+    if c["pct"] is None or abs(c["pct"]) <= 0.05:
+        fl, cls = "•", "flat"
+    else:
+        sube = c["pct"] > 0.05
+        fl = "▲" if sube else "▼"
+        # Genérico: subir = malo (rojo) salvo que el indicador declare 'sube_es_bueno'
+        # (ej. EMAE: que la actividad suba es una buena noticia, no una mala).
+        bueno = sube if c.get("sube_es_bueno") else not sube
+        cls = "bueno" if bueno else "malo"
     chg = f'{fl} {abs(c["pct"]):.1f}%' if c["pct"] is not None else "—"
-    # Renderizar asterisco si hay nota
+    # Asterisco numerado y clickeable: salta a su nota en el pie de página.
     nota_mark = ""
     if c.get("nota_num"):
-        nota_asterisco = "*" * c["nota_num"]
-        nota_mark = f'<div class="nota-ref">{nota_asterisco}</div>'
+        nota_mark = f'<div class="nota-ref"><a href="#nota-{c["nota_num"]}">*{c["nota_num"]}</a></div>'
     # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar())
     marca_html = f'<div class="marca-fecha">{c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
     # Botones de filtro (no aplican a gráficos de un solo período, ej. burbujas)
@@ -459,8 +511,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
         notas_items = []
         for nota_texto, nota_info in notas_ordenadas:
             num = nota_info["numero"]
-            asterisco = "*" * num
-            notas_items.append(f'<li><strong>{asterisco}</strong> {nota_texto}</li>')
+            notas_items.append(f'<li id="nota-{num}"><strong>*{num}</strong> {nota_texto}</li>')
         notas_html = '<h3 class="sub">Notas metodológicas y fuentes</h3><ul class="notas-list">' + "".join(notas_items) + '</ul>'
 
     nav, secciones = "", ""
@@ -516,9 +567,11 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .sub { font-size:14px; font-weight:600; margin:24px 0 12px; color:var(--azul-marca); }
   .ref { color:var(--gris); font-weight:400; font-size:13px; }
   .nota { color:var(--gris); font-size:12px; margin:6px 0 14px; }
-  .nota-ref { font-size:10px; color:var(--azul-enlace); font-weight:600; margin-top:4px; text-align:center; }
+  .nota-ref { font-size:10px; margin-top:4px; text-align:center; }
+  .nota-ref a { color:var(--azul-enlace); font-weight:600; text-decoration:none; }
+  .nota-ref a:hover { text-decoration:underline; }
   .notas-list { margin:10px 0 14px 20px; font-size:12px; color:var(--gris); }
-  .notas-list li { margin:6px 0; }
+  .notas-list li { margin:6px 0; scroll-margin-top:16px; }
   .notas-list strong { color:var(--tinta); }
   .dot { width:11px; height:11px; border-radius:2px; display:inline-block; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,460px)); justify-content:start; gap:18px; margin-bottom:8px; }
@@ -528,12 +581,12 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .cv { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:24px; font-weight:600; margin:2px 0; }
   .cm { display:flex; justify-content:space-between; align-items:baseline; font-size:11px; }
   .chg { font-family:ui-monospace,monospace; font-weight:600; }
-  .chg.up { color:#C62828; } .chg.down { color:#2E7D33; } .chg.flat { color:var(--gris); }
+  .chg.malo { color:#C62828; } .chg.bueno { color:#2E7D33; } .chg.flat { color:var(--gris); }
   .uni { color:var(--gris); }
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
   .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
   .cbox { height:200px; padding:8px 10px 12px; }
-  .cbox-grande { height:340px; }
+  .cbox-grande { height:400px; }
   .cell-ancha { grid-column: span 2; }
   .tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; margin-bottom:8px; }
   .tabla th { text-align:right; color:var(--gris); font-weight:600; font-size:11px; text-transform:uppercase; padding:4px 10px; }
@@ -660,8 +713,8 @@ const etiquetasBurbujaPlugin = {
     if (chart.config.type !== 'bubble') return;
     const { ctx } = chart;
     ctx.save();
-    ctx.font = '9px "Encode Sans", system-ui, sans-serif';
-    ctx.fillStyle = '#444444';
+    ctx.font = '11px "Encode Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#333333';
     ctx.textBaseline = 'middle';
 
     const items = chart.data.datasets.map((ds, i) => {
@@ -673,9 +726,9 @@ const etiquetasBurbujaPlugin = {
     const ocupadas = [];
     items.forEach(({ ds, punto }) => {
       const corto = ds.label.length > 16 ? ds.label.slice(0, 15) + '…' : ds.label;
-      const x = punto.x + punto.options.radius + 4;
+      const x = punto.x + punto.options.radius + 5;
       const y = punto.y;
-      const caja = { x, y: y - 6, w: ctx.measureText(corto).width + 3, h: 12 };
+      const caja = { x, y: y - 7, w: ctx.measureText(corto).width + 3, h: 14 };
       const choca = ocupadas.some(o =>
         caja.x < o.x + o.w && caja.x + caja.w > o.x && caja.y < o.y + o.h && caja.y + caja.h > o.y);
       if (choca) return;
@@ -688,7 +741,7 @@ const etiquetasBurbujaPlugin = {
 
 const bubbleOpts = () => ({
   responsive:true, maintainAspectRatio:false, animation:false,
-  layout:{ padding:{ right:70, top:10 } },
+  layout:{ padding:{ right:95, top:14 } },
   plugins:{ legend:{display:false},
     tooltip:{ callbacks:{
       title:(items)=> items[0].raw.label,
@@ -727,7 +780,7 @@ SERIES.forEach(s => {
     // Radio en px escalado desde el % de empleo (sin piso artificial: un sector con
     // 0,1% del empleo se ve casi invisible a propósito, es la realidad del dato).
     charts[s.i] = new Chart(ctx, { type:'bubble', data:{ datasets: s.puntos.map(p => (
-        { label:p.nombre, data:[{ x:p.x, y:p.y, r:p.r*1.1, r_pct:p.r, label:p.nombre }],
+        { label:p.nombre, data:[{ x:p.x, y:p.y, r:p.r*1.6, r_pct:p.r, label:p.nombre }],
           backgroundColor:p.color+'B0', borderColor:p.color }
       )) }, options: bubbleOpts(), plugins:[etiquetasBurbujaPlugin] });
   } else {

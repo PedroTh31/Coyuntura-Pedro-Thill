@@ -17,9 +17,11 @@ from datetime import datetime, timedelta
 from urllib.parse import quote
 from pathlib import Path
 import pandas as pd
+import yaml
 
 RAIZ = Path(__file__).resolve().parent
 CSV = RAIZ / "data" / "series_largo.csv"
+CONFIG = RAIZ / "indicadores.yaml"
 DASHBOARD_URL = "https://pedroth31.github.io/Coyuntura-Pedro-Thill/"   # editable
 
 # indicadores que van en el mail (deben coincidir con los nombres del config)
@@ -134,7 +136,16 @@ def _fmt(v):
     return s.replace(",", "@").replace(".", ",").replace("@", ".")
 
 
+def _cargar_sube_es_bueno():
+    """Mismo criterio que dashboard.py: por defecto subir = malo (rojo), salvo que el
+    indicador declare 'sube_es_bueno' en indicadores.yaml (ej. EMAE). Se lee del yaml
+    (única fuente de verdad) para que dashboard y mail nunca queden desincronizados."""
+    cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+    return {i["nombre"]: bool(i.get("sube_es_bueno")) for i in cfg["indicadores"]}
+
+
 def resumen_indicadores(df):
+    sube_es_bueno = _cargar_sube_es_bueno()
     filas = []
     for n in INDICADORES_MAIL:
         s = df[df["indicador"] == n].sort_values("fecha")
@@ -146,7 +157,8 @@ def resumen_indicadores(df):
         if not prev.empty and prev.iloc[-1]["valor"]:
             chg = (ult["valor"] / prev.iloc[-1]["valor"] - 1) * 100
         filas.append(dict(nombre=n, valor=_fmt(ult["valor"]), unidad=ult.get("unidad", ""),
-                          chg=chg, fecha=ult["fecha"].strftime("%d/%m/%Y")))
+                          chg=chg, fecha=ult["fecha"].strftime("%d/%m/%Y"),
+                          sube_es_bueno=sube_es_bueno.get(n, False)))
     return filas
 
 
@@ -170,14 +182,13 @@ def armar_html(indicadores, argentinas, internacionales):
     hoy = datetime.now().strftime("%d/%m/%Y")
     filas_ind = ""
     for f in indicadores:
-        if f["chg"] is None:
+        if f["chg"] is None or abs(f["chg"]) <= 0.05:
             flecha, color = "•", "#9A968C"
-        elif f["chg"] > 0.05:
-            flecha, color = "▲", "#B4341F"
-        elif f["chg"] < -0.05:
-            flecha, color = "▼", "#256D5B"
         else:
-            flecha, color = "•", "#9A968C"
+            sube = f["chg"] > 0.05
+            flecha = "▲" if sube else "▼"
+            bueno = sube if f.get("sube_es_bueno") else not sube
+            color = "#256D5B" if bueno else "#B4341F"
         chg = f'{flecha} {abs(f["chg"]):.1f}%' if f["chg"] is not None else "—"
         filas_ind += (f'<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">{f["nombre"]}</td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:monospace;text-align:right"><b>{f["valor"]}</b> <span style="color:#999;font-size:11px">{f["unidad"]}</span></td>'

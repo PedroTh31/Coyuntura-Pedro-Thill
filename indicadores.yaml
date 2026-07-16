@@ -9,8 +9,7 @@ indicadores:
 
   # ---------------- PRECIOS ----------------
   - {nombre: "Inflación mensual (IPC)", bloque: precios, grupo: "Precios", fuente: argentinadatos, endpoint: "finanzas/indices/inflacion", unidad: "% mensual", barras: true}
-  - {nombre: "Inflación interanual (IPC)", bloque: precios, grupo: "Precios", calculo: interanual, base_id: "148.3_INIVELNAL_DICI_M_26", unidad: "% i.a.", nota: "Variación interanual calculada como (IPC_t / IPC_t-12m - 1) × 100 a partir del IPC Nacional Nivel general de datos.gob.ar."}
-  - {nombre: "IPC Nacional - Nivel general", bloque: precios, grupo: "Precios", fuente: datos_gob, id: "148.3_INIVELNAL_DICI_M_26", unidad: "índice"}
+  - {nombre: "Inflación interanual (IPC)", bloque: precios, grupo: "Precios", calculo: interanual, base_id: "148.3_INIVELNAL_DICI_M_26", unidad: "% i.a.", barras: true, nota: "Variación interanual calculada como (IPC_t / IPC_t-12m - 1) × 100 a partir del IPC Nacional Nivel general de datos.gob.ar (148.3_INIVELNAL_DICI_M_26; se sigue trayendo esta serie para el cálculo aunque no tenga tarjeta propia en el dashboard)."}
 
   # -- IPC por categoría analítica: Núcleo / Regulados / Estacionales (INDEC no publica
   #    ponderadores para esta clasificación específica -> variación % simple, sin ponderar) --
@@ -68,19 +67,21 @@ indicadores:
   - {nombre: "Compras netas de divisas: Sector privado", bloque: monetario_financiero, grupo: "Reservas", fuente: datos_gob, id: "331.1_COMPRAS_NEROS__40", unidad: "millones de $", solo_componente: true}
   - {nombre: "Compras netas de divisas: Tesoro Nacional", bloque: monetario_financiero, grupo: "Reservas", fuente: datos_gob, id: "331.1_COMPRAS_NENAL__39", unidad: "millones de $", solo_componente: true}
   - {nombre: "Compras netas de divisas por contraparte", bloque: monetario_financiero, grupo: "Reservas", vista: overlay, series: ["Compras netas de divisas: Sector privado", "Compras netas de divisas: Tesoro Nacional"], unidad: "millones de $", nota: "Desagregado de las compras netas de divisas del BCRA por contraparte (dataset 331, datos.gob.ar). Verificado: sector privado + Tesoro Nacional = compras netas totales, exacto."}
+  - {nombre: "Balance cambiario (compras netas + reservas brutas)", bloque: monetario_financiero, grupo: "Reservas", vista: balance_cambiario, series: ["Compras netas de divisas del BCRA", "Reservas internacionales (BCRA)"], unidad: "millones de $", nota: "Barras = compras netas de divisas del BCRA en el mercado de cambios (dataset 331, datos.gob.ar, mensual). Línea = stock de reservas internacionales brutas (BCRA, diario, eje derecho, resampleado a fin de mes). A diferencia del combo de 'Reservas internacionales (BCRA)' de más arriba (cuyas barras son la variación mes a mes del propio stock), acá las barras son la compra/venta neta REAL informada por el BCRA -- el stock de reservas también se mueve por otros factores (pagos de deuda, valuación de oro/DEGs, etc.), así que las barras y la pendiente de la línea no tienen por qué coincidir mes a mes."}
 
   # ---------------- AGREGADOS MONETARIOS (orden BM · M1 · M2 · M3, desde 2026) ----------------
   - {nombre: "Base monetaria", bloque: monetario_financiero, grupo: "Agregados monetarios", fuente: datos_gob, id: "90.1_BMT_0_0_20", unidad: "millones de $", desde: "2026-01-01"}
   - {nombre: "M1 (circulante + cta. cte.)", bloque: monetario_financiero, grupo: "Agregados monetarios", calculo: suma, componentes: ["90.1_BMCMP_0_0_44", "90.1_DCCT_0_0_32"], unidad: "millones de $", desde: "2026-01-01", nota: "Suma de circulante (90.1_BMCMP_0_0_44) y depósitos en cuenta corriente (90.1_DCCT_0_0_32) de datos.gob.ar."}
   - {nombre: "M2 (agregado total)", bloque: monetario_financiero, grupo: "Agregados monetarios", fuente: datos_gob, id: "90.1_AMTM2_0_0_31", unidad: "millones de $", desde: "2026-01-01"}
   - {nombre: "M3 (agregado amplio)", bloque: monetario_financiero, grupo: "Agregados monetarios", fuente: datos_gob, id: "90.1_AMTM3_0_0_31", unidad: "millones de $", desde: "2026-01-01"}
+  - {nombre: "Agregados monetarios (Base, M1, M2, M3)", bloque: monetario_financiero, grupo: "Agregados monetarios", vista: overlay, series: ["Base monetaria", "M1 (circulante + cta. cte.)", "M2 (agregado total)", "M3 (agregado amplio)"], unidad: "millones de $", desde: "2026-01-01", nota: "Las 4 series comparten un solo eje (magnitud real: M3 > M2 > M1 > Base). La Base monetaria se ve 'aplastada' contra el eje por diferir en un orden de magnitud del resto; es el comportamiento esperado dada la relación real de tamaños entre los agregados, no un error del gráfico — usar la leyenda para aislar una serie a la vez si hace falta ver su propia escala de variación."}
 
   # ---------------- TASAS DE INTERÉS (desde 2026) ----------------
   - {nombre: "Tasa BADLAR (mayorista)", bloque: monetario_financiero, grupo: "Tasas de interés", fuente: datos_gob, id: "89.2_TS_INTELAR_0_D_20", unidad: "% TNA", desde: "2026-01-01"}
   - {nombre: "Tasa de política monetaria", bloque: monetario_financiero, grupo: "Tasas de interés", fuente: datos_gob, id: "89.2_TS_INTE_PM_0_D_16", unidad: "% TNA", desde: "2026-01-01", marca_fecha: true, nota: "El BCRA discontinuó la publicación de esta serie el 10/07/2025, en el marco del cambio de esquema de política monetaria; no hay serie sucesora oficial (para la tasa de referencia actual del mercado, ver BADLAR). Si el BCRA retoma la publicación, este gráfico se actualiza solo con los datos nuevos."}
 
   # ---------------- ACTIVIDAD REAL (EMAE con serie larga + semáforo) ----------------
-  - {nombre: "EMAE (actividad económica)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "143.3_NO_PR_2004_A_21", unidad: "índice 2004=100", desde: "2004-01-01"}
+  - {nombre: "EMAE (actividad económica)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "143.3_NO_PR_2004_A_21", unidad: "índice 2004=100", desde: "2004-01-01", sube_es_bueno: true}
 
   # -- EMAE Urbano vs No urbano (Rural): agrupa los 16 sectores del EMAE ponderando por su
   #    peso real en el Valor Agregado Bruto (VAB, INDEC, dataset "Producto Interno Bruto a
@@ -213,7 +214,6 @@ indicadores:
   - {nombre: "Exportaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IET_0_M_16", unidad: "millones de USD"}
   - {nombre: "Importaciones totales", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_IIT_0_M_25", unidad: "millones de USD"}
   - {nombre: "Saldo comercial", bloque: externo, grupo: "Comercio exterior", fuente: datos_gob, id: "74.3_ISC_0_M_19", unidad: "millones de USD"}
-  - {nombre: "Comercio exterior (expo/impo/saldo)", bloque: externo, grupo: "Comercio exterior", vista: overlay, series: ["Exportaciones totales", "Importaciones totales", "Saldo comercial"], unidad: "millones de USD"}
   # -- exportaciones por gran rubro (tabla) --
   - {nombre: "Productos primarios", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IEPP_0_M_35", unidad: "millones de USD"}
   - {nombre: "Manufacturas de origen agropecuario (MOA)", bloque: externo, grupo: "Exportaciones por rubro", tabla: "Exportaciones por gran rubro", fuente: datos_gob, id: "74.3_IEMOA_0_M_48", unidad: "millones de USD"}
@@ -227,14 +227,3 @@ indicadores:
   - {nombre: "Bienes de consumo", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIBCO_0_M_32", unidad: "millones de USD"}
   - {nombre: "Vehículos automotores de pasajeros", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIVAP_0_M_49", unidad: "millones de USD"}
   - {nombre: "Resto (importaciones por uso)", bloque: externo, grupo: "Importaciones por uso", tabla: "Importaciones por uso económico", fuente: datos_gob, id: "74.3_IIR_0_M_23", unidad: "millones de USD"}
-
-  # -- exportaciones a principales destinos (ICA, dataset 77: verificado por país, NO se usan los
-  #    campos "total_X" por bloque/región de este dataset: se comprobó que al menos uno (total UE-28,
-  #    77.3_IETU_0_A_26) está mal agregado en la fuente — reporta 1/26 de la suma real de sus propios
-  #    países miembro. Por eso se listan países individuales, cada uno una serie propia verificada) --
-  - {nombre: "Exportaciones a China", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEC_0_A_23", unidad: "millones de USD", solo_componente: true}
-  - {nombre: "Exportaciones a Brasil", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEB_0_A_24", unidad: "millones de USD", solo_componente: true}
-  - {nombre: "Exportaciones a Estados Unidos", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEEU_0_A_32", unidad: "millones de USD", solo_componente: true}
-  - {nombre: "Exportaciones a Chile", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IECH_0_A_23", unidad: "millones de USD", solo_componente: true}
-  - {nombre: "Exportaciones a India", bloque: externo, grupo: "Exportaciones por destino", fuente: datos_gob, id: "77.3_IEI_0_A_23", unidad: "millones de USD", solo_componente: true}
-  - {nombre: "Exportaciones a principales destinos", bloque: externo, grupo: "Exportaciones por destino", vista: overlay, series: ["Exportaciones a China", "Exportaciones a Brasil", "Exportaciones a Estados Unidos", "Exportaciones a Chile", "Exportaciones a India"], unidad: "millones de USD", nota: "Los 5 mayores destinos de exportación verificados individualmente (dataset ICA 77.3, INDEC). No se usan los totales por bloque/región de ese dataset: se detectó que al menos el campo 'total UE-28' está mal agregado en la fuente (reporta valores ~26 veces menores a la suma de sus propios países miembro)."}
