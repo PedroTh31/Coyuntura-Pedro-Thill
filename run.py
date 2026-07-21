@@ -12,7 +12,8 @@ from pathlib import Path
 import yaml
 import pandas as pd
 
-from fetchers import traer, fetch_datos_gob, fetch_dolar
+from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
+                       fetch_bcra_organismos_internacionales, fetch_bcra_swap_china)
 import storage
 import dashboard
 
@@ -124,6 +125,22 @@ def _calcular(ind, start):
             if len(ref):
                 s["valor"] = s["valor"] / ref.iloc[0] * 100
         return s[["fecha", "valor"]].dropna().reset_index(drop=True)
+    if tipo == "reservas_ajustadas":
+        # Reservas brutas (diarias) - swap China (mensual, sección II.2 de la planilla SDDS del
+        # BCRA) - organismos internacionales (Balance Semanal del BCRA). Se resamplea todo a fin
+        # de mes (la cadencia más gruesa, el swap) y se hace join interno: la serie arranca sola
+        # donde el swap tiene datos (dic-2022), sin rellenar hacia atrás con nada.
+        brutas = fetch_bcra(1, start).sort_values("fecha")
+        if brutas.empty:
+            return brutas
+        brutas_m = brutas.set_index("fecha")["valor"].resample("ME").last()
+        swap = fetch_bcra_swap_china().set_index("fecha")["valor"]
+        organismos = fetch_bcra_organismos_internacionales().set_index("fecha")["valor"].resample("ME").last()
+        s = pd.DataFrame({"brutas": brutas_m}).join(swap.rename("swap"), how="inner") \
+            .join(organismos.rename("organismos"), how="inner")
+        s["valor"] = s["brutas"] - s["swap"] - s["organismos"]
+        s = s.reset_index().rename(columns={"index": "fecha"})
+        return s[["fecha", "valor"]].dropna().sort_values("fecha").reset_index(drop=True)
     raise ValueError(f"cálculo desconocido: {tipo}")
 
 

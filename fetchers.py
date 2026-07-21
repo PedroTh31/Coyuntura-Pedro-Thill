@@ -22,9 +22,14 @@ import time
 from pathlib import Path
 import requests
 import pandas as pd
+import xlrd
+import pdfplumber
 
 TIMEOUT = 30
-HEADERS = {"User-Agent": "coyuntura-tracker/1.0 (uso académico)"}
+# Sin tildes/caracteres no-ASCII a propósito: un User-Agent con "é" (mal codificado en la
+# cabecera HTTP) causaba un 502 consistente y reproducible en api.bcra.gob.ar -- probado en
+# vivo, era la causa real de que "Reservas internacionales (BCRA)" no se actualizara.
+HEADERS = {"User-Agent": "coyuntura-tracker/1.0 (uso academico)"}
 
 
 def _get(url: str, params: dict | None = None, reintentos: int = 3) -> requests.Response:
@@ -139,7 +144,7 @@ def _parsear_respuesta_bcra(data: dict) -> list[dict]:
     results = data.get("results")
     if not results:
         return filas
-    # v4.0/v3.0: [{"idVariable":1,"detalle":[{fecha,valor},...]}]. v2.0: lista directa de {fecha,valor}.
+    # v4.0: [{"idVariable":1,"detalle":[{fecha,valor},...]}].
     if isinstance(results, list) and len(results) > 0 and results[0].get("detalle"):
         items = [d for item in results for d in item.get("detalle", [])]
     else:
@@ -157,54 +162,55 @@ def _parsear_respuesta_bcra(data: dict) -> list[dict]:
 
 def fetch_bcra(id_variable: int, start_date: str | None = None) -> pd.DataFrame:
     """
-    Trae datos de la API del BCRA (Estadísticas Monetarias).
-    Usa v4.0 (preferido), con fallbacks a v3.0 y v2.0.
+    Trae datos de la API del BCRA (Estadísticas Monetarias), sólo v4.0.
 
     id_variable: número de variable (ej: 1 para reservas internacionales diarias)
     Devuelve DataFrame con fecha (diaria) y valor.
 
-    Resiliente a la inestabilidad conocida de api.bcra.gob.ar (502 intermitentes):
-    para cada versión de la API, prueba ventanas de fecha cada vez más cortas
-    (2 años · 6 meses · 1 mes) y reintenta cada una con backoff antes de pasar
-    a la siguiente. Si todo falla, loguea el error y devuelve un DataFrame vacío
-    SIN tocar el histórico ya guardado (storage.py sólo agrega, nunca borra).
+    v3.0 y v2.0 quedaron confirmadas MUERTAS (410 Gone y 404 Not Found
+    respectivamente, no "inestables" -- probado en vivo, nunca van a responder)
+    y se sacaron del todo: antes cada corrida fallida desperdiciaba 12 de 18
+    intentos pegándole a esos dos endpoints muertos en vez de reintentar contra
+    la única versión viva. Resiliente a la inestabilidad conocida de v4.0 (502
+    intermitentes, confirmado que a veces responde y a veces no incluso con la
+    misma request repetida en minutos): prueba ventanas de fecha cada vez más
+    cortas (2 años · 6 meses · 1 mes) y reintenta cada una varias veces con
+    backoff. Si todo falla, loguea el error y devuelve un DataFrame vacío SIN
+    tocar el histórico ya guardado (storage.py sólo agrega, nunca borra).
     """
     end_date = pd.Timestamp.today()
     ventanas_dias = [730, 180, 30]  # 2 años, 6 meses, 1 mes
-    versiones = ["v4.0", "v3.0", "v2.0"]
-    reintentos_por_ventana = 2
+    reintentos_por_ventana = 4
     filas = []
     ultimo_error = None
 
-    for version in versiones:
-        for dias in ventanas_dias:
-            desde = (end_date - pd.Timedelta(days=dias)).strftime("%Y-%m-%d")
-            hasta = end_date.strftime("%Y-%m-%d")
-            url = f"https://api.bcra.gob.ar/estadisticas/{version}/monetarias/{id_variable}"
-            params = {"desde": desde, "hasta": hasta, "limit": 1000}
+    for dias in ventanas_dias:
+        desde = (end_date - pd.Timedelta(days=dias)).strftime("%Y-%m-%d")
+        hasta = end_date.strftime("%Y-%m-%d")
+        url = f"https://api.bcra.gob.ar/estadisticas/v4.0/monetarias/{id_variable}"
+        params = {"desde": desde, "hasta": hasta, "limit": 1000}
 
-            for intento in range(reintentos_por_ventana):
+        for intento in range(reintentos_por_ventana):
+            try:
                 try:
-                    try:
-                        r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=True)
-                        r.raise_for_status()
-                    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
-                        r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=False)
-                        r.raise_for_status()
-                    filas = _parsear_respuesta_bcra(r.json())
-                    if filas:
-                        break
-                except (requests.RequestException, ValueError, KeyError, TypeError) as e:
-                    ultimo_error = f"{version} desde={desde}: {e}"
-                    time.sleep(2 * (intento + 1))  # backoff antes del próximo reintento
-            if filas:
-                break
+                    r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=True)
+                    r.raise_for_status()
+                except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
+                    r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=False)
+                    r.raise_for_status()
+                filas = _parsear_respuesta_bcra(r.json())
+                if filas:
+                    break
+            except (requests.RequestException, ValueError, KeyError, TypeError) as e:
+                ultimo_error = f"v4.0 desde={desde}: {e}"
+                time.sleep(2 * (intento + 1))  # backoff antes del próximo reintento
         if filas:
             break
 
     if not filas:
         print(f"  [ADVERTENCIA] fetch_bcra id_variable={id_variable}: sin datos tras probar "
-              f"{len(versiones)} versiones x {len(ventanas_dias)} ventanas. Último error: {ultimo_error}")
+              f"{len(ventanas_dias)} ventanas x {reintentos_por_ventana} reintentos (sólo v4.0, "
+              f"v3.0/v2.0 confirmadas muertas). Último error: {ultimo_error}")
         return pd.DataFrame(columns=["fecha", "valor"])
 
     df = pd.DataFrame(filas)
@@ -293,6 +299,174 @@ def fetch_rem_variable(variable: str, referencia: str, start_date: str | None = 
         completo.to_csv(_REM_CACHE_CSV, index=False)
         _REM_CACHE_META.write_text(
             json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+
+    sub = completo[(completo["variable"] == variable) & (completo["referencia"] == referencia)]
+    if sub.empty:
+        return pd.DataFrame(columns=["fecha", "valor"])
+    df = sub[["fecha", "valor"]].sort_values("fecha").drop_duplicates(subset="fecha").reset_index(drop=True)
+    if start_date:
+        df = df[df["fecha"] >= pd.to_datetime(start_date)]
+    return df.reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
+# 6) BCRA: componentes de "reservas ajustadas" (swap China + organismos internacionales)
+# ---------------------------------------------------------------------------
+BCRA_BALANCE_XLS_URL = "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/Serieanual.xls"
+BCRA_SDDS_URL_TPL = "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/temp{mes:02d}{anio2:02d}.pdf"
+ORGANISMOS_FRESCURA_DIAS = 7  # el balance semanal se actualiza ~4 veces por mes, no hace falta bajarlo a diario
+SWAP_CHINA_INICIO = pd.Timestamp("2022-12-31")  # antes de esta fecha el swap no tiene fila propia en la planilla SDDS
+_ORGANISMOS_CACHE_CSV = _CACHE_DIR / "_cache_organismos_internacionales.csv"
+_ORGANISMOS_CACHE_META = _CACHE_DIR / "_cache_organismos_internacionales_meta.json"
+_SWAP_CACHE_CSV = _CACHE_DIR / "_cache_swap_china.csv"
+
+
+def fetch_bcra_organismos_internacionales() -> pd.DataFrame:
+    """
+    "Obligaciones con organismos internacionales" (BCRA, dataset del Balance
+    Semanal -- Serie Anual de Balances Semanales, un único Excel histórico
+    desde 1998, se actualiza ~4 veces por mes). El propio BCRA documenta este
+    rubro como "las operaciones y cuentas de depósito del F.M.I., Banco
+    Internacional de Pagos de Basilea (B.I.S.) y otros organismos" (más el
+    Uso del Tramo de Reservas y su contrapartida) -- es un AGREGADO FMI+BIS+
+    otros, no BIS aislado. Viene en miles de $ y se convierte a millones de
+    USD con el tipo de cambio de referencia de la misma planilla.
+
+    El archivo pesa ~1,8 MB: se cachea (mismo mecanismo que el REM) para no
+    volver a descargarlo en cada corrida diaria sin necesidad.
+    """
+    completo = None
+    if _ORGANISMOS_CACHE_META.exists() and _ORGANISMOS_CACHE_CSV.exists():
+        try:
+            meta = json.loads(_ORGANISMOS_CACHE_META.read_text(encoding="utf-8"))
+            descargado = pd.to_datetime(meta.get("descargado"))
+            if (pd.Timestamp.today().normalize() - descargado).days < ORGANISMOS_FRESCURA_DIAS:
+                completo = pd.read_csv(_ORGANISMOS_CACHE_CSV, parse_dates=["fecha"])
+        except (ValueError, KeyError, OSError, json.JSONDecodeError):
+            completo = None
+
+    if completo is None:
+        completo = _descargar_y_transformar_organismos()
+        _CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        completo.to_csv(_ORGANISMOS_CACHE_CSV, index=False)
+        _ORGANISMOS_CACHE_META.write_text(
+            json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+    return completo[["fecha", "valor"]].reset_index(drop=True)
+
+
+def _descargar_y_transformar_organismos() -> pd.DataFrame:
+    r = _get(BCRA_BALANCE_XLS_URL)
+    wb = xlrd.open_workbook(file_contents=r.content)
+    filas = []
+    for nombre_hoja in wb.sheet_names():
+        if "serie semanal" not in nombre_hoja.lower():
+            continue
+        ws = wb.sheet_by_name(nombre_hoja)
+        # Las filas se buscan por ETIQUETA (no por índice fijo): la posición cambia de año a año
+        # dentro del mismo archivo. "startswith" (no "in") porque el activo tiene un rubro parecido
+        # ("- Pago Obligaciones con Organismos Internacionales", un adelanto al Gobierno Nacional,
+        # NADA que ver) que un simple "contiene" matchearía por error.
+        fila_organismos = fila_tc = fila_fechas = None
+        for r_ in range(ws.nrows):
+            etiqueta = str(ws.cell_value(r_, 0)).strip().upper()
+            if etiqueta.startswith("OBLIGACIONES CON ORGANISMOS") and fila_organismos is None:
+                fila_organismos = r_
+            if etiqueta == "TIPO DE CAMBIO" and fila_tc is None:
+                fila_tc = r_
+        for r_ in range(ws.nrows):
+            v = ws.cell_value(r_, 1)
+            if isinstance(v, float) and 20000 < v < 60000:  # rango plausible de fecha serial de Excel
+                fila_fechas = r_
+                break
+        if fila_organismos is None or fila_tc is None or fila_fechas is None:
+            continue
+        for c in range(1, ws.ncols):
+            serial, miles_pesos, tc = (ws.cell_value(fila_fechas, c), ws.cell_value(fila_organismos, c),
+                                        ws.cell_value(fila_tc, c))
+            if not (isinstance(serial, float) and isinstance(miles_pesos, float)
+                    and isinstance(tc, float) and tc > 0):
+                continue
+            fecha = xlrd.xldate.xldate_as_datetime(serial, wb.datemode)
+            filas.append({"fecha": fecha, "valor": miles_pesos * 1000 / tc / 1e6})
+    df = pd.DataFrame(filas, columns=["fecha", "valor"])
+    return df.drop_duplicates(subset="fecha").sort_values("fecha").reset_index(drop=True)
+
+
+def _parse_num_ar(s) -> float | None:
+    """'-17.869,31' -> -17869.31 (formato numérico argentino: punto de miles, coma decimal)."""
+    if not s or not str(s).strip():
+        return None
+    try:
+        return float(str(s).strip().replace(".", "").replace(",", "."))
+    except ValueError:
+        return None
+
+
+def _leer_swap_china_mes(periodo: pd.Period) -> float | None:
+    """
+    Descarga (si existe) la planilla mensual "Reservas Internacionales/Liquidez
+    en Moneda Extranjera" (formato estándar SDDS del FMI) de un mes puntual y
+    busca la fila "swaps de monedas" (sección II.2) en cualquier página de la
+    tabla -- devuelve None si el mes todavía no se publicó (404) o si el PDF
+    no tiene esa fila (versiones viejas, antes de dic-2022, donde el swap
+    estaba mezclado con otra sección).
+    """
+    url = BCRA_SDDS_URL_TPL.format(mes=periodo.month, anio2=periodo.year % 100)
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        if r.status_code != 200 or not r.content.startswith(b"%PDF"):
+            return None
+    except requests.RequestException:
+        return None
+    try:
+        with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+            for page in pdf.pages:
+                for tabla in page.extract_tables():
+                    for fila in tabla:
+                        etiqueta = (fila[0] or "").replace("\n", " ").lower()
+                        if "swaps de monedas" in etiqueta:
+                            valor = _parse_num_ar(fila[2] if len(fila) > 2 else None)
+                            if valor is not None:
+                                return abs(valor)
+    except Exception:
+        return None
+    return None
+
+
+def fetch_bcra_swap_china() -> pd.DataFrame:
+    """
+    Posición de swap de monedas BCRA-PBOC (Banco Popular de China), sección
+    II.2 ("swaps de monedas") de la planilla mensual SDDS del BCRA. Sólo
+    tiene fila propia desde el cierre de dic-2022 (antes estaba mezclado con
+    pases en otra sección, según nota del propio BCRA); no se rellena hacia
+    atrás con ninguna otra fuente -- la serie arranca ahí y punto.
+
+    Cachea cada mes ya conseguido de forma PERMANENTE en un CSV (los meses
+    ya publicados no cambian retroactivamente): en cada corrida sólo intenta
+    bajar los meses que todavía faltan en la caché (normalmente el último,
+    a veces ninguno si el BCRA no publicó todavía el mes en curso).
+    """
+    cache = pd.DataFrame(columns=["fecha", "valor"])
+    if _SWAP_CACHE_CSV.exists():
+        cache = pd.read_csv(_SWAP_CACHE_CSV, parse_dates=["fecha"])
+
+    meses_tenidos = set(cache["fecha"].dt.to_period("M")) if not cache.empty else set()
+    mes_cursor = SWAP_CHINA_INICIO.to_period("M")
+    mes_final = pd.Timestamp.today().to_period("M")
+    nuevas = []
+    while mes_cursor <= mes_final:
+        if mes_cursor not in meses_tenidos:
+            valor = _leer_swap_china_mes(mes_cursor)
+            if valor is not None:
+                nuevas.append({"fecha": mes_cursor.to_timestamp("M"), "valor": valor})
+        mes_cursor += 1
+
+    if nuevas:
+        cache = pd.DataFrame(nuevas) if cache.empty else pd.concat([cache, pd.DataFrame(nuevas)], ignore_index=True)
+        cache = cache.drop_duplicates(subset="fecha").sort_values("fecha")
+        _CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        cache.to_csv(_SWAP_CACHE_CSV, index=False)
+    return cache[["fecha", "valor"]].sort_values("fecha").reset_index(drop=True)
 
     sub = completo[(completo["variable"] == variable) & (completo["referencia"] == referencia)]
     if sub.empty:

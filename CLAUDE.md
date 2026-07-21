@@ -45,6 +45,16 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `calculo: mensual` + `base_id` → variación % mes a mes de una serie de datos_gob (nivel → tasa).
 - `calculo: variacion_real_mensual` + `nominal_id` + `deflactor_id` + `media_movil` (opcional,
   meses) → deflacta por IPC, variación % mes a mes, con media móvil opcional.
+- `calculo: reservas_ajustadas` (sin parámetros propios) → reservas brutas (BCRA, diario) menos
+  swap de monedas con el PBOC (China) menos posición con organismos internacionales (FMI+BIS+
+  otros, Balance Semanal del BCRA). NO es "reservas netas" (esa fórmula de mercado tiene 4
+  componentes: encajes en USD, swap China, BIS aislado y repos a 1 año; acá sólo 2 de esos 4
+  tienen fuente pública estable, ver la `nota` del indicador). El swap sale de la sección II.2 de
+  la planilla mensual SDDS/NEDD del BCRA (`fetch_bcra_swap_china`, PDF con nombre predecible
+  `temp{MM}{AA}.pdf`, cacheado por mes de forma permanente ya que los meses publicados no
+  cambian) y sólo tiene datos desde dic-2022. Los organismos internacionales salen del Excel
+  único "Serie Anual de Balances Semanales" (`fetch_bcra_organismos_internacionales`, cacheado
+  como el REM).
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
 - `vista: overlay` + `series: ["Nombre indicador 1", "Nombre indicador 2", ...]` → líneas
   superpuestas de varios indicadores YA definidos (mismo nombre que su `nombre:`), un solo eje,
