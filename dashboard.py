@@ -191,18 +191,40 @@ def _serie_overlay(idx, ind, historico):
         datasets.append(dict(label=nombre_serie, color=COLORES_OVERLAY[i % len(COLORES_OVERLAY)],
             y=_en(fechas_default), full_y=_en(fechas_full)))
 
+    # Marca de "cambio de liderazgo": la fecha en la que la serie que termina arriba (la de
+    # mayor valor en el último dato disponible) pasó a ser la más alta de forma DEFINITIVA
+    # (sin volver a perder el primer puesto hasta el final). Genérico -- no depende de qué
+    # serie es cuál, ni de fechas hardcodeadas -- sirve para cualquier overlay donde "quién
+    # lidera" cambie con el tiempo y ese cambio sea el dato más importante del gráfico, pero
+    # las líneas se crucen en un ángulo demasiado cerrado para notarlo a simple vista.
+    cruce = None
+    if ind.get("marcar_cruce_maximo") and len(datasets) > 1:
+        lideres = []
+        for i in range(len(fechas_full)):
+            vals = {d["label"]: d["full_y"][i] for d in datasets if d["full_y"][i] is not None}
+            lideres.append(max(vals, key=vals.get) if vals else None)
+        if lideres and lideres[-1] is not None:
+            lider_final = lideres[-1]
+            j = len(lideres) - 1
+            while j > 0 and lideres[j - 1] == lider_final:
+                j -= 1
+            if j > 0:
+                cruce = dict(fecha=fechas_full[j].strftime("%m/%y"),
+                             texto=f"'{lider_final}' pasa a ser la serie más alta de acá en adelante")
+
     nombre_resumen, g_resumen = partes[-1]
     ult, pct = _variacion(g_resumen)
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
-        maxv=_fmt_num(g_resumen["valor"].max()), minv=_fmt_num(g_resumen["valor"].min()), nota_num=None)
+        maxv=_fmt_num(g_resumen["valor"].max()), minv=_fmt_num(g_resumen["valor"].min()), nota_num=None,
+        grande=ind.get("grande", False))
 
     serie_js = dict(i=idx, kind="overlay", unidad=ind.get("unidad", ""),
         x=[d.strftime("%m/%y") for d in fechas_default],
         full_x=[d.strftime("%m/%y") for d in fechas_full],
         full_dates=[d.isoformat() for d in fechas_full],
-        datasets=datasets)
+        datasets=datasets, radio_punto=ind.get("radio_punto", 0), cruce=cruce)
     return card, serie_js
 
 
@@ -228,7 +250,7 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
         g = g.copy()
         g["incidencia"] = g["valor"].pct_change() * 100 * peso
         g = g.dropna(subset=["incidencia"])
-        partes.append((nombre_serie, g))
+        partes.append((nombre_serie, peso, g))
         fechas_todas.update(g["fecha"])
     if not partes:
         return None
@@ -239,14 +261,37 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
     if len(fechas_default) < 2:
         fechas_default = fechas_full
 
+    # Top N por peso_nacional + "Resto" agrupado: con muchas categorías apiladas (ej. las 12
+    # divisiones de consumo del IPC) cada franja queda demasiado angosta para distinguirla a
+    # simple vista -- estándar de cómo se comunica inflación en informes serios. El corte es
+    # genérico y data-driven (ordena por el peso_nacional ya declarado en cada componente, no
+    # una lista fija de nombres hardcodeada): si el día de mañana cambia el ponderador de una
+    # división, el top N se recalcula solo, sin tocar código.
+    top_n = ind.get("top_n")
+    if top_n and len(partes) > top_n:
+        partes_ordenadas = sorted(partes, key=lambda t: t[1], reverse=True)
+        principales, resto = partes_ordenadas[:top_n], partes_ordenadas[top_n:]
+    else:
+        principales, resto = partes, []
+
     datasets = []
-    for i, (nombre_serie, g) in enumerate(partes):
+    for i, (nombre_serie, peso, g) in enumerate(principales):
         etiqueta = nombre_serie.replace("IPC división: ", "")
         valores_por_fecha = dict(zip(g["fecha"], g["incidencia"]))
         def _en(fechas_, vpf=valores_por_fecha):
             return [round(float(vpf[d]), 3) if d in vpf else None for d in fechas_]
         datasets.append(dict(label=etiqueta, color=COLORES_INCIDENCIA[i % len(COLORES_INCIDENCIA)],
             y=_en(fechas_default), full_y=_en(fechas_full)))
+
+    if resto:
+        valores_por_fecha_resto = {}
+        for _, _, g in resto:
+            for f, v in zip(g["fecha"], g["incidencia"]):
+                valores_por_fecha_resto[f] = valores_por_fecha_resto.get(f, 0.0) + v
+        def _en_resto(fechas_):
+            return [round(float(valores_por_fecha_resto[d]), 3) if d in valores_por_fecha_resto else None for d in fechas_]
+        datasets.append(dict(label=f"Resto ({len(resto)} divisiones)", color="#9E9E9E",
+            y=_en_resto(fechas_default), full_y=_en_resto(fechas_full)))
 
     # tarjeta: suma de incidencias del último mes (aproxima la variación del nivel general)
     ultima_fecha = fechas_full[-1]
@@ -512,8 +557,9 @@ def _card_cell(c):
     filtros = ""
     if not c.get("sin_filtros"):
         filtros = f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button></div>'
-    cell_cls = "cell cell-ancha" if c.get("sin_filtros") else "cell"
-    cbox_cls = "cbox cbox-grande" if c.get("sin_filtros") else "cbox"
+    grande = c.get("sin_filtros") or c.get("grande")
+    cell_cls = "cell cell-ancha" if grande else "cell"
+    cbox_cls = "cbox cbox-grande" if grande else "cbox"
     return (f'<div class="{cell_cls}"><div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div><div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
@@ -693,15 +739,48 @@ function filtrarDatos(s, rango) {
   };
 }
 
-const overlayOpts = (unidad) => ({
+const overlayOpts = (unidad, radioPunto, cruce) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
   plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}` } } },
+    tooltip:{ callbacks:{
+      label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}`,
+      afterBody:(items)=> (cruce && items.length && items[0].label === cruce.fecha) ? [`◆ ${cruce.texto}`] : []
+    } } },
   scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
            y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
-  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+  elements:{ point:{radius: radioPunto || 0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
+
+// Marca vertical de "cambio de liderazgo" en un overlay (ver 'cruce' en _serie_overlay,
+// dashboard.py): útil cuando dos líneas se cruzan en un ángulo demasiado cerrado para notarlo
+// a simple vista, pero el momento del cruce es el dato más importante del gráfico.
+function cruceOverlayPlugin(cruce) {
+  return {
+    id: 'cruceOverlay',
+    afterDatasetsDraw(chart) {
+      if (!cruce) return;
+      const i = chart.data.labels.indexOf(cruce.fecha);
+      if (i === -1) return;
+      const { ctx, chartArea, scales } = chart;
+      const x = scales.x.getPixelForValue(i);
+      ctx.save();
+      ctx.strokeStyle = '#8D2D04';
+      ctx.setLineDash([4, 3]);
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(x, chartArea.top);
+      ctx.lineTo(x, chartArea.bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#8D2D04';
+      ctx.font = 'bold 11px "Encode Sans", system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('◆', x, chartArea.top - 2);
+      ctx.restore();
+    }
+  };
+}
 
 const comboOpts = (unidad) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
@@ -822,7 +901,8 @@ SERIES.forEach(s => {
   } else if (s.kind === 'overlay') {
     charts[s.i] = new Chart(ctx, { type:'line', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, borderColor:d.color, backgroundColor:d.color+'10', fill:false }
-      )) }, options: overlayOpts(s.unidad) });
+      )) }, options: overlayOpts(s.unidad, s.radio_punto, s.cruce),
+      plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
   } else if (s.kind === 'incidencia') {
     charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, backgroundColor:d.color, stack:'incidencia' }

@@ -59,8 +59,21 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `vista: overlay` + `series: ["Nombre indicador 1", "Nombre indicador 2", ...]` → líneas
   superpuestas de varios indicadores YA definidos (mismo nombre que su `nombre:`), un solo eje,
   leyenda para prender/apagar cada serie. La tarjeta resume con la ÚLTIMA serie de la lista.
+  `grande: true` → tarjeta/gráfico más grandes (mismo tamaño que usan las burbujas), útil cuando
+  varias líneas superpuestas quedan difíciles de distinguir en el tamaño chico estándar.
+  `radio_punto: N` → dibuja un marcador de punto de radio N px en cada dato (por defecto 0, sin
+  puntos, sólo la línea) — ayuda a distinguir series que están muy pegadas entre sí.
+  `marcar_cruce_maximo: true` → marca con una línea vertical punteada (◆, con tooltip) la fecha
+  en que la serie que termina liderando pasó a ser la más alta de forma DEFINITIVA (sin volver a
+  perder el primer puesto). Se calcula solo en cada corrida (no una fecha fija); útil cuando el
+  cruce entre líneas es el dato más importante del gráfico pero pasa en un ángulo demasiado
+  cerrado para notarlo a simple vista.
 - `vista: incidencia_stack` + `series: [...]` → barras apiladas de incidencia mensual (variación %
   × `peso_nacional` de cada indicador referenciado) sobre un total (ej. divisiones del IPC).
+  `top_n: N` (opcional) → en vez de apilar todas las series, muestra sólo las N de mayor
+  `peso_nacional` (recalculado solo, no una lista fija) más una capa "Resto" con la suma del
+  resto — con muchas categorías apiladas (ej. 12 divisiones del IPC) cada franja individual queda
+  demasiado angosta para distinguirla a simple vista.
 - `vista: burbujas` + `sectores: [{emae: "...", empleo: "..."}, ...]` → gráfico de burbujas
   (Chart.js `bubble`): eje X = variación % interanual del primer indicador de cada par, eje Y =
   variación % interanual del segundo, tamaño = % que representa sobre el total del segundo
