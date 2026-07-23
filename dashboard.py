@@ -35,7 +35,7 @@ TITULO_BLOQUE = {"precios": "Precios", "monetario_financiero": "Monetario y fina
 ORDEN_GRUPOS = ["Precios", "Dólar", "Brecha y TCR", "Riesgo país", "Reservas",
                 "Agregados monetarios", "Tasas de interés", "Crédito",
                 "Comercio exterior", "Exportaciones por rubro", "Importaciones por uso",
-                "Actividad", "Consumo", "Social"]
+                "Actividad", "Social"]
 
 
 def _fmt_num(v) -> str:
@@ -154,6 +154,51 @@ def _serie_balance_cambiario(idx, ind, historico):
     return card, serie_js
 
 
+def _serie_comercio_espejo(idx, ind, historico):
+    """
+    Gráfico espejo (mirror / diverging bars) de comercio exterior: exportaciones
+    como barras positivas (arriba), importaciones como barras negativas (abajo
+    -- mismo valor, sólo se invierte el signo PARA EL GRÁFICO, el dato guardado
+    en el histórico no cambia), saldo comercial superpuesto como línea sobre el
+    mismo eje. ind['series'] = [exportaciones, importaciones, saldo].
+    """
+    nombre_expo, nombre_impo, nombre_saldo = ind["series"]
+    g_expo = historico[historico["indicador"] == nombre_expo].sort_values("fecha")
+    g_impo = historico[historico["indicador"] == nombre_impo].sort_values("fecha")
+    g_saldo = historico[historico["indicador"] == nombre_saldo].sort_values("fecha")
+    if g_expo.empty or g_impo.empty:
+        return None
+
+    fechas_full = sorted(set(g_expo["fecha"]) | set(g_impo["fecha"]) | set(g_saldo["fecha"]))
+    desde = ind.get("desde", DESDE_GENERAL)
+    fechas_default = [d for d in fechas_full if d >= pd.to_datetime(desde)]
+    if len(fechas_default) < 2:
+        fechas_default = fechas_full
+
+    expo_por_fecha = dict(zip(g_expo["fecha"], g_expo["valor"]))
+    impo_por_fecha = dict(zip(g_impo["fecha"], g_impo["valor"]))
+    saldo_por_fecha = dict(zip(g_saldo["fecha"], g_saldo["valor"]))
+
+    def _en(fechas_, vpf, signo=1):
+        return [round(float(vpf[d]) * signo, 2) if d in vpf else None for d in fechas_]
+
+    ult, pct = _variacion(g_saldo if not g_saldo.empty else g_expo)
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        valor=_fmt_num(ult), pct=pct, marca_fecha=None,
+        maxv=_fmt_num(g_expo["valor"].max()), minv=_fmt_num(-g_impo["valor"].max()), nota_num=None)
+
+    serie_js = dict(i=idx, kind="espejo", unidad=ind.get("unidad", ""),
+        x=[d.strftime("%m/%y") for d in fechas_default],
+        full_x=[d.strftime("%m/%y") for d in fechas_full],
+        full_dates=[d.isoformat() for d in fechas_full],
+        expo=_en(fechas_default, expo_por_fecha), impo=_en(fechas_default, impo_por_fecha, signo=-1),
+        saldo=_en(fechas_default, saldo_por_fecha),
+        full_expo=_en(fechas_full, expo_por_fecha), full_impo=_en(fechas_full, impo_por_fecha, signo=-1),
+        full_saldo=_en(fechas_full, saldo_por_fecha))
+    return card, serie_js
+
+
 COLORES_OVERLAY = ["#0767A7", "#C62828", "#2E7D33", "#8D2D04", "#6A1B99", "#EF6C00"]
 
 
@@ -224,7 +269,8 @@ def _serie_overlay(idx, ind, historico):
         x=[d.strftime("%m/%y") for d in fechas_default],
         full_x=[d.strftime("%m/%y") for d in fechas_full],
         full_dates=[d.isoformat() for d in fechas_full],
-        datasets=datasets, radio_punto=ind.get("radio_punto", 0), cruce=cruce)
+        datasets=datasets, radio_punto=ind.get("radio_punto", 0), cruce=cruce,
+        escala_log=ind.get("escala_log", False))
     return card, serie_js
 
 
@@ -390,7 +436,17 @@ def _serie_bubble(idx, ind, historico):
         valor=trimestre, pct=None, marca_fecha=None, maxv="s/d", minv="s/d", nota_num=None,
         sin_filtros=True)
 
-    serie_js = dict(i=idx, kind="bubble", fecha=fecha_comun.strftime("%m/%Y"), puntos=puntos)
+    # Cuadrante centrado en cero: límites simétricos (± el mayor valor absoluto de cada eje,
+    # con margen) en vez de dejar que Chart.js autoescale cada eje por separado -- así el cero
+    # queda en el centro del gráfico (un cuadrante de verdad: actividad/empleo que caen quedan
+    # visualmente abajo/izquierda del cruce de ejes) en vez de pegado a un borde. Data-driven,
+    # no un rango fijo: se recalcula solo según los sectores de cada corrida.
+    MARGEN_EJE_BURBUJAS = 1.15
+    lim_x = max(abs(p["x"]) for p in puntos) * MARGEN_EJE_BURBUJAS
+    lim_y = max(abs(p["y"]) for p in puntos) * MARGEN_EJE_BURBUJAS
+
+    serie_js = dict(i=idx, kind="bubble", fecha=fecha_comun.strftime("%m/%Y"), puntos=puntos,
+        lim_x=round(lim_x, 2), lim_y=round(lim_y, 2))
     return card, serie_js
 
 
@@ -420,13 +476,15 @@ def generar(historico, config_indicadores):
         nota = ind.get("nota")
         if ind.get("solo_componente"):
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
-        if ind.get("vista") in ("overlay", "incidencia_stack", "burbujas", "balance_cambiario"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "burbujas", "balance_cambiario", "comercio_espejo"):
             if ind["vista"] == "overlay":
                 entrada = _serie_overlay(idx, ind, historico)
             elif ind["vista"] == "incidencia_stack":
                 entrada = _serie_incidencia(idx, ind, historico, indicadores_por_nombre)
             elif ind["vista"] == "balance_cambiario":
                 entrada = _serie_balance_cambiario(idx, ind, historico)
+            elif ind["vista"] == "comercio_espejo":
+                entrada = _serie_comercio_espejo(idx, ind, historico)
             else:
                 entrada = _serie_bubble(idx, ind, historico)
             if entrada is None:
@@ -724,6 +782,22 @@ function filtrarDatos(s, rango) {
       datasets: s.datasets.map(d => ({ label: d.label, y: indices.map(i => d.full_y[i]) }))
     };
   }
+  if (s.kind === 'espejo') {
+    if (rango === 'default') {
+      return { x: s.x, expo: s.expo, impo: s.impo, saldo: s.saldo };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, expo: s.expo, impo: s.impo, saldo: s.saldo };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      expo: indices.map(i => s.full_expo[i]),
+      impo: indices.map(i => s.full_impo[i]),
+      saldo: indices.map(i => s.full_saldo[i]),
+    };
+  }
   if (rango === 'default') {
     return { x: s.x, y: s.y, flujo: s.flujo };
   }
@@ -739,7 +813,20 @@ function filtrarDatos(s, rango) {
   };
 }
 
-const overlayOpts = (unidad, radioPunto, cruce) => ({
+const espejoOpts = (unidad) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
+    tooltip:{ callbacks:{ label:(c)=> {
+        const v = c.dataset.type === 'line' ? c.parsed.y : Math.abs(c.parsed.y);
+        return `${c.dataset.label}: ${v == null ? 's/d' : v.toLocaleString('es-AR')} ${unidad}`;
+      } } } },
+  scales:{ x:{ stacked:true, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ stacked:true, ticks:{ color:'#838383', font:{size:10}, callback:(v)=> Math.abs(v).toLocaleString('es-AR') },
+               grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} } },
+});
+
+const overlayOpts = (unidad, radioPunto, cruce, escalaLog) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
   plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
@@ -748,7 +835,8 @@ const overlayOpts = (unidad, radioPunto, cruce) => ({
       afterBody:(items)=> (cruce && items.length && items[0].label === cruce.fecha) ? [`◆ ${cruce.texto}`] : []
     } } },
   scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
+           y:{ type: escalaLog ? 'logarithmic' : 'linear',
+               ticks:{ color:'#838383', font:{size:10}, callback:(v)=> v.toLocaleString('es-AR') }, grid:{color:'#EFEFEF'} } },
   elements:{ point:{radius: radioPunto || 0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
@@ -873,7 +961,7 @@ const etiquetasBurbujaPlugin = {
   }
 };
 
-const bubbleOpts = () => ({
+const bubbleOpts = (limX, limY) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   layout:{ padding:{ right:95, top:14 } },
   plugins:{ legend:{display:false},
@@ -882,10 +970,10 @@ const bubbleOpts = () => ({
       label:(c)=> [`Actividad (EMAE, i.a.): ${c.raw.x > 0 ? '+' : ''}${c.raw.x.toFixed(1)}%`,
                    `Empleo registrado (i.a.): ${c.raw.y > 0 ? '+' : ''}${c.raw.y.toFixed(1)}%`,
                    `% del empleo total: ${c.raw.r_pct.toFixed(1)}%`] } } },
-  scales:{ x:{ title:{display:true, text:'Variación % interanual de actividad', font:{size:10}, color:'#555555'},
-               ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} },
-           y:{ title:{display:true, text:'Variación % interanual de empleo', font:{size:10}, color:'#555555'},
-               ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
+  scales:{ x:{ min:-limX, max:limX, title:{display:true, text:'Variación % interanual de actividad', font:{size:10}, color:'#555555'},
+               ticks:{ color:'#838383', font:{size:10} }, grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} },
+           y:{ min:-limY, max:limY, title:{display:true, text:'Variación % interanual de empleo', font:{size:10}, color:'#555555'},
+               ticks:{ color:'#838383', font:{size:10} }, grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} } },
 });
 
 SERIES.forEach(s => {
@@ -901,13 +989,19 @@ SERIES.forEach(s => {
   } else if (s.kind === 'overlay') {
     charts[s.i] = new Chart(ctx, { type:'line', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, borderColor:d.color, backgroundColor:d.color+'10', fill:false }
-      )) }, options: overlayOpts(s.unidad, s.radio_punto, s.cruce),
+      )) }, options: overlayOpts(s.unidad, s.radio_punto, s.cruce, s.escala_log),
       plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
   } else if (s.kind === 'incidencia') {
     charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, backgroundColor:d.color, stack:'incidencia' }
       )) }, options: incidenciaOpts(s.unidad, s.y_max, s.y_min, s.atipicos),
       plugins: [atipicosIncidenciaPlugin(s.atipicos)] });
+  } else if (s.kind === 'espejo') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:'#0767A7', stack:'comercio' },
+        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:'#EF6C00', stack:'comercio' },
+        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:'#232D4F', backgroundColor:'#232D4F14', fill:false, tension:0.12, pointRadius:0, borderWidth:1.9 },
+      ]}, options: espejoOpts(s.unidad) });
   } else if (s.kind === 'bar') {
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:s.color, borderRadius:2 }] },
@@ -918,7 +1012,7 @@ SERIES.forEach(s => {
     charts[s.i] = new Chart(ctx, { type:'bubble', data:{ datasets: s.puntos.map(p => (
         { label:p.nombre, data:[{ x:p.x, y:p.y, r:p.r*1.6, r_pct:p.r, label:p.nombre }],
           backgroundColor:p.color+'B0', borderColor:p.color }
-      )) }, options: bubbleOpts(), plugins:[etiquetasBurbujaPlugin] });
+      )) }, options: bubbleOpts(s.lim_x, s.lim_y), plugins:[etiquetasBurbujaPlugin] });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
@@ -951,6 +1045,10 @@ document.querySelectorAll('.filtro').forEach(btn => {
       charts[idx].data.datasets[1].data = datFiltrados.y;
     } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
       datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
+    } else if (serie.kind === 'espejo') {
+      charts[idx].data.datasets[0].data = datFiltrados.expo;
+      charts[idx].data.datasets[1].data = datFiltrados.impo;
+      charts[idx].data.datasets[2].data = datFiltrados.saldo;
     } else {
       charts[idx].data.datasets[0].data = datFiltrados.y;
     }

@@ -56,6 +56,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   único "Serie Anual de Balances Semanales" (`fetch_bcra_organismos_internacionales`, cacheado
   como el REM).
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
+- `vista: comercio_espejo` + `series: [exportaciones, importaciones, saldo]` → gráfico espejo
+  (mirror/diverging bars): exportaciones barras positivas arriba, importaciones barras negativas
+  abajo (mismo valor de la fuente, sólo se invierte el signo para el gráfico), saldo comercial
+  superpuesto como línea. Convención: exportaciones = divisas que "entran", arriba.
 - `vista: overlay` + `series: ["Nombre indicador 1", "Nombre indicador 2", ...]` → líneas
   superpuestas de varios indicadores YA definidos (mismo nombre que su `nombre:`), un solo eje,
   leyenda para prender/apagar cada serie. La tarjeta resume con la ÚLTIMA serie de la lista.
@@ -68,6 +72,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   perder el primer puesto). Se calcula solo en cada corrida (no una fecha fija); útil cuando el
   cruce entre líneas es el dato más importante del gráfico pero pasa en un ángulo demasiado
   cerrado para notarlo a simple vista.
+  `escala_log: true` → eje Y logarítmico en vez de lineal, para overlays donde las series difieren
+  en varios órdenes de magnitud (ej. Base monetaria vs. M3): a diferencia de rebasar a índice 100,
+  preserva la relación de magnitud real entre las series mientras hace visibles los movimientos
+  relativos de todas a la vez.
 - `vista: incidencia_stack` + `series: [...]` → barras apiladas de incidencia mensual (variación %
   × `peso_nacional` de cada indicador referenciado) sobre un total (ej. divisiones del IPC).
   `top_n: N` (opcional) → en vez de apilar todas las series, muestra sólo las N de mayor
@@ -82,6 +90,8 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   comparar — documentarlo en la `nota`. Sin botones de filtro (es una foto de un período, no una
   serie temporal); usa anti-colisión de etiquetas en JS (prioriza burbujas grandes, omite la
   etiqueta de las que chocan con una ya puesta — esas quedan identificables sólo por tooltip).
+  Ejes centrados en cero (± el mayor valor absoluto de cada eje entre los sectores, con margen,
+  recalculado solo en cada corrida): cuadrante real, no un cero pegado a un borde.
 - `calculo: combinado` + `componentes: [{id, peso}, ...]` + `rebase_fecha` (opcional) +
   `media_movil` (opcional, meses) → promedio ponderado de varios índices de nivel (los pesos se
   renormalizan solos, no hace falta que sumen 1), con rebase y/o media móvil. Ej.: EMAE
@@ -133,11 +143,10 @@ cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diar
 compras netas de divisas por contraparte); Agregados (base, M1 calculado, M2, M3); Tasas
 (BADLAR, política); Crédito (préstamos al sector privado, variación % real mensual, por tipo de
 deudor Familias/Empresas, morosidad por tipo de banco); EMAE general + semáforo por 16 sectores +
-EMAE Urbano vs. No urbano (ponderado por VAB) + burbujas actividad×empleo por sector (SIPA); IPI
-manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo (expo/impo/saldo + tablas de
-desagregado por rubro y por uso + exportaciones a principales destinos); Social (desempleo,
-salario real, tasa de informalidad laboral, salario real por tipo de empleo); Consumo (venta de
-vehículos 0km al mercado interno, proxy de patentamientos).
+EMAE Urbano vs. No urbano (ponderado por VAB) + burbujas actividad×empleo por sector (SIPA, ejes
+centrados en cero); IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo (expo/impo/
+saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social (desempleo, salario
+real, tasa de informalidad laboral, salario real por tipo de empleo).
 
 ## Pendientes / a mejorar
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
