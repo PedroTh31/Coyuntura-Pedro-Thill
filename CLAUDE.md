@@ -119,6 +119,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `nota: "..."` → aclaración metodológica; se muestra como asterisco bajo el gráfico y en el
   pie de la página. Obligatoria en toda serie calculada, estimada, proxy o rascada de Excel,
   o con `factor` aplicado.
+- `subtitulo: "..."` → aclaración corta (una línea) visible directamente debajo del nombre de
+  la tarjeta, sin tener que abrir la nota al pie. Usar cuando el nombre solo no alcanza para
+  distinguir un indicador de otros parecidos (ej. el grupo "Reservas", donde varios gráficos
+  con nombres similares se confundían entre sí antes de agregarlo).
 
 ## REGLAS DURAS (no negociables)
 1. **NUNCA inventar IDs de series.** Antes de agregar un indicador de datos.gob.ar,

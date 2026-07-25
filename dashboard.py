@@ -144,7 +144,8 @@ def _serie_balance_cambiario(idx, ind, historico):
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
-        maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None)
+        maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None,
+        subtitulo=ind.get("subtitulo"))
 
     serie_js = dict(i=idx, color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""), kind="combo",
         x=[d.strftime("%m/%y") for d in fechas_s], y=_vals(linea_s), flujo=_vals(barras_s),
@@ -186,7 +187,8 @@ def _serie_comercio_espejo(idx, ind, historico):
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
-        maxv=_fmt_num(g_expo["valor"].max()), minv=_fmt_num(-g_impo["valor"].max()), nota_num=None)
+        maxv=_fmt_num(g_expo["valor"].max()), minv=_fmt_num(-g_impo["valor"].max()), nota_num=None,
+        subtitulo=ind.get("subtitulo"))
 
     serie_js = dict(i=idx, kind="espejo", unidad=ind.get("unidad", ""),
         x=[d.strftime("%m/%y") for d in fechas_default],
@@ -263,7 +265,7 @@ def _serie_overlay(idx, ind, historico):
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_resumen["valor"].max()), minv=_fmt_num(g_resumen["valor"].min()), nota_num=None,
-        grande=ind.get("grande", False))
+        grande=ind.get("grande", False), subtitulo=ind.get("subtitulo"))
 
     serie_js = dict(i=idx, kind="overlay", unidad=ind.get("unidad", ""),
         x=[d.strftime("%m/%y") for d in fechas_default],
@@ -348,7 +350,7 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
         valor=_fmt_num(total_ultimo), pct=None, marca_fecha=None,
         maxv=_fmt_num(max(valores_totales)) if valores_totales else "s/d",
         minv=_fmt_num(min(valores_totales)) if valores_totales else "s/d", nota_num=None,
-        grande=ind.get("grande", False))
+        grande=ind.get("grande", False), subtitulo=ind.get("subtitulo"))
 
     # Autoescala robusta: el eje "normal" se calcula sobre el percentil 95 de la incidencia
     # total mensual (positiva y negativa por separado, con margen del 15%), no sobre el máximo
@@ -456,7 +458,7 @@ def _serie_bubble(idx, ind, historico):
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad="",
         valor=trimestre, pct=None, marca_fecha=None, maxv="s/d", minv="s/d", nota_num=None,
-        sin_filtros=True)
+        sin_filtros=True, subtitulo=ind.get("subtitulo"))
 
     # Cuadrante centrado en cero: límites simétricos (± el mayor valor absoluto de cada eje,
     # con margen) en vez de dejar que Chart.js autoescale cada eje por separado -- así el cero
@@ -550,7 +552,7 @@ def generar(historico, config_indicadores):
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
             unidad=unidad, valor=_fmt_num(ult), pct=pct, marca_fecha=marca_fecha,
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num,
-            sube_es_bueno=ind.get("sube_es_bueno", False)))
+            sube_es_bueno=ind.get("sube_es_bueno", False), subtitulo=ind.get("subtitulo")))
         if ind.get("vista") == "reservas_combo":
             series_js.append(_serie_reservas_combo(idx, color, unidad, serie, desde))
         else:
@@ -648,8 +650,11 @@ def _card_cell(c):
     grande = c.get("sin_filtros") or c.get("grande")
     cell_cls = "cell cell-ancha" if grande else "cell"
     cbox_cls = "cbox cbox-grande" if grande else "cbox"
+    # Aclaración corta debajo del título (ej. grupo "Reservas", donde varios gráficos parecidos
+    # se confundían entre sí leyendo sólo el nombre): visible sin tener que abrir la nota al pie.
+    subtitulo_html = f'<div class="csub">{c["subtitulo"]}</div>' if c.get("subtitulo") else ""
     return (f'<div class="{cell_cls}"><div class="card" style="--acc:{c["color"]}">'
-            f'<div class="cn">{c["nombre"]}</div><div class="cv">{c["valor"]}</div>'
+            f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
             f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
@@ -736,6 +741,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .cell { border:1px solid var(--borde); border-radius:10px; overflow:hidden; background:var(--papel); box-shadow:0 1px 2px rgba(20,20,20,.04); }
   .card { border-left:4px solid var(--acc); padding:12px 14px 8px; }
   .cn { font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--gris); min-height:28px; }
+  .csub { font-size:11px; color:var(--tinta); opacity:0.75; margin-top:-4px; margin-bottom:4px; line-height:1.3; }
   .cv { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:24px; font-weight:600; margin:2px 0; }
   .cm { display:flex; justify-content:space-between; align-items:baseline; font-size:11px; }
   .chg { font-family:ui-monospace,monospace; font-weight:600; }
