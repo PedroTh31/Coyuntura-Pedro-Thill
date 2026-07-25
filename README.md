@@ -54,9 +54,11 @@ El proyecto usa **GitHub Actions**:
 - `.github/workflows/coyuntura.yml` — corre **a diario** (12:00 UTC), actualiza los
   CSV y el dashboard, y commitea los cambios. También se puede disparar a mano
   desde la pestaña **Actions**.
-- `.github/workflows/email_semanal.yml` — manda un mail resumen los lunes y jueves
-  (indicadores clave + noticias). Necesita los secrets `GMAIL_USER`,
-  `GMAIL_APP_PASSWORD` y opcionalmente `MAIL_TO`.
+- `.github/workflows/email_semanal.yml` — manda un mail resumen de lunes a viernes a
+  las 8:00 hora Argentina (indicadores clave + noticias). Necesita los secrets
+  `GMAIL_USER`, `GMAIL_APP_PASSWORD` y opcionalmente `MAIL_TO`. GitHub Actions no
+  garantiza el minuto exacto de disparo de un cron: en horas pico puede haber demoras
+  de 10 a 60+ minutos: no es un bug, es una limitación conocida de la plataforma.
 
 En **Settings → Actions → General** hay que dejar activado "Read and write
 permissions" para que el workflow pueda commitear.

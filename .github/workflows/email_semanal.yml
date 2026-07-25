@@ -1,8 +1,12 @@
-name: Mail de coyuntura (lunes y jueves)
+name: Mail de coyuntura (lun-vie, 8am Argentina)
 
 on:
   schedule:
-    - cron: "0 13 * * 1,4"
+    # 11:00 UTC = 8:00 Argentina (UTC-3, sin horario de verano). GitHub Actions no garantiza
+    # el minuto exacto de disparo de un cron: en horas pico puede haber demoras de 10 a 60+
+    # minutos, sin forma de eliminar esa variabilidad desde este lado -- por eso el mail puede
+    # llegar un poco más tarde algunos días, no es un bug.
+    - cron: "0 11 * * 1-5"
   workflow_dispatch:
 
 jobs:

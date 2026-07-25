@@ -18,7 +18,8 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `enviar_mail.py` — resumen semanal (indicadores + noticias arg/intl) por Gmail SMTP.
 - `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie.
 - `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario; `email_semanal.yml`
-  manda el mail lunes y jueves.
+  manda el mail de lunes a viernes a las 8am hora Argentina (GitHub Actions no garantiza el
+  minuto exacto de disparo de un cron; puede llegar con demora en horas pico).
 - `docs/` — salida publicada por GitHub Pages. `data/` — CSVs históricos versionados.
 
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
