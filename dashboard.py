@@ -633,10 +633,18 @@ def _card_cell(c):
         nota_mark = f'<div class="nota-ref"><a href="#nota-{c["nota_num"]}">*{c["nota_num"]}</a></div>'
     # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar())
     marca_html = f'<div class="marca-fecha">{c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
-    # Botones de filtro (no aplican a gráficos de un solo período, ej. burbujas)
+    # Botones de filtro (no aplican a gráficos de un solo período, ej. burbujas). "Personalizado"
+    # despliega un selector de fechas (desde/hasta) en vez de filtrar al tocarlo directamente.
     filtros = ""
     if not c.get("sin_filtros"):
-        filtros = f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button></div>'
+        filtros = (
+            f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button>'
+            '<button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button>'
+            '<button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button>'
+            f'<button class="filtro" data-rango="personalizado">Personalizado</button></div>'
+            f'<div class="rango-custom" data-idx="{c["i"]}"><input type="date" class="rango-desde">'
+            '<span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div>'
+        )
     grande = c.get("sin_filtros") or c.get("grande")
     cell_cls = "cell cell-ancha" if grande else "cell"
     cbox_cls = "cbox cbox-grande" if grande else "cbox"
@@ -748,6 +756,10 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .filtro { background:var(--fondo); border:1px solid var(--borde); color:var(--tinta); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
   .filtro:hover { background:var(--hover); border-color:var(--gris-claro); }
   .filtro.active { background:var(--azul-enlace); color:#fff; border-color:var(--azul-enlace); }
+  .rango-custom { display:none; align-items:center; gap:6px; padding:8px 10px 0; font-size:11px; color:var(--gris); }
+  .rango-custom input[type=date] { font-size:11px; padding:3px 5px; border:1px solid var(--borde); border-radius:4px; background:var(--fondo); color:var(--tinta); font-family:inherit; }
+  .rango-aplicar { background:var(--azul-enlace); color:#fff; border:none; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; }
+  .rango-aplicar:hover { opacity:0.85; }
   footer { color:var(--gris); font-size:12px; border-top:1px solid var(--borde); padding-top:14px; margin-top:20px; }
 </style></head>
 <body>
@@ -827,6 +839,69 @@ function filtrarDatos(s, rango) {
   const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
   if (indices.length === 0) {
     return { x: s.x, y: s.y, flujo: s.flujo };
+  }
+  return {
+    x: indices.map(i => s.full_x[i]),
+    y: indices.map(i => s.full_y[i]),
+    flujo: s.full_flujo ? indices.map(i => s.full_flujo[i]) : undefined
+  };
+}
+
+// Percentil con interpolación lineal (mismo método que pandas .quantile() por defecto),
+// para que el eje calculado en el navegador para un rango "Personalizado" arbitrario sea
+// consistente con el que ya viene precalculado en Python para Default/1A/5A/2008/Todo.
+function percentil(arr, p) {
+  if (!arr.length) return null;
+  const orden = [...arr].sort((a, b) => a - b);
+  const idx = p * (orden.length - 1);
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  if (lo === hi) return orden[lo];
+  return orden[lo] + (orden[hi] - orden[lo]) * (idx - lo);
+}
+
+// Recalcula el eje (percentil 95 + atípicos) de incidencia_stack para un rango de fechas
+// arbitrario (ver Punto 6): mismo mecanismo que _serie_incidencia en Python, pero aplicado a
+// los índices que caen dentro del rango "Personalizado" que eligió el usuario, ya que ese rango
+// no es uno de los 5 precalculados server-side.
+function calcularEjeIncidencia(s, indices) {
+  const MARGEN = 1.15;
+  const totales = indices.map(i => {
+    let pos = 0, neg = 0;
+    s.datasets.forEach(d => { const v = d.full_y[i]; if (v > 0) pos += v; else if (v < 0) neg += v; });
+    return [pos, neg];
+  });
+  const positivos = totales.filter(([p]) => p > 0).map(([p]) => p);
+  const negativos = totales.filter(([, n]) => n < 0).map(([, n]) => Math.abs(n));
+  const yMax = positivos.length ? Math.round(percentil(positivos, 0.95) * MARGEN * 100) / 100 : undefined;
+  const yMin = negativos.length ? Math.round(-percentil(negativos, 0.95) * MARGEN * 100) / 100 : undefined;
+  const atipicos = {};
+  indices.forEach((i, k) => {
+    const [pos, neg] = totales[k];
+    if ((yMax !== undefined && pos > yMax) || (yMin !== undefined && neg < yMin)) {
+      atipicos[s.full_x[i]] = Math.round((pos + neg) * 100) / 100;
+    }
+  });
+  return { y_max: yMax, y_min: yMin, atipicos };
+}
+
+// Filtro de rango personalizado (Punto 6): reutiliza los mismos arrays full_* que ya alimentan
+// filtrarDatos(), sólo cambia el criterio de selección de índices (desde/hasta elegidos por el
+// usuario en vez de uno de los 5 rangos fijos).
+function filtrarDatosPersonalizado(s, desde, hasta) {
+  const hastaCmp = hasta + 'T23:59:59';
+  const indices = s.full_dates.map((d, i) => (d >= desde && d <= hastaCmp) ? i : -1).filter(i => i >= 0);
+  if (s.kind === 'overlay' || s.kind === 'incidencia') {
+    const resultado = { x: indices.map(i => s.full_x[i]), datasets: s.datasets.map(d => ({ label: d.label, y: indices.map(i => d.full_y[i]) })) };
+    if (s.kind === 'incidencia') resultado.eje = calcularEjeIncidencia(s, indices);
+    return resultado;
+  }
+  if (s.kind === 'espejo') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      expo: indices.map(i => s.full_expo[i]),
+      impo: indices.map(i => s.full_impo[i]),
+      saldo: indices.map(i => s.full_saldo[i]),
+    };
   }
   return {
     x: indices.map(i => s.full_x[i]),
@@ -1044,6 +1119,37 @@ SERIES.forEach(s => {
   }
 });
 
+// Redibuja un chart ya creado con los datos ya filtrados (por un botón de rango fijo o por
+// el rango "Personalizado"). Factorizado para que ambos caminos compartan la misma lógica.
+function aplicarFiltro(idx, serie, rango, datFiltrados) {
+  charts[idx].data.labels = datFiltrados.x;
+  if (serie.kind === 'combo') {
+    const coloresBarras = datFiltrados.flujo.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
+    charts[idx].data.datasets[0].data = datFiltrados.flujo;
+    charts[idx].data.datasets[0].backgroundColor = coloresBarras;
+    charts[idx].data.datasets[1].data = datFiltrados.y;
+  } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
+    datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
+    if (serie.kind === 'incidencia') {
+      // Rangos fijos usan el eje precalculado en Python (serie.ejes); "Personalizado" trae el
+      // suyo ya calculado en JS (ver calcularEjeIncidencia) dentro de datFiltrados.eje.
+      const eje = (serie.ejes && serie.ejes[rango]) || datFiltrados.eje;
+      if (eje) {
+        charts[idx].options.scales.y.max = eje.y_max ?? undefined;
+        charts[idx].options.scales.y.min = eje.y_min ?? undefined;
+        charts[idx].$atipicos = eje.atipicos;
+      }
+    }
+  } else if (serie.kind === 'espejo') {
+    charts[idx].data.datasets[0].data = datFiltrados.expo;
+    charts[idx].data.datasets[1].data = datFiltrados.impo;
+    charts[idx].data.datasets[2].data = datFiltrados.saldo;
+  } else {
+    charts[idx].data.datasets[0].data = datFiltrados.y;
+  }
+  charts[idx].update('none');
+}
+
 // Event listeners para botones de filtro
 document.querySelectorAll('.filtro').forEach(btn => {
   btn.addEventListener('click', function() {
@@ -1057,32 +1163,29 @@ document.querySelectorAll('.filtro').forEach(btn => {
     filtrosContainer.querySelectorAll('.filtro').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
 
-    // Filtrar datos
-    const datFiltrados = filtrarDatos(serie, rango);
-
-    // Redibujar gráfico
-    charts[idx].data.labels = datFiltrados.x;
-    if (serie.kind === 'combo') {
-      const coloresBarras = datFiltrados.flujo.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
-      charts[idx].data.datasets[0].data = datFiltrados.flujo;
-      charts[idx].data.datasets[0].backgroundColor = coloresBarras;
-      charts[idx].data.datasets[1].data = datFiltrados.y;
-    } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
-      datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
-      if (serie.kind === 'incidencia' && serie.ejes && serie.ejes[rango]) {
-        const eje = serie.ejes[rango];
-        charts[idx].options.scales.y.max = eje.y_max ?? undefined;
-        charts[idx].options.scales.y.min = eje.y_min ?? undefined;
-        charts[idx].$atipicos = eje.atipicos;
-      }
-    } else if (serie.kind === 'espejo') {
-      charts[idx].data.datasets[0].data = datFiltrados.expo;
-      charts[idx].data.datasets[1].data = datFiltrados.impo;
-      charts[idx].data.datasets[2].data = datFiltrados.saldo;
-    } else {
-      charts[idx].data.datasets[0].data = datFiltrados.y;
+    const customDiv = document.querySelector(`.rango-custom[data-idx='${idx}']`);
+    if (rango === 'personalizado') {
+      // Sólo despliega el selector de fechas; el filtrado real ocurre al tocar "Aplicar".
+      if (customDiv) customDiv.style.display = 'flex';
+      return;
     }
-    charts[idx].update('none');
+    if (customDiv) customDiv.style.display = 'none';
+
+    aplicarFiltro(idx, serie, rango, filtrarDatos(serie, rango));
+  });
+});
+
+// "Aplicar" del rango personalizado (Punto 6)
+document.querySelectorAll('.rango-aplicar').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const container = this.closest('.rango-custom');
+    const idx = parseInt(container.dataset.idx);
+    const serie = SERIES[idx];
+    if (!serie || !charts[idx]) return;
+    const desde = container.querySelector('.rango-desde').value;
+    const hasta = container.querySelector('.rango-hasta').value;
+    if (!desde || !hasta || desde > hasta) return;
+    aplicarFiltro(idx, serie, 'personalizado', filtrarDatosPersonalizado(serie, desde, hasta));
   });
 });
 </script>
