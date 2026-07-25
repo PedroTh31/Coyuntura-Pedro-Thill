@@ -137,8 +137,8 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 5. **Merge idempotente:** no tocar la lógica de `storage.py` que preserva el histórico.
 
 ## Estado actual (ya implementado)
-Precios (inflación mensual/interanual, IPC nivel general, incidencia por división de consumo,
-inflación efectiva vs. esperada REM); Dólar (oficial/blue/MEP/CCL); Brecha cambiaria; Tipo de
+Precios (inflación mensual/interanual, IPC nivel general, incidencia por división de consumo);
+Dólar (oficial/blue/MEP/CCL); Brecha cambiaria; Tipo de
 cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diario, combo,
 compras netas de divisas por contraparte); Agregados (base, M1 calculado, M2, M3); Tasas
 (BADLAR, política); Crédito (préstamos al sector privado, variación % real mensual, por tipo de
