@@ -347,7 +347,8 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(total_ultimo), pct=None, marca_fecha=None,
         maxv=_fmt_num(max(valores_totales)) if valores_totales else "s/d",
-        minv=_fmt_num(min(valores_totales)) if valores_totales else "s/d", nota_num=None)
+        minv=_fmt_num(min(valores_totales)) if valores_totales else "s/d", nota_num=None,
+        grande=ind.get("grande", False))
 
     # Autoescala robusta: el eje "normal" se calcula sobre el percentil 95 de la incidencia
     # total mensual (positiva y negativa por separado, con margen del 15%), no sobre el máximo
@@ -357,27 +358,48 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
     # solo, sin volver a romper la escala. Los meses que superan ese rango no se pierden: quedan
     # en 'atipicos' (con su valor real) para que el gráfico los señale aparte en vez de estirar
     # el eje para incluirlos.
+    #
+    # El percentil 95 se recalcula por separado para cada ventana de filtro (Default/1A/5A/Desde
+    # 2008/Todo, ver 'ejes' más abajo): calcularlo una sola vez sobre el histórico completo dejaba
+    # el eje sobredimensionado en la ventana default (18 meses) frente a un pico como el shock de
+    # 2024, que quedó fuera de esa ventana -- la mayor parte del gráfico quedaba vacía arriba.
     totales_por_fecha = {}
     for i, fecha in enumerate(fechas_full):
         vals = [d["full_y"][i] for d in datasets]
         pos = sum(v for v in vals if v and v > 0)
         neg = sum(v for v in vals if v and v < 0)
         totales_por_fecha[fecha] = (pos, neg)
-    positivos = [p for p, n in totales_por_fecha.values() if p > 0]
-    negativos = [abs(n) for p, n in totales_por_fecha.values() if n < 0]
     MARGEN_EJE = 1.15
-    y_max = round(float(pd.Series(positivos).quantile(0.95)) * MARGEN_EJE, 2) if positivos else None
-    y_min = round(-float(pd.Series(negativos).quantile(0.95)) * MARGEN_EJE, 2) if negativos else None
-    atipicos = {}
-    for fecha, (pos, neg) in totales_por_fecha.items():
-        if (y_max is not None and pos > y_max) or (y_min is not None and neg < y_min):
-            atipicos[fecha.strftime("%m/%y")] = round(pos + neg, 2)
+
+    def _eje(fechas_subset):
+        subset = set(fechas_subset)
+        positivos = [p for f, (p, n) in totales_por_fecha.items() if f in subset and p > 0]
+        negativos = [abs(n) for f, (p, n) in totales_por_fecha.items() if f in subset and n < 0]
+        y_max_ = round(float(pd.Series(positivos).quantile(0.95)) * MARGEN_EJE, 2) if positivos else None
+        y_min_ = round(-float(pd.Series(negativos).quantile(0.95)) * MARGEN_EJE, 2) if negativos else None
+        atipicos_ = {}
+        for f in fechas_subset:
+            pos, neg = totales_por_fecha[f]
+            if (y_max_ is not None and pos > y_max_) or (y_min_ is not None and neg < y_min_):
+                atipicos_[f.strftime("%m/%y")] = round(pos + neg, 2)
+        return dict(y_max=y_max_, y_min=y_min_, atipicos=atipicos_)
+
+    hoy = fechas_full[-1]
+    cortes = {
+        "default": pd.to_datetime(desde),
+        "1a": hoy - pd.DateOffset(years=1),
+        "5a": hoy - pd.DateOffset(years=5),
+        "2008": pd.to_datetime("2008-01-01"),
+        "todo": pd.to_datetime("1900-01-01"),
+    }
+    ejes = {rango: _eje([f for f in fechas_full if f >= corte]) for rango, corte in cortes.items()}
 
     serie_js = dict(i=idx, kind="incidencia", unidad=ind.get("unidad", ""),
         x=[d.strftime("%m/%y") for d in fechas_default],
         full_x=[d.strftime("%m/%y") for d in fechas_full],
         full_dates=[d.isoformat() for d in fechas_full],
-        datasets=datasets, y_max=y_max, y_min=y_min, atipicos=atipicos)
+        datasets=datasets, y_max=ejes["default"]["y_max"], y_min=ejes["default"]["y_min"],
+        atipicos=ejes["default"]["atipicos"], ejes=ejes)
     return card, serie_js
 
 
@@ -881,7 +903,7 @@ const comboOpts = (unidad) => ({
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
-const incidenciaOpts = (unidad, yMax, yMin, atipicos) => ({
+const incidenciaOpts = (unidad, yMax, yMin) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
   layout:{ padding:{ top:18, bottom:8 } },
@@ -889,7 +911,8 @@ const incidenciaOpts = (unidad, yMax, yMin, atipicos) => ({
     tooltip:{ callbacks:{
       label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}`,
       afterBody:(items)=> {
-        const total = items.length && atipicos ? atipicos[items[0].label] : undefined;
+        const atipicos = items.length ? items[0].chart.$atipicos : null;
+        const total = atipicos ? atipicos[items[0].label] : undefined;
         if (total === undefined) return [];
         return [`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${total.toLocaleString('es-AR')} ${unidad}`];
       } } } },
@@ -899,27 +922,27 @@ const incidenciaOpts = (unidad, yMax, yMin, atipicos) => ({
 
 // Marca los meses "atípicos" (fuera del rango normal del eje, ver y_max/y_min en Python) con
 // un ⚠ arriba o abajo de la barra recortada, para no perder el dato aunque el eje ya no se
-// estire para incluirlo. 'atipicos' queda cerrado sobre la función (no una opción de Chart.js)
-// porque se arma una instancia del plugin por gráfico, con su propio diccionario fecha->valor.
-function atipicosIncidenciaPlugin(atipicos) {
-  return {
-    id: 'atipicosIncidencia',
-    afterDatasetsDraw(chart) {
-      if (!atipicos || !Object.keys(atipicos).length) return;
-      const { ctx, chartArea, scales } = chart;
-      ctx.save();
-      ctx.font = 'bold 12px "Encode Sans", system-ui, sans-serif';
-      ctx.textAlign = 'center';
-      chart.data.labels.forEach((label, i) => {
-        if (atipicos[label] === undefined) return;
-        const x = scales.x.getPixelForValue(i);
-        const arriba = atipicos[label] >= 0;
-        ctx.fillText('⚠', x, arriba ? chartArea.top - 2 : chartArea.bottom + 16);
-      });
-      ctx.restore();
-    }
-  };
-}
+// estire para incluirlo. Lee 'chart.$atipicos' (asignado al crear el chart y reasignado en cada
+// click de filtro, ver 'ejes' en Python y el handler de .filtro) en vez de un valor cerrado sobre
+// la función, porque el diccionario fecha->valor cambia según la ventana de filtro activa.
+const atipicosIncidenciaPlugin = {
+  id: 'atipicosIncidencia',
+  afterDatasetsDraw(chart) {
+    const atipicos = chart.$atipicos;
+    if (!atipicos || !Object.keys(atipicos).length) return;
+    const { ctx, chartArea, scales } = chart;
+    ctx.save();
+    ctx.font = 'bold 12px "Encode Sans", system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    chart.data.labels.forEach((label, i) => {
+      if (atipicos[label] === undefined) return;
+      const x = scales.x.getPixelForValue(i);
+      const arriba = atipicos[label] >= 0;
+      ctx.fillText('⚠', x, arriba ? chartArea.top - 2 : chartArea.bottom + 16);
+    });
+    ctx.restore();
+  }
+};
 
 // Plugin liviano (sin librería externa) para poner el nombre corto del sector
 // al lado de cada burbuja — con 15 puntos y sin serie temporal, una leyenda
@@ -994,8 +1017,9 @@ SERIES.forEach(s => {
   } else if (s.kind === 'incidencia') {
     charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, backgroundColor:d.color, stack:'incidencia' }
-      )) }, options: incidenciaOpts(s.unidad, s.y_max, s.y_min, s.atipicos),
-      plugins: [atipicosIncidenciaPlugin(s.atipicos)] });
+      )) }, options: incidenciaOpts(s.unidad, s.y_max, s.y_min),
+      plugins: [atipicosIncidenciaPlugin] });
+    charts[s.i].$atipicos = s.atipicos;
   } else if (s.kind === 'espejo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
         { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:'#0767A7', stack:'comercio' },
@@ -1045,6 +1069,12 @@ document.querySelectorAll('.filtro').forEach(btn => {
       charts[idx].data.datasets[1].data = datFiltrados.y;
     } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
       datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
+      if (serie.kind === 'incidencia' && serie.ejes && serie.ejes[rango]) {
+        const eje = serie.ejes[rango];
+        charts[idx].options.scales.y.max = eje.y_max ?? undefined;
+        charts[idx].options.scales.y.min = eje.y_min ?? undefined;
+        charts[idx].$atipicos = eje.atipicos;
+      }
     } else if (serie.kind === 'espejo') {
       charts[idx].data.datasets[0].data = datFiltrados.expo;
       charts[idx].data.datasets[1].data = datFiltrados.impo;
