@@ -83,7 +83,6 @@ indicadores:
 
   # ---------------- TASAS DE INTERÉS (desde 2026) ----------------
   - {nombre: "Tasa BADLAR (mayorista)", bloque: monetario_financiero, grupo: "Tasas de interés", fuente: datos_gob, id: "89.2_TS_INTELAR_0_D_20", unidad: "% TNA", desde: "2026-01-01"}
-  - {nombre: "Tasa de política monetaria", bloque: monetario_financiero, grupo: "Tasas de interés", fuente: datos_gob, id: "89.2_TS_INTE_PM_0_D_16", unidad: "% TNA", desde: "2026-01-01", marca_fecha: true, nota: "El BCRA discontinuó la publicación de esta serie el 10/07/2025, en el marco del cambio de esquema de política monetaria; no hay serie sucesora oficial (para la tasa de referencia actual del mercado, ver BADLAR). Si el BCRA retoma la publicación, este gráfico se actualiza solo con los datos nuevos."}
 
   # ---------------- ACTIVIDAD REAL (EMAE con serie larga + semáforo) ----------------
   - {nombre: "EMAE (actividad económica)", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "143.3_NO_PR_2004_A_21", unidad: "índice 2004=100", desde: "2004-01-01", sube_es_bueno: true}

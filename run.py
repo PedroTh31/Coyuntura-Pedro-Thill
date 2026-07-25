@@ -169,6 +169,13 @@ def chequear_frescura(historico: pd.DataFrame, indicadores: list[dict]):
     ya avisan de otra forma (nota + badge en el dashboard) y no deben generar
     ruido repetido en cada corrida.
 
+    Sólo se chequean los indicadores TODAVÍA declarados en el yaml. El histórico
+    (data/series_largo.csv) conserva datos de indicadores ya eliminados por completo
+    del dashboard (merge idempotente, nunca se purga solo) -- si se los siguiera
+    chequeando acá, un indicador descontinuado y sacado del yaml (no sólo marcado
+    con 'marca_fecha') generaría una alerta de rezago todos los días para siempre,
+    ya que nadie vuelve a actualizar esos datos ni hay forma de "resolverla".
+
     Un indicador puede declarar 'rezago_normal_dias: N' si tiene un rezago de
     publicación estructural conocido y documentado en su 'nota' (ej. el TCR
     multilateral depende del IPC de varios países y llega ~5-6 meses tarde
@@ -176,12 +183,13 @@ def chequear_frescura(historico: pd.DataFrame, indicadores: list[dict]):
     adicional al umbral para no repetir la misma alerta todos los días.
     """
     hoy = pd.Timestamp.today().normalize()
+    nombres_activos = {ind["nombre"] for ind in indicadores}
     nombres_excluidos = {ind["nombre"] for ind in indicadores if ind.get("marca_fecha")}
     rezago_normal = {ind["nombre"]: ind["rezago_normal_dias"] for ind in indicadores if ind.get("rezago_normal_dias")}
     rezagados = []
 
     for nombre, g in historico.groupby("indicador"):
-        if nombre in nombres_excluidos:
+        if nombre not in nombres_activos or nombre in nombres_excluidos:
             continue
         g = g.sort_values("fecha")
         ultima = g["fecha"].max()
