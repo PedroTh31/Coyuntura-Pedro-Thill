@@ -16,6 +16,7 @@ Fuentes soportadas:
   - rem_bcra       -> Excel histórico único del REM (bcra.gob.ar), expectativas de mercado
 """
 from __future__ import annotations
+import datetime
 import io
 import json
 import time
@@ -23,6 +24,7 @@ from pathlib import Path
 import requests
 import pandas as pd
 import xlrd
+import openpyxl
 import pdfplumber
 
 TIMEOUT = 30
@@ -468,7 +470,109 @@ def fetch_bcra_swap_china() -> pd.DataFrame:
         cache.to_csv(_SWAP_CACHE_CSV, index=False)
     return cache[["fecha", "valor"]].sort_values("fecha").reset_index(drop=True)
 
-    sub = completo[(completo["variable"] == variable) & (completo["referencia"] == referencia)]
+
+# ---------------------------------------------------------------------------
+# 7) BCRA: morosidad (cartera irregular) de Familias por línea de crédito
+# ---------------------------------------------------------------------------
+INFBANC_ANEXO_URL = "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/informes/InfBanc_Anexo.xlsx"
+MOROSIDAD_LINEAS_FRESCURA_DIAS = 7  # el Informe sobre Bancos se actualiza ~1 vez por mes
+_MOROSIDAD_LINEAS_CACHE_CSV = _CACHE_DIR / "_cache_morosidad_lineas.csv"
+_MOROSIDAD_LINEAS_CACHE_META = _CACHE_DIR / "_cache_morosidad_lineas_meta.json"
+MOROSIDAD_LINEAS_SERIES = ("Cartera irregular total", "Personales", "Tarjetas de crédito")
+
+
+def _sin_acentos(s: str) -> str:
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
+
+
+def _descargar_y_transformar_morosidad_lineas() -> pd.DataFrame:
+    """
+    Anexo estadístico (Excel) del "Informe sobre Bancos" mensual del BCRA, hoja
+    "Calidad de Cartera (por líneas)": tiene una sección fija "2. Familias -
+    Total" con el ratio de irregularidad (%) de la cartera de Familias, y sus
+    líneas Personales y Tarjetas de crédito por separado -- exactamente el
+    desagregado que el BCRA NO publica en datos.gob.ar (ahí sólo está por tipo
+    de banco, no por tipo de deudor/línea).
+
+    Las filas se buscan por ETIQUETA (no por índice fijo, puede moverse de
+    versión a versión del archivo), acotadas a la sección "2. Familias -
+    Total" (entre esa etiqueta y la siguiente sección "2.1. Familias - En
+    UVA") para no confundirlas con las mismas etiquetas que también aparecen
+    en la sección "1. Total Sector Privado" (Familias + Empresas) más arriba.
+    """
+    r = _get(INFBANC_ANEXO_URL)
+    wb = openpyxl.load_workbook(io.BytesIO(r.content), data_only=True)
+    hoja = next(s for s in wb.sheetnames if _sin_acentos(s.lower()).startswith("calidad de cartera (por l"))
+    ws = wb[hoja]
+
+    inicio = fin = None
+    for row in range(1, ws.max_row + 1):
+        etiqueta = _sin_acentos(str(ws.cell(row, 1).value or "").strip().lower())
+        if etiqueta.startswith("2. familias") and inicio is None:
+            inicio = row
+        elif etiqueta.startswith("2.1") and inicio is not None:
+            fin = row
+            break
+    if inicio is None:
+        return pd.DataFrame(columns=["fecha", "serie", "valor"])
+    fin = fin or ws.max_row
+
+    fila_fechas = fin_tabla = None
+    for row in range(inicio, fin):
+        etiqueta = _sin_acentos(str(ws.cell(row, 1).value or "").strip().lower())
+        if etiqueta == "en porcentaje" and fila_fechas is None:
+            fila_fechas = row
+        elif etiqueta.startswith("fuente:") and fila_fechas is not None:
+            # "Fuente: BCRA" cierra la sub-tabla "Ratio de irregularidad" -- sin este corte, el
+            # scan seguiría de largo hasta la sección "2.1" y también agarraría la sub-tabla
+            # "Saldo total de financiaciones" más abajo, que reusa las MISMAS etiquetas de fila
+            # ("Personales", "Tarjetas de crédito") pero en millones de $, no en % -- se mezclaban
+            # ambas bajo la misma serie y quedaban valores de miles de millones donde debía haber
+            # un ratio de 0-100.
+            fin_tabla = row
+            break
+    if fila_fechas is None:
+        return pd.DataFrame(columns=["fecha", "serie", "valor"])
+    fin_tabla = fin_tabla or fin
+    fechas = [ws.cell(fila_fechas, c).value for c in range(2, ws.max_column + 1)]
+
+    filas = []
+    for row in range(fila_fechas + 1, fin_tabla):
+        etiqueta_cruda = str(ws.cell(row, 1).value or "").strip()
+        etiqueta_norm = _sin_acentos(etiqueta_cruda.lower())
+        objetivo = next((s for s in MOROSIDAD_LINEAS_SERIES if _sin_acentos(s.lower()) == etiqueta_norm), None)
+        if objetivo is None:
+            continue
+        for c, fecha in enumerate(fechas, start=2):
+            if not isinstance(fecha, datetime.datetime):
+                continue
+            valor = ws.cell(row, c).value
+            if isinstance(valor, (int, float)):
+                filas.append({"fecha": pd.Timestamp(fecha), "serie": objetivo, "valor": float(valor)})
+    return pd.DataFrame(filas)
+
+
+def fetch_bcra_morosidad_lineas(serie: str, start_date: str | None = None) -> pd.DataFrame:
+    """serie: uno de MOROSIDAD_LINEAS_SERIES ('Cartera irregular total', 'Personales', 'Tarjetas de crédito')."""
+    completo = None
+    if _MOROSIDAD_LINEAS_CACHE_META.exists() and _MOROSIDAD_LINEAS_CACHE_CSV.exists():
+        try:
+            meta = json.loads(_MOROSIDAD_LINEAS_CACHE_META.read_text(encoding="utf-8"))
+            descargado = pd.to_datetime(meta.get("descargado"))
+            if (pd.Timestamp.today().normalize() - descargado).days < MOROSIDAD_LINEAS_FRESCURA_DIAS:
+                completo = pd.read_csv(_MOROSIDAD_LINEAS_CACHE_CSV, parse_dates=["fecha"])
+        except (ValueError, KeyError, OSError, json.JSONDecodeError):
+            completo = None
+
+    if completo is None:
+        completo = _descargar_y_transformar_morosidad_lineas()
+        _CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        completo.to_csv(_MOROSIDAD_LINEAS_CACHE_CSV, index=False)
+        _MOROSIDAD_LINEAS_CACHE_META.write_text(
+            json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+
+    sub = completo[completo["serie"] == serie]
     if sub.empty:
         return pd.DataFrame(columns=["fecha", "valor"])
     df = sub[["fecha", "valor"]].sort_values("fecha").drop_duplicates(subset="fecha").reset_index(drop=True)
@@ -492,4 +596,6 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
         return fetch_bcra(indicador["id_variable"], start_date)
     if fuente == "rem_bcra":
         return fetch_rem_variable(indicador["variable"], indicador["referencia"], start_date)
+    if fuente == "bcra_morosidad_lineas":
+        return fetch_bcra_morosidad_lineas(indicador["serie"], start_date)
     raise ValueError(f"Fuente desconocida: {fuente}")

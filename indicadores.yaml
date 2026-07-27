@@ -145,6 +145,15 @@ indicadores:
   - {nombre: "Morosidad: bancos públicos", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "332.2_BANCOS_PUBADA__55", unidad: "%", solo_componente: true}
   - {nombre: "Morosidad: bancos privados", bloque: monetario_financiero, grupo: "Crédito", fuente: datos_gob, id: "332.2_BANCOS_PRIADA__51", unidad: "%", solo_componente: true}
   - {nombre: "Morosidad del crédito (irregularidad de cartera)", bloque: monetario_financiero, grupo: "Crédito", vista: overlay, series: ["Morosidad: sistema financiero", "Morosidad: bancos públicos", "Morosidad: bancos privados"], unidad: "%", nota: "Ratio de cartera irregular sobre financiaciones al sector privado (BCRA, dataset 332). La fuente etiqueta la unidad como 'millones de pesos' en su metadata; es un error, se trata de un ratio %."}
+  # -- Morosidad de Familias por línea de crédito: NO está en datos.gob.ar (dataset 332 sólo
+  #    desagrega por tipo de banco, no por tipo de deudor/línea). Sale del Anexo estadístico
+  #    (Excel) del Informe sobre Bancos mensual del BCRA, hoja "Calidad de Cartera (por
+  #    líneas)", sección fija "2. Familias - Total" (ver fetch_bcra_morosidad_lineas en
+  #    fetchers.py) --
+  - {nombre: "Morosidad: Familias (total)", bloque: monetario_financiero, grupo: "Crédito", fuente: bcra_morosidad_lineas, serie: "Cartera irregular total", unidad: "%", solo_componente: true}
+  - {nombre: "Morosidad: Familias — Personales", bloque: monetario_financiero, grupo: "Crédito", fuente: bcra_morosidad_lineas, serie: "Personales", unidad: "%", solo_componente: true}
+  - {nombre: "Morosidad: Familias — Tarjetas de crédito", bloque: monetario_financiero, grupo: "Crédito", fuente: bcra_morosidad_lineas, serie: "Tarjetas de crédito", unidad: "%", solo_componente: true}
+  - {nombre: "Morosidad de Familias por línea de crédito", bloque: monetario_financiero, grupo: "Crédito", vista: overlay, series: ["Morosidad: Familias (total)", "Morosidad: Familias — Personales", "Morosidad: Familias — Tarjetas de crédito"], unidad: "%", subtitulo: "Cartera irregular de Familias: total y por línea (Personales, Tarjetas)", nota: "Ratio de cartera irregular (%) de la cartera de Familias (personas humanas), BCRA. Fuente: Anexo estadístico del Informe sobre Bancos mensual (bcra.gob.ar/informe-sobre-bancos/), hoja 'Calidad de Cartera (por líneas)', sección '2. Familias - Total'. A diferencia de 'Morosidad del crédito' de más arriba (desagregada por tipo de BANCO: sistema/públicos/privados, dataset 332 de datos.gob.ar), acá la desagregación es por tipo de DEUDOR/línea de crédito dentro de Familias -- el BCRA no publica esta apertura en datos.gob.ar, sólo en este anexo. El archivo se recachea como máximo una vez por semana (se actualiza ~1 vez por mes)."}
 
   # ---------------- EMAE POR SECTOR (semáforo) ----------------
   - {nombre: "EMAE · Agricultura, ganadería y silvicultura", bloque: real, grupo: "Actividad", fuente: datos_gob, id: "11.3_ISOM_2004_M_39", semaforo: true}

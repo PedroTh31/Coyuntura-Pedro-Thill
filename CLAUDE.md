@@ -56,6 +56,14 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   cambian) y sólo tiene datos desde dic-2022. Los organismos internacionales salen del Excel
   único "Serie Anual de Balances Semanales" (`fetch_bcra_organismos_internacionales`, cacheado
   como el REM).
+- `fuente: bcra_morosidad_lineas` + `serie: "..."` → morosidad (cartera irregular, %) de
+  Familias por línea de crédito, a partir del Anexo estadístico (Excel) del Informe sobre
+  Bancos mensual del BCRA (bcra.gob.ar/informe-sobre-bancos/), hoja "Calidad de Cartera (por
+  líneas)", sección fija "2. Familias - Total" (`fetch_bcra_morosidad_lineas` en
+  fetchers.py). `serie` debe ser uno de `MOROSIDAD_LINEAS_SERIES`: "Cartera irregular total",
+  "Personales" o "Tarjetas de crédito". No está en datos.gob.ar (dataset 332 sólo desagrega
+  por tipo de banco, no por tipo de deudor/línea). Cacheado como el REM/organismos
+  internacionales (máximo 1 descarga por semana).
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
 - `vista: comercio_espejo` + `series: [exportaciones, importaciones, saldo]` → gráfico espejo
   (mirror/diverging bars): exportaciones barras positivas arriba, importaciones barras negativas
