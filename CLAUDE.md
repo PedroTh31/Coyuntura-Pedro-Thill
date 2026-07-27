@@ -109,6 +109,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   renormalizan solos, no hace falta que sumen 1), con rebase y/o media móvil. Ej.: EMAE
   Urbano/No urbano agrupando sectores.
 - `barras: true` → un indicador normal (una sola serie) se grafica en barras en vez de línea.
+  También funciona en `vista: overlay` (varias series): en vez de líneas superpuestas, barras
+  agrupadas por fecha (una barra por serie, no apiladas) -- útil cuando las series son
+  variaciones % mensuales de categorías comparables (ej. Núcleo/Regulados/Estacionales), donde
+  el patrón visual estándar para esa lectura es de barras, no de líneas.
 - `peso_nacional: N` → ponderador fijo (0-1) de un indicador para `vista: incidencia_stack`.
   Documentar SIEMPRE la fuente y fecha base del ponderador en la `nota`.
 - `solo_componente: true` → el indicador se trae y guarda en el histórico normalmente, pero no

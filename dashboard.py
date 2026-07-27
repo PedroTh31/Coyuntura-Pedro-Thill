@@ -272,7 +272,7 @@ def _serie_overlay(idx, ind, historico):
         full_x=[d.strftime("%m/%y") for d in fechas_full],
         full_dates=[d.isoformat() for d in fechas_full],
         datasets=datasets, radio_punto=ind.get("radio_punto", 0), cruce=cruce,
-        escala_log=ind.get("escala_log", False))
+        escala_log=ind.get("escala_log", False), barras=ind.get("barras", False))
     return card, serie_js
 
 
@@ -1091,8 +1091,10 @@ SERIES.forEach(s => {
         { type:'line', label:'Stock', data:s.y, borderColor:s.color, backgroundColor:s.color+'14', yAxisID:'y1', fill:false }
       ]}, options: comboOpts(s.unidad) });
   } else if (s.kind === 'overlay') {
-    charts[s.i] = new Chart(ctx, { type:'line', data:{ labels:s.x, datasets: s.datasets.map(d => (
-        { label:d.label, data:d.y, borderColor:d.color, backgroundColor:d.color+'10', fill:false }
+    charts[s.i] = new Chart(ctx, { type: s.barras ? 'bar' : 'line', data:{ labels:s.x, datasets: s.datasets.map(d => (
+        s.barras
+          ? { label:d.label, data:d.y, backgroundColor:d.color, borderRadius:2 }
+          : { label:d.label, data:d.y, borderColor:d.color, backgroundColor:d.color+'10', fill:false }
       )) }, options: overlayOpts(s.unidad, s.radio_punto, s.cruce, s.escala_log),
       plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
   } else if (s.kind === 'incidencia') {
