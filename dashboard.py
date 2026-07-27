@@ -331,11 +331,23 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
         datasets.append(dict(label=etiqueta, color=COLORES_INCIDENCIA[i % len(COLORES_INCIDENCIA)],
             y=_en(fechas_default), full_y=_en(fechas_full)))
 
+    # Detalle de "Resto" por mes (Punto 11, Ronda 4): las divisiones agrupadas en "Resto" no
+    # tienen su propia barra de color (con las 12 completas apiladas cada franja queda
+    # ilegible), pero su aporte no es marginal -- en vez de obligar a abrir el CSV para verlo,
+    # queda disponible en el tooltip de cada mes: qué divisiones son y cuánto aportó cada una
+    # ESE mes en particular (no una lista fija, cambia con el dato real de cada período).
+    resto_detalle = None
     if resto:
         valores_por_fecha_resto = {}
-        for _, _, g in resto:
+        resto_detalle = {}
+        for nombre_serie, _, g in resto:
+            etiqueta_resto = nombre_serie.replace("IPC división: ", "")
             for f, v in zip(g["fecha"], g["incidencia"]):
                 valores_por_fecha_resto[f] = valores_por_fecha_resto.get(f, 0.0) + v
+                resto_detalle.setdefault(f.strftime("%m/%y"), []).append(
+                    dict(nombre=etiqueta_resto, valor=round(float(v), 3)))
+        for label in resto_detalle:
+            resto_detalle[label].sort(key=lambda d: abs(d["valor"]), reverse=True)
         def _en_resto(fechas_):
             return [round(float(valores_por_fecha_resto[d]), 3) if d in valores_por_fecha_resto else None for d in fechas_]
         datasets.append(dict(label=f"Resto ({len(resto)} divisiones)", color="#9E9E9E",
@@ -401,7 +413,7 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
         full_x=[d.strftime("%m/%y") for d in fechas_full],
         full_dates=[d.isoformat() for d in fechas_full],
         datasets=datasets, y_max=ejes["default"]["y_max"], y_min=ejes["default"]["y_min"],
-        atipicos=ejes["default"]["atipicos"], ejes=ejes)
+        atipicos=ejes["default"]["atipicos"], ejes=ejes, resto_detalle=resto_detalle)
     return card, serie_js
 
 
@@ -992,10 +1004,22 @@ const incidenciaOpts = (unidad, yMax, yMin) => ({
     tooltip:{ callbacks:{
       label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}`,
       afterBody:(items)=> {
-        const atipicos = items.length ? items[0].chart.$atipicos : null;
+        if (!items.length) return [];
+        const lineas = [];
+        const atipicos = items[0].chart.$atipicos;
         const total = atipicos ? atipicos[items[0].label] : undefined;
-        if (total === undefined) return [];
-        return [`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${total.toLocaleString('es-AR')} ${unidad}`];
+        if (total !== undefined) {
+          lineas.push(`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${total.toLocaleString('es-AR')} ${unidad}`);
+        }
+        // Detalle de "Resto" (Punto 11): qué divisiones lo componen y cuánto aportó cada una
+        // ESE mes -- no una lista fija, se recalcula con el dato real de cada período.
+        const restoDetalle = items[0].chart.$restoDetalle;
+        const detalle = restoDetalle ? restoDetalle[items[0].label] : null;
+        if (detalle && detalle.length) {
+          lineas.push('Detalle de "Resto":');
+          detalle.forEach(d => lineas.push(`  ${d.nombre}: ${d.valor > 0 ? '+' : ''}${d.valor.toLocaleString('es-AR')} ${unidad}`));
+        }
+        return lineas;
       } } } },
   scales:{ x:{ stacked:true, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
            y:{ stacked:true, max:yMax ?? undefined, min:yMin ?? undefined, ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
@@ -1103,6 +1127,7 @@ SERIES.forEach(s => {
       )) }, options: incidenciaOpts(s.unidad, s.y_max, s.y_min),
       plugins: [atipicosIncidenciaPlugin] });
     charts[s.i].$atipicos = s.atipicos;
+    charts[s.i].$restoDetalle = s.resto_detalle;
   } else if (s.kind === 'espejo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
         { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:'#0767A7', stack:'comercio' },
