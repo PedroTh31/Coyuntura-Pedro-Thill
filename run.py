@@ -39,6 +39,12 @@ def _calcular(ind, start):
         cols = [c for c in s.columns if c.startswith("v")]
         s["valor"] = s[cols].sum(axis=1)
         return s[["fecha", "valor"]]
+    if tipo == "resta":
+        a = fetch_datos_gob(ind["minuendo_id"], start).rename(columns={"valor": "a"})
+        b = fetch_datos_gob(ind["sustraendo_id"], start).rename(columns={"valor": "b"})
+        s = a.merge(b, on="fecha", how="inner")
+        s["valor"] = s["a"] - s["b"]
+        return s[["fecha", "valor"]]
     if tipo == "real":
         nom = fetch_datos_gob(ind["nominal_id"], start).rename(columns={"valor": "nom"})
         ipc = fetch_datos_gob(ind["deflactor_id"], start).rename(columns={"valor": "ipc"})

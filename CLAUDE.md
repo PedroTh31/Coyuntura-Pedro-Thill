@@ -40,6 +40,9 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   `REM_FRESCURA_DIAS` (7) días — el BCRA lo actualiza una vez por mes, no hace falta pegarle todos
   los días.
 - `calculo: suma` + `componentes: [id1, id2]` → suma de series (ej. M1).
+- `calculo: resta` + `minuendo_id` + `sustraendo_id` → resta de dos series de datos_gob (ej.
+  balance comercial energético = exportaciones de combustibles y energía menos importaciones
+  de combustibles y lubricantes).
 - `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real).
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
 - `calculo: interanual` + `base_id` → variación % interanual de una serie de datos_gob.
