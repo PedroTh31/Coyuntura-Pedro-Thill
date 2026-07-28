@@ -477,9 +477,40 @@ def _serie_bubble(idx, ind, historico):
     # queda en el centro del gráfico (un cuadrante de verdad: actividad/empleo que caen quedan
     # visualmente abajo/izquierda del cruce de ejes) en vez de pegado a un borde. Data-driven,
     # no un rango fijo: se recalcula solo según los sectores de cada corrida.
+    #
+    # Ronda 4 punto 12: con pocos sectores (~15), 1-2 outliers reales (ej. Pesca, Agricultura
+    # en trimestres con datos volátiles) alejados del resto estiraban el eje tanto que el
+    # cluster central (la mayoría de los sectores) quedaba amontonado en una franja angosta
+    # cerca del cero, ilegible. Se usa la cerca de Tukey (Q3 + 1,5×RIC sobre el valor absoluto,
+    # método estadístico estándar para detectar outliers, no un umbral fijo) para calcular el
+    # límite del eje sobre el cluster central en vez del máximo absoluto; los sectores que
+    # superan la cerca quedan clavados cerca del borde del gráfico (posición_real preservada en
+    # 'x_real'/'y_real' para el tooltip) con un borde punteado que los distingue visualmente.
     MARGEN_EJE_BURBUJAS = 1.15
-    lim_x = max(abs(p["x"]) for p in puntos) * MARGEN_EJE_BURBUJAS
-    lim_y = max(abs(p["y"]) for p in puntos) * MARGEN_EJE_BURBUJAS
+
+    def _limite_robusto(eje):
+        valores_abs = sorted(abs(p[eje]) for p in puntos)
+        n = len(valores_abs)
+        if n < 4:
+            return round(max(valores_abs) * MARGEN_EJE_BURBUJAS, 2)
+
+        def _percentil(q):
+            pos = q * (n - 1)
+            lo, hi = int(pos), min(int(pos) + 1, n - 1)
+            return valores_abs[lo] + (valores_abs[hi] - valores_abs[lo]) * (pos - lo)
+
+        ric = _percentil(0.75) - _percentil(0.25)
+        cerca = _percentil(0.75) + 1.5 * ric
+        centrales = [v for v in valores_abs if v <= cerca]
+        limite = round((max(centrales) if centrales else max(valores_abs)) * MARGEN_EJE_BURBUJAS, 2)
+        for p in puntos:
+            if abs(p[eje]) > cerca:
+                p[f"{eje}_real"] = p[eje]
+                p[eje] = round(max(-limite * 0.94, min(limite * 0.94, p[eje])), 2)
+        return limite
+
+    lim_x = _limite_robusto("x")
+    lim_y = _limite_robusto("y")
 
     serie_js = dict(i=idx, kind="bubble", fecha=fecha_comun.strftime("%m/%Y"), puntos=puntos,
         lim_x=round(lim_x, 2), lim_y=round(lim_y, 2))
@@ -1095,9 +1126,16 @@ const bubbleOpts = (limX, limY) => ({
   plugins:{ legend:{display:false},
     tooltip:{ callbacks:{
       title:(items)=> items[0].raw.label,
-      label:(c)=> [`Actividad (EMAE, i.a.): ${c.raw.x > 0 ? '+' : ''}${c.raw.x.toFixed(1)}%`,
-                   `Empleo registrado (i.a.): ${c.raw.y > 0 ? '+' : ''}${c.raw.y.toFixed(1)}%`,
-                   `% del empleo total: ${c.raw.r_pct.toFixed(1)}%`] } } },
+      label:(c)=> {
+        const x = c.raw.x_real ?? c.raw.x, y = c.raw.y_real ?? c.raw.y;
+        const lineas = [`Actividad (EMAE, i.a.): ${x > 0 ? '+' : ''}${x.toFixed(1)}%`,
+                        `Empleo registrado (i.a.): ${y > 0 ? '+' : ''}${y.toFixed(1)}%`,
+                        `% del empleo total: ${c.raw.r_pct.toFixed(1)}%`];
+        if (c.raw.x_real !== undefined || c.raw.y_real !== undefined) {
+          lineas.push('⚠ Fuera de escala del gráfico, dibujado cerca del borde -- valores reales arriba');
+        }
+        return lineas;
+      } } } },
   scales:{ x:{ min:-limX, max:limX, title:{display:true, text:'Variación % interanual de actividad', font:{size:10}, color:'#555555'},
                ticks:{ color:'#838383', font:{size:10} }, grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} },
            y:{ min:-limY, max:limY, title:{display:true, text:'Variación % interanual de empleo', font:{size:10}, color:'#555555'},
@@ -1141,10 +1179,13 @@ SERIES.forEach(s => {
   } else if (s.kind === 'bubble') {
     // Radio en px escalado desde el % de empleo (sin piso artificial: un sector con
     // 0,1% del empleo se ve casi invisible a propósito, es la realidad del dato).
-    charts[s.i] = new Chart(ctx, { type:'bubble', data:{ datasets: s.puntos.map(p => (
-        { label:p.nombre, data:[{ x:p.x, y:p.y, r:p.r*1.6, r_pct:p.r, label:p.nombre }],
-          backgroundColor:p.color+'B0', borderColor:p.color }
-      )) }, options: bubbleOpts(s.lim_x, s.lim_y), plugins:[etiquetasBurbujaPlugin] });
+    charts[s.i] = new Chart(ctx, { type:'bubble', data:{ datasets: s.puntos.map(p => {
+        const recortado = p.x_real !== undefined || p.y_real !== undefined;
+        return { label:p.nombre,
+          data:[{ x:p.x, y:p.y, r:p.r*1.6, r_pct:p.r, label:p.nombre, x_real:p.x_real, y_real:p.y_real }],
+          backgroundColor:p.color+'B0', borderColor:p.color,
+          borderWidth: recortado ? 2.5 : 1, borderDash: recortado ? [4, 3] : [] };
+      }) }, options: bubbleOpts(s.lim_x, s.lim_y), plugins:[etiquetasBurbujaPlugin] });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
