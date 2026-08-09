@@ -6313,6 +6313,7 @@
 2026-08-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.039603960396043
 2026-08-05,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.6907894736841973
 2026-08-07,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.993421052631585
+2026-08-08,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.993421052631585
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -12624,6 +12625,7 @@
 2026-08-04,Dólar CCL,monetario_financiero,$/USD (venta),1576.2
 2026-08-05,Dólar CCL,monetario_financiero,$/USD (venta),1576.1
 2026-08-07,Dólar CCL,monetario_financiero,$/USD (venta),1580.7
+2026-08-08,Dólar CCL,monetario_financiero,$/USD (venta),1580.7
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -15462,6 +15464,7 @@
 2026-08-04,Dólar MEP,monetario_financiero,$/USD (venta),1524.5
 2026-08-05,Dólar MEP,monetario_financiero,$/USD (venta),1523.0
 2026-08-07,Dólar MEP,monetario_financiero,$/USD (venta),1528.1
+2026-08-08,Dólar MEP,monetario_financiero,$/USD (venta),1528.1
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -21156,6 +21159,7 @@
 2026-08-04,Dólar blue,monetario_financiero,$/USD (venta),1545.0
 2026-08-05,Dólar blue,monetario_financiero,$/USD (venta),1540.0
 2026-08-07,Dólar blue,monetario_financiero,$/USD (venta),1525.0
+2026-08-08,Dólar blue,monetario_financiero,$/USD (venta),1525.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -26850,6 +26854,7 @@
 2026-08-04,Dólar oficial,monetario_financiero,$/USD (venta),1515.0
 2026-08-05,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
 2026-08-07,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
+2026-08-08,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -36126,23 +36131,24 @@
 2024-10-01,IPI manufacturero (industria),real,índice 2004=100,130.31068482170923
 2024-11-01,IPI manufacturero (industria),real,índice 2004=100,125.39541977505476
 2024-12-01,IPI manufacturero (industria),real,índice 2004=100,116.72631144153108
-2025-01-01,IPI manufacturero (industria),real,índice 2004=100,110.69962456258726
-2025-02-01,IPI manufacturero (industria),real,índice 2004=100,109.9895222063692
-2025-03-01,IPI manufacturero (industria),real,índice 2004=100,116.26302880852202
-2025-04-01,IPI manufacturero (industria),real,índice 2004=100,121.50665772034178
-2025-05-01,IPI manufacturero (industria),real,índice 2004=100,124.03536965795828
-2025-06-01,IPI manufacturero (industria),real,índice 2004=100,117.44259657087004
-2025-07-01,IPI manufacturero (industria),real,índice 2004=100,124.23392510659026
-2025-08-01,IPI manufacturero (industria),real,índice 2004=100,123.32398524576008
-2025-09-01,IPI manufacturero (industria),real,índice 2004=100,124.900563266663
-2025-10-01,IPI manufacturero (industria),real,índice 2004=100,126.71386014394714
-2025-11-01,IPI manufacturero (industria),real,índice 2004=100,114.41752657863128
-2025-12-01,IPI manufacturero (industria),real,índice 2004=100,112.02899423914867
-2026-01-01,IPI manufacturero (industria),real,índice 2004=100,106.46527544008812
-2026-02-01,IPI manufacturero (industria),real,índice 2004=100,100.2315981332693
-2026-03-01,IPI manufacturero (industria),real,índice 2004=100,122.0976742736882
-2026-04-01,IPI manufacturero (industria),real,índice 2004=100,118.435966906894
-2026-05-01,IPI manufacturero (industria),real,índice 2004=100,116.97545167246784
+2025-01-01,IPI manufacturero (industria),real,índice 2004=100,110.6983479184584
+2025-02-01,IPI manufacturero (industria),real,índice 2004=100,109.9879672719398
+2025-03-01,IPI manufacturero (industria),real,índice 2004=100,116.26302218891296
+2025-04-01,IPI manufacturero (industria),real,índice 2004=100,121.5057903538734
+2025-05-01,IPI manufacturero (industria),real,índice 2004=100,124.03498423474458
+2025-06-01,IPI manufacturero (industria),real,índice 2004=100,117.48117186410737
+2025-07-01,IPI manufacturero (industria),real,índice 2004=100,124.23325522421634
+2025-08-01,IPI manufacturero (industria),real,índice 2004=100,123.32131738437457
+2025-09-01,IPI manufacturero (industria),real,índice 2004=100,124.89984718005788
+2025-10-01,IPI manufacturero (industria),real,índice 2004=100,126.71079320832833
+2025-11-01,IPI manufacturero (industria),real,índice 2004=100,114.4155858024882
+2025-12-01,IPI manufacturero (industria),real,índice 2004=100,112.02787091913596
+2026-01-01,IPI manufacturero (industria),real,índice 2004=100,106.51404905038537
+2026-02-01,IPI manufacturero (industria),real,índice 2004=100,100.28306160772554
+2026-03-01,IPI manufacturero (industria),real,índice 2004=100,122.17791570884084
+2026-04-01,IPI manufacturero (industria),real,índice 2004=100,118.5896315999007
+2026-05-01,IPI manufacturero (industria),real,índice 2004=100,117.04054410652112
+2026-06-01,IPI manufacturero (industria),real,índice 2004=100,119.86011272719423
 2004-01-01,Importaciones totales,externo,millones de USD,1608.575067
 2004-02-01,Importaciones totales,externo,millones de USD,1363.731431
 2004-03-01,Importaciones totales,externo,millones de USD,1690.058163
@@ -48168,6 +48174,7 @@
 2026-08-04,Riesgo país (EMBI),monetario_financiero,puntos básicos,421.0
 2026-08-05,Riesgo país (EMBI),monetario_financiero,puntos básicos,428.0
 2026-08-06,Riesgo país (EMBI),monetario_financiero,puntos básicos,446.0
+2026-08-07,Riesgo país (EMBI),monetario_financiero,puntos básicos,451.0
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
