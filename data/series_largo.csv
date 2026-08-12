@@ -539,6 +539,7 @@
 2026-04-01,Base monetaria,monetario_financiero,millones de $,41165370.9
 2026-05-01,Base monetaria,monetario_financiero,millones de $,41399339.58064516
 2026-06-01,Base monetaria,monetario_financiero,millones de $,43272285.6
+2026-07-01,Base monetaria,monetario_financiero,millones de $,45618684.77419355
 2004-01-01,Bienes de capital,externo,millones de USD,507.070979
 2004-02-01,Bienes de capital,externo,millones de USD,303.029737
 2004-03-01,Bienes de capital,externo,millones de USD,340.167822
@@ -6316,6 +6317,7 @@
 2026-08-08,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.993421052631585
 2026-08-09,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.993421052631585
 2026-08-10,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.157894736842116
+2026-08-11,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.613861386138618
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -12630,6 +12632,7 @@
 2026-08-08,Dólar CCL,monetario_financiero,$/USD (venta),1580.7
 2026-08-09,Dólar CCL,monetario_financiero,$/USD (venta),1580.7
 2026-08-10,Dólar CCL,monetario_financiero,$/USD (venta),1583.2
+2026-08-11,Dólar CCL,monetario_financiero,$/USD (venta),1584.9
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -15471,6 +15474,7 @@
 2026-08-08,Dólar MEP,monetario_financiero,$/USD (venta),1528.1
 2026-08-09,Dólar MEP,monetario_financiero,$/USD (venta),1528.1
 2026-08-10,Dólar MEP,monetario_financiero,$/USD (venta),1526.1
+2026-08-11,Dólar MEP,monetario_financiero,$/USD (venta),1526.3
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -21168,6 +21172,7 @@
 2026-08-08,Dólar blue,monetario_financiero,$/USD (venta),1525.0
 2026-08-09,Dólar blue,monetario_financiero,$/USD (venta),1525.0
 2026-08-10,Dólar blue,monetario_financiero,$/USD (venta),1535.0
+2026-08-11,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -26865,6 +26870,7 @@
 2026-08-08,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
 2026-08-09,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
 2026-08-10,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
+2026-08-11,Dólar oficial,monetario_financiero,$/USD (venta),1515.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -37177,22 +37183,23 @@
 2024-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,25237150.838709682
 2025-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,26336673.516129028
 2025-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,25770871.285714284
-2025-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,26689901.3548387
-2025-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,27334090.69999999
+2025-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,26711602.58064516
+2025-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,27334090.7
 2025-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,28450961.90322581
 2025-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,29331920.9
 2025-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,30689776.516129028
 2025-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32132454.935483873
-2025-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,31713349.866666667
-2025-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,31876865.806451622
-2025-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32894867.00000001
-2025-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33466329.0
-2026-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34169283.96774193
-2026-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33197333.249999996
-2026-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33817487.77419354
+2025-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,31713325.3
+2025-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,31876780.70967743
+2025-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32894691.133333333
+2025-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33466231.38709677
+2026-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34168990.96774193
+2026-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33171370.5
+2026-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33817645.93548387
 2026-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33732593.80000001
-2026-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34286051.34301075
-2026-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,35524867.466666654
+2026-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34356261.29032259
+2026-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,35442493.00000001
+2026-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,35535577.12903226
 2004-01-01,M2 (agregado total),monetario_financiero,millones de $,64071.20516240616
 2004-02-01,M2 (agregado total),monetario_financiero,millones de $,66188.6135351483
 2004-03-01,M2 (agregado total),monetario_financiero,millones de $,65812.61050313903
@@ -37447,22 +37454,23 @@
 2024-12-01,M2 (agregado total),monetario_financiero,millones de $,63693877.87096774
 2025-01-01,M2 (agregado total),monetario_financiero,millones de $,64741030.35483871
 2025-02-01,M2 (agregado total),monetario_financiero,millones de $,63206403.78571428
-2025-03-01,M2 (agregado total),monetario_financiero,millones de $,65198957.90322581
-2025-04-01,M2 (agregado total),monetario_financiero,millones de $,69297503.86666666
-2025-05-01,M2 (agregado total),monetario_financiero,millones de $,72416043.4516129
-2025-06-01,M2 (agregado total),monetario_financiero,millones de $,73557971.0
-2025-07-01,M2 (agregado total),monetario_financiero,millones de $,77126287.61290322
-2025-08-01,M2 (agregado total),monetario_financiero,millones de $,76713730.80645162
-2025-09-01,M2 (agregado total),monetario_financiero,millones de $,74883095.56666666
-2025-10-01,M2 (agregado total),monetario_financiero,millones de $,76269345.22580644
-2025-11-01,M2 (agregado total),monetario_financiero,millones de $,77232843.1
-2025-12-01,M2 (agregado total),monetario_financiero,millones de $,84563022.12903225
-2026-01-01,M2 (agregado total),monetario_financiero,millones de $,81991096.09677419
-2026-02-01,M2 (agregado total),monetario_financiero,millones de $,80296115.0
-2026-03-01,M2 (agregado total),monetario_financiero,millones de $,81239884.96774194
-2026-04-01,M2 (agregado total),monetario_financiero,millones de $,80626010.16666667
-2026-05-01,M2 (agregado total),monetario_financiero,millones de $,86883829.26666667
-2026-06-01,M2 (agregado total),monetario_financiero,millones de $,86883829.26666667
+2025-03-01,M2 (agregado total),monetario_financiero,millones de $,65200513.83870967
+2025-04-01,M2 (agregado total),monetario_financiero,millones de $,69297477.2
+2025-05-01,M2 (agregado total),monetario_financiero,millones de $,72422230.29032259
+2025-06-01,M2 (agregado total),monetario_financiero,millones de $,73558758.1
+2025-07-01,M2 (agregado total),monetario_financiero,millones de $,77131366.80645162
+2025-08-01,M2 (agregado total),monetario_financiero,millones de $,76718874.70967741
+2025-09-01,M2 (agregado total),monetario_financiero,millones de $,74880413.73333333
+2025-10-01,M2 (agregado total),monetario_financiero,millones de $,76289239.83870968
+2025-11-01,M2 (agregado total),monetario_financiero,millones de $,77229098.03333333
+2025-12-01,M2 (agregado total),monetario_financiero,millones de $,84556179.83870968
+2026-01-01,M2 (agregado total),monetario_financiero,millones de $,81992222.03225806
+2026-02-01,M2 (agregado total),monetario_financiero,millones de $,80284831.0
+2026-03-01,M2 (agregado total),monetario_financiero,millones de $,81248703.64516129
+2026-04-01,M2 (agregado total),monetario_financiero,millones de $,80626012.33333333
+2026-05-01,M2 (agregado total),monetario_financiero,millones de $,83373477.38709678
+2026-06-01,M2 (agregado total),monetario_financiero,millones de $,86798809.53333333
+2026-07-01,M2 (agregado total),monetario_financiero,millones de $,90469892.93548387
 2004-01-01,M3 (agregado amplio),monetario_financiero,millones de $,111552.85260988696
 2004-02-01,M3 (agregado amplio),monetario_financiero,millones de $,113522.60910809808
 2004-03-01,M3 (agregado amplio),monetario_financiero,millones de $,111814.67715273977
@@ -37717,22 +37725,23 @@
 2024-12-01,M3 (agregado amplio),monetario_financiero,millones de $,112839092.16129036
 2025-01-01,M3 (agregado amplio),monetario_financiero,millones de $,116679495.61290322
 2025-02-01,M3 (agregado amplio),monetario_financiero,millones de $,119792600.8214286
-2025-03-01,M3 (agregado amplio),monetario_financiero,millones de $,122324337.9032258
-2025-04-01,M3 (agregado amplio),monetario_financiero,millones de $,125862885.96666664
-2025-05-01,M3 (agregado amplio),monetario_financiero,millones de $,131076348.77419356
-2025-06-01,M3 (agregado amplio),monetario_financiero,millones de $,136393854.66666666
-2025-07-01,M3 (agregado amplio),monetario_financiero,millones de $,141978912.7419355
-2025-08-01,M3 (agregado amplio),monetario_financiero,millones de $,141567505.41935483
-2025-09-01,M3 (agregado amplio),monetario_financiero,millones de $,145155525.03333333
-2025-10-01,M3 (agregado amplio),monetario_financiero,millones de $,146627660.06451613
-2025-11-01,M3 (agregado amplio),monetario_financiero,millones de $,149024310.40000004
-2025-12-01,M3 (agregado amplio),monetario_financiero,millones de $,156773738.41935486
-2026-01-01,M3 (agregado amplio),monetario_financiero,millones de $,155927009.41935483
-2026-02-01,M3 (agregado amplio),monetario_financiero,millones de $,156770959.3928571
-2026-03-01,M3 (agregado amplio),monetario_financiero,millones de $,159800657.03225806
-2026-04-01,M3 (agregado amplio),monetario_financiero,millones de $,164733428.6
-2026-05-01,M3 (agregado amplio),monetario_financiero,millones de $,174668124.10000002
-2026-06-01,M3 (agregado amplio),monetario_financiero,millones de $,174668124.10000002
+2025-03-01,M3 (agregado amplio),monetario_financiero,millones de $,122328411.29032256
+2025-04-01,M3 (agregado amplio),monetario_financiero,millones de $,125862859.3
+2025-05-01,M3 (agregado amplio),monetario_financiero,millones de $,131082535.61290324
+2025-06-01,M3 (agregado amplio),monetario_financiero,millones de $,136394641.76666668
+2025-07-01,M3 (agregado amplio),monetario_financiero,millones de $,141983991.93548387
+2025-08-01,M3 (agregado amplio),monetario_financiero,millones de $,141572649.32258064
+2025-09-01,M3 (agregado amplio),monetario_financiero,millones de $,145152910.96666667
+2025-10-01,M3 (agregado amplio),monetario_financiero,millones de $,146647362.1935484
+2025-11-01,M3 (agregado amplio),monetario_financiero,millones de $,149016704.63333336
+2025-12-01,M3 (agregado amplio),monetario_financiero,millones de $,156765941.9354839
+2026-01-01,M3 (agregado amplio),monetario_financiero,millones de $,155925253.83870968
+2026-02-01,M3 (agregado amplio),monetario_financiero,millones de $,156764173.35714284
+2026-03-01,M3 (agregado amplio),monetario_financiero,millones de $,159816952.32258067
+2026-04-01,M3 (agregado amplio),monetario_financiero,millones de $,164733430.76666668
+2026-05-01,M3 (agregado amplio),monetario_financiero,millones de $,170211312.09677422
+2026-06-01,M3 (agregado amplio),monetario_financiero,millones de $,174599878.56666663
+2026-07-01,M3 (agregado amplio),monetario_financiero,millones de $,179031090.54838708
 2004-01-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,858.538257
 2004-02-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,940.540346
 2004-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,883.874646
@@ -40262,6 +40271,7 @@
 2026-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,63830716.3324
 2026-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,67235297.01565486
 2026-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,68860603.06560001
+2026-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,72790763.009
 2004-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15452.421818644767
 2004-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15354.950232404586
 2004-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15329.824821639242
@@ -40532,6 +40542,7 @@
 2026-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,60780640.72319999
 2026-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,61192592.43723224
 2026-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,62940262.9248
+2026-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,64634033.58
 2004-01-01,Préstamos al sector privado,monetario_financiero,millones de $,30378.876190322582
 2004-02-01,Préstamos al sector privado,monetario_financiero,millones de $,30484.79650344827
 2004-03-01,Préstamos al sector privado,monetario_financiero,millones de $,30816.393158064515
@@ -40802,6 +40813,7 @@
 2026-04-01,Préstamos al sector privado,monetario_financiero,millones de $,124592608.0556
 2026-05-01,Préstamos al sector privado,monetario_financiero,millones de $,128427889.4528871
 2026-06-01,Préstamos al sector privado,monetario_financiero,millones de $,131800865.9904
+2026-07-01,Préstamos al sector privado,monetario_financiero,millones de $,137424796.589
 2017-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.167458584937182
 2017-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.38308452491302064
 2017-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.21599693344011017
@@ -41511,6 +41523,7 @@
 2026-08-04,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49639.0
 2026-08-05,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50058.0
 2026-08-06,Reservas internacionales (BCRA),monetario_financiero,millones de USD,48834.0
+2026-08-07,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49457.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -48186,6 +48199,7 @@
 2026-08-05,Riesgo país (EMBI),monetario_financiero,puntos básicos,428.0
 2026-08-06,Riesgo país (EMBI),monetario_financiero,puntos básicos,446.0
 2026-08-07,Riesgo país (EMBI),monetario_financiero,puntos básicos,451.0
+2026-08-10,Riesgo país (EMBI),monetario_financiero,puntos básicos,465.0
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
