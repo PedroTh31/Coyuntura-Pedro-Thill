@@ -6327,6 +6327,7 @@
 2026-08-16,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.225165562913902
 2026-08-17,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.225165562913902
 2026-08-18,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.9933993399339895
+2026-08-19,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.310231023102307
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -12651,6 +12652,7 @@
 2026-08-16,Dólar CCL,monetario_financiero,$/USD (venta),1573.8
 2026-08-17,Dólar CCL,monetario_financiero,$/USD (venta),1573.8
 2026-08-18,Dólar CCL,monetario_financiero,$/USD (venta),1575.5
+2026-08-19,Dólar CCL,monetario_financiero,$/USD (venta),1580.3
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -15502,6 +15504,7 @@
 2026-08-16,Dólar MEP,monetario_financiero,$/USD (venta),1521.6
 2026-08-17,Dólar MEP,monetario_financiero,$/USD (venta),1521.6
 2026-08-18,Dólar MEP,monetario_financiero,$/USD (venta),1521.0
+2026-08-19,Dólar MEP,monetario_financiero,$/USD (venta),1523.9
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -21209,6 +21212,7 @@
 2026-08-16,Dólar blue,monetario_financiero,$/USD (venta),1545.0
 2026-08-17,Dólar blue,monetario_financiero,$/USD (venta),1545.0
 2026-08-18,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-08-19,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -26916,6 +26920,7 @@
 2026-08-16,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
 2026-08-17,Dólar oficial,monetario_financiero,$/USD (venta),1510.0
 2026-08-18,Dólar oficial,monetario_financiero,$/USD (venta),1515.0
+2026-08-19,Dólar oficial,monetario_financiero,$/USD (venta),1515.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -41591,6 +41596,7 @@
 2026-08-11,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49586.0
 2026-08-12,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49628.0
 2026-08-13,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49543.0
+2026-08-14,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49505.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -48272,6 +48278,7 @@
 2026-08-13,Riesgo país (EMBI),monetario_financiero,puntos básicos,472.0
 2026-08-14,Riesgo país (EMBI),monetario_financiero,puntos básicos,480.0
 2026-08-17,Riesgo país (EMBI),monetario_financiero,puntos básicos,489.0
+2026-08-18,Riesgo país (EMBI),monetario_financiero,puntos básicos,511.0
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
