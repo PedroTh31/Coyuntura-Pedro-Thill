@@ -6332,6 +6332,7 @@
 2026-08-21,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.585526315789479
 2026-08-22,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.585526315789479
 2026-08-23,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.585526315789479
+2026-08-24,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.614379084967313
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -7679,6 +7680,52 @@
 2026-03-01,Compras netas de divisas: Tesoro Nacional,monetario_financiero,millones de $,-160000.0
 2026-04-01,Compras netas de divisas: Tesoro Nacional,monetario_financiero,millones de $,0.0
 2026-05-01,Compras netas de divisas: Tesoro Nacional,monetario_financiero,millones de $,-2372091.0
+2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
+2024-09-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,95737.364
+2024-10-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,103708.705
+2024-11-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,105788.398
+2024-12-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,111008.269
+2025-01-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,112674.744
+2025-02-28,Depósitos: sector privado no financiero,monetario_financiero,millones de $,114867.462
+2025-03-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,117151.189
+2025-04-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,124227.732
+2025-05-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,127193.57400000001
+2025-06-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,132710.799
+2025-07-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,139261.045
+2025-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,138985.53
+2025-09-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,147031.715
+2025-10-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,148932.494
+2025-11-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,155253.775
+2025-12-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,165254.308
+2026-01-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,164367.328
+2026-02-28,Depósitos: sector privado no financiero,monetario_financiero,millones de $,164990.683
+2026-03-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,166379.065
+2026-04-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,171746.876
+2026-05-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,174195.324
+2026-06-30,Depósitos: sector privado no financiero,monetario_financiero,millones de $,184877.872
+2024-08-31,Depósitos: sector público,monetario_financiero,millones de $,19949.772
+2024-09-30,Depósitos: sector público,monetario_financiero,millones de $,22414.244
+2024-10-31,Depósitos: sector público,monetario_financiero,millones de $,23690.476
+2024-11-30,Depósitos: sector público,monetario_financiero,millones de $,25914.943
+2024-12-31,Depósitos: sector público,monetario_financiero,millones de $,23783.747
+2025-01-31,Depósitos: sector público,monetario_financiero,millones de $,24695.962
+2025-02-28,Depósitos: sector público,monetario_financiero,millones de $,23692.654000000002
+2025-03-31,Depósitos: sector público,monetario_financiero,millones de $,24497.481
+2025-04-30,Depósitos: sector público,monetario_financiero,millones de $,25905.343
+2025-05-31,Depósitos: sector público,monetario_financiero,millones de $,28814.376
+2025-06-30,Depósitos: sector público,monetario_financiero,millones de $,29162.946
+2025-07-31,Depósitos: sector público,monetario_financiero,millones de $,31956.219
+2025-08-31,Depósitos: sector público,monetario_financiero,millones de $,33163.99
+2025-09-30,Depósitos: sector público,monetario_financiero,millones de $,34079.024
+2025-10-31,Depósitos: sector público,monetario_financiero,millones de $,35079.086
+2025-11-30,Depósitos: sector público,monetario_financiero,millones de $,36959.588
+2025-12-31,Depósitos: sector público,monetario_financiero,millones de $,31549.382
+2026-01-31,Depósitos: sector público,monetario_financiero,millones de $,29476.361
+2026-02-28,Depósitos: sector público,monetario_financiero,millones de $,31080.366
+2026-03-31,Depósitos: sector público,monetario_financiero,millones de $,32590.054
+2026-04-30,Depósitos: sector público,monetario_financiero,millones de $,33987.716
+2026-05-31,Depósitos: sector público,monetario_financiero,millones de $,38822.26
+2026-06-30,Depósitos: sector público,monetario_financiero,millones de $,35761.727
 2013-01-02,Dólar CCL,monetario_financiero,$/USD (venta),6.67
 2013-01-03,Dólar CCL,monetario_financiero,$/USD (venta),6.68
 2013-01-04,Dólar CCL,monetario_financiero,$/USD (venta),6.82
@@ -12661,6 +12708,7 @@
 2026-08-21,Dólar CCL,monetario_financiero,$/USD (venta),1589.7
 2026-08-22,Dólar CCL,monetario_financiero,$/USD (venta),1589.7
 2026-08-23,Dólar CCL,monetario_financiero,$/USD (venta),1589.7
+2026-08-24,Dólar CCL,monetario_financiero,$/USD (venta),1600.6
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -15517,6 +15565,7 @@
 2026-08-21,Dólar MEP,monetario_financiero,$/USD (venta),1545.3
 2026-08-22,Dólar MEP,monetario_financiero,$/USD (venta),1545.3
 2026-08-23,Dólar MEP,monetario_financiero,$/USD (venta),1545.3
+2026-08-24,Dólar MEP,monetario_financiero,$/USD (venta),1543.4
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -21229,6 +21278,7 @@
 2026-08-21,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-08-22,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-08-23,Dólar blue,monetario_financiero,$/USD (venta),1550.0
+2026-08-24,Dólar blue,monetario_financiero,$/USD (venta),1565.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -26941,6 +26991,7 @@
 2026-08-21,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
 2026-08-22,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
 2026-08-23,Dólar oficial,monetario_financiero,$/USD (venta),1520.0
+2026-08-24,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072

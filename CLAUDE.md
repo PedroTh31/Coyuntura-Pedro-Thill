@@ -170,7 +170,8 @@ Dólar (oficial/blue/MEP/CCL); Brecha cambiaria; Tipo de
 cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diario, combo,
 compras netas de divisas por contraparte); Agregados (base, M1 calculado, M2, M3); Tasas
 (BADLAR); Crédito (préstamos al sector privado, variación % real mensual, por tipo de
-deudor Familias/Empresas, morosidad por tipo de banco); EMAE general + semáforo por 16 sectores +
+deudor Familias/Empresas, morosidad por tipo de banco y por línea dentro de Familias,
+depósitos privado vs. público); EMAE general + semáforo por 16 sectores +
 EMAE Urbano vs. No urbano (ponderado por VAB) + burbujas actividad×empleo por sector (SIPA, ejes
 centrados en cero); IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo (expo/impo/
 saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social (desempleo, salario
