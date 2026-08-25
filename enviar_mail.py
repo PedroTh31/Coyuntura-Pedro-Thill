@@ -9,13 +9,13 @@ Necesita 3 variables de entorno (se cargan desde GitHub Secrets):
   MAIL_TO              -> a quién enviar (opcional; por defecto, a vos mismo)
 """
 import os
+import re
 import ssl
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from urllib.parse import quote
 from pathlib import Path
 import pandas as pd
 import yaml
@@ -34,28 +34,61 @@ INDICADORES_MAIL = [
     "EMAE (actividad económica)", "Saldo comercial",
 ]
 
-Q_ARGENTINA = ["economía argentina", "dólar blue inflación argentina",
-               "BCRA reservas tasas Argentina", "Milei economía medidas"]
-Q_INTERNACIONAL = ["Reserva Federal tasas inflación", "economía China Estados Unidos",
-                   "FMI economía mundial", "precio petróleo soja commodities"]
-
-# feeds de medios argentinos que SÍ traen bajada (si alguno cambia su URL, se ignora sin romper)
+# feeds de medios argentinos que SÍ traen bajada (verificados con feedparser antes de sumarlos;
+# si alguno cambia su URL más adelante, se ignora sin romper -- ver _recolectar)
 FEEDS_MEDIOS = [
     "https://www.pagina12.com.ar/rss/secciones/economia/notas",
     "https://www.ambito.com/rss/economia.xml",
     "https://www.cronista.com/files/rss/economia.xml",
     "https://www.iprofesional.com/rss/economia.xml",
+    "https://www.perfil.com/feed/economia",
+    "https://www.infobae.com/arc/outboundfeeds/rss/category/economia/",
+    "https://www.lanacion.com.ar/arc/outboundfeeds/rss/category/economia/",
+    "https://www.clarin.com/rss/economia/",
+    "https://www.bloomberglinea.com/arc/outboundfeeds/rss/category/economia/?outputType=xml",
 ]
 
-# si el título contiene alguna de estas, se considera internacional (no va al bloque argentino)
+# feeds internacionales ya acotados a economía/finanzas o geopolítica por su propia sección
+# editorial -- no necesitan el filtro adicional de KW_INTERNACIONAL de más abajo
+FEEDS_INTERNACIONAL = [
+    "https://feeds.bbci.co.uk/news/business/rss.xml",
+    "https://www.economist.com/finance-and-economics/rss.xml",
+    "https://foreignpolicy.com/feed/",
+    "https://www.foreignaffairs.com/rss.xml",
+    "https://www.ft.com/global-economy?format=rss",
+    "https://www.project-syndicate.org/rss",
+    "https://www.france24.com/es/econom%C3%ADa/rss",
+]
+
+# feeds internacionales generalistas (traen de todo, no sólo economía/geopolítica): se
+# incluyen igual porque tienen buena cobertura en español, pero cada nota debe matchear
+# KW_INTERNACIONAL antes de entrar al mail (ver obtener_noticias)
+FEEDS_INTERNACIONAL_GENERALISTA = [
+    "http://feeds.bbci.co.uk/mundo/rss.xml",
+    "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada",
+]
+
+# si el título/copete contiene alguna de estas, se considera internacional/geopolítico:
+# (a) saca una nota Argentina del bloque argentino si igual menciona esto, y
+# (b) es el filtro de relevancia para las fuentes generalistas de arriba
 KW_INTERNACIONAL = ["trump", "china", "ee.uu", "eeuu", "estados unidos", "wall street",
     "reserva federal", " fed ", "europa", "alemania", "japón", "brasil", "lula",
-    "nvidia", "apple", "petróleo brent", "unión europea", "rusia", "israel", "bitcoin"]
+    "nvidia", "apple", "petróleo brent", "unión europea", "rusia", "israel", "bitcoin",
+    "otan", "sanciones", "guerra comercial", "geopolític", "conflicto", "cumbre",
+    "aranceles"]
+
+# notas tipo "consejo/listicle" que no son noticia económica real (ej. "cómo pagar
+# reservas de hotel en dólares"): filtro heurístico, ajustar según lo que se cuele
+KW_EXCLUIR_TIPS = [
+    "la mejor forma de", "cómo pagar", "cómo ahorrar", "consejos para",
+    "trucos para", "paso a paso para", "todo lo que tenés que saber para",
+    "todo lo que necesitás saber para", "cuidar tu bolsillo",
+]
+_RE_LISTICLE = re.compile(r"^\d+\s+(formas?|tips?|claves?|trucos?|maneras?)\s+", re.I)
 
 
 def _limpiar(texto):
     """Saca etiquetas HTML y espacios sobrantes de una bajada, y la recorta."""
-    import re
     import html as _html
     if not texto:
         return ""
@@ -67,17 +100,34 @@ def _limpiar(texto):
     return t
 
 
-def _es_internacional(titulo):
-    t = " " + titulo.lower() + " "
+def _es_internacional(texto):
+    t = " " + texto.lower() + " "
     return any(k in t for k in KW_INTERNACIONAL)
 
 
-def _recolectar(feeds, queries):
-    """Junta notas de una lista de feeds + consultas a Google News, con bajada y fecha."""
-    import feedparser
+def _es_tip(titulo):
+    """Filtra notas tipo consejo/listicle que no son noticia económica real."""
+    t = titulo.lower().strip()
+    if _RE_LISTICLE.match(t):
+        return True
+    return any(k in t for k in KW_EXCLUIR_TIPS)
+
+
+def _limite(es_argentina):
+    """Ventana de tiempo por categoría: Argentina 1-2 días (lunes cubre el fin de
+    semana), internacional hasta 7 días (menos volumen de fuentes, más colchón)."""
     hoy_ar = datetime.now(ZONA_AR)
-    dias_atras = 3 if hoy_ar.weekday() == 0 else 1   # lunes=0: cubrir el fin de semana
-    limite = hoy_ar.replace(tzinfo=None) - timedelta(days=dias_atras)
+    if es_argentina:
+        dias = 3 if hoy_ar.weekday() == 0 else 1   # lunes=0
+    else:
+        dias = 7
+    return hoy_ar.replace(tzinfo=None) - timedelta(days=dias)
+
+
+def _recolectar(feeds, es_argentina):
+    """Junta notas de una lista de feeds RSS directos, con bajada y fecha."""
+    import feedparser
+    limite = _limite(es_argentina)
     vistos, items = set(), []
 
     def procesar(feed):
@@ -107,12 +157,6 @@ def _recolectar(feeds, queries):
             procesar(feedparser.parse(url))
         except Exception:
             continue
-    for q in queries:
-        url = f"https://news.google.com/rss/search?q={quote(q)}&hl=es-419&gl=AR&ceid=AR:es"
-        try:
-            procesar(feedparser.parse(url))
-        except Exception:
-            continue
 
     items.sort(key=lambda x: (x["bajada"] == "", -x["pub"].timestamp()))
     return items
@@ -124,10 +168,18 @@ def obtener_noticias(n=6):
         import feedparser  # noqa: F401
     except Exception:
         return [], []
-    arg = [x for x in _recolectar(FEEDS_MEDIOS, Q_ARGENTINA) if not _es_internacional(x["titulo"])]
+    arg = [x for x in _recolectar(FEEDS_MEDIOS, es_argentina=True)
+           if not _es_internacional(x["titulo"]) and not _es_tip(x["titulo"])]
     arg = arg[:n]
     titulos_arg = {x["titulo"] for x in arg}
-    intl = [x for x in _recolectar([], Q_INTERNACIONAL) if x["titulo"] not in titulos_arg][:n]
+
+    crudo_intl = _recolectar(FEEDS_INTERNACIONAL, es_argentina=False)
+    crudo_generalista = [x for x in _recolectar(FEEDS_INTERNACIONAL_GENERALISTA, es_argentina=False)
+                         if _es_internacional(x["titulo"] + " " + x["bajada"])]
+    intl = [x for x in crudo_intl + crudo_generalista
+            if x["titulo"] not in titulos_arg and not _es_tip(x["titulo"])]
+    intl.sort(key=lambda x: (x["bajada"] == "", -x["pub"].timestamp()))
+    intl = intl[:n]
     return arg, intl
 
 
@@ -243,7 +295,7 @@ def armar_html(indicadores, argentinas, internacionales, briefing=""):
       <h3 style="margin-top:26px">🌎 Noticias internacionales</h3>
       {_render_noticias(internacionales)}
       <p style="margin-top:26px"><a href="{DASHBOARD_URL}" style="background:#1D4E89;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none">Ver el dashboard completo →</a></p>
-      <p style="color:#999;font-size:12px;margin-top:20px">Generado automáticamente. Fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA · Google News.</p>
+      <p style="color:#999;font-size:12px;margin-top:20px">Generado automáticamente. Fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA · medios citados en cada nota.</p>
     </div>"""
 
 
