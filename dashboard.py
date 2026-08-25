@@ -692,13 +692,20 @@ def _card_cell(c):
     marca_html = f'<div class="marca-fecha">{c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
     # Botones de filtro (no aplican a gráficos de un solo período, ej. burbujas). "Personalizado"
     # despliega un selector de fechas (desde/hasta) en vez de filtrar al tocarlo directamente.
+    # Rediseño de tarjetas: 4 botones visibles (Default/1A/5A/Todo, "Desde 2008" se saca por ser
+    # el más redundante: "Todo" ya cubre el histórico completo y "5A" el mediano plazo) + un
+    # ícono de calendario para el rango personalizado, en vez de 6 botones siempre visibles.
+    # Mismos atributos (class="filtro" data-rango="...") que antes: el JS de filtrado
+    # (calcFechaCorte/filtrarDatos/aplicarFiltro y el listener de .filtro[data-rango]) no cambia,
+    # sólo el HTML/CSS que arma la fila de filtros.
     filtros = ""
     if not c.get("sin_filtros"):
         filtros = (
-            f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-rango="default">Default</button>'
+            f'<div class="filtros" data-idx="{c["i"]}">'
+            '<div class="filtros-seg"><button class="filtro active" data-rango="default">Default</button>'
             '<button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button>'
-            '<button class="filtro" data-rango="2008">Desde 2008</button><button class="filtro" data-rango="todo">Todo</button>'
-            f'<button class="filtro" data-rango="personalizado">Personalizado</button></div>'
+            '<button class="filtro" data-rango="todo">Todo</button></div>'
+            '<button class="filtro filtro-cal" data-rango="personalizado" title="Rango personalizado" aria-label="Rango personalizado">📅</button></div>'
             f'<div class="rango-custom" data-idx="{c["i"]}"><input type="date" class="rango-desde">'
             '<span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div>'
         )
@@ -813,7 +820,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .uni { color:var(--gris); }
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
   .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
-  .cbox { height:200px; padding:8px 10px 12px; }
+  .cbox { height:260px; padding:8px 10px 12px; }
   .cbox-grande { height:400px; }
   .cell-ancha { grid-column: span 2; }
   .tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; margin-bottom:8px; }
@@ -822,10 +829,17 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .tabla td { padding:8px 10px; text-align:right; border-radius:5px; font-family:ui-monospace,monospace; font-weight:600; }
   .tabla td.sec { text-align:left; background:var(--papel); font-family:"Encode Sans",system-ui,sans-serif; font-weight:400; border:1px solid var(--borde); }
   .tabla td.num { background:var(--papel); color:#333; border:1px solid var(--borde); }
-  .filtros { display:flex; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
+  .filtros { display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
   .filtro { background:var(--fondo); border:1px solid var(--borde); color:var(--tinta); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
   .filtro:hover { background:var(--hover); border-color:var(--gris-claro); }
   .filtro.active { background:var(--azul-enlace); color:#fff; border-color:var(--azul-enlace); }
+  /* Rediseño de tarjetas: segmented control para los 4 botones de rango + ícono de calendario
+     aparte para "Personalizado" -- mismos elementos .filtro/data-rango de siempre, sólo cambia
+     el envoltorio visual. */
+  .filtros-seg { display:flex; background:var(--fondo); border:1px solid var(--borde); border-radius:6px; padding:2px; }
+  .filtros-seg .filtro { border:none; background:transparent; }
+  .filtros-seg .filtro.active { background:var(--azul-enlace); color:#fff; }
+  .filtro-cal { width:26px; height:26px; padding:0; display:flex; align-items:center; justify-content:center; font-size:13px; line-height:1; }
   .rango-custom { display:none; align-items:center; gap:6px; padding:8px 10px 0; font-size:11px; color:var(--gris); }
   .rango-custom input[type=date] { font-size:11px; padding:3px 5px; border:1px solid var(--borde); border-radius:4px; background:var(--fondo); color:var(--tinta); font-family:inherit; }
   .rango-aplicar { background:var(--azul-enlace); color:#fff; border:none; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; }
