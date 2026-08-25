@@ -470,7 +470,7 @@ def _serie_bubble(idx, ind, historico):
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad="",
         valor=trimestre, pct=None, marca_fecha=None, maxv="s/d", minv="s/d", nota_num=None,
-        sin_filtros=True, subtitulo=ind.get("subtitulo"))
+        sin_filtros=True, subtitulo=ind.get("subtitulo"), toggle_burbuja=True)
 
     # Cuadrante centrado en cero: límites simétricos (± el mayor valor absoluto de cada eje,
     # con margen) en vez de dejar que Chart.js autoescale cada eje por separado -- así el cero
@@ -512,8 +512,20 @@ def _serie_bubble(idx, ind, historico):
     lim_x = _limite_robusto("x")
     lim_y = _limite_robusto("y")
 
+    # Ronda 5 punto 1: aun con la cerca de Tukey, el cluster central (la mayoría real del
+    # empleo del país) queda amontonado en una franja chica cerca del cero -- es estructural
+    # a los datos (la mayoría de los sectores varía poco de un año a otro), no se arregla con
+    # más margen de eje. Se arma un segundo set "zoom al cluster" que EXCLUYE del todo a los
+    # sectores marcados como outlier (no sólo los recorta como en la vista completa) y
+    # recalcula el límite de cada eje sólo sobre los que quedan, mismo margen ×1.15. El
+    # usuario togglea entre las dos vistas con un botón (mismo lenguaje visual que .filtro).
+    puntos_zoom = [p for p in puntos if "x_real" not in p and "y_real" not in p]
+    lim_x_zoom = round(max((abs(p["x"]) for p in puntos_zoom), default=1) * MARGEN_EJE_BURBUJAS, 2)
+    lim_y_zoom = round(max((abs(p["y"]) for p in puntos_zoom), default=1) * MARGEN_EJE_BURBUJAS, 2)
+
     serie_js = dict(i=idx, kind="bubble", fecha=fecha_comun.strftime("%m/%Y"), puntos=puntos,
-        lim_x=round(lim_x, 2), lim_y=round(lim_y, 2))
+        lim_x=round(lim_x, 2), lim_y=round(lim_y, 2),
+        puntos_zoom=puntos_zoom, lim_x_zoom=lim_x_zoom, lim_y_zoom=lim_y_zoom)
     return card, serie_js
 
 
@@ -690,6 +702,15 @@ def _card_cell(c):
             f'<div class="rango-custom" data-idx="{c["i"]}"><input type="date" class="rango-desde">'
             '<span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div>'
         )
+    # Toggle "Vista completa" / "Zoom al cluster" (Ronda 5 punto 1, sólo burbujas): mismo
+    # lenguaje visual que .filtro pero con data-vista en vez de data-rango, para no chocar
+    # con el listener de los botones de rango de fecha (que no aplican acá, ver sin_filtros).
+    toggle_burbuja = ""
+    if c.get("toggle_burbuja"):
+        toggle_burbuja = (
+            f'<div class="filtros" data-idx="{c["i"]}"><button class="filtro active" data-vista="completa">Vista completa</button>'
+            '<button class="filtro" data-vista="zoom">Zoom al cluster</button></div>'
+        )
     grande = c.get("sin_filtros") or c.get("grande")
     cell_cls = "cell cell-ancha" if grande else "cell"
     cbox_cls = "cbox cbox-grande" if grande else "cbox"
@@ -700,7 +721,7 @@ def _card_cell(c):
             f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
-            f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
+            f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{toggle_burbuja}{nota_mark}</div>')
 
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
@@ -1120,6 +1141,21 @@ const etiquetasBurbujaPlugin = {
   }
 };
 
+// Construye los datasets de burbujas a partir de una lista de puntos (Ronda 5 punto 1:
+// factorizado para que lo use tanto la creación inicial del chart como el toggle
+// "Vista completa"/"Zoom al cluster", que reemplaza los datasets sin recrear el chart).
+// Radio en px escalado desde el % de empleo (sin piso artificial: un sector con 0,1% del
+// empleo se ve casi invisible a propósito, es la realidad del dato).
+function construirDatasetsBurbuja(puntos) {
+  return puntos.map(p => {
+    const recortado = p.x_real !== undefined || p.y_real !== undefined;
+    return { label:p.nombre,
+      data:[{ x:p.x, y:p.y, r:p.r*1.6, r_pct:p.r, label:p.nombre, x_real:p.x_real, y_real:p.y_real }],
+      backgroundColor:p.color+'B0', borderColor:p.color,
+      borderWidth: recortado ? 2.5 : 1, borderDash: recortado ? [4, 3] : [] };
+  });
+}
+
 const bubbleOpts = (limX, limY) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   layout:{ padding:{ right:95, top:14 } },
@@ -1177,15 +1213,8 @@ SERIES.forEach(s => {
       data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:s.color, borderRadius:2 }] },
       options: baseOpts(s.unidad) });
   } else if (s.kind === 'bubble') {
-    // Radio en px escalado desde el % de empleo (sin piso artificial: un sector con
-    // 0,1% del empleo se ve casi invisible a propósito, es la realidad del dato).
-    charts[s.i] = new Chart(ctx, { type:'bubble', data:{ datasets: s.puntos.map(p => {
-        const recortado = p.x_real !== undefined || p.y_real !== undefined;
-        return { label:p.nombre,
-          data:[{ x:p.x, y:p.y, r:p.r*1.6, r_pct:p.r, label:p.nombre, x_real:p.x_real, y_real:p.y_real }],
-          backgroundColor:p.color+'B0', borderColor:p.color,
-          borderWidth: recortado ? 2.5 : 1, borderDash: recortado ? [4, 3] : [] };
-      }) }, options: bubbleOpts(s.lim_x, s.lim_y), plugins:[etiquetasBurbujaPlugin] });
+    charts[s.i] = new Chart(ctx, { type:'bubble', data:{ datasets: construirDatasetsBurbuja(s.puntos) },
+      options: bubbleOpts(s.lim_x, s.lim_y), plugins:[etiquetasBurbujaPlugin] });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
@@ -1224,8 +1253,10 @@ function aplicarFiltro(idx, serie, rango, datFiltrados) {
   charts[idx].update('none');
 }
 
-// Event listeners para botones de filtro
-document.querySelectorAll('.filtro').forEach(btn => {
+// Event listeners para botones de filtro (rango de fecha). Selector acotado a
+// '.filtro[data-rango]' (no todo '.filtro') para no chocar con el toggle de vista de
+// burbujas de más abajo, que reusa la misma clase visual pero con data-vista.
+document.querySelectorAll('.filtro[data-rango]').forEach(btn => {
   btn.addEventListener('click', function() {
     const filtrosContainer = this.closest('.filtros');
     const idx = parseInt(filtrosContainer.dataset.idx);
@@ -1246,6 +1277,31 @@ document.querySelectorAll('.filtro').forEach(btn => {
     if (customDiv) customDiv.style.display = 'none';
 
     aplicarFiltro(idx, serie, rango, filtrarDatos(serie, rango));
+  });
+});
+
+// Toggle "Vista completa" / "Zoom al cluster" del gráfico de burbujas (Ronda 5 punto 1):
+// reemplaza los datasets y los límites de eje sin recrear el chart, mismo patrón que
+// aplicarFiltro (chart.data, chart.options.scales, chart.update('none')).
+document.querySelectorAll('.filtro[data-vista]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const container = this.closest('.filtros');
+    const idx = parseInt(container.dataset.idx);
+    const vista = this.dataset.vista;
+    const serie = SERIES[idx];
+    const chart = charts[idx];
+    if (!serie || !chart) return;
+
+    container.querySelectorAll('.filtro').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+
+    const puntos = vista === 'zoom' ? serie.puntos_zoom : serie.puntos;
+    const limX = vista === 'zoom' ? serie.lim_x_zoom : serie.lim_x;
+    const limY = vista === 'zoom' ? serie.lim_y_zoom : serie.lim_y;
+    chart.data.datasets = construirDatasetsBurbuja(puntos);
+    chart.options.scales.x.min = -limX; chart.options.scales.x.max = limX;
+    chart.options.scales.y.min = -limY; chart.options.scales.y.max = limY;
+    chart.update('none');
   });
 });
 

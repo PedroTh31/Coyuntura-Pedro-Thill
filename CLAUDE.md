@@ -99,11 +99,19 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   variación % interanual del segundo, tamaño = % que representa sobre el total del segundo
   indicador al último período común. Si las frecuencias no coinciden (ej. EMAE mensual vs.
   empleo trimestral), el más frecuente se remuestrea al calendario del menos frecuente antes de
-  comparar — documentarlo en la `nota`. Sin botones de filtro (es una foto de un período, no una
-  serie temporal); usa anti-colisión de etiquetas en JS (prioriza burbujas grandes, omite la
-  etiqueta de las que chocan con una ya puesta — esas quedan identificables sólo por tooltip).
-  Ejes centrados en cero (± el mayor valor absoluto de cada eje entre los sectores, con margen,
-  recalculado solo en cada corrida): cuadrante real, no un cero pegado a un borde.
+  comparar — documentarlo en la `nota`. Sin botones de filtro de rango de fecha (es una foto de
+  un período, no una serie temporal); usa anti-colisión de etiquetas en JS (prioriza burbujas
+  grandes, omite la etiqueta de las que chocan con una ya puesta — esas quedan identificables
+  sólo por tooltip). Ejes centrados en cero, límite calculado con la cerca de Tukey (Q3 +
+  1,5×RIC sobre el valor absoluto de cada eje, método estadístico estándar para detectar
+  outliers, no un umbral fijo ni el máximo absoluto) sobre el cluster central de sectores: los
+  que superan la cerca quedan clavados cerca del borde con borde punteado (su valor real se
+  preserva en `x_real`/`y_real` para el tooltip, nunca se pierde el dato). Toggle "Vista
+  completa"/"Zoom al cluster" (mismo lenguaje visual que los botones `.filtro` de rango, pero
+  con `data-vista` en vez de `data-rango`): "Zoom al cluster" excluye del todo a los sectores
+  outlier (no sólo los recorta) y recalcula los límites de eje sólo sobre los que quedan, mismo
+  margen ×1.15 — para cuando el cluster central (la mayoría real del agregado que se está
+  comparando) sigue viéndose amontonado aun con la cerca de Tukey aplicada.
 - `calculo: combinado` + `componentes: [{id, peso}, ...]` + `rebase_fecha` (opcional) +
   `media_movil` (opcional, meses) → promedio ponderado de varios índices de nivel (los pesos se
   renormalizan solos, no hace falta que sumen 1), con rebase y/o media móvil. Ej.: EMAE
