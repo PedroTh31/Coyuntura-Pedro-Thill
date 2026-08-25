@@ -1,5 +1,5 @@
 """
-enviar_mail.py  ·  Arma y envía por Gmail un resumen semanal:
+enviar_mail.py  ·  Arma y envía por Gmail un resumen diario (lun-vie):
   - indicadores clave con su variación de la semana
   - titulares económicos más relevantes (RSS público, gratis)
 
@@ -14,6 +14,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from urllib.parse import quote
 from pathlib import Path
 import pandas as pd
@@ -23,6 +24,7 @@ RAIZ = Path(__file__).resolve().parent
 CSV = RAIZ / "data" / "series_largo.csv"
 CONFIG = RAIZ / "indicadores.yaml"
 DASHBOARD_URL = "https://pedroth31.github.io/Coyuntura-Pedro-Thill/"   # editable
+ZONA_AR = ZoneInfo("America/Argentina/Buenos_Aires")
 
 # indicadores que van en el mail (deben coincidir con los nombres del config)
 INDICADORES_MAIL = [
@@ -73,7 +75,9 @@ def _es_internacional(titulo):
 def _recolectar(feeds, queries):
     """Junta notas de una lista de feeds + consultas a Google News, con bajada y fecha."""
     import feedparser
-    limite = datetime.now() - timedelta(days=7)
+    hoy_ar = datetime.now(ZONA_AR)
+    dias_atras = 3 if hoy_ar.weekday() == 0 else 1   # lunes=0: cubrir el fin de semana
+    limite = hoy_ar.replace(tzinfo=None) - timedelta(days=dias_atras)
     vistos, items = set(), []
 
     def procesar(feed):
@@ -162,9 +166,43 @@ def resumen_indicadores(df):
     return filas
 
 
+# artículo + forma corta de cada indicador de INDICADORES_MAIL, sólo para armar el
+# briefing en una frase natural (lista fija, igual que INDICADORES_MAIL)
+_ARTICULO_BRIEFING = {
+    "Dólar oficial": "el dólar oficial",
+    "Dólar blue": "el dólar blue",
+    "Brecha cambiaria (CCL/oficial)": "la brecha cambiaria",
+    "Riesgo país (EMBI)": "el riesgo país",
+    "Reservas internacionales (BCRA)": "las reservas internacionales",
+    "Inflación mensual (IPC)": "la inflación mensual",
+    "Base monetaria": "la base monetaria",
+    "Tasa BADLAR (mayorista)": "la tasa BADLAR",
+    "EMAE (actividad económica)": "el EMAE",
+    "Saldo comercial": "el saldo comercial",
+}
+
+
+def _generar_briefing(indicadores, umbral=1.0, max_items=3):
+    """Frase corta con los indicadores que más se movieron, por regla fija (sin LLM)."""
+    movidos = [f for f in indicadores if f["chg"] is not None and abs(f["chg"]) > umbral]
+    movidos.sort(key=lambda f: abs(f["chg"]), reverse=True)
+    top = movidos[:max_items]
+    if not top:
+        return "Jornada sin grandes movimientos en los indicadores clave."
+    partes = []
+    for f in top:
+        verbo = "subió" if f["chg"] > 0 else "bajó"
+        nombre = _ARTICULO_BRIEFING.get(f["nombre"], f["nombre"])
+        pct = f'{abs(f["chg"]):.1f}'.replace(".", ",")
+        unidad = f' {f["unidad"]}' if f.get("unidad") else ""
+        partes.append(f'{nombre}, que {verbo} {pct}% a {f["valor"]}{unidad}')
+    cuerpo = partes[0] if len(partes) == 1 else ", ".join(partes[:-1]) + " y " + partes[-1]
+    return f"Hoy se destaca {cuerpo}."
+
+
 def _render_noticias(lista):
     if not lista:
-        return '<p style="color:#999">Sin novedades esta semana.</p>'
+        return '<p style="color:#999">Sin novedades hoy.</p>'
     bloques = []
     for x in lista:
         bajada = f'<div style="color:#444;font-size:13px;margin:2px 0 3px">{x["bajada"]}</div>' if x.get("bajada") else ""
@@ -178,8 +216,8 @@ def _render_noticias(lista):
     return "".join(bloques)
 
 
-def armar_html(indicadores, argentinas, internacionales):
-    hoy = datetime.now().strftime("%d/%m/%Y")
+def armar_html(indicadores, argentinas, internacionales, briefing=""):
+    hoy = datetime.now(ZONA_AR).strftime("%d/%m/%Y")
     filas_ind = ""
     for f in indicadores:
         if f["chg"] is None or abs(f["chg"]) <= 0.05:
@@ -194,8 +232,10 @@ def armar_html(indicadores, argentinas, internacionales):
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:monospace;text-align:right"><b>{f["valor"]}</b> <span style="color:#999;font-size:11px">{f["unidad"]}</span></td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right;color:{color};font-family:monospace">{chg}</td></tr>')
 
+    briefing_html = f'<p style="font-size:15px;margin-top:14px">{briefing}</p>' if briefing else ""
     return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:#1A1A1A">
-      <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · semana del {hoy}</h2>
+      <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>
+      {briefing_html}
       <h3 style="margin-top:22px">Indicadores clave <span style="color:#999;font-weight:400;font-size:13px">(variación vs. 7 días atrás)</span></h3>
       <table style="width:100%;border-collapse:collapse;font-size:14px">{filas_ind}</table>
       <h3 style="margin-top:26px">🇦🇷 Noticias argentinas</h3>
@@ -212,7 +252,7 @@ def enviar(html):
     pw = os.environ["GMAIL_APP_PASSWORD"]
     to = os.environ.get("MAIL_TO", user)
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"Coyuntura Argentina · semana {datetime.now():%d/%m}"
+    msg["Subject"] = f"Coyuntura Argentina · {datetime.now(ZONA_AR):%d/%m}"
     msg["From"] = user
     msg["To"] = to
     msg.attach(MIMEText(html, "html", "utf-8"))
@@ -226,8 +266,9 @@ def enviar(html):
 def main():
     df = pd.read_csv(CSV, parse_dates=["fecha"])
     indicadores = resumen_indicadores(df)
+    briefing = _generar_briefing(indicadores)
     argentinas, internacionales = obtener_noticias()
-    html = armar_html(indicadores, argentinas, internacionales)
+    html = armar_html(indicadores, argentinas, internacionales, briefing)
     enviar(html)
 
 

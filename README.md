@@ -54,7 +54,7 @@ El proyecto usa **GitHub Actions**:
 - `.github/workflows/coyuntura.yml` — corre **a diario** (12:00 UTC), actualiza los
   CSV y el dashboard, y commitea los cambios. También se puede disparar a mano
   desde la pestaña **Actions**.
-- `.github/workflows/email_semanal.yml` — manda un mail resumen de lunes a viernes a
+- `.github/workflows/email_diario.yml` — manda un mail resumen de lunes a viernes a
   las 8:00 hora Argentina (indicadores clave + noticias). Necesita los secrets
   `GMAIL_USER`, `GMAIL_APP_PASSWORD` y opcionalmente `MAIL_TO`. GitHub Actions no
   garantiza el minuto exacto de disparo de un cron: en horas pico puede haber demoras
@@ -79,8 +79,8 @@ coyuntura/
 ├── buscar_series.py   # encontrar ids de datos.gob.ar
 ├── storage.py         # guarda/mergea el histórico (merge idempotente)
 ├── dashboard.py        # gráficos (Chart.js) + HTML
-├── enviar_mail.py     # resumen semanal por mail
+├── enviar_mail.py     # resumen diario por mail
 ├── data/               # CSVs históricos (se versionan)
 ├── docs/               # dashboard publicado por GitHub Pages
-└── .github/workflows/  # corrida diaria + mail semanal
+└── .github/workflows/  # corrida diaria + mail diario
 ```

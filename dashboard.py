@@ -11,6 +11,7 @@ No genera imágenes: embebe los datos como JSON y los dibuja Chart.js en el nave
 from __future__ import annotations
 from pathlib import Path
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from collections import defaultdict
 import json
 import pandas as pd
@@ -732,7 +733,7 @@ def _card_cell(c):
 
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
-    ahora = datetime.now().strftime("%d/%m/%Y %H:%M")
+    ahora = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
     for titulo, filas in tablas.items():
         if filas:

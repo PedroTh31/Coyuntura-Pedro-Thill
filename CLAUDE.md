@@ -15,9 +15,9 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   idempotente** (nunca pierde ni duplica datos viejos).
 - `dashboard.py` — genera `docs/index.html`. Los gráficos son **interactivos (Chart.js)**,
   NO imágenes. Cada indicador es una celda: tarjeta arriba + gráfico debajo.
-- `enviar_mail.py` — resumen semanal (indicadores + noticias arg/intl) por Gmail SMTP.
+- `enviar_mail.py` — resumen diario (lun-vie, indicadores + noticias arg/intl) por Gmail SMTP.
 - `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie.
-- `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario; `email_semanal.yml`
+- `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario; `email_diario.yml`
   manda el mail de lunes a viernes a las 8am hora Argentina (GitHub Actions no garantiza el
   minuto exacto de disparo de un cron; puede llegar con demora en horas pico).
 - `docs/` — salida publicada por GitHub Pages. `data/` — CSVs históricos versionados.
