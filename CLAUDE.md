@@ -95,9 +95,9 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   resto — con muchas categorías apiladas (ej. 12 divisiones del IPC) cada franja individual queda
   demasiado angosta para distinguirla a simple vista.
 - `vista: burbujas` + `sectores: [{emae: "...", empleo: "..."}, ...]` → gráfico de burbujas
-  (Chart.js `bubble`): eje X = variación % interanual del primer indicador de cada par, eje Y =
-  variación % interanual del segundo, tamaño = % que representa sobre el total del segundo
-  indicador al último período común. Si las frecuencias no coinciden (ej. EMAE mensual vs.
+  (Chart.js `bubble`): eje X = variación % interanual de `empleo`, eje Y = variación % interanual
+  de `emae`, tamaño = % que representa sobre el total de `empleo` al último período común. Si las
+  frecuencias no coinciden (ej. EMAE mensual vs.
   empleo trimestral), el más frecuente se remuestrea al calendario del menos frecuente antes de
   comparar — documentarlo en la `nota`. Sin botones de filtro de rango de fecha (es una foto de
   un período, no una serie temporal); usa anti-colisión de etiquetas en JS (prioriza burbujas

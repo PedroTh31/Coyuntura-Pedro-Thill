@@ -423,9 +423,9 @@ COLORES_BURBUJAS = COLORES_INCIDENCIA + ["#3B8681", "#9284BE", "#F48EAB"]
 
 def _serie_bubble(idx, ind, historico):
     """
-    Gráfico de burbujas: eje X = variación % interanual de actividad (EMAE por
-    sector), eje Y = variación % interanual de empleo registrado (SIPA), tamaño
-    = % del empleo total. El EMAE (mensual) se remuestrea a trimestres
+    Gráfico de burbujas: eje X = variación % interanual de empleo registrado
+    (SIPA), eje Y = variación % interanual de actividad (EMAE por sector),
+    tamaño = % del empleo total. El EMAE (mensual) se remuestrea a trimestres
     calendario (misma definición que usa la fuente de empleo, nativamente
     trimestral: ene-mar/abr-jun/jul-sep/oct-dic) antes de comparar, para que
     ambos ejes representen el mismo período exacto.
@@ -456,7 +456,7 @@ def _serie_bubble(idx, ind, historico):
             continue
         var_actividad = (emae_q[fecha_comun] / emae_q[fecha_prev] - 1) * 100
         var_empleo = (emp_q[fecha_comun] / emp_q[fecha_prev] - 1) * 100
-        puntos.append(dict(nombre=nombre_sector, x=var_actividad, y=var_empleo, empleo=float(emp_q[fecha_comun])))
+        puntos.append(dict(nombre=nombre_sector, x=var_empleo, y=var_actividad, empleo=float(emp_q[fecha_comun])))
     if not puntos:
         return None
 
@@ -1179,17 +1179,17 @@ const bubbleOpts = (limX, limY) => ({
       title:(items)=> items[0].raw.label,
       label:(c)=> {
         const x = c.raw.x_real ?? c.raw.x, y = c.raw.y_real ?? c.raw.y;
-        const lineas = [`Actividad (EMAE, i.a.): ${x > 0 ? '+' : ''}${x.toFixed(1)}%`,
-                        `Empleo registrado (i.a.): ${y > 0 ? '+' : ''}${y.toFixed(1)}%`,
+        const lineas = [`Empleo registrado (i.a.): ${x > 0 ? '+' : ''}${x.toFixed(1)}%`,
+                        `Actividad (EMAE, i.a.): ${y > 0 ? '+' : ''}${y.toFixed(1)}%`,
                         `% del empleo total: ${c.raw.r_pct.toFixed(1)}%`];
         if (c.raw.x_real !== undefined || c.raw.y_real !== undefined) {
           lineas.push('⚠ Fuera de escala del gráfico, dibujado cerca del borde -- valores reales arriba');
         }
         return lineas;
       } } } },
-  scales:{ x:{ min:-limX, max:limX, title:{display:true, text:'Variación % interanual de actividad', font:{size:10}, color:'#555555'},
+  scales:{ x:{ min:-limX, max:limX, title:{display:true, text:'Variación % interanual de empleo', font:{size:10}, color:'#555555'},
                ticks:{ color:'#838383', font:{size:10} }, grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} },
-           y:{ min:-limY, max:limY, title:{display:true, text:'Variación % interanual de empleo', font:{size:10}, color:'#555555'},
+           y:{ min:-limY, max:limY, title:{display:true, text:'Variación % interanual de actividad', font:{size:10}, color:'#555555'},
                ticks:{ color:'#838383', font:{size:10} }, grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} } },
 });
 
