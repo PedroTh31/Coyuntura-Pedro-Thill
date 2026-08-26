@@ -48,8 +48,10 @@ FEEDS_MEDIOS = [
     "https://www.bloomberglinea.com/arc/outboundfeeds/rss/category/economia/?outputType=xml",
 ]
 
-# feeds internacionales ya acotados a economía/finanzas o geopolítica por su propia sección
-# editorial -- no necesitan el filtro adicional de KW_INTERNACIONAL de más abajo
+# feeds internacionales: la sección editorial NO alcanza como filtro por sí sola (verificado
+# con el primer mail real: hasta BBC Business/The Economist traen notas de consumo/lifestyle
+# sin relación con macro/geopolítica, ej. "Ironing board seats to be replaced on Thameslink") --
+# todas, sin excepción, pasan por el filtro KW_INTERNACIONAL de más abajo (ver obtener_noticias)
 FEEDS_INTERNACIONAL = [
     "https://feeds.bbci.co.uk/news/business/rss.xml",
     "https://www.economist.com/finance-and-economics/rss.xml",
@@ -58,31 +60,47 @@ FEEDS_INTERNACIONAL = [
     "https://www.ft.com/global-economy?format=rss",
     "https://www.project-syndicate.org/rss",
     "https://www.france24.com/es/econom%C3%ADa/rss",
-]
-
-# feeds internacionales generalistas (traen de todo, no sólo economía/geopolítica): se
-# incluyen igual porque tienen buena cobertura en español, pero cada nota debe matchear
-# KW_INTERNACIONAL antes de entrar al mail (ver obtener_noticias)
-FEEDS_INTERNACIONAL_GENERALISTA = [
     "http://feeds.bbci.co.uk/mundo/rss.xml",
     "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada",
 ]
 
 # si el título/copete contiene alguna de estas, se considera internacional/geopolítico:
 # (a) saca una nota Argentina del bloque argentino si igual menciona esto, y
-# (b) es el filtro de relevancia para las fuentes generalistas de arriba
+# (b) es el filtro de relevancia obligatorio para TODAS las fuentes internacionales de arriba
 KW_INTERNACIONAL = ["trump", "china", "ee.uu", "eeuu", "estados unidos", "wall street",
     "reserva federal", " fed ", "europa", "alemania", "japón", "brasil", "lula",
     "nvidia", "apple", "petróleo brent", "unión europea", "rusia", "israel", "bitcoin",
     "otan", "sanciones", "guerra comercial", "geopolític", "conflicto", "cumbre",
     "aranceles"]
 
-# notas tipo "consejo/listicle" que no son noticia económica real (ej. "cómo pagar
-# reservas de hotel en dólares"): filtro heurístico, ajustar según lo que se cuele
+# palabras que, si aparecen en título o bajada de una nota ARGENTINA, confirman que es
+# noticia económica real: filtro POSITIVO (además del negativo de KW_EXCLUIR_TIPS más abajo)
+# -- un feriado o un calendario de pagos de ANSES no matchea ningún patrón "tips", pero
+# tampoco es economía, así que el filtro negativo solo nunca alcanza para excluirlo
+KW_ECONOMICO_AR = [
+    "inflación", "dólar", "bcra", "banco central", "riesgo país", "pbi",
+    "producto bruto", "actividad económica", "emae", "reservas", "deuda", "fmi",
+    "superávit", "déficit", "tasa de interés", "tasas de interés", "desempleo",
+    "pobreza", "canasta básica", "comercio exterior", "exportaciones",
+    "importaciones", "balanza comercial", "merval", "bolsa", "acciones", "bonos",
+    "salario", "paritaria", "inversión", "recesión", "consumo", "industria",
+    "producción", "tarifa", "impuesto", "recaudación", "fiscal", "presupuesto",
+    "milei",
+]
+
+# notas tipo "consejo/listicle" o de relleno que no son noticia económica real (ej. "cómo
+# pagar reservas de hotel en dólares", "Dólar EN VIVO minuto a minuto", "qué significa esto
+# para tu factura"): filtro heurístico, ajustar según lo que se cuele
 KW_EXCLUIR_TIPS = [
     "la mejor forma de", "cómo pagar", "cómo ahorrar", "consejos para",
     "trucos para", "paso a paso para", "todo lo que tenés que saber para",
     "todo lo que necesitás saber para", "cuidar tu bolsillo",
+    "cuánto cobra", "cuánto se cobra", "a cuánto llega", "de cuánto es",
+    "aumento confirmado", "en vivo", "minuto a minuto", "hora a hora",
+    "cronograma de pagos", "calendario de pagos", "esquema de cobros",
+    "quiénes cobran", "quiénes perciben",
+    "what does this mean for", "what will this mean for", "mean for my bills",
+    "mean for your",
 ]
 _RE_LISTICLE = re.compile(r"^\d+\s+(formas?|tips?|claves?|trucos?|maneras?)\s+", re.I)
 
@@ -106,11 +124,21 @@ def _es_internacional(texto):
 
 
 def _es_tip(titulo):
-    """Filtra notas tipo consejo/listicle que no son noticia económica real."""
+    """Filtra notas tipo consejo/listicle/relleno que no son noticia económica real."""
     t = titulo.lower().strip()
     if _RE_LISTICLE.match(t):
         return True
+    if t.startswith("firstft:"):
+        return True  # boletín embolsado de FT, agrupa varias notas sin relación
     return any(k in t for k in KW_EXCLUIR_TIPS)
+
+
+def _es_economico_ar(texto):
+    """Filtro positivo para notas argentinas: título o bajada tienen que mencionar algo
+    de economía real (un feriado o un calendario de pagos no matchea 'tips', pero
+    tampoco es economía -- el filtro negativo solo no alcanza para esos casos)."""
+    t = " " + texto.lower() + " "
+    return any(k in t for k in KW_ECONOMICO_AR)
 
 
 def _limite(es_argentina):
@@ -169,16 +197,15 @@ def obtener_noticias(n=6):
     except Exception:
         return [], []
     arg = [x for x in _recolectar(FEEDS_MEDIOS, es_argentina=True)
-           if not _es_internacional(x["titulo"]) and not _es_tip(x["titulo"])]
+           if not _es_internacional(x["titulo"]) and not _es_tip(x["titulo"])
+           and _es_economico_ar(x["titulo"] + " " + x["bajada"])]
     arg = arg[:n]
     titulos_arg = {x["titulo"] for x in arg}
 
     crudo_intl = _recolectar(FEEDS_INTERNACIONAL, es_argentina=False)
-    crudo_generalista = [x for x in _recolectar(FEEDS_INTERNACIONAL_GENERALISTA, es_argentina=False)
-                         if _es_internacional(x["titulo"] + " " + x["bajada"])]
-    intl = [x for x in crudo_intl + crudo_generalista
-            if x["titulo"] not in titulos_arg and not _es_tip(x["titulo"])]
-    intl.sort(key=lambda x: (x["bajada"] == "", -x["pub"].timestamp()))
+    intl = [x for x in crudo_intl
+            if x["titulo"] not in titulos_arg and not _es_tip(x["titulo"])
+            and _es_internacional(x["titulo"] + " " + x["bajada"])]
     intl = intl[:n]
     return arg, intl
 
@@ -308,7 +335,14 @@ def armar_html(indicadores, argentinas, internacionales, briefing=""):
 def enviar(html):
     user = os.environ["GMAIL_USER"]
     pw = os.environ["GMAIL_APP_PASSWORD"]
-    to = os.environ.get("MAIL_TO", user)
+    to_raw = os.environ.get("MAIL_TO", user)
+    # Sanitizado: un secret MAIL_TO cargado con una dirección por renglón (en vez de
+    # separadas por coma) mete un '\n' en el header "To", y la librería estándar de
+    # email rechaza cualquier header con salto de línea adentro (HeaderWriteError) --
+    # el envío entero corta con exit code 1. Acepta coma Y salto de línea como
+    # separador, y usa la misma lista ya limpia para el header y el envío real.
+    destinatarios = [x.strip() for x in re.split(r"[,\n\r]+", to_raw) if x.strip()]
+    to = ", ".join(destinatarios)
     msg = MIMEMultipart("alternative")
     msg["Subject"] = f"Coyuntura Argentina · {datetime.now(ZONA_AR):%d/%m}"
     msg["From"] = user
@@ -317,7 +351,7 @@ def enviar(html):
     ctx = ssl.create_default_context()
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ctx) as srv:
         srv.login(user, pw)
-        srv.sendmail(user, [x.strip() for x in to.split(",")], msg.as_string())
+        srv.sendmail(user, destinatarios, msg.as_string())
     print(f"Mail enviado a {to}")
 
 
