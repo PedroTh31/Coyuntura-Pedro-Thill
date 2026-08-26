@@ -97,24 +97,21 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   `peso_nacional` (recalculado solo, no una lista fija) más una capa "Resto" con la suma del
   resto — con muchas categorías apiladas (ej. 12 divisiones del IPC) cada franja individual queda
   demasiado angosta para distinguirla a simple vista.
-- `vista: burbujas` + `sectores: [{emae: "...", empleo: "..."}, ...]` → gráfico de burbujas
-  (Chart.js `bubble`): eje X = variación % interanual de `empleo`, eje Y = variación % interanual
-  de `emae`, tamaño = % que representa sobre el total de `empleo` al último período común. Si las
-  frecuencias no coinciden (ej. EMAE mensual vs.
-  empleo trimestral), el más frecuente se remuestrea al calendario del menos frecuente antes de
-  comparar — documentarlo en la `nota`. Sin botones de filtro de rango de fecha (es una foto de
-  un período, no una serie temporal); usa anti-colisión de etiquetas en JS (prioriza burbujas
-  grandes, omite la etiqueta de las que chocan con una ya puesta — esas quedan identificables
-  sólo por tooltip). Ejes centrados en cero, límite calculado con la cerca de Tukey (Q3 +
-  1,5×RIC sobre el valor absoluto de cada eje, método estadístico estándar para detectar
-  outliers, no un umbral fijo ni el máximo absoluto) sobre el cluster central de sectores: los
-  que superan la cerca quedan clavados cerca del borde con borde punteado (su valor real se
-  preserva en `x_real`/`y_real` para el tooltip, nunca se pierde el dato). Toggle "Vista
-  completa"/"Zoom al cluster" (mismo lenguaje visual que los botones `.filtro` de rango, pero
-  con `data-vista` en vez de `data-rango`): "Zoom al cluster" excluye del todo a los sectores
-  outlier (no sólo los recorta) y recalcula los límites de eje sólo sobre los que quedan, mismo
-  margen ×1.15 — para cuando el cluster central (la mayoría real del agregado que se está
-  comparando) sigue viéndose amontonado aun con la cerca de Tukey aplicada.
+- `vista: sectores_bar` + `sectores: [{emae: "...", empleo: "..."}, ...]` → barras categóricas
+  (Chart.js `bar`): eje X = sector (una columna por sector, ordenadas de mayor a menor % que
+  representa sobre el total de `empleo` al último período común), eje Y = variación %
+  interanual de `emae`. El empleo sólo define el ORDEN de las columnas, no un eje propio
+  (decisión de diseño: mantener el cruce actividad×empleo en dos ejes reintroduciría el
+  problema de superposición que tenía la versión anterior de burbujas). Barras coloreadas por
+  signo (verde/rojo), mismo criterio que los combos de barra+línea. Si las frecuencias no
+  coinciden (ej. EMAE mensual vs. empleo trimestral), el más frecuente se remuestrea al
+  calendario del menos frecuente antes de comparar — documentarlo en la `nota`. Sin botones de
+  filtro de rango de fecha (es una foto de un período, no una serie temporal). Reemplaza a una
+  versión anterior en burbujas (eje X/Y = actividad/empleo, tamaño = peso de empleo): con sólo
+  ~15 sectores, el cluster central quedaba amontonado en el centro del cuadrante y necesitaba
+  ejes recortados con la cerca de Tukey (Q3 + 1,5×RIC) más un toggle "Vista completa"/"Zoom al
+  cluster" para que el grupo central no quedara ilegible — con una columna por sector no hay
+  superposición posible, así que ninguno de los dos mecanismos hace falta.
 - `calculo: combinado` + `componentes: [{id, peso}, ...]` + `rebase_fecha` (opcional) +
   `media_movil` (opcional, meses) → promedio ponderado de varios índices de nivel (los pesos se
   renormalizan solos, no hace falta que sumen 1), con rebase y/o media móvil. Ej.: EMAE
@@ -187,10 +184,11 @@ compras netas de divisas por contraparte); Agregados (base, M1 calculado, M2, M3
 (BADLAR); Crédito (préstamos al sector privado, variación % real mensual, por tipo de
 deudor Familias/Empresas, morosidad por tipo de banco y por línea dentro de Familias,
 depósitos privado vs. público); EMAE general + semáforo por 16 sectores +
-EMAE Urbano vs. No urbano (ponderado por VAB) + burbujas actividad×empleo por sector (SIPA, ejes
-centrados en cero); IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo (expo/impo/
-saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social (desempleo, salario
-real, tasa de informalidad laboral, salario real por tipo de empleo).
+EMAE Urbano vs. No urbano (ponderado por VAB) + actividad por sector en barras ordenadas por
+peso de empleo (SIPA); IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo
+(expo/impo/saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social
+(desempleo, salario real, tasa de informalidad laboral, salario real por tipo de empleo,
+capacidad de compra RIPTE/CBT).
 
 ## Pendientes / a mejorar
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
