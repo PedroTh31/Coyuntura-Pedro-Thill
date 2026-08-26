@@ -146,7 +146,8 @@ def _serie_balance_cambiario(idx, ind, historico):
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None,
-        subtitulo=ind.get("subtitulo"))
+        subtitulo=ind.get("subtitulo"),
+        sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
 
     serie_js = dict(i=idx, color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""), kind="combo",
         x=[d.strftime("%m/%y") for d in fechas_s], y=_vals(linea_s), flujo=_vals(barras_s),
@@ -189,7 +190,8 @@ def _serie_comercio_espejo(idx, ind, historico):
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_expo["valor"].max()), minv=_fmt_num(-g_impo["valor"].max()), nota_num=None,
-        subtitulo=ind.get("subtitulo"))
+        subtitulo=ind.get("subtitulo"),
+        sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
 
     serie_js = dict(i=idx, kind="espejo", unidad=ind.get("unidad", ""),
         x=[d.strftime("%m/%y") for d in fechas_default],
@@ -266,7 +268,8 @@ def _serie_overlay(idx, ind, historico):
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_resumen["valor"].max()), minv=_fmt_num(g_resumen["valor"].min()), nota_num=None,
-        grande=ind.get("grande", False), subtitulo=ind.get("subtitulo"))
+        grande=ind.get("grande", False), subtitulo=ind.get("subtitulo"),
+        sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
 
     serie_js = dict(i=idx, kind="overlay", unidad=ind.get("unidad", ""),
         x=[d.strftime("%m/%y") for d in fechas_default],
@@ -608,7 +611,8 @@ def generar(historico, config_indicadores):
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
             unidad=unidad, valor=_fmt_num(ult), pct=pct, marca_fecha=marca_fecha,
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num,
-            sube_es_bueno=ind.get("sube_es_bueno", False), subtitulo=ind.get("subtitulo")))
+            sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
+            subtitulo=ind.get("subtitulo")))
         if ind.get("vista") == "reservas_combo":
             series_js.append(_serie_reservas_combo(idx, color, unidad, serie, desde))
         else:
@@ -680,10 +684,15 @@ def _card_cell(c):
     else:
         sube = c["pct"] > 0.05
         fl = "▲" if sube else "▼"
-        # Genérico: subir = malo (rojo) salvo que el indicador declare 'sube_es_bueno'
-        # (ej. EMAE: que la actividad suba es una buena noticia, no una mala).
-        bueno = sube if c.get("sube_es_bueno") else not sube
-        cls = "bueno" if bueno else "malo"
+        if c.get("neutral"):
+            # El indicador declara 'neutral': subir no es ni buena ni mala noticia por sí
+            # solo (ej. agregados monetarios, préstamos): se muestra la flecha sin pintarla.
+            cls = "flat"
+        else:
+            # Genérico: subir = malo (rojo) salvo que el indicador declare 'sube_es_bueno'
+            # (ej. EMAE: que la actividad suba es una buena noticia, no una mala).
+            bueno = sube if c.get("sube_es_bueno") else not sube
+            cls = "bueno" if bueno else "malo"
     chg = f'{fl} {abs(c["pct"]):.1f}%' if c["pct"] is not None else "—"
     # Asterisco numerado y clickeable: salta a su nota en el pie de página.
     nota_mark = ""

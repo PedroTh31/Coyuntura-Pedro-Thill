@@ -192,16 +192,19 @@ def _fmt(v):
     return s.replace(",", "@").replace(".", ",").replace("@", ".")
 
 
-def _cargar_sube_es_bueno():
+def _cargar_flags_color():
     """Mismo criterio que dashboard.py: por defecto subir = malo (rojo), salvo que el
-    indicador declare 'sube_es_bueno' en indicadores.yaml (ej. EMAE). Se lee del yaml
-    (única fuente de verdad) para que dashboard y mail nunca queden desincronizados."""
+    indicador declare 'sube_es_bueno' (ej. EMAE) o 'neutral' (sin juicio de valor, ej.
+    agregados monetarios) en indicadores.yaml. Se lee del yaml (única fuente de verdad)
+    para que dashboard y mail nunca queden desincronizados."""
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
-    return {i["nombre"]: bool(i.get("sube_es_bueno")) for i in cfg["indicadores"]}
+    sube_es_bueno = {i["nombre"]: bool(i.get("sube_es_bueno")) for i in cfg["indicadores"]}
+    neutral = {i["nombre"]: bool(i.get("neutral")) for i in cfg["indicadores"]}
+    return sube_es_bueno, neutral
 
 
 def resumen_indicadores(df):
-    sube_es_bueno = _cargar_sube_es_bueno()
+    sube_es_bueno, neutral = _cargar_flags_color()
     filas = []
     for n in INDICADORES_MAIL:
         s = df[df["indicador"] == n].sort_values("fecha")
@@ -214,7 +217,7 @@ def resumen_indicadores(df):
             chg = (ult["valor"] / prev.iloc[-1]["valor"] - 1) * 100
         filas.append(dict(nombre=n, valor=_fmt(ult["valor"]), unidad=ult.get("unidad", ""),
                           chg=chg, fecha=ult["fecha"].strftime("%d/%m/%Y"),
-                          sube_es_bueno=sube_es_bueno.get(n, False)))
+                          sube_es_bueno=sube_es_bueno.get(n, False), neutral=neutral.get(n, False)))
     return filas
 
 
@@ -277,8 +280,11 @@ def armar_html(indicadores, argentinas, internacionales, briefing=""):
         else:
             sube = f["chg"] > 0.05
             flecha = "▲" if sube else "▼"
-            bueno = sube if f.get("sube_es_bueno") else not sube
-            color = "#256D5B" if bueno else "#B4341F"
+            if f.get("neutral"):
+                color = "#9A968C"
+            else:
+                bueno = sube if f.get("sube_es_bueno") else not sube
+                color = "#256D5B" if bueno else "#B4341F"
         chg = f'{flecha} {abs(f["chg"]):.1f}%' if f["chg"] is not None else "—"
         filas_ind += (f'<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">{f["nombre"]}</td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:monospace;text-align:right"><b>{f["valor"]}</b> <span style="color:#999;font-size:11px">{f["unidad"]}</span></td>'

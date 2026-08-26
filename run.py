@@ -45,6 +45,16 @@ def _calcular(ind, start):
         s = a.merge(b, on="fecha", how="inner")
         s["valor"] = s["a"] - s["b"]
         return s[["fecha", "valor"]]
+    if tipo == "ratio":
+        # Cociente de dos series de datos_gob (ej. salario / costo de una canasta):
+        # numerador_id / denominador_id, sin rebase ni indexar -- el valor crudo del
+        # cociente es la unidad que importa (ej. "canastas que compra un salario").
+        num = fetch_datos_gob(ind["numerador_id"], start).rename(columns={"valor": "num"})
+        den = fetch_datos_gob(ind["denominador_id"], start).rename(columns={"valor": "den"})
+        s = num.merge(den, on="fecha", how="inner").sort_values("fecha")
+        s = s[s["den"] > 0]
+        s["valor"] = s["num"] / s["den"]
+        return s[["fecha", "valor"]].dropna().reset_index(drop=True)
     if tipo == "real":
         nom = fetch_datos_gob(ind["nominal_id"], start).rename(columns={"valor": "nom"})
         ipc = fetch_datos_gob(ind["deflactor_id"], start).rename(columns={"valor": "ipc"})

@@ -43,6 +43,9 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `calculo: resta` + `minuendo_id` + `sustraendo_id` → resta de dos series de datos_gob (ej.
   balance comercial energético = exportaciones de combustibles y energía menos importaciones
   de combustibles y lubricantes).
+- `calculo: ratio` + `numerador_id` + `denominador_id` → cociente de dos series de datos_gob,
+  sin rebase ni indexar (el valor crudo del cociente es la unidad que importa, ej. capacidad de
+  compra = salario en pesos ÷ costo de una canasta en pesos = "canastas que compra un salario").
 - `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real).
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
 - `calculo: interanual` + `base_id` → variación % interanual de una serie de datos_gob.
@@ -140,6 +143,18 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `rezago_normal_dias: N` → para series con un rezago de publicación estructural conocido
   (ej. el TCR multilateral depende del IPC de varios países); pone un piso al umbral del
   chequeo de frescura para no repetir la misma alerta todos los días.
+- `sube_es_bueno: true` → la flecha de variación se pinta verde cuando el indicador SUBE y
+  roja cuando baja (ej. EMAE, reservas, salario real). Por defecto (sin este flag) es al
+  revés: verde si baja, roja si sube (ej. inflación, dólar). Mismo criterio en dashboard.py y
+  enviar_mail.py (leen el flag del mismo yaml, una sola fuente de verdad). No es una decisión
+  técnica: para cualquier indicador donde "subir" no tenga un signo obvio (agregados
+  monetarios, tasas, crédito, depósitos nominales, TCR), preguntarle a Pedro antes de
+  marcarlo — no resolver el juicio económico por cuenta propia.
+- `neutral: true` → la flecha de variación se muestra sin pintar (gris, misma clase que "sin
+  cambio significativo"), para indicadores donde ni `sube_es_bueno: true` ni el default rojo
+  aplican con claridad (ej. Base monetaria/M1/M2/M3, BADLAR, préstamos, depósitos bancarios,
+  TCR multilateral — decisión de Pedro en cada caso, ver punto anterior). Se lee del mismo
+  yaml en dashboard.py y enviar_mail.py.
 - `nota: "..."` → aclaración metodológica; se muestra como asterisco bajo el gráfico y en el
   pie de la página. Obligatoria en toda serie calculada, estimada, proxy o rascada de Excel,
   o con `factor` aplicado.
