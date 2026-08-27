@@ -99,6 +99,17 @@ def _calcular(ind, start):
         s = s[s["valor"] > 0]
         s["valor"] = s["valor"].pct_change() * 100
         return s[["fecha", "valor"]].dropna().reset_index(drop=True)
+    if tipo == "acumulado_12m":
+        # Suma móvil de los últimos 12 meses de una serie de datos_gob (ej. resultado fiscal
+        # acumulado de 12 meses, para comparar con series de flujo/nivel de otra frecuencia
+        # como riesgo país). A diferencia de 'interanual', no filtra valores <= 0: series como
+        # el resultado fiscal son negativas en meses de déficit, sin que eso sea un dato inválido.
+        base_id = ind.get("base_id")
+        if not base_id:
+            raise ValueError(f"Cálculo 'acumulado_12m' requiere 'base_id' en {ind['nombre']}")
+        s = fetch_datos_gob(base_id, start).sort_values("fecha").copy()
+        s["valor"] = s["valor"].rolling(12, min_periods=12).sum()
+        return s[["fecha", "valor"]].dropna().reset_index(drop=True)
     if tipo == "variacion_real_mensual":
         # Variación % mensual REAL: deflacta la serie nominal por IPC antes de calcular la
         # variación mes a mes, con media móvil opcional (en meses) para suavizar.
@@ -298,7 +309,7 @@ def main():
 
     for ind in indicadores:
         nombre = ind["nombre"]
-        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea"):
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         try:
             if "calculo" in ind:

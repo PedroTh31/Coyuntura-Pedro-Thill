@@ -49,6 +49,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real).
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
 - `calculo: interanual` + `base_id` → variación % interanual de una serie de datos_gob.
+- `calculo: acumulado_12m` + `base_id` → suma móvil de los últimos 12 meses de una serie de
+  datos_gob (ej. resultado fiscal acumulado, para comparar con series de otra frecuencia). A
+  diferencia de `interanual`, no filtra valores ≤ 0: series como el resultado fiscal son
+  negativas en meses de déficit sin que eso sea un dato inválido.
 - `calculo: mensual` + `base_id` → variación % mes a mes de una serie de datos_gob (nivel → tasa).
 - `calculo: variacion_real_mensual` + `nominal_id` + `deflactor_id` + `media_movil` (opcional,
   meses) → deflacta por IPC, variación % mes a mes, con media móvil opcional.
@@ -71,6 +75,21 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   por tipo de banco, no por tipo de deudor/línea). Cacheado como el REM/organismos
   internacionales (máximo 1 descarga por semana).
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
+- `vista: balance_cambiario` + `series: [indicador_barras, indicador_linea]` → combo de UN
+  indicador ya existente como barras (eje izquierdo) + UN indicador ya existente como línea
+  (eje derecho), ambos resampleados a fin de mes antes de graficar. Pensado originalmente para
+  compras netas de divisas + stock de reservas, pero el mecanismo es genérico.
+- `vista: combo_barras_linea` + `barras: [{serie: "...", signo: 1|-1}, ...]` (1 o 2) +
+  `linea: "..."` (opcional `unidad_linea` si la línea usa otra unidad que las barras) → combo
+  genérico de 1-2 indicadores ya existentes como barras (eje izquierdo) + 1 indicador ya
+  existente como línea (eje derecho), dos ejes, con leyenda (a diferencia de `balance_cambiario`,
+  que es siempre 1 barra + 1 línea sin leyenda). `signo: -1` invierte el signo SOLO para el
+  gráfico (ej. mostrar un gasto como resta visual sobre una barra positiva, misma idea que
+  `comercio_espejo` con las importaciones) sin tocar el dato guardado en el histórico. Todo se
+  resamplea a fin de mes antes de unir fechas: necesario cuando barras y línea tienen frecuencias
+  distintas (ej. resultado fiscal mensual + riesgo país diario) — unir fechas crudas sin
+  resamplear deja un eje categórico dominado por la frecuencia más alta, con las barras de la
+  frecuencia más baja reducidas a casi un pixel de ancho.
 - `vista: comercio_espejo` + `series: [exportaciones, importaciones, saldo]` → gráfico espejo
   (mirror/diverging bars): exportaciones barras positivas arriba, importaciones barras negativas
   abajo (mismo valor de la fuente, sólo se invierte el signo para el gráfico), saldo comercial
@@ -188,7 +207,9 @@ EMAE Urbano vs. No urbano (ponderado por VAB) + actividad por sector en barras o
 peso de empleo (SIPA); IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo
 (expo/impo/saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social
 (desempleo, salario real, tasa de informalidad laboral, salario real por tipo de empleo,
-capacidad de compra RIPTE/CBT).
+capacidad de compra RIPTE/CBT); Fiscal (resultado primario y financiero del Sector Público
+Nacional, superávit gemelos fiscal/comercial, resultado primario acumulado 12 meses vs. riesgo
+país, resultado primario vs. intereses de deuda).
 
 ## Pendientes / a mejorar
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que

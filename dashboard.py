@@ -36,7 +36,7 @@ TITULO_BLOQUE = {"precios": "Precios", "monetario_financiero": "Monetario y fina
 ORDEN_GRUPOS = ["Precios", "Dólar", "Brecha y TCR", "Riesgo país", "Reservas",
                 "Agregados monetarios", "Tasas de interés", "Crédito",
                 "Comercio exterior", "Exportaciones por rubro", "Importaciones por uso",
-                "Actividad", "Social"]
+                "Actividad", "Social", "Fiscal"]
 
 
 def _fmt_num(v) -> str:
@@ -201,6 +201,79 @@ def _serie_comercio_espejo(idx, ind, historico):
         saldo=_en(fechas_default, saldo_por_fecha),
         full_expo=_en(fechas_full, expo_por_fecha), full_impo=_en(fechas_full, impo_por_fecha, signo=-1),
         full_saldo=_en(fechas_full, saldo_por_fecha))
+    return card, serie_js
+
+
+def _serie_combo_barras_linea(idx, ind, historico):
+    """
+    Combo genérico de 1-2 barras + 1 línea, dos ejes (barras a la izquierda, línea a la
+    derecha). Cada elemento de ind['barras'] es {serie: "...", signo: 1|-1 (opcional,
+    default 1)} -- 'signo: -1' invierte el signo SOLO para el gráfico (ej. mostrar un gasto
+    como resta visual sobre una barra positiva, mismo mecanismo que ya usa comercio_espejo
+    con las importaciones), el dato guardado en el histórico no cambia. ind['linea'] es el
+    nombre de un único indicador ya existente en 'historico'. Usado para los combos de
+    foco fiscal (superávit gemelos, riesgo país vs. resultado acumulado, primario vs.
+    intereses) pero no es específico de fiscal: sirve para cualquier combo de 1-2 barras +
+    1 línea sobre dos indicadores/cálculos ya existentes.
+    """
+    # Todo se resamplea a fin de mes ("MS", mismo criterio que _serie_balance_cambiario) antes
+    # de unir fechas: si la línea es de frecuencia distinta a las barras (ej. riesgo país
+    # diario vs. resultado fiscal mensual), unir las fechas CRUDAS deja un eje categórico con
+    # cientos de categorías diarias y sólo un puñado de barras mensuales -- cada barra queda
+    # apenas un pixel de ancho, casi invisible. Resamplear ambos lados a la misma frecuencia
+    # mensual antes de graficar evita ese problema de raíz.
+    barras_cfg = ind["barras"]
+    nombre_linea = ind["linea"]
+    g_linea = historico[historico["indicador"] == nombre_linea].sort_values("fecha")
+    if g_linea.empty:
+        return None
+    linea_m = g_linea.set_index("fecha")["valor"].resample("MS").last()
+
+    series_barras = []
+    for b in barras_cfg:
+        g = historico[historico["indicador"] == b["serie"]].sort_values("fecha")
+        if g.empty:
+            continue
+        series_barras.append((b["serie"], g.set_index("fecha")["valor"].resample("MS").last(), b.get("signo", 1)))
+    if not series_barras:
+        return None
+
+    fechas_full = linea_m.index
+    for _, serie_m, _ in series_barras:
+        fechas_full = fechas_full.union(serie_m.index)
+    fechas_full = fechas_full.sort_values()
+    linea_full = linea_m.reindex(fechas_full)
+
+    desde = ind.get("desde", DESDE_GENERAL)
+    fechas_s = fechas_full[fechas_full >= pd.to_datetime(desde)]
+    if len(fechas_s) < 2:
+        fechas_s = fechas_full
+
+    def _vals(s, signo=1):
+        return [round(float(v) * signo, 2) if pd.notna(v) else None for v in s]
+
+    barras_js = []
+    for i, (nombre_b, serie_m, signo) in enumerate(series_barras):
+        serie_full = serie_m.reindex(fechas_full)
+        barras_js.append(dict(label=nombre_b, color=COLORES_OVERLAY[i % len(COLORES_OVERLAY)],
+            y=_vals(serie_full.reindex(fechas_s), signo), full_y=_vals(serie_full, signo)))
+
+    unidad_linea = ind.get("unidad_linea", ind.get("unidad", ""))
+    ult, pct = _variacion(g_linea)
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_linea,
+        valor=_fmt_num(ult), pct=pct, marca_fecha=None,
+        maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None,
+        subtitulo=ind.get("subtitulo"), grande=ind.get("grande", False),
+        sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
+
+    serie_js = dict(i=idx, kind="combo_bl",
+        unidad_barras=ind.get("unidad", ""), unidad_linea=unidad_linea,
+        x=[d.strftime("%m/%y") for d in fechas_s],
+        full_x=[d.strftime("%m/%y") for d in fechas_full],
+        full_dates=[d.isoformat() for d in fechas_full],
+        barras=barras_js, linea_label=nombre_linea,
+        linea=_vals(linea_full.reindex(fechas_s)), full_linea=_vals(linea_full))
     return card, serie_js
 
 
@@ -508,7 +581,7 @@ def generar(historico, config_indicadores):
         nota = ind.get("nota")
         if ind.get("solo_componente"):
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
-        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea"):
             if ind["vista"] == "overlay":
                 entrada = _serie_overlay(idx, ind, historico)
             elif ind["vista"] == "incidencia_stack":
@@ -517,6 +590,8 @@ def generar(historico, config_indicadores):
                 entrada = _serie_balance_cambiario(idx, ind, historico)
             elif ind["vista"] == "comercio_espejo":
                 entrada = _serie_comercio_espejo(idx, ind, historico)
+            elif ind["vista"] == "combo_barras_linea":
+                entrada = _serie_combo_barras_linea(idx, ind, historico)
             else:
                 entrada = _serie_sectores_bar(idx, ind, historico)
             if entrada is None:
@@ -866,6 +941,21 @@ function filtrarDatos(s, rango) {
       saldo: indices.map(i => s.full_saldo[i]),
     };
   }
+  if (s.kind === 'combo_bl') {
+    if (rango === 'default') {
+      return { x: s.x, barras: s.barras.map(b => ({ label: b.label, y: b.y })), linea: s.linea };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, barras: s.barras.map(b => ({ label: b.label, y: b.y })), linea: s.linea };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barras: s.barras.map(b => ({ label: b.label, y: indices.map(i => b.full_y[i]) })),
+      linea: indices.map(i => s.full_linea[i]),
+    };
+  }
   if (rango === 'default') {
     return { x: s.x, y: s.y, flujo: s.flujo };
   }
@@ -935,6 +1025,13 @@ function filtrarDatosPersonalizado(s, desde, hasta) {
       expo: indices.map(i => s.full_expo[i]),
       impo: indices.map(i => s.full_impo[i]),
       saldo: indices.map(i => s.full_saldo[i]),
+    };
+  }
+  if (s.kind === 'combo_bl') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barras: s.barras.map(b => ({ label: b.label, y: indices.map(i => b.full_y[i]) })),
+      linea: indices.map(i => s.full_linea[i]),
     };
   }
   return {
@@ -1009,6 +1106,21 @@ const comboOpts = (unidad) => ({
   scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
            y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:'Var. mensual', font:{size:9}, color:'#838383'} },
            y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:'Stock', font:{size:9}, color:'#838383'} } },
+  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+});
+
+// Combo genérico de 1-2 barras + 1 línea (ver _serie_combo_barras_linea en Python): a
+// diferencia de comboOpts (una sola barra fija, título de eje fijo "Var. mensual"/"Stock"),
+// acá el título y la unidad de cada eje se pasan como parámetro porque el indicador de
+// barras y el de línea pueden ser cualquier par (no siempre reservas).
+const comboBLOpts = (unidadBarras, unidadLinea) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
+    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${c.dataset.yAxisID==='y1' ? unidadLinea : unidadBarras}` } } },
+  scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarras, font:{size:9}, color:'#838383'} },
+           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadLinea, font:{size:9}, color:'#838383'} } },
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
@@ -1123,6 +1235,12 @@ SERIES.forEach(s => {
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:coloresBarras, borderRadius:2 }] },
       options: sectorBarOpts(s.empleo_pct) });
+  } else if (s.kind === 'combo_bl') {
+    const datasets = s.barras.map(b => ({ type:'bar', label:b.label, data:b.y,
+        backgroundColor:b.color, yAxisID:'y' }));
+    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:'#232D4F',
+        backgroundColor:'#232D4F14', fill:false, tension:0.12, pointRadius:0, borderWidth:1.9, yAxisID:'y1' });
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets }, options: comboBLOpts(s.unidad_barras, s.unidad_linea) });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
@@ -1155,6 +1273,9 @@ function aplicarFiltro(idx, serie, rango, datFiltrados) {
     charts[idx].data.datasets[0].data = datFiltrados.expo;
     charts[idx].data.datasets[1].data = datFiltrados.impo;
     charts[idx].data.datasets[2].data = datFiltrados.saldo;
+  } else if (serie.kind === 'combo_bl') {
+    datFiltrados.barras.forEach((b, i) => { charts[idx].data.datasets[i].data = b.y; });
+    charts[idx].data.datasets[datFiltrados.barras.length].data = datFiltrados.linea;
   } else {
     charts[idx].data.datasets[0].data = datFiltrados.y;
   }
