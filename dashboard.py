@@ -496,17 +496,20 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
 
 def _serie_sectores_bar(idx, ind, historico):
     """
-    Barras categóricas: eje X = sector (categórico), ordenados de mayor a menor
-    % del empleo registrado total que representan; eje Y = variación % interanual
-    de actividad (EMAE por sector). El empleo (SIPA) sólo define el ORDEN de las
-    columnas, no un segundo eje (decisión de Pedro, Ronda "burbujas a barras": cada
-    sector tiene su propia columna, no puede haber superposición -- a diferencia
-    del gráfico de burbujas anterior, donde el cluster central de sectores quedaba
-    amontonado y necesitaba cerca de Tukey + toggle de zoom; ninguno de los dos
-    hace falta con barras categóricas). El EMAE (mensual) se remuestrea a
+    Barras categóricas con burbuja: eje X = sector (categórico), ordenados por el
+    VALOR de este mismo gráfico -- variación % interanual de actividad, de menor a
+    mayor (la caída más fuerte al extremo izquierdo, el mayor crecimiento al
+    extremo derecho) -- NO por peso de empleo (referencia visual: slide de MAP
+    LATAM que mandó Pedro). Eje Y: variación % interanual de actividad (EMAE por
+    sector). El tamaño de la burbuja dibujada sobre cada columna sigue
+    representando el % del empleo registrado total que representa el sector (dato
+    que antes definía el orden, ahora es sólo una dimensión visual adicional). Cada
+    sector tiene su propia posición en el eje X: no puede haber superposición entre
+    sectores como en el bubble chart original de dos ejes continuos, así que no
+    hace falta cerca de Tukey ni toggle de zoom. El EMAE (mensual) se remuestrea a
     trimestres calendario (misma definición que usa la fuente de empleo,
     nativamente trimestral: ene-mar/abr-jun/jul-sep/oct-dic) antes de comparar,
-    para que la variación de actividad y el orden por empleo representen el mismo
+    para que la variación de actividad y el peso de empleo representen el mismo
     período exacto.
     """
     pares = []
@@ -541,13 +544,13 @@ def _serie_sectores_bar(idx, ind, historico):
     total_empleo = sum(p["empleo"] for p in puntos)
     for p in puntos:
         p["pct_empleo"] = round(p["empleo"] / total_empleo * 100, 2)
-    puntos.sort(key=lambda p: p["pct_empleo"], reverse=True)
+    puntos.sort(key=lambda p: p["var_actividad"])
 
     trimestre = f"T{(fecha_comun.month - 1) // 3 + 1} {fecha_comun.year}"
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad="",
         valor=trimestre, pct=None, marca_fecha=None, maxv="s/d", minv="s/d", nota_num=None,
-        sin_filtros=True, subtitulo=ind.get("subtitulo"))
+        sin_filtros=True, subtitulo=ind.get("subtitulo"), grande=True)
 
     serie_js = dict(i=idx, kind="bar_sectores", fecha=fecha_comun.strftime("%m/%Y"),
         x=[p["nombre"] for p in puntos], y=[round(p["var_actividad"], 2) for p in puntos],
@@ -1183,11 +1186,14 @@ const atipicosIncidenciaPlugin = {
 };
 
 // Opciones del gráfico de barras categóricas "Actividad por sector" (reemplaza el
-// gráfico de burbujas: cada sector tiene su propia columna, ordenadas por peso de
-// empleo, sin necesidad de anti-colisión de etiquetas ni límites de eje robustos --
-// una barra por sector no puede superponerse con otra).
+// gráfico de burbujas de dos ejes continuos: cada sector tiene su propia columna,
+// ordenadas por el VALOR de actividad -- no por empleo --, sin necesidad de
+// anti-colisión de etiquetas ni límites de eje robustos, una barra por sector no
+// puede superponerse con otra). Padding arriba: deja lugar a la burbuja que dibuja
+// burbujaSectorPlugin en la punta de cada columna sin que se corte contra el borde.
 const sectorBarOpts = (empleoPct) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
+  layout:{ padding:{ top:18 } },
   plugins:{ legend:{display:false},
     tooltip:{ callbacks:{
       label:(c)=> {
@@ -1200,6 +1206,34 @@ const sectorBarOpts = (empleoPct) => ({
            y:{ title:{display:true, text:'Variación % interanual de actividad (EMAE)', font:{size:10}, color:'#555555'},
                ticks:{ color:'#838383', font:{size:10} }, grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} } },
 });
+
+// Dibuja una burbuja centrada en la punta de cada columna, con radio escalado por el
+// % del empleo total que representa ese sector (el dato que antes definía el orden del
+// eje X, ahora sólo una dimensión visual encima de las barras -- referencia: slide de
+// MAP LATAM que mandó Pedro). Radio ~ raíz cuadrada del %, no el % directo, para que sea
+// el ÁREA del círculo -- no el radio -- la que quede proporcional al peso (estándar en
+// gráficos de burbujas, evita exagerar visualmente las diferencias entre sectores).
+function burbujaSectorPlugin(empleoPct) {
+  return {
+    id: 'burbujaSector',
+    afterDatasetsDraw(chart) {
+      const meta = chart.getDatasetMeta(0);
+      const { ctx } = chart;
+      ctx.save();
+      meta.data.forEach((bar, i) => {
+        const r = Math.max(3, Math.sqrt(empleoPct[i] || 0) * 6);
+        ctx.beginPath();
+        ctx.arc(bar.x, bar.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = '#0767A7B0';
+        ctx.strokeStyle = '#0767A7';
+        ctx.lineWidth = 1;
+        ctx.fill();
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+  };
+}
 
 SERIES.forEach(s => {
   const el = document.getElementById('ch'+s.i);
@@ -1239,7 +1273,7 @@ SERIES.forEach(s => {
     const coloresBarras = s.y.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:coloresBarras, borderRadius:2 }] },
-      options: sectorBarOpts(s.empleo_pct) });
+      options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
   } else if (s.kind === 'combo_bl') {
     const datasets = s.barras.map(b => ({ type:'bar', label:b.label, data:b.y,
         backgroundColor:b.color, yAxisID:'y' }));

@@ -132,20 +132,22 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   resto — con muchas categorías apiladas (ej. 12 divisiones del IPC) cada franja individual queda
   demasiado angosta para distinguirla a simple vista.
 - `vista: sectores_bar` + `sectores: [{emae: "...", empleo: "..."}, ...]` → barras categóricas
-  (Chart.js `bar`): eje X = sector (una columna por sector, ordenadas de mayor a menor % que
-  representa sobre el total de `empleo` al último período común), eje Y = variación %
-  interanual de `emae`. El empleo sólo define el ORDEN de las columnas, no un eje propio
-  (decisión de diseño: mantener el cruce actividad×empleo en dos ejes reintroduciría el
-  problema de superposición que tenía la versión anterior de burbujas). Barras coloreadas por
-  signo (verde/rojo), mismo criterio que los combos de barra+línea. Si las frecuencias no
-  coinciden (ej. EMAE mensual vs. empleo trimestral), el más frecuente se remuestrea al
-  calendario del menos frecuente antes de comparar — documentarlo en la `nota`. Sin botones de
-  filtro de rango de fecha (es una foto de un período, no una serie temporal). Reemplaza a una
-  versión anterior en burbujas (eje X/Y = actividad/empleo, tamaño = peso de empleo): con sólo
-  ~15 sectores, el cluster central quedaba amontonado en el centro del cuadrante y necesitaba
-  ejes recortados con la cerca de Tukey (Q3 + 1,5×RIC) más un toggle "Vista completa"/"Zoom al
-  cluster" para que el grupo central no quedara ilegible — con una columna por sector no hay
-  superposición posible, así que ninguno de los dos mecanismos hace falta.
+  con burbuja (Chart.js `bar` + plugin propio `burbujaSectorPlugin`): eje X = sector (una
+  columna por sector, ordenadas por el VALOR de `emae` de menor a mayor -- no por `empleo`),
+  eje Y = variación % interanual de `emae`. Burbuja dibujada en la punta de cada columna: %
+  que representa `empleo` sobre el total al último período común (radio ~ raíz cuadrada del %,
+  para que sea el ÁREA la que quede proporcional al peso, no el radio) -- referencia visual:
+  slide de MAP LATAM. El empleo ya no define el orden del eje (a diferencia de una versión
+  anterior de este mismo mecanismo), sólo el tamaño de la burbuja. Barras coloreadas por signo
+  (verde/rojo), mismo criterio que los combos de barra+línea. Si las frecuencias no coinciden
+  (ej. EMAE mensual vs. empleo trimestral), el más frecuente se remuestrea al calendario del
+  menos frecuente antes de comparar — documentarlo en la `nota`. Sin botones de filtro de rango
+  de fecha (es una foto de un período, no una serie temporal). Reemplaza a una versión anterior
+  en burbujas de dos ejes continuos (eje X/Y = actividad/empleo, tamaño = peso de empleo): con
+  sólo ~15 sectores, el cluster central quedaba amontonado en el centro del cuadrante y
+  necesitaba ejes recortados con la cerca de Tukey (Q3 + 1,5×RIC) más un toggle "Vista
+  completa"/"Zoom al cluster" para que el grupo central no quedara ilegible — con una columna
+  por sector no hay superposición posible, así que ninguno de los dos mecanismos hace falta.
 - `calculo: combinado` + `componentes: [{id, peso}, ...]` + `rebase_fecha` (opcional) +
   `media_movil` (opcional, meses) → promedio ponderado de varios índices de nivel (los pesos se
   renormalizan solos, no hace falta que sumen 1), con rebase y/o media móvil. Ej.: EMAE
@@ -217,9 +219,10 @@ cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diar
 compras netas de divisas por contraparte); Agregados (base, M1 calculado, M2, M3); Tasas
 (BADLAR); Crédito (préstamos al sector privado, variación % real mensual, por tipo de
 deudor Familias/Empresas, morosidad por tipo de banco y por línea dentro de Familias,
-depósitos privado vs. público); EMAE general + semáforo por 16 sectores +
-EMAE Urbano vs. No urbano (ponderado por VAB) + actividad por sector en barras ordenadas por
-peso de empleo (SIPA); IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector externo
+depósitos privado vs. público); semáforo del EMAE por 16 sectores + actividad por sector en
+barras ordenadas por peso de empleo (SIPA) -- EMAE general, EMAE Urbano vs. No urbano e IPI
+manufacturero se sacaron del dashboard a pedido de Pedro (siguen en indicadores.yaml donde
+hace falta, ver `solo_componente`); Sector externo
 (expo/impo/saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social
 (desempleo, salario real, tasa de informalidad laboral, salario real por tipo de empleo,
 capacidad de compra RIPTE/CBT); Fiscal (resultado primario y financiero del Sector Público
