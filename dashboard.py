@@ -1056,6 +1056,11 @@ const espejoOpts = (unidad) => ({
 
 const overlayOpts = (unidad, radioPunto, cruce, escalaLog) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
+  // spanGaps: si dos series superpuestas tienen frecuencias muy distintas (ej. una
+  // trimestral + una diaria, como Deuda/PBI vs. TCR), la de menor frecuencia queda con
+  // huecos (null) en la mayoría de las fechas del eje compartido -- sin esto, Chart.js
+  // corta la línea en cada hueco en vez de interpolarla entre los puntos reales.
+  spanGaps: true,
   interaction:{ mode:'index', intersect:false },
   plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
     tooltip:{ callbacks:{

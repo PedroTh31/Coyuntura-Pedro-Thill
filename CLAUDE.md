@@ -54,6 +54,13 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   diferencia de `interanual`, no filtra valores ≤ 0: series como el resultado fiscal son
   negativas en meses de déficit sin que eso sea un dato inválido.
 - `calculo: mensual` + `base_id` → variación % mes a mes de una serie de datos_gob (nivel → tasa).
+- `calculo: deuda_pbi` + `pbi_id` (sin parámetros propios de deuda, usa `fuente: deuda_bruta`
+  internamente) → deuda pública bruta (USD, mensual) ÷ PBI nominal (pesos, trimestral, id en
+  `pbi_id`) convertido a USD con el tipo de cambio oficial PROMEDIO de cada trimestre
+  (decisión de Pedro: promedio, no cierre, mismo criterio que comparaciones internacionales
+  tipo FMI), expresado en %. No es un cálculo genérico como `ratio`: mezcla 3 fuentes de
+  frecuencias distintas (mensual/trimestral/diaria) con una conversión de moneda de por
+  medio, específico para este ratio.
 - `calculo: variacion_real_mensual` + `nominal_id` + `deflactor_id` + `media_movil` (opcional,
   meses) → deflacta por IPC, variación % mes a mes, con media móvil opcional.
 - `calculo: reservas_ajustadas` (sin parámetros propios) → reservas brutas (BCRA, diario) menos
@@ -74,6 +81,14 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   "Personales" o "Tarjetas de crédito". No está en datos.gob.ar (dataset 332 sólo desagrega
   por tipo de banco, no por tipo de deudor/línea). Cacheado como el REM/organismos
   internacionales (máximo 1 descarga por semana).
+- `fuente: deuda_bruta` (sin parámetros propios) → deuda bruta de la Administración Central
+  (Secretaría de Finanzas, Ministerio de Economía), boletín mensual, hoja "A.1", fila "A-
+  DEUDA BRUTA ( I + II + III)" (`fetch_deuda_bruta` en fetchers.py). No está en datos.gob.ar
+  con datos vigentes (la única serie limpia, 161.1_TL_DEUDRAL_0_0_28, es sólo deuda EXTERNA y
+  está discontinuada desde abr-2024). El nombre del Excel cambia cada mes (no es un patrón de
+  URL predecible): se scrapea la página de descarga para encontrar el link vigente. Los
+  últimos 1-4 meses marcados como provisorios por la fuente ("(*)") se excluyen. Cacheado
+  como el REM/organismos internacionales/morosidad por líneas (máximo 1 descarga por semana).
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
 - `vista: balance_cambiario` + `series: [indicador_barras, indicador_linea]` → combo de UN
   indicador ya existente como barras (eje izquierdo) + UN indicador ya existente como línea
@@ -209,7 +224,8 @@ peso de empleo (SIPA); IPI manufacturero (453.1_SERIE_ORIGNAL_0_0_14_46); Sector
 (desempleo, salario real, tasa de informalidad laboral, salario real por tipo de empleo,
 capacidad de compra RIPTE/CBT); Fiscal (resultado primario y financiero del Sector Público
 Nacional, superávit gemelos fiscal/comercial, resultado primario acumulado 12 meses vs. riesgo
-país, resultado primario vs. intereses de deuda).
+país, resultado primario vs. intereses de deuda, deuda pública bruta, PBI nominal trimestral,
+deuda/PBI vs. tipo de cambio real).
 
 ## Pendientes / a mejorar
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que

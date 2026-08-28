@@ -13,7 +13,8 @@ import yaml
 import pandas as pd
 
 from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
-                       fetch_bcra_organismos_internacionales, fetch_bcra_swap_china)
+                       fetch_bcra_organismos_internacionales, fetch_bcra_swap_china,
+                       fetch_deuda_bruta)
 import storage
 import dashboard
 
@@ -55,6 +56,28 @@ def _calcular(ind, start):
         s = s[s["den"] > 0]
         s["valor"] = s["num"] / s["den"]
         return s[["fecha", "valor"]].dropna().reset_index(drop=True)
+    if tipo == "deuda_pbi":
+        # Deuda pública bruta (USD, mensual, fetch_deuda_bruta) / PBI nominal (pesos
+        # corrientes, trimestral, id en 'pbi_id') convertido a USD con el tipo de cambio
+        # OFICIAL PROMEDIO de cada trimestre (decisión de Pedro: promedio trimestral, no
+        # tipo de cambio de cierre -- mismo criterio que usan comparaciones internacionales
+        # tipo FMI, evita que un salto puntual del dólar en la fecha de corte distorsione
+        # el ratio). Resultado en %. No es un 'calculo' genérico como 'ratio': mezcla 3
+        # fuentes de frecuencias distintas (mensual/trimestral/diaria) con una conversión
+        # de moneda de por medio, específico para este ratio.
+        deuda = fetch_deuda_bruta(start).rename(columns={"valor": "deuda_usd"})
+        pbi = fetch_datos_gob(ind["pbi_id"], start).rename(columns={"valor": "pbi_ars"}).sort_values("fecha")
+        dolar = fetch_dolar("oficial", start).sort_values("fecha")
+        tc_prom_trim = dolar.set_index("fecha")["valor"].resample("QS").mean()
+        pbi["tc_prom"] = pbi["fecha"].map(tc_prom_trim)
+        # La deuda es mensual: se toma el mes de CIERRE de cada trimestre (stock a fin de
+        # período, mismo criterio de "foto" que usa el resto del proyecto para stocks).
+        pbi["fecha_deuda"] = pbi["fecha"] + pd.DateOffset(months=2)
+        s = pbi.merge(deuda.rename(columns={"fecha": "fecha_deuda"}), on="fecha_deuda", how="inner")
+        s = s[(s["tc_prom"] > 0) & (s["pbi_ars"] > 0)]
+        s["pbi_usd"] = s["pbi_ars"] / s["tc_prom"]
+        s["valor"] = s["deuda_usd"] / s["pbi_usd"] * 100
+        return s[["fecha", "valor"]].dropna().sort_values("fecha").reset_index(drop=True)
     if tipo == "real":
         nom = fetch_datos_gob(ind["nominal_id"], start).rename(columns={"valor": "nom"})
         ipc = fetch_datos_gob(ind["deflactor_id"], start).rename(columns={"valor": "ipc"})
