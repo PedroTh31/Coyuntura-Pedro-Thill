@@ -19,6 +19,7 @@ from __future__ import annotations
 import datetime
 import io
 import json
+import re
 import time
 from pathlib import Path
 import requests
@@ -582,6 +583,94 @@ def fetch_bcra_morosidad_lineas(serie: str, start_date: str | None = None) -> pd
 
 
 # ---------------------------------------------------------------------------
+# 8) Secretaría de Finanzas: deuda bruta de la Administración Central
+# ---------------------------------------------------------------------------
+DEUDA_PAGINA_URL = "https://www.argentina.gob.ar/economia/finanzas/datos-mensuales"
+DEUDA_FRESCURA_DIAS = 7  # el boletín se actualiza ~1 vez por mes
+_DEUDA_CACHE_CSV = _CACHE_DIR / "_cache_deuda_bruta.csv"
+_DEUDA_CACHE_META = _CACHE_DIR / "_cache_deuda_bruta_meta.json"
+
+
+def _descargar_deuda_bruta() -> pd.DataFrame:
+    """
+    Boletín mensual de deuda bruta de la Administración Central (Secretaría
+    de Finanzas, Ministerio de Economía), hoja "A.1", fila "A- DEUDA BRUTA
+    ( I + II + III)" (total, millones de USD corrientes), serie mensual
+    desde 2019. El nombre del archivo Excel cambia cada mes (ej.
+    boletin_mensual_31_07_2026_0.xlsx, con el día de cierre del mes y un
+    sufijo que puede variar si hay una revisión posterior) -- no es un
+    patrón de URL predecible como el de otros fetchers de este archivo, así
+    que se scrapea la página de descarga para encontrar el link vigente en
+    vez de intentar adivinar el nombre. La fila de fechas (encabezado) y la
+    fila del total se ubican buscando su contenido (no un número de fila
+    fijo), para no romperse si el boletín agrega o saca alguna fila arriba.
+    """
+    pagina = _get(DEUDA_PAGINA_URL)
+    m = re.search(r'href="(/sites/default/files/boletin_mensual[^"]*\.xlsx)"', pagina.text)
+    if not m:
+        raise ValueError("No se encontró el link al boletín mensual de deuda bruta en la página de Hacienda")
+    r = _get("https://www.argentina.gob.ar" + m.group(1))
+    with io.BytesIO(r.content) as buf:
+        df = pd.read_excel(buf, sheet_name="A.1", header=None, engine="openpyxl")
+
+    fila_header = None
+    for i in range(min(20, len(df))):
+        if sum(isinstance(v, (pd.Timestamp, datetime.datetime)) for v in df.iloc[i]) > 5:
+            fila_header = i
+            break
+    if fila_header is None:
+        raise ValueError("No se encontró la fila de fechas en la hoja A.1 del boletín de deuda")
+    fechas = df.iloc[fila_header]
+
+    fila_total = None
+    for i in range(fila_header, len(df)):
+        if any(isinstance(v, str) and v.strip().upper().startswith("A- DEUDA BRUTA") for v in df.iloc[i]):
+            fila_total = i
+            break
+    if fila_total is None:
+        raise ValueError("No se encontró la fila 'A- DEUDA BRUTA' en la hoja A.1 del boletín de deuda")
+    valores = df.iloc[fila_total]
+
+    # La etiqueta de la fila vive en una columna propia (no siempre la 0): en vez de asumir un
+    # offset fijo entre columna de etiqueta y columna del primer dato, se empareja cada columna
+    # de 'fechas' con la misma columna de 'valores' y sólo se queda con los pares donde AMBAS
+    # celdas tienen el tipo esperado (fecha real / número real) -- así se saltean solas las
+    # columnas de etiqueta (texto o vacías) sin necesidad de saber en qué columna están.
+    filas = []
+    for col in range(len(fechas)):
+        f, v = fechas.iloc[col], valores.iloc[col]
+        if isinstance(f, (pd.Timestamp, datetime.datetime)) and isinstance(v, (int, float)) and pd.notna(v):
+            filas.append({"fecha": pd.Timestamp(f), "valor": float(v)})
+    return pd.DataFrame(filas).sort_values("fecha").reset_index(drop=True)
+
+
+def fetch_deuda_bruta(start_date: str | None = None) -> pd.DataFrame:
+    """Deuda bruta de la Administración Central, cacheada igual que REM/organismos
+    internacionales/morosidad por líneas (máximo 1 descarga por semana)."""
+    cache = None
+    if _DEUDA_CACHE_META.exists() and _DEUDA_CACHE_CSV.exists():
+        try:
+            meta = json.loads(_DEUDA_CACHE_META.read_text(encoding="utf-8"))
+            descargado = pd.to_datetime(meta.get("descargado"))
+            if (pd.Timestamp.today().normalize() - descargado).days < DEUDA_FRESCURA_DIAS:
+                cache = pd.read_csv(_DEUDA_CACHE_CSV, parse_dates=["fecha"])
+        except (ValueError, KeyError, OSError, json.JSONDecodeError):
+            cache = None
+
+    if cache is None:
+        cache = _descargar_deuda_bruta()
+        _CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        cache.to_csv(_DEUDA_CACHE_CSV, index=False)
+        _DEUDA_CACHE_META.write_text(
+            json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+
+    df = cache[["fecha", "valor"]].sort_values("fecha").drop_duplicates(subset="fecha").reset_index(drop=True)
+    if start_date:
+        df = df[df["fecha"] >= pd.to_datetime(start_date)]
+    return df.reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
 # Dispatcher: elige el fetcher según el config del indicador
 # ---------------------------------------------------------------------------
 def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
@@ -598,4 +687,6 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
         return fetch_rem_variable(indicador["variable"], indicador["referencia"], start_date)
     if fuente == "bcra_morosidad_lineas":
         return fetch_bcra_morosidad_lineas(indicador["serie"], start_date)
+    if fuente == "deuda_bruta":
+        return fetch_deuda_bruta(start_date)
     raise ValueError(f"Fuente desconocida: {fuente}")
