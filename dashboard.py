@@ -204,6 +204,55 @@ def _serie_comercio_espejo(idx, ind, historico):
     return card, serie_js
 
 
+def _serie_combo_2lineas(idx, ind, historico):
+    """
+    Combo genérico de DOS líneas ya existentes en dos ejes (izquierda/derecha), para
+    cuando sus magnitudes no son comparables en un mismo eje compartido (ej. un
+    índice base 100 vs. un nivel concreto en otra unidad) -- a diferencia de
+    'overlay', que comparte un solo eje y sólo tiene sentido cuando las series son
+    de magnitud parecida. ind['linea_izq']/ind['linea_der'] son nombres de
+    indicadores ya existentes; unidad_izq/unidad_der etiquetan cada eje. Todo se
+    resamplea a fin de mes antes de unir fechas (mismo criterio que
+    _serie_combo_barras_linea), por si las dos series tienen frecuencias distintas.
+    """
+    nombre_izq, nombre_der = ind["linea_izq"], ind["linea_der"]
+    g_izq = historico[historico["indicador"] == nombre_izq].sort_values("fecha")
+    g_der = historico[historico["indicador"] == nombre_der].sort_values("fecha")
+    if g_izq.empty or g_der.empty:
+        return None
+    izq_m = g_izq.set_index("fecha")["valor"].resample("MS").last()
+    der_m = g_der.set_index("fecha")["valor"].resample("MS").last()
+    fechas_full = izq_m.index.union(der_m.index).sort_values()
+    izq_full = izq_m.reindex(fechas_full)
+    der_full = der_m.reindex(fechas_full)
+
+    desde = ind.get("desde", DESDE_GENERAL)
+    fechas_s = fechas_full[fechas_full >= pd.to_datetime(desde)]
+    if len(fechas_s) < 2:
+        fechas_s = fechas_full
+
+    def _vals(s):
+        return [round(float(v), 2) if pd.notna(v) else None for v in s]
+
+    unidad_izq, unidad_der = ind.get("unidad_izq", ""), ind.get("unidad_der", "")
+    ult, pct = _variacion(g_izq)
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_izq,
+        valor=_fmt_num(ult), pct=pct, marca_fecha=None,
+        maxv=_fmt_num(g_izq["valor"].max()), minv=_fmt_num(g_izq["valor"].min()), nota_num=None,
+        subtitulo=ind.get("subtitulo"), grande=ind.get("grande", False),
+        sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
+
+    serie_js = dict(i=idx, kind="combo_2lineas", unidad_izq=unidad_izq, unidad_der=unidad_der,
+        label_izq=nombre_izq, label_der=nombre_der,
+        x=[d.strftime("%m/%y") for d in fechas_s],
+        full_x=[d.strftime("%m/%y") for d in fechas_full],
+        full_dates=[d.isoformat() for d in fechas_full],
+        izq=_vals(izq_full.reindex(fechas_s)), full_izq=_vals(izq_full),
+        der=_vals(der_full.reindex(fechas_s)), full_der=_vals(der_full))
+    return card, serie_js
+
+
 def _serie_combo_barras_linea(idx, ind, historico):
     """
     Combo genérico de 1-2 barras + 1 línea, dos ejes (barras a la izquierda, línea a la
@@ -584,7 +633,7 @@ def generar(historico, config_indicadores):
         nota = ind.get("nota")
         if ind.get("solo_componente"):
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
-        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas"):
             if ind["vista"] == "overlay":
                 entrada = _serie_overlay(idx, ind, historico)
             elif ind["vista"] == "incidencia_stack":
@@ -595,6 +644,8 @@ def generar(historico, config_indicadores):
                 entrada = _serie_comercio_espejo(idx, ind, historico)
             elif ind["vista"] == "combo_barras_linea":
                 entrada = _serie_combo_barras_linea(idx, ind, historico)
+            elif ind["vista"] == "combo_2lineas":
+                entrada = _serie_combo_2lineas(idx, ind, historico)
             else:
                 entrada = _serie_sectores_bar(idx, ind, historico)
             if entrada is None:
@@ -959,6 +1010,21 @@ function filtrarDatos(s, rango) {
       linea: indices.map(i => s.full_linea[i]),
     };
   }
+  if (s.kind === 'combo_2lineas') {
+    if (rango === 'default') {
+      return { x: s.x, izq: s.izq, der: s.der };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, izq: s.izq, der: s.der };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      izq: indices.map(i => s.full_izq[i]),
+      der: indices.map(i => s.full_der[i]),
+    };
+  }
   if (rango === 'default') {
     return { x: s.x, y: s.y, flujo: s.flujo };
   }
@@ -1035,6 +1101,13 @@ function filtrarDatosPersonalizado(s, desde, hasta) {
       x: indices.map(i => s.full_x[i]),
       barras: s.barras.map(b => ({ label: b.label, y: indices.map(i => b.full_y[i]) })),
       linea: indices.map(i => s.full_linea[i]),
+    };
+  }
+  if (s.kind === 'combo_2lineas') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      izq: indices.map(i => s.full_izq[i]),
+      der: indices.map(i => s.full_der[i]),
     };
   }
   return {
@@ -1129,6 +1202,20 @@ const comboBLOpts = (unidadBarras, unidadLinea) => ({
   scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
            y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarras, font:{size:9}, color:'#838383'} },
            y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadLinea, font:{size:9}, color:'#838383'} } },
+  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+});
+
+// Combo de DOS líneas en dos ejes (ver _serie_combo_2lineas en Python): a diferencia de
+// comboBLOpts (barras + línea), acá las dos series son líneas -- útil cuando ninguna de
+// las dos tiene sentido como barra (ej. dos índices/niveles de magnitud incomparable).
+const combo2LOpts = (unidadIzq, unidadDer) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
+    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${c.dataset.yAxisID==='y1' ? unidadDer : unidadIzq}` } } },
+  scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadIzq, font:{size:9}, color:'#838383'} },
+           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadDer, font:{size:9}, color:'#838383'} } },
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
@@ -1280,6 +1367,11 @@ SERIES.forEach(s => {
     datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:'#232D4F',
         backgroundColor:'#232D4F14', fill:false, tension:0.12, pointRadius:0, borderWidth:1.9, yAxisID:'y1' });
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets }, options: comboBLOpts(s.unidad_barras, s.unidad_linea) });
+  } else if (s.kind === 'combo_2lineas') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'line', label:s.label_izq, data:s.izq, borderColor:'#0767A7', backgroundColor:'#0767A714', yAxisID:'y', fill:false },
+        { type:'line', label:s.label_der, data:s.der, borderColor:'#C62828', backgroundColor:'#C6282814', yAxisID:'y1', fill:false },
+      ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
@@ -1315,6 +1407,9 @@ function aplicarFiltro(idx, serie, rango, datFiltrados) {
   } else if (serie.kind === 'combo_bl') {
     datFiltrados.barras.forEach((b, i) => { charts[idx].data.datasets[i].data = b.y; });
     charts[idx].data.datasets[datFiltrados.barras.length].data = datFiltrados.linea;
+  } else if (serie.kind === 'combo_2lineas') {
+    charts[idx].data.datasets[0].data = datFiltrados.izq;
+    charts[idx].data.datasets[1].data = datFiltrados.der;
   } else {
     charts[idx].data.datasets[0].data = datFiltrados.y;
   }

@@ -332,7 +332,7 @@ def main():
 
     for ind in indicadores:
         nombre = ind["nombre"]
-        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas"):
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         try:
             if "calculo" in ind:
@@ -345,6 +345,14 @@ def main():
                 continue
             if ind.get("factor"):
                 serie = serie.assign(valor=serie["valor"] * ind["factor"])
+            if ind.get("rebase_100"):
+                # Rebasa a 100 en el primer valor disponible -- genérico, para overlays que
+                # combinan series de magnitud muy distinta (ej. M1/M2/M3) donde mostrar
+                # niveles absolutos aplastaría a la más chica contra el eje.
+                serie = serie.sort_values("fecha").copy()
+                primero = serie["valor"].iloc[0] if len(serie) else None
+                if primero:
+                    serie = serie.assign(valor=serie["valor"] / primero * 100)
             filas.append(_fila(serie, ind))
             print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()})")
         except Exception as e:

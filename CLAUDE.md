@@ -105,6 +105,13 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   distintas (ej. resultado fiscal mensual + riesgo país diario) — unir fechas crudas sin
   resamplear deja un eje categórico dominado por la frecuencia más alta, con las barras de la
   frecuencia más baja reducidas a casi un pixel de ancho.
+- `vista: combo_2lineas` + `linea_izq: "..."` + `linea_der: "..."` + `unidad_izq`/`unidad_der`
+  → combo de DOS indicadores ya existentes, ambos como línea, cada uno en su propio eje --
+  para cuando ninguno de los dos tiene sentido como barra y sus magnitudes no son comparables
+  en un eje compartido (ej. un índice base 100 vs. un nivel concreto en otra unidad; a
+  diferencia de `overlay`, que comparte un solo eje y sólo sirve si las series son de magnitud
+  parecida). Mismo resampleo a fin de mes que `combo_barras_linea` por si las frecuencias
+  difieren.
 - `vista: comercio_espejo` + `series: [exportaciones, importaciones, saldo]` → gráfico espejo
   (mirror/diverging bars): exportaciones barras positivas arriba, importaciones barras negativas
   abajo (mismo valor de la fuente, sólo se invierte el signo para el gráfico), saldo comercial
@@ -169,6 +176,11 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `factor: N` → multiplica el valor crudo de la fuente por N antes de guardarlo (ej. `factor:
   100` cuando la fuente publica una tasa como fracción 0-1 pese a declararla "Porcentaje").
   Usar siempre esto en vez de parchear el número a mano en el código.
+- `rebase_100: true` → rebasa la serie a 100 en su primer valor disponible antes de guardarla
+  (aplica sobre el resultado de cualquier `fuente:`/`calculo:`, es un paso genérico, no un
+  cálculo propio). Para cuando un indicador sólo tiene sentido combinado en un `vista: overlay`
+  con otros de magnitud muy distinta (ej. M1/M2/M3: M3 es varias veces más grande que M1 en
+  pesos, así que mostrarlos en niveles absolutos aplastaría a los más chicos contra el eje).
 - `marca_fecha: true` → si la serie lleva más de `UMBRAL_DISCONTINUADA_DIAS` sin datos
   nuevos, el dashboard muestra un badge dinámico "Sin datos nuevos desde MM/AAAA" (se
   recalcula cada corrida; desaparece solo si la fuente retoma la publicación). También
