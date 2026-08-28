@@ -30,7 +30,7 @@ ZONA_AR = ZoneInfo("America/Argentina/Buenos_Aires")
 INDICADORES_MAIL = [
     "Dólar oficial", "Dólar blue", "Brecha cambiaria (CCL/oficial)",
     "Riesgo país (EMBI)", "Reservas internacionales (BCRA)",
-    "Inflación mensual (IPC)", "Base monetaria", "Tasa BADLAR (mayorista)",
+    "Inflación mensual (IPC)", "Base monetaria", "Tasa TAMAR (total bancos)",
     "EMAE (actividad económica)", "Saldo comercial",
 ]
 
@@ -258,7 +258,7 @@ _ARTICULO_BRIEFING = {
     "Reservas internacionales (BCRA)": "las reservas internacionales",
     "Inflación mensual (IPC)": "la inflación mensual",
     "Base monetaria": "la base monetaria",
-    "Tasa BADLAR (mayorista)": "la tasa BADLAR",
+    "Tasa TAMAR (total bancos)": "la tasa TAMAR",
     "EMAE (actividad económica)": "el EMAE",
     "Saldo comercial": "el saldo comercial",
 }

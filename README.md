@@ -8,9 +8,10 @@ vía GitHub Actions.
 ## Qué trae "de fábrica"
 Precios (IPC mensual/interanual), dólar oficial/blue/MEP/CCL, brecha cambiaria,
 tipo de cambio real, riesgo país, reservas (BCRA), agregados monetarios (base, M1,
-M2, M3), tasas (BADLAR, política monetaria), crédito, EMAE general + semáforo por
-16 sectores, IPI manufacturero, sector externo (expo/impo desagregado), desempleo,
-salario real. El detalle completo de cada indicador vive en `indicadores.yaml`.
+M2, M3), tasas (TAMAR, política monetaria), crédito, semáforo del EMAE por
+16 sectores + actividad por sector, sector externo (expo/impo desagregado), desempleo,
+salario real, fiscal (resultado primario/financiero, deuda pública). El detalle
+completo de cada indicador vive en `indicadores.yaml`.
 
 ## Fuentes (todas gratis, sin API key)
 | Fuente | Qué aporta |

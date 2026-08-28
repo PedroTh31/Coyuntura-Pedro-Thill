@@ -197,7 +197,7 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   marcarlo — no resolver el juicio económico por cuenta propia.
 - `neutral: true` → la flecha de variación se muestra sin pintar (gris, misma clase que "sin
   cambio significativo"), para indicadores donde ni `sube_es_bueno: true` ni el default rojo
-  aplican con claridad (ej. Base monetaria/M1/M2/M3, BADLAR, préstamos, depósitos bancarios,
+  aplican con claridad (ej. Base monetaria/M1/M2/M3, TAMAR, préstamos, depósitos bancarios,
   TCR multilateral — decisión de Pedro en cada caso, ver punto anterior). Se lee del mismo
   yaml en dashboard.py y enviar_mail.py.
 - `nota: "..."` → aclaración metodológica; se muestra como asterisco bajo el gráfico y en el
@@ -228,16 +228,18 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 Precios (inflación mensual/interanual, IPC nivel general, incidencia por división de consumo);
 Dólar (oficial/blue/MEP/CCL); Brecha cambiaria; Tipo de
 cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diario, combo,
-compras netas de divisas por contraparte); Agregados (base, M1 calculado, M2, M3); Tasas
-(BADLAR); Crédito (préstamos al sector privado, variación % real mensual, por tipo de
+compras netas de divisas por contraparte); Agregados monetarios (base, M1/M2/M3 combinados en
+un overlay rebasado a 100); Tasas (TAMAR total bancos, reemplaza a BADLAR); Crédito (préstamos
+al sector privado, variación % real mensual, por tipo de
 deudor Familias/Empresas, morosidad por tipo de banco y por línea dentro de Familias,
 depósitos privado vs. público); semáforo del EMAE por 16 sectores + actividad por sector en
-barras ordenadas por peso de empleo (SIPA) -- EMAE general, EMAE Urbano vs. No urbano e IPI
-manufacturero se sacaron del dashboard a pedido de Pedro (siguen en indicadores.yaml donde
-hace falta, ver `solo_componente`); Sector externo
+barras con burbuja de empleo, ordenadas por variación de actividad (SIPA) -- EMAE general, EMAE
+Urbano vs. No urbano e IPI manufacturero se sacaron del dashboard a pedido de Pedro (siguen en
+indicadores.yaml donde hace falta, ver `solo_componente`); Sector externo
 (expo/impo/saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social
-(desempleo, salario real, tasa de informalidad laboral, salario real por tipo de empleo,
-capacidad de compra RIPTE/CBT); Fiscal (resultado primario y financiero del Sector Público
+(desempleo, tasa de informalidad laboral, salario real por tipo de empleo, salario real
+combinado con capacidad de compra RIPTE/CBT en un combo de dos ejes); Fiscal (resultado
+primario y financiero del Sector Público
 Nacional, superávit gemelos fiscal/comercial, resultado primario acumulado 12 meses vs. riesgo
 país, resultado primario vs. intereses de deuda, deuda pública bruta, PBI nominal trimestral,
 deuda/PBI vs. tipo de cambio real).
