@@ -803,7 +803,11 @@ def _card_cell(c):
     # Aclaración corta debajo del título (ej. grupo "Reservas", donde varios gráficos parecidos
     # se confundían entre sí leyendo sólo el nombre): visible sin tener que abrir la nota al pie.
     subtitulo_html = f'<div class="csub">{c["subtitulo"]}</div>' if c.get("subtitulo") else ""
-    return (f'<div class="{cell_cls}"><div class="card" style="--acc:{c["color"]}">'
+    # Ícono de pantalla completa (Punto 11): un solo botón por tarjeta, implementado UNA vez
+    # acá (se aplica a las ~38 tarjetas automáticamente) -- el JS compartido (fullscreenPlugin
+    # más abajo) escucha el click y expande el .cell entero via Fullscreen API nativa.
+    fs_btn = '<button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>'
+    return (f'<div class="{cell_cls}">{fs_btn}<div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
@@ -888,7 +892,26 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .notas-list strong { color:var(--tinta); }
   .dot { width:11px; height:11px; border-radius:2px; display:inline-block; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,460px)); justify-content:start; gap:18px; margin-bottom:8px; }
-  .cell { border:1px solid var(--borde); border-radius:10px; overflow:hidden; background:var(--papel); box-shadow:0 1px 2px rgba(20,20,20,.04); }
+  .cell { position:relative; border:1px solid var(--borde); border-radius:10px; overflow:hidden; background:var(--papel); box-shadow:0 1px 2px rgba(20,20,20,.04); }
+  /* Punto 11: ícono de pantalla completa, esquina superior derecha de cada tarjeta. */
+  .fs-btn { position:absolute; top:6px; right:6px; z-index:5; width:24px; height:24px; padding:0;
+    border:1px solid var(--borde); border-radius:5px; background:var(--fondo); color:var(--gris);
+    font-size:13px; line-height:1; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; opacity:0.55; transition:opacity 0.15s; }
+  .fs-btn:hover { opacity:1; background:var(--hover); }
+  /* Estado :fullscreen (Fullscreen API nativa) -- overflow:visible para no recortar el
+     gráfico/leyenda al expandirse, y tipografía más grande para aprovechar el espacio. */
+  .cell:fullscreen, .cell:-webkit-full-screen { overflow:visible; background:var(--papel);
+    display:flex; flex-direction:column; padding:16px; }
+  .cell:fullscreen .cbox, .cell:-webkit-full-screen .cbox { flex:1 1 auto; height:auto !important; }
+  .cell:fullscreen .cv, .cell:-webkit-full-screen .cv { font-size:32px; }
+  .cell:fullscreen .cn, .cell:-webkit-full-screen .cn { font-size:13px; }
+  /* Fallback para navegadores sin Fullscreen API nativa (Safari iOS histórico): mismo
+     resultado visual vía position:fixed, con el mismo botón ahora usado para cerrar. */
+  .cell.fs-fallback { position:fixed; inset:12px; z-index:1000; overflow:auto; display:flex;
+    flex-direction:column; padding:16px; box-shadow:0 4px 24px rgba(0,0,0,.25); }
+  .cell.fs-fallback .cbox { flex:1 1 auto; height:auto !important; }
+  .cell.fs-fallback .fs-btn { opacity:1; }
   .card { border-left:4px solid var(--acc); padding:12px 14px 8px; }
   .cn { font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--gris); min-height:28px; }
   .csub { font-size:11px; color:var(--tinta); opacity:0.75; margin-top:-4px; margin-bottom:4px; line-height:1.3; }
@@ -900,8 +923,12 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
   .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
   .cbox { height:260px; padding:8px 10px 12px; }
-  .cbox-grande { height:400px; }
-  .cell-ancha { grid-column: span 2; }
+  /* Punto 11 (ronda "continuación"): Pedro quiere TODAS las tarjetas del mismo tamaño por
+     ahora, hasta elegir cuáles agrandar a propósito. No se tocaron los flags grande/
+     sin_filtros en indicadores.yaml (siguen marcados en el dato) -- sólo se neutralizó acá
+     la diferencia visual, así que volver a diferenciarlas es reactivar estas 2 líneas:
+     .cbox-grande { height:400px; }
+     .cell-ancha { grid-column: span 2; } */
   .tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; margin-bottom:8px; }
   .tabla th { text-align:right; color:var(--gris); font-weight:600; font-size:11px; text-transform:uppercase; padding:4px 10px; }
   .tabla th:first-child { text-align:left; }
@@ -1456,6 +1483,55 @@ document.querySelectorAll('.rango-aplicar').forEach(btn => {
     aplicarFiltro(idx, serie, 'personalizado', filtrarDatosPersonalizado(serie, desde, hasta));
   });
 });
+
+// Ícono de pantalla completa (Punto 11): implementado UNA sola vez acá para las ~38
+// tarjetas -- cada botón .fs-btn expande el .cell que lo contiene entero (no sólo el
+// <canvas>) para que título/valor/filtros también se vean grandes. Usa la Fullscreen API
+// nativa del navegador; si no existe (Safari iOS históricamente irregular), cae a un
+// fallback con position:fixed (.fs-fallback en el CSS) controlado a mano.
+function redimensionarChartDe(cell) {
+  const canvas = cell.querySelector('canvas');
+  if (!canvas) return;
+  const idx = parseInt(canvas.id.replace('ch', ''));
+  if (charts[idx]) charts[idx].resize();
+}
+
+const tieneFullscreenNativo = !!(document.documentElement.requestFullscreen);
+
+document.querySelectorAll('.fs-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const cell = this.closest('.cell');
+    if (!cell) return;
+    if (tieneFullscreenNativo) {
+      if (document.fullscreenElement === cell) {
+        document.exitFullscreen();
+      } else {
+        cell.requestFullscreen().catch(() => {});
+      }
+    } else {
+      // Fallback sin Fullscreen API: el mismo botón alterna la clase a mano.
+      cell.classList.toggle('fs-fallback');
+      redimensionarChartDe(cell);
+    }
+  });
+});
+
+if (tieneFullscreenNativo) {
+  let cellFullscreenAnterior = null;
+  document.addEventListener('fullscreenchange', () => {
+    // Chart.js no redimensiona solo si el contenedor cambia de tamaño por la Fullscreen
+    // API (no dispara resize del window) -- hay que llamarlo a mano, tanto al entrar como
+    // al salir (document.fullscreenElement es null al salir, por eso se guarda la anterior).
+    const actual = document.fullscreenElement;
+    if (actual && actual.classList.contains('cell')) {
+      redimensionarChartDe(actual);
+      cellFullscreenAnterior = actual;
+    } else if (cellFullscreenAnterior) {
+      redimensionarChartDe(cellFullscreenAnterior);
+      cellFullscreenAnterior = null;
+    }
+  });
+}
 </script>
 </body></html>"""
 
