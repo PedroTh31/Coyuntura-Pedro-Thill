@@ -12,6 +12,8 @@ import os
 import re
 import ssl
 import smtplib
+import unicodedata
+from difflib import SequenceMatcher
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
@@ -83,9 +85,26 @@ KW_ECONOMICO_AR = [
     "superávit", "déficit", "tasa de interés", "tasas de interés", "desempleo",
     "pobreza", "canasta básica", "comercio exterior", "exportaciones",
     "importaciones", "balanza comercial", "merval", "bolsa", "acciones", "bonos",
-    "salario", "paritaria", "inversión", "recesión", "consumo", "industria",
-    "producción", "tarifa", "impuesto", "recaudación", "fiscal", "presupuesto",
-    "milei",
+    "salario", "paritaria", "recesión", "tarifa", "impuesto", "recaudación",
+    "fiscal", "presupuesto", "milei",
+]
+# "inversión", "consumo", "industria", "producción" se sacaron de la lista de arriba
+# (Ronda 2 del mail): son demasiado genéricos -- aparecen tal cual en notas de
+# management/franquicias sin nada de macro (ej. "Radiografía de un negocio"), dejaban
+# pasar contenido fuera de tema aunque el resto del filtro funcionara bien.
+
+# Además del tema económico, una nota ARGENTINA tiene que mencionar Argentina en algún
+# lado (Ronda 2): "deuda" o "desempleo" solos no alcanzan si la nota es sobre Colombia,
+# México, etc. -- caso real que se coló: "Deuda de las EPS en Colombia llegó a...".
+# "Milei"/"Caputo" ya están acá, pero sólo cuentan junto con un match de
+# KW_ECONOMICO_AR (las dos listas se exigen en conjunto, ver _es_economico_ar).
+KW_ARGENTINA_CONTEXTO = [
+    "argentina", "argentino", "argentina", "bcra", "banco central", "indec",
+    "ministerio de economía", "peso argentino", "gobierno nacional", "milei", "caputo",
+    "buenos aires", "córdoba", "santa fe", "mendoza", "tucumán", "salta",
+    "entre ríos", "chaco", "corrientes", "misiones", "san juan", "jujuy",
+    "río negro", "neuquén", "formosa", "chubut", "san luis", "catamarca",
+    "la rioja", "santa cruz", "santiago del estero", "la pampa", "tierra del fuego",
 ]
 
 # notas tipo "consejo/listicle" o de relleno que no son noticia económica real (ej. "cómo
@@ -96,13 +115,30 @@ KW_EXCLUIR_TIPS = [
     "trucos para", "paso a paso para", "todo lo que tenés que saber para",
     "todo lo que necesitás saber para", "cuidar tu bolsillo",
     "cuánto cobra", "cuánto se cobra", "a cuánto llega", "de cuánto es",
-    "aumento confirmado", "en vivo", "minuto a minuto", "hora a hora",
+    "a cuánto cotiza", "aumento confirmado", "en vivo", "minuto a minuto", "hora a hora",
     "cronograma de pagos", "calendario de pagos", "esquema de cobros",
     "quiénes cobran", "quiénes perciben",
     "what does this mean for", "what will this mean for", "mean for my bills",
     "mean for your",
+    "denuncia periodística", "investigación periodística", "ronda de investigación",
 ]
 _RE_LISTICLE = re.compile(r"^\d+\s+(formas?|tips?|claves?|trucos?|maneras?)\s+", re.I)
+# Acrónimos cortos (ej. "CIA") con \b: si se buscaran como substring suelto ("cia")
+# matchean falsos positivos adentro de palabras comunes ("diferencia", "resistencia").
+# Caso real que se coló (Ronda 2): nota sobre Peter Thiel/Palantir/CIA con referencias
+# a la AMIA -- investigación periodística/política, no una noticia económica.
+_RE_EXCLUIR_ACRONIMOS = re.compile(r"\b(cia|amia|espionaje|inteligencia)\b", re.I)
+
+# Ronda 2 del mail: priorizar (no excluir del todo) noticias internacionales con
+# contenido económico/de mercados por sobre las puramente geopolíticas (guerra,
+# elecciones, diplomacia) que no tengan ningún término de esta lista.
+KW_ECONOMICO_INTL = [
+    "fed", "reserva federal", "fomc", "tasa de interés", "tasas de interés",
+    "banco central", "bce", "banco de inglaterra", "banco de japón", "pboc",
+    "futuros", "bonos", "rendimientos", "wall street", "nasdaq", "s&p 500",
+    "nikkei", "yuan", "yen", "euro",
+    "inflación", "pib", "desempleo", "manufactura", "exportaciones",
+]
 
 
 def _limpiar(texto):
@@ -124,12 +160,16 @@ def _es_internacional(texto):
 
 
 def _es_tip(titulo):
-    """Filtra notas tipo consejo/listicle/relleno que no son noticia económica real."""
+    """Filtra notas tipo consejo/listicle/relleno, y (Ronda 2) notas de investigación
+    política/periodística que no son noticia económica real aunque mencionen de
+    pasada algún término económico (ej. una nota sobre la CIA y la AMIA)."""
     t = titulo.lower().strip()
     if _RE_LISTICLE.match(t):
         return True
     if t.startswith("firstft:"):
         return True  # boletín embolsado de FT, agrupa varias notas sin relación
+    if _RE_EXCLUIR_ACRONIMOS.search(t):
+        return True
     return any(k in t for k in KW_EXCLUIR_TIPS)
 
 
@@ -139,6 +179,60 @@ def _es_economico_ar(texto):
     tampoco es economía -- el filtro negativo solo no alcanza para esos casos)."""
     t = " " + texto.lower() + " "
     return any(k in t for k in KW_ECONOMICO_AR)
+
+
+def _es_argentina_contexto(texto):
+    """Filtro positivo adicional (Ronda 2): la nota tiene que mencionar Argentina en
+    algún lado -- 'deuda' o 'desempleo' solos no alcanzan si la nota es sobre otro
+    país (caso real: una nota sobre deuda de obras sociales en Colombia)."""
+    t = " " + texto.lower() + " "
+    return any(k in t for k in KW_ARGENTINA_CONTEXTO)
+
+
+def _es_economico_intl(texto):
+    """Para priorizar (no excluir) noticias internacionales con contenido económico/
+    de mercados por sobre las puramente geopolíticas (Ronda 2)."""
+    t = " " + texto.lower() + " "
+    return any(k in t for k in KW_ECONOMICO_INTL)
+
+
+def _normalizar_titulo(texto):
+    """Normaliza un título para comparar similitud entre notas (Ronda 2, dedup):
+    minúsculas, sin tildes, sin puntuación."""
+    t = texto.lower().strip()
+    t = "".join(c for c in unicodedata.normalize("NFD", t) if unicodedata.category(c) != "Mn")
+    t = re.sub(r"[^a-z0-9\s]", " ", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def _deduplicar(items, umbral=0.6):
+    """Colapsa notas que son la misma noticia contada por distintas fuentes (Ronda 2;
+    ej. dos notas de la cotización del dólar, una con foco en Córdoba y otra en Buenos
+    Aires). Compara títulos normalizados con SequenceMatcher; ante un grupo de
+    duplicados se queda con el de fuente de mayor jerarquía (el orden en que aparece
+    la fuente en FEEDS_MEDIOS/FEEDS_INTERNACIONAL, guardado en 'rank' por
+    _recolectar) y, si empatan, con el más reciente. Preserva el orden relativo
+    original de los sobrevivientes (ya viene pre-ordenado por _recolectar)."""
+    normalizados = [_normalizar_titulo(x["titulo"]) for x in items]
+    usados = [False] * len(items)
+    resultado = []
+    for i in range(len(items)):
+        if usados[i]:
+            continue
+        grupo = [i]
+        usados[i] = True
+        for j in range(i + 1, len(items)):
+            if usados[j]:
+                continue
+            if SequenceMatcher(None, normalizados[i], normalizados[j]).ratio() > umbral:
+                grupo.append(j)
+                usados[j] = True
+        if len(grupo) == 1:
+            resultado.append(items[i])
+        else:
+            ganador = min(grupo, key=lambda k: (items[k].get("rank", 0), -items[k]["pub"].timestamp()))
+            resultado.append(items[ganador])
+    return resultado
 
 
 def _limite(es_argentina):
@@ -153,12 +247,13 @@ def _limite(es_argentina):
 
 
 def _recolectar(feeds, es_argentina):
-    """Junta notas de una lista de feeds RSS directos, con bajada y fecha."""
+    """Junta notas de una lista de feeds RSS directos, con bajada y fecha. 'rank' guarda
+    la posición del feed en la lista (jerarquía de fuente, usada por _deduplicar)."""
     import feedparser
     limite = _limite(es_argentina)
     vistos, items = set(), []
 
-    def procesar(feed):
+    def procesar(feed, rank):
         for e in getattr(feed, "entries", []):
             t = getattr(e, "title", "").strip()
             if not t or t in vistos:
@@ -178,11 +273,11 @@ def _recolectar(feeds, es_argentina):
                 fuente = getattr(src, "title", "") or (src.get("title", "") if isinstance(src, dict) else "")
             vistos.add(t)
             items.append(dict(titulo=t, link=getattr(e, "link", "#"),
-                              fuente=fuente, bajada=bajada, pub=pub))
+                              fuente=fuente, bajada=bajada, pub=pub, rank=rank))
 
-    for url in feeds:
+    for rank, url in enumerate(feeds):
         try:
-            procesar(feedparser.parse(url))
+            procesar(feedparser.parse(url), rank)
         except Exception:
             continue
 
@@ -196,17 +291,24 @@ def obtener_noticias(n=6):
         import feedparser  # noqa: F401
     except Exception:
         return [], []
-    arg = [x for x in _recolectar(FEEDS_MEDIOS, es_argentina=True)
+    arg_crudo = [x for x in _recolectar(FEEDS_MEDIOS, es_argentina=True)
            if not _es_internacional(x["titulo"]) and not _es_tip(x["titulo"])
-           and _es_economico_ar(x["titulo"] + " " + x["bajada"])]
-    arg = arg[:n]
+           and _es_economico_ar(x["titulo"] + " " + x["bajada"])
+           and _es_argentina_contexto(x["titulo"] + " " + x["bajada"])]
+    arg_crudo = _deduplicar(arg_crudo)
+    arg = arg_crudo[:n]
     titulos_arg = {x["titulo"] for x in arg}
 
     crudo_intl = _recolectar(FEEDS_INTERNACIONAL, es_argentina=False)
-    intl = [x for x in crudo_intl
+    intl_crudo = [x for x in crudo_intl
             if x["titulo"] not in titulos_arg and not _es_tip(x["titulo"])
             and _es_internacional(x["titulo"] + " " + x["bajada"])]
-    intl = intl[:n]
+    intl_crudo = _deduplicar(intl_crudo)
+    # Prioriza (no excluye) notas con contenido económico/de mercados por sobre las
+    # puramente geopolíticas -- sort estable, mantiene el orden bajada/recencia dentro
+    # de cada grupo de prioridad (ver _recolectar).
+    intl_crudo.sort(key=lambda x: 0 if _es_economico_intl(x["titulo"] + " " + x["bajada"]) else 1)
+    intl = intl_crudo[:n]
     return arg, intl
 
 
@@ -238,48 +340,27 @@ def resumen_indicadores(df):
         if s.empty:
             continue
         ult = s.iloc[-1]
+        unidad = ult.get("unidad", "")
         prev = s[s["fecha"] <= ult["fecha"] - pd.Timedelta(days=7)]
         chg = None
-        if not prev.empty and prev.iloc[-1]["valor"]:
-            chg = (ult["valor"] / prev.iloc[-1]["valor"] - 1) * 100
-        filas.append(dict(nombre=n, valor=_fmt(ult["valor"]), unidad=ult.get("unidad", ""),
-                          chg=chg, fecha=ult["fecha"].strftime("%d/%m/%Y"),
+        # Ronda 2: para indicadores que ya son tasas/porcentajes (TAMAR, inflación,
+        # brecha cambiaria...), la variación a 7 días se muestra como diferencia
+        # simple en puntos porcentuales (ej. "de 3,0% a 3,5% = +0,5 p.p."), no como
+        # variación % del valor (que para una tasa da un número confuso, ej. "+16,7%"
+        # para ese mismo movimiento). El resto (dólar, reservas, montos en pesos)
+        # sigue en % de variación como siempre -- "%" en la unidad ya declarada en
+        # indicadores.yaml decide cuál criterio aplica, sin lista hardcodeada aparte.
+        es_pp = "%" in str(unidad)
+        if not prev.empty and prev.iloc[-1]["valor"] is not None:
+            valor_prev = prev.iloc[-1]["valor"]
+            if es_pp:
+                chg = ult["valor"] - valor_prev
+            elif valor_prev:
+                chg = (ult["valor"] / valor_prev - 1) * 100
+        filas.append(dict(nombre=n, valor=_fmt(ult["valor"]), unidad=unidad,
+                          chg=chg, es_pp=es_pp, fecha=ult["fecha"].strftime("%d/%m/%Y"),
                           sube_es_bueno=sube_es_bueno.get(n, False), neutral=neutral.get(n, False)))
     return filas
-
-
-# artículo + forma corta de cada indicador de INDICADORES_MAIL, sólo para armar el
-# briefing en una frase natural (lista fija, igual que INDICADORES_MAIL)
-_ARTICULO_BRIEFING = {
-    "Dólar oficial": "el dólar oficial",
-    "Dólar blue": "el dólar blue",
-    "Brecha cambiaria (CCL/oficial)": "la brecha cambiaria",
-    "Riesgo país (EMBI)": "el riesgo país",
-    "Reservas internacionales (BCRA)": "las reservas internacionales",
-    "Inflación mensual (IPC)": "la inflación mensual",
-    "Base monetaria": "la base monetaria",
-    "Tasa TAMAR (total bancos)": "la tasa TAMAR",
-    "EMAE (actividad económica)": "el EMAE",
-    "Saldo comercial": "el saldo comercial",
-}
-
-
-def _generar_briefing(indicadores, umbral=1.0, max_items=3):
-    """Frase corta con los indicadores que más se movieron, por regla fija (sin LLM)."""
-    movidos = [f for f in indicadores if f["chg"] is not None and abs(f["chg"]) > umbral]
-    movidos.sort(key=lambda f: abs(f["chg"]), reverse=True)
-    top = movidos[:max_items]
-    if not top:
-        return "Jornada sin grandes movimientos en los indicadores clave."
-    partes = []
-    for f in top:
-        verbo = "subió" if f["chg"] > 0 else "bajó"
-        nombre = _ARTICULO_BRIEFING.get(f["nombre"], f["nombre"])
-        pct = f'{abs(f["chg"]):.1f}'.replace(".", ",")
-        unidad = f' {f["unidad"]}' if f.get("unidad") else ""
-        partes.append(f'{nombre}, que {verbo} {pct}% a {f["valor"]}{unidad}')
-    cuerpo = partes[0] if len(partes) == 1 else ", ".join(partes[:-1]) + " y " + partes[-1]
-    return f"Hoy se destaca {cuerpo}."
 
 
 def _render_noticias(lista):
@@ -298,7 +379,7 @@ def _render_noticias(lista):
     return "".join(bloques)
 
 
-def armar_html(indicadores, argentinas, internacionales, briefing=""):
+def armar_html(indicadores, argentinas, internacionales):
     hoy = datetime.now(ZONA_AR).strftime("%d/%m/%Y")
     filas_ind = ""
     for f in indicadores:
@@ -312,15 +393,14 @@ def armar_html(indicadores, argentinas, internacionales, briefing=""):
             else:
                 bueno = sube if f.get("sube_es_bueno") else not sube
                 color = "#256D5B" if bueno else "#B4341F"
-        chg = f'{flecha} {abs(f["chg"]):.1f}%' if f["chg"] is not None else "—"
+        unidad_chg = " p.p." if f.get("es_pp") else "%"
+        chg = f'{flecha} {abs(f["chg"]):.1f}{unidad_chg}' if f["chg"] is not None else "—"
         filas_ind += (f'<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">{f["nombre"]}</td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:monospace;text-align:right"><b>{f["valor"]}</b> <span style="color:#999;font-size:11px">{f["unidad"]}</span></td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right;color:{color};font-family:monospace">{chg}</td></tr>')
 
-    briefing_html = f'<p style="font-size:15px;margin-top:14px">{briefing}</p>' if briefing else ""
     return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:#1A1A1A">
       <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>
-      {briefing_html}
       <h3 style="margin-top:22px">Indicadores clave <span style="color:#999;font-weight:400;font-size:13px">(variación vs. 7 días atrás)</span></h3>
       <table style="width:100%;border-collapse:collapse;font-size:14px">{filas_ind}</table>
       <h3 style="margin-top:26px">🇦🇷 Noticias argentinas</h3>
@@ -358,9 +438,8 @@ def enviar(html):
 def main():
     df = pd.read_csv(CSV, parse_dates=["fecha"])
     indicadores = resumen_indicadores(df)
-    briefing = _generar_briefing(indicadores)
     argentinas, internacionales = obtener_noticias()
-    html = armar_html(indicadores, argentinas, internacionales, briefing)
+    html = armar_html(indicadores, argentinas, internacionales)
     enviar(html)
 
 
