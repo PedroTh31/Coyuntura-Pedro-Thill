@@ -25,18 +25,25 @@ UMBRAL_DISCONTINUADA_DIAS = 90  # a partir de cuántos días sin datos se marca 
 # tokens oficiales tomados de poncho.min.css (--arg-azul, --arg-enlace, --arg-rojo, etc.),
 # elegidos para separarse bien entre sí incluso con daltonismo (protanopia/deuteranopia).
 ACENTO = {"precios": "#C62828", "monetario_financiero": "#0767A7",
-          "externo": "#EF6C00", "real": "#50B7B2", "social": "#6A1B99", "fiscal": "#8D2D04"}
+          "externo": "#EF6C00", "real": "#50B7B2", "social": "#6A1B99", "fiscal": "#8D2D04",
+          "mercados": "#0767A7"}
 AZUL_MARCA = "#232D4F"     # --arg-azul: navy institucional (header, footer, texto fuerte)
 AZUL_ENLACE = "#0767A7"    # --arg-enlace: azul de interacción (links, botón activo)
 TINTA = "#141414"; PAPEL = "#FFFFFF"; GRIS = "#555555"
-ORDEN_BLOQUES = ["precios", "monetario_financiero", "externo", "real", "social", "fiscal"]
+# NOTA: "mercados" alimenta docs/financiera.html (ver dashboard_financiera vía run.py,
+# generar() con archivo_salida="financiera.html"). Convive en las mismas listas que los
+# bloques macro porque generar()/_escribir_html() son genéricos: un bloque sin tarjetas
+# para el config_indicadores que se le pasó simplemente no imprime sección (ver el "continue"
+# en _escribir_html), así que agregarlo acá no afecta a docs/index.html.
+ORDEN_BLOQUES = ["precios", "monetario_financiero", "externo", "real", "social", "fiscal", "mercados"]
 TITULO_BLOQUE = {"precios": "Precios", "monetario_financiero": "Monetario y financiero",
                  "real": "Actividad real", "externo": "Sector externo",
-                 "social": "Social y empleo", "fiscal": "Fiscal"}
+                 "social": "Social y empleo", "fiscal": "Fiscal", "mercados": "Mercados"}
 ORDEN_GRUPOS = ["Precios", "Dólar", "Brecha y TCR", "Riesgo país", "Reservas",
                 "Agregados monetarios", "Tasas de interés", "Crédito",
                 "Comercio exterior", "Exportaciones por rubro", "Importaciones por uso",
-                "Actividad", "Social", "Fiscal"]
+                "Actividad", "Social", "Fiscal",
+                "Tipo de cambio y brechas", "Tasas y CER", "Acciones", "Dólar futuro"]
 
 
 def _fmt_num(v) -> str:
@@ -620,7 +627,8 @@ def _registrar_nota(nota, nombre, notas_dict):
     return nota_num
 
 
-def generar(historico, config_indicadores):
+def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
+            nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina"):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
@@ -717,7 +725,9 @@ def generar(historico, config_indicadores):
                 full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
                 min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat()))
         idx += 1
-    _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict)
+    _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
+                    archivo_salida=archivo_salida, extra_html=extra_html or {},
+                    nav_extra=nav_extra, titulo_pagina=titulo_pagina)
 
 
 def _color_semaforo(v):
@@ -754,6 +764,49 @@ def _tabla_valores(titulo, filas):
     return (f'<h3 class="sub">{titulo} <span class="ref">({fecha})</span></h3>'
             '<table class="tabla"><thead><tr><th>Rubro</th><th>Último (USD M)</th><th>Interanual</th></tr></thead>'
             f'<tbody>{cuerpo}</tbody></table>')
+
+
+_MESES_ABREV = ["", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
+
+
+def tabla_ddf(contratos, fecha_str):
+    """
+    Tabla de la curva de dólar futuro (DDF, MAE): un contrato por vencimiento
+    mensual, foto del día -- no es una serie histórica (los contratos cambian
+    de nombre mes a mes), así que no pasa por el mecanismo 'tabla:' genérico
+    (pensado para desagregados con historia propia en el CSV); se arma acá
+    directo a partir del snapshot que devuelve fetch_mae_ddf().
+    """
+    if not contratos:
+        return ""
+    def celda_var(v):
+        bg, fg = _color_semaforo(v)
+        return f'<td style="background:{bg};color:{fg}">{(f"{v:+.2f}%" if v is not None else "s/d")}</td>'
+    def _clave_vencimiento(c):
+        # ticker = "DLRMMAAAA" -- ordenar por (año, mes), NO alfabéticamente por ticker
+        # (alfabético pondría "DLR012027" antes que "DLR092026" pese a vencer después).
+        t = c["ticker"]
+        try:
+            return (int(t[5:9]), int(t[3:5]))
+        except (ValueError, IndexError):
+            return (9999, 99)
+    filas = []
+    for c in sorted(contratos, key=_clave_vencimiento):
+        ticker = c["ticker"]
+        mm, aaaa = ticker[3:5], ticker[5:9]
+        try:
+            venc = f"{_MESES_ABREV[int(mm)]}/{aaaa}"
+        except (ValueError, IndexError):
+            venc = ticker
+        filas.append(f'<tr><td class="sec">{venc}</td><td class="num">{_fmt_num(c["ultimo"])}</td>'
+                      f'{celda_var(c["variacion"])}</tr>')
+    return (f'<h3 class="sub">Dólar futuro (DDF) <span class="ref">({fecha_str})</span></h3>'
+            '<p class="nota">Curva de contratos de dólar futuro por vencimiento mensual, Mercado Abierto '
+            'Electrónico (MAE, endpoint no documentado oficialmente por el MAE, "variación" = variación % '
+            'vs. cierre anterior según esquema de campos documentado por terceros -- gauss314/skills, no '
+            'por el MAE mismo -- datos delayed 5-15 min intradía).</p>'
+            '<table class="tabla"><thead><tr><th>Vencimiento</th><th>Último ($)</th><th>Variación diaria</th></tr></thead>'
+            f'<tbody>{"".join(filas)}</tbody></table>')
 
 
 def _card_cell(c):
@@ -814,7 +867,10 @@ def _card_cell(c):
             f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
 
 
-def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
+def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
+                    archivo_salida="index.html", extra_html=None, nav_extra="",
+                    titulo_pagina="Monitor de coyuntura · Argentina"):
+    extra_html = extra_html or {}
     ahora = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
     for titulo, filas in tablas.items():
@@ -831,13 +887,13 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
             notas_items.append(f'<li id="nota-{num}"><strong>*{num}</strong> {nota_texto}</li>')
         notas_html = '<h3 class="sub">Notas metodológicas y fuentes</h3><ul class="notas-list">' + "".join(notas_items) + '</ul>'
 
-    nav, secciones = "", ""
+    nav, secciones = nav_extra, ""
     for bloque in ORDEN_BLOQUES:
         cb = [c for c in charts if c["bloque"] == bloque]
         grupos_chart = {c["grupo"] for c in cb}
         grupos_tabla = {g for g, (t, fs) in grupo_tabla.items() if fs[0]["bloque"] == bloque}
         tiene_sem = (bloque == "real" and semaforo)
-        if not cb and not grupos_tabla and not tiene_sem:
+        if not cb and not grupos_tabla and not tiene_sem and bloque not in extra_html:
             continue
         nav += f'<a href="#{bloque}">{TITULO_BLOQUE.get(bloque, bloque)}</a>'
         grupos = [g for g in ORDEN_GRUPOS if g in grupos_chart or g in grupos_tabla]
@@ -854,13 +910,15 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
                 cuerpo += f'<div class="grid">{celdas}</div>'
         if tiene_sem:
             cuerpo += _tabla_semaforo(semaforo, fecha_sem)
+        if bloque in extra_html:
+            cuerpo += extra_html[bloque]
         secciones += (f'<section class="bloque" id="{bloque}"><h2>'
                       f'<span class="dot" style="background:{ACENTO.get(bloque,AZUL_ENLACE)}"></span>'
                       f'{TITULO_BLOQUE.get(bloque, bloque)}</h2>{cuerpo}</section>')
 
     plantilla = """<!doctype html><html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Monitor de coyuntura · Argentina</title>
+<title>__TITULO__</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -879,6 +937,8 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
   header .sub { color:#C8D0DA; font-size:13px; margin-top:6px; }
   nav { display:flex; flex-wrap:wrap; gap:18px; margin:0 0 28px; padding-bottom:14px; border-bottom:1px solid var(--borde); font-size:13px; }
   nav a { color:var(--azul-enlace); text-decoration:none; font-weight:600; } nav a:hover { text-decoration:underline; }
+  nav a.nav-pagina { background:var(--azul-marca); color:#fff; padding:4px 12px; border-radius:14px; margin-right:6px; }
+  nav a.nav-pagina:hover { text-decoration:none; opacity:.88; }
   .bloque { margin:40px 0; scroll-margin-top:16px; }
   .bloque h2 { font-size:18px; font-weight:700; display:flex; align-items:center; gap:9px; border-bottom:2px solid var(--azul-marca); padding-bottom:8px; color:var(--azul-marca); }
   .sub { font-size:14px; font-weight:600; margin:24px 0 12px; color:var(--azul-marca); }
@@ -954,7 +1014,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict):
 </style></head>
 <body>
 <header class="masthead"><div class="masthead-inner">
-  <h1>Monitor de coyuntura · Argentina</h1>
+  <h1>__TITULO__</h1>
   <div class="sub">Actualizado __AHORA__ · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div>
 </div></header>
 <div class="wrap">
@@ -1536,8 +1596,9 @@ if (tieneFullscreenNativo) {
 </body></html>"""
 
     html = (plantilla.replace("__AHORA__", ahora).replace("__NAV__", nav)
+            .replace("__TITULO__", titulo_pagina)
             .replace("__SECCIONES__", secciones)
             .replace("__NOTAS__", notas_html)
             .replace("__DATA__", json.dumps(series_js, ensure_ascii=False)))
     OUT.mkdir(exist_ok=True)
-    (OUT / "index.html").write_text(html, encoding="utf-8")
+    (OUT / archivo_salida).write_text(html, encoding="utf-8")

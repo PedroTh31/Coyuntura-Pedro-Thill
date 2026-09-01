@@ -671,6 +671,87 @@ def fetch_deuda_bruta(start_date: str | None = None) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
+# 5) BYMA -> índices históricos (MERVAL, BURCAP)
+# ---------------------------------------------------------------------------
+_BYMA_BASE = "https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free"
+
+
+def fetch_byma_indice(symbol: str, start_date: str | None = None) -> pd.DataFrame:
+    """
+    Serie histórica de un índice de BYMA (symbol="M" -> S&P MERVAL, "G" -> BURCAP).
+
+    El certificado de BYMA tiene una CA intermedia que no está en el bundle
+    estándar de certifi -- se pide con verify=False, mismo criterio que las
+    librerías públicas de BYMA (pyhomebroker, bymadata). La conexión sigue
+    siendo TLS, sólo se salta la validación de cadena.
+    """
+    desde_dt = pd.to_datetime(start_date) if start_date else pd.Timestamp("2024-01-01")
+    desde_unix = int(desde_dt.timestamp())
+    hasta_unix = int(pd.Timestamp.today().timestamp())
+    url = f"{_BYMA_BASE}/chart/index-historical-series/history"
+    params = {"symbol": symbol, "resolution": "D", "from": desde_unix, "to": hasta_unix}
+
+    ultimo_error = None
+    for intento in range(3):
+        try:
+            r = requests.get(url, params=params, headers=HEADERS, timeout=TIMEOUT, verify=False)
+            r.raise_for_status()
+            data = r.json()
+            break
+        except requests.RequestException as e:
+            ultimo_error = e
+            time.sleep(2 * (intento + 1))
+    else:
+        print(f"  [ADVERTENCIA] fetch_byma_indice symbol={symbol}: {ultimo_error}")
+        return pd.DataFrame(columns=["fecha", "valor"])
+
+    ts = data.get("t") or []
+    cierres = data.get("c") or []
+    if not ts or not cierres:
+        return pd.DataFrame(columns=["fecha", "valor"])
+    df = pd.DataFrame({
+        "fecha": pd.to_datetime(ts, unit="s").normalize(),
+        "valor": [float(v) for v in cierres],
+    })
+    return df.sort_values("fecha").drop_duplicates(subset="fecha").reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
+# 6) MAE -> curva de dólar futuro (DDF), snapshot del día (no serie fecha/valor)
+# ---------------------------------------------------------------------------
+_MAE_BASE = "https://api.marketdata.mae.com.ar/api"
+
+
+def fetch_mae_ddf() -> list[dict]:
+    """
+    Curva completa de dólar futuro (DDF) del día: un contrato por vencimiento
+    mensual. Endpoint no documentado oficialmente por el MAE ("puede cambiar
+    sin aviso", datos delayed 5-15 min intradía) -- no es una serie fecha/valor
+    como el resto de los fetchers, es una foto de todos los contratos vigentes
+    en la fecha de la corrida, así que no pasa por traer()/el histórico
+    fecha/valor: se maneja aparte en la pestaña financiera.
+    """
+    try:
+        r = _get(f"{_MAE_BASE}/mercado/resumen/DDF")
+        data = r.json()
+    except (RuntimeError, ValueError) as e:
+        print(f"  [ADVERTENCIA] fetch_mae_ddf: {e}")
+        return []
+    contratos = data if isinstance(data, list) else data.get("data", [])
+    filas = []
+    for c in contratos:
+        try:
+            filas.append({
+                "ticker": c["ticker"],
+                "ultimo": float(c["ultimo"]),
+                "variacion": float(c.get("variacion") or 0),
+            })
+        except (KeyError, ValueError, TypeError):
+            pass
+    return filas
+
+
+# ---------------------------------------------------------------------------
 # Dispatcher: elige el fetcher según el config del indicador
 # ---------------------------------------------------------------------------
 def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
@@ -689,4 +770,6 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
         return fetch_bcra_morosidad_lineas(indicador["serie"], start_date)
     if fuente == "deuda_bruta":
         return fetch_deuda_bruta(start_date)
+    if fuente == "byma":
+        return fetch_byma_indice(indicador["symbol"], start_date)
     raise ValueError(f"Fuente desconocida: {fuente}")

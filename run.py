@@ -14,7 +14,7 @@ import pandas as pd
 
 from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
                        fetch_bcra_organismos_internacionales, fetch_bcra_swap_china,
-                       fetch_deuda_bruta)
+                       fetch_deuda_bruta, fetch_mae_ddf)
 import storage
 import dashboard
 
@@ -327,11 +327,14 @@ def main():
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     start = cfg.get("start_date")
     indicadores = cfg["indicadores"]
+    indicadores_financiera = cfg.get("indicadores_financiera", [])
     filas = []
     problemas = []  # (nombre, motivo) de indicadores que no trajeron datos
 
-    for ind in indicadores:
+    for ind in indicadores + indicadores_financiera:
         nombre = ind["nombre"]
+        if ind.get("solo_referencia"):
+            continue  # sólo re-muestra en financiera.html un indicador ya fetcheado por la lista macro
         if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas"):
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         try:
@@ -375,10 +378,24 @@ def main():
     historico = storage.actualizar(nuevos)
     print(f"\nHistorico total: {len(historico)} filas, "
           f"{historico['indicador'].nunique()} indicadores.")
-    chequear_frescura(historico, indicadores)
-    chequear_plausibilidad(historico, indicadores)
-    dashboard.generar(historico, indicadores)
-    print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
+    financiera_propios = [i for i in indicadores_financiera if not i.get("solo_referencia")]
+    chequear_frescura(historico, indicadores + financiera_propios)
+    chequear_plausibilidad(historico, indicadores + financiera_propios)
+
+    nav_a_financiera = '<a href="financiera.html" class="nav-pagina">Financiera →</a>'
+    nav_a_macro = '<a href="index.html" class="nav-pagina">← Macro</a>'
+    dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera)
+
+    if indicadores_financiera:
+        ddf = fetch_mae_ddf()
+        fecha_ddf = pd.Timestamp.today().strftime("%d/%m/%Y")
+        extra_html = {"mercados": dashboard.tabla_ddf(ddf, fecha_ddf)} if ddf else {}
+        dashboard.generar(historico, indicadores_financiera, archivo_salida="financiera.html",
+                           extra_html=extra_html, nav_extra=nav_a_macro,
+                           titulo_pagina="Monitor financiero · Argentina")
+        print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html, docs/financiera.html")
+    else:
+        print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
 
 
 if __name__ == "__main__":
