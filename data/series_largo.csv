@@ -6340,6 +6340,737 @@
 2026-08-29,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.482084690553734
 2026-08-30,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.482084690553734
 2026-08-31,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.482084690553734
+2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
+2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
+2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
+2024-09-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,453.4230194091
+2024-09-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,453.9970461406
+2024-09-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,454.57179958132
+2024-09-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,455.14728065126
+2024-09-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,455.7234902716
+2024-09-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,456.30042936466
+2024-09-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,456.87809885394
+2024-09-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,457.45649966412
+2024-09-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,458.03563272103
+2024-09-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,458.6154989517
+2024-09-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,459.1960992843
+2024-09-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,459.77743464821
+2024-09-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,460.40840511054
+2024-09-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,461.04024147819
+2024-09-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,461.67294493947
+2024-09-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,462.30651668433
+2024-09-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,462.94095790434
+2024-09-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,463.57626979272
+2024-09-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,464.21245354433
+2024-09-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,464.84951035565
+2024-09-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,465.48744142482
+2024-09-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,466.12624795162
+2024-09-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,466.76593113746
+2024-09-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,467.40649218543
+2024-09-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,468.04793230025
+2024-09-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,468.6902526883
+2024-09-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,469.33345455761
+2024-10-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,469.97753911786
+2024-10-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,470.62250758042
+2024-10-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,471.2683611583
+2024-10-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,471.91510106616
+2024-10-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,472.56272852037
+2024-10-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,473.21124473892
+2024-10-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,473.86065094152
+2024-10-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,474.51094834952
+2024-10-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,475.16213818595
+2024-10-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,475.81422167553
+2024-10-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,476.46720004465
+2024-10-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,477.12107452139
+2024-10-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,477.77584633552
+2024-10-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,478.43151671849
+2024-10-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,479.08808690343
+2024-10-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,479.6200372888
+2024-10-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,480.15257831965
+2024-10-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,480.6857106518
+2024-10-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,481.21943494179
+2024-10-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,481.75375184689
+2024-10-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,482.28866202511
+2024-10-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,482.82416613519
+2024-10-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,483.36026483658
+2024-10-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,483.8969587895
+2024-10-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,484.43424865486
+2024-10-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,484.97213509433
+2024-10-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,485.51061877032
+2024-10-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,486.04970034596
+2024-10-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,486.58938048512
+2024-10-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,487.1296598524
+2024-10-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,487.67053911317
+2024-11-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,488.21201893349
+2024-11-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,488.7540999802
+2024-11-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,489.29678292086
+2024-11-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,489.84006842378
+2024-11-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,490.38395715801
+2024-11-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,490.92844979334
+2024-11-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,491.47354700029
+2024-11-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,492.01924945016
+2024-11-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,492.56555781497
+2024-11-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,493.11247276749
+2024-11-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,493.65999498124
+2024-11-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,494.20812513048
+2024-11-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,494.75686389022
+2024-11-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,495.30621193624
+2024-11-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,495.85616994505
+2024-11-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,496.29671772812
+2024-11-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,496.73765691976
+2024-11-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,497.1789878677
+2024-11-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,497.62071092002
+2024-11-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,498.06282642507
+2024-11-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,498.50533473153
+2024-11-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,498.9482361884
+2024-11-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,499.39153114498
+2024-11-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,499.83521995086
+2024-11-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,500.27930295597
+2024-11-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,500.72378051054
+2024-11-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,501.16865296511
+2024-11-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,501.61392067053
+2024-11-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,502.05958397796
+2024-11-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,502.50564323889
+2024-12-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,502.9520988051
+2024-12-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,503.3989510287
+2024-12-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,503.84620026208
+2024-12-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,504.29384685799
+2024-12-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,504.74189116946
+2024-12-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,505.19033354985
+2024-12-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,505.63917435282
+2024-12-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,506.08841393235
+2024-12-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,506.53805264275
+2024-12-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,506.98809083863
+2024-12-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,507.4385288749
+2024-12-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,507.88936710682
+2024-12-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,508.34060588993
+2024-12-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,508.79224558012
+2024-12-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,509.24428653357
+2024-12-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,509.63403255931
+2024-12-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,510.02407687404
+2024-12-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,510.41441970606
+2024-12-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,510.80506128383
+2024-12-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,511.19600183599
+2024-12-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,511.58724159137
+2024-12-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,511.97878077895
+2024-12-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,512.37061962791
+2024-12-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,512.76275836758
+2024-12-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,513.15519722749
+2024-12-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,513.54793643733
+2024-12-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,513.94097622696
+2024-12-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,514.33431682645
+2024-12-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,514.72795846601
+2024-12-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,515.12190137603
+2024-12-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,515.5161457871
+2025-01-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,515.91069192996
+2025-01-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,516.30554003554
+2025-01-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,516.70069033495
+2025-01-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,517.09614305947
+2025-01-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,517.49189844056
+2025-01-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,517.88795670985
+2025-01-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,518.28431809916
+2025-01-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,518.68098284047
+2025-01-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,519.07795116596
+2025-01-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,519.47522330797
+2025-01-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,519.87279949902
+2025-01-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,520.27067997182
+2025-01-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,520.66886495924
+2025-01-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,521.06735469435
+2025-01-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,521.46614941037
+2025-01-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,521.91449898254
+2025-01-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,522.36323403963
+2025-01-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,522.81235491308
+2025-01-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,523.26186193461
+2025-01-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,523.71175543622
+2025-01-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,524.1620357502
+2025-01-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,524.61270320914
+2025-01-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,525.06375814588
+2025-01-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,525.51520089359
+2025-01-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,525.96703178569
+2025-01-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,526.41925115591
+2025-01-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,526.87185933825
+2025-01-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,527.324856667
+2025-01-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,527.77824347677
+2025-01-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,528.2320201024
+2025-01-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,528.68618687907
+2025-02-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,529.14074414221
+2025-02-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,529.59569222757
+2025-02-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,530.05103147116
+2025-02-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,530.5067622093
+2025-02-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,530.9628847786
+2025-02-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,531.41939951593
+2025-02-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,531.87630675849
+2025-02-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,532.33360684374
+2025-02-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,532.79130010945
+2025-02-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,533.24938689366
+2025-02-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,533.70786753472
+2025-02-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,534.16674237126
+2025-02-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,534.6260117422
+2025-02-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,535.08567598676
+2025-02-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,535.54573544445
+2025-02-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,535.96212130597
+2025-02-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,536.37883090675
+2025-02-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,536.79586449851
+2025-02-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,537.21322233315
+2025-02-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,537.63090466277
+2025-02-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,538.04891173966
+2025-02-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,538.46724381632
+2025-02-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,538.88590114542
+2025-02-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,539.30488397986
+2025-02-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,539.7241925727
+2025-02-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,540.14382717724
+2025-02-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,540.56378804694
+2025-02-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,540.98407543547
+2025-03-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,541.4046895967
+2025-03-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,541.8256307847
+2025-03-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,542.24689925373
+2025-03-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,542.66849525824
+2025-03-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,543.09041905291
+2025-03-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,543.51267089257
+2025-03-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,543.9352510323
+2025-03-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,544.35815972734
+2025-03-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,544.78139723313
+2025-03-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,545.20496380534
+2025-03-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,545.62885969981
+2025-03-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,546.05308517259
+2025-03-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,546.47764047992
+2025-03-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,546.90252587825
+2025-03-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,547.32774162423
+2025-03-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,547.74663451654
+2025-03-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,548.16584800515
+2025-03-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,548.58538233545
+2025-03-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,549.00523775297
+2025-03-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,549.42541450347
+2025-03-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,549.84591283287
+2025-03-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,550.26673298729
+2025-03-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,550.68787521304
+2025-03-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,551.10933975661
+2025-03-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,551.53112686468
+2025-03-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,551.95323678413
+2025-03-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,552.37566976201
+2025-03-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,552.79842604558
+2025-03-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,553.22150588228
+2025-03-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,553.64490951974
+2025-03-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,554.06863720577
+2025-04-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,554.49268918839
+2025-04-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,554.91706571578
+2025-04-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,555.34176703634
+2025-04-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,555.76679339864
+2025-04-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,556.19214505146
+2025-04-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,556.61782224376
+2025-04-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,557.04382522467
+2025-04-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,557.47015424354
+2025-04-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,557.89680954991
+2025-04-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,558.32379139349
+2025-04-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,558.75110002419
+2025-04-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,559.17873569212
+2025-04-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,559.60669864758
+2025-04-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,560.03498914105
+2025-04-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,560.46360742321
+2025-04-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,561.14277606968
+2025-04-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,561.82276773131
+2025-04-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,562.50358340544
+2025-04-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,563.1852240906
+2025-04-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,563.86769078655
+2025-04-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,564.55098449423
+2025-04-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,565.23510621582
+2025-04-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,565.9200569547
+2025-04-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,566.60583771549
+2025-04-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,567.29244950398
+2025-04-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,567.97989332723
+2025-04-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,568.66817019349
+2025-04-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,569.35728111224
+2025-04-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,570.04722709419
+2025-04-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,570.73800915125
+2025-05-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,571.42962829659
+2025-05-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,572.12208554459
+2025-05-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,572.81538191086
+2025-05-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,573.50951841224
+2025-05-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,574.2044960668
+2025-05-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,574.90031589386
+2025-05-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,575.59697891395
+2025-05-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,576.29448614885
+2025-05-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,576.99283862159
+2025-05-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,577.69203735641
+2025-05-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,578.39208337883
+2025-05-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,579.09297771557
+2025-05-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,579.79472139463
+2025-05-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,580.49731544524
+2025-05-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,581.20076089787
+2025-05-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,581.71873209015
+2025-05-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,582.23716490287
+2025-05-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,582.75605974744
+2025-05-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,583.27541703563
+2025-05-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,583.79523717957
+2025-05-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,584.31552059176
+2025-05-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,584.83626768507
+2025-05-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,585.35747887273
+2025-05-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,585.87915456836
+2025-05-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,586.40129518592
+2025-05-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,586.92390113975
+2025-05-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,587.44697284458
+2025-05-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,587.97051071547
+2025-05-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,588.49451516789
+2025-05-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,589.01898661765
+2025-05-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,589.54392548094
+2025-06-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,590.06933217433
+2025-06-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,590.59520711476
+2025-06-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,591.12155071952
+2025-06-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,591.6483634063
+2025-06-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,592.17564559314
+2025-06-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,592.70339769847
+2025-06-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,593.23162014109
+2025-06-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,593.76031334016
+2025-06-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,594.28947771522
+2025-06-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,594.8191136862
+2025-06-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,595.34922167337
+2025-06-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,595.87980209741
+2025-06-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,596.41085537936
+2025-06-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,596.94238194063
+2025-06-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,597.47438220301
+2025-06-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,597.7709746128
+2025-06-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,598.0677142541
+2025-06-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,598.3646012
+2025-06-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,598.66163552363
+2025-06-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,598.95881729814
+2025-06-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,599.25614659673
+2025-06-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,599.55362349264
+2025-06-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,599.85124805912
+2025-06-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,600.1490203695
+2025-06-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,600.4469404971
+2025-06-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,600.7450085153
+2025-06-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,601.04322449753
+2025-06-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,601.34158851723
+2025-06-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,601.64010064788
+2025-06-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,601.93876096302
+2025-07-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,602.23756953621
+2025-07-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,602.53652644103
+2025-07-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,602.83563175112
+2025-07-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,603.13488554016
+2025-07-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,603.43428788185
+2025-07-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,603.73383884993
+2025-07-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,604.03353851818
+2025-07-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,604.33338696042
+2025-07-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,604.63338425051
+2025-07-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,604.93353046232
+2025-07-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,605.23382566979
+2025-07-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,605.53426994688
+2025-07-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,605.83486336759
+2025-07-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,606.13560600596
+2025-07-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,606.43649793606
+2025-07-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,606.74709932975
+2025-07-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,607.05785980561
+2025-07-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,607.3687794451
+2025-07-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,607.67985832974
+2025-07-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,607.9910965411
+2025-07-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,608.30249416078
+2025-07-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,608.61405127042
+2025-07-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,608.9257679517
+2025-07-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,609.23764428637
+2025-07-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,609.54968035619
+2025-07-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,609.86187624297
+2025-07-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,610.17423202856
+2025-07-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,610.48674779486
+2025-07-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,610.79942362382
+2025-07-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,611.1122595974
+2025-07-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,611.42525579763
+2025-08-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,611.73841230658
+2025-08-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,612.05172920636
+2025-08-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,612.3652065791
+2025-08-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,612.678844507
+2025-08-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,612.99264307229
+2025-08-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,613.30660235725
+2025-08-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,613.62072244419
+2025-08-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,613.93500341548
+2025-08-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,614.24944535351
+2025-08-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,614.56404834072
+2025-08-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,614.8788124596
+2025-08-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,615.19373779268
+2025-08-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,615.50882442254
+2025-08-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,615.82407243177
+2025-08-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,616.13948190303
+2025-08-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,616.51368664964
+2025-08-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,616.88811866491
+2025-08-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,617.26277808685
+2025-08-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,617.6376650536
+2025-08-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,618.01277970334
+2025-08-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,618.38812217436
+2025-08-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,618.76369260502
+2025-08-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,619.13949113376
+2025-08-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,619.51551789913
+2025-08-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,619.89177303974
+2025-08-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,620.26825669428
+2025-08-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,620.64496900154
+2025-08-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,621.0219101004
+2025-08-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,621.39908012981
+2025-08-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,621.77647922879
+2025-08-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,622.15410753649
+2025-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,622.5319651921
+2025-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,622.91005233492
+2025-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,623.28836910432
+2025-09-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,623.66691563976
+2025-09-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,624.0456920808
+2025-09-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,624.42469856705
+2025-09-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,624.80393523823
+2025-09-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,625.18340223415
+2025-09-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,625.56309969469
+2025-09-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,625.94302775982
+2025-09-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,626.32318656959
+2025-09-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,626.70357626414
+2025-09-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,627.08419698371
+2025-09-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,627.46504886859
+2025-09-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,627.84613205919
+2025-09-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,628.24016117153
+2025-09-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,628.63443757208
+2025-09-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,629.02896141602
+2025-09-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,629.42373285866
+2025-09-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,629.81875205538
+2025-09-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,630.21401916166
+2025-09-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,630.6095343331
+2025-09-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,631.00529772537
+2025-09-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,631.40130949426
+2025-09-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,631.79756979564
+2025-09-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,632.1940787855
+2025-09-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,632.5908366199
+2025-09-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,632.98784345502
+2025-09-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,633.38509944713
+2025-09-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,633.78260475259
+2025-10-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,634.18035952787
+2025-10-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,634.57836392955
+2025-10-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,634.97661811426
+2025-10-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,635.37512223879
+2025-10-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,635.77387645999
+2025-10-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,636.17288093482
+2025-10-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,636.57213582032
+2025-10-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,636.97164127367
+2025-10-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,637.37139745211
+2025-10-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,637.77140451299
+2025-10-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,638.17166261377
+2025-10-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,638.572171912
+2025-10-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,638.97293256531
+2025-10-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,639.37394473147
+2025-10-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,639.77520856832
+2025-10-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,640.20426054369
+2025-10-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,640.63360025388
+2025-10-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,641.06322789184
+2025-10-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,641.49314365066
+2025-10-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,641.92334772357
+2025-10-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,642.35384030392
+2025-10-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,642.7846215852
+2025-10-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,643.215691761
+2025-10-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,643.64705102508
+2025-10-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,644.0786995713
+2025-10-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,644.51063759367
+2025-10-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,644.94286528631
+2025-10-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,645.37538284349
+2025-10-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,645.80819045961
+2025-10-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,646.24128832917
+2025-10-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,646.67467664684
+2025-11-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,647.1083556074
+2025-11-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,647.54232540575
+2025-11-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,647.97658623695
+2025-11-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,648.41113829618
+2025-11-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,648.84598177872
+2025-11-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,649.28111688004
+2025-11-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,649.71654379568
+2025-11-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,650.15226272136
+2025-11-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,650.58827385289
+2025-11-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,651.02457738625
+2025-11-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,651.46117351752
+2025-11-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,651.89806244294
+2025-11-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,652.33524435885
+2025-11-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,652.77271946175
+2025-11-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,653.21048794825
+2025-11-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,653.70579802212
+2025-11-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,654.20148367488
+2025-11-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,654.69754519132
+2025-11-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,655.19398285644
+2025-11-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,655.69079695547
+2025-11-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,656.18798777385
+2025-11-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,656.68555559723
+2025-11-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,657.18350071148
+2025-11-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,657.68182340269
+2025-11-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,658.18052395717
+2025-11-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,658.67960266144
+2025-11-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,659.17905980224
+2025-11-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,659.67889566652
+2025-11-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,660.17911054147
+2025-11-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,660.67970471447
+2025-12-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,661.18067847314
+2025-12-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,661.68203210529
+2025-12-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,662.18376589899
+2025-12-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,662.68588014249
+2025-12-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,663.18837512428
+2025-12-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,663.69125113305
+2025-12-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,664.19450845775
+2025-12-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,664.69814738749
+2025-12-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,665.20216821165
+2025-12-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,665.7065712198
+2025-12-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,666.21135670173
+2025-12-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,666.71652494748
+2025-12-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,667.22207624728
+2025-12-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,667.72801089158
+2025-12-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,668.23432917106
+2025-12-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,668.7668138406
+2025-12-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,669.29972282227
+2025-12-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,669.83305645416
+2025-12-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,670.36681507467
+2025-12-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,670.90099902245
+2025-12-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,671.43560863642
+2025-12-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,671.97064425578
+2025-12-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,672.50610621999
+2025-12-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,673.04199486878
+2025-12-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,673.57831054217
+2025-12-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,674.11505358041
+2025-12-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,674.65222432408
+2025-12-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,675.18982311397
+2025-12-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,675.72785029118
+2025-12-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,676.26630619708
+2025-12-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,676.80519117329
+2026-01-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,677.34450556172
+2026-01-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,677.88424970456
+2026-01-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,678.42442394424
+2026-01-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,678.96502862351
+2026-01-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,679.50606408534
+2026-01-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,680.04753067303
+2026-01-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,680.5894287301
+2026-01-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,681.13175860037
+2026-01-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,681.67452062794
+2026-01-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,682.21771515718
+2026-01-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,682.76134253272
+2026-01-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,683.30540309948
+2026-01-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,683.84989720264
+2026-01-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,684.39482518768
+2026-01-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,684.94018740034
+2026-01-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,685.55061207521
+2026-01-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,686.16158076588
+2026-01-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,686.77309395718
+2026-01-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,687.38515213437
+2026-01-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,687.99775578316
+2026-01-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,688.61090538967
+2026-01-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,689.22460144045
+2026-01-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,689.83884442252
+2026-01-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,690.4536348233
+2026-01-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,691.06897313065
+2026-01-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,691.68485983287
+2026-01-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,692.30129541869
+2026-01-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,692.91828037729
+2026-01-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,693.53581519828
+2026-01-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,694.15390037169
+2026-01-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,694.772536388
+2026-02-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,695.39172373812
+2026-02-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,696.01146291342
+2026-02-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,696.63175440569
+2026-02-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,697.25259870715
+2026-02-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,697.87399631047
+2026-02-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,698.49594770876
+2026-02-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,699.11845339556
+2026-02-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,699.74151386487
+2026-02-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,700.36512961111
+2026-02-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,700.98930112914
+2026-02-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,701.61402891428
+2026-02-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,702.23931346228
+2026-02-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,702.86515526933
+2026-02-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,703.49155483206
+2026-02-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,704.11851264754
+2026-02-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,704.83777110235
+2026-02-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,705.55776428109
+2026-02-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,706.27849293429
+2026-02-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,706.99995781323
+2026-02-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,707.72215966998
+2026-02-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,708.44509925735
+2026-02-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,709.16877732894
+2026-02-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,709.89319463912
+2026-02-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,710.61835194302
+2026-02-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,711.34424999653
+2026-02-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,712.07088955634
+2026-02-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,712.79827137991
+2026-02-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,713.52639622544
+2026-03-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,714.25526485195
+2026-03-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,714.9848780192
+2026-03-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,715.71523648775
+2026-03-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,716.44634101892
+2026-03-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,717.17819237481
+2026-03-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,717.91079131832
+2026-03-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,718.64413861309
+2026-03-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,719.37823502358
+2026-03-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,720.11308131501
+2026-03-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,720.84867825337
+2026-03-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,721.58502660547
+2026-03-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,722.32212713887
+2026-03-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,723.05998062192
+2026-03-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,723.79858782376
+2026-03-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,724.53794951432
+2026-03-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,725.20640921375
+2026-03-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,725.875485635
+2026-03-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,726.54517934708
+2026-03-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,727.21549091948
+2026-03-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,727.88642092226
+2026-03-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,728.55796992596
+2026-03-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,729.2301385017
+2026-03-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,729.90292722108
+2026-03-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,730.57633665624
+2026-03-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,731.25036737988
+2026-03-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,731.92501996517
+2026-03-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,732.60029498586
+2026-03-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,733.2761930162
+2026-03-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,733.95271463099
+2026-03-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,734.62986040554
+2026-03-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,735.3076309157
+2026-04-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,735.98602673786
+2026-04-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,736.66504844893
+2026-04-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,737.34469662636
+2026-04-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,738.02497184812
+2026-04-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,738.70587469273
+2026-04-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,739.38740573923
+2026-04-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,740.0695655672
+2026-04-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,740.75235475676
+2026-04-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,741.43577388855
+2026-04-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,742.11982354377
+2026-04-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,742.80450430413
+2026-04-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,743.48981675189
+2026-04-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,744.17576146985
+2026-04-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,744.86233904135
+2026-04-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,745.54955005024
+2026-04-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,746.38092265237
+2026-04-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,747.21322232958
+2026-04-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,748.04645011565
+2026-04-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,748.88060704553
+2026-04-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,749.71569415533
+2026-04-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,750.5517124823
+2026-04-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,751.38866306486
+2026-04-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,752.22654694258
+2026-04-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,753.06536515618
+2026-04-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,753.90511874755
+2026-04-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,754.74580875976
+2026-04-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,755.58743623701
+2026-04-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,756.43000222469
+2026-04-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,757.27350776934
+2026-04-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,758.11795391868
+2026-05-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,758.96334172158
+2026-05-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,759.8096722281
+2026-05-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,760.65694648945
+2026-05-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,761.50516555804
+2026-05-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,762.35433048744
+2026-05-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,763.20444233237
+2026-05-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,764.05550214876
+2026-05-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,764.90751099372
+2026-05-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,765.7604699255
+2026-05-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,766.61438000358
+2026-05-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,767.46924228857
+2026-05-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,768.32505784231
+2026-05-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,769.1818277278
+2026-05-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,770.03955300922
+2026-05-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,770.89823475195
+2026-05-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,771.53679651803
+2026-05-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,772.17588722698
+2026-05-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,772.81550731696
+2026-05-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,773.45565722645
+2026-05-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,774.09633739433
+2026-05-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,774.73754825984
+2026-05-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,775.37929026256
+2026-05-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,776.02156384246
+2026-05-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,776.66436943986
+2026-05-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,777.30770749544
+2026-05-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,777.95157845027
+2026-05-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,778.59598274576
+2026-05-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,779.2409208237
+2026-05-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,779.88639312623
+2026-05-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,780.53240009587
+2026-05-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,781.17894217551
+2026-06-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,781.8260198084
+2026-06-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,782.47363343815
+2026-06-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,783.12178350875
+2026-06-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,783.77047046455
+2026-06-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,784.41969475027
+2026-06-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,785.069456811
+2026-06-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,785.7197570922
+2026-06-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,786.3705960397
+2026-06-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,787.02197409968
+2026-06-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,787.67389171873
+2026-06-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,788.32634934376
+2026-06-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,788.9793474221
+2026-06-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,789.6328864014
+2026-06-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,790.28696672973
+2026-06-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,790.9415888555
+2026-06-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,791.48970450621
+2026-06-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,792.03819999631
+2026-06-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,792.58707558902
+2026-06-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,793.13633154774
+2026-06-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,793.68596813608
+2026-06-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,794.23598561779
+2026-06-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,794.78638425684
+2026-06-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,795.33716431737
+2026-06-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,795.8883260637
+2026-06-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,796.43986976033
+2026-06-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,796.99179567195
+2026-06-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,797.54410406343
+2026-06-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,798.09679519983
+2026-06-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,798.64986934639
+2026-06-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,799.20332676852
+2026-07-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,799.75716773184
+2026-07-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,800.31139250214
+2026-07-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,800.86600134539
+2026-07-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,801.42099452775
+2026-07-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,801.97637231557
+2026-07-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,802.53213497537
+2026-07-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,803.08828277386
+2026-07-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,803.64481597795
+2026-07-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,804.20173485471
+2026-07-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,804.75903967142
+2026-07-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,805.31673069553
+2026-07-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,805.87480819467
+2026-07-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,806.43327243667
+2026-07-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,806.99212368954
+2026-07-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,807.55136222147
+2026-07-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,808.04181862257
+2026-07-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,808.53257289635
+2026-07-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,809.0236252237
+2026-07-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,809.51497578566
+2026-07-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,810.00662476334
+2026-07-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,810.498572338
+2026-07-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,810.99081869097
+2026-07-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,811.48336400371
+2026-07-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,811.97620845781
+2026-07-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,812.46935223492
+2026-07-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,812.96279551686
+2026-07-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,813.45653848551
+2026-07-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,813.95058132289
+2026-07-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,814.44492421112
+2026-07-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,814.93956733242
+2026-07-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,815.43451086916
+2026-08-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,815.92975500377
+2026-08-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,816.42529991882
+2026-08-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,816.92114579699
+2026-08-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,817.41729282107
+2026-08-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,817.91374117394
+2026-08-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,818.41049103863
+2026-08-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,818.90754259824
+2026-08-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,819.40489603602
+2026-08-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,819.90255153529
+2026-08-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,820.40050927952
+2026-08-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,820.89876945228
+2026-08-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,821.39733223722
+2026-08-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,821.89619781815
+2026-08-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,822.39536637897
+2026-08-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,822.89483810368
+2026-08-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,823.4466954609
+2026-08-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,823.99892290981
+2026-08-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,824.5515206986
+2026-08-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,825.10448907565
+2026-08-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,825.65782828947
+2026-08-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,826.21153858876
+2026-08-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,826.76562022237
+2026-08-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,827.32007343934
+2026-08-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,827.87489848887
+2026-08-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,828.4300956203
+2026-08-26,CER (Coeficiente de Estabilización de Referencia),mercados,índice,828.98566508318
+2026-08-27,CER (Coeficiente de Estabilización de Referencia),mercados,índice,829.5416071272
+2026-08-28,CER (Coeficiente de Estabilización de Referencia),mercados,índice,830.09792200222
+2026-08-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,830.65460995827
+2026-08-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,831.21167124556
+2026-08-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,831.76910611444
+2026-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,832.32691481546
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -42197,6 +42928,7 @@
 2026-08-25,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50913.0
 2026-08-26,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50784.0
 2026-08-27,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50861.0
+2026-08-28,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49793.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -49293,6 +50025,489 @@
 2026-08-26,Riesgo país (EMBI),monetario_financiero,puntos básicos,517.0
 2026-08-27,Riesgo país (EMBI),monetario_financiero,puntos básicos,509.0
 2026-08-28,Riesgo país (EMBI),monetario_financiero,puntos básicos,512.0
+2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
+2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
+2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
+2024-09-05,S&P MERVAL,mercados,puntos,1765465.04
+2024-09-06,S&P MERVAL,mercados,puntos,1721667.94
+2024-09-09,S&P MERVAL,mercados,puntos,1738555.72
+2024-09-10,S&P MERVAL,mercados,puntos,1715184.89
+2024-09-11,S&P MERVAL,mercados,puntos,1764128.51
+2024-09-12,S&P MERVAL,mercados,puntos,1790058.18
+2024-09-13,S&P MERVAL,mercados,puntos,1817734.05
+2024-09-16,S&P MERVAL,mercados,puntos,1812872.36
+2024-09-17,S&P MERVAL,mercados,puntos,1813297.98
+2024-09-18,S&P MERVAL,mercados,puntos,1815098.87
+2024-09-19,S&P MERVAL,mercados,puntos,1847053.09
+2024-09-20,S&P MERVAL,mercados,puntos,1822928.29
+2024-09-23,S&P MERVAL,mercados,puntos,1790228.16
+2024-09-24,S&P MERVAL,mercados,puntos,1774667.88
+2024-09-25,S&P MERVAL,mercados,puntos,1744131.22
+2024-09-26,S&P MERVAL,mercados,puntos,1715670.67
+2024-09-27,S&P MERVAL,mercados,puntos,1727776.56
+2024-09-30,S&P MERVAL,mercados,puntos,1697400.66
+2024-10-01,S&P MERVAL,mercados,puntos,1728761.16
+2024-10-02,S&P MERVAL,mercados,puntos,1715158.94
+2024-10-03,S&P MERVAL,mercados,puntos,1754992.39
+2024-10-04,S&P MERVAL,mercados,puntos,1756514.5
+2024-10-07,S&P MERVAL,mercados,puntos,1714593.66
+2024-10-08,S&P MERVAL,mercados,puntos,1731369.65
+2024-10-09,S&P MERVAL,mercados,puntos,1771932.78
+2024-10-10,S&P MERVAL,mercados,puntos,1782989.12
+2024-10-14,S&P MERVAL,mercados,puntos,1804414.59
+2024-10-15,S&P MERVAL,mercados,puntos,1816250.54
+2024-10-16,S&P MERVAL,mercados,puntos,1776060.51
+2024-10-17,S&P MERVAL,mercados,puntos,1801603.87
+2024-10-18,S&P MERVAL,mercados,puntos,1823329.81
+2024-10-21,S&P MERVAL,mercados,puntos,1820705.37
+2024-10-22,S&P MERVAL,mercados,puntos,1807539.27
+2024-10-23,S&P MERVAL,mercados,puntos,1774318.59
+2024-10-24,S&P MERVAL,mercados,puntos,1849994.8
+2024-10-25,S&P MERVAL,mercados,puntos,1872784.66
+2024-10-28,S&P MERVAL,mercados,puntos,1851913.76
+2024-10-29,S&P MERVAL,mercados,puntos,1845639.23
+2024-10-30,S&P MERVAL,mercados,puntos,1837535.2
+2024-10-31,S&P MERVAL,mercados,puntos,1848744.26
+2024-11-01,S&P MERVAL,mercados,puntos,1879878.59
+2024-11-04,S&P MERVAL,mercados,puntos,1919066.03
+2024-11-05,S&P MERVAL,mercados,puntos,1931281.18
+2024-11-06,S&P MERVAL,mercados,puntos,1976612.94
+2024-11-07,S&P MERVAL,mercados,puntos,2015557.7
+2024-11-11,S&P MERVAL,mercados,puntos,1987845.91
+2024-11-12,S&P MERVAL,mercados,puntos,2012040.91
+2024-11-13,S&P MERVAL,mercados,puntos,2042551.02
+2024-11-15,S&P MERVAL,mercados,puntos,2066915.29
+2024-11-20,S&P MERVAL,mercados,puntos,2145971.78
+2024-11-21,S&P MERVAL,mercados,puntos,2140096.23
+2024-11-22,S&P MERVAL,mercados,puntos,2211988.06
+2024-11-25,S&P MERVAL,mercados,puntos,2218551.01
+2024-11-26,S&P MERVAL,mercados,puntos,2252266.29
+2024-11-27,S&P MERVAL,mercados,puntos,2205245.03
+2024-11-28,S&P MERVAL,mercados,puntos,2230803.31
+2024-11-29,S&P MERVAL,mercados,puntos,2258294.88
+2024-12-02,S&P MERVAL,mercados,puntos,2295204.59
+2024-12-03,S&P MERVAL,mercados,puntos,2305061.83
+2024-12-04,S&P MERVAL,mercados,puntos,2218519.27
+2024-12-05,S&P MERVAL,mercados,puntos,2215750.54
+2024-12-06,S&P MERVAL,mercados,puntos,2201041.58
+2024-12-09,S&P MERVAL,mercados,puntos,2231282.38
+2024-12-10,S&P MERVAL,mercados,puntos,2198994.77
+2024-12-11,S&P MERVAL,mercados,puntos,2291149.25
+2024-12-12,S&P MERVAL,mercados,puntos,2304089.57
+2024-12-13,S&P MERVAL,mercados,puntos,2370661.82
+2024-12-16,S&P MERVAL,mercados,puntos,2543201.91
+2024-12-17,S&P MERVAL,mercados,puntos,2592200.5
+2024-12-18,S&P MERVAL,mercados,puntos,2521016.62
+2024-12-19,S&P MERVAL,mercados,puntos,2419894.15
+2024-12-20,S&P MERVAL,mercados,puntos,2467561.97
+2024-12-23,S&P MERVAL,mercados,puntos,2501153.01
+2024-12-24,S&P MERVAL,mercados,puntos,2551020.43
+2024-12-26,S&P MERVAL,mercados,puntos,2597388.5
+2024-12-27,S&P MERVAL,mercados,puntos,2577545.67
+2024-12-30,S&P MERVAL,mercados,puntos,2533634.65
+2025-01-02,S&P MERVAL,mercados,puntos,2695646.43
+2025-01-03,S&P MERVAL,mercados,puntos,2728911.12
+2025-01-06,S&P MERVAL,mercados,puntos,2801220.76
+2025-01-07,S&P MERVAL,mercados,puntos,2822174.55
+2025-01-08,S&P MERVAL,mercados,puntos,2782477.05
+2025-01-09,S&P MERVAL,mercados,puntos,2829730.44
+2025-01-10,S&P MERVAL,mercados,puntos,2805139.64
+2025-01-13,S&P MERVAL,mercados,puntos,2655178.58
+2025-01-14,S&P MERVAL,mercados,puntos,2733273.32
+2025-01-15,S&P MERVAL,mercados,puntos,2704473.82
+2025-01-16,S&P MERVAL,mercados,puntos,2629377.02
+2025-01-17,S&P MERVAL,mercados,puntos,2510885.95
+2025-01-20,S&P MERVAL,mercados,puntos,2536837.44
+2025-01-21,S&P MERVAL,mercados,puntos,2619719.26
+2025-01-22,S&P MERVAL,mercados,puntos,2680945.64
+2025-01-23,S&P MERVAL,mercados,puntos,2625049.91
+2025-01-24,S&P MERVAL,mercados,puntos,2566082.22
+2025-01-27,S&P MERVAL,mercados,puntos,2439098.66
+2025-01-28,S&P MERVAL,mercados,puntos,2435628.73
+2025-01-29,S&P MERVAL,mercados,puntos,2545355.53
+2025-01-30,S&P MERVAL,mercados,puntos,2599328.57
+2025-01-31,S&P MERVAL,mercados,puntos,2564658.95
+2025-02-03,S&P MERVAL,mercados,puntos,2484135.71
+2025-02-04,S&P MERVAL,mercados,puntos,2523647.04
+2025-02-05,S&P MERVAL,mercados,puntos,2477713.88
+2025-02-06,S&P MERVAL,mercados,puntos,2503483.42
+2025-02-07,S&P MERVAL,mercados,puntos,2416381.75
+2025-02-10,S&P MERVAL,mercados,puntos,2391367.59
+2025-02-11,S&P MERVAL,mercados,puntos,2273567.99
+2025-02-12,S&P MERVAL,mercados,puntos,2285846.47
+2025-02-13,S&P MERVAL,mercados,puntos,2353743.68
+2025-02-14,S&P MERVAL,mercados,puntos,2387385.73
+2025-02-17,S&P MERVAL,mercados,puntos,2254188.63
+2025-02-18,S&P MERVAL,mercados,puntos,2391724.77
+2025-02-19,S&P MERVAL,mercados,puntos,2401579.7
+2025-02-20,S&P MERVAL,mercados,puntos,2410220.95
+2025-02-21,S&P MERVAL,mercados,puntos,2364529.49
+2025-02-24,S&P MERVAL,mercados,puntos,2348398.47
+2025-02-25,S&P MERVAL,mercados,puntos,2282898.85
+2025-02-26,S&P MERVAL,mercados,puntos,2275036.79
+2025-02-27,S&P MERVAL,mercados,puntos,2193656.65
+2025-02-28,S&P MERVAL,mercados,puntos,2205800.5
+2025-03-05,S&P MERVAL,mercados,puntos,2290049.88
+2025-03-06,S&P MERVAL,mercados,puntos,2270181.14
+2025-03-07,S&P MERVAL,mercados,puntos,2262289.29
+2025-03-10,S&P MERVAL,mercados,puntos,2138846.19
+2025-03-11,S&P MERVAL,mercados,puntos,2159499.78
+2025-03-12,S&P MERVAL,mercados,puntos,2272936.82
+2025-03-13,S&P MERVAL,mercados,puntos,2232179.96
+2025-03-14,S&P MERVAL,mercados,puntos,2335574.83
+2025-03-17,S&P MERVAL,mercados,puntos,2346305.57
+2025-03-18,S&P MERVAL,mercados,puntos,2288537.99
+2025-03-19,S&P MERVAL,mercados,puntos,2392030.0
+2025-03-20,S&P MERVAL,mercados,puntos,2361582.89
+2025-03-21,S&P MERVAL,mercados,puntos,2433538.15
+2025-03-25,S&P MERVAL,mercados,puntos,2487679.86
+2025-03-26,S&P MERVAL,mercados,puntos,2439966.22
+2025-03-27,S&P MERVAL,mercados,puntos,2412081.5
+2025-03-28,S&P MERVAL,mercados,puntos,2378562.84
+2025-03-31,S&P MERVAL,mercados,puntos,2338760.74
+2025-04-01,S&P MERVAL,mercados,puntos,2356530.77
+2025-04-03,S&P MERVAL,mercados,puntos,2275658.78
+2025-04-04,S&P MERVAL,mercados,puntos,2107815.91
+2025-04-07,S&P MERVAL,mercados,puntos,2025967.27
+2025-04-08,S&P MERVAL,mercados,puntos,1990621.29
+2025-04-09,S&P MERVAL,mercados,puntos,2183577.03
+2025-04-10,S&P MERVAL,mercados,puntos,2111490.16
+2025-04-11,S&P MERVAL,mercados,puntos,2248802.99
+2025-04-14,S&P MERVAL,mercados,puntos,2364950.09
+2025-04-15,S&P MERVAL,mercados,puntos,2284279.53
+2025-04-16,S&P MERVAL,mercados,puntos,2177974.91
+2025-04-21,S&P MERVAL,mercados,puntos,2045707.37
+2025-04-22,S&P MERVAL,mercados,puntos,2163891.01
+2025-04-23,S&P MERVAL,mercados,puntos,2239401.91
+2025-04-24,S&P MERVAL,mercados,puntos,2232745.13
+2025-04-25,S&P MERVAL,mercados,puntos,2225242.8
+2025-04-28,S&P MERVAL,mercados,puntos,2179248.63
+2025-04-29,S&P MERVAL,mercados,puntos,2158847.83
+2025-04-30,S&P MERVAL,mercados,puntos,2100843.66
+2025-05-05,S&P MERVAL,mercados,puntos,2059931.67
+2025-05-06,S&P MERVAL,mercados,puntos,2129994.4
+2025-05-07,S&P MERVAL,mercados,puntos,2089607.78
+2025-05-08,S&P MERVAL,mercados,puntos,2061722.21
+2025-05-09,S&P MERVAL,mercados,puntos,2114385.52
+2025-05-12,S&P MERVAL,mercados,puntos,2230394.68
+2025-05-13,S&P MERVAL,mercados,puntos,2285483.3
+2025-05-14,S&P MERVAL,mercados,puntos,2301643.22
+2025-05-15,S&P MERVAL,mercados,puntos,2298473.1
+2025-05-16,S&P MERVAL,mercados,puntos,2318359.96
+2025-05-19,S&P MERVAL,mercados,puntos,2369505.2
+2025-05-20,S&P MERVAL,mercados,puntos,2378463.98
+2025-05-21,S&P MERVAL,mercados,puntos,2319548.56
+2025-05-22,S&P MERVAL,mercados,puntos,2314896.98
+2025-05-23,S&P MERVAL,mercados,puntos,2345902.16
+2025-05-26,S&P MERVAL,mercados,puntos,2370800.08
+2025-05-27,S&P MERVAL,mercados,puntos,2355098.27
+2025-05-28,S&P MERVAL,mercados,puntos,2344329.52
+2025-05-29,S&P MERVAL,mercados,puntos,2308055.76
+2025-05-30,S&P MERVAL,mercados,puntos,2278991.58
+2025-06-02,S&P MERVAL,mercados,puntos,2206291.24
+2025-06-03,S&P MERVAL,mercados,puntos,2224637.93
+2025-06-04,S&P MERVAL,mercados,puntos,2126915.34
+2025-06-05,S&P MERVAL,mercados,puntos,2121103.34
+2025-06-06,S&P MERVAL,mercados,puntos,2156778.44
+2025-06-09,S&P MERVAL,mercados,puntos,2111196.88
+2025-06-10,S&P MERVAL,mercados,puntos,2202667.32
+2025-06-11,S&P MERVAL,mercados,puntos,2171272.38
+2025-06-12,S&P MERVAL,mercados,puntos,2187671.01
+2025-06-13,S&P MERVAL,mercados,puntos,2127156.22
+2025-06-17,S&P MERVAL,mercados,puntos,2072440.28
+2025-06-18,S&P MERVAL,mercados,puntos,2050983.25
+2025-06-19,S&P MERVAL,mercados,puntos,2064098.65
+2025-06-23,S&P MERVAL,mercados,puntos,1977115.89
+2025-06-24,S&P MERVAL,mercados,puntos,2064589.55
+2025-06-25,S&P MERVAL,mercados,puntos,2024392.67
+2025-06-26,S&P MERVAL,mercados,puntos,2038948.45
+2025-06-27,S&P MERVAL,mercados,puntos,2041077.8
+2025-06-30,S&P MERVAL,mercados,puntos,1994824.53
+2025-07-01,S&P MERVAL,mercados,puntos,2031093.18
+2025-07-02,S&P MERVAL,mercados,puntos,2063026.6
+2025-07-03,S&P MERVAL,mercados,puntos,2078160.8
+2025-07-04,S&P MERVAL,mercados,puntos,2078697.04
+2025-07-07,S&P MERVAL,mercados,puntos,2049934.07
+2025-07-08,S&P MERVAL,mercados,puntos,2129785.51
+2025-07-10,S&P MERVAL,mercados,puntos,2068736.04
+2025-07-11,S&P MERVAL,mercados,puntos,2007432.66
+2025-07-14,S&P MERVAL,mercados,puntos,2064025.38
+2025-07-15,S&P MERVAL,mercados,puntos,2075071.76
+2025-07-16,S&P MERVAL,mercados,puntos,2027274.12
+2025-07-17,S&P MERVAL,mercados,puntos,2066134.29
+2025-07-18,S&P MERVAL,mercados,puntos,2075286.29
+2025-07-21,S&P MERVAL,mercados,puntos,2042465.47
+2025-07-22,S&P MERVAL,mercados,puntos,2010482.18
+2025-07-23,S&P MERVAL,mercados,puntos,2083677.16
+2025-07-24,S&P MERVAL,mercados,puntos,2135086.53
+2025-07-25,S&P MERVAL,mercados,puntos,2197098.38
+2025-07-28,S&P MERVAL,mercados,puntos,2213570.17
+2025-07-29,S&P MERVAL,mercados,puntos,2304342.57
+2025-07-30,S&P MERVAL,mercados,puntos,2306756.29
+2025-07-31,S&P MERVAL,mercados,puntos,2319510.48
+2025-08-01,S&P MERVAL,mercados,puntos,2278848.71
+2025-08-04,S&P MERVAL,mercados,puntos,2287328.88
+2025-08-05,S&P MERVAL,mercados,puntos,2346867.28
+2025-08-06,S&P MERVAL,mercados,puntos,2415040.72
+2025-08-07,S&P MERVAL,mercados,puntos,2349020.51
+2025-08-08,S&P MERVAL,mercados,puntos,2300926.1
+2025-08-11,S&P MERVAL,mercados,puntos,2303302.21
+2025-08-12,S&P MERVAL,mercados,puntos,2311836.34
+2025-08-13,S&P MERVAL,mercados,puntos,2287631.16
+2025-08-14,S&P MERVAL,mercados,puntos,2188542.39
+2025-08-18,S&P MERVAL,mercados,puntos,2198382.12
+2025-08-19,S&P MERVAL,mercados,puntos,2092205.51
+2025-08-20,S&P MERVAL,mercados,puntos,2081951.07
+2025-08-21,S&P MERVAL,mercados,puntos,2103162.67
+2025-08-22,S&P MERVAL,mercados,puntos,2106200.0
+2025-08-25,S&P MERVAL,mercados,puntos,2021852.01
+2025-08-26,S&P MERVAL,mercados,puntos,2033345.31
+2025-08-27,S&P MERVAL,mercados,puntos,1974150.59
+2025-08-28,S&P MERVAL,mercados,puntos,1997378.72
+2025-08-29,S&P MERVAL,mercados,puntos,1984845.04
+2025-09-01,S&P MERVAL,mercados,puntos,1939743.31
+2025-09-02,S&P MERVAL,mercados,puntos,1975729.46
+2025-09-03,S&P MERVAL,mercados,puntos,1933986.48
+2025-09-04,S&P MERVAL,mercados,puntos,1990319.8
+2025-09-05,S&P MERVAL,mercados,puntos,1997624.37
+2025-09-08,S&P MERVAL,mercados,puntos,1732923.77
+2025-09-09,S&P MERVAL,mercados,puntos,1728446.73
+2025-09-10,S&P MERVAL,mercados,puntos,1825227.53
+2025-09-11,S&P MERVAL,mercados,puntos,1805181.98
+2025-09-12,S&P MERVAL,mercados,puntos,1759873.99
+2025-09-15,S&P MERVAL,mercados,puntos,1748701.64
+2025-09-16,S&P MERVAL,mercados,puntos,1788268.73
+2025-09-17,S&P MERVAL,mercados,puntos,1783519.79
+2025-09-18,S&P MERVAL,mercados,puntos,1695529.96
+2025-09-19,S&P MERVAL,mercados,puntos,1683959.61
+2025-09-22,S&P MERVAL,mercados,puntos,1811038.73
+2025-09-23,S&P MERVAL,mercados,puntos,1815381.74
+2025-09-24,S&P MERVAL,mercados,puntos,1843318.56
+2025-09-25,S&P MERVAL,mercados,puntos,1767848.42
+2025-09-26,S&P MERVAL,mercados,puntos,1791045.47
+2025-09-29,S&P MERVAL,mercados,puntos,1793184.57
+2025-09-30,S&P MERVAL,mercados,puntos,1773439.62
+2025-10-01,S&P MERVAL,mercados,puntos,1764589.85
+2025-10-02,S&P MERVAL,mercados,puntos,1808661.23
+2025-10-03,S&P MERVAL,mercados,puntos,1805024.22
+2025-10-06,S&P MERVAL,mercados,puntos,1802569.74
+2025-10-07,S&P MERVAL,mercados,puntos,1793951.77
+2025-10-08,S&P MERVAL,mercados,puntos,1819463.8
+2025-10-09,S&P MERVAL,mercados,puntos,1924930.02
+2025-10-13,S&P MERVAL,mercados,puntos,1958154.71
+2025-10-14,S&P MERVAL,mercados,puntos,1884773.87
+2025-10-15,S&P MERVAL,mercados,puntos,1912738.66
+2025-10-16,S&P MERVAL,mercados,puntos,1929504.82
+2025-10-17,S&P MERVAL,mercados,puntos,1989555.4
+2025-10-20,S&P MERVAL,mercados,puntos,1978419.05
+2025-10-21,S&P MERVAL,mercados,puntos,2002848.51
+2025-10-22,S&P MERVAL,mercados,puntos,2018810.75
+2025-10-23,S&P MERVAL,mercados,puntos,2055520.27
+2025-10-24,S&P MERVAL,mercados,puntos,2076858.58
+2025-10-27,S&P MERVAL,mercados,puntos,2529084.12
+2025-10-28,S&P MERVAL,mercados,puntos,2670387.93
+2025-10-29,S&P MERVAL,mercados,puntos,2801880.41
+2025-10-30,S&P MERVAL,mercados,puntos,2793519.41
+2025-10-31,S&P MERVAL,mercados,puntos,3002607.18
+2025-11-03,S&P MERVAL,mercados,puntos,3104495.27
+2025-11-04,S&P MERVAL,mercados,puntos,3080710.09
+2025-11-05,S&P MERVAL,mercados,puntos,3048196.47
+2025-11-06,S&P MERVAL,mercados,puntos,2973544.16
+2025-11-07,S&P MERVAL,mercados,puntos,2864646.71
+2025-11-10,S&P MERVAL,mercados,puntos,2951889.0
+2025-11-11,S&P MERVAL,mercados,puntos,2958257.64
+2025-11-12,S&P MERVAL,mercados,puntos,2984607.77
+2025-11-13,S&P MERVAL,mercados,puntos,2883332.85
+2025-11-14,S&P MERVAL,mercados,puntos,2992808.43
+2025-11-17,S&P MERVAL,mercados,puntos,2926870.5
+2025-11-18,S&P MERVAL,mercados,puntos,2932664.03
+2025-11-19,S&P MERVAL,mercados,puntos,2869723.54
+2025-11-20,S&P MERVAL,mercados,puntos,2850532.83
+2025-11-21,S&P MERVAL,mercados,puntos,2761614.99
+2025-11-25,S&P MERVAL,mercados,puntos,2865760.19
+2025-11-26,S&P MERVAL,mercados,puntos,2852183.75
+2025-11-27,S&P MERVAL,mercados,puntos,3020019.34
+2025-11-28,S&P MERVAL,mercados,puntos,3026469.38
+2025-12-01,S&P MERVAL,mercados,puntos,3060289.11
+2025-12-02,S&P MERVAL,mercados,puntos,3042000.53
+2025-12-03,S&P MERVAL,mercados,puntos,3129449.22
+2025-12-04,S&P MERVAL,mercados,puntos,3129449.25
+2025-12-05,S&P MERVAL,mercados,puntos,3046354.76
+2025-12-09,S&P MERVAL,mercados,puntos,2987064.12
+2025-12-10,S&P MERVAL,mercados,puntos,3013646.79
+2025-12-11,S&P MERVAL,mercados,puntos,2980580.6
+2025-12-12,S&P MERVAL,mercados,puntos,2979065.08
+2025-12-15,S&P MERVAL,mercados,puntos,3011572.12
+2025-12-16,S&P MERVAL,mercados,puntos,3034429.24
+2025-12-17,S&P MERVAL,mercados,puntos,3035516.7
+2025-12-18,S&P MERVAL,mercados,puntos,3163223.63
+2025-12-19,S&P MERVAL,mercados,puntos,3139466.65
+2025-12-22,S&P MERVAL,mercados,puntos,3136089.83
+2025-12-23,S&P MERVAL,mercados,puntos,3114970.21
+2025-12-24,S&P MERVAL,mercados,puntos,3121145.12
+2025-12-26,S&P MERVAL,mercados,puntos,3112379.72
+2025-12-29,S&P MERVAL,mercados,puntos,3100074.42
+2025-12-30,S&P MERVAL,mercados,puntos,3051616.77
+2026-01-02,S&P MERVAL,mercados,puntos,3126292.19
+2026-01-05,S&P MERVAL,mercados,puntos,3130196.92
+2026-01-06,S&P MERVAL,mercados,puntos,3112376.81
+2026-01-07,S&P MERVAL,mercados,puntos,3013957.34
+2026-01-08,S&P MERVAL,mercados,puntos,3074879.73
+2026-01-09,S&P MERVAL,mercados,puntos,3089461.07
+2026-01-12,S&P MERVAL,mercados,puntos,3076946.7
+2026-01-13,S&P MERVAL,mercados,puntos,3036292.52
+2026-01-14,S&P MERVAL,mercados,puntos,2950111.29
+2026-01-15,S&P MERVAL,mercados,puntos,2926727.13
+2026-01-16,S&P MERVAL,mercados,puntos,2933230.04
+2026-01-19,S&P MERVAL,mercados,puntos,2912976.29
+2026-01-20,S&P MERVAL,mercados,puntos,2942091.46
+2026-01-21,S&P MERVAL,mercados,puntos,3047553.39
+2026-01-22,S&P MERVAL,mercados,puntos,3066434.82
+2026-01-23,S&P MERVAL,mercados,puntos,3093534.44
+2026-01-26,S&P MERVAL,mercados,puntos,3131276.98
+2026-01-27,S&P MERVAL,mercados,puntos,3244319.97
+2026-01-28,S&P MERVAL,mercados,puntos,3230714.02
+2026-01-29,S&P MERVAL,mercados,puntos,3211242.22
+2026-01-30,S&P MERVAL,mercados,puntos,3199553.98
+2026-02-02,S&P MERVAL,mercados,puntos,3106672.19
+2026-02-03,S&P MERVAL,mercados,puntos,3038541.17
+2026-02-04,S&P MERVAL,mercados,puntos,3015927.37
+2026-02-05,S&P MERVAL,mercados,puntos,2932837.44
+2026-02-06,S&P MERVAL,mercados,puntos,2977118.6
+2026-02-09,S&P MERVAL,mercados,puntos,2976663.79
+2026-02-10,S&P MERVAL,mercados,puntos,3060605.62
+2026-02-11,S&P MERVAL,mercados,puntos,3017641.26
+2026-02-12,S&P MERVAL,mercados,puntos,2851779.79
+2026-02-13,S&P MERVAL,mercados,puntos,2816127.94
+2026-02-18,S&P MERVAL,mercados,puntos,2723175.02
+2026-02-19,S&P MERVAL,mercados,puntos,2839106.06
+2026-02-20,S&P MERVAL,mercados,puntos,2873248.32
+2026-02-23,S&P MERVAL,mercados,puntos,2763058.74
+2026-02-24,S&P MERVAL,mercados,puntos,2812413.88
+2026-02-25,S&P MERVAL,mercados,puntos,2799876.06
+2026-02-26,S&P MERVAL,mercados,puntos,2754419.39
+2026-02-27,S&P MERVAL,mercados,puntos,2642105.38
+2026-03-02,S&P MERVAL,mercados,puntos,2603094.11
+2026-03-03,S&P MERVAL,mercados,puntos,2597025.1
+2026-03-04,S&P MERVAL,mercados,puntos,2579970.37
+2026-03-05,S&P MERVAL,mercados,puntos,2570733.32
+2026-03-06,S&P MERVAL,mercados,puntos,2626114.83
+2026-03-09,S&P MERVAL,mercados,puntos,2632795.13
+2026-03-10,S&P MERVAL,mercados,puntos,2700255.24
+2026-03-11,S&P MERVAL,mercados,puntos,2770634.71
+2026-03-12,S&P MERVAL,mercados,puntos,2695423.7
+2026-03-13,S&P MERVAL,mercados,puntos,2642584.17
+2026-03-16,S&P MERVAL,mercados,puntos,2606350.94
+2026-03-17,S&P MERVAL,mercados,puntos,2663049.12
+2026-03-18,S&P MERVAL,mercados,puntos,2693891.16
+2026-03-19,S&P MERVAL,mercados,puntos,2768681.47
+2026-03-20,S&P MERVAL,mercados,puntos,2725326.3
+2026-03-25,S&P MERVAL,mercados,puntos,2805316.38
+2026-03-26,S&P MERVAL,mercados,puntos,2769368.97
+2026-03-27,S&P MERVAL,mercados,puntos,2793846.44
+2026-03-30,S&P MERVAL,mercados,puntos,2865753.48
+2026-03-31,S&P MERVAL,mercados,puntos,2997780.34
+2026-04-01,S&P MERVAL,mercados,puntos,2999341.73
+2026-04-06,S&P MERVAL,mercados,puntos,3006247.77
+2026-04-07,S&P MERVAL,mercados,puntos,2972629.43
+2026-04-08,S&P MERVAL,mercados,puntos,3011185.67
+2026-04-09,S&P MERVAL,mercados,puntos,2999607.52
+2026-04-10,S&P MERVAL,mercados,puntos,2998770.0
+2026-04-13,S&P MERVAL,mercados,puntos,2991781.46
+2026-04-14,S&P MERVAL,mercados,puntos,2950634.57
+2026-04-15,S&P MERVAL,mercados,puntos,2917888.82
+2026-04-16,S&P MERVAL,mercados,puntos,2923833.26
+2026-04-17,S&P MERVAL,mercados,puntos,2889185.31
+2026-04-20,S&P MERVAL,mercados,puntos,2931701.3
+2026-04-21,S&P MERVAL,mercados,puntos,2940100.33
+2026-04-22,S&P MERVAL,mercados,puntos,2898691.74
+2026-04-23,S&P MERVAL,mercados,puntos,2831848.54
+2026-04-24,S&P MERVAL,mercados,puntos,2840787.49
+2026-04-27,S&P MERVAL,mercados,puntos,2866257.12
+2026-04-28,S&P MERVAL,mercados,puntos,2869560.32
+2026-04-29,S&P MERVAL,mercados,puntos,2838834.68
+2026-04-30,S&P MERVAL,mercados,puntos,2832850.99
+2026-05-04,S&P MERVAL,mercados,puntos,2767136.5
+2026-05-05,S&P MERVAL,mercados,puntos,2759256.6
+2026-05-06,S&P MERVAL,mercados,puntos,2881352.28
+2026-05-07,S&P MERVAL,mercados,puntos,2834283.25
+2026-05-08,S&P MERVAL,mercados,puntos,2769126.64
+2026-05-11,S&P MERVAL,mercados,puntos,2833120.06
+2026-05-12,S&P MERVAL,mercados,puntos,2792993.25
+2026-05-13,S&P MERVAL,mercados,puntos,2738354.49
+2026-05-14,S&P MERVAL,mercados,puntos,2747310.05
+2026-05-15,S&P MERVAL,mercados,puntos,2707868.63
+2026-05-18,S&P MERVAL,mercados,puntos,2816245.26
+2026-05-19,S&P MERVAL,mercados,puntos,2774731.25
+2026-05-20,S&P MERVAL,mercados,puntos,2788517.13
+2026-05-21,S&P MERVAL,mercados,puntos,2877438.5
+2026-05-22,S&P MERVAL,mercados,puntos,2857199.65
+2026-05-26,S&P MERVAL,mercados,puntos,2924355.74
+2026-05-27,S&P MERVAL,mercados,puntos,2997833.14
+2026-05-28,S&P MERVAL,mercados,puntos,3089496.72
+2026-05-29,S&P MERVAL,mercados,puntos,3166406.61
+2026-06-01,S&P MERVAL,mercados,puntos,3242787.55
+2026-06-02,S&P MERVAL,mercados,puntos,3224263.87
+2026-06-03,S&P MERVAL,mercados,puntos,3164196.01
+2026-06-04,S&P MERVAL,mercados,puntos,3174511.37
+2026-06-05,S&P MERVAL,mercados,puntos,3084616.64
+2026-06-08,S&P MERVAL,mercados,puntos,3112024.27
+2026-06-09,S&P MERVAL,mercados,puntos,3150726.8
+2026-06-10,S&P MERVAL,mercados,puntos,3153149.95
+2026-06-11,S&P MERVAL,mercados,puntos,3353007.69
+2026-06-12,S&P MERVAL,mercados,puntos,3352707.61
+2026-06-16,S&P MERVAL,mercados,puntos,3254705.52
+2026-06-17,S&P MERVAL,mercados,puntos,3291882.74
+2026-06-18,S&P MERVAL,mercados,puntos,3333406.84
+2026-06-19,S&P MERVAL,mercados,puntos,3291321.57
+2026-06-22,S&P MERVAL,mercados,puntos,3277511.73
+2026-06-23,S&P MERVAL,mercados,puntos,3248427.85
+2026-06-24,S&P MERVAL,mercados,puntos,3110490.18
+2026-06-25,S&P MERVAL,mercados,puntos,3096067.49
+2026-06-26,S&P MERVAL,mercados,puntos,3123411.23
+2026-06-29,S&P MERVAL,mercados,puntos,3176750.46
+2026-06-30,S&P MERVAL,mercados,puntos,3168607.38
+2026-07-01,S&P MERVAL,mercados,puntos,3121854.95
+2026-07-02,S&P MERVAL,mercados,puntos,3157091.24
+2026-07-03,S&P MERVAL,mercados,puntos,3196899.69
+2026-07-06,S&P MERVAL,mercados,puntos,3267481.44
+2026-07-07,S&P MERVAL,mercados,puntos,3223997.62
+2026-07-08,S&P MERVAL,mercados,puntos,3202489.47
+2026-07-13,S&P MERVAL,mercados,puntos,3235294.75
+2026-07-14,S&P MERVAL,mercados,puntos,3229323.46
+2026-07-15,S&P MERVAL,mercados,puntos,3291246.06
+2026-07-16,S&P MERVAL,mercados,puntos,3185257.36
+2026-07-17,S&P MERVAL,mercados,puntos,3199934.38
+2026-07-20,S&P MERVAL,mercados,puntos,3223652.03
+2026-07-21,S&P MERVAL,mercados,puntos,3281979.17
+2026-07-22,S&P MERVAL,mercados,puntos,3379771.44
+2026-07-23,S&P MERVAL,mercados,puntos,3319521.58
+2026-07-24,S&P MERVAL,mercados,puntos,3283853.97
+2026-07-27,S&P MERVAL,mercados,puntos,3305315.9
+2026-07-28,S&P MERVAL,mercados,puntos,3256361.65
+2026-07-29,S&P MERVAL,mercados,puntos,3233105.22
+2026-07-30,S&P MERVAL,mercados,puntos,3304917.79
+2026-07-31,S&P MERVAL,mercados,puntos,3291322.63
+2026-08-03,S&P MERVAL,mercados,puntos,3274443.21
+2026-08-04,S&P MERVAL,mercados,puntos,3188970.55
+2026-08-05,S&P MERVAL,mercados,puntos,3156331.8
+2026-08-06,S&P MERVAL,mercados,puntos,3100731.81
+2026-08-07,S&P MERVAL,mercados,puntos,3086784.54
+2026-08-10,S&P MERVAL,mercados,puntos,3122064.44
+2026-08-11,S&P MERVAL,mercados,puntos,3022484.54
+2026-08-12,S&P MERVAL,mercados,puntos,2999523.98
+2026-08-13,S&P MERVAL,mercados,puntos,3000582.18
+2026-08-14,S&P MERVAL,mercados,puntos,2947349.15
+2026-08-18,S&P MERVAL,mercados,puntos,2891651.11
+2026-08-19,S&P MERVAL,mercados,puntos,2874492.65
+2026-08-20,S&P MERVAL,mercados,puntos,2875949.59
+2026-08-21,S&P MERVAL,mercados,puntos,2913183.61
+2026-08-24,S&P MERVAL,mercados,puntos,2995129.46
+2026-08-25,S&P MERVAL,mercados,puntos,3009028.71
+2026-08-26,S&P MERVAL,mercados,puntos,3024971.01
+2026-08-27,S&P MERVAL,mercados,puntos,3001208.88
+2026-08-28,S&P MERVAL,mercados,puntos,2979471.81
+2026-08-31,S&P MERVAL,mercados,puntos,3033848.07
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
@@ -58679,6 +59894,7 @@
 2026-08-26,Tasa TAMAR (total bancos),monetario_financiero,% TNA,24.125
 2026-08-27,Tasa TAMAR (total bancos),monetario_financiero,% TNA,25.0
 2026-08-28,Tasa TAMAR (total bancos),monetario_financiero,% TNA,24.0
+2026-08-31,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.5625
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
