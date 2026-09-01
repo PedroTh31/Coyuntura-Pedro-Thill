@@ -15,16 +15,28 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   idempotente** (nunca pierde ni duplica datos viejos).
 - `dashboard.py` — genera `docs/index.html` (pestaña macro) Y `docs/financiera.html`
   (pestaña financiera): es el MISMO módulo, `generar(historico, config_indicadores,
-  archivo_salida=, extra_html=, nav_extra=, titulo_pagina=)` es genérico -- se lo llama dos
-  veces desde `run.py`, una por página, cada vez con la lista de indicadores que corresponde
-  (`indicadores` o `indicadores_financiera` de `indicadores.yaml`). Un `bloque` (ver
-  `ORDEN_BLOQUES`) sin tarjetas para la lista que se le pasó en esa llamada simplemente no
+  archivo_salida=, extra_html=, extra_charts=, nav_extra=, titulo_pagina=)` es genérico -- se
+  lo llama dos veces desde `run.py`, una por página, cada vez con la lista de indicadores que
+  corresponde (`indicadores` o `indicadores_financiera` de `indicadores.yaml`). Un `bloque`
+  (ver `ORDEN_BLOQUES`) sin tarjetas para la lista que se le pasó en esa llamada simplemente no
   imprime sección -- por eso agregar el bloque `mercados` (financiera) a las mismas listas
   module-level (`ORDEN_BLOQUES`/`TITULO_BLOQUE`/`ACENTO`/`ORDEN_GRUPOS`) que usa `index.html`
-  no contamina la página macro. Los gráficos son **interactivos (Chart.js)**, NO imágenes.
-  Cada indicador es una celda: tarjeta arriba + gráfico debajo. `extra_html={bloque: html}`
-  permite inyectar contenido que no sale del pipeline fecha/valor estándar (ej. la tabla DDF,
-  ver `tabla_ddf()`). `nav_extra` es el link cruzado entre páginas ("Financiera →" / "← Macro").
+  no contamina la página macro. **Reclasificar un indicador de una página a la otra significa
+  MOVER su entrada de lista en indicadores.yaml (de `indicadores` a `indicadores_financiera` o
+  viceversa), no sólo cambiarle el campo `bloque` en el lugar** -- bug real encontrado en Ronda
+  2: retaguear sin mover dejaba la tarjeta apareciendo en las DOS páginas a la vez (la de
+  origen seguía viéndolo porque el bloque nuevo también estaba en `ORDEN_BLOQUES`), mientras
+  que la de destino nunca lo veía (su `generar()` sólo itera la lista que se le pasó). Los
+  gráficos son **interactivos (Chart.js)**, NO imágenes. Cada indicador es una celda: tarjeta
+  arriba + gráfico debajo. `extra_html={bloque: html}` inyecta HTML crudo que no sale del
+  pipeline fecha/valor estándar (tablas snapshot, ej. acciones/CEDEARs más operados, ver
+  `tabla_acciones()`). `extra_charts=[{card:{...}, serie_js:{...}, nota:"..."}, ...]` inyecta
+  tarjetas+gráficos armados FUERA del loop yaml-driven (run.py los arma con datos fetched
+  aparte, ej. "muro de vencimientos" con `kind: "muro"` -- barras AGRUPADAS, no apiladas, ver
+  `muroOpts` en el JS embebido -- o el gráfico de dólar futuro con `kind: "bar"` reusado tal
+  cual); `generar()` les asigna el índice `i` y registra la `nota` con el mismo sistema de
+  asterisco numerado que cualquier indicador normal. `nav_extra` es el link cruzado entre
+  páginas ("Financiera →" / "← Macro").
 - `enviar_mail.py` — resumen diario (lun-vie, indicadores + noticias arg/intl) por Gmail SMTP.
 - `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie, en
   dos listas top-level: `indicadores` (macro, `docs/index.html`) e `indicadores_financiera`
@@ -48,6 +60,30 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   estándar de certifi: el fetcher pide con `verify=False` (conexión sigue siendo TLS, sólo se
   salta la validación de cadena), mismo criterio que las librerías públicas de BYMA
   (`pyhomebroker`, `bymadata`).
+- `fuente: mae_bono` + `ticker: "..."` + `campo: tir|md` (opcional `letra`, default "H") →
+  TIR o duración modificada de un bono hard-dollar, Mercado Abierto Electrónico
+  (`fetch_mae_bono_campo`/`fetch_mae_flujofondos` en fetchers.py, endpoint
+  `emisiones/flujofondoscotiz/{letra}`, no documentado oficialmente por el MAE, `letra: "H"` =
+  bonos hard-dollar step-up tipo AL30/GD30/GD35, `"B"` = BOPREAL). Snapshot del día, SIN
+  endpoint histórico: la serie sólo acumula un punto por corrida desde que se empieza a
+  trackearla, sin backfill posible. El mismo endpoint también trae el flujo de fondos completo
+  (`detalle[]`: fechaPago + amortizacion, esta última en % del valor nominal ORIGINAL de cada
+  bono) -- usado para el "muro de vencimientos" (ver `vista`/`kind` más abajo), no para una
+  serie fecha/valor normal.
+- `fuente: mae_resumen` + `tipo: "..."` + `ticker: "..."` + `campo` (opcional, default
+  "ultimo") → un campo de un instrumento puntual del resumen del MAE (`tipo: "CAU"` =
+  cauciones, `"RF"` = renta fija, `"DDF"` = dólar futuro, `"FOR"` = forwards). Snapshot del
+  día, mismas limitaciones que `mae_bono` (sin historia propia).
+- `fuente: fred` + `id: "..."` → series de EEUU vía FRED (Federal Reserve Economic Data,
+  `fetch_fred` en fetchers.py, endpoint público `fredgraph.csv`, sin API key). Serie histórica
+  real (no snapshot), ej. `DGS10` = rendimiento del Treasury a 10 años.
+- `calculo: spread_bono_ust` + `ticker_bono: "..."` + `fred_id: "..."` → (TIR del bono vía
+  `mae_bono` − rendimiento FRED) × 100, en puntos básicos. Usa `pd.merge_asof` con
+  `direction="backward"` (NO merge exacto por fecha): la TIR del bono es de hoy pero FRED
+  suele publicar el cierre de UST con 1 día hábil de rezago, un merge exacto casi nunca
+  matchea. Pensado para un "spread soberano (proxy)" -- etiquetar SIEMPRE así, nunca como
+  "riesgo país" a secas: no es el EMBI+ oficial, compara TIR puntual contra un Treasury de
+  plazo fijo sin ajustar por duración exacta.
 - `solo_referencia: true` → el indicador NO se fetchea (run.py lo saltea en el loop): reusa el
   dato que otro indicador de la MISMA corrida ya trajo con el mismo `nombre` (mismo `historico`
   compartido), sólo le agrega una tarjeta propia bajo su propio `bloque`/`grupo`. Pensado para
@@ -269,16 +305,25 @@ Nacional, superávit gemelos fiscal/comercial, resultado primario acumulado 12 m
 país, resultado primario vs. intereses de deuda, deuda pública bruta, PBI nominal trimestral,
 deuda/PBI vs. tipo de cambio real).
 
-**Pestaña financiera** (`docs/financiera.html`, Ronda 1 de `PROMPT_pestana_financiera.md`):
-página separada con nav cruzado hacia/desde la macro. FX/brechas y TAMAR referenciados desde la
-pestaña macro (`solo_referencia`, mismo dato, sin refetch); CER (BCRA, idVariable 30, nuevo);
-S&P MERVAL (BYMA, serie histórica diaria, nuevo); Dólar futuro (DDF, curva de contratos por
-vencimiento vía MAE, tabla -- no serie histórica, cambia de contratos mes a mes). Pendiente de
-rondas siguientes (ver `PROMPT_pestana_financiera (1).md` sección 8): renta fija/curva de
-rendimientos, muro de vencimientos, riesgo país (proxy), fiscal dentro de esta misma pestaña,
-combinadas (tasa real vs. EMAE, TAMAR vs. CER ex-post, etc.), divisas internacionales, FED,
-licitaciones, panel líder / acciones individuales más allá del índice (alcance mínimo de Ronda 1
-según el maestro).
+**Pestaña financiera** (`docs/financiera.html`, Rondas 1-2 de `PROMPT_pestana_financiera.md`):
+página separada con nav cruzado hacia/desde la macro. FX/brechas y TAMAR (total bancos, 135)
+referenciados desde la pestaña macro (`solo_referencia`, mismo dato, sin refetch); CER (BCRA,
+idVariable 30); S&P MERVAL (BYMA, serie histórica diaria); TAMAR bancos privados (idVariable
+44, variante que referencian los bonos duales) y BADLAR (idVariable 7), plazo fijo a 30 días,
+cauciones pesos/USD (MAE); curva de rendimientos AL30/GD30/GD35 (TIR en el tiempo vía MAE, no
+snapshot puntual -- el pedido original de un gráfico X=duración/Y=TIR se cambió por una serie
+temporal de las 3 TIR, ver la nota del indicador); spread soberano GD30 vs. UST10Y (proxy, NO
+es el EMBI+ oficial); muro de vencimientos de AL30/GD30/GD35 (barras agrupadas por año, % del
+valor nominal de cada bono, vía el flujo de fondos del MAE); depósitos y morosidad
+RECLASIFICADOS desde la macro (ver la nota sobre mover vs. retaguear en Arquitectura), con
+nuevo corte de depósitos por moneda (pesos/USD, privado/público); acciones y CEDEARs más
+operados (tablas, ranking por monto vía data912, recalculado en cada corrida); dólar futuro
+(DDF, curva de contratos vía MAE, gráfico de barras -- reemplazó a la tabla de Ronda 1).
+Universo de renta fija acotado a AL30/GD30/GD35 por decisión de Pedro (no todo el set
+disponible en el MAE). Pendiente de rondas siguientes (ver `PROMPT_pestana_financiera (1).md`
+sección 8): LECAPs/BONCAPs/ONs en la curva de rendimientos, fiscal dentro de esta misma
+pestaña, combinadas (tasa real vs. EMAE, TAMAR vs. CER ex-post, etc.), divisas internacionales,
+FED, licitaciones, panel líder completo (20 símbolos) más allá del ranking por volumen actual.
 
 ## Pendientes / a mejorar
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
