@@ -13,14 +13,28 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `fetchers.py` — funciones por fuente. Todas devuelven un DataFrame `fecha | valor`.
 - `storage.py` — guarda `data/series_largo.csv` y `data/series_ancho.csv` con **merge
   idempotente** (nunca pierde ni duplica datos viejos).
-- `dashboard.py` — genera `docs/index.html`. Los gráficos son **interactivos (Chart.js)**,
-  NO imágenes. Cada indicador es una celda: tarjeta arriba + gráfico debajo.
+- `dashboard.py` — genera `docs/index.html` (pestaña macro) Y `docs/financiera.html`
+  (pestaña financiera): es el MISMO módulo, `generar(historico, config_indicadores,
+  archivo_salida=, extra_html=, nav_extra=, titulo_pagina=)` es genérico -- se lo llama dos
+  veces desde `run.py`, una por página, cada vez con la lista de indicadores que corresponde
+  (`indicadores` o `indicadores_financiera` de `indicadores.yaml`). Un `bloque` (ver
+  `ORDEN_BLOQUES`) sin tarjetas para la lista que se le pasó en esa llamada simplemente no
+  imprime sección -- por eso agregar el bloque `mercados` (financiera) a las mismas listas
+  module-level (`ORDEN_BLOQUES`/`TITULO_BLOQUE`/`ACENTO`/`ORDEN_GRUPOS`) que usa `index.html`
+  no contamina la página macro. Los gráficos son **interactivos (Chart.js)**, NO imágenes.
+  Cada indicador es una celda: tarjeta arriba + gráfico debajo. `extra_html={bloque: html}`
+  permite inyectar contenido que no sale del pipeline fecha/valor estándar (ej. la tabla DDF,
+  ver `tabla_ddf()`). `nav_extra` es el link cruzado entre páginas ("Financiera →" / "← Macro").
 - `enviar_mail.py` — resumen diario (lun-vie, indicadores + noticias arg/intl) por Gmail SMTP.
-- `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie.
+- `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie, en
+  dos listas top-level: `indicadores` (macro, `docs/index.html`) e `indicadores_financiera`
+  (`docs/financiera.html`).
 - `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario; `email_diario.yml`
   manda el mail de lunes a viernes a las 8am hora Argentina (GitHub Actions no garantiza el
   minuto exacto de disparo de un cron; puede llegar con demora en horas pico).
-- `docs/` — salida publicada por GitHub Pages. `data/` — CSVs históricos versionados.
+- `docs/` — salida publicada por GitHub Pages (`index.html` + `financiera.html`). `data/` —
+  CSVs históricos versionados, compartidos por las dos páginas (un solo `historico`, cada
+  indicador tageado con su propio `bloque`).
 
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
 - `fuente: datos_gob` + `id: "..."` → apis.datos.gob.ar/series (IPC, EMAE, monetarias,
@@ -28,6 +42,17 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `fuente: bcra` + `id_variable: N` → api.bcra.gob.ar (reservas diarias, etc.).
 - `fuente: argentinadatos` + `endpoint: "..."` → api.argentinadatos.com (inflación, riesgo país).
 - `fuente: dolar` + `casa: ...` → cotizaciones de dólar por casa (ArgentinaDatos).
+- `fuente: byma` + `symbol: "..."` → índices históricos de BYMA (open.bymadata.com.ar,
+  `fetch_byma_indice` en fetchers.py; `symbol: "M"` = S&P MERVAL, `"G"` = BURCAP), serie diaria
+  completa en un solo request. El certificado de BYMA tiene una CA intermedia fuera del bundle
+  estándar de certifi: el fetcher pide con `verify=False` (conexión sigue siendo TLS, sólo se
+  salta la validación de cadena), mismo criterio que las librerías públicas de BYMA
+  (`pyhomebroker`, `bymadata`).
+- `solo_referencia: true` → el indicador NO se fetchea (run.py lo saltea en el loop): reusa el
+  dato que otro indicador de la MISMA corrida ya trajo con el mismo `nombre` (mismo `historico`
+  compartido), sólo le agrega una tarjeta propia bajo su propio `bloque`/`grupo`. Pensado para
+  mostrar el mismo indicador macro (ej. Dólar oficial, TAMAR) también en `indicadores_financiera`
+  sin duplicar el fetch ni las filas del CSV.
 - `fuente: rem_bcra` + `variable: "..."` + `referencia: "..."` → Relevamiento de Expectativas de
   Mercado (BCRA), a partir del único Excel histórico que publica el BCRA en una URL fija. Arma la
   serie de "expectativa a un mes vista, siempre la encuesta más reciente disponible para cada
@@ -243,6 +268,17 @@ primario y financiero del Sector Público
 Nacional, superávit gemelos fiscal/comercial, resultado primario acumulado 12 meses vs. riesgo
 país, resultado primario vs. intereses de deuda, deuda pública bruta, PBI nominal trimestral,
 deuda/PBI vs. tipo de cambio real).
+
+**Pestaña financiera** (`docs/financiera.html`, Ronda 1 de `PROMPT_pestana_financiera.md`):
+página separada con nav cruzado hacia/desde la macro. FX/brechas y TAMAR referenciados desde la
+pestaña macro (`solo_referencia`, mismo dato, sin refetch); CER (BCRA, idVariable 30, nuevo);
+S&P MERVAL (BYMA, serie histórica diaria, nuevo); Dólar futuro (DDF, curva de contratos por
+vencimiento vía MAE, tabla -- no serie histórica, cambia de contratos mes a mes). Pendiente de
+rondas siguientes (ver `PROMPT_pestana_financiera (1).md` sección 8): renta fija/curva de
+rendimientos, muro de vencimientos, riesgo país (proxy), fiscal dentro de esta misma pestaña,
+combinadas (tasa real vs. EMAE, TAMAR vs. CER ex-post, etc.), divisas internacionales, FED,
+licitaciones, panel líder / acciones individuales más allá del índice (alcance mínimo de Ronda 1
+según el maestro).
 
 ## Pendientes / a mejorar
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
