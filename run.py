@@ -14,7 +14,8 @@ import pandas as pd
 
 from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
                        fetch_bcra_organismos_internacionales, fetch_bcra_swap_china,
-                       fetch_deuda_bruta, fetch_mae_ddf)
+                       fetch_deuda_bruta, fetch_mae_ddf, fetch_mae_bono_campo, fetch_mae_flujofondos,
+                       fetch_fred, fetch_data912)
 import storage
 import dashboard
 
@@ -191,7 +192,140 @@ def _calcular(ind, start):
         s["valor"] = s["brutas"] - s["swap"] - s["organismos"]
         s = s.reset_index().rename(columns={"index": "fecha"})
         return s[["fecha", "valor"]].dropna().sort_values("fecha").reset_index(drop=True)
+    if tipo == "spread_bono_ust":
+        # Spread soberano PROXY (Punto 4, Ronda 2 financiera): TIR de un bono hard-dollar
+        # argentino (MAE, snapshot del día, sin historia propia) menos el rendimiento del
+        # Treasury americano comparable (FRED, histórico real), en puntos básicos. NO es el
+        # EMBI+ oficial (ver 'Riesgo país (EMBI)' en la pestaña macro) -- metodología
+        # simplificada, compara TIR puntual contra un Treasury de plazo fijo (ej. 10 años),
+        # sin ajustar por la duración exacta del bono argentino. Como la TIR del bono sólo
+        # tiene UN dato por día (hoy) y sin backfill posible, el merge con la serie completa
+        # de FRED sólo produce un punto por corrida -- la serie se acumula día a día desde
+        # que el pipeline empieza a trackearla, igual que el resto de los datos del MAE.
+        bono = fetch_mae_bono_campo(ind["ticker_bono"], "tir").rename(columns={"valor": "tir"})
+        ust = fetch_fred(ind["fred_id"], start).rename(columns={"valor": "ust"})
+        if bono.empty or ust.empty:
+            return pd.DataFrame(columns=["fecha", "valor"])
+        # merge_asof (no merge exacto): la TIR del bono es de HOY, pero FRED suele publicar
+        # el cierre de UST10Y con 1 día hábil de rezago (fines de semana/feriados EEUU) -- un
+        # merge por fecha exacta casi nunca matchea. Se toma el último UST10Y disponible a
+        # esa fecha o antes (tolerancia 5 días, cubre un fin de semana largo sin arrastrar un
+        # dato demasiado viejo).
+        s = pd.merge_asof(bono.sort_values("fecha"), ust.sort_values("fecha"), on="fecha",
+                           direction="backward", tolerance=pd.Timedelta(days=5))
+        s = s.dropna(subset=["ust"])
+        if s.empty:
+            return pd.DataFrame(columns=["fecha", "valor"])
+        s["valor"] = (s["tir"] - s["ust"]) * 100
+        return s[["fecha", "valor"]]
     raise ValueError(f"cálculo desconocido: {tipo}")
+
+
+_TICKERS_MURO = ["AL30", "GD30", "GD35"]
+_COLORES_MURO = {"AL30": "#0767A7", "GD30": "#EF6C00", "GD35": "#6A1B99"}
+
+
+def _muro_vencimientos(anios_adelante=10):
+    """
+    Amortización de capital de AL30/GD30/GD35 por año de pago (Punto 5, Ronda 2
+    financiera), a partir del flujo de fondos del MAE (fetch_mae_flujofondos,
+    campo 'detalle' de cada bono: fechaPago + amortizacion). 'amortizacion'
+    viene en % del valor nominal ORIGINAL de cada bono -- bases distintas entre
+    bonos, así que se arma como gráfico de barras AGRUPADAS (no apiladas), ver
+    la nota en dashboard.py/muroOpts. Devuelve un dict {card, serie_js, nota}
+    para 'extra_charts' de dashboard.generar(), o None si no hay datos.
+    """
+    bonos = fetch_mae_flujofondos("H")
+    hoy = pd.Timestamp.today()
+    anio_max = hoy.year + anios_adelante
+    por_anio = {}
+    for b in bonos:
+        ticker = b.get("especie")
+        if ticker not in _TICKERS_MURO:
+            continue
+        for cupon in b.get("detalle", []):
+            try:
+                fecha = pd.to_datetime(cupon["fechaPago"])
+                monto = float(cupon.get("amortizacion") or 0)
+            except (KeyError, ValueError, TypeError):
+                continue
+            if monto <= 0 or fecha.year < hoy.year or fecha.year > anio_max:
+                continue
+            por_anio.setdefault(fecha.year, {})[ticker] = por_anio.setdefault(fecha.year, {}).get(ticker, 0) + monto
+    if not por_anio:
+        return None
+    anios = sorted(por_anio.keys())
+    datasets = []
+    for ticker in _TICKERS_MURO:
+        if not any(ticker in por_anio[a] for a in anios):
+            continue
+        datasets.append(dict(label=ticker, color=_COLORES_MURO[ticker],
+            y=[round(por_anio[a].get(ticker, 0), 1) for a in anios]))
+    if not datasets:
+        return None
+    card = dict(nombre="Muro de vencimientos (AL30/GD30/GD35)", bloque="mercados", grupo="Renta fija",
+        color=dashboard.ACENTO["mercados"], unidad="% VN", valor="—", pct=None, marca_fecha=None,
+        maxv="—", minv="—", sube_es_bueno=False, neutral=True, sin_filtros=True,
+        subtitulo="Pagos de capital por año, en % del valor nominal original de cada bono")
+    serie_js = dict(kind="muro", x=[str(a) for a in anios], datasets=datasets, unidad="% VN")
+    nota = ("Amortización de capital de AL30, GD30 y GD35 por año de pago, en % del valor nominal "
+            "ORIGINAL de cada bono (campo 'amortizacion' del flujo de fondos del MAE, endpoint "
+            "emisiones/flujofondoscotiz, no documentado oficialmente por el MAE). Barras agrupadas, "
+            "NO apiladas: cada bono amortiza sobre SU PROPIO valor nominal -- apilar sumaría "
+            "porcentajes de bases distintas en una altura sin significado. Universo acotado a estos "
+            "3 bonos hard-dollar (alcance definido por Pedro para esta ronda, no incluye LECAPs/"
+            "BONCAPs en pesos ni otros soberanos).")
+    return {"card": card, "serie_js": serie_js, "nota": nota}
+
+
+def _ddf_chart():
+    """Punto 9, Ronda 2 financiera: reemplaza la tabla de dólar futuro por un gráfico de barras."""
+    ddf = fetch_mae_ddf()
+    if not ddf:
+        return None
+    labels, valores = dashboard.ordenar_ddf(ddf)
+    card = dict(nombre="Dólar futuro (DDF)", bloque="mercados", grupo="Dólar futuro",
+        color=dashboard.ACENTO["mercados"], unidad="$", valor=_fmt_ultimo(valores[0] if valores else None),
+        pct=None, marca_fecha=None, maxv=_fmt_ultimo(max(valores)) if valores else "—",
+        minv=_fmt_ultimo(min(valores)) if valores else "—", sube_es_bueno=False, neutral=True,
+        sin_filtros=True, subtitulo="Curva de contratos por vencimiento mensual")
+    serie_js = dict(kind="bar", x=labels, y=valores, color=dashboard.ACENTO["mercados"], unidad="$")
+    nota = ('Curva de contratos de dólar futuro (DDF) por vencimiento mensual, Mercado Abierto '
+            'Electrónico (MAE, endpoint emisiones/resumen/DDF, no documentado oficialmente por el '
+            'MAE, datos delayed 5-15 min intradía). Snapshot del día -- no es una serie histórica '
+            '(los contratos cambian de nombre mes a mes).')
+    return {"card": card, "serie_js": serie_js, "nota": nota}
+
+
+def _fmt_ultimo(v):
+    return f"{v:,.0f}".replace(",", ".") if v is not None else "—"
+
+
+def _ranking_data912(endpoint, sufijos_dedup="CD"):
+    """
+    Ranking de instrumentos de data912 por monto operado (volumen × último precio),
+    de-dupe por símbolo base (ej. 'AALC'/'AALD' -> 'AAL', variantes de liquidación
+    contado/48hs del mismo subyacente). Recalculado en cada corrida -- ranking
+    data-driven, no una lista fija de símbolos "más líquidos" congelada en el yaml.
+    """
+    items = fetch_data912(endpoint)
+    ranked = []
+    for it in items:
+        try:
+            monto = float(it.get("v") or 0) * float(it.get("c") or 0)
+            ranked.append({"simbolo": it["symbol"], "precio": float(it["c"]),
+                            "pct_change": float(it.get("pct_change") or 0), "monto": monto})
+        except (KeyError, ValueError, TypeError):
+            continue
+    ranked.sort(key=lambda x: x["monto"], reverse=True)
+    vistos, top = set(), []
+    for r in ranked:
+        base = r["simbolo"][:-1] if r["simbolo"] and r["simbolo"][-1] in sufijos_dedup else r["simbolo"]
+        if base in vistos:
+            continue
+        vistos.add(base)
+        top.append(r)
+    return top
 
 
 def _avisar(nombre: str, motivo: str, titulo: str = "Indicador sin datos"):
@@ -387,11 +521,15 @@ def main():
     dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera)
 
     if indicadores_financiera:
-        ddf = fetch_mae_ddf()
-        fecha_ddf = pd.Timestamp.today().strftime("%d/%m/%Y")
-        extra_html = {"mercados": dashboard.tabla_ddf(ddf, fecha_ddf)} if ddf else {}
+        fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
+        extra_charts = [ec for ec in (_ddf_chart(), _muro_vencimientos()) if ec is not None]
+        acciones = _ranking_data912("/live/arg_stocks")[:18]
+        cedears = _ranking_data912("/live/arg_cedears")[:15]
+        extra_html = {"mercados":
+            dashboard.tabla_acciones("Acciones más operadas (MERVAL)", acciones, fecha_hoy) +
+            dashboard.tabla_acciones("CEDEARs más operados", cedears, fecha_hoy)}
         dashboard.generar(historico, indicadores_financiera, archivo_salida="financiera.html",
-                           extra_html=extra_html, nav_extra=nav_a_macro,
+                           extra_html=extra_html, extra_charts=extra_charts, nav_extra=nav_a_macro,
                            titulo_pagina="Monitor financiero · Argentina")
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html, docs/financiera.html")
     else:

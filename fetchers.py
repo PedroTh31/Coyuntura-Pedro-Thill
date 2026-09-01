@@ -751,6 +751,113 @@ def fetch_mae_ddf() -> list[dict]:
     return filas
 
 
+_CACHE_MAE_RESUMEN: dict[str, list[dict]] = {}
+
+
+def fetch_mae_resumen(tipo: str) -> list[dict]:
+    """
+    Snapshot completo de un segmento del MAE (RF=renta fija, CAU=cauciones,
+    DDF=dólar futuro, FOR=forwards), endpoint no documentado oficialmente,
+    sin auth. Cacheado en memoria por tipo durante la corrida (varios
+    indicadores del mismo tipo no repiten el request).
+    """
+    if tipo in _CACHE_MAE_RESUMEN:
+        return _CACHE_MAE_RESUMEN[tipo]
+    try:
+        r = _get(f"{_MAE_BASE}/mercado/resumen/{tipo}")
+        data = r.json()
+        data = data if isinstance(data, list) else data.get("data", [])
+    except (RuntimeError, ValueError) as e:
+        print(f"  [ADVERTENCIA] fetch_mae_resumen tipo={tipo}: {e}")
+        data = []
+    _CACHE_MAE_RESUMEN[tipo] = data
+    return data
+
+
+def fetch_mae_resumen_campo(tipo: str, ticker: str, campo: str = "ultimo") -> pd.DataFrame:
+    """Un campo de un instrumento puntual del resumen MAE, snapshot del día (sin historia)."""
+    for item in fetch_mae_resumen(tipo):
+        if item.get("ticker") == ticker:
+            valor = item.get(campo)
+            if valor is None:
+                break
+            return pd.DataFrame({"fecha": [pd.Timestamp.today().normalize()], "valor": [float(valor)]})
+    return pd.DataFrame(columns=["fecha", "valor"])
+
+
+_CACHE_MAE_FLUJOFONDOS: dict[str, list[dict]] = {}
+
+
+def fetch_mae_flujofondos(letra: str = "H") -> list[dict]:
+    """
+    Curva de rendimientos del MAE: un bono por fila, con TIR (%), duración
+    modificada (md) y el flujo de fondos completo (detalle[], fechaPago +
+    amortizacion por cupón). letra="H" = bonos hard-dollar step-up (AL30,
+    GD30, GD35, etc.), "B" = BOPREAL. Cacheado por letra durante la corrida.
+    """
+    if letra in _CACHE_MAE_FLUJOFONDOS:
+        return _CACHE_MAE_FLUJOFONDOS[letra]
+    try:
+        r = _get(f"{_MAE_BASE}/emisiones/flujofondoscotiz/{letra}")
+        data = r.json()
+        data = data if isinstance(data, list) else data.get("data", [])
+    except (RuntimeError, ValueError) as e:
+        print(f"  [ADVERTENCIA] fetch_mae_flujofondos letra={letra}: {e}")
+        data = []
+    _CACHE_MAE_FLUJOFONDOS[letra] = data
+    return data
+
+
+def fetch_mae_bono_campo(ticker: str, campo: str, letra: str = "H") -> pd.DataFrame:
+    """
+    TIR o duración modificada (md) de un bono, snapshot del día -- el MAE no
+    tiene endpoint histórico para esto, así que la serie sólo acumula un
+    punto por día desde que el pipeline empieza a trackearla (sin backfill
+    posible), igual que el resto de los datos de snapshot del MAE.
+    """
+    for bono in fetch_mae_flujofondos(letra):
+        if bono.get("especie") == ticker:
+            valor = bono.get(campo)
+            if valor is None:
+                break
+            return pd.DataFrame({"fecha": [pd.Timestamp.today().normalize()], "valor": [float(valor)]})
+    return pd.DataFrame(columns=["fecha", "valor"])
+
+
+# ---------------------------------------------------------------------------
+# 7) data912 -> acciones/CEDEARs en vivo, snapshot del día (sin historia)
+# ---------------------------------------------------------------------------
+def fetch_data912(endpoint: str) -> list[dict]:
+    """
+    Snapshot en vivo de data912 (data912.com, sin auth, rate limit 120 req/min,
+    refresca cada ~20s -- no es tick-a-tick real). endpoint ej. "/live/arg_stocks",
+    "/live/arg_cedears". Devuelve la lista cruda de instrumentos del momento en
+    que corre la pipeline, misma lógica que otras fuentes "live" del proyecto
+    (ej. reservas diarias del BCRA).
+    """
+    try:
+        r = _get(f"https://data912.com{endpoint}")
+        return r.json()
+    except (RuntimeError, ValueError) as e:
+        print(f"  [ADVERTENCIA] fetch_data912 endpoint={endpoint}: {e}")
+        return []
+
+
+# ---------------------------------------------------------------------------
+# 8) FRED (Federal Reserve Economic Data) -> series de EEUU, sin API key
+# ---------------------------------------------------------------------------
+def fetch_fred(series_id: str, start_date: str | None = None) -> pd.DataFrame:
+    """Serie histórica de FRED vía el endpoint público de descarga CSV (sin API key)."""
+    r = _get("https://fred.stlouisfed.org/graph/fredgraph.csv", params={"id": series_id})
+    df = pd.read_csv(io.StringIO(r.text))
+    df.columns = ["fecha", "valor"]
+    df = df[df["valor"] != "."]  # FRED usa "." para datos faltantes
+    df = df.assign(fecha=pd.to_datetime(df["fecha"]), valor=df["valor"].astype(float))
+    if start_date:
+        df = df[df["fecha"] >= pd.to_datetime(start_date)]
+    return df.sort_values("fecha").reset_index(drop=True)
+
+
 # ---------------------------------------------------------------------------
 # Dispatcher: elige el fetcher según el config del indicador
 # ---------------------------------------------------------------------------
@@ -772,4 +879,10 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
         return fetch_deuda_bruta(start_date)
     if fuente == "byma":
         return fetch_byma_indice(indicador["symbol"], start_date)
+    if fuente == "mae_resumen":
+        return fetch_mae_resumen_campo(indicador["tipo"], indicador["ticker"], indicador.get("campo", "ultimo"))
+    if fuente == "mae_bono":
+        return fetch_mae_bono_campo(indicador["ticker"], indicador["campo"], indicador.get("letra", "H"))
+    if fuente == "fred":
+        return fetch_fred(indicador["id"], start_date)
     raise ValueError(f"Fuente desconocida: {fuente}")

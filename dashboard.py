@@ -43,7 +43,7 @@ ORDEN_GRUPOS = ["Precios", "Dólar", "Brecha y TCR", "Riesgo país", "Reservas",
                 "Agregados monetarios", "Tasas de interés", "Crédito",
                 "Comercio exterior", "Exportaciones por rubro", "Importaciones por uso",
                 "Actividad", "Social", "Fiscal",
-                "Tipo de cambio y brechas", "Tasas y CER", "Acciones", "Dólar futuro"]
+                "Tipo de cambio y brechas", "Tasas y CER", "Acciones", "Dólar futuro", "Renta fija"]
 
 
 def _fmt_num(v) -> str:
@@ -628,7 +628,7 @@ def _registrar_nota(nota, nombre, notas_dict):
 
 
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
-            nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina"):
+            extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina"):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
@@ -725,6 +725,17 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                 full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
                 min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat()))
         idx += 1
+    # extra_charts: tarjetas/gráficos armados fuera del loop yaml-driven de arriba (ej. muro de
+    # vencimientos, curvas snapshot) -- fetchers.py/run.py los arma ya con card/serie_js casi
+    # completos, acá sólo se les asigna el índice 'i' que les toca según el orden de inserción.
+    for ec in (extra_charts or []):
+        card = dict(ec["card"], i=idx)
+        if ec.get("nota"):
+            card["nota_num"] = _registrar_nota(ec["nota"], card["nombre"], notas_dict)
+        serie_js_extra = dict(ec["serie_js"], i=idx)
+        charts.append(card)
+        series_js.append(serie_js_extra)
+        idx += 1
     _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida=archivo_salida, extra_html=extra_html or {},
                     nav_extra=nav_extra, titulo_pagina=titulo_pagina)
@@ -769,44 +780,48 @@ def _tabla_valores(titulo, filas):
 _MESES_ABREV = ["", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 
 
-def tabla_ddf(contratos, fecha_str):
+def ordenar_ddf(contratos):
     """
-    Tabla de la curva de dólar futuro (DDF, MAE): un contrato por vencimiento
-    mensual, foto del día -- no es una serie histórica (los contratos cambian
-    de nombre mes a mes), así que no pasa por el mecanismo 'tabla:' genérico
-    (pensado para desagregados con historia propia en el CSV); se arma acá
-    directo a partir del snapshot que devuelve fetch_mae_ddf().
+    Ordena la curva DDF (MAE) por (año, mes) real del ticker "DLRMMAAAA" y
+    devuelve (labels "mes/año", valores último). NO por orden alfabético del
+    ticker (pondría "DLR012027" antes que "DLR092026" pese a vencer después).
+    Usado por run.py para armar la tarjeta/gráfico de dólar futuro (Ronda 2:
+    reemplaza a la tabla de la Ronda 1 -- ver Punto 9).
     """
-    if not contratos:
-        return ""
-    def celda_var(v):
-        bg, fg = _color_semaforo(v)
-        return f'<td style="background:{bg};color:{fg}">{(f"{v:+.2f}%" if v is not None else "s/d")}</td>'
-    def _clave_vencimiento(c):
-        # ticker = "DLRMMAAAA" -- ordenar por (año, mes), NO alfabéticamente por ticker
-        # (alfabético pondría "DLR012027" antes que "DLR092026" pese a vencer después).
+    def _clave(c):
         t = c["ticker"]
         try:
             return (int(t[5:9]), int(t[3:5]))
         except (ValueError, IndexError):
             return (9999, 99)
-    filas = []
-    for c in sorted(contratos, key=_clave_vencimiento):
-        ticker = c["ticker"]
-        mm, aaaa = ticker[3:5], ticker[5:9]
+    labels, valores = [], []
+    for c in sorted(contratos, key=_clave):
+        mm, aaaa = c["ticker"][3:5], c["ticker"][5:9]
         try:
-            venc = f"{_MESES_ABREV[int(mm)]}/{aaaa}"
+            labels.append(f"{_MESES_ABREV[int(mm)]}/{aaaa}")
         except (ValueError, IndexError):
-            venc = ticker
-        filas.append(f'<tr><td class="sec">{venc}</td><td class="num">{_fmt_num(c["ultimo"])}</td>'
-                      f'{celda_var(c["variacion"])}</tr>')
-    return (f'<h3 class="sub">Dólar futuro (DDF) <span class="ref">({fecha_str})</span></h3>'
-            '<p class="nota">Curva de contratos de dólar futuro por vencimiento mensual, Mercado Abierto '
-            'Electrónico (MAE, endpoint no documentado oficialmente por el MAE, "variación" = variación % '
-            'vs. cierre anterior según esquema de campos documentado por terceros -- gauss314/skills, no '
-            'por el MAE mismo -- datos delayed 5-15 min intradía).</p>'
-            '<table class="tabla"><thead><tr><th>Vencimiento</th><th>Último ($)</th><th>Variación diaria</th></tr></thead>'
-            f'<tbody>{"".join(filas)}</tbody></table>')
+            labels.append(c["ticker"])
+        valores.append(round(c["ultimo"], 2))
+    return labels, valores
+
+
+def tabla_acciones(titulo, filas, fecha_str):
+    """
+    Tabla de acciones/CEDEARs más operados por monto (data912), snapshot del
+    día -- ranking recalculado en cada corrida (no una lista fija de
+    símbolos), mismo criterio que evitar hardcodear qué es "lo más líquido"
+    de una vez y para siempre.
+    """
+    if not filas:
+        return ""
+    def celda_var(v):
+        bg, fg = _color_semaforo(v)
+        return f'<td style="background:{bg};color:{fg}">{(f"{v:+.2f}%" if v is not None else "s/d")}</td>'
+    cuerpo = "".join(f'<tr><td class="sec">{f["simbolo"]}</td><td class="num">{_fmt_num(f["precio"])}</td>'
+                      f'{celda_var(f["pct_change"])}</tr>' for f in filas)
+    return (f'<h3 class="sub">{titulo} <span class="ref">({fecha_str})</span></h3>'
+            '<table class="tabla"><thead><tr><th>Símbolo</th><th>Último ($)</th><th>Variación diaria</th></tr></thead>'
+            f'<tbody>{cuerpo}</tbody></table>')
 
 
 def _card_cell(c):
@@ -1236,6 +1251,20 @@ const overlayOpts = (unidad, radioPunto, cruce, escalaLog) => ({
   elements:{ point:{radius: radioPunto || 0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
 
+// Barras AGRUPADAS (no apiladas) por categoría (año) a partir de un snapshot -- sin filtros
+// de rango de fecha (no es una serie temporal con historia propia). Agrupadas y no apiladas
+// a propósito: cada bono amortiza en % de SU PROPIO valor nominal (bases distintas entre
+// bonos), apilarlas sumaría porcentajes de bases distintas en una altura sin significado real.
+// Usado por 'muro de vencimientos' (Ronda 2 financiera).
+const muroOpts = (unidad) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
+    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y.toLocaleString('es-AR')} ${unidad}` } } },
+  scales:{ x:{ ticks:{ color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } }
+});
+
 // Marca vertical de "cambio de liderazgo" en un overlay (ver 'cruce' en _serie_overlay,
 // dashboard.py): útil cuando dos líneas se cruzan en un ángulo demasiado cerrado para notarlo
 // a simple vista, pero el momento del cruce es el dato más importante del gráfico.
@@ -1459,6 +1488,10 @@ SERIES.forEach(s => {
         { type:'line', label:s.label_izq, data:s.izq, borderColor:'#0767A7', backgroundColor:'#0767A714', yAxisID:'y', fill:false },
         { type:'line', label:s.label_der, data:s.der, borderColor:'#C62828', backgroundColor:'#C6282814', yAxisID:'y1', fill:false },
       ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
+  } else if (s.kind === 'muro') {
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
+        { label:d.label, data:d.y, backgroundColor:d.color }
+      )) }, options: muroOpts(s.unidad) });
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
