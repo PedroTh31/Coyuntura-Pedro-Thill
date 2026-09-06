@@ -6344,6 +6344,7 @@
 2026-09-02,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.719869706840395
 2026-09-03,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.8697068403908963
 2026-09-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.4771241830065414
+2026-09-05,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.4771241830065414
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7079,6 +7080,7 @@
 2026-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,833.44365471688
 2026-09-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,834.00258641919
 2026-09-05,CER (Coeficiente de Estabilización de Referencia),mercados,índice,834.56189295746
+2026-09-06,CER (Coeficiente de Estabilización de Referencia),mercados,índice,835.12157458305
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -14697,6 +14699,7 @@
 2026-09-02,Dólar CCL,monetario_financiero,$/USD (venta),1592.1
 2026-09-03,Dólar CCL,monetario_financiero,$/USD (venta),1594.4
 2026-09-04,Dólar CCL,monetario_financiero,$/USD (venta),1583.2
+2026-09-05,Dólar CCL,monetario_financiero,$/USD (venta),1583.2
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -17565,6 +17568,7 @@
 2026-09-02,Dólar MEP,monetario_financiero,$/USD (venta),1533.9
 2026-09-03,Dólar MEP,monetario_financiero,$/USD (venta),1535.2
 2026-09-04,Dólar MEP,monetario_financiero,$/USD (venta),1525.3
+2026-09-05,Dólar MEP,monetario_financiero,$/USD (venta),1525.3
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -23289,6 +23293,7 @@
 2026-09-02,Dólar blue,monetario_financiero,$/USD (venta),1545.0
 2026-09-03,Dólar blue,monetario_financiero,$/USD (venta),1540.0
 2026-09-04,Dólar blue,monetario_financiero,$/USD (venta),1540.0
+2026-09-05,Dólar blue,monetario_financiero,$/USD (venta),1540.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -29013,6 +29018,7 @@
 2026-09-02,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-03,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-04,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
+2026-09-05,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -52264,6 +52270,7 @@
 2026-09-03,TIR AL30 (USD),mercados,% anual,10.333918970395894
 2026-09-04,TIR AL30 (USD),mercados,% anual,8.410640085071801
 2026-09-05,TIR AL30 (USD),mercados,% anual,8.35380245880705
+2026-09-06,TIR AL30 (USD),mercados,% anual,8.365911326541111
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
@@ -52271,6 +52278,7 @@
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
 2026-09-04,TIR GD35 (USD),mercados,% anual,9.269434014836303
 2026-09-05,TIR GD35 (USD),mercados,% anual,10.013140190105284
+2026-09-06,TIR GD35 (USD),mercados,% anual,10.018441476984968
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
