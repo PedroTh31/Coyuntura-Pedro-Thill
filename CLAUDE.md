@@ -124,6 +124,11 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   medio, específico para este ratio.
 - `calculo: variacion_real_mensual` + `nominal_id` + `deflactor_id` + `media_movil` (opcional,
   meses) → deflacta por IPC, variación % mes a mes, con media móvil opcional.
+- `calculo: tasa_real_expost` + `tasa_id_variable` + `ipc_base_id` → tasa nominal del BCRA
+  (diaria, resampleada a fin de mes) menos inflación interanual (datos_gob, mensual, calculada
+  con la misma lógica que `calculo: interanual`), en puntos porcentuales. EX-POST (mide contra
+  la inflación YA ocurrida, no la esperada) -- la variante ex-ante necesitaría inflación
+  esperada del REM, no implementada por esta vía.
 - `calculo: reservas_ajustadas` (sin parámetros propios) → reservas brutas (BCRA, diario) menos
   swap de monedas con el PBOC (China) menos posición con organismos internacionales (FMI+BIS+
   otros, Balance Semanal del BCRA). NO es "reservas netas" (esa fórmula de mercado tiene 4
@@ -292,18 +297,21 @@ cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diar
 compras netas de divisas por contraparte); Agregados monetarios (base, M1/M2/M3 combinados en
 un overlay rebasado a 100); Tasas (TAMAR total bancos, reemplaza a BADLAR); Crédito (préstamos
 al sector privado, variación % real mensual, por tipo de
-deudor Familias/Empresas, morosidad por tipo de banco y por línea dentro de Familias,
-depósitos privado vs. público); semáforo del EMAE por 16 sectores + actividad por sector en
-barras con burbuja de empleo, ordenadas por variación de actividad (SIPA) -- EMAE general, EMAE
-Urbano vs. No urbano e IPI manufacturero se sacaron del dashboard a pedido de Pedro (siguen en
-indicadores.yaml donde hace falta, ver `solo_componente`); Sector externo
-(expo/impo/saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social
+deudor Familias/Empresas; tasa de interés real ex-post (TAMAR - inflación interanual, opción A,
+ex-ante con REM pendiente de confirmación de Pedro); semáforo del EMAE por 16 sectores +
+actividad por sector en barras con burbuja de empleo, ordenadas por variación de actividad
+(SIPA) -- EMAE general, EMAE Urbano vs. No urbano e IPI manufacturero se sacaron del dashboard
+a pedido de Pedro (siguen en indicadores.yaml donde hace falta, ver `solo_componente`); Sector
+externo (expo/impo/saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social
 (desempleo, tasa de informalidad laboral, salario real por tipo de empleo, salario real
 combinado con capacidad de compra RIPTE/CBT en un combo de dos ejes); Fiscal (resultado
-primario y financiero del Sector Público
-Nacional, superávit gemelos fiscal/comercial, resultado primario acumulado 12 meses vs. riesgo
-país, resultado primario vs. intereses de deuda, deuda pública bruta, PBI nominal trimestral,
-deuda/PBI vs. tipo de cambio real).
+primario y financiero del Sector Público Nacional, superávit gemelos fiscal/comercial,
+resultado primario acumulado 12 meses vs. riesgo país, resultado primario vs. intereses de
+deuda, deuda pública bruta, PBI nominal trimestral, deuda/PBI vs. tipo de cambio real,
+asistencia monetaria del BCRA al Tesoro -- Adelantos Transitorios + Transferencia de
+Utilidades, ubicación en Fiscal y sin normalizar por PBI/Base Monetaria pendientes de
+confirmación de Pedro). Depósitos y morosidad se reclasificaron a la pestaña financiera (ver
+más abajo), ya no están en `docs/index.html`.
 
 **Pestaña financiera** (`docs/financiera.html`, Rondas 1-2 de `PROMPT_pestana_financiera.md`):
 página separada con nav cruzado hacia/desde la macro. FX/brechas y TAMAR (total bancos, 135)
@@ -320,12 +328,27 @@ nuevo corte de depósitos por moneda (pesos/USD, privado/público); acciones y C
 operados (tablas, ranking por monto vía data912, recalculado en cada corrida); dólar futuro
 (DDF, curva de contratos vía MAE, gráfico de barras -- reemplazó a la tabla de Ronda 1).
 Universo de renta fija acotado a AL30/GD30/GD35 por decisión de Pedro (no todo el set
-disponible en el MAE). Pendiente de rondas siguientes (ver `PROMPT_pestana_financiera (1).md`
-sección 8): LECAPs/BONCAPs/ONs en la curva de rendimientos, fiscal dentro de esta misma
-pestaña, combinadas (tasa real vs. EMAE, TAMAR vs. CER ex-post, etc.), divisas internacionales,
-FED, licitaciones, panel líder completo (20 símbolos) más allá del ranking por volumen actual.
+disponible en el MAE). Canje MEP/CCL (`calculo: brecha` sobre CCL/MEP en vez de CCL/oficial).
+Pendiente de rondas siguientes (ver `PROMPT_pestana_financiera (1).md` sección 8):
+LECAPs/BONCAPs/ONs en la curva de rendimientos, fiscal dentro de esta misma pestaña,
+combinadas (tasa real vs. EMAE, TAMAR vs. CER ex-post, etc.), divisas internacionales, FED,
+licitaciones, panel líder completo (20 símbolos) más allá del ranking por volumen actual.
 
 ## Pendientes / a mejorar
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
 todavía no tienen fuente confiable identificada: patentamientos exactos (ACARA, sin datos
-abiertos), turismo, escrituras, ISAC, depósitos.
+abiertos), turismo, escrituras, ISAC.
+
+**Hallazgos de `PROMPT_ronda_canje_y_macro.md` sin implementar (reportados, no forzados):**
+- **Historia larga de reservas**: `api.bcra.gob.ar` v4.0 SÍ soporta paginación real encadenando
+  `hasta` = (mínima fecha del batch anterior − 1 día) -- confirmado en vivo, historia real de
+  reservas (idVariable 1) al menos desde 2014-05-07, muy por encima de la ventana de ~2 años
+  que trae `fetch_bcra()` hoy (diseño propio, no una limitación real de la API). NO migrado:
+  `fetch_bcra()` alimenta reservas Y "Reservas ajustadas" (notas *7/*10 de index.html, que
+  documentan la ventana deslizante actual) -- cualquier cambio necesita confirmación de Pedro
+  antes de tocar el fetcher en producción.
+- **Calendario de licitaciones del Tesoro**: el único endpoint de licitaciones del MAE
+  confirmado en vivo (`mercado/licitaciones`) no tiene campo de monto y mezcla eventos
+  municipales/corporativos (ONs)/nacionales sin filtro -- no alcanza para "próxima fecha +
+  monto que vence". Pendiente encontrar una fuente mejor (ej. calendario propio de la
+  Secretaría de Finanzas, posible candidato a scrapear tipo `deuda_bruta`).
