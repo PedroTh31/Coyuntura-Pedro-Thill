@@ -218,6 +218,28 @@ def _calcular(ind, start):
             return pd.DataFrame(columns=["fecha", "valor"])
         s["valor"] = (s["tir"] - s["ust"]) * 100
         return s[["fecha", "valor"]]
+    if tipo == "tasa_real_expost":
+        # Tasa de interés real EX-POST (Punto 2.3, opción A, PROMPT_ronda_canje_y_macro.md):
+        # tasa nominal (ej. TAMAR, BCRA, diaria) menos inflación interanual (IPC, datos_gob,
+        # mensual) -- mide "lo que ya pasó", no lo que el mercado espera (eso sería ex-ante,
+        # con el REM, dejado para una ronda futura según el prompt). DECISIÓN PENDIENTE DE
+        # PEDRO: esta es la opción por default (A); confirmar antes de dar la tarea por
+        # cerrada, o pedir la variante ex-ante (REM) si se prefiere esa lectura.
+        tasa = fetch_bcra(ind["tasa_id_variable"], start).sort_values("fecha")
+        if tasa.empty:
+            return pd.DataFrame(columns=["fecha", "valor"])
+        ipc = _calcular({"calculo": "interanual", "base_id": ind["ipc_base_id"],
+                          "nombre": f"{ind['nombre']} (IPC interanual, auxiliar)"}, start)
+        if ipc.empty:
+            return pd.DataFrame(columns=["fecha", "valor"])
+        # La tasa es diaria y el IPC interanual es mensual: se resamplea la tasa a fin de mes
+        # (último valor del mes) antes de restar, para comparar ambas en la misma frecuencia.
+        tasa_m = tasa.set_index("fecha")["valor"].resample("ME").last()
+        ipc_m = ipc.set_index("fecha")["valor"]
+        ipc_m.index = ipc_m.index.to_period("M").to_timestamp("M")
+        s = pd.DataFrame({"tasa": tasa_m}).join(ipc_m.rename("ipc"), how="inner")
+        s["valor"] = s["tasa"] - s["ipc"]
+        return s.reset_index().rename(columns={"index": "fecha"})[["fecha", "valor"]].dropna()
     raise ValueError(f"cálculo desconocido: {tipo}")
 
 
