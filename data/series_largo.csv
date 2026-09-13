@@ -7364,6 +7364,7 @@
 2026-09-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,837.36405699216
 2026-09-11,CER (Coeficiente de Estabilización de Referencia),mercados,índice,837.92561783095
 2026-09-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,838.48755526887
+2026-09-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,839.04986955848
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10363,6 +10364,7 @@
 2026-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.863339862181897
 2026-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.813639489781221
 2026-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8656024153876856
+2026-07-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8430151395032848
 2026-09-01,Caución en dólares (1 día),mercados,% TNA,0.85
 2026-09-02,Caución en dólares (1 día),mercados,% TNA,1.05
 2026-09-03,Caución en dólares (1 día),mercados,% TNA,1.18
@@ -54899,6 +54901,8 @@
 2026-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,75.99756392106201
 2026-03-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,76.01357614399204
 2026-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,76.8665007017683
+2026-05-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,76.91907976145093
+2026-06-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,77.67534400310426
 2016-12-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,97.29422026317194
 2017-02-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,98.07123872351777
@@ -55012,6 +55016,8 @@
 2026-02-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,85.63866654136231
 2026-03-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,86.74274417296607
 2026-04-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,88.52270266794824
+2026-05-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,89.6882227427081
+2026-06-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,91.93062600961693
 2016-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.73960710977124
 2017-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.9444643890661
@@ -55125,6 +55131,8 @@
 2026-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.41798872878451
 2026-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,78.4007433414188
 2026-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.48460801443649
+2026-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.36800747798651
+2026-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.40619907307067
 2016-12-01,Salario real registrado - sector público,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real registrado - sector público,social,índice base 100 al inicio,98.73695374328815
 2017-02-01,Salario real registrado - sector público,social,índice base 100 al inicio,97.11403630306371
@@ -55238,6 +55246,8 @@
 2026-02-01,Salario real registrado - sector público,social,índice base 100 al inicio,63.740533360149186
 2026-03-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.76717281417915
 2026-04-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.60792970757073
+2026-05-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.19782963397243
+2026-06-01,Salario real registrado - sector público,social,índice base 100 al inicio,65.16558980218382
 2004-01-01,Saldo comercial,externo,millones de USD,713.875612
 2004-02-01,Saldo comercial,externo,millones de USD,1031.303708
 2004-03-01,Saldo comercial,externo,millones de USD,967.51558
@@ -55521,10 +55531,12 @@
 2026-09-10,TIR AL30 (USD),mercados,% anual,8.681969729867463
 2026-09-11,TIR AL30 (USD),mercados,% anual,8.437015855731714
 2026-09-12,TIR AL30 (USD),mercados,% anual,8.736780836436926
+2026-09-13,TIR AL30 (USD),mercados,% anual,8.749872759103871
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
 2026-09-12,TIR GD30 (USD),mercados,% anual,8.706866527627367
+2026-09-13,TIR GD30 (USD),mercados,% anual,8.71990946973531
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
 2026-09-02,TIR GD35 (USD),mercados,% anual,10.16546137481472
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
@@ -55536,6 +55548,7 @@
 2026-09-10,TIR GD35 (USD),mercados,% anual,10.129149016116816
 2026-09-11,TIR GD35 (USD),mercados,% anual,10.129237625240831
 2026-09-12,TIR GD35 (USD),mercados,% anual,10.134402649038464
+2026-09-13,TIR GD35 (USD),mercados,% anual,10.139900726524449
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
