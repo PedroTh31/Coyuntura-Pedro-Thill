@@ -537,7 +537,8 @@
 2026-03-01,Balance comercial energético,externo,millones de USD,1126.42912161
 2026-04-01,Balance comercial energético,externo,millones de USD,1418.11456456
 2026-05-01,Balance comercial energético,externo,millones de USD,1477.9961260300001
-2026-06-01,Balance comercial energético,externo,millones de USD,611.48910693
+2026-06-01,Balance comercial energético,externo,millones de USD,623.1003130599998
+2026-07-01,Balance comercial energético,externo,millones de USD,892.0258714600001
 2004-01-01,Base monetaria,monetario_financiero,millones de $,47003.90047669949
 2004-02-01,Base monetaria,monetario_financiero,millones de $,46888.80145566172
 2004-03-01,Base monetaria,monetario_financiero,millones de $,44567.00822113096
@@ -1080,6 +1081,7 @@
 2026-04-01,Bienes de capital,externo,millones de USD,1141.91021629
 2026-05-01,Bienes de capital,externo,millones de USD,1162.43639545
 2026-06-01,Bienes de capital,externo,millones de USD,1119.19437406
+2026-07-01,Bienes de capital,externo,millones de USD,1167.16911031
 2004-01-01,Bienes de consumo,externo,millones de USD,163.01275
 2004-02-01,Bienes de consumo,externo,millones de USD,155.900925
 2004-03-01,Bienes de consumo,externo,millones de USD,197.9737
@@ -1350,6 +1352,7 @@
 2026-04-01,Bienes de consumo,externo,millones de USD,978.29347762
 2026-05-01,Bienes de consumo,externo,millones de USD,878.91909127
 2026-06-01,Bienes de consumo,externo,millones de USD,922.77744569
+2026-07-01,Bienes de consumo,externo,millones de USD,889.07783348
 2004-01-01,Bienes intermedios,externo,millones de USD,592.404385
 2004-02-01,Bienes intermedios,externo,millones de USD,556.003629
 2004-03-01,Bienes intermedios,externo,millones de USD,710.416246
@@ -1620,6 +1623,7 @@
 2026-04-01,Bienes intermedios,externo,millones de USD,2246.8016698
 2026-05-01,Bienes intermedios,externo,millones de USD,2246.51790584
 2026-06-01,Bienes intermedios,externo,millones de USD,2343.58122346
+2026-07-01,Bienes intermedios,externo,millones de USD,2425.85753858
 2013-01-02,Brecha cambiaria (CCL/oficial),monetario_financiero,%,33.400000000000006
 2013-01-03,Brecha cambiaria (CCL/oficial),monetario_financiero,%,33.59999999999999
 2013-01-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,36.40000000000001
@@ -6123,9 +6127,9 @@
 2025-04-29,Brecha cambiaria (CCL/oficial),monetario_financiero,%,1.1101694915254257
 2025-04-30,Brecha cambiaria (CCL/oficial),monetario_financiero,%,0.05042016806722227
 2025-05-01,Brecha cambiaria (CCL/oficial),monetario_financiero,%,0.05042016806722227
-2025-05-02,Brecha cambiaria (CCL/oficial),monetario_financiero,%,20.109243697478995
-2025-05-03,Brecha cambiaria (CCL/oficial),monetario_financiero,%,20.109243697478995
-2025-05-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,20.109243697478995
+2025-05-02,Brecha cambiaria (CCL/oficial),monetario_financiero,%,0.05042016806722227
+2025-05-03,Brecha cambiaria (CCL/oficial),monetario_financiero,%,0.05042016806722227
+2025-05-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,0.05042016806722227
 2025-05-05,Brecha cambiaria (CCL/oficial),monetario_financiero,%,0.21487603305785363
 2025-05-06,Brecha cambiaria (CCL/oficial),monetario_financiero,%,-0.016460905349802157
 2025-05-07,Brecha cambiaria (CCL/oficial),monetario_financiero,%,2.614035087719291
@@ -6625,6 +6629,7 @@
 2026-09-13,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.4117647058823595
 2026-09-14,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.4117647058823595
 2026-09-15,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.4117647058823595
+2026-09-16,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.222222222222216
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7370,6 +7375,7 @@
 2026-09-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,839.04986955848
 2026-09-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,839.61256095251
 2026-09-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,840.17562970385
+2026-09-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,840.64786033042
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -9747,9 +9753,9 @@
 2025-04-29,Canje MEP/CCL,mercados,%,1.635573728596973
 2025-04-30,Canje MEP/CCL,mercados,%,0.6594521474467374
 2025-05-01,Canje MEP/CCL,mercados,%,0.6594521474467374
-2025-05-02,Canje MEP/CCL,mercados,%,4.818128483426221
-2025-05-03,Canje MEP/CCL,mercados,%,22.120642515379352
-2025-05-04,Canje MEP/CCL,mercados,%,22.120642515379352
+2025-05-02,Canje MEP/CCL,mercados,%,0.6594521474467374
+2025-05-03,Canje MEP/CCL,mercados,%,0.6594521474467374
+2025-05-04,Canje MEP/CCL,mercados,%,0.6594521474467374
 2025-05-05,Canje MEP/CCL,mercados,%,0.614005974112164
 2025-05-06,Canje MEP/CCL,mercados,%,1.0817107671825532
 2025-05-07,Canje MEP/CCL,mercados,%,1.1937716262975684
@@ -10249,6 +10255,7 @@
 2026-09-13,Canje MEP/CCL,mercados,%,3.7405026300409094
 2026-09-14,Canje MEP/CCL,mercados,%,3.7405026300409094
 2026-09-15,Canje MEP/CCL,mercados,%,3.9565302271100444
+2026-09-16,Canje MEP/CCL,mercados,%,4.004696060527002
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -10382,6 +10389,7 @@
 2026-09-10,Caución en dólares (1 día),mercados,% TNA,1.04
 2026-09-14,Caución en dólares (1 día),mercados,% TNA,1.1
 2026-09-15,Caución en dólares (1 día),mercados,% TNA,1.35
+2026-09-16,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-09-01,Caución en pesos (1 día),mercados,% TNA,20.0
 2026-09-02,Caución en pesos (1 día),mercados,% TNA,20.8
 2026-09-03,Caución en pesos (1 día),mercados,% TNA,20.2
@@ -10391,6 +10399,7 @@
 2026-09-10,Caución en pesos (1 día),mercados,% TNA,20.15
 2026-09-14,Caución en pesos (1 día),mercados,% TNA,22.0
 2026-09-15,Caución en pesos (1 día),mercados,% TNA,20.5
+2026-09-16,Caución en pesos (1 día),mercados,% TNA,20.5
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -10660,7 +10669,8 @@
 2026-03-01,Combustibles y energía,externo,millones de USD,1265.32725978
 2026-04-01,Combustibles y energía,externo,millones de USD,1569.56535302
 2026-05-01,Combustibles y energía,externo,millones de USD,1775.4407203
-2026-06-01,Combustibles y energía,externo,millones de USD,1405.97860225
+2026-06-01,Combustibles y energía,externo,millones de USD,1433.11390438
+2026-07-01,Combustibles y energía,externo,millones de USD,1505.6680787
 2004-01-01,Combustibles y lubricantes,externo,millones de USD,58.417359
 2004-02-01,Combustibles y lubricantes,externo,millones de USD,44.850202
 2004-03-01,Combustibles y lubricantes,externo,millones de USD,39.959885
@@ -10930,7 +10940,8 @@
 2026-03-01,Combustibles y lubricantes,externo,millones de USD,138.89813817
 2026-04-01,Combustibles y lubricantes,externo,millones de USD,151.45078846
 2026-05-01,Combustibles y lubricantes,externo,millones de USD,297.44459427
-2026-06-01,Combustibles y lubricantes,externo,millones de USD,794.48949532
+2026-06-01,Combustibles y lubricantes,externo,millones de USD,810.01359132
+2026-07-01,Combustibles y lubricantes,externo,millones de USD,613.64220724
 2004-01-01,Compras netas de divisas del BCRA,monetario_financiero,millones de $,1428.3388710800002
 2004-02-01,Compras netas de divisas del BCRA,monetario_financiero,millones de $,141.99301359999993
 2004-03-01,Compras netas de divisas del BCRA,monetario_financiero,millones de $,-2665.286793951269
@@ -12198,7 +12209,7 @@
 2026-07-28,Depósitos: sector privado en dólares,mercados,millones de USD,60795961.7045
 2026-07-29,Depósitos: sector privado en dólares,mercados,millones de USD,60677077.655
 2026-07-30,Depósitos: sector privado en dólares,mercados,millones de USD,60258387.2589
-2026-07-31,Depósitos: sector privado en dólares,mercados,millones de USD,59935540.9777
+2026-07-31,Depósitos: sector privado en dólares,mercados,millones de USD,59938517.8839
 2026-08-03,Depósitos: sector privado en dólares,mercados,millones de USD,60133474.342
 2026-08-04,Depósitos: sector privado en dólares,mercados,millones de USD,60333907.3862
 2026-08-05,Depósitos: sector privado en dólares,mercados,millones de USD,60461527.4724
@@ -12226,6 +12237,7 @@
 2026-09-07,Depósitos: sector privado en dólares,mercados,millones de USD,62375903.658
 2026-09-08,Depósitos: sector privado en dólares,mercados,millones de USD,62441327.5101
 2026-09-09,Depósitos: sector privado en dólares,mercados,millones de USD,62684666.7165
+2026-09-10,Depósitos: sector privado en dólares,mercados,millones de USD,62786291.4088
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -12686,7 +12698,7 @@
 2026-07-28,Depósitos: sector privado en pesos,mercados,millones de $,118843.59300000001
 2026-07-29,Depósitos: sector privado en pesos,mercados,millones de $,119873.268
 2026-07-30,Depósitos: sector privado en pesos,mercados,millones de $,121692.41
-2026-07-31,Depósitos: sector privado en pesos,mercados,millones de $,124932.034
+2026-07-31,Depósitos: sector privado en pesos,mercados,millones de $,124959.962
 2026-08-03,Depósitos: sector privado en pesos,mercados,millones de $,123140.469
 2026-08-04,Depósitos: sector privado en pesos,mercados,millones de $,123022.137
 2026-08-05,Depósitos: sector privado en pesos,mercados,millones de $,123269.731
@@ -12707,13 +12719,14 @@
 2026-08-27,Depósitos: sector privado en pesos,mercados,millones de $,121009.22
 2026-08-28,Depósitos: sector privado en pesos,mercados,millones de $,123459.951
 2026-08-31,Depósitos: sector privado en pesos,mercados,millones de $,125755.179
-2026-09-01,Depósitos: sector privado en pesos,mercados,millones de $,125493.43000000001
-2026-09-02,Depósitos: sector privado en pesos,mercados,millones de $,125224.315
-2026-09-03,Depósitos: sector privado en pesos,mercados,millones de $,125630.512
-2026-09-04,Depósitos: sector privado en pesos,mercados,millones de $,126156.535
-2026-09-07,Depósitos: sector privado en pesos,mercados,millones de $,123889.94900000001
-2026-09-08,Depósitos: sector privado en pesos,mercados,millones de $,123517.153
-2026-09-09,Depósitos: sector privado en pesos,mercados,millones de $,123332.86200000001
+2026-09-01,Depósitos: sector privado en pesos,mercados,millones de $,125493.436
+2026-09-02,Depósitos: sector privado en pesos,mercados,millones de $,125221.392
+2026-09-03,Depósitos: sector privado en pesos,mercados,millones de $,125630.517
+2026-09-04,Depósitos: sector privado en pesos,mercados,millones de $,126156.174
+2026-09-07,Depósitos: sector privado en pesos,mercados,millones de $,123875.656
+2026-09-08,Depósitos: sector privado en pesos,mercados,millones de $,123517.14600000001
+2026-09-09,Depósitos: sector privado en pesos,mercados,millones de $,123339.38100000001
+2026-09-10,Depósitos: sector privado en pesos,mercados,millones de $,122359.54400000001
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -17404,9 +17417,9 @@
 2025-04-29,Dólar CCL,monetario_financiero,$/USD (venta),1193.1
 2025-04-30,Dólar CCL,monetario_financiero,$/USD (venta),1190.6
 2025-05-01,Dólar CCL,monetario_financiero,$/USD (venta),1190.6
-2025-05-02,Dólar CCL,monetario_financiero,$/USD (venta),1429.3
-2025-05-03,Dólar CCL,monetario_financiero,$/USD (venta),1429.3
-2025-05-04,Dólar CCL,monetario_financiero,$/USD (venta),1429.3
+2025-05-02,Dólar CCL,monetario_financiero,$/USD (venta),1190.6
+2025-05-03,Dólar CCL,monetario_financiero,$/USD (venta),1190.6
+2025-05-04,Dólar CCL,monetario_financiero,$/USD (venta),1190.6
 2025-05-05,Dólar CCL,monetario_financiero,$/USD (venta),1212.6
 2025-05-06,Dólar CCL,monetario_financiero,$/USD (venta),1214.8
 2025-05-07,Dólar CCL,monetario_financiero,$/USD (venta),1169.8
@@ -17906,6 +17919,7 @@
 2026-09-13,Dólar CCL,monetario_financiero,$/USD (venta),1597.5
 2026-09-14,Dólar CCL,monetario_financiero,$/USD (venta),1597.5
 2026-09-15,Dólar CCL,monetario_financiero,$/USD (venta),1597.5
+2026-09-16,Dólar CCL,monetario_financiero,$/USD (venta),1594.6
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -20283,9 +20297,9 @@
 2025-04-29,Dólar MEP,monetario_financiero,$/USD (venta),1173.9
 2025-04-30,Dólar MEP,monetario_financiero,$/USD (venta),1182.8
 2025-05-01,Dólar MEP,monetario_financiero,$/USD (venta),1182.8
-2025-05-02,Dólar MEP,monetario_financiero,$/USD (venta),1363.6
-2025-05-03,Dólar MEP,monetario_financiero,$/USD (venta),1170.4
-2025-05-04,Dólar MEP,monetario_financiero,$/USD (venta),1170.4
+2025-05-02,Dólar MEP,monetario_financiero,$/USD (venta),1182.8
+2025-05-03,Dólar MEP,monetario_financiero,$/USD (venta),1182.8
+2025-05-04,Dólar MEP,monetario_financiero,$/USD (venta),1182.8
 2025-05-05,Dólar MEP,monetario_financiero,$/USD (venta),1205.2
 2025-05-06,Dólar MEP,monetario_financiero,$/USD (venta),1201.8
 2025-05-07,Dólar MEP,monetario_financiero,$/USD (venta),1156.0
@@ -20785,6 +20799,7 @@
 2026-09-13,Dólar MEP,monetario_financiero,$/USD (venta),1539.9
 2026-09-14,Dólar MEP,monetario_financiero,$/USD (venta),1539.9
 2026-09-15,Dólar MEP,monetario_financiero,$/USD (venta),1536.7
+2026-09-16,Dólar MEP,monetario_financiero,$/USD (venta),1533.2
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26520,6 +26535,7 @@
 2026-09-13,Dólar blue,monetario_financiero,$/USD (venta),1545.0
 2026-09-14,Dólar blue,monetario_financiero,$/USD (venta),1545.0
 2026-09-15,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-09-16,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32255,6 +32271,7 @@
 2026-09-13,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
 2026-09-14,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
 2026-09-15,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
+2026-09-16,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -39604,7 +39621,8 @@
 2026-03-01,Exportaciones totales,externo,millones de USD,8697.08512642
 2026-04-01,Exportaciones totales,externo,millones de USD,8915.93637318
 2026-05-01,Exportaciones totales,externo,millones de USD,9577.82038154
-2026-06-01,Exportaciones totales,externo,millones de USD,9054.98573695
+2026-06-01,Exportaciones totales,externo,millones de USD,9111.84980674
+2026-07-01,Exportaciones totales,externo,millones de USD,8853.85953346
 2017-01-01,IPC Estacionales (var. mensual),precios,% mensual,1.6969000000000012
 2017-02-01,IPC Estacionales (var. mensual),precios,% mensual,0.6269610971425976
 2017-03-01,IPC Estacionales (var. mensual),precios,% mensual,2.3963570447893767
@@ -41867,7 +41885,8 @@
 2026-03-01,Importaciones totales,externo,millones de USD,6115.8952783
 2026-04-01,Importaciones totales,externo,millones de USD,6203.13971368
 2026-05-01,Importaciones totales,externo,millones de USD,6128.02645979
-2026-06-01,Importaciones totales,externo,millones de USD,6861.13752743
+2026-06-01,Importaciones totales,externo,millones de USD,6876.66162343
+2026-07-01,Importaciones totales,externo,millones de USD,6738.67586482
 2016-07-31,"Inflación esperada (REM, próximo mes)",precios,% mensual,2.2
 2016-08-31,"Inflación esperada (REM, próximo mes)",precios,% mensual,2.0
 2016-09-30,"Inflación esperada (REM, próximo mes)",precios,% mensual,1.6
@@ -43590,7 +43609,8 @@
 2026-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2678.73557747
 2026-04-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2708.53975009
 2026-05-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2997.16455438
-2026-06-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,3344.37322903
+2026-06-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,3367.47669038
+2026-07-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,3068.09378379
 2004-01-01,Manufacturas de origen industrial (MOI),externo,millones de USD,587.595138
 2004-02-01,Manufacturas de origen industrial (MOI),externo,millones de USD,628.56695
 2004-03-01,Manufacturas de origen industrial (MOI),externo,millones de USD,748.945032
@@ -43860,7 +43880,8 @@
 2026-03-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2403.44930559
 2026-04-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2514.38356136
 2026-05-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2362.47071951
-2026-06-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2418.27048402
+2026-06-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2416.96683354
+2026-07-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2169.98700756
 2010-01-01,Morosidad: Familias (total),mercados,%,4.728069001204374
 2010-02-01,Morosidad: Familias (total),mercados,%,4.645705688754574
 2010-03-01,Morosidad: Familias (total),mercados,%,4.411004184938255
@@ -45399,6 +45420,7 @@
 2026-04-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1120.85989207
 2026-05-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1034.79966936
 2026-06-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1094.30052077
+2026-07-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1082.7676478
 2004-01-01,Productos primarios,externo,millones de USD,434.661098
 2004-02-01,Productos primarios,externo,millones de USD,415.13754
 2004-03-01,Productos primarios,externo,millones de USD,511.365779
@@ -45668,7 +45690,8 @@
 2026-03-01,Productos primarios,externo,millones de USD,2349.57298358
 2026-04-01,Productos primarios,externo,millones de USD,2123.44770871
 2026-05-01,Productos primarios,externo,millones de USD,2442.74438735
-2026-06-01,Productos primarios,externo,millones de USD,1886.36342165
+2026-06-01,Productos primarios,externo,millones de USD,1894.29237844
+2026-07-01,Productos primarios,externo,millones de USD,2110.11066341
 2004-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,14926.454371677812
 2004-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15129.84627104369
 2004-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15486.568336425267
@@ -47220,6 +47243,7 @@
 2026-09-08,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50732.0
 2026-09-09,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50617.0
 2026-09-10,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50506.0
+2026-09-11,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50474.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -47490,6 +47514,7 @@
 2026-04-01,Resto (importaciones por uso),externo,millones de USD,124.23597752
 2026-05-01,Resto (importaciones por uso),externo,millones de USD,118.45172947
 2026-06-01,Resto (importaciones por uso),externo,millones de USD,131.3873007
+2026-07-01,Resto (importaciones por uso),externo,millones de USD,112.15592796
 2015-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-13462.999999999984
 2015-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-16392.699999999997
 2015-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-27894.699999999983
@@ -54327,6 +54352,7 @@
 2026-09-10,Riesgo país (EMBI),monetario_financiero,puntos básicos,491.0
 2026-09-11,Riesgo país (EMBI),monetario_financiero,puntos básicos,485.0
 2026-09-14,Riesgo país (EMBI),monetario_financiero,puntos básicos,490.0
+2026-09-15,Riesgo país (EMBI),monetario_financiero,puntos básicos,506.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -54820,6 +54846,7 @@
 2026-09-10,S&P MERVAL,mercados,puntos,3157852.24
 2026-09-11,S&P MERVAL,mercados,puntos,3098897.55
 2026-09-14,S&P MERVAL,mercados,puntos,3084547.15
+2026-09-15,S&P MERVAL,mercados,puntos,3079778.69
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
@@ -55549,7 +55576,8 @@
 2026-03-01,Saldo comercial,externo,millones de USD,2581.1898481199987
 2026-04-01,Saldo comercial,externo,millones de USD,2712.7966595000007
 2026-05-01,Saldo comercial,externo,millones de USD,3449.793921749999
-2026-06-01,Saldo comercial,externo,millones de USD,2193.8482095200006
+2026-06-01,Saldo comercial,externo,millones de USD,2235.18818331
+2026-07-01,Saldo comercial,externo,millones de USD,2115.1836686399997
 2026-09-01,Spread soberano GD30 vs. UST10Y (proxy),mercados,puntos básicos,164.215203771069
 2026-09-01,TIR AL30 (USD),mercados,% anual,8.65197745824869
 2026-09-02,TIR AL30 (USD),mercados,% anual,8.69030637106532
@@ -55566,6 +55594,7 @@
 2026-09-13,TIR AL30 (USD),mercados,% anual,8.749872759103871
 2026-09-14,TIR AL30 (USD),mercados,% anual,11.039244335664032
 2026-09-15,TIR AL30 (USD),mercados,% anual,8.987164809167671
+2026-09-16,TIR AL30 (USD),mercados,% anual,8.808799238969296
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -55573,6 +55602,7 @@
 2026-09-13,TIR GD30 (USD),mercados,% anual,8.71990946973531
 2026-09-14,TIR GD30 (USD),mercados,% anual,8.924405320792197
 2026-09-15,TIR GD30 (USD),mercados,% anual,8.936728228070708
+2026-09-16,TIR GD30 (USD),mercados,% anual,6.685550929102316
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
 2026-09-02,TIR GD35 (USD),mercados,% anual,10.16546137481472
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
@@ -55586,7 +55616,8 @@
 2026-09-12,TIR GD35 (USD),mercados,% anual,10.134402649038464
 2026-09-13,TIR GD35 (USD),mercados,% anual,10.139900726524449
 2026-09-14,TIR GD35 (USD),mercados,% anual,10.36391374864941
-2026-09-15,TIR GD35 (USD),mercados,% anual,10.344976241002941
+2026-09-15,TIR GD35 (USD),mercados,% anual,10.34497624100294
+2026-09-16,TIR GD35 (USD),mercados,% anual,9.695200392388973
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
@@ -56077,6 +56108,7 @@
 2026-09-09,Tasa BADLAR (bancos privados),mercados,% TNA,22.4375
 2026-09-10,Tasa BADLAR (bancos privados),mercados,% TNA,22.3125
 2026-09-11,Tasa BADLAR (bancos privados),mercados,% TNA,21.4375
+2026-09-14,Tasa BADLAR (bancos privados),mercados,% TNA,22.125
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -64751,6 +64783,7 @@
 2026-09-09,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.5
 2026-09-10,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.0
 2026-09-11,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.5625
+2026-09-14,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.3125
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -65220,6 +65253,7 @@
 2026-09-09,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.5625
 2026-09-10,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.8125
 2026-09-11,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.4375
+2026-09-14,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
@@ -65907,6 +65941,7 @@
 2026-09-09,Tasa de plazo fijo a 30 días,mercados,% TNA,21.98
 2026-09-10,Tasa de plazo fijo a 30 días,mercados,% TNA,21.51
 2026-09-11,Tasa de plazo fijo a 30 días,mercados,% TNA,20.59
+2026-09-14,Tasa de plazo fijo a 30 días,mercados,% TNA,20.98
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
@@ -83678,6 +83713,7 @@
 2026-04-01,Vehículos automotores de pasajeros,externo,millones de USD,439.58769192
 2026-05-01,Vehículos automotores de pasajeros,externo,millones de USD,389.45707413
 2026-06-01,Vehículos automotores de pasajeros,externo,millones de USD,455.40716743
+2026-07-01,Vehículos automotores de pasajeros,externo,millones de USD,448.00559945
 2004-01-01,Venta de vehículos 0km al mercado interno,real,unidades,22134.0
 2004-02-01,Venta de vehículos 0km al mercado interno,real,unidades,20318.0
 2004-03-01,Venta de vehículos 0km al mercado interno,real,unidades,24887.0
