@@ -6632,6 +6632,7 @@
 2026-09-16,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.222222222222216
 2026-09-17,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.247557003257341
 2026-09-18,Brecha cambiaria (CCL/oficial),monetario_financiero,%,3.8045602605863316
+2026-09-19,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.110749185667739
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7380,6 +7381,7 @@
 2026-09-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,840.64786033042
 2026-09-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,841.12035637978
 2026-09-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,841.59311800112
+2026-09-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,842.06614534372
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10262,6 +10264,7 @@
 2026-09-16,Canje MEP/CCL,mercados,%,4.004696060527002
 2026-09-17,Canje MEP/CCL,mercados,%,3.7675896504766326
 2026-09-18,Canje MEP/CCL,mercados,%,3.824851762559467
+2026-09-19,Canje MEP/CCL,mercados,%,3.765989221479127
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -12243,11 +12246,12 @@
 2026-09-03,Depósitos: sector privado en dólares,mercados,millones de USD,61984459.7878
 2026-09-04,Depósitos: sector privado en dólares,mercados,millones de USD,62054086.0415
 2026-09-07,Depósitos: sector privado en dólares,mercados,millones de USD,62375903.658
-2026-09-08,Depósitos: sector privado en dólares,mercados,millones de USD,62441327.5101
+2026-09-08,Depósitos: sector privado en dólares,mercados,millones de USD,62426226.4611
 2026-09-09,Depósitos: sector privado en dólares,mercados,millones de USD,62684666.7165
 2026-09-10,Depósitos: sector privado en dólares,mercados,millones de USD,62786291.4088
 2026-09-11,Depósitos: sector privado en dólares,mercados,millones de USD,62676256.174
 2026-09-14,Depósitos: sector privado en dólares,mercados,millones de USD,62687404.179
+2026-09-15,Depósitos: sector privado en dólares,mercados,millones de USD,62563529.8064
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -12728,17 +12732,18 @@
 2026-08-26,Depósitos: sector privado en pesos,mercados,millones de $,119757.447
 2026-08-27,Depósitos: sector privado en pesos,mercados,millones de $,121009.22
 2026-08-28,Depósitos: sector privado en pesos,mercados,millones de $,123459.951
-2026-08-31,Depósitos: sector privado en pesos,mercados,millones de $,125755.179
+2026-08-31,Depósitos: sector privado en pesos,mercados,millones de $,125755.20300000001
 2026-09-01,Depósitos: sector privado en pesos,mercados,millones de $,125493.436
 2026-09-02,Depósitos: sector privado en pesos,mercados,millones de $,125221.392
 2026-09-03,Depósitos: sector privado en pesos,mercados,millones de $,125629.97
 2026-09-04,Depósitos: sector privado en pesos,mercados,millones de $,126153.03600000001
 2026-09-07,Depósitos: sector privado en pesos,mercados,millones de $,123876.883
-2026-09-08,Depósitos: sector privado en pesos,mercados,millones de $,123500.966
-2026-09-09,Depósitos: sector privado en pesos,mercados,millones de $,123325.689
-2026-09-10,Depósitos: sector privado en pesos,mercados,millones de $,122363.06300000001
+2026-09-08,Depósitos: sector privado en pesos,mercados,millones de $,123500.557
+2026-09-09,Depósitos: sector privado en pesos,mercados,millones de $,123325.68800000001
+2026-09-10,Depósitos: sector privado en pesos,mercados,millones de $,122336.126
 2026-09-11,Depósitos: sector privado en pesos,mercados,millones de $,123174.534
-2026-09-14,Depósitos: sector privado en pesos,mercados,millones de $,122555.325
+2026-09-14,Depósitos: sector privado en pesos,mercados,millones de $,122563.93800000001
+2026-09-15,Depósitos: sector privado en pesos,mercados,millones de $,122465.605
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -17934,6 +17939,7 @@
 2026-09-16,Dólar CCL,monetario_financiero,$/USD (venta),1594.6
 2026-09-17,Dólar CCL,monetario_financiero,$/USD (venta),1600.2
 2026-09-18,Dólar CCL,monetario_financiero,$/USD (venta),1593.4
+2026-09-19,Dólar CCL,monetario_financiero,$/USD (venta),1598.1
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -20816,6 +20822,7 @@
 2026-09-16,Dólar MEP,monetario_financiero,$/USD (venta),1533.2
 2026-09-17,Dólar MEP,monetario_financiero,$/USD (venta),1542.1
 2026-09-18,Dólar MEP,monetario_financiero,$/USD (venta),1534.7
+2026-09-19,Dólar MEP,monetario_financiero,$/USD (venta),1540.1
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26554,6 +26561,7 @@
 2026-09-16,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2026-09-17,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2026-09-18,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-09-19,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32292,6 +32300,7 @@
 2026-09-16,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
 2026-09-17,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-18,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
+2026-09-19,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -47267,6 +47276,7 @@
 2026-09-11,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50474.0
 2026-09-14,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50404.0
 2026-09-15,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49954.0
+2026-09-16,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50003.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -54378,6 +54388,7 @@
 2026-09-15,Riesgo país (EMBI),monetario_financiero,puntos básicos,506.0
 2026-09-16,Riesgo país (EMBI),monetario_financiero,puntos básicos,510.0
 2026-09-17,Riesgo país (EMBI),monetario_financiero,puntos básicos,515.0
+2026-09-18,Riesgo país (EMBI),monetario_financiero,puntos básicos,524.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -54874,6 +54885,7 @@
 2026-09-15,S&P MERVAL,mercados,puntos,3079778.69
 2026-09-16,S&P MERVAL,mercados,puntos,3028870.87
 2026-09-17,S&P MERVAL,mercados,puntos,3061511.73
+2026-09-18,S&P MERVAL,mercados,puntos,3021925.96
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
@@ -55624,6 +55636,7 @@
 2026-09-16,TIR AL30 (USD),mercados,% anual,8.808799238969296
 2026-09-17,TIR AL30 (USD),mercados,% anual,8.872183658595208
 2026-09-18,TIR AL30 (USD),mercados,% anual,9.107984448044377
+2026-09-19,TIR AL30 (USD),mercados,% anual,9.019495076996423
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -55633,6 +55646,7 @@
 2026-09-15,TIR GD30 (USD),mercados,% anual,8.936728228070708
 2026-09-16,TIR GD30 (USD),mercados,% anual,6.685550929102316
 2026-09-18,TIR GD30 (USD),mercados,% anual,8.945672837216167
+2026-09-19,TIR GD30 (USD),mercados,% anual,8.918127540986553
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
 2026-09-02,TIR GD35 (USD),mercados,% anual,10.16546137481472
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
@@ -55650,6 +55664,7 @@
 2026-09-16,TIR GD35 (USD),mercados,% anual,9.695200392388973
 2026-09-17,TIR GD35 (USD),mercados,% anual,10.46896845375028
 2026-09-18,TIR GD35 (USD),mercados,% anual,10.474446669249057
+2026-09-19,TIR GD35 (USD),mercados,% anual,10.656685220195522
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
@@ -56143,6 +56158,7 @@
 2026-09-14,Tasa BADLAR (bancos privados),mercados,% TNA,22.125
 2026-09-15,Tasa BADLAR (bancos privados),mercados,% TNA,22.5625
 2026-09-16,Tasa BADLAR (bancos privados),mercados,% TNA,22.75
+2026-09-17,Tasa BADLAR (bancos privados),mercados,% TNA,22.0625
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -64820,6 +64836,7 @@
 2026-09-14,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.3125
 2026-09-15,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.0625
 2026-09-16,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.625
+2026-09-17,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.8125
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -65292,6 +65309,7 @@
 2026-09-14,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
 2026-09-15,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
 2026-09-16,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
+2026-09-17,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.5625
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
@@ -65982,6 +66000,7 @@
 2026-09-14,Tasa de plazo fijo a 30 días,mercados,% TNA,20.98
 2026-09-15,Tasa de plazo fijo a 30 días,mercados,% TNA,21.53
 2026-09-16,Tasa de plazo fijo a 30 días,mercados,% TNA,21.4
+2026-09-17,Tasa de plazo fijo a 30 días,mercados,% TNA,20.79
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
