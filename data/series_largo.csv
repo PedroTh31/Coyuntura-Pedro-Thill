@@ -538,7 +538,8 @@
 2026-04-01,Balance comercial energético,externo,millones de USD,1418.11456456
 2026-05-01,Balance comercial energético,externo,millones de USD,1477.9961260300001
 2026-06-01,Balance comercial energético,externo,millones de USD,623.1003130599998
-2026-07-01,Balance comercial energético,externo,millones de USD,892.0258714600001
+2026-07-01,Balance comercial energético,externo,millones de USD,896.8534638399999
+2026-08-01,Balance comercial energético,externo,millones de USD,976.4535232999999
 2004-01-01,Base monetaria,monetario_financiero,millones de $,47003.90047669949
 2004-02-01,Base monetaria,monetario_financiero,millones de $,46888.80145566172
 2004-03-01,Base monetaria,monetario_financiero,millones de $,44567.00822113096
@@ -1082,6 +1083,7 @@
 2026-05-01,Bienes de capital,externo,millones de USD,1162.43639545
 2026-06-01,Bienes de capital,externo,millones de USD,1119.19437406
 2026-07-01,Bienes de capital,externo,millones de USD,1167.16911031
+2026-08-01,Bienes de capital,externo,millones de USD,1310.24842279
 2004-01-01,Bienes de consumo,externo,millones de USD,163.01275
 2004-02-01,Bienes de consumo,externo,millones de USD,155.900925
 2004-03-01,Bienes de consumo,externo,millones de USD,197.9737
@@ -1353,6 +1355,7 @@
 2026-05-01,Bienes de consumo,externo,millones de USD,878.91909127
 2026-06-01,Bienes de consumo,externo,millones de USD,922.77744569
 2026-07-01,Bienes de consumo,externo,millones de USD,889.07783348
+2026-08-01,Bienes de consumo,externo,millones de USD,941.43059076
 2004-01-01,Bienes intermedios,externo,millones de USD,592.404385
 2004-02-01,Bienes intermedios,externo,millones de USD,556.003629
 2004-03-01,Bienes intermedios,externo,millones de USD,710.416246
@@ -1624,6 +1627,7 @@
 2026-05-01,Bienes intermedios,externo,millones de USD,2246.51790584
 2026-06-01,Bienes intermedios,externo,millones de USD,2343.58122346
 2026-07-01,Bienes intermedios,externo,millones de USD,2425.85753858
+2026-08-01,Bienes intermedios,externo,millones de USD,2235.1346361
 2013-01-02,Brecha cambiaria (CCL/oficial),monetario_financiero,%,33.400000000000006
 2013-01-03,Brecha cambiaria (CCL/oficial),monetario_financiero,%,33.59999999999999
 2013-01-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,36.40000000000001
@@ -6635,6 +6639,7 @@
 2026-09-19,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.110749185667739
 2026-09-20,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.110749185667739
 2026-09-21,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.110749185667739
+2026-09-22,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.0000000000000036
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7386,6 +7391,7 @@
 2026-09-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,842.06614534372
 2026-09-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,842.5394385569
 2026-09-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,843.01299779013
+2026-09-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,843.48682319291
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10271,6 +10277,7 @@
 2026-09-19,Canje MEP/CCL,mercados,%,3.765989221479127
 2026-09-20,Canje MEP/CCL,mercados,%,3.765989221479127
 2026-09-21,Canje MEP/CCL,mercados,%,3.765989221479127
+2026-09-22,Canje MEP/CCL,mercados,%,3.898470549951183
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -10407,6 +10414,7 @@
 2026-09-16,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-09-17,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-09-21,Caución en dólares (1 día),mercados,% TNA,2.0
+2026-09-22,Caución en dólares (1 día),mercados,% TNA,1.7
 2026-09-01,Caución en pesos (1 día),mercados,% TNA,20.0
 2026-09-02,Caución en pesos (1 día),mercados,% TNA,20.8
 2026-09-03,Caución en pesos (1 día),mercados,% TNA,20.2
@@ -10419,6 +10427,7 @@
 2026-09-16,Caución en pesos (1 día),mercados,% TNA,20.5
 2026-09-17,Caución en pesos (1 día),mercados,% TNA,20.25
 2026-09-21,Caución en pesos (1 día),mercados,% TNA,21.0
+2026-09-22,Caución en pesos (1 día),mercados,% TNA,20.45
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -10689,7 +10698,8 @@
 2026-04-01,Combustibles y energía,externo,millones de USD,1569.56535302
 2026-05-01,Combustibles y energía,externo,millones de USD,1775.4407203
 2026-06-01,Combustibles y energía,externo,millones de USD,1433.11390438
-2026-07-01,Combustibles y energía,externo,millones de USD,1505.6680787
+2026-07-01,Combustibles y energía,externo,millones de USD,1527.55125308
+2026-08-01,Combustibles y energía,externo,millones de USD,1493.64914781
 2004-01-01,Combustibles y lubricantes,externo,millones de USD,58.417359
 2004-02-01,Combustibles y lubricantes,externo,millones de USD,44.850202
 2004-03-01,Combustibles y lubricantes,externo,millones de USD,39.959885
@@ -10960,7 +10970,8 @@
 2026-04-01,Combustibles y lubricantes,externo,millones de USD,151.45078846
 2026-05-01,Combustibles y lubricantes,externo,millones de USD,297.44459427
 2026-06-01,Combustibles y lubricantes,externo,millones de USD,810.01359132
-2026-07-01,Combustibles y lubricantes,externo,millones de USD,613.64220724
+2026-07-01,Combustibles y lubricantes,externo,millones de USD,630.69778924
+2026-08-01,Combustibles y lubricantes,externo,millones de USD,517.19562451
 2004-01-01,Compras netas de divisas del BCRA,monetario_financiero,millones de $,1428.3388710800002
 2004-02-01,Compras netas de divisas del BCRA,monetario_financiero,millones de $,141.99301359999993
 2004-03-01,Compras netas de divisas del BCRA,monetario_financiero,millones de $,-2665.286793951269
@@ -12260,6 +12271,7 @@
 2026-09-11,Depósitos: sector privado en dólares,mercados,millones de USD,62676256.174
 2026-09-14,Depósitos: sector privado en dólares,mercados,millones de USD,62687404.179
 2026-09-15,Depósitos: sector privado en dólares,mercados,millones de USD,62563529.8064
+2026-09-16,Depósitos: sector privado en dólares,mercados,millones de USD,62691260.681
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -12748,10 +12760,11 @@
 2026-09-07,Depósitos: sector privado en pesos,mercados,millones de $,123876.883
 2026-09-08,Depósitos: sector privado en pesos,mercados,millones de $,123500.557
 2026-09-09,Depósitos: sector privado en pesos,mercados,millones de $,123325.68800000001
-2026-09-10,Depósitos: sector privado en pesos,mercados,millones de $,122336.126
-2026-09-11,Depósitos: sector privado en pesos,mercados,millones de $,123174.534
+2026-09-10,Depósitos: sector privado en pesos,mercados,millones de $,122336.196
+2026-09-11,Depósitos: sector privado en pesos,mercados,millones de $,123075.594
 2026-09-14,Depósitos: sector privado en pesos,mercados,millones de $,122563.93800000001
-2026-09-15,Depósitos: sector privado en pesos,mercados,millones de $,122465.605
+2026-09-15,Depósitos: sector privado en pesos,mercados,millones de $,122477.944
+2026-09-16,Depósitos: sector privado en pesos,mercados,millones de $,121533.505
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -17950,6 +17963,7 @@
 2026-09-19,Dólar CCL,monetario_financiero,$/USD (venta),1598.1
 2026-09-20,Dólar CCL,monetario_financiero,$/USD (venta),1598.1
 2026-09-21,Dólar CCL,monetario_financiero,$/USD (venta),1598.1
+2026-09-22,Dólar CCL,monetario_financiero,$/USD (venta),1596.4
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -20835,6 +20849,7 @@
 2026-09-19,Dólar MEP,monetario_financiero,$/USD (venta),1540.1
 2026-09-20,Dólar MEP,monetario_financiero,$/USD (venta),1540.1
 2026-09-21,Dólar MEP,monetario_financiero,$/USD (venta),1540.1
+2026-09-22,Dólar MEP,monetario_financiero,$/USD (venta),1536.5
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26576,6 +26591,7 @@
 2026-09-19,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-09-20,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-09-21,Dólar blue,monetario_financiero,$/USD (venta),1550.0
+2026-09-22,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32317,6 +32333,7 @@
 2026-09-19,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-20,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-21,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
+2026-09-22,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -39668,6 +39685,7 @@
 2026-05-01,Exportaciones totales,externo,millones de USD,9577.82038154
 2026-06-01,Exportaciones totales,externo,millones de USD,9111.84980674
 2026-07-01,Exportaciones totales,externo,millones de USD,8853.85953346
+2026-08-01,Exportaciones totales,externo,millones de USD,8882.58249877
 2017-01-01,IPC Estacionales (var. mensual),precios,% mensual,1.6969000000000012
 2017-02-01,IPC Estacionales (var. mensual),precios,% mensual,0.6269610971425976
 2017-03-01,IPC Estacionales (var. mensual),precios,% mensual,2.3963570447893767
@@ -41931,7 +41949,8 @@
 2026-04-01,Importaciones totales,externo,millones de USD,6203.13971368
 2026-05-01,Importaciones totales,externo,millones de USD,6128.02645979
 2026-06-01,Importaciones totales,externo,millones de USD,6876.66162343
-2026-07-01,Importaciones totales,externo,millones de USD,6738.67586482
+2026-07-01,Importaciones totales,externo,millones de USD,6755.73144682
+2026-08-01,Importaciones totales,externo,millones de USD,6695.99164386
 2016-07-31,"Inflación esperada (REM, próximo mes)",precios,% mensual,2.2
 2016-08-31,"Inflación esperada (REM, próximo mes)",precios,% mensual,2.0
 2016-09-30,"Inflación esperada (REM, próximo mes)",precios,% mensual,1.6
@@ -42569,6 +42588,7 @@
 2026-05-01,Intereses netos de deuda pública,fiscal,millones de $,1445753.7000000002
 2026-06-01,Intereses netos de deuda pública,fiscal,millones de $,328048.49999999994
 2026-07-01,Intereses netos de deuda pública,fiscal,millones de $,2715435.6
+2026-08-01,Intereses netos de deuda pública,fiscal,millones de $,1354793.2
 2004-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,100.0
 2004-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,101.5289318668415
 2004-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,97.90903819045876
@@ -43655,7 +43675,8 @@
 2026-04-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2708.53975009
 2026-05-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2997.16455438
 2026-06-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,3367.47669038
-2026-07-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,3068.09378379
+2026-07-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,3062.02803047
+2026-08-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,3301.43504644
 2004-01-01,Manufacturas de origen industrial (MOI),externo,millones de USD,587.595138
 2004-02-01,Manufacturas de origen industrial (MOI),externo,millones de USD,628.56695
 2004-03-01,Manufacturas de origen industrial (MOI),externo,millones de USD,748.945032
@@ -43926,7 +43947,8 @@
 2026-04-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2514.38356136
 2026-05-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2362.47071951
 2026-06-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2416.96683354
-2026-07-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2169.98700756
+2026-07-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2154.66078886
+2026-08-01,Manufacturas de origen industrial (MOI),externo,millones de USD,2356.24570758
 2010-01-01,Morosidad: Familias (total),mercados,%,4.728069001204374
 2010-02-01,Morosidad: Familias (total),mercados,%,4.645705688754574
 2010-03-01,Morosidad: Familias (total),mercados,%,4.411004184938255
@@ -43934,9 +43956,9 @@
 2010-05-01,Morosidad: Familias (total),mercados,%,4.192495955543773
 2010-06-01,Morosidad: Familias (total),mercados,%,3.859306639647115
 2010-07-01,Morosidad: Familias (total),mercados,%,3.8378460542768056
-2010-08-01,Morosidad: Familias (total),mercados,%,3.6790608370780213
+2010-08-01,Morosidad: Familias (total),mercados,%,3.679060837078021
 2010-09-01,Morosidad: Familias (total),mercados,%,3.4380570640097265
-2010-10-01,Morosidad: Familias (total),mercados,%,3.3258442211867396
+2010-10-01,Morosidad: Familias (total),mercados,%,3.32584422118674
 2010-11-01,Morosidad: Familias (total),mercados,%,3.171966664485916
 2010-12-01,Morosidad: Familias (total),mercados,%,2.9558778803398167
 2011-01-01,Morosidad: Familias (total),mercados,%,2.8977118966675994
@@ -43944,18 +43966,18 @@
 2011-03-01,Morosidad: Familias (total),mercados,%,2.67058603541141
 2011-04-01,Morosidad: Familias (total),mercados,%,2.6175572329164654
 2011-05-01,Morosidad: Familias (total),mercados,%,2.6126789109306863
-2011-06-01,Morosidad: Familias (total),mercados,%,2.5171175257257037
+2011-06-01,Morosidad: Familias (total),mercados,%,2.517117525725704
 2011-07-01,Morosidad: Familias (total),mercados,%,2.444376014207484
 2011-08-01,Morosidad: Familias (total),mercados,%,2.3465841772771743
 2011-09-01,Morosidad: Familias (total),mercados,%,2.2368529468915748
-2011-10-01,Morosidad: Familias (total),mercados,%,2.2331513113641113
-2011-11-01,Morosidad: Familias (total),mercados,%,2.1889976037808316
+2011-10-01,Morosidad: Familias (total),mercados,%,2.2331513113641117
+2011-11-01,Morosidad: Familias (total),mercados,%,2.188997603780832
 2011-12-01,Morosidad: Familias (total),mercados,%,2.1603305590561126
 2012-01-01,Morosidad: Familias (total),mercados,%,2.2598166060524822
 2012-02-01,Morosidad: Familias (total),mercados,%,2.3652884890861663
 2012-03-01,Morosidad: Familias (total),mercados,%,2.417665375635554
 2012-04-01,Morosidad: Familias (total),mercados,%,2.6126777119924176
-2012-05-01,Morosidad: Familias (total),mercados,%,2.7306994582364292
+2012-05-01,Morosidad: Familias (total),mercados,%,2.730699458236429
 2012-06-01,Morosidad: Familias (total),mercados,%,2.6364803169138926
 2012-07-01,Morosidad: Familias (total),mercados,%,2.705723842652873
 2012-08-01,Morosidad: Familias (total),mercados,%,2.7143495523236174
@@ -43974,9 +43996,9 @@
 2013-09-01,Morosidad: Familias (total),mercados,%,2.8690629290340395
 2013-10-01,Morosidad: Familias (total),mercados,%,2.775949021100293
 2013-11-01,Morosidad: Familias (total),mercados,%,2.7158880308570508
-2013-12-01,Morosidad: Familias (total),mercados,%,2.6187042867408636
+2013-12-01,Morosidad: Familias (total),mercados,%,2.618704286740864
 2014-01-01,Morosidad: Familias (total),mercados,%,2.6275321108861123
-2014-02-01,Morosidad: Familias (total),mercados,%,2.7675427084505397
+2014-02-01,Morosidad: Familias (total),mercados,%,2.76754270845054
 2014-03-01,Morosidad: Familias (total),mercados,%,2.846967051566579
 2014-04-01,Morosidad: Familias (total),mercados,%,2.987218325872852
 2014-05-01,Morosidad: Familias (total),mercados,%,3.17663080526649
@@ -43991,12 +44013,12 @@
 2015-02-01,Morosidad: Familias (total),mercados,%,2.944178423537573
 2015-03-01,Morosidad: Familias (total),mercados,%,2.906330484247803
 2015-04-01,Morosidad: Familias (total),mercados,%,2.945860470072302
-2015-05-01,Morosidad: Familias (total),mercados,%,2.9474793287199335
+2015-05-01,Morosidad: Familias (total),mercados,%,2.947479328719933
 2015-06-01,Morosidad: Familias (total),mercados,%,2.8237272840248244
-2015-07-01,Morosidad: Familias (total),mercados,%,2.7395145632941906
+2015-07-01,Morosidad: Familias (total),mercados,%,2.73951456329419
 2015-08-01,Morosidad: Familias (total),mercados,%,2.6471751868730933
 2015-09-01,Morosidad: Familias (total),mercados,%,2.488650991239653
-2015-10-01,Morosidad: Familias (total),mercados,%,2.4047595128233197
+2015-10-01,Morosidad: Familias (total),mercados,%,2.40475951282332
 2015-11-01,Morosidad: Familias (total),mercados,%,2.370633163073815
 2015-12-01,Morosidad: Familias (total),mercados,%,2.3046270615349567
 2016-01-01,Morosidad: Familias (total),mercados,%,2.413794555969887
@@ -44006,10 +44028,10 @@
 2016-05-01,Morosidad: Familias (total),mercados,%,2.6011341887989183
 2016-06-01,Morosidad: Familias (total),mercados,%,2.685999032363439
 2016-07-01,Morosidad: Familias (total),mercados,%,2.7386234509318834
-2016-08-01,Morosidad: Familias (total),mercados,%,2.7581984457924396
+2016-08-01,Morosidad: Familias (total),mercados,%,2.75819844579244
 2016-09-01,Morosidad: Familias (total),mercados,%,2.7146188108351192
 2016-10-01,Morosidad: Familias (total),mercados,%,2.737917047510665
-2016-11-01,Morosidad: Familias (total),mercados,%,2.6648850661773626
+2016-11-01,Morosidad: Familias (total),mercados,%,2.664885066177362
 2016-12-01,Morosidad: Familias (total),mercados,%,2.661412207478062
 2017-01-01,Morosidad: Familias (total),mercados,%,2.769877351818748
 2017-02-01,Morosidad: Familias (total),mercados,%,2.8516121529688667
@@ -44019,25 +44041,25 @@
 2017-06-01,Morosidad: Familias (total),mercados,%,3.21871819428631
 2017-07-01,Morosidad: Familias (total),mercados,%,3.0475143935540405
 2017-08-01,Morosidad: Familias (total),mercados,%,3.018126870578127
-2017-09-01,Morosidad: Familias (total),mercados,%,2.9160638938831878
+2017-09-01,Morosidad: Familias (total),mercados,%,2.916063893883188
 2017-10-01,Morosidad: Familias (total),mercados,%,2.924944555412224
 2017-11-01,Morosidad: Familias (total),mercados,%,2.930706257444133
 2017-12-01,Morosidad: Familias (total),mercados,%,2.8962838264187205
 2018-01-01,Morosidad: Familias (total),mercados,%,2.985778166670023
-2018-02-01,Morosidad: Familias (total),mercados,%,3.0301371424266055
-2018-03-01,Morosidad: Familias (total),mercados,%,3.0657177234311233
+2018-02-01,Morosidad: Familias (total),mercados,%,3.030137142426605
+2018-03-01,Morosidad: Familias (total),mercados,%,3.0657177234311237
 2018-04-01,Morosidad: Familias (total),mercados,%,3.1647728718013823
 2018-05-01,Morosidad: Familias (total),mercados,%,3.3826657443249224
 2018-06-01,Morosidad: Familias (total),mercados,%,3.360946327060378
 2018-07-01,Morosidad: Familias (total),mercados,%,3.4838012541900296
-2018-08-01,Morosidad: Familias (total),mercados,%,3.5404208747261716
+2018-08-01,Morosidad: Familias (total),mercados,%,3.540420874726172
 2018-09-01,Morosidad: Familias (total),mercados,%,3.656895548894118
 2018-10-01,Morosidad: Familias (total),mercados,%,3.775140404619422
-2018-11-01,Morosidad: Familias (total),mercados,%,3.9105759170094774
+2018-11-01,Morosidad: Familias (total),mercados,%,3.910575917009477
 2018-12-01,Morosidad: Familias (total),mercados,%,4.034129825217144
 2019-01-01,Morosidad: Familias (total),mercados,%,4.230076407526471
-2019-02-01,Morosidad: Familias (total),mercados,%,4.4407092987326555
-2019-03-01,Morosidad: Familias (total),mercados,%,4.5054284891492555
+2019-02-01,Morosidad: Familias (total),mercados,%,4.440709298732656
+2019-03-01,Morosidad: Familias (total),mercados,%,4.505428489149256
 2019-04-01,Morosidad: Familias (total),mercados,%,4.643704112098171
 2019-05-01,Morosidad: Familias (total),mercados,%,4.872724091964989
 2019-06-01,Morosidad: Familias (total),mercados,%,4.922307345287892
@@ -44047,7 +44069,7 @@
 2019-10-01,Morosidad: Familias (total),mercados,%,4.409240305203581
 2019-11-01,Morosidad: Familias (total),mercados,%,4.413107275962689
 2019-12-01,Morosidad: Familias (total),mercados,%,4.17087517421628
-2020-01-01,Morosidad: Familias (total),mercados,%,4.2051981388263036
+2020-01-01,Morosidad: Familias (total),mercados,%,4.205198138826304
 2020-02-01,Morosidad: Familias (total),mercados,%,4.307221222345747
 2020-03-01,Morosidad: Familias (total),mercados,%,3.03173531811056
 2020-04-01,Morosidad: Familias (total),mercados,%,3.113332707437224
@@ -44055,14 +44077,14 @@
 2020-06-01,Morosidad: Familias (total),mercados,%,3.0404111489624195
 2020-07-01,Morosidad: Familias (total),mercados,%,3.1084386397390595
 2020-08-01,Morosidad: Familias (total),mercados,%,3.0239075251898897
-2020-09-01,Morosidad: Familias (total),mercados,%,2.7136229203062086
+2020-09-01,Morosidad: Familias (total),mercados,%,2.713622920306209
 2020-10-01,Morosidad: Familias (total),mercados,%,2.427568254955136
 2020-11-01,Morosidad: Familias (total),mercados,%,2.206355073574123
-2020-12-01,Morosidad: Familias (total),mercados,%,1.8970464873988007
-2021-01-01,Morosidad: Familias (total),mercados,%,1.8086221177421817
+2020-12-01,Morosidad: Familias (total),mercados,%,1.8970464873988009
+2021-01-01,Morosidad: Familias (total),mercados,%,1.8086221177421815
 2021-02-01,Morosidad: Familias (total),mercados,%,1.7022599235925684
-2021-03-01,Morosidad: Familias (total),mercados,%,1.9916861884676267
-2021-04-01,Morosidad: Familias (total),mercados,%,2.5668657503135113
+2021-03-01,Morosidad: Familias (total),mercados,%,1.991686188467627
+2021-04-01,Morosidad: Familias (total),mercados,%,2.5668657503135117
 2021-05-01,Morosidad: Familias (total),mercados,%,2.9432098845930983
 2021-06-01,Morosidad: Familias (total),mercados,%,4.119675724104883
 2021-07-01,Morosidad: Familias (total),mercados,%,5.057665768331383
@@ -44073,39 +44095,39 @@
 2021-12-01,Morosidad: Familias (total),mercados,%,4.177217710117682
 2022-01-01,Morosidad: Familias (total),mercados,%,4.069049835844999
 2022-02-01,Morosidad: Familias (total),mercados,%,3.9172711865189385
-2022-03-01,Morosidad: Familias (total),mercados,%,3.7293710488231198
+2022-03-01,Morosidad: Familias (total),mercados,%,3.72937104882312
 2022-04-01,Morosidad: Familias (total),mercados,%,3.5199358254509447
 2022-05-01,Morosidad: Familias (total),mercados,%,3.332981359646424
-2022-06-01,Morosidad: Familias (total),mercados,%,3.2290583527905556
+2022-06-01,Morosidad: Familias (total),mercados,%,3.229058352790556
 2022-07-01,Morosidad: Familias (total),mercados,%,3.221108005749903
-2022-08-01,Morosidad: Familias (total),mercados,%,3.1202578947151838
+2022-08-01,Morosidad: Familias (total),mercados,%,3.120257894715184
 2022-09-01,Morosidad: Familias (total),mercados,%,3.016411153621276
 2022-10-01,Morosidad: Familias (total),mercados,%,3.01582756575188
 2022-11-01,Morosidad: Familias (total),mercados,%,2.8621368090415658
 2022-12-01,Morosidad: Familias (total),mercados,%,3.0362601517414314
-2023-01-01,Morosidad: Familias (total),mercados,%,3.1247847463064553
+2023-01-01,Morosidad: Familias (total),mercados,%,3.1247847463064558
 2023-02-01,Morosidad: Familias (total),mercados,%,3.14537710310306
-2023-03-01,Morosidad: Familias (total),mercados,%,3.2749905634025076
+2023-03-01,Morosidad: Familias (total),mercados,%,3.274990563402508
 2023-04-01,Morosidad: Familias (total),mercados,%,3.262343355144109
 2023-05-01,Morosidad: Familias (total),mercados,%,3.1990837747193828
 2023-06-01,Morosidad: Familias (total),mercados,%,3.3125550941849187
-2023-07-01,Morosidad: Familias (total),mercados,%,3.3199196616400575
+2023-07-01,Morosidad: Familias (total),mercados,%,3.319919661640057
 2023-08-01,Morosidad: Familias (total),mercados,%,3.1406388407768207
 2023-09-01,Morosidad: Familias (total),mercados,%,3.083761541268544
 2023-10-01,Morosidad: Familias (total),mercados,%,2.846938807800363
 2023-11-01,Morosidad: Familias (total),mercados,%,2.6950246175325243
 2023-12-01,Morosidad: Familias (total),mercados,%,2.784692843264294
-2024-01-01,Morosidad: Familias (total),mercados,%,2.6996760221946174
+2024-01-01,Morosidad: Familias (total),mercados,%,2.699676022194617
 2024-02-01,Morosidad: Familias (total),mercados,%,2.605121098735076
-2024-03-01,Morosidad: Familias (total),mercados,%,2.6524153176309193
+2024-03-01,Morosidad: Familias (total),mercados,%,2.6524153176309198
 2024-04-01,Morosidad: Familias (total),mercados,%,2.5892186333058107
 2024-05-01,Morosidad: Familias (total),mercados,%,2.7587009632315804
 2024-06-01,Morosidad: Familias (total),mercados,%,2.786364688776409
 2024-07-01,Morosidad: Familias (total),mercados,%,2.672201214095846
-2024-08-01,Morosidad: Familias (total),mercados,%,2.6624173216648614
+2024-08-01,Morosidad: Familias (total),mercados,%,2.662417321664861
 2024-09-01,Morosidad: Familias (total),mercados,%,2.63540936430396
 2024-10-01,Morosidad: Familias (total),mercados,%,2.489310113996647
-2024-11-01,Morosidad: Familias (total),mercados,%,2.5245236321711517
+2024-11-01,Morosidad: Familias (total),mercados,%,2.524523632171152
 2024-12-01,Morosidad: Familias (total),mercados,%,2.5534667508354887
 2025-01-01,Morosidad: Familias (total),mercados,%,2.6641852829108985
 2025-02-01,Morosidad: Familias (total),mercados,%,2.9392389465918027
@@ -44123,7 +44145,7 @@
 2026-02-01,Morosidad: Familias (total),mercados,%,11.22059965886106
 2026-03-01,Morosidad: Familias (total),mercados,%,11.633960256022032
 2026-04-01,Morosidad: Familias (total),mercados,%,12.090258471830438
-2026-05-01,Morosidad: Familias (total),mercados,%,12.795302382570279
+2026-05-01,Morosidad: Familias (total),mercados,%,12.79530238257028
 2010-01-01,Morosidad: Familias — Personales,mercados,%,6.038333921898983
 2010-02-01,Morosidad: Familias — Personales,mercados,%,5.907889903670379
 2010-03-01,Morosidad: Familias — Personales,mercados,%,5.660711052175463
@@ -45467,6 +45489,7 @@
 2026-05-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1034.79966936
 2026-06-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1094.30052077
 2026-07-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1082.7676478
+2026-08-01,Piezas y accesorios para bienes de capital,externo,millones de USD,1159.45995103
 2004-01-01,Productos primarios,externo,millones de USD,434.661098
 2004-02-01,Productos primarios,externo,millones de USD,415.13754
 2004-03-01,Productos primarios,externo,millones de USD,511.365779
@@ -45737,7 +45760,8 @@
 2026-04-01,Productos primarios,externo,millones de USD,2123.44770871
 2026-05-01,Productos primarios,externo,millones de USD,2442.74438735
 2026-06-01,Productos primarios,externo,millones de USD,1894.29237844
-2026-07-01,Productos primarios,externo,millones de USD,2110.11066341
+2026-07-01,Productos primarios,externo,millones de USD,2109.61946105
+2026-08-01,Productos primarios,externo,millones de USD,1731.25259694
 2004-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,14926.454371677812
 2004-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15129.84627104369
 2004-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15486.568336425267
@@ -47293,6 +47317,7 @@
 2026-09-14,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50404.0
 2026-09-15,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49954.0
 2026-09-16,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50003.0
+2026-09-17,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49786.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -47564,6 +47589,7 @@
 2026-05-01,Resto (importaciones por uso),externo,millones de USD,118.45172947
 2026-06-01,Resto (importaciones por uso),externo,millones de USD,131.3873007
 2026-07-01,Resto (importaciones por uso),externo,millones de USD,112.15592796
+2026-08-01,Resto (importaciones por uso),externo,millones de USD,109.15636567
 2015-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-13462.999999999984
 2015-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-16392.699999999997
 2015-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-27894.699999999983
@@ -47703,6 +47729,7 @@
 2026-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,478613.1999999996
 2026-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-1024891.399999999
 2026-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,244897.10000000036
+2026-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,635528.5999999981
 2015-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-6228.5
 2015-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-15966.600000000006
 2015-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23478.300000000003
@@ -47842,6 +47869,7 @@
 2026-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1489873.2999999989
 2026-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-1068458.1999999974
 2026-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,2489241.9000000004
+2026-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1539500.3999999966
 2015-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-246813.00000000006
 2016-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-241449.50000000003
 2016-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-243151.2
@@ -47970,6 +47998,7 @@
 2026-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7686203.900000004
 2026-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6150002.800000001
 2026-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7292591.6
+2026-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7841769.6999999955
 2004-01-02,Riesgo país (EMBI),monetario_financiero,puntos básicos,5580.0
 2004-01-05,Riesgo país (EMBI),monetario_financiero,puntos básicos,5459.0
 2004-01-06,Riesgo país (EMBI),monetario_financiero,puntos básicos,5260.0
@@ -54405,6 +54434,7 @@
 2026-09-16,Riesgo país (EMBI),monetario_financiero,puntos básicos,510.0
 2026-09-17,Riesgo país (EMBI),monetario_financiero,puntos básicos,515.0
 2026-09-18,Riesgo país (EMBI),monetario_financiero,puntos básicos,524.0
+2026-09-21,Riesgo país (EMBI),monetario_financiero,puntos básicos,533.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -54902,6 +54932,7 @@
 2026-09-16,S&P MERVAL,mercados,puntos,3028870.87
 2026-09-17,S&P MERVAL,mercados,puntos,3061511.73
 2026-09-18,S&P MERVAL,mercados,puntos,3021925.96
+2026-09-21,S&P MERVAL,mercados,puntos,2998955.82
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
@@ -55632,7 +55663,8 @@
 2026-04-01,Saldo comercial,externo,millones de USD,2712.7966595000007
 2026-05-01,Saldo comercial,externo,millones de USD,3449.793921749999
 2026-06-01,Saldo comercial,externo,millones de USD,2235.18818331
-2026-07-01,Saldo comercial,externo,millones de USD,2115.1836686399997
+2026-07-01,Saldo comercial,externo,millones de USD,2098.1280866399998
+2026-08-01,Saldo comercial,externo,millones de USD,2186.5908549099995
 2026-09-01,Spread soberano GD30 vs. UST10Y (proxy),mercados,puntos básicos,164.215203771069
 2026-09-01,TIR AL30 (USD),mercados,% anual,8.65197745824869
 2026-09-02,TIR AL30 (USD),mercados,% anual,8.69030637106532
@@ -55655,6 +55687,7 @@
 2026-09-19,TIR AL30 (USD),mercados,% anual,9.019495076996424
 2026-09-20,TIR AL30 (USD),mercados,% anual,9.032899005520228
 2026-09-21,TIR AL30 (USD),mercados,% anual,9.11903671992899
+2026-09-22,TIR AL30 (USD),mercados,% anual,9.244437618593901
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -55686,7 +55719,7 @@
 2026-09-18,TIR GD35 (USD),mercados,% anual,10.474446669249057
 2026-09-19,TIR GD35 (USD),mercados,% anual,10.656685220195522
 2026-09-20,TIR GD35 (USD),mercados,% anual,10.662402769012806
-2026-09-21,TIR GD35 (USD),mercados,% anual,10.668675005174293
+2026-09-21,TIR GD35 (USD),mercados,% anual,10.668675005174292
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
@@ -56181,6 +56214,7 @@
 2026-09-15,Tasa BADLAR (bancos privados),mercados,% TNA,22.5625
 2026-09-16,Tasa BADLAR (bancos privados),mercados,% TNA,22.75
 2026-09-17,Tasa BADLAR (bancos privados),mercados,% TNA,22.0625
+2026-09-18,Tasa BADLAR (bancos privados),mercados,% TNA,22.0625
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -64859,6 +64893,7 @@
 2026-09-15,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.0625
 2026-09-16,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.625
 2026-09-17,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.8125
+2026-09-18,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.875
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -65332,6 +65367,7 @@
 2026-09-15,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
 2026-09-16,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
 2026-09-17,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.5625
+2026-09-18,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.25
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
@@ -66025,6 +66061,7 @@
 2026-09-15,Tasa de plazo fijo a 30 días,mercados,% TNA,21.53
 2026-09-16,Tasa de plazo fijo a 30 días,mercados,% TNA,21.4
 2026-09-17,Tasa de plazo fijo a 30 días,mercados,% TNA,20.79
+2026-09-18,Tasa de plazo fijo a 30 días,mercados,% TNA,20.83
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
@@ -83797,6 +83834,7 @@
 2026-05-01,Vehículos automotores de pasajeros,externo,millones de USD,389.45707413
 2026-06-01,Vehículos automotores de pasajeros,externo,millones de USD,455.40716743
 2026-07-01,Vehículos automotores de pasajeros,externo,millones de USD,448.00559945
+2026-08-01,Vehículos automotores de pasajeros,externo,millones de USD,423.366053
 2004-01-01,Venta de vehículos 0km al mercado interno,real,unidades,22134.0
 2004-02-01,Venta de vehículos 0km al mercado interno,real,unidades,20318.0
 2004-03-01,Venta de vehículos 0km al mercado interno,real,unidades,24887.0
