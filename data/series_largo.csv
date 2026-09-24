@@ -6641,6 +6641,7 @@
 2026-09-21,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.110749185667739
 2026-09-22,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.0000000000000036
 2026-09-23,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.123778501628661
+2026-09-24,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.6970684039087995
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7394,6 +7395,7 @@
 2026-09-21,CER (Coeficiente de Estabilización de Referencia),mercados,índice,843.01299779013
 2026-09-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,843.48682319291
 2026-09-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,843.96091491485
+2026-09-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,844.43527310563
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10281,6 +10283,7 @@
 2026-09-21,Canje MEP/CCL,mercados,%,3.765989221479127
 2026-09-22,Canje MEP/CCL,mercados,%,3.898470549951183
 2026-09-23,Canje MEP/CCL,mercados,%,4.015358583886508
+2026-09-24,Canje MEP/CCL,mercados,%,4.1609955279019895
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -10419,6 +10422,7 @@
 2026-09-21,Caución en dólares (1 día),mercados,% TNA,2.0
 2026-09-22,Caución en dólares (1 día),mercados,% TNA,1.7
 2026-09-23,Caución en dólares (1 día),mercados,% TNA,1.0
+2026-09-24,Caución en dólares (1 día),mercados,% TNA,1.2
 2026-09-01,Caución en pesos (1 día),mercados,% TNA,20.0
 2026-09-02,Caución en pesos (1 día),mercados,% TNA,20.8
 2026-09-03,Caución en pesos (1 día),mercados,% TNA,20.2
@@ -10433,6 +10437,7 @@
 2026-09-21,Caución en pesos (1 día),mercados,% TNA,21.0
 2026-09-22,Caución en pesos (1 día),mercados,% TNA,20.45
 2026-09-23,Caución en pesos (1 día),mercados,% TNA,20.55
+2026-09-24,Caución en pesos (1 día),mercados,% TNA,20.5
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -12264,7 +12269,7 @@
 2026-08-26,Depósitos: sector privado en dólares,mercados,millones de USD,61876287.341
 2026-08-27,Depósitos: sector privado en dólares,mercados,millones de USD,61791291.0806
 2026-08-28,Depósitos: sector privado en dólares,mercados,millones de USD,61890704.856
-2026-08-31,Depósitos: sector privado en dólares,mercados,millones de USD,61710095.3052
+2026-08-31,Depósitos: sector privado en dólares,mercados,millones de USD,61719152.1168
 2026-09-01,Depósitos: sector privado en dólares,mercados,millones de USD,62070353.7728
 2026-09-02,Depósitos: sector privado en dólares,mercados,millones de USD,62081157.1114
 2026-09-03,Depósitos: sector privado en dólares,mercados,millones de USD,61984459.7878
@@ -12277,7 +12282,8 @@
 2026-09-14,Depósitos: sector privado en dólares,mercados,millones de USD,62687404.179
 2026-09-15,Depósitos: sector privado en dólares,mercados,millones de USD,62563529.8064
 2026-09-16,Depósitos: sector privado en dólares,mercados,millones de USD,62691260.681
-2026-09-17,Depósitos: sector privado en dólares,mercados,millones de USD,62742109.7224
+2026-09-17,Depósitos: sector privado en dólares,mercados,millones de USD,62743619.7248
+2026-09-18,Depósitos: sector privado en dólares,mercados,millones de USD,62979603.7808
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -12758,7 +12764,7 @@
 2026-08-26,Depósitos: sector privado en pesos,mercados,millones de $,119757.447
 2026-08-27,Depósitos: sector privado en pesos,mercados,millones de $,121009.22
 2026-08-28,Depósitos: sector privado en pesos,mercados,millones de $,123459.951
-2026-08-31,Depósitos: sector privado en pesos,mercados,millones de $,125772.463
+2026-08-31,Depósitos: sector privado en pesos,mercados,millones de $,125797.24100000001
 2026-09-01,Depósitos: sector privado en pesos,mercados,millones de $,125493.546
 2026-09-02,Depósitos: sector privado en pesos,mercados,millones de $,125221.50200000001
 2026-09-03,Depósitos: sector privado en pesos,mercados,millones de $,125630.08
@@ -12768,10 +12774,11 @@
 2026-09-09,Depósitos: sector privado en pesos,mercados,millones de $,123318.45
 2026-09-10,Depósitos: sector privado en pesos,mercados,millones de $,122339.888
 2026-09-11,Depósitos: sector privado en pesos,mercados,millones de $,123075.88100000001
-2026-09-14,Depósitos: sector privado en pesos,mercados,millones de $,122558.916
-2026-09-15,Depósitos: sector privado en pesos,mercados,millones de $,122477.882
+2026-09-14,Depósitos: sector privado en pesos,mercados,millones de $,122558.929
+2026-09-15,Depósitos: sector privado en pesos,mercados,millones de $,122458.48700000001
 2026-09-16,Depósitos: sector privado en pesos,mercados,millones de $,121543.977
-2026-09-17,Depósitos: sector privado en pesos,mercados,millones de $,121404.75
+2026-09-17,Depósitos: sector privado en pesos,mercados,millones de $,121408.486
+2026-09-18,Depósitos: sector privado en pesos,mercados,millones de $,121604.372
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -12846,7 +12853,7 @@
 2019-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335661.30000000005
 2019-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334477.0
 2019-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324898.30000000005
-2019-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334322.9
+2019-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334322.89999999997
 2019-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,329930.60000000003
 2019-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,337267.10000000003
 2019-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,341957.5
@@ -12860,15 +12867,15 @@
 2020-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,323381.2
 2020-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,323254.8
 2020-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324808.30000000005
-2020-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324552.4
-2020-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,328087.9
+2020-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324552.39999999997
+2020-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,328087.89999999997
 2020-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,329479.50000000006
 2020-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,332247.5
 2020-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,333194.6999999999
 2020-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,333253.80000000005
 2020-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335582.19999999995
 2021-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334929.2
-2021-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334883.8
+2021-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334883.79999999993
 2021-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335556.1
 2021-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,338332.10000000003
 2021-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,341091.8
@@ -12880,55 +12887,55 @@
 2021-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,354422.3
 2021-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,363232.5999999999
 2022-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,365747.6
-2022-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,366626.3000000001
+2022-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,366626.30000000005
 2022-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,376300.4
-2022-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374198.9
+2022-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374198.89999999997
 2022-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374577.8
-2022-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,378505.6
-2022-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,380772.7
+2022-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,378505.60000000003
+2022-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,380772.69999999995
 2022-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,381121.0
 2022-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,382281.20000000007
-2022-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386272.4
+2022-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386272.39999999997
 2022-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386659.5
-2022-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396555.2
+2022-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396555.19999999995
 2023-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,395856.29999999993
-2023-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,394199.2
-2023-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398245.7
+2023-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,394199.19999999995
+2023-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398245.69999999995
 2023-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396272.20000000007
-2023-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398833.2
+2023-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398833.19999999995
 2023-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403835.79999999993
 2023-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406133.9
 2023-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,395758.29999999993
-2023-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406948.1
+2023-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406948.10000000003
 2023-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,418019.0999999999
-2023-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,425555.9
-2023-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,370673.4
+2023-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,425555.89999999997
+2023-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,370673.39999999997
 2024-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,381272.8
 2024-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386539.8
-2024-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403052.4
-2024-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,414035.6
-2024-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,435697.7
+2024-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403052.39999999997
+2024-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,414035.60000000003
+2024-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,435697.69999999995
 2024-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,442514.9
 2024-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,452070.5
 2024-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,458408.7
-2024-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460068.8000000001
+2024-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460068.80000000005
 2024-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,463241.8
 2024-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,464935.70000000007
 2024-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,466921.1999999999
 2025-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,467794.5999999999
 2025-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,471163.7
 2025-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,473560.8
-2025-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472918.0
+2025-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472917.99999999994
 2025-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,461017.2
-2025-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,465353.1
-2025-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447177.1
+2025-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,465353.10000000003
+2025-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447177.10000000003
 2025-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,454263.4
 2025-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,454037.0
-2025-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,443238.5
+2025-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,443238.49999999994
 2025-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447031.7
 2025-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,455076.70000000007
 2026-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460938.3
-2026-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472133.6
+2026-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472133.60000000003
 2026-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,483854.5
 2019-01-01,Deuda pública bruta / PBI,fiscal,% del PBI,74.32996503459577
 2019-04-01,Deuda pública bruta / PBI,fiscal,% del PBI,71.66857264167162
@@ -17972,6 +17979,7 @@
 2026-09-21,Dólar CCL,monetario_financiero,$/USD (venta),1598.1
 2026-09-22,Dólar CCL,monetario_financiero,$/USD (venta),1596.4
 2026-09-23,Dólar CCL,monetario_financiero,$/USD (venta),1598.3
+2026-09-24,Dólar CCL,monetario_financiero,$/USD (venta),1607.1
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -20859,6 +20867,7 @@
 2026-09-21,Dólar MEP,monetario_financiero,$/USD (venta),1540.1
 2026-09-22,Dólar MEP,monetario_financiero,$/USD (venta),1536.5
 2026-09-23,Dólar MEP,monetario_financiero,$/USD (venta),1536.6
+2026-09-24,Dólar MEP,monetario_financiero,$/USD (venta),1542.9
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26602,6 +26611,7 @@
 2026-09-21,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-09-22,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-09-23,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-09-24,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32345,6 +32355,7 @@
 2026-09-21,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-22,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-23,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
+2026-09-24,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -47330,6 +47341,7 @@
 2026-09-16,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50003.0
 2026-09-17,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49786.0
 2026-09-18,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49803.0
+2026-09-21,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49696.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -54448,6 +54460,7 @@
 2026-09-18,Riesgo país (EMBI),monetario_financiero,puntos básicos,524.0
 2026-09-21,Riesgo país (EMBI),monetario_financiero,puntos básicos,533.0
 2026-09-22,Riesgo país (EMBI),monetario_financiero,puntos básicos,555.0
+2026-09-23,Riesgo país (EMBI),monetario_financiero,puntos básicos,566.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -54947,6 +54960,7 @@
 2026-09-18,S&P MERVAL,mercados,puntos,3021925.96
 2026-09-21,S&P MERVAL,mercados,puntos,2998955.82
 2026-09-22,S&P MERVAL,mercados,puntos,2997659.41
+2026-09-23,S&P MERVAL,mercados,puntos,2969545.39
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
@@ -55062,6 +55076,7 @@
 2026-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,76.8665007017683
 2026-05-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,76.91907976145093
 2026-06-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,77.67534400310426
+2026-07-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,78.21143758116786
 2016-12-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,97.29422026317194
 2017-02-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,98.07123872351777
@@ -55177,6 +55192,7 @@
 2026-04-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,88.52270266794824
 2026-05-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,89.6882227427081
 2026-06-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,91.93062600961693
+2026-07-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,93.52636791810436
 2016-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.73960710977124
 2017-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.9444643890661
@@ -55292,6 +55308,7 @@
 2026-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.48460801443649
 2026-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.36800747798651
 2026-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.40619907307067
+2026-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,79.51348708972202
 2016-12-01,Salario real registrado - sector público,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real registrado - sector público,social,índice base 100 al inicio,98.73695374328815
 2017-02-01,Salario real registrado - sector público,social,índice base 100 al inicio,97.11403630306371
@@ -55407,6 +55424,7 @@
 2026-04-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.60792970757073
 2026-05-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.19782963397243
 2026-06-01,Salario real registrado - sector público,social,índice base 100 al inicio,65.16558980218382
+2026-07-01,Salario real registrado - sector público,social,índice base 100 al inicio,65.71333877883573
 2004-01-01,Saldo comercial,externo,millones de USD,713.875612
 2004-02-01,Saldo comercial,externo,millones de USD,1031.303708
 2004-03-01,Saldo comercial,externo,millones de USD,967.51558
@@ -55703,6 +55721,7 @@
 2026-09-21,TIR AL30 (USD),mercados,% anual,9.11903671992899
 2026-09-22,TIR AL30 (USD),mercados,% anual,9.2444376185939
 2026-09-23,TIR AL30 (USD),mercados,% anual,12.089027732097534
+2026-09-24,TIR AL30 (USD),mercados,% anual,9.613969253267802
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -55716,6 +55735,7 @@
 2026-09-20,TIR GD30 (USD),mercados,% anual,8.931366475855524
 2026-09-21,TIR GD30 (USD),mercados,% anual,8.945919199339341
 2026-09-23,TIR GD30 (USD),mercados,% anual,7.345724714773507
+2026-09-24,TIR GD30 (USD),mercados,% anual,9.980726429263006
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
 2026-09-02,TIR GD35 (USD),mercados,% anual,10.16546137481472
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
@@ -56232,6 +56252,7 @@
 2026-09-17,Tasa BADLAR (bancos privados),mercados,% TNA,22.0625
 2026-09-18,Tasa BADLAR (bancos privados),mercados,% TNA,22.0625
 2026-09-21,Tasa BADLAR (bancos privados),mercados,% TNA,22.0
+2026-09-22,Tasa BADLAR (bancos privados),mercados,% TNA,22.5
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -64912,6 +64933,7 @@
 2026-09-17,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.8125
 2026-09-18,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.875
 2026-09-21,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.8125
+2026-09-22,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.25
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -65387,6 +65409,7 @@
 2026-09-17,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.5625
 2026-09-18,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.25
 2026-09-21,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.5
+2026-09-22,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
@@ -66082,6 +66105,7 @@
 2026-09-17,Tasa de plazo fijo a 30 días,mercados,% TNA,20.79
 2026-09-18,Tasa de plazo fijo a 30 días,mercados,% TNA,20.83
 2026-09-21,Tasa de plazo fijo a 30 días,mercados,% TNA,20.93
+2026-09-22,Tasa de plazo fijo a 30 días,mercados,% TNA,21.27
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
