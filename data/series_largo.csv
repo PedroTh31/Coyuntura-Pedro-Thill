@@ -6642,6 +6642,7 @@
 2026-09-22,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.0000000000000036
 2026-09-23,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.123778501628661
 2026-09-24,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.6970684039087995
+2026-09-25,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.8246753246753205
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7396,6 +7397,7 @@
 2026-09-22,CER (Coeficiente de Estabilización de Referencia),mercados,índice,843.48682319291
 2026-09-23,CER (Coeficiente de Estabilización de Referencia),mercados,índice,843.96091491485
 2026-09-24,CER (Coeficiente de Estabilización de Referencia),mercados,índice,844.43527310563
+2026-09-25,CER (Coeficiente de Estabilización de Referencia),mercados,índice,844.90989791504
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10284,6 +10286,7 @@
 2026-09-22,Canje MEP/CCL,mercados,%,3.898470549951183
 2026-09-23,Canje MEP/CCL,mercados,%,4.015358583886508
 2026-09-24,Canje MEP/CCL,mercados,%,4.1609955279019895
+2026-09-25,Canje MEP/CCL,mercados,%,4.444875776397517
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -12283,7 +12286,8 @@
 2026-09-15,Depósitos: sector privado en dólares,mercados,millones de USD,62563529.8064
 2026-09-16,Depósitos: sector privado en dólares,mercados,millones de USD,62691260.681
 2026-09-17,Depósitos: sector privado en dólares,mercados,millones de USD,62743619.7248
-2026-09-18,Depósitos: sector privado en dólares,mercados,millones de USD,62979603.7808
+2026-09-18,Depósitos: sector privado en dólares,mercados,millones de USD,62981116.114
+2026-09-21,Depósitos: sector privado en dólares,mercados,millones de USD,63237030.0562
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -12764,7 +12768,7 @@
 2026-08-26,Depósitos: sector privado en pesos,mercados,millones de $,119757.447
 2026-08-27,Depósitos: sector privado en pesos,mercados,millones de $,121009.22
 2026-08-28,Depósitos: sector privado en pesos,mercados,millones de $,123459.951
-2026-08-31,Depósitos: sector privado en pesos,mercados,millones de $,125797.24100000001
+2026-08-31,Depósitos: sector privado en pesos,mercados,millones de $,125796.676
 2026-09-01,Depósitos: sector privado en pesos,mercados,millones de $,125493.546
 2026-09-02,Depósitos: sector privado en pesos,mercados,millones de $,125221.50200000001
 2026-09-03,Depósitos: sector privado en pesos,mercados,millones de $,125630.08
@@ -12773,12 +12777,13 @@
 2026-09-08,Depósitos: sector privado en pesos,mercados,millones de $,123500.667
 2026-09-09,Depósitos: sector privado en pesos,mercados,millones de $,123318.45
 2026-09-10,Depósitos: sector privado en pesos,mercados,millones de $,122339.888
-2026-09-11,Depósitos: sector privado en pesos,mercados,millones de $,123075.88100000001
+2026-09-11,Depósitos: sector privado en pesos,mercados,millones de $,123028.395
 2026-09-14,Depósitos: sector privado en pesos,mercados,millones de $,122558.929
-2026-09-15,Depósitos: sector privado en pesos,mercados,millones de $,122458.48700000001
+2026-09-15,Depósitos: sector privado en pesos,mercados,millones de $,122458.48
 2026-09-16,Depósitos: sector privado en pesos,mercados,millones de $,121543.977
 2026-09-17,Depósitos: sector privado en pesos,mercados,millones de $,121408.486
-2026-09-18,Depósitos: sector privado en pesos,mercados,millones de $,121604.372
+2026-09-18,Depósitos: sector privado en pesos,mercados,millones de $,121608.339
+2026-09-21,Depósitos: sector privado en pesos,mercados,millones de $,121085.363
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -12853,7 +12858,7 @@
 2019-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335661.30000000005
 2019-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334477.0
 2019-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324898.30000000005
-2019-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334322.89999999997
+2019-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334322.9
 2019-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,329930.60000000003
 2019-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,337267.10000000003
 2019-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,341957.5
@@ -12867,15 +12872,15 @@
 2020-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,323381.2
 2020-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,323254.8
 2020-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324808.30000000005
-2020-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324552.39999999997
-2020-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,328087.89999999997
+2020-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324552.4
+2020-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,328087.9
 2020-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,329479.50000000006
 2020-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,332247.5
 2020-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,333194.6999999999
 2020-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,333253.80000000005
 2020-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335582.19999999995
 2021-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334929.2
-2021-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334883.79999999993
+2021-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334883.8
 2021-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335556.1
 2021-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,338332.10000000003
 2021-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,341091.8
@@ -12887,55 +12892,55 @@
 2021-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,354422.3
 2021-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,363232.5999999999
 2022-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,365747.6
-2022-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,366626.30000000005
+2022-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,366626.3000000001
 2022-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,376300.4
-2022-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374198.89999999997
+2022-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374198.9
 2022-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374577.8
-2022-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,378505.60000000003
-2022-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,380772.69999999995
+2022-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,378505.6
+2022-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,380772.7
 2022-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,381121.0
 2022-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,382281.20000000007
-2022-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386272.39999999997
+2022-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386272.4
 2022-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386659.5
-2022-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396555.19999999995
+2022-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396555.2
 2023-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,395856.29999999993
-2023-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,394199.19999999995
-2023-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398245.69999999995
+2023-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,394199.2
+2023-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398245.7
 2023-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396272.20000000007
-2023-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398833.19999999995
+2023-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398833.2
 2023-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403835.79999999993
 2023-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406133.9
 2023-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,395758.29999999993
-2023-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406948.10000000003
+2023-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406948.1
 2023-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,418019.0999999999
-2023-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,425555.89999999997
-2023-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,370673.39999999997
+2023-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,425555.9
+2023-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,370673.4
 2024-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,381272.8
 2024-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386539.8
-2024-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403052.39999999997
-2024-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,414035.60000000003
-2024-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,435697.69999999995
+2024-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403052.4
+2024-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,414035.6
+2024-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,435697.7
 2024-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,442514.9
 2024-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,452070.5
 2024-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,458408.7
-2024-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460068.80000000005
+2024-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460068.8000000001
 2024-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,463241.8
 2024-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,464935.70000000007
 2024-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,466921.1999999999
 2025-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,467794.5999999999
 2025-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,471163.7
 2025-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,473560.8
-2025-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472917.99999999994
+2025-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472918.0
 2025-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,461017.2
-2025-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,465353.10000000003
-2025-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447177.10000000003
+2025-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,465353.1
+2025-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447177.1
 2025-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,454263.4
 2025-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,454037.0
-2025-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,443238.49999999994
+2025-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,443238.5
 2025-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447031.7
 2025-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,455076.70000000007
 2026-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460938.3
-2026-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472133.60000000003
+2026-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472133.6
 2026-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,483854.5
 2019-01-01,Deuda pública bruta / PBI,fiscal,% del PBI,74.32996503459577
 2019-04-01,Deuda pública bruta / PBI,fiscal,% del PBI,71.66857264167162
@@ -17980,6 +17985,7 @@
 2026-09-22,Dólar CCL,monetario_financiero,$/USD (venta),1596.4
 2026-09-23,Dólar CCL,monetario_financiero,$/USD (venta),1598.3
 2026-09-24,Dólar CCL,monetario_financiero,$/USD (venta),1607.1
+2026-09-25,Dólar CCL,monetario_financiero,$/USD (venta),1614.3
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -20868,6 +20874,7 @@
 2026-09-22,Dólar MEP,monetario_financiero,$/USD (venta),1536.5
 2026-09-23,Dólar MEP,monetario_financiero,$/USD (venta),1536.6
 2026-09-24,Dólar MEP,monetario_financiero,$/USD (venta),1542.9
+2026-09-25,Dólar MEP,monetario_financiero,$/USD (venta),1545.6
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26612,6 +26619,7 @@
 2026-09-22,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-09-23,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2026-09-24,Dólar blue,monetario_financiero,$/USD (venta),1560.0
+2026-09-25,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32356,6 +32364,7 @@
 2026-09-22,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-23,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-09-24,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
+2026-09-25,Dólar oficial,monetario_financiero,$/USD (venta),1540.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -32568,64 +32577,65 @@
 2021-06-01,EMAE (actividad económica),real,índice 2004=100,148.97961710841247
 2021-07-01,EMAE (actividad económica),real,índice 2004=100,142.42591306035814
 2021-08-01,EMAE (actividad económica),real,índice 2004=100,140.97494072777735
-2021-09-01,EMAE (actividad económica),real,índice 2004=100,141.2960890902841
+2021-09-01,EMAE (actividad económica),real,índice 2004=100,141.29608909028414
 2021-10-01,EMAE (actividad económica),real,índice 2004=100,139.5147586996789
 2021-11-01,EMAE (actividad económica),real,índice 2004=100,143.7518776188886
 2021-12-01,EMAE (actividad económica),real,índice 2004=100,147.2298783181341
-2022-01-01,EMAE (actividad económica),real,índice 2004=100,139.6379616122818
+2022-01-01,EMAE (actividad económica),real,índice 2004=100,139.63796161228177
 2022-02-01,EMAE (actividad económica),real,índice 2004=100,137.8495135250759
-2022-03-01,EMAE (actividad económica),real,índice 2004=100,153.9308507942523
-2022-04-01,EMAE (actividad económica),real,índice 2004=100,157.661692173444
-2022-05-01,EMAE (actividad económica),real,índice 2004=100,164.6893631140829
-2022-06-01,EMAE (actividad económica),real,índice 2004=100,161.45483428121702
-2022-07-01,EMAE (actividad económica),real,índice 2004=100,152.4453874358741
-2022-08-01,EMAE (actividad económica),real,índice 2004=100,151.4657389160673
-2022-09-01,EMAE (actividad económica),real,índice 2004=100,149.17434970526307
-2022-10-01,EMAE (actividad económica),real,índice 2004=100,146.55439616164352
-2022-11-01,EMAE (actividad económica),real,índice 2004=100,148.0304949294996
-2022-12-01,EMAE (actividad económica),real,índice 2004=100,146.1808063380454
-2023-01-01,EMAE (actividad económica),real,índice 2004=100,143.03462349514643
-2023-02-01,EMAE (actividad económica),real,índice 2004=100,137.26646276487918
-2023-03-01,EMAE (actividad económica),real,índice 2004=100,155.06501366860087
-2023-04-01,EMAE (actividad económica),real,índice 2004=100,150.05952685002168
-2023-05-01,EMAE (actividad económica),real,índice 2004=100,153.8108541920872
-2023-06-01,EMAE (actividad económica),real,índice 2004=100,152.59547604983808
-2023-07-01,EMAE (actividad económica),real,índice 2004=100,150.20312548746972
-2023-08-01,EMAE (actividad económica),real,índice 2004=100,151.92217936039572
-2023-09-01,EMAE (actividad económica),real,índice 2004=100,148.41237963196167
-2023-10-01,EMAE (actividad económica),real,índice 2004=100,147.5138130289386
-2023-11-01,EMAE (actividad económica),real,índice 2004=100,146.36635231658468
-2023-12-01,EMAE (actividad económica),real,índice 2004=100,139.342627273609
-2024-01-01,EMAE (actividad económica),real,índice 2004=100,137.37335131476613
-2024-02-01,EMAE (actividad económica),real,índice 2004=100,133.46450585818494
-2024-03-01,EMAE (actividad económica),real,índice 2004=100,142.39572369405855
-2024-04-01,EMAE (actividad económica),real,índice 2004=100,147.25689957052242
-2024-05-01,EMAE (actividad económica),real,índice 2004=100,156.76909867816687
-2024-06-01,EMAE (actividad económica),real,índice 2004=100,147.35712225489846
-2024-07-01,EMAE (actividad económica),real,índice 2004=100,149.65170282067913
-2024-08-01,EMAE (actividad económica),real,índice 2004=100,147.28124861080667
-2024-09-01,EMAE (actividad económica),real,índice 2004=100,144.7966985658174
-2024-10-01,EMAE (actividad económica),real,índice 2004=100,148.10394079332772
-2024-11-01,EMAE (actividad económica),real,índice 2004=100,148.1787290454886
-2024-12-01,EMAE (actividad económica),real,índice 2004=100,148.67761660915863
-2025-01-01,EMAE (actividad económica),real,índice 2004=100,146.49668450002147
-2025-02-01,EMAE (actividad económica),real,índice 2004=100,141.40461989508793
-2025-03-01,EMAE (actividad económica),real,índice 2004=100,150.61008323211774
-2025-04-01,EMAE (actividad económica),real,índice 2004=100,158.9390811466807
-2025-05-01,EMAE (actividad económica),real,índice 2004=100,165.0745517100542
-2025-06-01,EMAE (actividad económica),real,índice 2004=100,156.78921353289212
-2025-07-01,EMAE (actividad económica),real,índice 2004=100,153.77120720937
-2025-08-01,EMAE (actividad económica),real,índice 2004=100,150.37620998417583
-2025-09-01,EMAE (actividad económica),real,índice 2004=100,151.7041464938178
-2025-10-01,EMAE (actividad económica),real,índice 2004=100,152.8338843125518
-2025-11-01,EMAE (actividad económica),real,índice 2004=100,147.969804476899
-2025-12-01,EMAE (actividad económica),real,índice 2004=100,153.8525121126555
-2026-01-01,EMAE (actividad económica),real,índice 2004=100,149.4318861992643
-2026-02-01,EMAE (actividad económica),real,índice 2004=100,139.3365199989212
-2026-03-01,EMAE (actividad económica),real,índice 2004=100,159.9499096193297
-2026-04-01,EMAE (actividad económica),real,índice 2004=100,161.71805294443547
-2026-05-01,EMAE (actividad económica),real,índice 2004=100,165.66808413621425
-2026-06-01,EMAE (actividad económica),real,índice 2004=100,161.01331908191355
+2022-03-01,EMAE (actividad económica),real,índice 2004=100,153.93085079425236
+2022-04-01,EMAE (actividad económica),real,índice 2004=100,157.66169217344412
+2022-05-01,EMAE (actividad económica),real,índice 2004=100,164.68936311408294
+2022-06-01,EMAE (actividad económica),real,índice 2004=100,161.45483428121688
+2022-07-01,EMAE (actividad económica),real,índice 2004=100,152.4453874358736
+2022-08-01,EMAE (actividad económica),real,índice 2004=100,151.4657389160671
+2022-09-01,EMAE (actividad económica),real,índice 2004=100,149.1743497052638
+2022-10-01,EMAE (actividad económica),real,índice 2004=100,146.55439616164583
+2022-11-01,EMAE (actividad económica),real,índice 2004=100,148.03049492950063
+2022-12-01,EMAE (actividad económica),real,índice 2004=100,146.1808063380422
+2023-01-01,EMAE (actividad económica),real,índice 2004=100,143.03462349513617
+2023-02-01,EMAE (actividad económica),real,índice 2004=100,137.26646276487486
+2023-03-01,EMAE (actividad económica),real,índice 2004=100,155.06501366861548
+2023-04-01,EMAE (actividad económica),real,índice 2004=100,150.05952685006818
+2023-05-01,EMAE (actividad económica),real,índice 2004=100,153.81085419210677
+2023-06-01,EMAE (actividad económica),real,índice 2004=100,152.59547604977195
+2023-07-01,EMAE (actividad económica),real,índice 2004=100,150.20312548725906
+2023-08-01,EMAE (actividad económica),real,índice 2004=100,151.92217936030693
+2023-09-01,EMAE (actividad económica),real,índice 2004=100,148.41237963226115
+2023-10-01,EMAE (actividad económica),real,índice 2004=100,147.5138130298927
+2023-11-01,EMAE (actividad económica),real,índice 2004=100,146.36635231698688
+2023-12-01,EMAE (actividad económica),real,índice 2004=100,139.34262727225266
+2024-01-01,EMAE (actividad económica),real,índice 2004=100,137.3733513104446
+2024-02-01,EMAE (actividad económica),real,índice 2004=100,133.4645058563633
+2024-03-01,EMAE (actividad económica),real,índice 2004=100,142.39572370020173
+2024-04-01,EMAE (actividad económica),real,índice 2004=100,147.25689959009534
+2024-05-01,EMAE (actividad económica),real,índice 2004=100,156.76909868641758
+2024-06-01,EMAE (actividad económica),real,índice 2004=100,147.35712222707485
+2024-07-01,EMAE (actividad económica),real,índice 2004=100,149.65170273202926
+2024-08-01,EMAE (actividad económica),real,índice 2004=100,147.28124857343758
+2024-09-01,EMAE (actividad económica),real,índice 2004=100,144.79669869183633
+2024-10-01,EMAE (actividad económica),real,índice 2004=100,148.10394119484172
+2024-11-01,EMAE (actividad económica),real,índice 2004=100,148.1787292147409
+2024-12-01,EMAE (actividad económica),real,índice 2004=100,148.67761603839233
+2025-01-01,EMAE (actividad económica),real,índice 2004=100,146.49668268147974
+2025-02-01,EMAE (actividad económica),real,índice 2004=100,141.40461912850864
+2025-03-01,EMAE (actividad económica),real,índice 2004=100,150.61008581723874
+2025-04-01,EMAE (actividad económica),real,índice 2004=100,158.93908938324
+2025-05-01,EMAE (actividad económica),real,índice 2004=100,165.07455518205356
+2025-06-01,EMAE (actividad económica),real,índice 2004=100,156.7892018243336
+2025-07-01,EMAE (actividad económica),real,índice 2004=100,153.77116990425543
+2025-08-01,EMAE (actividad económica),real,índice 2004=100,150.37619425875818
+2025-09-01,EMAE (actividad económica),real,índice 2004=100,151.70419952434997
+2025-10-01,EMAE (actividad económica),real,índice 2004=100,152.83405327528675
+2025-11-01,EMAE (actividad económica),real,índice 2004=100,147.96987570063345
+2025-12-01,EMAE (actividad económica),real,índice 2004=100,153.85227192618612
+2026-01-01,EMAE (actividad económica),real,índice 2004=100,149.48602043206023
+2026-02-01,EMAE (actividad económica),real,índice 2004=100,139.34303476491058
+2026-03-01,EMAE (actividad económica),real,índice 2004=100,160.23744803364747
+2026-04-01,EMAE (actividad económica),real,índice 2004=100,162.3029965582245
+2026-05-01,EMAE (actividad económica),real,índice 2004=100,166.26832998733488
+2026-06-01,EMAE (actividad económica),real,índice 2004=100,161.7041890303425
+2026-07-01,EMAE (actividad económica),real,índice 2004=100,151.5541509337364
 2004-06-01,"EMAE No urbano (agro, minería y pesca)",real,índice nov-2023=100,119.9043512758124
 2004-07-01,"EMAE No urbano (agro, minería y pesca)",real,índice nov-2023=100,123.0585860066519
 2004-08-01,"EMAE No urbano (agro, minería y pesca)",real,índice nov-2023=100,123.74932860874668
@@ -33420,12 +33430,13 @@
 2025-10-01,EMAE · Administración pública y defensa,real,,160.3506394020737
 2025-11-01,EMAE · Administración pública y defensa,real,,160.64646857886805
 2025-12-01,EMAE · Administración pública y defensa,real,,160.744962864348
-2026-01-01,EMAE · Administración pública y defensa,real,,160.69765518297075
-2026-02-01,EMAE · Administración pública y defensa,real,,160.72354013191625
-2026-03-01,EMAE · Administración pública y defensa,real,,159.23541557569823
-2026-04-01,EMAE · Administración pública y defensa,real,,158.5895053516859
-2026-05-01,EMAE · Administración pública y defensa,real,,158.5894022516019
-2026-06-01,EMAE · Administración pública y defensa,real,,159.40706428762292
+2026-01-01,EMAE · Administración pública y defensa,real,,160.6868353127149
+2026-02-01,EMAE · Administración pública y defensa,real,,160.71084686494677
+2026-03-01,EMAE · Administración pública y defensa,real,,159.22478483260647
+2026-04-01,EMAE · Administración pública y defensa,real,,158.5272174316402
+2026-05-01,EMAE · Administración pública y defensa,real,,158.52779446930302
+2026-06-01,EMAE · Administración pública y defensa,real,,159.39518296415554
+2026-07-01,EMAE · Administración pública y defensa,real,,159.00092960478491
 2004-01-01,"EMAE · Agricultura, ganadería y silvicultura",real,,65.99535021807492
 2004-02-01,"EMAE · Agricultura, ganadería y silvicultura",real,,64.92659776537022
 2004-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,110.66655949085371
@@ -33690,12 +33701,13 @@
 2025-10-01,"EMAE · Agricultura, ganadería y silvicultura",real,,71.70486887513898
 2025-11-01,"EMAE · Agricultura, ganadería y silvicultura",real,,90.34238812270414
 2025-12-01,"EMAE · Agricultura, ganadería y silvicultura",real,,145.86989364700167
-2026-01-01,"EMAE · Agricultura, ganadería y silvicultura",real,,113.7054623571078
-2026-02-01,"EMAE · Agricultura, ganadería y silvicultura",real,,80.86757854160027
-2026-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,177.5741068792964
-2026-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,236.14995767689007
-2026-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,296.26984238436205
-2026-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,206.99903999683897
+2026-01-01,"EMAE · Agricultura, ganadería y silvicultura",real,,114.45485616147516
+2026-02-01,"EMAE · Agricultura, ganadería y silvicultura",real,,81.87527015949428
+2026-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,180.50632619878377
+2026-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,238.3117597791225
+2026-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,298.181262789865
+2026-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,208.3457968374464
+2026-07-01,"EMAE · Agricultura, ganadería y silvicultura",real,,119.65091975951388
 2004-01-01,EMAE · Comercio mayorista y minorista,real,,92.06533783698931
 2004-02-01,EMAE · Comercio mayorista y minorista,real,,91.4647184549155
 2004-03-01,EMAE · Comercio mayorista y minorista,real,,109.12777978859177
@@ -33960,12 +33972,13 @@
 2025-10-01,EMAE · Comercio mayorista y minorista,real,,159.9102778399418
 2025-11-01,EMAE · Comercio mayorista y minorista,real,,149.76239119956492
 2025-12-01,EMAE · Comercio mayorista y minorista,real,,148.5788719598116
-2026-01-01,EMAE · Comercio mayorista y minorista,real,,145.95711885907497
-2026-02-01,EMAE · Comercio mayorista y minorista,real,,143.6883771575081
-2026-03-01,EMAE · Comercio mayorista y minorista,real,,160.20550316618102
-2026-04-01,EMAE · Comercio mayorista y minorista,real,,154.65165609308954
-2026-05-01,EMAE · Comercio mayorista y minorista,real,,154.5106659364952
-2026-06-01,EMAE · Comercio mayorista y minorista,real,,156.84526951573466
+2026-01-01,EMAE · Comercio mayorista y minorista,real,,146.42582956217893
+2026-02-01,EMAE · Comercio mayorista y minorista,real,,143.75010048096
+2026-03-01,EMAE · Comercio mayorista y minorista,real,,160.87253736147073
+2026-04-01,EMAE · Comercio mayorista y minorista,real,,157.67734785773416
+2026-05-01,EMAE · Comercio mayorista y minorista,real,,157.68616420495874
+2026-06-01,EMAE · Comercio mayorista y minorista,real,,160.513754239753
+2026-07-01,EMAE · Comercio mayorista y minorista,real,,146.57527821703042
 2004-01-01,EMAE · Construcción,real,,95.9380474530423
 2004-02-01,EMAE · Construcción,real,,98.85338769931154
 2004-03-01,EMAE · Construcción,real,,103.1245292023196
@@ -34230,12 +34243,13 @@
 2025-10-01,EMAE · Construcción,real,,132.89503429662142
 2025-11-01,EMAE · Construcción,real,,124.54509082765442
 2025-12-01,EMAE · Construcción,real,,121.94485919456754
-2026-01-01,EMAE · Construcción,real,,133.34873778084153
-2026-02-01,EMAE · Construcción,real,,130.3905047828715
-2026-03-01,EMAE · Construcción,real,,143.2582810769081
-2026-04-01,EMAE · Construcción,real,,132.50026885638826
-2026-05-01,EMAE · Construcción,real,,126.01367085192312
-2026-06-01,EMAE · Construcción,real,,129.80357157932565
+2026-01-01,EMAE · Construcción,real,,133.19723693046285
+2026-02-01,EMAE · Construcción,real,,130.2408472520369
+2026-03-01,EMAE · Construcción,real,,143.01830034112413
+2026-04-01,EMAE · Construcción,real,,130.39959065235993
+2026-05-01,EMAE · Construcción,real,,124.08138313500216
+2026-06-01,EMAE · Construcción,real,,127.90951550980974
+2026-07-01,EMAE · Construcción,real,,127.46861138282016
 2004-01-01,"EMAE · Electricidad, gas y agua",real,,99.91798255351932
 2004-02-01,"EMAE · Electricidad, gas y agua",real,,92.89344027217716
 2004-03-01,"EMAE · Electricidad, gas y agua",real,,103.77021006661796
@@ -34500,12 +34514,13 @@
 2025-10-01,"EMAE · Electricidad, gas y agua",real,,138.56912599010457
 2025-11-01,"EMAE · Electricidad, gas y agua",real,,138.38026356150982
 2025-12-01,"EMAE · Electricidad, gas y agua",real,,159.91055723946968
-2026-01-01,"EMAE · Electricidad, gas y agua",real,,162.25044824604095
-2026-02-01,"EMAE · Electricidad, gas y agua",real,,147.22968420629263
-2026-03-01,"EMAE · Electricidad, gas y agua",real,,154.5875393579915
-2026-04-01,"EMAE · Electricidad, gas y agua",real,,138.82007488839227
-2026-05-01,"EMAE · Electricidad, gas y agua",real,,160.12492791455685
-2026-06-01,"EMAE · Electricidad, gas y agua",real,,161.17199486732176
+2026-01-01,"EMAE · Electricidad, gas y agua",real,,162.31304984428553
+2026-02-01,"EMAE · Electricidad, gas y agua",real,,147.22423755881314
+2026-03-01,"EMAE · Electricidad, gas y agua",real,,154.73910832814576
+2026-04-01,"EMAE · Electricidad, gas y agua",real,,138.8348830255531
+2026-05-01,"EMAE · Electricidad, gas y agua",real,,160.25110211823196
+2026-06-01,"EMAE · Electricidad, gas y agua",real,,161.34230168120916
+2026-07-01,"EMAE · Electricidad, gas y agua",real,,164.8051246482998
 2004-01-01,EMAE · Enseñanza,real,,95.62769506542772
 2004-02-01,EMAE · Enseñanza,real,,96.08424638742524
 2004-03-01,EMAE · Enseñanza,real,,96.38030439218048
@@ -34770,12 +34785,13 @@
 2025-10-01,EMAE · Enseñanza,real,,173.6277516535362
 2025-11-01,EMAE · Enseñanza,real,,173.64548872485398
 2025-12-01,EMAE · Enseñanza,real,,174.54233881230664
-2026-01-01,EMAE · Enseñanza,real,,167.21599835785622
-2026-02-01,EMAE · Enseñanza,real,,168.9143772030912
-2026-03-01,EMAE · Enseñanza,real,,172.28903849312113
-2026-04-01,EMAE · Enseñanza,real,,171.43568795303867
-2026-05-01,EMAE · Enseñanza,real,,172.04697791007305
-2026-06-01,EMAE · Enseñanza,real,,172.8420381725931
+2026-01-01,EMAE · Enseñanza,real,,167.37042499327194
+2026-02-01,EMAE · Enseñanza,real,,169.07795461038566
+2026-03-01,EMAE · Enseñanza,real,,172.41120482072353
+2026-04-01,EMAE · Enseñanza,real,,171.54770245934907
+2026-05-01,EMAE · Enseñanza,real,,172.1575981486472
+2026-06-01,EMAE · Enseñanza,real,,173.26533356471677
+2026-07-01,EMAE · Enseñanza,real,,173.41344887299087
 2004-01-01,EMAE · Explotación de minas y canteras,real,,100.7044990358751
 2004-02-01,EMAE · Explotación de minas y canteras,real,,95.41418582146753
 2004-03-01,EMAE · Explotación de minas y canteras,real,,100.25103841449804
@@ -35040,12 +35056,13 @@
 2025-10-01,EMAE · Explotación de minas y canteras,real,,128.19368696345484
 2025-11-01,EMAE · Explotación de minas y canteras,real,,122.00005527215065
 2025-12-01,EMAE · Explotación de minas y canteras,real,,130.30262662011546
-2026-01-01,EMAE · Explotación de minas y canteras,real,,135.23587932841704
-2026-02-01,EMAE · Explotación de minas y canteras,real,,121.52569367183897
-2026-03-01,EMAE · Explotación de minas y canteras,real,,136.1794355577162
-2026-04-01,EMAE · Explotación de minas y canteras,real,,136.19903119511753
-2026-05-01,EMAE · Explotación de minas y canteras,real,,145.4782485245455
-2026-06-01,EMAE · Explotación de minas y canteras,real,,140.54927584550464
+2026-01-01,EMAE · Explotación de minas y canteras,real,,135.273994032279
+2026-02-01,EMAE · Explotación de minas y canteras,real,,121.56333741314262
+2026-03-01,EMAE · Explotación de minas y canteras,real,,136.22061294514629
+2026-04-01,EMAE · Explotación de minas y canteras,real,,135.9937046444603
+2026-05-01,EMAE · Explotación de minas y canteras,real,,145.27301644137634
+2026-06-01,EMAE · Explotación de minas y canteras,real,,140.82367858365106
+2026-07-01,EMAE · Explotación de minas y canteras,real,,139.38739766609666
 2004-01-01,EMAE · Hoteles y restaurantes,real,,108.41168235047203
 2004-02-01,EMAE · Hoteles y restaurantes,real,,103.44825644014011
 2004-03-01,EMAE · Hoteles y restaurantes,real,,101.0618421535548
@@ -35310,12 +35327,13 @@
 2025-10-01,EMAE · Hoteles y restaurantes,real,,186.79590312165908
 2025-11-01,EMAE · Hoteles y restaurantes,real,,192.70714135379495
 2025-12-01,EMAE · Hoteles y restaurantes,real,,199.1789416375233
-2026-01-01,EMAE · Hoteles y restaurantes,real,,199.59875440933456
-2026-02-01,EMAE · Hoteles y restaurantes,real,,192.2412571510428
-2026-03-01,EMAE · Hoteles y restaurantes,real,,153.91127589067665
-2026-04-01,EMAE · Hoteles y restaurantes,real,,128.95074200252418
-2026-05-01,EMAE · Hoteles y restaurantes,real,,164.99594877125213
-2026-06-01,EMAE · Hoteles y restaurantes,real,,193.64966448128425
+2026-01-01,EMAE · Hoteles y restaurantes,real,,199.49555547421065
+2026-02-01,EMAE · Hoteles y restaurantes,real,,192.4957991422613
+2026-03-01,EMAE · Hoteles y restaurantes,real,,153.9593263425682
+2026-04-01,EMAE · Hoteles y restaurantes,real,,127.71145864403503
+2026-05-01,EMAE · Hoteles y restaurantes,real,,163.46332071624497
+2026-06-01,EMAE · Hoteles y restaurantes,real,,191.67608733475527
+2026-07-01,EMAE · Hoteles y restaurantes,real,,170.20784852782933
 2004-01-01,EMAE · Impuestos netos de subsidios,real,,98.3148555955895
 2004-02-01,EMAE · Impuestos netos de subsidios,real,,89.72999976417917
 2004-03-01,EMAE · Impuestos netos de subsidios,real,,99.1391189515047
@@ -35580,12 +35598,13 @@
 2025-10-01,EMAE · Impuestos netos de subsidios,real,,189.79245190012875
 2025-11-01,EMAE · Impuestos netos de subsidios,real,,179.87747537281444
 2025-12-01,EMAE · Impuestos netos de subsidios,real,,183.42959740642672
-2026-01-01,EMAE · Impuestos netos de subsidios,real,,186.77737140045943
-2026-02-01,EMAE · Impuestos netos de subsidios,real,,161.89801640221563
-2026-03-01,EMAE · Impuestos netos de subsidios,real,,182.2241390832837
-2026-04-01,EMAE · Impuestos netos de subsidios,real,,186.43044440024684
-2026-05-01,EMAE · Impuestos netos de subsidios,real,,179.11824126774863
-2026-06-01,EMAE · Impuestos netos de subsidios,real,,177.694614705483
+2026-01-01,EMAE · Impuestos netos de subsidios,real,,186.7469851222559
+2026-02-01,EMAE · Impuestos netos de subsidios,real,,161.87197700671828
+2026-03-01,EMAE · Impuestos netos de subsidios,real,,182.4768806795517
+2026-04-01,EMAE · Impuestos netos de subsidios,real,,186.76443613334243
+2026-05-01,EMAE · Impuestos netos de subsidios,real,,179.43827528813082
+2026-06-01,EMAE · Impuestos netos de subsidios,real,,178.17913223654332
+2026-07-01,EMAE · Impuestos netos de subsidios,real,,177.97427284940244
 2004-01-01,EMAE · Industria manufacturera,real,,91.45461030871807
 2004-02-01,EMAE · Industria manufacturera,real,,89.42485185270863
 2004-03-01,EMAE · Industria manufacturera,real,,101.42643285289913
@@ -35850,12 +35869,13 @@
 2025-10-01,EMAE · Industria manufacturera,real,,130.39940098937294
 2025-11-01,EMAE · Industria manufacturera,real,,120.13921727152892
 2025-12-01,EMAE · Industria manufacturera,real,,117.31991366603664
-2026-01-01,EMAE · Industria manufacturera,real,,104.36843160622372
-2026-02-01,EMAE · Industria manufacturera,real,,98.81329787056713
-2026-03-01,EMAE · Industria manufacturera,real,,122.03899784048464
-2026-04-01,EMAE · Industria manufacturera,real,,115.86487988160192
-2026-05-01,EMAE · Industria manufacturera,real,,114.38020638419756
-2026-06-01,EMAE · Industria manufacturera,real,,118.6081519642159
+2026-01-01,EMAE · Industria manufacturera,real,,104.2006660617906
+2026-02-01,EMAE · Industria manufacturera,real,,98.61520857107608
+2026-03-01,EMAE · Industria manufacturera,real,,121.93898700063951
+2026-04-01,EMAE · Industria manufacturera,real,,115.7820705778394
+2026-05-01,EMAE · Industria manufacturera,real,,114.3661288204209
+2026-06-01,EMAE · Industria manufacturera,real,,118.69578965569492
+2026-07-01,EMAE · Industria manufacturera,real,,119.13441155019324
 2004-01-01,EMAE · Inmobiliarias y empresariales,real,,91.41838181645646
 2004-02-01,EMAE · Inmobiliarias y empresariales,real,,94.0469778515694
 2004-03-01,EMAE · Inmobiliarias y empresariales,real,,99.64872482538144
@@ -36120,12 +36140,13 @@
 2025-10-01,EMAE · Inmobiliarias y empresariales,real,,163.27805607437455
 2025-11-01,EMAE · Inmobiliarias y empresariales,real,,158.7708225767162
 2025-12-01,EMAE · Inmobiliarias y empresariales,real,,163.24455865790114
-2026-01-01,EMAE · Inmobiliarias y empresariales,real,,153.66543438841248
-2026-02-01,EMAE · Inmobiliarias y empresariales,real,,153.60023119109562
-2026-03-01,EMAE · Inmobiliarias y empresariales,real,,159.06939447846293
-2026-04-01,EMAE · Inmobiliarias y empresariales,real,,160.78995633488006
-2026-05-01,EMAE · Inmobiliarias y empresariales,real,,159.84236479167612
-2026-06-01,EMAE · Inmobiliarias y empresariales,real,,162.66570085386377
+2026-01-01,EMAE · Inmobiliarias y empresariales,real,,153.67065220018864
+2026-02-01,EMAE · Inmobiliarias y empresariales,real,,153.60114074258507
+2026-03-01,EMAE · Inmobiliarias y empresariales,real,,159.0295700404332
+2026-04-01,EMAE · Inmobiliarias y empresariales,real,,160.86943733339203
+2026-05-01,EMAE · Inmobiliarias y empresariales,real,,159.9041675519236
+2026-06-01,EMAE · Inmobiliarias y empresariales,real,,163.07714836584051
+2026-07-01,EMAE · Inmobiliarias y empresariales,real,,158.5618049348616
 2004-01-01,EMAE · Intermediación financiera,real,,103.8902559331949
 2004-02-01,EMAE · Intermediación financiera,real,,96.48146398756708
 2004-03-01,EMAE · Intermediación financiera,real,,98.30456801948348
@@ -36390,12 +36411,13 @@
 2025-10-01,EMAE · Intermediación financiera,real,,210.79881854007172
 2025-11-01,EMAE · Intermediación financiera,real,,196.2764528966126
 2025-12-01,EMAE · Intermediación financiera,real,,201.5447104401588
-2026-01-01,EMAE · Intermediación financiera,real,,199.06907196302387
-2026-02-01,EMAE · Intermediación financiera,real,,188.41296472649165
-2026-03-01,EMAE · Intermediación financiera,real,,210.45881306933572
-2026-04-01,EMAE · Intermediación financiera,real,,203.66308930601556
-2026-05-01,EMAE · Intermediación financiera,real,,179.08724504584376
-2026-06-01,EMAE · Intermediación financiera,real,,193.72989337767632
+2026-01-01,EMAE · Intermediación financiera,real,,198.7166118453509
+2026-02-01,EMAE · Intermediación financiera,real,,187.59273430970885
+2026-03-01,EMAE · Intermediación financiera,real,,209.29720564176216
+2026-04-01,EMAE · Intermediación financiera,real,,205.58564350565624
+2026-05-01,EMAE · Intermediación financiera,real,,181.31617132828327
+2026-06-01,EMAE · Intermediación financiera,real,,195.60461346297632
+2026-07-01,EMAE · Intermediación financiera,real,,189.86663491224536
 2004-01-01,EMAE · Otros servicios comunitarios,real,,97.00617764220874
 2004-02-01,EMAE · Otros servicios comunitarios,real,,96.83613489123869
 2004-03-01,EMAE · Otros servicios comunitarios,real,,96.15504322897569
@@ -36660,12 +36682,13 @@
 2025-10-01,EMAE · Otros servicios comunitarios,real,,128.8472963948685
 2025-11-01,EMAE · Otros servicios comunitarios,real,,123.25284659781596
 2025-12-01,EMAE · Otros servicios comunitarios,real,,128.82112625586268
-2026-01-01,EMAE · Otros servicios comunitarios,real,,141.4144348281523
-2026-02-01,EMAE · Otros servicios comunitarios,real,,139.2380373579877
-2026-03-01,EMAE · Otros servicios comunitarios,real,,139.74814751848749
-2026-04-01,EMAE · Otros servicios comunitarios,real,,120.01927291151203
-2026-05-01,EMAE · Otros servicios comunitarios,real,,116.57309437466624
-2026-06-01,EMAE · Otros servicios comunitarios,real,,118.68264330203472
+2026-01-01,EMAE · Otros servicios comunitarios,real,,141.45508008612197
+2026-02-01,EMAE · Otros servicios comunitarios,real,,139.3013657728037
+2026-03-01,EMAE · Otros servicios comunitarios,real,,139.67243863613623
+2026-04-01,EMAE · Otros servicios comunitarios,real,,120.11734537759986
+2026-05-01,EMAE · Otros servicios comunitarios,real,,116.6721644492145
+2026-06-01,EMAE · Otros servicios comunitarios,real,,118.7250861855202
+2026-07-01,EMAE · Otros servicios comunitarios,real,,131.41482936970868
 2004-01-01,EMAE · Pesca,real,,42.54786775960567
 2004-02-01,EMAE · Pesca,real,,62.44077060066832
 2004-03-01,EMAE · Pesca,real,,174.08464601017343
@@ -36930,12 +36953,13 @@
 2025-10-01,EMAE · Pesca,real,,118.44066364840708
 2025-11-01,EMAE · Pesca,real,,120.43156076267306
 2025-12-01,EMAE · Pesca,real,,136.12064507484186
-2026-01-01,EMAE · Pesca,real,,229.42994270288995
-2026-02-01,EMAE · Pesca,real,,252.64735393032268
-2026-03-01,EMAE · Pesca,real,,168.99870659045294
-2026-04-01,EMAE · Pesca,real,,119.57783114107112
-2026-05-01,EMAE · Pesca,real,,113.75983697752474
-2026-06-01,EMAE · Pesca,real,,325.21367608240894
+2026-01-01,EMAE · Pesca,real,,229.4333908984985
+2026-02-01,EMAE · Pesca,real,,252.6499510141572
+2026-03-01,EMAE · Pesca,real,,169.00563040952753
+2026-04-01,EMAE · Pesca,real,,121.9524723828205
+2026-05-01,EMAE · Pesca,real,,116.15761134404096
+2026-06-01,EMAE · Pesca,real,,327.56621635397454
+2026-07-01,EMAE · Pesca,real,,407.2544500057287
 2004-01-01,EMAE · Servicios sociales y de salud,real,,94.19839355990248
 2004-02-01,EMAE · Servicios sociales y de salud,real,,90.31346220534452
 2004-03-01,EMAE · Servicios sociales y de salud,real,,98.0814880028068
@@ -37200,12 +37224,13 @@
 2025-10-01,EMAE · Servicios sociales y de salud,real,,177.42492730749396
 2025-11-01,EMAE · Servicios sociales y de salud,real,,176.50431437850955
 2025-12-01,EMAE · Servicios sociales y de salud,real,,169.714383320505
-2026-01-01,EMAE · Servicios sociales y de salud,real,,187.41892999069844
-2026-02-01,EMAE · Servicios sociales y de salud,real,,177.07925830368745
-2026-03-01,EMAE · Servicios sociales y de salud,real,,191.8697305858755
-2026-04-01,EMAE · Servicios sociales y de salud,real,,195.3430033890692
-2026-05-01,EMAE · Servicios sociales y de salud,real,,197.7489725703713
-2026-06-01,EMAE · Servicios sociales y de salud,real,,205.58934961193395
+2026-01-01,EMAE · Servicios sociales y de salud,real,,187.28367585471184
+2026-02-01,EMAE · Servicios sociales y de salud,real,,176.94561473894697
+2026-03-01,EMAE · Servicios sociales y de salud,real,,191.58436270975332
+2026-04-01,EMAE · Servicios sociales y de salud,real,,195.2933044170662
+2026-05-01,EMAE · Servicios sociales y de salud,real,,197.62466335930853
+2026-06-01,EMAE · Servicios sociales y de salud,real,,204.7794406070384
+2026-07-01,EMAE · Servicios sociales y de salud,real,,187.61853972402847
 2004-01-01,EMAE · Transporte y comunicaciones,real,,95.50672550581248
 2004-02-01,EMAE · Transporte y comunicaciones,real,,90.73641381150811
 2004-03-01,EMAE · Transporte y comunicaciones,real,,97.1758091267454
@@ -37470,12 +37495,13 @@
 2025-10-01,EMAE · Transporte y comunicaciones,real,,187.5674744198488
 2025-11-01,EMAE · Transporte y comunicaciones,real,,185.5196018262652
 2025-12-01,EMAE · Transporte y comunicaciones,real,,185.809987244129
-2026-01-01,EMAE · Transporte y comunicaciones,real,,187.03893284908185
-2026-02-01,EMAE · Transporte y comunicaciones,real,,175.78217774871342
-2026-03-01,EMAE · Transporte y comunicaciones,real,,194.3348131046951
-2026-04-01,EMAE · Transporte y comunicaciones,real,,193.27235408658044
-2026-05-01,EMAE · Transporte y comunicaciones,real,,197.4888001503049
-2026-06-01,EMAE · Transporte y comunicaciones,real,,192.0841221941872
+2026-01-01,EMAE · Transporte y comunicaciones,real,,186.77764220053388
+2026-02-01,EMAE · Transporte y comunicaciones,real,,175.50801133707822
+2026-03-01,EMAE · Transporte y comunicaciones,real,,194.3988353947196
+2026-04-01,EMAE · Transporte y comunicaciones,real,,193.7167400801393
+2026-05-01,EMAE · Transporte y comunicaciones,real,,197.94394025807065
+2026-06-01,EMAE · Transporte y comunicaciones,real,,192.42408271465976
+2026-07-01,EMAE · Transporte y comunicaciones,real,,185.6441492143441
 2016-01-01,Empleo registrado: Administración pública y defensa,real,miles de puestos,1557.6748438619377
 2016-04-01,Empleo registrado: Administración pública y defensa,real,miles de puestos,1554.3565673253097
 2016-07-01,Empleo registrado: Administración pública y defensa,real,miles de puestos,1561.9468520985383
@@ -47342,6 +47368,7 @@
 2026-09-17,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49786.0
 2026-09-18,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49803.0
 2026-09-21,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49696.0
+2026-09-22,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49412.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -54461,6 +54488,7 @@
 2026-09-21,Riesgo país (EMBI),monetario_financiero,puntos básicos,533.0
 2026-09-22,Riesgo país (EMBI),monetario_financiero,puntos básicos,555.0
 2026-09-23,Riesgo país (EMBI),monetario_financiero,puntos básicos,566.0
+2026-09-24,Riesgo país (EMBI),monetario_financiero,puntos básicos,578.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -54961,6 +54989,7 @@
 2026-09-21,S&P MERVAL,mercados,puntos,2998955.82
 2026-09-22,S&P MERVAL,mercados,puntos,2997659.41
 2026-09-23,S&P MERVAL,mercados,puntos,2969545.39
+2026-09-24,S&P MERVAL,mercados,puntos,2939964.25
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
@@ -55722,6 +55751,7 @@
 2026-09-22,TIR AL30 (USD),mercados,% anual,9.2444376185939
 2026-09-23,TIR AL30 (USD),mercados,% anual,12.089027732097534
 2026-09-24,TIR AL30 (USD),mercados,% anual,9.613969253267802
+2026-09-25,TIR AL30 (USD),mercados,% anual,10.71156111958642
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -55736,6 +55766,7 @@
 2026-09-21,TIR GD30 (USD),mercados,% anual,8.945919199339341
 2026-09-23,TIR GD30 (USD),mercados,% anual,7.345724714773507
 2026-09-24,TIR GD30 (USD),mercados,% anual,9.980726429263006
+2026-09-25,TIR GD30 (USD),mercados,% anual,9.99581934448847
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
 2026-09-02,TIR GD35 (USD),mercados,% anual,10.16546137481472
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
@@ -55756,6 +55787,7 @@
 2026-09-19,TIR GD35 (USD),mercados,% anual,10.656685220195522
 2026-09-20,TIR GD35 (USD),mercados,% anual,10.662402769012806
 2026-09-21,TIR GD35 (USD),mercados,% anual,10.668675005174292
+2026-09-25,TIR GD35 (USD),mercados,% anual,11.313224737980795
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
@@ -56253,6 +56285,7 @@
 2026-09-18,Tasa BADLAR (bancos privados),mercados,% TNA,22.0625
 2026-09-21,Tasa BADLAR (bancos privados),mercados,% TNA,22.0
 2026-09-22,Tasa BADLAR (bancos privados),mercados,% TNA,22.5
+2026-09-23,Tasa BADLAR (bancos privados),mercados,% TNA,22.5
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -64934,6 +64967,7 @@
 2026-09-18,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.875
 2026-09-21,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.8125
 2026-09-22,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.25
+2026-09-23,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.625
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -65410,6 +65444,7 @@
 2026-09-18,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.25
 2026-09-21,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.5
 2026-09-22,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.625
+2026-09-23,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.6875
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
@@ -66106,6 +66141,7 @@
 2026-09-18,Tasa de plazo fijo a 30 días,mercados,% TNA,20.83
 2026-09-21,Tasa de plazo fijo a 30 días,mercados,% TNA,20.93
 2026-09-22,Tasa de plazo fijo a 30 días,mercados,% TNA,21.27
+2026-09-23,Tasa de plazo fijo a 30 días,mercados,% TNA,21.87
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
