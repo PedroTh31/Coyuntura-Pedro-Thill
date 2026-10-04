@@ -6651,6 +6651,7 @@
 2026-10-01,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.81818181818181
 2026-10-02,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.16504854368931
 2026-10-03,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.441558441558447
+2026-10-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.441558441558447
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7414,6 +7415,7 @@
 2026-10-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,847.76325416029
 2026-10-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,848.23974950071
 2026-10-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,848.71651266097
+2026-10-04,CER (Coeficiente de Estabilización de Referencia),mercados,índice,849.19354379158
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10311,6 +10313,7 @@
 2026-10-01,Canje MEP/CCL,mercados,%,4.229353651449608
 2026-10-02,Canje MEP/CCL,mercados,%,4.421593830334181
 2026-10-03,Canje MEP/CCL,mercados,%,4.633030478767952
+2026-10-04,Canje MEP/CCL,mercados,%,4.633030478767952
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -18042,6 +18045,7 @@
 2026-10-01,Dólar CCL,monetario_financiero,$/USD (venta),1614.2
 2026-10-02,Dólar CCL,monetario_financiero,$/USD (venta),1624.8
 2026-10-03,Dólar CCL,monetario_financiero,$/USD (venta),1623.8
+2026-10-04,Dólar CCL,monetario_financiero,$/USD (venta),1623.8
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -20939,6 +20943,7 @@
 2026-10-01,Dólar MEP,monetario_financiero,$/USD (venta),1548.7
 2026-10-02,Dólar MEP,monetario_financiero,$/USD (venta),1556.0
 2026-10-03,Dólar MEP,monetario_financiero,$/USD (venta),1551.9
+2026-10-04,Dólar MEP,monetario_financiero,$/USD (venta),1551.9
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26692,6 +26697,7 @@
 2026-10-01,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2026-10-02,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2026-10-03,Dólar blue,monetario_financiero,$/USD (venta),1560.0
+2026-10-04,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32445,6 +32451,7 @@
 2026-10-01,Dólar oficial,monetario_financiero,$/USD (venta),1540.0
 2026-10-02,Dólar oficial,monetario_financiero,$/USD (venta),1545.0
 2026-10-03,Dólar oficial,monetario_financiero,$/USD (venta),1540.0
+2026-10-04,Dólar oficial,monetario_financiero,$/USD (venta),1540.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -55903,6 +55910,7 @@
 2026-09-30,TIR GD35 (USD),mercados,% anual,11.751021238675872
 2026-10-02,TIR GD35 (USD),mercados,% anual,10.962321160002
 2026-10-03,TIR GD35 (USD),mercados,% anual,12.185375817689566
+2026-10-04,TIR GD35 (USD),mercados,% anual,12.192260831443216
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
