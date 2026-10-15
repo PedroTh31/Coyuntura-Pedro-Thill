@@ -6662,6 +6662,7 @@
 2026-10-12,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.664495114006506
 2026-10-13,Brecha cambiaria (CCL/oficial),monetario_financiero,%,4.664495114006506
 2026-10-14,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.133550488599337
+2026-10-15,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.361563517915302
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7436,6 +7437,7 @@
 2026-10-12,CER (Coeficiente de Estabilización de Referencia),mercados,índice,853.01945786114
 2026-10-13,CER (Coeficiente de Estabilización de Referencia),mercados,índice,853.49890751288
 2026-10-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,853.97862664495
+2026-10-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,854.45861540882
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10344,6 +10346,7 @@
 2026-10-12,Canje MEP/CCL,mercados,%,4.128589020675344
 2026-10-13,Canje MEP/CCL,mercados,%,4.128589020675344
 2026-10-14,Canje MEP/CCL,mercados,%,4.833051838378588
+2026-10-15,Canje MEP/CCL,mercados,%,5.039942846008949
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -10379,7 +10382,7 @@
 2018-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.162165077656653
 2019-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.132269870687741
 2019-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.11698554324083
-2019-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.1790948690473755
+2019-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.179094869047376
 2019-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.154917772583597
 2019-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.166917734340863
 2019-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.125257058506665
@@ -10401,11 +10404,11 @@
 2020-10-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.009023303959357
 2020-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9133634441920617
 2020-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.811793837845418
-2021-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.7271620728928756
+2021-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.727162072892876
 2021-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.85166076078044
 2021-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.848136213707258
 2021-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9510925607901206
-2021-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9060485740547435
+2021-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.906048574054744
 2021-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.927710591404297
 2021-07-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.03640417440386
 2021-08-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.08359935016856
@@ -10427,9 +10430,9 @@
 2022-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.934038863237144
 2023-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8087808553742137
 2023-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.813903378422007
-2023-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8761972397678965
-2023-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.0035120976981275
-2023-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9677938701054734
+2023-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.876197239767897
+2023-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.003512097698128
+2023-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.967793870105474
 2023-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.022421583684132
 2023-07-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.03371418947172
 2023-08-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.734408786552294
@@ -10439,7 +10442,7 @@
 2023-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.018328224553393
 2024-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.874857685864203
 2024-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.768457732572176
-2024-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.8200991631827916
+2024-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.820099163182792
 2024-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.0577012194512223
 2024-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.1921065942387514
 2024-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.302369295880524
@@ -10447,11 +10450,11 @@
 2024-08-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.394184129134968
 2024-09-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.44404937363598
 2024-10-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.590770650293344
-2024-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.6375458308893798
+2024-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.63754583088938
 2024-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.628386791602861
 2025-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.690661507677205
 2025-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8273144460888
-2025-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8292950280540428
+2025-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8292950280540423
 2025-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.904330409794373
 2025-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.974850895929286
 2025-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.020336283178571
@@ -10462,7 +10465,7 @@
 2025-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.96127134601745
 2025-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.856964223229519
 2026-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.7397696397844937
-2026-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8343505092335093
+2026-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.834350509233509
 2026-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8249847052450137
 2026-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.863339862181897
 2026-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.813639489781221
@@ -10493,6 +10496,7 @@
 2026-10-08,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-10-13,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-10-14,Caución en dólares (1 día),mercados,% TNA,1.0
+2026-10-15,Caución en dólares (1 día),mercados,% TNA,0.9
 2026-09-01,Caución en pesos (1 día),mercados,% TNA,20.0
 2026-09-02,Caución en pesos (1 día),mercados,% TNA,20.8
 2026-09-03,Caución en pesos (1 día),mercados,% TNA,20.2
@@ -10518,6 +10522,7 @@
 2026-10-08,Caución en pesos (1 día),mercados,% TNA,20.4
 2026-10-13,Caución en pesos (1 día),mercados,% TNA,21.5
 2026-10-14,Caución en pesos (1 día),mercados,% TNA,24.0
+2026-10-15,Caución en pesos (1 día),mercados,% TNA,22.75
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -10837,7 +10842,7 @@
 2007-09-01,Combustibles y lubricantes,externo,millones de USD,254.94288638000003
 2007-10-01,Combustibles y lubricantes,externo,millones de USD,229.57093314
 2007-11-01,Combustibles y lubricantes,externo,millones de USD,194.23902003000003
-2007-12-01,Combustibles y lubricantes,externo,millones de USD,185.12705353999996
+2007-12-01,Combustibles y lubricantes,externo,millones de USD,185.12705354
 2008-01-01,Combustibles y lubricantes,externo,millones de USD,101.67576429
 2008-02-01,Combustibles y lubricantes,externo,millones de USD,129.58101441000002
 2008-03-01,Combustibles y lubricantes,externo,millones de USD,191.3808003
@@ -12371,12 +12376,13 @@
 2026-09-25,Depósitos: sector privado en dólares,mercados,millones de USD,63694167.329
 2026-09-28,Depósitos: sector privado en dólares,mercados,millones de USD,63830161.7939
 2026-09-29,Depósitos: sector privado en dólares,mercados,millones de USD,63755272.3995
-2026-09-30,Depósitos: sector privado en dólares,mercados,millones de USD,63600818.4399
+2026-09-30,Depósitos: sector privado en dólares,mercados,millones de USD,63585643.2309
 2026-10-01,Depósitos: sector privado en dólares,mercados,millones de USD,63948048.7428
 2026-10-02,Depósitos: sector privado en dólares,mercados,millones de USD,64144800.582
 2026-10-05,Depósitos: sector privado en dólares,mercados,millones de USD,63957306.5138
 2026-10-06,Depósitos: sector privado en dólares,mercados,millones de USD,64118660.935
-2026-10-07,Depósitos: sector privado en dólares,mercados,millones de USD,64142178.9344
+2026-10-07,Depósitos: sector privado en dólares,mercados,millones de USD,64143699.648
+2026-10-08,Depósitos: sector privado en dólares,mercados,millones de USD,64346775.0851
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -12879,12 +12885,13 @@
 2026-09-25,Depósitos: sector privado en pesos,mercados,millones de $,122755.447
 2026-09-28,Depósitos: sector privado en pesos,mercados,millones de $,122881.25600000001
 2026-09-29,Depósitos: sector privado en pesos,mercados,millones de $,124875.935
-2026-09-30,Depósitos: sector privado en pesos,mercados,millones de $,128240.129
-2026-10-01,Depósitos: sector privado en pesos,mercados,millones de $,128729.018
-2026-10-02,Depósitos: sector privado en pesos,mercados,millones de $,129160.061
-2026-10-05,Depósitos: sector privado en pesos,mercados,millones de $,127681.992
-2026-10-06,Depósitos: sector privado en pesos,mercados,millones de $,128720.013
-2026-10-07,Depósitos: sector privado en pesos,mercados,millones de $,127862.952
+2026-09-30,Depósitos: sector privado en pesos,mercados,millones de $,128246.85100000001
+2026-10-01,Depósitos: sector privado en pesos,mercados,millones de $,128729.158
+2026-10-02,Depósitos: sector privado en pesos,mercados,millones de $,129160.496
+2026-10-05,Depósitos: sector privado en pesos,mercados,millones de $,127672.854
+2026-10-06,Depósitos: sector privado en pesos,mercados,millones de $,128727.541
+2026-10-07,Depósitos: sector privado en pesos,mercados,millones de $,127872.105
+2026-10-08,Depósitos: sector privado en pesos,mercados,millones de $,127981.992
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -12909,6 +12916,7 @@
 2026-05-31,Depósitos: sector privado no financiero,mercados,millones de $,174195.324
 2026-06-30,Depósitos: sector privado no financiero,mercados,millones de $,184937.7
 2026-07-31,Depósitos: sector privado no financiero,mercados,millones de $,184971.81
+2026-08-31,Depósitos: sector privado no financiero,mercados,millones de $,187655.774
 2024-08-31,Depósitos: sector público,monetario_financiero,millones de $,19949.772
 2024-09-30,Depósitos: sector público,mercados,millones de $,22414.244
 2024-10-31,Depósitos: sector público,mercados,millones de $,23690.476
@@ -12932,7 +12940,8 @@
 2026-04-30,Depósitos: sector público,mercados,millones de $,33987.716
 2026-05-31,Depósitos: sector público,mercados,millones de $,38822.26
 2026-06-30,Depósitos: sector público,mercados,millones de $,35761.604
-2026-07-31,Depósitos: sector público,mercados,millones de $,42674.281
+2026-07-31,Depósitos: sector público,mercados,millones de $,42721.284
+2026-08-31,Depósitos: sector público,mercados,millones de $,44209.413
 2024-09-30,Depósitos: sector público en dólares,mercados,millones de USD,1571616.0
 2024-10-31,Depósitos: sector público en dólares,mercados,millones de USD,1690309.0
 2024-11-30,Depósitos: sector público en dólares,mercados,millones de USD,1726873.0
@@ -12955,11 +12964,12 @@
 2026-04-30,Depósitos: sector público en dólares,mercados,millones de USD,3323384.0
 2026-05-31,Depósitos: sector público en dólares,mercados,millones de USD,2893334.0
 2026-06-30,Depósitos: sector público en dólares,mercados,millones de USD,3376863.0
-2026-07-31,Depósitos: sector público en dólares,mercados,millones de USD,3412813.0
+2026-07-31,Depósitos: sector público en dólares,mercados,millones de USD,3416853.0
+2026-08-31,Depósitos: sector público en dólares,mercados,millones de USD,3050621.0
 2019-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335661.30000000005
 2019-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334477.0
 2019-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324898.30000000005
-2019-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334322.9
+2019-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334322.89999999997
 2019-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,329930.60000000003
 2019-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,337267.10000000003
 2019-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,341957.5
@@ -12973,15 +12983,15 @@
 2020-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,323381.2
 2020-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,323254.8
 2020-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324808.30000000005
-2020-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324552.4
-2020-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,328087.9
+2020-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,324552.39999999997
+2020-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,328087.89999999997
 2020-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,329479.50000000006
 2020-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,332247.5
 2020-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,333194.6999999999
 2020-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,333253.80000000005
 2020-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335582.19999999995
 2021-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334929.2
-2021-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334883.8
+2021-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,334883.79999999993
 2021-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,335556.1
 2021-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,338332.10000000003
 2021-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,341091.8
@@ -12993,55 +13003,55 @@
 2021-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,354422.3
 2021-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,363232.5999999999
 2022-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,365747.6
-2022-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,366626.3000000001
+2022-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,366626.30000000005
 2022-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,376300.4
-2022-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374198.9
+2022-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374198.89999999997
 2022-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,374577.8
-2022-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,378505.6
-2022-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,380772.7
+2022-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,378505.60000000003
+2022-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,380772.69999999995
 2022-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,381121.0
 2022-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,382281.20000000007
-2022-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386272.4
+2022-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386272.39999999997
 2022-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386659.5
-2022-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396555.2
+2022-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396555.19999999995
 2023-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,395856.29999999993
-2023-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,394199.2
-2023-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398245.7
+2023-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,394199.19999999995
+2023-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398245.69999999995
 2023-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,396272.20000000007
-2023-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398833.2
+2023-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,398833.19999999995
 2023-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403835.79999999993
 2023-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406133.9
 2023-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,395758.29999999993
-2023-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406948.1
+2023-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,406948.10000000003
 2023-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,418019.0999999999
-2023-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,425555.9
-2023-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,370673.4
+2023-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,425555.89999999997
+2023-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,370673.39999999997
 2024-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,381272.8
 2024-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,386539.8
-2024-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403052.4
-2024-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,414035.6
-2024-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,435697.7
+2024-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,403052.39999999997
+2024-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,414035.60000000003
+2024-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,435697.69999999995
 2024-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,442514.9
 2024-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,452070.5
 2024-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,458408.7
-2024-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460068.8000000001
+2024-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460068.80000000005
 2024-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,463241.8
 2024-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,464935.70000000007
 2024-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,466921.1999999999
 2025-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,467794.5999999999
 2025-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,471163.7
 2025-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,473560.8
-2025-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472918.0
+2025-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472917.99999999994
 2025-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,461017.2
-2025-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,465353.1
-2025-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447177.1
+2025-06-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,465353.10000000003
+2025-07-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447177.10000000003
 2025-08-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,454263.4
 2025-09-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,454037.0
-2025-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,443238.5
+2025-10-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,443238.49999999994
 2025-11-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,447031.7
 2025-12-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,455076.70000000007
 2026-01-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,460938.3
-2026-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472133.6
+2026-02-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,472133.60000000003
 2026-03-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,483854.5
 2026-04-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,496430.8000000001
 2026-05-01,Deuda pública bruta (Administración Central),fiscal,millones de USD,479062.1000000001
@@ -18110,6 +18120,7 @@
 2026-10-12,Dólar CCL,monetario_financiero,$/USD (venta),1606.6
 2026-10-13,Dólar CCL,monetario_financiero,$/USD (venta),1606.6
 2026-10-14,Dólar CCL,monetario_financiero,$/USD (venta),1613.8
+2026-10-15,Dólar CCL,monetario_financiero,$/USD (venta),1617.3
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -21018,6 +21029,7 @@
 2026-10-12,Dólar MEP,monetario_financiero,$/USD (venta),1542.9
 2026-10-13,Dólar MEP,monetario_financiero,$/USD (venta),1542.9
 2026-10-14,Dólar MEP,monetario_financiero,$/USD (venta),1539.4
+2026-10-15,Dólar MEP,monetario_financiero,$/USD (venta),1539.7
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26782,6 +26794,7 @@
 2026-10-12,Dólar blue,monetario_financiero,$/USD (venta),1540.0
 2026-10-13,Dólar blue,monetario_financiero,$/USD (venta),1540.0
 2026-10-14,Dólar blue,monetario_financiero,$/USD (venta),1550.0
+2026-10-15,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32546,6 +32559,7 @@
 2026-10-12,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-10-13,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-10-14,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
+2026-10-15,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -33705,7 +33719,7 @@
 2011-01-01,"EMAE · Agricultura, ganadería y silvicultura",real,,70.9288586670815
 2011-02-01,"EMAE · Agricultura, ganadería y silvicultura",real,,71.39901731541627
 2011-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,139.7658554294179
-2011-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,215.24184207380975
+2011-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,215.24184207380972
 2011-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,315.7625658054044
 2011-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,211.204625625493
 2011-07-01,"EMAE · Agricultura, ganadería y silvicultura",real,,106.38926386530116
@@ -33755,7 +33769,7 @@
 2015-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,144.4282120789188
 2015-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,240.9170855912434
 2015-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,365.6589729801224
-2015-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,244.31854019365556
+2015-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,244.3185401936556
 2015-07-01,"EMAE · Agricultura, ganadería y silvicultura",real,,115.60813567499136
 2015-08-01,"EMAE · Agricultura, ganadería y silvicultura",real,,68.81774814861737
 2015-09-01,"EMAE · Agricultura, ganadería y silvicultura",real,,64.55008886087165
@@ -33803,7 +33817,7 @@
 2019-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,160.53001434688164
 2019-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,230.9943282073848
 2019-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,341.8236001347074
-2019-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,222.81868563239237
+2019-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,222.8186856323924
 2019-07-01,"EMAE · Agricultura, ganadería y silvicultura",real,,126.84834872112268
 2019-08-01,"EMAE · Agricultura, ganadería y silvicultura",real,,78.02068368993574
 2019-09-01,"EMAE · Agricultura, ganadería y silvicultura",real,,70.80070875709316
@@ -33875,7 +33889,7 @@
 2025-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,147.9911057875826
 2025-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,213.98245091066835
 2025-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,284.59974164748013
-2025-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,197.86315727298532
+2025-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,197.8631572729853
 2025-07-01,"EMAE · Agricultura, ganadería y silvicultura",real,,118.8756811722598
 2025-08-01,"EMAE · Agricultura, ganadería y silvicultura",real,,78.32148458168004
 2025-09-01,"EMAE · Agricultura, ganadería y silvicultura",real,,75.47728828663327
@@ -39918,21 +39932,21 @@
 2017-01-01,IPC Estacionales (var. mensual),precios,% mensual,1.6969000000000012
 2017-02-01,IPC Estacionales (var. mensual),precios,% mensual,0.6269610971425976
 2017-03-01,IPC Estacionales (var. mensual),precios,% mensual,2.3963570447893767
-2017-04-01,IPC Estacionales (var. mensual),precios,% mensual,3.244588058801301
+2017-04-01,IPC Estacionales (var. mensual),precios,% mensual,8.186699999999991
 2017-05-01,IPC Estacionales (var. mensual),precios,% mensual,0.8012999749507088
-2017-06-01,IPC Estacionales (var. mensual),precios,% mensual,0.9383459143026851
-2017-07-01,IPC Estacionales (var. mensual),precios,% mensual,0.46522022331660917
+2017-06-01,IPC Estacionales (var. mensual),precios,% mensual,0.9383459143026852
+2017-07-01,IPC Estacionales (var. mensual),precios,% mensual,1.4079315125772984
 2017-08-01,IPC Estacionales (var. mensual),precios,% mensual,1.0723489677996856
-2017-09-01,IPC Estacionales (var. mensual),precios,% mensual,3.9714640764608067
-2017-10-01,IPC Estacionales (var. mensual),precios,% mensual,2.4181251828523154
+2017-09-01,IPC Estacionales (var. mensual),precios,% mensual,3.971464076460807
+2017-10-01,IPC Estacionales (var. mensual),precios,% mensual,6.485624232273968
 2017-11-01,IPC Estacionales (var. mensual),precios,% mensual,1.71158470294277
-2017-12-01,IPC Estacionales (var. mensual),precios,% mensual,0.3318976981928179
+2017-12-01,IPC Estacionales (var. mensual),precios,% mensual,2.0491631113672693
 2018-01-01,IPC Estacionales (var. mensual),precios,% mensual,2.6649223797825305
 2018-02-01,IPC Estacionales (var. mensual),precios,% mensual,-0.6809938404219507
-2018-03-01,IPC Estacionales (var. mensual),precios,% mensual,1.6272792527143531
+2018-03-01,IPC Estacionales (var. mensual),precios,% mensual,3.6250485743830163
 2018-04-01,IPC Estacionales (var. mensual),precios,% mensual,0.8707652485216544
 2018-05-01,IPC Estacionales (var. mensual),precios,% mensual,2.5291759837368977
-2018-06-01,IPC Estacionales (var. mensual),precios,% mensual,3.3573679415303204
+2018-06-01,IPC Estacionales (var. mensual),precios,% mensual,5.97145766893008
 2018-07-01,IPC Estacionales (var. mensual),precios,% mensual,3.7754991311379715
 2018-08-01,IPC Estacionales (var. mensual),precios,% mensual,1.9329840607061
 2018-09-01,IPC Estacionales (var. mensual),precios,% mensual,3.971476029072041
@@ -39940,34 +39954,34 @@
 2018-11-01,IPC Estacionales (var. mensual),precios,% mensual,3.017489261649331
 2018-12-01,IPC Estacionales (var. mensual),precios,% mensual,1.439881830515466
 2019-01-01,IPC Estacionales (var. mensual),precios,% mensual,1.0984448640823707
-2019-02-01,IPC Estacionales (var. mensual),precios,% mensual,1.9268032732593365
+2019-02-01,IPC Estacionales (var. mensual),precios,% mensual,1.9268032732593363
 2019-03-01,IPC Estacionales (var. mensual),precios,% mensual,4.766149808977116
-2019-04-01,IPC Estacionales (var. mensual),precios,% mensual,1.6061738788670565
+2019-04-01,IPC Estacionales (var. mensual),precios,% mensual,14.628776235164786
 2019-05-01,IPC Estacionales (var. mensual),precios,% mensual,0.6182948913113995
 2019-06-01,IPC Estacionales (var. mensual),precios,% mensual,2.466586359203804
-2019-07-01,IPC Estacionales (var. mensual),precios,% mensual,3.6401521839298123
-2019-08-01,IPC Estacionales (var. mensual),precios,% mensual,3.8542581530785824
+2019-07-01,IPC Estacionales (var. mensual),precios,% mensual,3.640152183929812
+2019-08-01,IPC Estacionales (var. mensual),precios,% mensual,10.289614303553375
 2019-09-01,IPC Estacionales (var. mensual),precios,% mensual,8.538617493821231
 2019-10-01,IPC Estacionales (var. mensual),precios,% mensual,2.8343246604307204
 2019-11-01,IPC Estacionales (var. mensual),precios,% mensual,7.337453407215677
-2019-12-01,IPC Estacionales (var. mensual),precios,% mensual,2.1354593447896253
+2019-12-01,IPC Estacionales (var. mensual),precios,% mensual,9.629601086459271
 2020-01-01,IPC Estacionales (var. mensual),precios,% mensual,3.6368592837694447
 2020-02-01,IPC Estacionales (var. mensual),precios,% mensual,2.5147698560459064
-2020-03-01,IPC Estacionales (var. mensual),precios,% mensual,4.9067765541696895
+2020-03-01,IPC Estacionales (var. mensual),precios,% mensual,11.456198702444143
 2020-04-01,IPC Estacionales (var. mensual),precios,% mensual,4.834695545640932
-2020-05-01,IPC Estacionales (var. mensual),precios,% mensual,4.684522460355445
+2020-05-01,IPC Estacionales (var. mensual),precios,% mensual,9.745700404721735
 2020-06-01,IPC Estacionales (var. mensual),precios,% mensual,4.771503894307405
 2020-07-01,IPC Estacionales (var. mensual),precios,% mensual,0.9470177154022652
 2020-08-01,IPC Estacionales (var. mensual),precios,% mensual,3.975575359014938
-2020-09-01,IPC Estacionales (var. mensual),precios,% mensual,7.874225806765245
-2020-10-01,IPC Estacionales (var. mensual),precios,% mensual,9.563160749926357
+2020-09-01,IPC Estacionales (var. mensual),precios,% mensual,13.225048977351616
+2020-10-01,IPC Estacionales (var. mensual),precios,% mensual,9.563160749926356
 2020-11-01,IPC Estacionales (var. mensual),precios,% mensual,2.037022040723979
 2020-12-01,IPC Estacionales (var. mensual),precios,% mensual,1.3367070773544043
-2021-01-01,IPC Estacionales (var. mensual),precios,% mensual,3.015362231569929
-2021-02-01,IPC Estacionales (var. mensual),precios,% mensual,3.1219628041479597
-2021-03-01,IPC Estacionales (var. mensual),precios,% mensual,7.163073178437895
+2021-01-01,IPC Estacionales (var. mensual),precios,% mensual,16.70544249225845
+2021-02-01,IPC Estacionales (var. mensual),precios,% mensual,3.12196280414796
+2021-03-01,IPC Estacionales (var. mensual),precios,% mensual,10.508664462850593
 2021-04-01,IPC Estacionales (var. mensual),precios,% mensual,2.1577094795032004
-2021-05-01,IPC Estacionales (var. mensual),precios,% mensual,1.4887865342208206
+2021-05-01,IPC Estacionales (var. mensual),precios,% mensual,3.6786197019024858
 2021-06-01,IPC Estacionales (var. mensual),precios,% mensual,0.509997840866605
 2021-07-01,IPC Estacionales (var. mensual),precios,% mensual,4.8786897834343534
 2021-08-01,IPC Estacionales (var. mensual),precios,% mensual,0.5880975294708213
@@ -39975,62 +39989,62 @@
 2021-10-01,IPC Estacionales (var. mensual),precios,% mensual,8.133657961659125
 2021-11-01,IPC Estacionales (var. mensual),precios,% mensual,0.512050211459969
 2021-12-01,IPC Estacionales (var. mensual),precios,% mensual,3.735212032473356
-2022-01-01,IPC Estacionales (var. mensual),precios,% mensual,9.049861760633915
+2022-01-01,IPC Estacionales (var. mensual),precios,% mensual,9.049861760633917
 2022-02-01,IPC Estacionales (var. mensual),precios,% mensual,8.423340341263241
 2022-03-01,IPC Estacionales (var. mensual),precios,% mensual,6.192366470398758
 2022-04-01,IPC Estacionales (var. mensual),precios,% mensual,5.427457555868798
-2022-05-01,IPC Estacionales (var. mensual),precios,% mensual,3.3513101122009337
+2022-05-01,IPC Estacionales (var. mensual),precios,% mensual,36.80781953223094
 2022-06-01,IPC Estacionales (var. mensual),precios,% mensual,6.600777322789475
-2022-07-01,IPC Estacionales (var. mensual),precios,% mensual,11.300124750289275
+2022-07-01,IPC Estacionales (var. mensual),precios,% mensual,18.646798145042776
 2022-08-01,IPC Estacionales (var. mensual),precios,% mensual,8.668674500204476
-2022-09-01,IPC Estacionales (var. mensual),precios,% mensual,11.733470707624761
+2022-09-01,IPC Estacionales (var. mensual),precios,% mensual,11.73347070762476
 2022-10-01,IPC Estacionales (var. mensual),precios,% mensual,9.046947747883438
 2022-11-01,IPC Estacionales (var. mensual),precios,% mensual,4.103002808395262
 2022-12-01,IPC Estacionales (var. mensual),precios,% mensual,4.6418678125194734
-2023-01-01,IPC Estacionales (var. mensual),precios,% mensual,7.9180535546872655
+2023-01-01,IPC Estacionales (var. mensual),precios,% mensual,55.65533712793391
 2023-02-01,IPC Estacionales (var. mensual),precios,% mensual,3.334735860360505
 2023-03-01,IPC Estacionales (var. mensual),precios,% mensual,9.327867890257547
 2023-04-01,IPC Estacionales (var. mensual),precios,% mensual,12.649737412144235
-2023-05-01,IPC Estacionales (var. mensual),precios,% mensual,5.973887908338571
+2023-05-01,IPC Estacionales (var. mensual),precios,% mensual,34.86717596953861
 2023-06-01,IPC Estacionales (var. mensual),precios,% mensual,1.8400477503361712
 2023-07-01,IPC Estacionales (var. mensual),precios,% mensual,5.102065562795155
 2023-08-01,IPC Estacionales (var. mensual),precios,% mensual,10.65178012578205
 2023-09-01,IPC Estacionales (var. mensual),precios,% mensual,14.69278629261488
 2023-10-01,IPC Estacionales (var. mensual),precios,% mensual,7.618999864067044
 2023-11-01,IPC Estacionales (var. mensual),precios,% mensual,12.80823056057483
-2023-12-01,IPC Estacionales (var. mensual),precios,% mensual,16.229288187371594
+2023-12-01,IPC Estacionales (var. mensual),precios,% mensual,41.1059467559372
 2024-01-01,IPC Estacionales (var. mensual),precios,% mensual,16.207762605895404
-2024-02-01,IPC Estacionales (var. mensual),precios,% mensual,8.693508975351438
-2024-03-01,IPC Estacionales (var. mensual),precios,% mensual,11.142630726486935
-2024-04-01,IPC Estacionales (var. mensual),precios,% mensual,9.946923329538615
+2024-02-01,IPC Estacionales (var. mensual),precios,% mensual,26.31029487809402
+2024-03-01,IPC Estacionales (var. mensual),precios,% mensual,11.142630726486937
+2024-04-01,IPC Estacionales (var. mensual),precios,% mensual,9.946923329538617
 2024-05-01,IPC Estacionales (var. mensual),precios,% mensual,7.164153390205996
-2024-06-01,IPC Estacionales (var. mensual),precios,% mensual,4.445862724651906
+2024-06-01,IPC Estacionales (var. mensual),precios,% mensual,36.77430983692667
 2024-07-01,IPC Estacionales (var. mensual),precios,% mensual,5.075139144443064
 2024-08-01,IPC Estacionales (var. mensual),precios,% mensual,1.5275183973345818
-2024-09-01,IPC Estacionales (var. mensual),precios,% mensual,2.9391660114567397
+2024-09-01,IPC Estacionales (var. mensual),precios,% mensual,4.511580710344543
 2024-10-01,IPC Estacionales (var. mensual),precios,% mensual,1.3624749810563275
 2024-11-01,IPC Estacionales (var. mensual),precios,% mensual,-1.201997031995028
-2024-12-01,IPC Estacionales (var. mensual),precios,% mensual,-1.4049630005396607
+2024-12-01,IPC Estacionales (var. mensual),precios,% mensual,-2.5900724189675706
 2025-01-01,IPC Estacionales (var. mensual),precios,% mensual,0.355954073908471
-2025-02-01,IPC Estacionales (var. mensual),precios,% mensual,-0.8186981698089513
+2025-02-01,IPC Estacionales (var. mensual),precios,% mensual,-0.46565828538892573
 2025-03-01,IPC Estacionales (var. mensual),precios,% mensual,8.44043582818681
 2025-04-01,IPC Estacionales (var. mensual),precios,% mensual,1.882175734300362
 2025-05-01,IPC Estacionales (var. mensual),precios,% mensual,-2.731481117783463
 2025-06-01,IPC Estacionales (var. mensual),precios,% mensual,-0.21413445109182971
 2025-07-01,IPC Estacionales (var. mensual),precios,% mensual,4.051481646059529
 2025-08-01,IPC Estacionales (var. mensual),precios,% mensual,-0.7913755621061114
-2025-09-01,IPC Estacionales (var. mensual),precios,% mensual,2.2028328527229135
-2025-10-01,IPC Estacionales (var. mensual),precios,% mensual,2.79357735173682
-2025-11-01,IPC Estacionales (var. mensual),precios,% mensual,0.42531980548674575
+2025-09-01,IPC Estacionales (var. mensual),precios,% mensual,2.202832852722913
+2025-10-01,IPC Estacionales (var. mensual),precios,% mensual,5.057948044130001
+2025-11-01,IPC Estacionales (var. mensual),precios,% mensual,0.4253198054867457
 2025-12-01,IPC Estacionales (var. mensual),precios,% mensual,0.6076642674375021
-2026-01-01,IPC Estacionales (var. mensual),precios,% mensual,5.707291638385126
+2026-01-01,IPC Estacionales (var. mensual),precios,% mensual,6.801963147302459
 2026-02-01,IPC Estacionales (var. mensual),precios,% mensual,-1.2753259420706708
 2026-03-01,IPC Estacionales (var. mensual),precios,% mensual,1.0459136228223143
-2026-04-01,IPC Estacionales (var. mensual),precios,% mensual,-0.04806164152015846
-2026-05-01,IPC Estacionales (var. mensual),precios,% mensual,3.4824437379623374
+2026-04-01,IPC Estacionales (var. mensual),precios,% mensual,-0.0480616415201584
+2026-05-01,IPC Estacionales (var. mensual),precios,% mensual,3.4327083768167066
 2026-06-01,IPC Estacionales (var. mensual),precios,% mensual,3.3758881741547064
 2026-07-01,IPC Estacionales (var. mensual),precios,% mensual,4.536415642274205
-2026-08-01,IPC Estacionales (var. mensual),precios,% mensual,-0.8643353600333192
+2026-08-01,IPC Estacionales (var. mensual),precios,% mensual,3.632870437766633
 2016-12-01,IPC Nacional - Nivel general,precios,índice,100.0
 2017-01-01,IPC Nacional - Nivel general,precios,índice,101.5859
 2017-02-01,IPC Nacional - Nivel general,precios,índice,103.6859
@@ -40148,79 +40162,79 @@
 2026-06-01,IPC Nacional - Nivel general,precios,índice,11826.4103
 2017-01-01,IPC Núcleo (var. mensual),precios,% mensual,1.5039000000000025
 2017-02-01,IPC Núcleo (var. mensual),precios,% mensual,1.6813147081047974
-2017-03-01,IPC Núcleo (var. mensual),precios,% mensual,1.9331366479185648
-2017-04-01,IPC Núcleo (var. mensual),precios,% mensual,5.8353422873406835
-2017-05-01,IPC Núcleo (var. mensual),precios,% mensual,1.6568460442905495
-2017-06-01,IPC Núcleo (var. mensual),precios,% mensual,3.0144190938963256
+2017-03-01,IPC Núcleo (var. mensual),precios,% mensual,1.9331366479185652
+2017-04-01,IPC Núcleo (var. mensual),precios,% mensual,2.1113875008673677
+2017-05-01,IPC Núcleo (var. mensual),precios,% mensual,1.6568460442905497
+2017-06-01,IPC Núcleo (var. mensual),precios,% mensual,1.3354467529066438
 2017-07-01,IPC Núcleo (var. mensual),precios,% mensual,1.7647808301247014
 2017-08-01,IPC Núcleo (var. mensual),precios,% mensual,1.4320052780054215
 2017-09-01,IPC Núcleo (var. mensual),precios,% mensual,1.6342323887561294
 2017-10-01,IPC Núcleo (var. mensual),precios,% mensual,1.3150119985047004
 2017-11-01,IPC Núcleo (var. mensual),precios,% mensual,1.2848513702502506
-2017-12-01,IPC Núcleo (var. mensual),precios,% mensual,4.331262091099042
+2017-12-01,IPC Núcleo (var. mensual),precios,% mensual,1.6707824180473008
 2018-01-01,IPC Núcleo (var. mensual),precios,% mensual,1.4988487223666525
 2018-02-01,IPC Núcleo (var. mensual),precios,% mensual,2.0908267163812333
 2018-03-01,IPC Núcleo (var. mensual),precios,% mensual,2.576400878638996
-2018-04-01,IPC Núcleo (var. mensual),precios,% mensual,2.130085594892273
-2018-05-01,IPC Núcleo (var. mensual),precios,% mensual,7.542766724854855
+2018-04-01,IPC Núcleo (var. mensual),precios,% mensual,2.1300855948922726
+2018-05-01,IPC Núcleo (var. mensual),precios,% mensual,2.654987055892377
 2018-06-01,IPC Núcleo (var. mensual),precios,% mensual,4.073954988687167
 2018-07-01,IPC Núcleo (var. mensual),precios,% mensual,3.1930887595530644
 2018-08-01,IPC Núcleo (var. mensual),precios,% mensual,3.352280566209531
-2018-09-01,IPC Núcleo (var. mensual),precios,% mensual,14.801990911058205
+2018-09-01,IPC Núcleo (var. mensual),precios,% mensual,7.641252779935859
 2018-10-01,IPC Núcleo (var. mensual),precios,% mensual,4.539721712386524
 2018-11-01,IPC Núcleo (var. mensual),precios,% mensual,3.298648285548711
 2018-12-01,IPC Núcleo (var. mensual),precios,% mensual,2.7435393610045544
-2019-01-01,IPC Núcleo (var. mensual),precios,% mensual,5.828729186596293
+2019-01-01,IPC Núcleo (var. mensual),precios,% mensual,3.0028066433953393
 2019-02-01,IPC Núcleo (var. mensual),precios,% mensual,3.855498693474302
-2019-03-01,IPC Núcleo (var. mensual),precios,% mensual,8.6115126181733
+2019-03-01,IPC Núcleo (var. mensual),precios,% mensual,4.579453167651892
 2019-04-01,IPC Núcleo (var. mensual),precios,% mensual,3.7670642645937003
 2019-05-01,IPC Núcleo (var. mensual),precios,% mensual,3.177530679830687
-2019-06-01,IPC Núcleo (var. mensual),precios,% mensual,5.995920428619783
+2019-06-01,IPC Núcleo (var. mensual),precios,% mensual,2.7315925572350075
 2019-07-01,IPC Núcleo (var. mensual),precios,% mensual,2.1476796602663883
 2019-08-01,IPC Núcleo (var. mensual),precios,% mensual,4.637860819711426
-2019-09-01,IPC Núcleo (var. mensual),precios,% mensual,11.374199592620915
-2019-10-01,IPC Núcleo (var. mensual),precios,% mensual,3.80466764451548
-2019-11-01,IPC Núcleo (var. mensual),precios,% mensual,7.934149307454663
+2019-09-01,IPC Núcleo (var. mensual),precios,% mensual,6.437764228108667
+2019-10-01,IPC Núcleo (var. mensual),precios,% mensual,3.8046676445154803
+2019-11-01,IPC Núcleo (var. mensual),precios,% mensual,3.9781271465371804
 2019-12-01,IPC Núcleo (var. mensual),precios,% mensual,3.6823011487841617
 2020-01-01,IPC Núcleo (var. mensual),precios,% mensual,2.440934291841157
-2020-02-01,IPC Núcleo (var. mensual),precios,% mensual,8.742862173272691
+2020-02-01,IPC Núcleo (var. mensual),precios,% mensual,2.381762468705717
 2020-03-01,IPC Núcleo (var. mensual),precios,% mensual,3.120592995324345
-2020-04-01,IPC Núcleo (var. mensual),precios,% mensual,4.889891636580845
+2020-04-01,IPC Núcleo (var. mensual),precios,% mensual,1.7157568530824063
 2020-05-01,IPC Núcleo (var. mensual),precios,% mensual,1.6056784083697373
 2020-06-01,IPC Núcleo (var. mensual),precios,% mensual,2.315144764369914
-2020-07-01,IPC Núcleo (var. mensual),precios,% mensual,6.5915378406521175
+2020-07-01,IPC Núcleo (var. mensual),precios,% mensual,2.5332739813328065
 2020-08-01,IPC Núcleo (var. mensual),precios,% mensual,3.0332743829144526
-2020-09-01,IPC Núcleo (var. mensual),precios,% mensual,5.420446901573905
-2020-10-01,IPC Núcleo (var. mensual),precios,% mensual,3.459601571090088
-2020-11-01,IPC Núcleo (var. mensual),precios,% mensual,7.533498215063883
+2020-09-01,IPC Núcleo (var. mensual),precios,% mensual,2.3168947439132337
+2020-10-01,IPC Núcleo (var. mensual),precios,% mensual,3.4596015710900874
+2020-11-01,IPC Núcleo (var. mensual),precios,% mensual,3.9376689858741543
 2020-12-01,IPC Núcleo (var. mensual),precios,% mensual,4.871001037530909
 2021-01-01,IPC Núcleo (var. mensual),precios,% mensual,3.915877937023615
 2021-02-01,IPC Núcleo (var. mensual),precios,% mensual,4.069718475307305
 2021-03-01,IPC Núcleo (var. mensual),precios,% mensual,4.526054844233185
 2021-04-01,IPC Núcleo (var. mensual),precios,% mensual,4.558951371909803
 2021-05-01,IPC Núcleo (var. mensual),precios,% mensual,3.4797506938282874
-2021-06-01,IPC Núcleo (var. mensual),precios,% mensual,7.2150129325519785
-2021-07-01,IPC Núcleo (var. mensual),precios,% mensual,3.133501312348685
-2021-08-01,IPC Núcleo (var. mensual),precios,% mensual,3.1321874754012717
-2021-09-01,IPC Núcleo (var. mensual),precios,% mensual,9.833557796756697
+2021-06-01,IPC Núcleo (var. mensual),precios,% mensual,3.6096552356174927
+2021-07-01,IPC Núcleo (var. mensual),precios,% mensual,3.1335013123486855
+2021-08-01,IPC Núcleo (var. mensual),precios,% mensual,3.1321874754012713
+2021-09-01,IPC Núcleo (var. mensual),precios,% mensual,3.2621255553990425
 2021-10-01,IPC Núcleo (var. mensual),precios,% mensual,3.2010124388921923
-2021-11-01,IPC Núcleo (var. mensual),precios,% mensual,6.557869568510966
-2021-12-01,IPC Núcleo (var. mensual),precios,% mensual,4.423238788462736
+2021-11-01,IPC Núcleo (var. mensual),precios,% mensual,3.252736625628039
+2021-12-01,IPC Núcleo (var. mensual),precios,% mensual,4.4232387884627355
 2022-01-01,IPC Núcleo (var. mensual),precios,% mensual,3.302097786775726
 2022-02-01,IPC Núcleo (var. mensual),precios,% mensual,4.450768875905875
-2022-03-01,IPC Núcleo (var. mensual),precios,% mensual,19.87952888266482
+2022-03-01,IPC Núcleo (var. mensual),precios,% mensual,6.396437400131516
 2022-04-01,IPC Núcleo (var. mensual),precios,% mensual,6.708974359897035
-2022-05-01,IPC Núcleo (var. mensual),precios,% mensual,12.259808003293271
+2022-05-01,IPC Núcleo (var. mensual),precios,% mensual,5.201843309518606
 2022-06-01,IPC Núcleo (var. mensual),precios,% mensual,5.083387964535646
 2022-07-01,IPC Núcleo (var. mensual),precios,% mensual,7.3288005686861
 2022-08-01,IPC Núcleo (var. mensual),precios,% mensual,6.801591063054002
 2022-09-01,IPC Núcleo (var. mensual),precios,% mensual,5.512781333514716
-2022-10-01,IPC Núcleo (var. mensual),precios,% mensual,18.9426381275122
+2022-10-01,IPC Núcleo (var. mensual),precios,% mensual,5.5491579643453415
 2022-11-01,IPC Núcleo (var. mensual),precios,% mensual,4.755869688845538
 2022-12-01,IPC Núcleo (var. mensual),precios,% mensual,5.251080268315311
-2023-01-01,IPC Núcleo (var. mensual),precios,% mensual,10.884268957614074
+2023-01-01,IPC Núcleo (var. mensual),precios,% mensual,5.352143346118776
 2023-02-01,IPC Núcleo (var. mensual),precios,% mensual,7.690216438789466
-2023-03-01,IPC Núcleo (var. mensual),precios,% mensual,15.45481668916009
+2023-03-01,IPC Núcleo (var. mensual),precios,% mensual,7.210125958641744
 2023-04-01,IPC Núcleo (var. mensual),precios,% mensual,8.400631040277151
 2023-05-01,IPC Núcleo (var. mensual),precios,% mensual,7.841789729669557
 2023-06-01,IPC Núcleo (var. mensual),precios,% mensual,6.492213089968435
@@ -40228,41 +40242,41 @@
 2023-08-01,IPC Núcleo (var. mensual),precios,% mensual,13.78668190881578
 2023-09-01,IPC Núcleo (var. mensual),precios,% mensual,13.42821144291415
 2023-10-01,IPC Núcleo (var. mensual),precios,% mensual,8.81103433546322
-2023-11-01,IPC Núcleo (var. mensual),precios,% mensual,13.4036155012214
+2023-11-01,IPC Núcleo (var. mensual),precios,% mensual,13.403615501221399
 2023-12-01,IPC Núcleo (var. mensual),precios,% mensual,28.25875987091053
 2024-01-01,IPC Núcleo (var. mensual),precios,% mensual,20.21648871207129
-2024-02-01,IPC Núcleo (var. mensual),precios,% mensual,96.34488989300127
+2024-02-01,IPC Núcleo (var. mensual),precios,% mensual,12.290140839705677
 2024-03-01,IPC Núcleo (var. mensual),precios,% mensual,9.41204797536992
 2024-04-01,IPC Núcleo (var. mensual),precios,% mensual,6.298438398652029
-2024-05-01,IPC Núcleo (var. mensual),precios,% mensual,3.734686742433136
-2024-06-01,IPC Núcleo (var. mensual),precios,% mensual,3.6511302858435615
-2024-07-01,IPC Núcleo (var. mensual),precios,% mensual,18.62110803916279
+2024-05-01,IPC Núcleo (var. mensual),precios,% mensual,3.7346867424331354
+2024-06-01,IPC Núcleo (var. mensual),precios,% mensual,3.6511302858435624
+2024-07-01,IPC Núcleo (var. mensual),precios,% mensual,3.7855879288956507
 2024-08-01,IPC Núcleo (var. mensual),precios,% mensual,4.120285573091365
 2024-09-01,IPC Núcleo (var. mensual),precios,% mensual,3.262205751650904
-2024-10-01,IPC Núcleo (var. mensual),precios,% mensual,6.275207746977496
+2024-10-01,IPC Núcleo (var. mensual),precios,% mensual,2.9178168076062105
 2024-11-01,IPC Núcleo (var. mensual),precios,% mensual,2.7148338562957175
 2024-12-01,IPC Núcleo (var. mensual),precios,% mensual,3.197281506150129
 2025-01-01,IPC Núcleo (var. mensual),precios,% mensual,2.397689431239436
-2025-02-01,IPC Núcleo (var. mensual),precios,% mensual,5.388063231037887
-2025-03-01,IPC Núcleo (var. mensual),precios,% mensual,3.192790242688948
-2025-04-01,IPC Núcleo (var. mensual),precios,% mensual,6.510145346815266
-2025-05-01,IPC Núcleo (var. mensual),precios,% mensual,2.1972650333935477
-2025-06-01,IPC Núcleo (var. mensual),precios,% mensual,3.9486552988440726
+2025-02-01,IPC Núcleo (var. mensual),precios,% mensual,2.9203528091388264
+2025-03-01,IPC Núcleo (var. mensual),precios,% mensual,3.1927902426889476
+2025-04-01,IPC Núcleo (var. mensual),precios,% mensual,3.2147159664202674
+2025-05-01,IPC Núcleo (var. mensual),precios,% mensual,2.1972650333935473
+2025-06-01,IPC Núcleo (var. mensual),precios,% mensual,1.7137349662716073
 2025-07-01,IPC Núcleo (var. mensual),precios,% mensual,1.4791483194941168
-2025-08-01,IPC Núcleo (var. mensual),precios,% mensual,3.5542958505170974
+2025-08-01,IPC Núcleo (var. mensual),precios,% mensual,2.0449004208132004
 2025-09-01,IPC Núcleo (var. mensual),precios,% mensual,1.895876192364887
-2025-10-01,IPC Núcleo (var. mensual),precios,% mensual,4.154621146484128
+2025-10-01,IPC Núcleo (var. mensual),precios,% mensual,2.2167187118103504
 2025-11-01,IPC Núcleo (var. mensual),precios,% mensual,2.6389973653884624
-2025-12-01,IPC Núcleo (var. mensual),precios,% mensual,5.752953811705153
+2025-12-01,IPC Núcleo (var. mensual),precios,% mensual,3.033892113375969
 2026-01-01,IPC Núcleo (var. mensual),precios,% mensual,2.630369065853122
-2026-02-01,IPC Núcleo (var. mensual),precios,% mensual,5.786637973132169
+2026-02-01,IPC Núcleo (var. mensual),precios,% mensual,3.0753751896320347
 2026-03-01,IPC Núcleo (var. mensual),precios,% mensual,3.1889458451843655
 2026-04-01,IPC Núcleo (var. mensual),precios,% mensual,2.286474435452468
-2026-05-01,IPC Núcleo (var. mensual),precios,% mensual,1.9034777326863093
-2026-06-01,IPC Núcleo (var. mensual),precios,% mensual,5.86950370104109
+2026-05-01,IPC Núcleo (var. mensual),precios,% mensual,1.9034777326863095
+2026-06-01,IPC Núcleo (var. mensual),precios,% mensual,1.5695811790507053
 2026-07-01,IPC Núcleo (var. mensual),precios,% mensual,1.782174844485196
 2026-08-01,IPC Núcleo (var. mensual),precios,% mensual,1.8114029123214692
-2017-01-01,IPC Regulados (var. mensual),precios,% mensual,1.818299999999984
+2017-01-01,IPC Regulados (var. mensual),precios,% mensual,1.8182999999999838
 2017-02-01,IPC Regulados (var. mensual),precios,% mensual,4.03984352518163
 2017-03-01,IPC Regulados (var. mensual),precios,% mensual,3.845972306658263
 2017-04-01,IPC Regulados (var. mensual),precios,% mensual,4.053608131215025
@@ -40284,15 +40298,15 @@
 2018-08-01,IPC Regulados (var. mensual),precios,% mensual,6.197403965358594
 2018-09-01,IPC Regulados (var. mensual),precios,% mensual,4.703016916172498
 2018-10-01,IPC Regulados (var. mensual),precios,% mensual,7.443793689778944
-2018-11-01,IPC Regulados (var. mensual),precios,% mensual,2.783665240962208
+2018-11-01,IPC Regulados (var. mensual),precios,% mensual,2.7836652409622076
 2018-12-01,IPC Regulados (var. mensual),precios,% mensual,2.574160853247376
-2019-01-01,IPC Regulados (var. mensual),precios,% mensual,3.421188630490968
+2019-01-01,IPC Regulados (var. mensual),precios,% mensual,3.4211886304909678
 2019-02-01,IPC Regulados (var. mensual),precios,% mensual,4.21946831900859
 2019-03-01,IPC Regulados (var. mensual),precios,% mensual,4.904228220332629
 2019-04-01,IPC Regulados (var. mensual),precios,% mensual,3.2864686624975104
 2019-05-01,IPC Regulados (var. mensual),precios,% mensual,3.72099590757633
 2019-06-01,IPC Regulados (var. mensual),precios,% mensual,2.786709123418052
-2019-07-01,IPC Regulados (var. mensual),precios,% mensual,1.803815618679616
+2019-07-01,IPC Regulados (var. mensual),precios,% mensual,1.8038156186796162
 2019-08-01,IPC Regulados (var. mensual),precios,% mensual,2.1167443301689737
 2019-09-01,IPC Regulados (var. mensual),precios,% mensual,3.354030909525818
 2019-10-01,IPC Regulados (var. mensual),precios,% mensual,2.0246330174866767
@@ -40302,16 +40316,16 @@
 2020-02-01,IPC Regulados (var. mensual),precios,% mensual,0.7026390884716127
 2020-03-01,IPC Regulados (var. mensual),precios,% mensual,3.280254856363185
 2020-04-01,IPC Regulados (var. mensual),precios,% mensual,-0.6625278514221122
-2020-05-01,IPC Regulados (var. mensual),precios,% mensual,-0.0848168187261855
+2020-05-01,IPC Regulados (var. mensual),precios,% mensual,-0.08481681872618552
 2020-06-01,IPC Regulados (var. mensual),precios,% mensual,0.7487582429593242
 2020-07-01,IPC Regulados (var. mensual),precios,% mensual,0.5158538106824428
 2020-08-01,IPC Regulados (var. mensual),precios,% mensual,1.006955478938698
-2020-09-01,IPC Regulados (var. mensual),precios,% mensual,1.9280891232550608
+2020-09-01,IPC Regulados (var. mensual),precios,% mensual,1.9280891232550612
 2020-10-01,IPC Regulados (var. mensual),precios,% mensual,1.4941267531069835
-2020-11-01,IPC Regulados (var. mensual),precios,% mensual,1.2016279546846589
+2020-11-01,IPC Regulados (var. mensual),precios,% mensual,1.2016279546846587
 2020-12-01,IPC Regulados (var. mensual),precios,% mensual,2.648787889440918
 2021-01-01,IPC Regulados (var. mensual),precios,% mensual,5.141375962702965
-2021-02-01,IPC Regulados (var. mensual),precios,% mensual,2.153268728178958
+2021-02-01,IPC Regulados (var. mensual),precios,% mensual,2.1532687281789586
 2021-03-01,IPC Regulados (var. mensual),precios,% mensual,4.513437091453687
 2021-04-01,IPC Regulados (var. mensual),precios,% mensual,3.53004916460522
 2021-05-01,IPC Regulados (var. mensual),precios,% mensual,3.7698043955741056
@@ -40319,13 +40333,13 @@
 2021-07-01,IPC Regulados (var. mensual),precios,% mensual,1.44570951083689
 2021-08-01,IPC Regulados (var. mensual),precios,% mensual,1.1314327683314307
 2021-09-01,IPC Regulados (var. mensual),precios,% mensual,2.9577346296094875
-2021-10-01,IPC Regulados (var. mensual),precios,% mensual,1.9228163692197373
+2021-10-01,IPC Regulados (var. mensual),precios,% mensual,1.9228163692197375
 2021-11-01,IPC Regulados (var. mensual),precios,% mensual,1.0341076637649715
 2021-12-01,IPC Regulados (var. mensual),precios,% mensual,1.7141608744662085
 2022-01-01,IPC Regulados (var. mensual),precios,% mensual,2.7565647176321706
 2022-02-01,IPC Regulados (var. mensual),precios,% mensual,3.101566308843906
 2022-03-01,IPC Regulados (var. mensual),precios,% mensual,8.429599126050169
-2022-04-01,IPC Regulados (var. mensual),precios,% mensual,3.9146528137609113
+2022-04-01,IPC Regulados (var. mensual),precios,% mensual,3.9146528137609105
 2022-05-01,IPC Regulados (var. mensual),precios,% mensual,5.675291399532556
 2022-06-01,IPC Regulados (var. mensual),precios,% mensual,5.260850148703611
 2022-07-01,IPC Regulados (var. mensual),precios,% mensual,4.911343377630173
@@ -40337,8 +40351,8 @@
 2023-01-01,IPC Regulados (var. mensual),precios,% mensual,7.100339571172709
 2023-02-01,IPC Regulados (var. mensual),precios,% mensual,5.141191416162205
 2023-03-01,IPC Regulados (var. mensual),precios,% mensual,8.287396266898494
-2023-04-01,IPC Regulados (var. mensual),precios,% mensual,4.894689548360232
-2023-05-01,IPC Regulados (var. mensual),precios,% mensual,9.032497245906644
+2023-04-01,IPC Regulados (var. mensual),precios,% mensual,4.8946895483602315
+2023-05-01,IPC Regulados (var. mensual),precios,% mensual,9.032497245906645
 2023-06-01,IPC Regulados (var. mensual),precios,% mensual,7.184461056405578
 2023-07-01,IPC Regulados (var. mensual),precios,% mensual,6.719723926508925
 2023-08-01,IPC Regulados (var. mensual),precios,% mensual,8.27579440421784
@@ -40347,8 +40361,8 @@
 2023-11-01,IPC Regulados (var. mensual),precios,% mensual,10.056235889450726
 2023-12-01,IPC Regulados (var. mensual),precios,% mensual,20.679933015519826
 2024-01-01,IPC Regulados (var. mensual),precios,% mensual,26.57193595980145
-2024-02-01,IPC Regulados (var. mensual),precios,% mensual,21.10612188929832
-2024-03-01,IPC Regulados (var. mensual),precios,% mensual,18.12681792358284
+2024-02-01,IPC Regulados (var. mensual),precios,% mensual,21.106121889298322
+2024-03-01,IPC Regulados (var. mensual),precios,% mensual,18.126817923582838
 2024-04-01,IPC Regulados (var. mensual),precios,% mensual,18.394088937479136
 2024-05-01,IPC Regulados (var. mensual),precios,% mensual,4.017450817261081
 2024-06-01,IPC Regulados (var. mensual),precios,% mensual,8.056568242069662
@@ -40377,7 +40391,7 @@
 2026-05-01,IPC Regulados (var. mensual),precios,% mensual,2.396095631076589
 2026-06-01,IPC Regulados (var. mensual),precios,% mensual,2.2951919403429555
 2026-07-01,IPC Regulados (var. mensual),precios,% mensual,2.127177815316572
-2026-08-01,IPC Regulados (var. mensual),precios,% mensual,2.236565668401425
+2026-08-01,IPC Regulados (var. mensual),precios,% mensual,2.2365656684014246
 2016-12-01,IPC división: Alimentos y bebidas no alcohólicas,precios,índice,100.0
 2017-01-01,IPC división: Alimentos y bebidas no alcohólicas,precios,índice,101.3024
 2017-02-01,IPC división: Alimentos y bebidas no alcohólicas,precios,índice,103.1605
@@ -42820,103 +42834,103 @@
 2026-07-01,Intereses netos de deuda pública,fiscal,millones de $,2715435.6
 2026-08-01,Intereses netos de deuda pública,fiscal,millones de $,1354793.2
 2004-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,100.0
-2004-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,100.0
+2004-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,101.5289318668415
 2004-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,97.90903819045876
 2004-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,99.63335903210168
 2004-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,108.13799387839586
-2004-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,111.0961137009104
+2004-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,112.79469758610607
 2004-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,118.90568483076058
-2004-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,116.83196937048987
-2004-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,117.8636922477266
-2004-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,118.1334904013472
-2004-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,120.79652929465799
-2004-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,129.18876415196053
-2005-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,130.88297776376592
-2005-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,125.83305007267577
-2005-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,126.38547761395118
+2004-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,118.6182505808538
+2004-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,117.86369224772659
+2004-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,119.93967098150553
+2004-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,122.64342592508255
+2004-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,131.16397233545857
+2005-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,132.88408931906721
+2005-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,127.75695167425553
+2005-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,128.31782545625072
 2005-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,129.12543467084993
-2005-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,131.0046097554756
+2005-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,133.0075809810584
 2005-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,135.71233955752606
-2005-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,139.7016353512387
-2005-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,139.85845203097716
-2005-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,141.004560148181
-2005-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,144.10802626859146
-2005-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,148.81905881248048
-2005-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,163.10020011469672
-2006-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,169.31551211774612
-2006-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,162.61116537109152
-2006-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,162.98377627965203
+2005-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,141.83757817262247
+2005-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,141.99679247255
+2005-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,143.16042380198627
+2005-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,146.31133980488826
+2005-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,151.09440082659808
+2005-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,165.5938910491326
+2006-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,171.90423093802022
+2006-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,165.09737929749244
+2006-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,165.4756871729733
 2006-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,163.9777019159147
-2006-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,165.87120296874932
-2006-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,173.51286940978147
-2006-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,179.23533697745358
+2006-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,168.40726064885186
+2006-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,176.1657629632587
+2006-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,181.9757231611426
 2006-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,180.8981058197015
-2006-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,182.4630817974653
-2006-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,183.7544760721847
-2006-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,190.4530819465256
+2006-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,182.46308179746532
+2006-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,186.5639568136
+2006-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,193.3649798077878
 2006-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,203.88439137929925
-2007-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,210.5291767576437
-2007-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,204.8323088706265
+2007-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,210.52917675764374
+2007-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,207.96405531453672
 2007-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,208.67332561394468
-2007-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,206.4216836548474
-2007-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,212.51745746255995
-2007-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,211.52790554945432
-2007-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,221.65272811232083
-2007-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,216.64173836287785
-2007-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,209.04320492204803
-2007-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,210.54549549047414
+2007-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,209.57773055631714
+2007-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,215.76670459230633
+2007-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,214.76202310466235
+2007-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,225.04164730615366
+2007-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,219.95404293758725
+2007-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,212.239333097568
+2007-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,213.76459266522733
 2007-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,215.88964604612468
-2007-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,219.44449679581305
-2008-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,245.5797930796712
-2008-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,229.619557065048
+2007-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,222.7996536373542
+2008-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,245.57979307967116
+2008-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,233.13028364551585
 2008-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,227.09062361207123
 2008-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,231.2611845889129
-2008-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,239.30620962585036
-2008-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,250.1955219296077
+2008-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,239.30620962585033
+2008-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,250.19552192960774
 2008-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,260.5908865120629
-2008-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,245.98910445382637
+2008-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,249.7501102607789
 2008-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,262.88192377183674
 2008-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,262.68102569874964
-2008-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,254.79952199721873
-2008-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,287.4000275201389
+2008-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,258.695233085594
+2008-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,291.79417812620557
 2009-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,303.2099035451772
-2009-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,280.6895154573326
-2009-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,274.13675550638163
-2009-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,267.0145267409873
+2009-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,284.98106690604277
+2009-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,278.32811972004407
+2009-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,271.09699692942627
 2009-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,276.2583553436799
 2009-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,288.4987338738933
 2009-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,290.4002688100011
-2009-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,286.4175038526486
-2009-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,293.8847419433815
-2009-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,292.6472445585183
+2009-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,290.7966323412638
+2009-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,298.3780394147388
+2009-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,297.1216215380071
 2009-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,297.20325165023354
 2009-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,326.6725972260256
-2010-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,336.4725218473799
+2010-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,341.6169574570697
 2010-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,340.2200206086515
 2010-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,321.94939860605695
-2010-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,317.4906492051425
-2010-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,317.3381979162186
-2010-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,321.94398184186076
+2010-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,322.3448649150819
+2010-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,322.1900827498202
+2010-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,326.8662859736193
 2010-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,348.41051898167035
-2010-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,340.87808782100825
+2010-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,346.08988153278364
 2010-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,352.0789588005118
 2010-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,366.67180556158337
-2010-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,371.5200491884573
-2010-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,399.22695048189354
+2010-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,371.52004918845734
+2010-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,405.3308585488307
 2011-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,450.9156049463714
 2011-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,421.4522328118488
-2011-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,419.3839802052447
-2011-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,421.41160601919785
-2011-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,433.9770267289815
-2011-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,444.21171213553947
-2011-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,456.8833900093
-2011-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,466.4511780709431
-2011-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,467.6749836503659
-2011-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,473.08471351312147
+2011-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,425.796075523031
+2011-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,427.8547023541939
+2011-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,440.6122397854121
+2011-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,451.00340655862203
+2011-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,463.8688257534579
+2011-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,473.5828987757274
+2011-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,474.8254155086421
+2011-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,480.31785645517937
 2011-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,490.380377764272
-2011-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,521.4212422823881
-2012-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,576.5369908023662
-2012-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,544.9791773151526
+2011-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,529.3934178161244
+2012-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,585.3518485788727
+2012-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,553.3115376247746
 2012-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,542.1582002013861
 2012-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,539.3730431989783
 2012-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,557.9136953080932
@@ -42951,7 +42965,7 @@
 2014-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1058.5888586142537
 2014-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1100.492454939383
 2014-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1222.5959589644406
-2015-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1311.9665453144303
+2015-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1311.9665453144305
 2015-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1178.0778332551583
 2015-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1194.1802842409195
 2015-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1213.6262220926153
@@ -42972,12 +42986,12 @@
 2016-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1617.074507035181
 2016-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1608.4981257290324
 2016-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1622.7559517372376
-2016-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1659.6565604579077
+2016-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1659.6565604579075
 2016-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1728.6658731216753
 2016-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1940.309110083252
 2017-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2049.2390297437305
 2017-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,1958.752469399801
-2017-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2028.4931551929135
+2017-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2028.4931551929133
 2017-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2034.2895469632824
 2017-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2008.3013733469145
 2017-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2122.6103780614685
@@ -42997,7 +43011,7 @@
 2018-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2758.210060633104
 2018-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2985.975996930326
 2018-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2564.277417450461
-2018-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2473.0342326751193
+2018-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2473.0342326751197
 2018-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2703.5225223978778
 2019-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2781.843338176852
 2019-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2673.3463621471938
@@ -43010,8 +43024,8 @@
 2019-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,2951.50875778931
 2019-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3051.4780073166608
 2019-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3015.995512378694
-2019-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3384.2801693577762
-2020-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3691.5081452925733
+2019-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3384.280169357776
+2020-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3691.508145292573
 2020-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3682.163094499347
 2020-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,3792.338042776088
 2020-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,4091.068141496531
@@ -43038,7 +43052,7 @@
 2022-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,9703.246923321698
 2022-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,9160.483436330289
 2022-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,9246.967425995534
-2022-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,9168.254849124101
+2022-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,9168.2548491241
 2022-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,9412.742955490268
 2022-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,10067.961478806474
 2022-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,10951.86712141472
@@ -43049,7 +43063,7 @@
 2022-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,13044.961808431868
 2023-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,14602.26156684014
 2023-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,13698.584272472735
-2023-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,13712.059200455773
+2023-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,13712.059200455771
 2023-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,14105.479406298178
 2023-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,15132.218031880311
 2023-06-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,15778.60380672418
@@ -43059,7 +43073,7 @@
 2023-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,21674.01120630115
 2023-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,23920.17040272426
 2023-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,25824.459218462453
-2024-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,29942.743781303558
+2024-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,29942.74378130356
 2024-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,31395.63878844307
 2024-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,33948.12756450362
 2024-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,37049.01762718941
@@ -43068,7 +43082,7 @@
 2024-07-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,52825.31882237268
 2024-08-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,54997.95058017462
 2024-09-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,57796.539676998735
-2024-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,63405.232308272694
+2024-10-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,63405.23230827269
 2024-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,67327.96572624017
 2024-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,75548.71474087436
 2025-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,77652.93224838354
@@ -43084,7 +43098,7 @@
 2025-11-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,96988.2134376794
 2025-12-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,100182.892461768
 2026-01-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,100743.27476146574
-2026-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,97814.94491944305
+2026-02-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,97814.94491944303
 2026-03-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,101233.04351645718
 2026-04-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,99483.90481068435
 2026-05-01,M1 (circulante + cta. cte.),monetario_financiero,índice base 100 al inicio,101298.45854114172
@@ -43094,18 +43108,18 @@
 2004-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,100.0
 2004-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,103.30477375503548
 2004-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,100.0
-2004-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,103.7810613232636
+2004-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,103.78106132326359
 2004-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,108.09571452233293
 2004-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,114.62651359577698
 2004-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,118.67641927960275
 2004-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,120.46638586911337
 2004-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,120.64836258856008
-2004-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,118.06210306026496
+2004-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,118.06210306026497
 2004-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,119.81807515938334
 2004-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,126.50549356033282
 2005-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,132.26924251538804
 2005-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,126.203111044896
-2005-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,127.53595906753748
+2005-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,127.53595906753749
 2005-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,131.80990337380513
 2005-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,135.39574534348546
 2005-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,139.00210646215464
@@ -43129,26 +43143,26 @@
 2006-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,192.8725407232588
 2007-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,192.23050339613624
 2007-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,192.0234957390361
-2007-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,192.5071227275033
-2007-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,196.2612606897061
-2007-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,201.98207613096503
+2007-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,192.50712272750332
+2007-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,196.26126068970612
+2007-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,201.98207613096505
 2007-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,204.1703629099437
-2007-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,213.0849842439241
-2007-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,211.7324071185789
+2007-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,213.08498424392414
+2007-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,211.73240711857898
 2007-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,207.8756183149348
 2007-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,215.9430591356596
-2007-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,212.35899211281705
+2007-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,212.35899211281702
 2007-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,221.61256006142108
 2008-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,241.2497944354788
 2008-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,230.79221974871845
 2008-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,233.8349443628884
 2008-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,231.61951059353493
 2008-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,235.3956897579105
-2008-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,237.27537871289653
+2008-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,237.27537871289658
 2008-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,251.62770185834125
 2008-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,239.2916376445351
-2008-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,247.3832335148472
-2008-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,246.275850954634
+2008-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,247.38323351484718
+2008-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,246.27585095463402
 2008-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,242.33130954183383
 2008-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,263.1688254262545
 2009-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,278.35497959226234
@@ -43181,10 +43195,10 @@
 2011-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,408.4155094602936
 2011-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,421.1843627098348
 2011-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,431.0682018679536
-2011-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,450.3144061658722
+2011-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,450.31440616587224
 2011-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,455.9745101037957
 2011-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,453.3744905090406
-2011-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,457.3004396754857
+2011-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,457.30043967548573
 2011-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,460.6947516310288
 2011-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,493.61119057725455
 2012-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,540.8423671480866
@@ -43225,10 +43239,10 @@
 2014-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1171.727786216903
 2015-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1225.8004332640517
 2015-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1157.173955321323
-2015-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1128.6986030747155
+2015-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1128.6986030747157
 2015-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1186.337983098326
 2015-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1216.7599378821797
-2015-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1239.6434247910563
+2015-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1239.6434247910565
 2015-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1308.2080525869412
 2015-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1358.4422651740051
 2015-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1344.971285546926
@@ -43240,17 +43254,17 @@
 2016-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1450.4250867479052
 2016-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1414.4753094170026
 2016-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1483.8651221194802
-2016-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1477.9969142444163
+2016-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1477.9969142444165
 2016-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1554.2461961734364
-2016-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1551.26206016805
+2016-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1551.2620601680499
 2016-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1615.3276736139962
 2016-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1657.7223524878157
 2016-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1726.5472774007762
 2016-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1912.4275677542944
-2017-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1939.8361638530607
+2017-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1939.8361638530612
 2017-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1934.790142579756
 2017-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1969.4420001202063
-2017-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1913.728461315572
+2017-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1913.7284613155718
 2017-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,1925.9914726606207
 2017-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2015.415615426371
 2017-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2097.324395630888
@@ -43265,7 +43279,7 @@
 2018-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2463.5682699786967
 2018-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2608.8305905329835
 2018-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2699.445014794842
-2018-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2696.716984166186
+2018-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2696.7169841661866
 2018-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2673.3560087780406
 2018-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2852.9687836099088
 2018-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2604.3758764608656
@@ -43275,12 +43289,12 @@
 2019-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2780.0879490780267
 2019-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2810.566495545617
 2019-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2846.6303833629427
-2019-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2934.64818654024
+2019-05-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,2934.6481865402397
 2019-06-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3007.3752100122674
 2019-07-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3131.472657702142
 2019-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3265.8056910467963
 2019-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3300.1478238425752
-2019-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3400.617370145776
+2019-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3400.6173701457756
 2019-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3431.8421633553007
 2019-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,3817.3667975313874
 2020-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,4145.441337811992
@@ -43305,9 +43319,9 @@
 2021-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,8623.388222770947
 2021-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,8889.522927708444
 2021-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,9336.206509409598
-2021-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,9874.112448945809
+2021-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,9874.112448945807
 2021-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,11113.908015936242
-2022-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,11438.915131517617
+2022-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,11438.915131517615
 2022-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,11479.363104020118
 2022-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,11525.56684695868
 2022-04-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,11682.789350316983
@@ -43353,8 +43367,8 @@
 2025-08-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,116571.69366654768
 2025-09-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,113778.21539196018
 2025-10-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,115918.87824457436
-2025-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,117346.57194558448
-2025-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,128480.20948003064
+2025-11-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,117346.57194558447
+2025-12-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,128480.20948003065
 2026-01-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,127974.61313181986
 2026-02-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,125307.73882754968
 2026-03-01,M2 (agregado total),monetario_financiero,índice base 100 al inicio,126807.33178615026
@@ -43368,11 +43382,11 @@
 2004-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,100.0
 2004-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,102.3953491859262
 2004-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,104.34602397853962
-2004-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,107.6565391137548
+2004-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,107.65653911375479
 2004-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,110.51074233067936
 2004-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,112.32333839956334
 2004-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,113.3188364465303
-2004-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,114.31337122952964
+2004-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,114.31337122952965
 2004-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,116.62851865183217
 2004-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,119.68311387384132
 2005-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,122.28049646177104
@@ -43388,7 +43402,7 @@
 2005-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,140.81846620962918
 2005-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,145.09361764253472
 2006-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,148.09177034565116
-2006-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,147.72402514813675
+2006-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,147.72402514813677
 2006-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,149.19051870966825
 2006-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,150.48437138700385
 2006-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,154.27552266876876
@@ -43399,24 +43413,24 @@
 2006-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,169.74479120077956
 2006-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,173.2833024857427
 2006-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,178.6638810023218
-2007-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,183.016443580304
+2007-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,183.01644358030399
 2007-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,185.9001027985508
-2007-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,187.74962267451716
+2007-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,187.74962267451713
 2007-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,191.0913625412594
 2007-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,195.5648243510556
 2007-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,198.29121249218028
 2007-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,203.13480786893544
 2007-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,206.2482548414633
 2007-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,207.01267757216425
-2007-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,207.29925713252692
+2007-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,207.29925713252695
 2007-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,208.89147632963665
 2007-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,215.99212927308443
 2008-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,222.8057136911405
 2008-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,226.44346367263944
 2008-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,230.5858610422009
 2008-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,230.2988774939108
-2008-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,231.121066418668
-2008-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,230.7685902388509
+2008-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,231.12106641866802
+2008-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,230.76859023885086
 2008-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,236.9776137633704
 2008-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,239.06092588962872
 2008-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,242.76568231950228
@@ -43428,18 +43442,18 @@
 2009-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,239.0961973344674
 2009-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,236.1718756438432
 2009-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,239.30497192825536
-2009-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,242.89911462131852
-2009-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,243.0340168015892
+2009-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,242.89911462131855
+2009-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,243.03401680158916
 2009-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,245.46498565030112
 2009-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,250.6620999718147
-2009-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,252.67039924394103
+2009-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,252.67039924394106
 2009-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,256.4692973379533
 2009-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,266.87872645934664
 2010-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,274.435597840529
 2010-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,275.4672829931171
 2010-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,277.25708818945714
 2010-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,282.37104609372136
-2010-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,291.7728531295824
+2010-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,291.77285312958236
 2010-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,300.99005618420784
 2010-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,314.2796463020426
 2010-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,320.49354940327805
@@ -43447,7 +43461,7 @@
 2010-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,340.2754180823501
 2010-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,348.1544113701035
 2010-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,361.6943092700869
-2011-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,377.5907462741621
+2011-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,377.59074627416214
 2011-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,382.987235735248
 2011-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,391.7536778952683
 2011-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,399.04810011335866
@@ -43459,7 +43473,7 @@
 2011-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,453.25854151403735
 2011-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,458.5511891036726
 2011-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,472.5792977672239
-2012-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,490.9043056131287
+2012-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,490.90430561312866
 2012-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,496.9086310058946
 2012-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,504.3216991834339
 2012-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,513.9837498441719
@@ -43486,155 +43500,155 @@
 2014-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,837.8120824502263
 2014-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,834.5391967935689
 2014-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,831.0129997405561
-2014-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,100.0
+2014-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,842.46736460337
 2014-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,101.25583625628718
-2014-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,103.74103785422146
-2014-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,106.5187247313285
-2014-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,108.52686001959175
-2014-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,110.20412799233834
-2014-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,112.4244516179222
-2014-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,114.87178499138454
-2014-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,120.96006723439913
-2015-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,126.87470694917278
-2015-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,127.56392912140915
-2015-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,128.21161205725048
-2015-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,129.64563124272001
+2014-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,873.9843876226441
+2014-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,897.3854930531413
+2014-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,914.3033774938431
+2014-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,928.4338127811775
+2014-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,947.1393147153
+2014-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,967.757299689767
+2014-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1019.0490906521069
+2015-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1068.8779999829446
+2015-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1074.6844718536465
+2015-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1080.1409892142146
+2015-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1092.2221328539467
 2015-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,132.88095242195766
 2015-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,137.5258010051805
 2015-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,143.7324789613629
 2015-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,146.59523520750705
-2015-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,149.29084878180942
-2015-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,152.48250009004352
-2015-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,156.55718177936998
-2015-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,165.66699473843636
-2016-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,168.93380410975269
+2015-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1257.7266793261122
+2015-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1284.615299989921
+2015-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1318.9431634339658
+2015-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1395.6903645905084
+2016-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1423.2121674076532
 2016-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,166.95081254120305
-2016-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,165.50177730814818
-2016-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,163.119321731536
-2016-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,165.59461268063419
+2016-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1394.298461659694
+2016-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1374.2270509505634
+2016-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1395.080569375697
 2016-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,169.97042389957198
-2016-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,176.79645383563926
+2016-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1489.4524253413235
 2016-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,176.98295062664633
-2016-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,179.37879074459977
+2016-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1511.2077710434235
 2016-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,183.1462225334744
-2016-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,189.76392747519603
-2016-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,200.88520307798441
+2016-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1598.6991587681343
+2016-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1692.3922762492232
 2017-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,208.1957169543609
-2017-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,213.22908338368887
-2017-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,213.7622260180492
-2017-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,213.03125743026516
-2017-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,214.54251473658826
+2017-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1796.3854393504857
+2017-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1800.8769920517584
+2017-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,213.0312574302652
+2017-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1807.4506698551318
 2017-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,220.577514052039
-2017-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,227.5015193430884
-2017-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,229.14873872894117
-2017-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,231.43881939292496
+2017-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1916.6260544423426
+2017-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,229.1487387289412
+2017-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1949.7965224087282
 2017-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,233.68860782245355
 2017-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,239.22116489205845
-2017-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,255.30482078045375
+2017-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,255.30482078045372
 2018-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,268.8002385544691
 2018-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,281.21302175970044
 2018-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,286.69203406953125
-2018-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,286.74167218804973
-2018-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,293.3589391715331
+2018-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2415.705008902297
+2018-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2471.453323666818
 2018-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,297.0224033494677
 2018-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,310.1583732207658
-2018-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,321.5814909437036
-2018-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,326.50997538771566
+2018-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2709.2191118056453
+2018-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2750.739984816
 2018-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,330.9909159427565
-2018-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,344.38505888491477
+2018-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2901.3317296755054
 2018-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,357.2713870448845
-2019-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,365.442311704157
-2019-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,366.7219688784719
-2019-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,366.16226279333534
-2019-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,365.4571258381071
-2019-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,375.7380212230594
+2019-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3078.7322125596443
+2019-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3089.5129066320533
+2019-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3084.7975655270784
+2019-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3078.857016803523
+2019-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3165.470205210759
 2019-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,384.7694204712859
 2019-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,396.9241207659411
-2019-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,405.714022497998
+2019-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3418.0082331652075
 2019-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,404.9427463891697
-2019-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,406.31166169773707
-2019-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,407.58580825839977
-2019-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,440.4915468849557
+2019-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3423.043148381086
+2019-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3433.777417331885
+2019-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3710.9975263423044
 2020-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,478.1323206361771
-2020-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,500.8230058039568
-2020-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,527.6611055702115
+2020-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,4219.270378323978
+2020-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,4445.372610134367
 2020-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,575.3303097017686
 2020-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,620.9765202838308
 2020-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,670.3373243010803
-2020-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,709.6321963690006
+2020-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,5978.419663126931
 2020-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,732.9388581252294
 2020-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,749.9223785721384
-2020-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,764.2226264118763
+2020-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,6438.326220434791
 2020-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,769.6587911270508
-2020-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,807.8669032549818
+2020-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,6806.015009355103
 2021-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,842.2233238903933
 2021-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,852.9599416541777
-2021-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,882.9904379706086
-2021-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,911.7230401657921
-2021-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,950.0424002403558
-2021-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,983.4756955848943
-2021-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1030.052239737507
+2021-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,7438.90627247074
+2021-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,911.723040165792
+2021-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,8003.797171919527
+2021-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,8285.461774108722
+2021-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,8677.853958154563
 2021-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1060.8349339063434
 2021-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1096.0729245551636
-2021-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1135.474475486771
+2021-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,9566.00188937734
 2021-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1180.4139834710134
-2021-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1254.4160281709594
+2021-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,10568.04565369415
 2022-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1323.6713567238291
 2022-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1337.738294261363
-2022-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1373.011382759905
+2022-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,11567.172812041661
 2022-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1419.3818669562024
 2022-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1499.1535763928648
-2022-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1603.5876681662821
+2022-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,13509.702767105111
 2022-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1744.730554917201
-2022-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1800.669680581282
+2022-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,15170.054403205046
 2022-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,1903.800676359361
-2022-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2031.3612936683182
-2022-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2121.201430334288
+2022-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2031.3612936683185
+2022-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,17870.429788066263
 2022-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2294.02381064598
-2023-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2441.517773600843
+2023-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,20568.990443577895
 2023-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2516.593614090022
-2023-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2624.8798789428724
-2023-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,2782.107646787691
+2023-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,22113.756340134147
+2023-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,23438.348972321095
 2023-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3009.6633180564763
-2023-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3236.8251656060215
-2023-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3478.2552044746417
-2023-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3783.2088153206337
-2023-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,4044.43231966884
+2023-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,3236.825165606021
+2023-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,29303.16495531708
+2023-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,31872.29960387412
+2023-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,34073.022376681016
 2023-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,4327.928233874211
-2023-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,4488.6958745318925
-2023-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,4865.809965237436
-2024-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,5749.930083511512
-2024-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,6123.346348568261
+2023-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,37815.797839229024
+2023-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,40992.860980743986
+2024-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,48441.284441095784
+2024-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,51587.194608319725
 2024-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,6729.078108284948
 2024-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,7294.934106370968
 2024-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,8101.747806328737
-2024-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,8613.334715550953
-2024-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,9168.116393026206
+2024-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,72564.5339825693
+2024-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,77238.38856009743
 2024-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,9546.018565842656
-2024-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,9963.96931296576
-2024-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,10562.395126426512
-2024-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,11181.021450067972
-2024-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,11978.64468806503
-2025-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,12386.329892940066
-2025-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,12716.807393735511
-2025-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,12986.001092668661
+2024-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,83943.18968083116
+2024-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,88984.73186060022
+2024-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,94196.45674612516
+2024-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,100916.17221874301
+2025-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,104350.78702013161
+2025-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,107134.95211169006
+2025-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,12986.00109266866
 2025-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,13361.207025873506
-2025-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,13915.311518752675
-2025-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,14479.228074109762
-2025-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,15072.575985964071
-2025-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,15028.909142225331
+2025-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,117231.95822838484
+2025-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,121982.77117086382
+2025-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,126981.53368679191
+2025-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,126613.6547791407
 2025-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,15408.978507401653
 2025-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,15567.624770036158
-2025-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,15819.162890724187
+2025-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,133271.28470779833
 2025-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,16641.781510886634
-2026-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,16552.804001419787
-2026-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,16641.519825888907
+2026-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,139451.97163872246
+2026-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,140199.3735071136
 2026-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,16965.442554275545
-2026-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,17488.399898534608
-2026-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,18069.099905396542
-2026-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,18534.12640299991
+2026-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,147334.06173648295
+2026-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,152226.26978054427
+2026-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,156143.96625961075
 2026-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,19006.264046061
-2026-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,19580.867558012153
+2026-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,164962.41888246124
 2004-01-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,858.538257
 2004-02-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,940.540346
 2004-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,883.874646
@@ -43735,7 +43749,7 @@
 2012-02-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2086.7907225041367
 2012-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1906.7848230346476
 2012-04-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2135.499952524711
-2012-05-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2654.9562813740517
+2012-05-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2654.956281374052
 2012-06-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2361.4386416132284
 2012-07-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2508.770099944977
 2012-08-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2546.5340030084244
@@ -43779,7 +43793,7 @@
 2015-10-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2127.881081925755
 2015-11-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1695.7360647173252
 2015-12-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1446.844793141238
-2016-01-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1830.5230156699836
+2016-01-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1830.523015669984
 2016-02-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1730.000880910403
 2016-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1753.9664256133008
 2016-04-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1835.0628511270584
@@ -44777,13 +44791,13 @@
 2010-05-01,Morosidad: bancos privados,mercados,%,2.8432447601918835
 2010-06-01,Morosidad: bancos privados,mercados,%,2.745357278208699
 2010-07-01,Morosidad: bancos privados,mercados,%,2.7052528924849266
-2010-08-01,Morosidad: bancos privados,mercados,%,2.6166198283749518
+2010-08-01,Morosidad: bancos privados,mercados,%,2.616619828374952
 2010-09-01,Morosidad: bancos privados,mercados,%,2.3798413908916114
 2010-10-01,Morosidad: bancos privados,mercados,%,2.2993840645932475
 2010-11-01,Morosidad: bancos privados,mercados,%,2.1760137443819385
 2010-12-01,Morosidad: bancos privados,mercados,%,1.991105308397524
 2011-01-01,Morosidad: bancos privados,mercados,%,1.886776177850187
-2011-02-01,Morosidad: bancos privados,mercados,%,1.8254368862992931
+2011-02-01,Morosidad: bancos privados,mercados,%,1.825436886299293
 2011-03-01,Morosidad: bancos privados,mercados,%,1.7349915390359425
 2011-04-01,Morosidad: bancos privados,mercados,%,1.6860503746378652
 2011-05-01,Morosidad: bancos privados,mercados,%,1.646355170771791
@@ -44803,7 +44817,7 @@
 2012-07-01,Morosidad: bancos privados,mercados,%,1.7670010332936292
 2012-08-01,Morosidad: bancos privados,mercados,%,1.8073221748391697
 2012-09-01,Morosidad: bancos privados,mercados,%,1.7443480838546073
-2012-10-01,Morosidad: bancos privados,mercados,%,1.8319962245782917
+2012-10-01,Morosidad: bancos privados,mercados,%,1.831996224578292
 2012-11-01,Morosidad: bancos privados,mercados,%,1.7957808284475476
 2012-12-01,Morosidad: bancos privados,mercados,%,1.778909707688237
 2013-01-01,Morosidad: bancos privados,mercados,%,1.8622800320815445
@@ -44816,7 +44830,7 @@
 2013-08-01,Morosidad: bancos privados,mercados,%,1.9620757741672563
 2013-09-01,Morosidad: bancos privados,mercados,%,1.8934208176706209
 2013-10-01,Morosidad: bancos privados,mercados,%,1.8708554561941424
-2013-11-01,Morosidad: bancos privados,mercados,%,1.8104228274397811
+2013-11-01,Morosidad: bancos privados,mercados,%,1.810422827439781
 2013-12-01,Morosidad: bancos privados,mercados,%,1.7056826775978151
 2014-01-01,Morosidad: bancos privados,mercados,%,1.7482757444860126
 2014-02-01,Morosidad: bancos privados,mercados,%,1.827317623565749
@@ -44830,11 +44844,11 @@
 2014-10-01,Morosidad: bancos privados,mercados,%,2.021963345537697
 2014-11-01,Morosidad: bancos privados,mercados,%,2.029572963573508
 2014-12-01,Morosidad: bancos privados,mercados,%,1.908467224250759
-2015-01-01,Morosidad: bancos privados,mercados,%,1.9376092761163692
+2015-01-01,Morosidad: bancos privados,mercados,%,1.9376092761163688
 2015-02-01,Morosidad: bancos privados,mercados,%,1.9116763327995432
 2015-03-01,Morosidad: bancos privados,mercados,%,1.900434936243614
 2015-04-01,Morosidad: bancos privados,mercados,%,1.9779743535176948
-2015-05-01,Morosidad: bancos privados,mercados,%,1.9421437376033972
+2015-05-01,Morosidad: bancos privados,mercados,%,1.9421437376033968
 2015-06-01,Morosidad: bancos privados,mercados,%,1.8155180426007973
 2015-07-01,Morosidad: bancos privados,mercados,%,1.7793529176772125
 2015-08-01,Morosidad: bancos privados,mercados,%,1.7165307991520582
@@ -47563,6 +47577,7 @@
 2026-10-06,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49125.0
 2026-10-07,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49133.0
 2026-10-08,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49323.0
+2026-10-09,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49709.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -47980,7 +47995,7 @@
 2015-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23478.300000000003
 2015-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-20776.2
 2015-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-8477.400000000009
-2015-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23432.4
+2015-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23432.399999999998
 2015-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-13040.300000000005
 2015-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-19792.0
 2015-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-24302.2
@@ -48057,7 +48072,7 @@
 2021-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-156416.90000000026
 2021-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,268649.6000000001
 2021-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-251615.19999999984
-2021-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-191544.8
+2021-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-191544.79999999996
 2021-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-539399.8999999997
 2022-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-57058.39999999991
 2022-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-107190.0
@@ -48106,7 +48121,7 @@
 2025-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,69987.39999999665
 2025-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,291641.09999999776
 2025-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1634330.4000000004
-2025-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-3346192.2
+2025-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-3346192.1999999997
 2026-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,2867743.3000000026
 2026-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1067216.2999999989
 2026-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,629465.9999999981
@@ -48123,14 +48138,14 @@
 2016-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-250733.5
 2016-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-283543.5999999999
 2016-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-286917.4
-2016-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-299066.9
-2016-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-318634.9
+2016-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-299066.89999999997
+2016-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-318634.89999999997
 2016-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-358871.3
 2016-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-350382.60000000003
 2016-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-371085.70000000007
 2017-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-326895.5
 2017-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-388146.2000000001
-2017-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-306865.9
+2017-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-306865.89999999997
 2017-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-388852.5000000002
 2017-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-337271.5
 2017-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-380096.5
@@ -48146,7 +48161,7 @@
 2018-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-400407.10000000015
 2018-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-379546.8000000001
 2018-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-404609.9000000002
-2018-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-369825.8000000001
+2018-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-369825.80000000005
 2018-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-384018.70000000007
 2018-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-420725.20000000007
 2018-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-430495.1
@@ -48159,7 +48174,7 @@
 2019-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-456569.99999999977
 2019-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-403195.29999999946
 2019-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-397259.1999999996
-2019-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-439879.8999999999
+2019-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-439879.89999999985
 2019-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-373493.5999999997
 2019-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-348639.6999999997
 2019-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-330227.1999999998
@@ -48173,7 +48188,7 @@
 2020-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1078328.3200000003
 2020-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1025625.22
 2020-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1601021.6200000003
-2020-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1127685.0200000005
+2020-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1127685.0200000003
 2020-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1740460.9200000004
 2020-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1922332.12
 2021-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1901102.72
@@ -48183,7 +48198,7 @@
 2021-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1109317.5200000005
 2021-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1311144.6999999995
 2021-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1270943.0999999996
-2021-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1277574.720000001
+2021-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1277574.7200000007
 2021-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-877033.6999999997
 2021-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1527738.7200000002
 2021-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1577777.9200000002
@@ -48192,16 +48207,16 @@
 2022-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2148397.82
 2022-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1641669.999999999
 2022-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-1832399.9
-2022-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2157593.02
+2022-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2157593.0199999996
 2022-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2278949.6
 2022-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2254108.2
-2022-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2390924.7
+2022-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2390924.6999999997
 2022-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2332261.0
-2022-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2411966.1
+2022-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2411966.0999999996
 2022-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-2670346.6
 2022-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3195508.9000000004
 2023-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3299326.2
-2023-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3354153.600000001
+2023-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3354153.6000000006
 2023-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3203562.400000001
 2023-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3409227.3
 2023-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3567966.9000000004
@@ -48224,7 +48239,7 @@
 2024-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,4174232.4977520006
 2024-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,5620653.597752003
 2024-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,5919928.497752009
-2025-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,2431429.100000004
+2025-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,2431429.1000000034
 2025-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,3771732.1
 2025-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,5011946.7
 2025-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7494622.100000005
@@ -48234,7 +48249,7 @@
 2025-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,8351883.400000012
 2025-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6224012.900000002
 2025-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7109821.5
-2025-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,9324085.6
+2025-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,9324085.600000001
 2025-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6440649.200000003
 2026-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7538267.700000005
 2026-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7787762.500000006
@@ -54696,6 +54711,7 @@
 2026-10-09,Riesgo país (EMBI),monetario_financiero,puntos básicos,589.0
 2026-10-12,Riesgo país (EMBI),monetario_financiero,puntos básicos,589.0
 2026-10-13,Riesgo país (EMBI),monetario_financiero,puntos básicos,597.0
+2026-10-14,Riesgo país (EMBI),monetario_financiero,puntos básicos,611.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -55209,22 +55225,23 @@
 2026-10-08,S&P MERVAL,mercados,puntos,2832472.06
 2026-10-09,S&P MERVAL,mercados,puntos,2828026.86
 2026-10-13,S&P MERVAL,mercados,puntos,2869151.19
+2026-10-14,S&P MERVAL,mercados,puntos,2835842.94
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
 2017-03-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.7350193593408
-2017-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.55633111149888
+2017-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.55633111149889
 2017-05-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.71831904664867
 2017-06-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,101.28883335990821
-2017-07-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,103.53984246671008
+2017-07-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,103.53984246671007
 2017-08-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.51003154191925
 2017-09-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.01965852359143
 2017-10-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.02441024258049
 2017-11-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.21345876560966
 2017-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,102.14582055703083
 2018-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,101.49259949722551
-2018-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.92573022158292
-2018-03-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.50369432739448
+2018-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.92573022158291
+2018-03-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.50369432739447
 2018-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.46177918262994
 2018-05-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,98.91706170250195
 2018-06-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,96.16691607428253
@@ -55444,27 +55461,27 @@
 2016-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.73960710977124
 2017-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.9444643890661
-2017-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.04095980514984
-2017-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.72617962565369
-2017-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.27991869416256
+2017-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.04095980514983
+2017-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.72617962565367
+2017-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.27991869416255
 2017-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.86817833618692
-2017-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.89128898198015
-2017-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.9138630183304
+2017-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.89128898198017
+2017-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.91386301833039
 2017-09-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.1582899928009
 2017-10-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.42004188880946
-2017-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.45757973429644
-2017-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,102.03096777579924
-2018-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.98327941190092
+2017-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.45757973429643
+2017-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,102.03096777579925
+2018-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.98327941190091
 2018-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.36665000621127
-2018-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,99.47270190298175
-2018-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.21796951379288
+2018-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,99.47270190298177
+2018-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.21796951379287
 2018-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.5894367133979
-2018-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,98.30849705294024
+2018-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,98.30849705294025
 2018-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,97.6100245129056
 2018-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,96.62508488769056
 2018-09-01,Salario real registrado - sector privado,social,índice base 100 al inicio,92.82782045699425
 2018-10-01,Salario real registrado - sector privado,social,índice base 100 al inicio,91.44985849489738
-2018-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.92661984739335
+2018-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.92661984739337
 2018-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.12018252840176
 2019-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.68130219095654
 2019-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.78632272871944
@@ -55472,7 +55489,7 @@
 2019-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,88.29643265562673
 2019-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.26380059320651
 2019-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.19867392844625
-2019-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,91.02053434977208
+2019-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,91.02053434977209
 2019-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.99629814239951
 2019-09-01,Salario real registrado - sector privado,social,índice base 100 al inicio,87.2348623760742
 2019-10-01,Salario real registrado - sector privado,social,índice base 100 al inicio,87.6391359813844
@@ -55985,6 +56002,7 @@
 2026-10-09,TIR AL30 (USD),mercados,% anual,11.935015541373447
 2026-10-13,TIR AL30 (USD),mercados,% anual,12.126511893101704
 2026-10-14,TIR AL30 (USD),mercados,% anual,12.14389367224407
+2026-10-15,TIR AL30 (USD),mercados,% anual,10.317470858862093
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -56006,6 +56024,7 @@
 2026-10-08,TIR GD30 (USD),mercados,% anual,7.138112240518249
 2026-10-09,TIR GD30 (USD),mercados,% anual,7.148546439764432
 2026-10-14,TIR GD30 (USD),mercados,% anual,7.181940347257772
+2026-10-15,TIR GD30 (USD),mercados,% anual,9.8618612757967
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
 2026-09-02,TIR GD35 (USD),mercados,% anual,10.16546137481472
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
@@ -56550,6 +56569,7 @@
 2026-10-07,Tasa BADLAR (bancos privados),mercados,% TNA,21.4375
 2026-10-08,Tasa BADLAR (bancos privados),mercados,% TNA,22.375
 2026-10-09,Tasa BADLAR (bancos privados),mercados,% TNA,22.6875
+2026-10-13,Tasa BADLAR (bancos privados),mercados,% TNA,21.6875
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -65244,6 +65264,7 @@
 2026-10-07,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.375
 2026-10-08,Tasa TAMAR (total bancos),monetario_financiero,% TNA,24.375
 2026-10-09,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.6875
+2026-10-13,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.9375
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -65733,6 +65754,7 @@
 2026-10-07,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.0
 2026-10-08,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.125
 2026-10-09,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.0625
+2026-10-13,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.8125
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451607
@@ -65821,12 +65843,12 @@
 2025-10-01,Tasa de desempleo,social,% de la PEA,7.5
 2026-01-01,Tasa de desempleo,social,% de la PEA,7.8
 2026-04-01,Tasa de desempleo,social,% de la PEA,7.9
-2004-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,48.7
+2004-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,48.699999999999996
 2004-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,48.3
-2004-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,47.7
+2004-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,47.699999999999996
 2004-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,48.9
 2005-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,47.5
-2005-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,47.2
+2005-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,47.199999999999996
 2005-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,46.1
 2005-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,45.5
 2006-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,44.4
@@ -65842,7 +65864,7 @@
 2008-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.3
 2008-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,37.79999999999999
 2009-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.4
-2009-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.2
+2009-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.199999999999996
 2009-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.0
 2009-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.1
 2010-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,34.599999999999994
@@ -65865,7 +65887,7 @@
 2014-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,33.1
 2014-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,33.6
 2014-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,34.300000000000004
-2015-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,31.9
+2015-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,31.900000000000002
 2015-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,33.1
 2015-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,33.1
 2016-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,33.4
@@ -65884,11 +65906,11 @@
 2019-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,34.9794531111841
 2019-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,35.8596199700537
 2020-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,35.7530554914376
-2020-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,23.8346058342344
+2020-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,23.834605834234402
 2020-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,28.6093583780063
 2020-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,32.65895
 2021-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,32.416689
-2021-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,31.542982785792
+2021-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,31.542982785792002
 2021-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,33.0621306
 2021-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,33.3042171
 2022-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,35.9111973
@@ -65899,7 +65921,7 @@
 2023-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.81272659999999
 2023-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,35.8017708
 2023-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,35.7279325
-2024-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,35.7
+2024-01-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,35.699999999999996
 2024-04-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.4
 2024-07-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.7
 2024-10-01,Tasa de informalidad laboral (asalariados sin descuento jubilatorio),social,%,36.1
@@ -66442,6 +66464,7 @@
 2026-10-07,Tasa de plazo fijo a 30 días,mercados,% TNA,21.13
 2026-10-08,Tasa de plazo fijo a 30 días,mercados,% TNA,22.3
 2026-10-09,Tasa de plazo fijo a 30 días,mercados,% TNA,21.52
+2026-10-13,Tasa de plazo fijo a 30 días,mercados,% TNA,20.65
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
