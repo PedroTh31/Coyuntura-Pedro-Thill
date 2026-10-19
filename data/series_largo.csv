@@ -6665,6 +6665,8 @@
 2026-10-15,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.361563517915302
 2026-10-16,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.620915032679741
 2026-10-17,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.570032573289896
+2026-10-18,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.570032573289896
+2026-10-19,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.570032573289896
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7443,6 +7445,7 @@
 2026-10-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,854.97756035401
 2026-10-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,855.49682047404
 2026-10-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,856.01639596032
+2026-10-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,856.5362870044
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10354,6 +10357,8 @@
 2026-10-15,Canje MEP/CCL,mercados,%,5.039942846008949
 2026-10-16,Canje MEP/CCL,mercados,%,5.208333333333326
 2026-10-17,Canje MEP/CCL,mercados,%,5.05672609400325
+2026-10-18,Canje MEP/CCL,mercados,%,5.05672609400325
+2026-10-19,Canje MEP/CCL,mercados,%,5.05672609400325
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -10389,7 +10394,7 @@
 2018-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.162165077656653
 2019-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.132269870687741
 2019-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.11698554324083
-2019-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.179094869047376
+2019-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.1790948690473755
 2019-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.154917772583597
 2019-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.166917734340863
 2019-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.125257058506665
@@ -10411,11 +10416,11 @@
 2020-10-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.009023303959357
 2020-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9133634441920617
 2020-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.811793837845418
-2021-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.727162072892876
+2021-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.7271620728928756
 2021-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.85166076078044
 2021-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.848136213707258
 2021-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9510925607901206
-2021-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.906048574054744
+2021-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9060485740547435
 2021-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.927710591404297
 2021-07-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.03640417440386
 2021-08-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.08359935016856
@@ -10437,9 +10442,9 @@
 2022-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.934038863237144
 2023-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8087808553742137
 2023-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.813903378422007
-2023-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.876197239767897
-2023-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.003512097698128
-2023-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.967793870105474
+2023-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8761972397678965
+2023-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.0035120976981275
+2023-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.9677938701054734
 2023-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.022421583684132
 2023-07-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.03371418947172
 2023-08-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.734408786552294
@@ -10449,7 +10454,7 @@
 2023-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.018328224553393
 2024-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.874857685864203
 2024-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.768457732572176
-2024-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.820099163182792
+2024-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,2.8200991631827916
 2024-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.0577012194512223
 2024-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.1921065942387514
 2024-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.302369295880524
@@ -10457,11 +10462,11 @@
 2024-08-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.394184129134968
 2024-09-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.44404937363598
 2024-10-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.590770650293344
-2024-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.63754583088938
+2024-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.6375458308893798
 2024-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.628386791602861
 2025-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.690661507677205
 2025-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8273144460888
-2025-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8292950280540423
+2025-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8292950280540428
 2025-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.904330409794373
 2025-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.974850895929286
 2025-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.020336283178571
@@ -10472,7 +10477,7 @@
 2025-11-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.96127134601745
 2025-12-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.856964223229519
 2026-01-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.7397696397844937
-2026-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.834350509233509
+2026-02-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8343505092335093
 2026-03-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.8249847052450137
 2026-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.863339862181897
 2026-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,3.813639489781221
@@ -10504,6 +10509,7 @@
 2026-10-13,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-10-14,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-10-15,Caución en dólares (1 día),mercados,% TNA,0.9
+2026-10-19,Caución en dólares (1 día),mercados,% TNA,1.0
 2026-09-01,Caución en pesos (1 día),mercados,% TNA,20.0
 2026-09-02,Caución en pesos (1 día),mercados,% TNA,20.8
 2026-09-03,Caución en pesos (1 día),mercados,% TNA,20.2
@@ -10530,6 +10536,7 @@
 2026-10-13,Caución en pesos (1 día),mercados,% TNA,21.5
 2026-10-14,Caución en pesos (1 día),mercados,% TNA,24.0
 2026-10-15,Caución en pesos (1 día),mercados,% TNA,22.75
+2026-10-19,Caución en pesos (1 día),mercados,% TNA,20.5
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -10849,7 +10856,7 @@
 2007-09-01,Combustibles y lubricantes,externo,millones de USD,254.94288638000003
 2007-10-01,Combustibles y lubricantes,externo,millones de USD,229.57093314
 2007-11-01,Combustibles y lubricantes,externo,millones de USD,194.23902003000003
-2007-12-01,Combustibles y lubricantes,externo,millones de USD,185.12705353999996
+2007-12-01,Combustibles y lubricantes,externo,millones de USD,185.12705354
 2008-01-01,Combustibles y lubricantes,externo,millones de USD,101.67576429
 2008-02-01,Combustibles y lubricantes,externo,millones de USD,129.58101441000002
 2008-03-01,Combustibles y lubricantes,externo,millones de USD,191.3808003
@@ -18134,6 +18141,8 @@
 2026-10-15,Dólar CCL,monetario_financiero,$/USD (venta),1617.3
 2026-10-16,Dólar CCL,monetario_financiero,$/USD (venta),1616.0
 2026-10-17,Dólar CCL,monetario_financiero,$/USD (venta),1620.5
+2026-10-18,Dólar CCL,monetario_financiero,$/USD (venta),1620.5
+2026-10-19,Dólar CCL,monetario_financiero,$/USD (venta),1620.5
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -21045,6 +21054,8 @@
 2026-10-15,Dólar MEP,monetario_financiero,$/USD (venta),1539.7
 2026-10-16,Dólar MEP,monetario_financiero,$/USD (venta),1536.0
 2026-10-17,Dólar MEP,monetario_financiero,$/USD (venta),1542.5
+2026-10-18,Dólar MEP,monetario_financiero,$/USD (venta),1542.5
+2026-10-19,Dólar MEP,monetario_financiero,$/USD (venta),1542.5
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26812,6 +26823,8 @@
 2026-10-15,Dólar blue,monetario_financiero,$/USD (venta),1550.0
 2026-10-16,Dólar blue,monetario_financiero,$/USD (venta),1545.0
 2026-10-17,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-10-18,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-10-19,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32579,6 +32592,8 @@
 2026-10-15,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2026-10-16,Dólar oficial,monetario_financiero,$/USD (venta),1530.0
 2026-10-17,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
+2026-10-18,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
+2026-10-19,Dólar oficial,monetario_financiero,$/USD (venta),1535.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -36531,7 +36546,7 @@
 2017-12-01,EMAE · Intermediación financiera,real,,193.7979634025081
 2018-01-01,EMAE · Intermediación financiera,real,,195.27434666443148
 2018-02-01,EMAE · Intermediación financiera,real,,188.1936982753797
-2018-03-01,EMAE · Intermediación financiera,real,,192.16430365422207
+2018-03-01,EMAE · Intermediación financiera,real,,192.16430365422212
 2018-04-01,EMAE · Intermediación financiera,real,,192.4148323449706
 2018-05-01,EMAE · Intermediación financiera,real,,195.4612915024855
 2018-06-01,EMAE · Intermediación financiera,real,,190.45934695399885
@@ -36619,7 +36634,7 @@
 2025-04-01,EMAE · Intermediación financiera,real,,194.90511067789092
 2025-05-01,EMAE · Intermediación financiera,real,,176.4706021192234
 2025-06-01,EMAE · Intermediación financiera,real,,184.3666218483169
-2025-07-01,EMAE · Intermediación financiera,real,,195.83576954336
+2025-07-01,EMAE · Intermediación financiera,real,,195.83576954335996
 2025-08-01,EMAE · Intermediación financiera,real,,203.1851787495102
 2025-09-01,EMAE · Intermediación financiera,real,,223.96706048178623
 2025-10-01,EMAE · Intermediación financiera,real,,210.79881854007172
@@ -37311,7 +37326,7 @@
 2015-03-01,EMAE · Servicios sociales y de salud,real,,172.15742503231323
 2015-04-01,EMAE · Servicios sociales y de salud,real,,177.44219703148113
 2015-05-01,EMAE · Servicios sociales y de salud,real,,180.63345314070568
-2015-06-01,EMAE · Servicios sociales y de salud,real,,186.13448499845956
+2015-06-01,EMAE · Servicios sociales y de salud,real,,186.1344849984596
 2015-07-01,EMAE · Servicios sociales y de salud,real,,171.17108115808287
 2015-08-01,EMAE · Servicios sociales y de salud,real,,171.84141610289424
 2015-09-01,EMAE · Servicios sociales y de salud,real,,169.07423875772105
@@ -37359,7 +37374,7 @@
 2019-03-01,EMAE · Servicios sociales y de salud,real,,185.6960413557643
 2019-04-01,EMAE · Servicios sociales y de salud,real,,188.2282362717904
 2019-05-01,EMAE · Servicios sociales y de salud,real,,192.6399473203551
-2019-06-01,EMAE · Servicios sociales y de salud,real,,198.35540240518492
+2019-06-01,EMAE · Servicios sociales y de salud,real,,198.3554024051849
 2019-07-01,EMAE · Servicios sociales y de salud,real,,181.5904488097204
 2019-08-01,EMAE · Servicios sociales y de salud,real,,181.1995995931543
 2019-09-01,EMAE · Servicios sociales y de salud,real,,178.1549587134101
@@ -37416,7 +37431,7 @@
 2023-12-01,EMAE · Servicios sociales y de salud,real,,172.14566696754724
 2024-01-01,EMAE · Servicios sociales y de salud,real,,188.09598603012185
 2024-02-01,EMAE · Servicios sociales y de salud,real,,177.96576532351486
-2024-03-01,EMAE · Servicios sociales y de salud,real,,192.05410065788212
+2024-03-01,EMAE · Servicios sociales y de salud,real,,192.0541006578821
 2024-04-01,EMAE · Servicios sociales y de salud,real,,195.30634180779276
 2024-05-01,EMAE · Servicios sociales y de salud,real,,197.44967813653
 2024-06-01,EMAE · Servicios sociales y de salud,real,,203.44747054947723
@@ -37440,7 +37455,7 @@
 2025-12-01,EMAE · Servicios sociales y de salud,real,,169.714383320505
 2026-01-01,EMAE · Servicios sociales y de salud,real,,187.28367585471184
 2026-02-01,EMAE · Servicios sociales y de salud,real,,176.94561473894697
-2026-03-01,EMAE · Servicios sociales y de salud,real,,191.58436270975332
+2026-03-01,EMAE · Servicios sociales y de salud,real,,191.5843627097533
 2026-04-01,EMAE · Servicios sociales y de salud,real,,195.2933044170662
 2026-05-01,EMAE · Servicios sociales y de salud,real,,197.62466335930853
 2026-06-01,EMAE · Servicios sociales y de salud,real,,204.7794406070384
@@ -37545,7 +37560,7 @@
 2012-02-01,EMAE · Transporte y comunicaciones,real,,166.11118740541957
 2012-03-01,EMAE · Transporte y comunicaciones,real,,175.49859389197
 2012-04-01,EMAE · Transporte y comunicaciones,real,,176.9022829343712
-2012-05-01,EMAE · Transporte y comunicaciones,real,,187.46115617780436
+2012-05-01,EMAE · Transporte y comunicaciones,real,,187.4611561778044
 2012-06-01,EMAE · Transporte y comunicaciones,real,,180.95230038990684
 2012-07-01,EMAE · Transporte y comunicaciones,real,,181.743824970828
 2012-08-01,EMAE · Transporte y comunicaciones,real,,177.4979171725897
@@ -37557,7 +37572,7 @@
 2013-02-01,EMAE · Transporte y comunicaciones,real,,163.74742027170316
 2013-03-01,EMAE · Transporte y comunicaciones,real,,179.0386167922344
 2013-04-01,EMAE · Transporte y comunicaciones,real,,184.47056395961047
-2013-05-01,EMAE · Transporte y comunicaciones,real,,195.90061149522495
+2013-05-01,EMAE · Transporte y comunicaciones,real,,195.90061149522492
 2013-06-01,EMAE · Transporte y comunicaciones,real,,187.2046969494454
 2013-07-01,EMAE · Transporte y comunicaciones,real,,184.8173008240068
 2013-08-01,EMAE · Transporte y comunicaciones,real,,183.2852818757845
@@ -37568,7 +37583,7 @@
 2014-01-01,EMAE · Transporte y comunicaciones,real,,175.08586920770733
 2014-02-01,EMAE · Transporte y comunicaciones,real,,169.3849742695385
 2014-03-01,EMAE · Transporte y comunicaciones,real,,177.5450962401662
-2014-04-01,EMAE · Transporte y comunicaciones,real,,185.29111973471677
+2014-04-01,EMAE · Transporte y comunicaciones,real,,185.2911197347168
 2014-05-01,EMAE · Transporte y comunicaciones,real,,196.4469027327474
 2014-06-01,EMAE · Transporte y comunicaciones,real,,189.8984151071081
 2014-07-01,EMAE · Transporte y comunicaciones,real,,185.10098641538403
@@ -37581,11 +37596,11 @@
 2015-02-01,EMAE · Transporte y comunicaciones,real,,173.50927876560803
 2015-03-01,EMAE · Transporte y comunicaciones,real,,182.99954733043992
 2015-04-01,EMAE · Transporte y comunicaciones,real,,190.61183143952744
-2015-05-01,EMAE · Transporte y comunicaciones,real,,198.27996882039596
+2015-05-01,EMAE · Transporte y comunicaciones,real,,198.279968820396
 2015-06-01,EMAE · Transporte y comunicaciones,real,,195.40465358487776
 2015-07-01,EMAE · Transporte y comunicaciones,real,,193.05419290767605
 2015-08-01,EMAE · Transporte y comunicaciones,real,,189.46947568498985
-2015-09-01,EMAE · Transporte y comunicaciones,real,,188.92930757809455
+2015-09-01,EMAE · Transporte y comunicaciones,real,,188.92930757809452
 2015-10-01,EMAE · Transporte y comunicaciones,real,,188.30949271004584
 2015-11-01,EMAE · Transporte y comunicaciones,real,,185.17533638974763
 2015-12-01,EMAE · Transporte y comunicaciones,real,,183.5959254946376
@@ -37595,7 +37610,7 @@
 2016-04-01,EMAE · Transporte y comunicaciones,real,,193.53070517114008
 2016-05-01,EMAE · Transporte y comunicaciones,real,,204.46937784791973
 2016-06-01,EMAE · Transporte y comunicaciones,real,,197.77917231031324
-2016-07-01,EMAE · Transporte y comunicaciones,real,,194.91487117842797
+2016-07-01,EMAE · Transporte y comunicaciones,real,,194.914871178428
 2016-08-01,EMAE · Transporte y comunicaciones,real,,195.01443201659657
 2016-09-01,EMAE · Transporte y comunicaciones,real,,192.08877330870004
 2016-10-01,EMAE · Transporte y comunicaciones,real,,192.3339678689574
@@ -37607,7 +37622,7 @@
 2017-04-01,EMAE · Transporte y comunicaciones,real,,198.16219685097985
 2017-05-01,EMAE · Transporte y comunicaciones,real,,211.9665031673345
 2017-06-01,EMAE · Transporte y comunicaciones,real,,204.47714349174043
-2017-07-01,EMAE · Transporte y comunicaciones,real,,201.63994138351012
+2017-07-01,EMAE · Transporte y comunicaciones,real,,201.6399413835101
 2017-08-01,EMAE · Transporte y comunicaciones,real,,198.10327414668444
 2017-09-01,EMAE · Transporte y comunicaciones,real,,195.03246292266329
 2017-10-01,EMAE · Transporte y comunicaciones,real,,196.6667410796656
@@ -37630,11 +37645,11 @@
 2019-03-01,EMAE · Transporte y comunicaciones,real,,191.4807469991102
 2019-04-01,EMAE · Transporte y comunicaciones,real,,193.79682917463413
 2019-05-01,EMAE · Transporte y comunicaciones,real,,205.1779543023548
-2019-06-01,EMAE · Transporte y comunicaciones,real,,196.71574344275095
+2019-06-01,EMAE · Transporte y comunicaciones,real,,196.71574344275092
 2019-07-01,EMAE · Transporte y comunicaciones,real,,196.2465005543376
 2019-08-01,EMAE · Transporte y comunicaciones,real,,190.16926665678744
 2019-09-01,EMAE · Transporte y comunicaciones,real,,187.02830354279044
-2019-10-01,EMAE · Transporte y comunicaciones,real,,188.75553168151836
+2019-10-01,EMAE · Transporte y comunicaciones,real,,188.7555316815184
 2019-11-01,EMAE · Transporte y comunicaciones,real,,185.71227651077385
 2019-12-01,EMAE · Transporte y comunicaciones,real,,184.6041273348994
 2020-01-01,EMAE · Transporte y comunicaciones,real,,182.9354230156884
@@ -37663,7 +37678,7 @@
 2021-12-01,EMAE · Transporte y comunicaciones,real,,176.31510823696098
 2022-01-01,EMAE · Transporte y comunicaciones,real,,171.12480280476845
 2022-02-01,EMAE · Transporte y comunicaciones,real,,172.23432848344285
-2022-03-01,EMAE · Transporte y comunicaciones,real,,184.85307102209492
+2022-03-01,EMAE · Transporte y comunicaciones,real,,184.85307102209487
 2022-04-01,EMAE · Transporte y comunicaciones,real,,189.2227540318639
 2022-05-01,EMAE · Transporte y comunicaciones,real,,195.6405715235095
 2022-06-01,EMAE · Transporte y comunicaciones,real,,191.15997031192208
@@ -37693,7 +37708,7 @@
 2024-06-01,EMAE · Transporte y comunicaciones,real,,186.3312883105076
 2024-07-01,EMAE · Transporte y comunicaciones,real,,186.6772042579848
 2024-08-01,EMAE · Transporte y comunicaciones,real,,179.7848948941941
-2024-09-01,EMAE · Transporte y comunicaciones,real,,180.89653722206316
+2024-09-01,EMAE · Transporte y comunicaciones,real,,180.8965372220632
 2024-10-01,EMAE · Transporte y comunicaciones,real,,182.7390487904561
 2024-11-01,EMAE · Transporte y comunicaciones,real,,182.14016225478045
 2024-12-01,EMAE · Transporte y comunicaciones,real,,182.451129782909
@@ -37945,11 +37960,11 @@
 2021-04-01,Empleo registrado: Enseñanza,real,miles de puestos,1968.1753048912587
 2021-07-01,Empleo registrado: Enseñanza,real,miles de puestos,2003.23721476339
 2021-10-01,Empleo registrado: Enseñanza,real,miles de puestos,2017.6695927207056
-2022-01-01,Empleo registrado: Enseñanza,real,miles de puestos,1994.9795782035412
+2022-01-01,Empleo registrado: Enseñanza,real,miles de puestos,1994.9795782035408
 2022-04-01,Empleo registrado: Enseñanza,real,miles de puestos,2022.236385816774
 2022-07-01,Empleo registrado: Enseñanza,real,miles de puestos,2058.0774115646
 2022-10-01,Empleo registrado: Enseñanza,real,miles de puestos,2064.6141166985435
-2023-01-01,Empleo registrado: Enseñanza,real,miles de puestos,2043.4885715877615
+2023-01-01,Empleo registrado: Enseñanza,real,miles de puestos,2043.4885715877613
 2023-04-01,Empleo registrado: Enseñanza,real,miles de puestos,2072.7573386389686
 2023-07-01,Empleo registrado: Enseñanza,real,miles de puestos,2103.9538570554405
 2023-10-01,Empleo registrado: Enseñanza,real,miles de puestos,2107.96464548239
@@ -42334,13 +42349,13 @@
 2026-05-31,"Inflación esperada (REM, próximo mes)",precios,% mensual,2.3
 2026-06-30,"Inflación esperada (REM, próximo mes)",precios,% mensual,2.1
 2026-07-31,"Inflación esperada (REM, próximo mes)",precios,% mensual,1.951644634782964
-2017-12-01,Inflación interanual (IPC),precios,% i.a.,24.795599999999986
+2017-12-01,Inflación interanual (IPC),precios,% i.a.,24.795599999999983
 2018-01-01,Inflación interanual (IPC),precios,% i.a.,25.006226257777907
 2018-02-01,Inflación interanual (IPC),precios,% i.a.,25.437113435867364
 2018-03-01,Inflación interanual (IPC),precios,% i.a.,25.396523331662713
-2018-04-01,Inflación interanual (IPC),precios,% i.a.,25.498156776336266
+2018-04-01,Inflación interanual (IPC),precios,% i.a.,25.498156776336263
 2018-05-01,Inflación interanual (IPC),precios,% i.a.,26.290756997415187
-2018-06-01,Inflación interanual (IPC),precios,% i.a.,29.466497746489196
+2018-06-01,Inflación interanual (IPC),precios,% i.a.,29.4664977464892
 2018-07-01,Inflación interanual (IPC),precios,% i.a.,31.20915549649692
 2018-08-01,Inflación interanual (IPC),precios,% i.a.,34.42611016112578
 2018-09-01,Inflación interanual (IPC),precios,% i.a.,40.54234047421197
@@ -42350,7 +42365,7 @@
 2019-01-01,Inflación interanual (IPC),precios,% i.a.,49.31257663083408
 2019-02-01,Inflación interanual (IPC),precios,% i.a.,51.275713013779736
 2019-03-01,Inflación interanual (IPC),precios,% i.a.,54.73233993511908
-2019-04-01,Inflación interanual (IPC),precios,% i.a.,55.727804509210884
+2019-04-01,Inflación interanual (IPC),precios,% i.a.,55.72780450921088
 2019-05-01,Inflación interanual (IPC),precios,% i.a.,57.29651198193557
 2019-06-01,Inflación interanual (IPC),precios,% i.a.,55.75189582149274
 2019-07-01,Inflación interanual (IPC),precios,% i.a.,54.38663707010072
@@ -42371,14 +42386,14 @@
 2020-10-01,Inflación interanual (IPC),precios,% i.a.,37.23904007424079
 2020-11-01,Inflación interanual (IPC),precios,% i.a.,35.79781989182178
 2020-12-01,Inflación interanual (IPC),precios,% i.a.,36.140587812345416
-2021-01-01,Inflación interanual (IPC),precios,% i.a.,38.531980309830004
+2021-01-01,Inflación interanual (IPC),precios,% i.a.,38.53198030983
 2021-02-01,Inflación interanual (IPC),precios,% i.a.,40.651782754865295
 2021-03-01,Inflación interanual (IPC),precios,% i.a.,42.64884970291425
-2021-04-01,Inflación interanual (IPC),precios,% i.a.,46.280152829043075
+2021-04-01,Inflación interanual (IPC),precios,% i.a.,46.28015282904308
 2021-05-01,Inflación interanual (IPC),precios,% i.a.,48.84472864674745
 2021-06-01,Inflación interanual (IPC),precios,% i.a.,50.20007839147161
 2021-07-01,Inflación interanual (IPC),precios,% i.a.,51.76617162510582
-2021-08-01,Inflación interanual (IPC),precios,% i.a.,51.423887270992516
+2021-08-01,Inflación interanual (IPC),precios,% i.a.,51.42388727099252
 2021-09-01,Inflación interanual (IPC),precios,% i.a.,52.4712170969593
 2021-10-01,Inflación interanual (IPC),precios,% i.a.,52.11165082286735
 2021-11-01,Inflación interanual (IPC),precios,% i.a.,51.18234515503297
@@ -42388,7 +42403,7 @@
 2022-03-01,Inflación interanual (IPC),precios,% i.a.,55.10663032213823
 2022-04-01,Inflación interanual (IPC),precios,% i.a.,58.03800857180077
 2022-05-01,Inflación interanual (IPC),precios,% i.a.,60.67992959624513
-2022-06-01,Inflación interanual (IPC),precios,% i.a.,63.982581648779814
+2022-06-01,Inflación interanual (IPC),precios,% i.a.,63.98258164877981
 2022-07-01,Inflación interanual (IPC),precios,% i.a.,71.00245393131924
 2022-08-01,Inflación interanual (IPC),precios,% i.a.,78.51527309675541
 2022-09-01,Inflación interanual (IPC),precios,% i.a.,83.02998239535225
@@ -42398,7 +42413,7 @@
 2023-01-01,Inflación interanual (IPC),precios,% i.a.,98.82908614540362
 2023-02-01,Inflación interanual (IPC),precios,% i.a.,102.5007968469017
 2023-03-01,Inflación interanual (IPC),precios,% i.a.,104.29651896009892
-2023-04-01,Inflación interanual (IPC),precios,% i.a.,108.83405987029037
+2023-04-01,Inflación interanual (IPC),precios,% i.a.,108.83405987029036
 2023-05-01,Inflación interanual (IPC),precios,% i.a.,114.2462892370281
 2023-06-01,Inflación interanual (IPC),precios,% i.a.,115.58027347843294
 2023-07-01,Inflación interanual (IPC),precios,% i.a.,113.44999360149153
@@ -42422,7 +42437,7 @@
 2025-01-01,Inflación interanual (IPC),precios,% i.a.,84.53750815082385
 2025-02-01,Inflación interanual (IPC),precios,% i.a.,66.87414642180414
 2025-03-01,Inflación interanual (IPC),precios,% i.a.,55.93001569937308
-2025-04-01,Inflación interanual (IPC),precios,% i.a.,47.260263669660475
+2025-04-01,Inflación interanual (IPC),precios,% i.a.,47.26026366966048
 2025-05-01,Inflación interanual (IPC),precios,% i.a.,43.47905066104683
 2025-06-01,Inflación interanual (IPC),precios,% i.a.,39.42012192141193
 2025-07-01,Inflación interanual (IPC),precios,% i.a.,36.56654485864994
@@ -43434,14 +43449,14 @@
 2006-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,178.6638810023218
 2007-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,183.016443580304
 2007-02-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,185.9001027985508
-2007-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,187.74962267451716
+2007-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,187.7496226745172
 2007-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,191.0913625412594
 2007-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,195.5648243510556
 2007-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,198.29121249218028
 2007-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,203.13480786893544
 2007-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,206.2482548414633
 2007-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,207.01267757216425
-2007-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,207.29925713252692
+2007-10-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,207.2992571325269
 2007-11-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,208.89147632963665
 2007-12-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,215.99212927308443
 2008-01-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,222.8057136911405
@@ -43461,7 +43476,7 @@
 2009-03-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,239.0961973344674
 2009-04-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,236.1718756438432
 2009-05-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,239.30497192825536
-2009-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,242.89911462131852
+2009-06-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,242.8991146213185
 2009-07-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,243.0340168015892
 2009-08-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,245.46498565030112
 2009-09-01,M3 (agregado amplio),monetario_financiero,índice base 100 al inicio,250.6620999718147
@@ -43768,7 +43783,7 @@
 2012-02-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2086.7907225041367
 2012-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1906.7848230346476
 2012-04-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2135.499952524711
-2012-05-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2654.956281374052
+2012-05-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2654.9562813740517
 2012-06-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2361.4386416132284
 2012-07-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2508.770099944977
 2012-08-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2546.5340030084244
@@ -43812,7 +43827,7 @@
 2015-10-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,2127.881081925755
 2015-11-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1695.7360647173252
 2015-12-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1446.844793141238
-2016-01-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1830.523015669984
+2016-01-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1830.5230156699836
 2016-02-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1730.000880910403
 2016-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1753.9664256133008
 2016-04-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,1835.0628511270584
@@ -44219,9 +44234,9 @@
 2010-05-01,Morosidad: Familias (total),mercados,%,4.192495955543773
 2010-06-01,Morosidad: Familias (total),mercados,%,3.859306639647115
 2010-07-01,Morosidad: Familias (total),mercados,%,3.8378460542768056
-2010-08-01,Morosidad: Familias (total),mercados,%,3.679060837078021
+2010-08-01,Morosidad: Familias (total),mercados,%,3.6790608370780213
 2010-09-01,Morosidad: Familias (total),mercados,%,3.4380570640097265
-2010-10-01,Morosidad: Familias (total),mercados,%,3.32584422118674
+2010-10-01,Morosidad: Familias (total),mercados,%,3.3258442211867396
 2010-11-01,Morosidad: Familias (total),mercados,%,3.171966664485916
 2010-12-01,Morosidad: Familias (total),mercados,%,2.9558778803398167
 2011-01-01,Morosidad: Familias (total),mercados,%,2.8977118966675994
@@ -44229,18 +44244,18 @@
 2011-03-01,Morosidad: Familias (total),mercados,%,2.67058603541141
 2011-04-01,Morosidad: Familias (total),mercados,%,2.6175572329164654
 2011-05-01,Morosidad: Familias (total),mercados,%,2.6126789109306863
-2011-06-01,Morosidad: Familias (total),mercados,%,2.517117525725704
+2011-06-01,Morosidad: Familias (total),mercados,%,2.5171175257257037
 2011-07-01,Morosidad: Familias (total),mercados,%,2.444376014207484
 2011-08-01,Morosidad: Familias (total),mercados,%,2.3465841772771743
 2011-09-01,Morosidad: Familias (total),mercados,%,2.2368529468915748
-2011-10-01,Morosidad: Familias (total),mercados,%,2.2331513113641117
-2011-11-01,Morosidad: Familias (total),mercados,%,2.188997603780832
+2011-10-01,Morosidad: Familias (total),mercados,%,2.2331513113641113
+2011-11-01,Morosidad: Familias (total),mercados,%,2.1889976037808316
 2011-12-01,Morosidad: Familias (total),mercados,%,2.1603305590561126
 2012-01-01,Morosidad: Familias (total),mercados,%,2.2598166060524822
 2012-02-01,Morosidad: Familias (total),mercados,%,2.3652884890861663
 2012-03-01,Morosidad: Familias (total),mercados,%,2.417665375635554
 2012-04-01,Morosidad: Familias (total),mercados,%,2.6126777119924176
-2012-05-01,Morosidad: Familias (total),mercados,%,2.730699458236429
+2012-05-01,Morosidad: Familias (total),mercados,%,2.7306994582364292
 2012-06-01,Morosidad: Familias (total),mercados,%,2.6364803169138926
 2012-07-01,Morosidad: Familias (total),mercados,%,2.705723842652873
 2012-08-01,Morosidad: Familias (total),mercados,%,2.7143495523236174
@@ -44259,9 +44274,9 @@
 2013-09-01,Morosidad: Familias (total),mercados,%,2.8690629290340395
 2013-10-01,Morosidad: Familias (total),mercados,%,2.775949021100293
 2013-11-01,Morosidad: Familias (total),mercados,%,2.7158880308570508
-2013-12-01,Morosidad: Familias (total),mercados,%,2.618704286740864
+2013-12-01,Morosidad: Familias (total),mercados,%,2.6187042867408636
 2014-01-01,Morosidad: Familias (total),mercados,%,2.6275321108861123
-2014-02-01,Morosidad: Familias (total),mercados,%,2.76754270845054
+2014-02-01,Morosidad: Familias (total),mercados,%,2.7675427084505397
 2014-03-01,Morosidad: Familias (total),mercados,%,2.846967051566579
 2014-04-01,Morosidad: Familias (total),mercados,%,2.987218325872852
 2014-05-01,Morosidad: Familias (total),mercados,%,3.17663080526649
@@ -44276,12 +44291,12 @@
 2015-02-01,Morosidad: Familias (total),mercados,%,2.944178423537573
 2015-03-01,Morosidad: Familias (total),mercados,%,2.906330484247803
 2015-04-01,Morosidad: Familias (total),mercados,%,2.945860470072302
-2015-05-01,Morosidad: Familias (total),mercados,%,2.947479328719933
+2015-05-01,Morosidad: Familias (total),mercados,%,2.9474793287199335
 2015-06-01,Morosidad: Familias (total),mercados,%,2.8237272840248244
-2015-07-01,Morosidad: Familias (total),mercados,%,2.73951456329419
+2015-07-01,Morosidad: Familias (total),mercados,%,2.7395145632941906
 2015-08-01,Morosidad: Familias (total),mercados,%,2.6471751868730933
 2015-09-01,Morosidad: Familias (total),mercados,%,2.488650991239653
-2015-10-01,Morosidad: Familias (total),mercados,%,2.40475951282332
+2015-10-01,Morosidad: Familias (total),mercados,%,2.4047595128233197
 2015-11-01,Morosidad: Familias (total),mercados,%,2.370633163073815
 2015-12-01,Morosidad: Familias (total),mercados,%,2.3046270615349567
 2016-01-01,Morosidad: Familias (total),mercados,%,2.413794555969887
@@ -44291,10 +44306,10 @@
 2016-05-01,Morosidad: Familias (total),mercados,%,2.6011341887989183
 2016-06-01,Morosidad: Familias (total),mercados,%,2.685999032363439
 2016-07-01,Morosidad: Familias (total),mercados,%,2.7386234509318834
-2016-08-01,Morosidad: Familias (total),mercados,%,2.75819844579244
+2016-08-01,Morosidad: Familias (total),mercados,%,2.7581984457924396
 2016-09-01,Morosidad: Familias (total),mercados,%,2.7146188108351192
 2016-10-01,Morosidad: Familias (total),mercados,%,2.737917047510665
-2016-11-01,Morosidad: Familias (total),mercados,%,2.664885066177362
+2016-11-01,Morosidad: Familias (total),mercados,%,2.6648850661773626
 2016-12-01,Morosidad: Familias (total),mercados,%,2.661412207478062
 2017-01-01,Morosidad: Familias (total),mercados,%,2.769877351818748
 2017-02-01,Morosidad: Familias (total),mercados,%,2.8516121529688667
@@ -44304,25 +44319,25 @@
 2017-06-01,Morosidad: Familias (total),mercados,%,3.21871819428631
 2017-07-01,Morosidad: Familias (total),mercados,%,3.0475143935540405
 2017-08-01,Morosidad: Familias (total),mercados,%,3.018126870578127
-2017-09-01,Morosidad: Familias (total),mercados,%,2.916063893883188
+2017-09-01,Morosidad: Familias (total),mercados,%,2.9160638938831878
 2017-10-01,Morosidad: Familias (total),mercados,%,2.924944555412224
 2017-11-01,Morosidad: Familias (total),mercados,%,2.930706257444133
 2017-12-01,Morosidad: Familias (total),mercados,%,2.8962838264187205
 2018-01-01,Morosidad: Familias (total),mercados,%,2.985778166670023
-2018-02-01,Morosidad: Familias (total),mercados,%,3.030137142426605
-2018-03-01,Morosidad: Familias (total),mercados,%,3.0657177234311237
+2018-02-01,Morosidad: Familias (total),mercados,%,3.0301371424266055
+2018-03-01,Morosidad: Familias (total),mercados,%,3.0657177234311233
 2018-04-01,Morosidad: Familias (total),mercados,%,3.1647728718013823
 2018-05-01,Morosidad: Familias (total),mercados,%,3.3826657443249224
 2018-06-01,Morosidad: Familias (total),mercados,%,3.360946327060378
 2018-07-01,Morosidad: Familias (total),mercados,%,3.4838012541900296
-2018-08-01,Morosidad: Familias (total),mercados,%,3.540420874726172
+2018-08-01,Morosidad: Familias (total),mercados,%,3.5404208747261716
 2018-09-01,Morosidad: Familias (total),mercados,%,3.656895548894118
 2018-10-01,Morosidad: Familias (total),mercados,%,3.775140404619422
-2018-11-01,Morosidad: Familias (total),mercados,%,3.910575917009477
+2018-11-01,Morosidad: Familias (total),mercados,%,3.9105759170094774
 2018-12-01,Morosidad: Familias (total),mercados,%,4.034129825217144
 2019-01-01,Morosidad: Familias (total),mercados,%,4.230076407526471
-2019-02-01,Morosidad: Familias (total),mercados,%,4.440709298732656
-2019-03-01,Morosidad: Familias (total),mercados,%,4.505428489149256
+2019-02-01,Morosidad: Familias (total),mercados,%,4.4407092987326555
+2019-03-01,Morosidad: Familias (total),mercados,%,4.5054284891492555
 2019-04-01,Morosidad: Familias (total),mercados,%,4.643704112098171
 2019-05-01,Morosidad: Familias (total),mercados,%,4.872724091964989
 2019-06-01,Morosidad: Familias (total),mercados,%,4.922307345287892
@@ -44332,7 +44347,7 @@
 2019-10-01,Morosidad: Familias (total),mercados,%,4.409240305203581
 2019-11-01,Morosidad: Familias (total),mercados,%,4.413107275962689
 2019-12-01,Morosidad: Familias (total),mercados,%,4.17087517421628
-2020-01-01,Morosidad: Familias (total),mercados,%,4.205198138826304
+2020-01-01,Morosidad: Familias (total),mercados,%,4.2051981388263036
 2020-02-01,Morosidad: Familias (total),mercados,%,4.307221222345747
 2020-03-01,Morosidad: Familias (total),mercados,%,3.03173531811056
 2020-04-01,Morosidad: Familias (total),mercados,%,3.113332707437224
@@ -44340,14 +44355,14 @@
 2020-06-01,Morosidad: Familias (total),mercados,%,3.0404111489624195
 2020-07-01,Morosidad: Familias (total),mercados,%,3.1084386397390595
 2020-08-01,Morosidad: Familias (total),mercados,%,3.0239075251898897
-2020-09-01,Morosidad: Familias (total),mercados,%,2.713622920306209
+2020-09-01,Morosidad: Familias (total),mercados,%,2.7136229203062086
 2020-10-01,Morosidad: Familias (total),mercados,%,2.427568254955136
 2020-11-01,Morosidad: Familias (total),mercados,%,2.206355073574123
-2020-12-01,Morosidad: Familias (total),mercados,%,1.8970464873988009
-2021-01-01,Morosidad: Familias (total),mercados,%,1.8086221177421815
+2020-12-01,Morosidad: Familias (total),mercados,%,1.8970464873988007
+2021-01-01,Morosidad: Familias (total),mercados,%,1.8086221177421817
 2021-02-01,Morosidad: Familias (total),mercados,%,1.7022599235925684
-2021-03-01,Morosidad: Familias (total),mercados,%,1.991686188467627
-2021-04-01,Morosidad: Familias (total),mercados,%,2.5668657503135117
+2021-03-01,Morosidad: Familias (total),mercados,%,1.9916861884676267
+2021-04-01,Morosidad: Familias (total),mercados,%,2.5668657503135113
 2021-05-01,Morosidad: Familias (total),mercados,%,2.9432098845930983
 2021-06-01,Morosidad: Familias (total),mercados,%,4.119675724104883
 2021-07-01,Morosidad: Familias (total),mercados,%,5.057665768331383
@@ -44358,39 +44373,39 @@
 2021-12-01,Morosidad: Familias (total),mercados,%,4.177217710117682
 2022-01-01,Morosidad: Familias (total),mercados,%,4.069049835844999
 2022-02-01,Morosidad: Familias (total),mercados,%,3.9172711865189385
-2022-03-01,Morosidad: Familias (total),mercados,%,3.72937104882312
+2022-03-01,Morosidad: Familias (total),mercados,%,3.7293710488231198
 2022-04-01,Morosidad: Familias (total),mercados,%,3.5199358254509447
 2022-05-01,Morosidad: Familias (total),mercados,%,3.332981359646424
-2022-06-01,Morosidad: Familias (total),mercados,%,3.229058352790556
+2022-06-01,Morosidad: Familias (total),mercados,%,3.2290583527905556
 2022-07-01,Morosidad: Familias (total),mercados,%,3.221108005749903
-2022-08-01,Morosidad: Familias (total),mercados,%,3.120257894715184
+2022-08-01,Morosidad: Familias (total),mercados,%,3.1202578947151838
 2022-09-01,Morosidad: Familias (total),mercados,%,3.016411153621276
 2022-10-01,Morosidad: Familias (total),mercados,%,3.01582756575188
 2022-11-01,Morosidad: Familias (total),mercados,%,2.8621368090415658
 2022-12-01,Morosidad: Familias (total),mercados,%,3.0362601517414314
-2023-01-01,Morosidad: Familias (total),mercados,%,3.1247847463064558
+2023-01-01,Morosidad: Familias (total),mercados,%,3.1247847463064553
 2023-02-01,Morosidad: Familias (total),mercados,%,3.14537710310306
-2023-03-01,Morosidad: Familias (total),mercados,%,3.274990563402508
+2023-03-01,Morosidad: Familias (total),mercados,%,3.2749905634025076
 2023-04-01,Morosidad: Familias (total),mercados,%,3.262343355144109
 2023-05-01,Morosidad: Familias (total),mercados,%,3.1990837747193828
 2023-06-01,Morosidad: Familias (total),mercados,%,3.3125550941849187
-2023-07-01,Morosidad: Familias (total),mercados,%,3.319919661640057
+2023-07-01,Morosidad: Familias (total),mercados,%,3.3199196616400575
 2023-08-01,Morosidad: Familias (total),mercados,%,3.1406388407768207
 2023-09-01,Morosidad: Familias (total),mercados,%,3.083761541268544
 2023-10-01,Morosidad: Familias (total),mercados,%,2.846938807800363
 2023-11-01,Morosidad: Familias (total),mercados,%,2.6950246175325243
 2023-12-01,Morosidad: Familias (total),mercados,%,2.784692843264294
-2024-01-01,Morosidad: Familias (total),mercados,%,2.699676022194617
+2024-01-01,Morosidad: Familias (total),mercados,%,2.6996760221946174
 2024-02-01,Morosidad: Familias (total),mercados,%,2.605121098735076
-2024-03-01,Morosidad: Familias (total),mercados,%,2.6524153176309198
+2024-03-01,Morosidad: Familias (total),mercados,%,2.6524153176309193
 2024-04-01,Morosidad: Familias (total),mercados,%,2.5892186333058107
 2024-05-01,Morosidad: Familias (total),mercados,%,2.7587009632315804
 2024-06-01,Morosidad: Familias (total),mercados,%,2.786364688776409
 2024-07-01,Morosidad: Familias (total),mercados,%,2.672201214095846
-2024-08-01,Morosidad: Familias (total),mercados,%,2.662417321664861
+2024-08-01,Morosidad: Familias (total),mercados,%,2.6624173216648614
 2024-09-01,Morosidad: Familias (total),mercados,%,2.63540936430396
 2024-10-01,Morosidad: Familias (total),mercados,%,2.489310113996647
-2024-11-01,Morosidad: Familias (total),mercados,%,2.524523632171152
+2024-11-01,Morosidad: Familias (total),mercados,%,2.5245236321711517
 2024-12-01,Morosidad: Familias (total),mercados,%,2.5534667508354887
 2025-01-01,Morosidad: Familias (total),mercados,%,2.6641852829108985
 2025-02-01,Morosidad: Familias (total),mercados,%,2.9392389465918027
@@ -44408,7 +44423,7 @@
 2026-02-01,Morosidad: Familias (total),mercados,%,11.22059965886106
 2026-03-01,Morosidad: Familias (total),mercados,%,11.633960256022032
 2026-04-01,Morosidad: Familias (total),mercados,%,12.090258471830438
-2026-05-01,Morosidad: Familias (total),mercados,%,12.79530238257028
+2026-05-01,Morosidad: Familias (total),mercados,%,12.795302382570279
 2010-01-01,Morosidad: Familias — Personales,mercados,%,6.038333921898983
 2010-02-01,Morosidad: Familias — Personales,mercados,%,5.907889903670379
 2010-03-01,Morosidad: Familias — Personales,mercados,%,5.660711052175463
@@ -46842,118 +46857,118 @@
 2026-07-01,Préstamos al sector privado,monetario_financiero,millones de $,137583079.589
 2026-08-01,Préstamos al sector privado,monetario_financiero,millones de $,141215452.7156549
 2017-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.167458584937182
-2017-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.38308452491302064
+2017-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.018965805965132088
 2017-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.21599693344011017
 2017-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.379360948993195
 2017-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.657562302656724
 2017-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.866145446235905
-2017-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.5321565722896677
-2017-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.3107052933005225
+2017-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.5172691519566777
+2017-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.455539990706869
 2017-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.447530077650898
 2017-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.314978885965465
 2018-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.3212214335066594
-2018-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.7282617702472969
-2018-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.3407610123616538
-2018-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.44522357957412034
+2018-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),5.030481022099235
+2018-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.730382702225047
+2018-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.4452235795741203
 2018-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.2771387962957108
 2018-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.262059740033572
-2018-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.7880317676479823
+2018-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.616050719997984
 2018-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.7197460432918912
-2018-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.5220329664150462
-2018-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.5702783711884876
+2018-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.840124504039797
+2018-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.7791320960980677
 2018-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.541782208879518
 2018-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-4.455698943222475
-2019-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.2428018834707544
-2019-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.876732094517124
+2019-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-5.717072424299421
+2019-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-6.618307088701506
 2019-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.0791626442967623
-2019-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.5556592706059957
-2019-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.9571199380281736
-2019-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.4413123280227302
+2019-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-5.68037383180386
+2019-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.91033075877638
+2019-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.2397795045675704
 2019-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.3017236576597857
-2019-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.5134688517791233
+2019-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.913535005018121
 2019-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.7347469333053264
-2019-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.1780094191814323
-2019-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.6390720947686694
+2019-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.0839924938989456
+2019-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.639072094768669
 2019-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.2011011032185728
-2020-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.1332219117138163
-2020-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.665626705978737
-2020-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.0438047959468197
+2020-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-4.818668543192443
+2020-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-6.158719938606601
+2020-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.04380479594682
 2020-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.0544673410029762
 2020-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.9827262676428604
 2020-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.4502202732532632
-2020-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.27173918025776134
-2020-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.21714685438138526
-2020-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.514469932767336
-2020-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.6339413814878715
-2020-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.6745645747044872
-2020-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.7723210775446278
+2020-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.2717391802577613
+2020-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.862118532451167
+2020-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.1187567358774085
+2020-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.14910762575154335
+2020-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.6745645747044874
+2020-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.772321077544628
 2021-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.9704708578422018
 2021-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.5878739787869502
 2021-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.166197004616899
-2021-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.4344496063922043
+2021-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.310455113805743
 2021-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.1475979083682
-2021-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.684109970959657
-2021-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.0491404711301904
+2021-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-4.140274703830652
+2021-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.891997054487716
 2021-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.6141138696264496
 2021-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.2679941319678448
-2021-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.18907513059932576
+2021-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.1890751305993257
 2021-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.2449070373198574
-2021-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.81088979880489
+2021-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.6625293846833825
 2022-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.9155197781959652
-2022-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.1097584287828253
+2022-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.06313502091335603
 2022-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.294300409646695
 2022-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.151772417521547
 2022-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.3619978316157166
-2022-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.22506214206060182
-2022-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.27756827382719607
-2022-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.9146851061565687
+2022-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.2250621420606018
+2022-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.2722578532395181
+2022-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.761143605087184
 2022-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.340381433422167
-2022-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.6998745367369636
-2022-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.74981158403924
+2022-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-4.150312823105598
+2022-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.505917462949269
 2022-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.6133594816092692
 2023-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.6310197890722881
 2023-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.608784382922549
-2023-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.1205795319094793
+2023-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.7345685208070463
 2023-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.9637533118123688
-2023-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.14174183981464297
+2023-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.1417418398146429
 2023-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.5310882760643735
-2023-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.28244191684748704
-2023-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.9601978609629077
-2023-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.479887480021351
-2023-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.376217979838079
+2023-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.2713247180636298
+2023-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.9601978609629076
+2023-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-3.9137544624489995
+2023-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.757625885294473
 2023-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-2.084635141801597
-2023-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-4.101286745270745
-2024-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-9.44133010289823
-2024-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-8.36711644832017
+2023-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-6.398599788752393
+2024-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-8.118798835395483
+2024-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-9.845326129413612
 2024-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-5.519371451332599
-2024-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.97290829312389
+2024-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-5.176572933220323
 2024-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.210837858697649
-2024-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),5.906403686952767
-2024-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),8.99134107756597
-2024-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),9.311503163771688
-2024-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),8.894899805693113
+2024-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.805674328734596
+2024-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),8.823558813947153
+2024-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),12.143463985488793
+2024-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),8.894899805693115
 2024-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),8.101182359418397
-2024-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),7.7208660071534405
-2024-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),7.486631228495622
-2025-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),6.895802287482826
+2024-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),10.843825301571178
+2024-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),10.225849303435982
+2025-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),9.739020382811146
 2025-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),5.847654251589819
-2025-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.519843551695694
+2025-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.519843551695693
 2025-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.959971798230155
 2025-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.967259375015608
-2025-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.243538658393309
-2025-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.232762218911645
-2025-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.8587826936310097
-2025-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.7345366278408
-2025-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.8518673475953706
-2025-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.3407318089967711
-2025-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.16885388751457878
-2026-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.04619483535036606
+2025-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),6.894400106595647
+2025-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),6.8816461617041975
+2025-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),7.032276523080367
+2025-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.7345366278407996
+2025-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.85186734759537
+2025-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.3407318089967705
+2025-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.1688538875145787
+2026-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.046194835350366
 2026-02-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.2634211082400066
-2026-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.7851810248632574
-2026-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.0742702890752558
-2026-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.14752067065521013
-2026-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.6374212831725456
-2026-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.2870003260794756
+2026-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.6183538209113665
+2026-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-1.1224918079883097
+2026-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.41296846245790464
+2026-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.6374212831725451
+2026-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.2870003260794751
 2026-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.283852049363084
 2024-07-31,Reservas ajustadas (swap China + organismos internacionales),monetario_financiero,millones de USD,8234.083747520774
 2024-08-31,Reservas ajustadas (swap China + organismos internacionales),monetario_financiero,millones de USD,8252.816622403941
@@ -55255,18 +55270,18 @@
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
 2017-03-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.7350193593408
-2017-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.55633111149888
+2017-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.55633111149889
 2017-05-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.71831904664867
 2017-06-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,101.28883335990821
-2017-07-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,103.53984246671008
+2017-07-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,103.53984246671007
 2017-08-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.51003154191925
 2017-09-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.01965852359143
 2017-10-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.02441024258049
 2017-11-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,104.21345876560966
-2017-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,102.14582055703083
-2018-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,101.49259949722551
-2018-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.92573022158292
-2018-03-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.50369432739448
+2017-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,102.14582055703085
+2018-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,101.49259949722553
+2018-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.92573022158291
+2018-03-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.50369432739447
 2018-04-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.46177918262994
 2018-05-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,98.91706170250195
 2018-06-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,96.16691607428253
@@ -55380,14 +55395,14 @@
 2017-10-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,104.32558253846496
 2017-11-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,105.67344424664276
 2017-12-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,105.37385771974022
-2018-01-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,104.21027329032381
+2018-01-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,104.2102732903238
 2018-02-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,102.95588268829295
 2018-03-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,102.42800765583182
 2018-04-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,102.03558266467148
 2018-05-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,99.07941623454766
 2018-06-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,94.36621920724272
 2018-07-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,94.16897991737106
-2018-08-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,92.96748906478423
+2018-08-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,92.96748906478425
 2018-09-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,90.32057703723146
 2018-10-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,87.15223021772573
 2018-11-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,88.96512973414886
@@ -55440,7 +55455,7 @@
 2022-10-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,63.60157866425914
 2022-11-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,64.52324676793201
 2022-12-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,61.709242243300686
-2023-01-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,62.120495173058465
+2023-01-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,62.12049517305847
 2023-02-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,62.38839561573055
 2023-03-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,61.461083982389006
 2023-04-01,Salario real no registrado - sector privado,social,índice base 100 al inicio,59.44565397116671
@@ -55486,27 +55501,27 @@
 2016-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.0
 2017-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.73960710977124
 2017-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.9444643890661
-2017-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.04095980514983
-2017-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.72617962565367
-2017-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.27991869416255
+2017-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.04095980514984
+2017-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.72617962565369
+2017-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.27991869416256
 2017-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.86817833618692
-2017-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.89128898198017
-2017-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.91386301833039
+2017-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.89128898198015
+2017-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.9138630183304
 2017-09-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.1582899928009
 2017-10-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.42004188880946
-2017-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.45757973429643
-2017-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,102.03096777579925
-2018-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.98327941190091
+2017-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,104.45757973429644
+2017-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,102.03096777579924
+2018-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,101.98327941190092
 2018-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.36665000621127
-2018-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,99.47270190298177
-2018-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.21796951379287
+2018-03-01,Salario real registrado - sector privado,social,índice base 100 al inicio,99.47270190298175
+2018-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.21796951379288
 2018-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,100.5894367133979
-2018-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,98.30849705294025
+2018-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,98.30849705294024
 2018-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,97.6100245129056
 2018-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,96.62508488769056
 2018-09-01,Salario real registrado - sector privado,social,índice base 100 al inicio,92.82782045699425
 2018-10-01,Salario real registrado - sector privado,social,índice base 100 al inicio,91.44985849489738
-2018-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.92661984739337
+2018-11-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.92661984739335
 2018-12-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.12018252840176
 2019-01-01,Salario real registrado - sector privado,social,índice base 100 al inicio,90.68130219095654
 2019-02-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.78632272871944
@@ -55514,7 +55529,7 @@
 2019-04-01,Salario real registrado - sector privado,social,índice base 100 al inicio,88.29643265562673
 2019-05-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.26380059320651
 2019-06-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.19867392844625
-2019-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,91.02053434977209
+2019-07-01,Salario real registrado - sector privado,social,índice base 100 al inicio,91.02053434977208
 2019-08-01,Salario real registrado - sector privado,social,índice base 100 al inicio,89.99629814239951
 2019-09-01,Salario real registrado - sector privado,social,índice base 100 al inicio,87.2348623760742
 2019-10-01,Salario real registrado - sector privado,social,índice base 100 al inicio,87.6391359813844
@@ -55615,11 +55630,11 @@
 2018-01-01,Salario real registrado - sector público,social,índice base 100 al inicio,98.80895995824235
 2018-02-01,Salario real registrado - sector público,social,índice base 100 al inicio,97.1286247268066
 2018-03-01,Salario real registrado - sector público,social,índice base 100 al inicio,97.58549975871648
-2018-04-01,Salario real registrado - sector público,social,índice base 100 al inicio,96.44108506218679
-2018-05-01,Salario real registrado - sector público,social,índice base 100 al inicio,95.98483966232297
+2018-04-01,Salario real registrado - sector público,social,índice base 100 al inicio,96.4410850621868
+2018-05-01,Salario real registrado - sector público,social,índice base 100 al inicio,95.98483966232295
 2018-06-01,Salario real registrado - sector público,social,índice base 100 al inicio,93.74840693860634
 2018-07-01,Salario real registrado - sector público,social,índice base 100 al inicio,93.57154188686769
-2018-08-01,Salario real registrado - sector público,social,índice base 100 al inicio,92.74505750406375
+2018-08-01,Salario real registrado - sector público,social,índice base 100 al inicio,92.74505750406377
 2018-09-01,Salario real registrado - sector público,social,índice base 100 al inicio,90.10108930821205
 2018-10-01,Salario real registrado - sector público,social,índice base 100 al inicio,89.48555096730045
 2018-11-01,Salario real registrado - sector público,social,índice base 100 al inicio,88.46836693847618
@@ -55709,7 +55724,7 @@
 2025-11-01,Salario real registrado - sector público,social,índice base 100 al inicio,65.9611411860931
 2025-12-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.76816303454032
 2026-01-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.0936729847177
-2026-02-01,Salario real registrado - sector público,social,índice base 100 al inicio,63.740533360149186
+2026-02-01,Salario real registrado - sector público,social,índice base 100 al inicio,63.74053336014919
 2026-03-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.76717281417915
 2026-04-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.60792970757073
 2026-05-01,Salario real registrado - sector público,social,índice base 100 al inicio,64.19782963397243
@@ -56030,7 +56045,8 @@
 2026-10-15,TIR AL30 (USD),mercados,% anual,10.317470858862093
 2026-10-16,TIR AL30 (USD),mercados,% anual,12.415168738073689
 2026-10-17,TIR AL30 (USD),mercados,% anual,12.223904241904608
-2026-10-18,TIR AL30 (USD),mercados,% anual,12.243743740659113
+2026-10-18,TIR AL30 (USD),mercados,% anual,12.243743740659111
+2026-10-19,TIR AL30 (USD),mercados,% anual,9.55813475961521
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -56054,6 +56070,7 @@
 2026-10-14,TIR GD30 (USD),mercados,% anual,7.181940347257772
 2026-10-15,TIR GD30 (USD),mercados,% anual,9.8618612757967
 2026-10-16,TIR GD30 (USD),mercados,% anual,7.351945390125909
+2026-10-19,TIR GD30 (USD),mercados,% anual,8.011652142376866
 2026-09-01,TIR GD35 (USD),mercados,% anual,10.1616761707095
 2026-09-02,TIR GD35 (USD),mercados,% anual,10.16546137481472
 2026-09-03,TIR GD35 (USD),mercados,% anual,10.13388157362582
@@ -56089,6 +56106,7 @@
 2026-10-08,TIR GD35 (USD),mercados,% anual,11.55311332982955
 2026-10-09,TIR GD35 (USD),mercados,% anual,11.55929707681215
 2026-10-16,TIR GD35 (USD),mercados,% anual,10.68279004867978
+2026-10-19,TIR GD35 (USD),mercados,% anual,11.206222029100479
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
@@ -65793,10 +65811,10 @@
 2026-10-15,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.5
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
-2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
+2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451607
 2004-10-01,Tasa de desempleo,social,% de la PEA,12.0218792820011
 2005-01-01,Tasa de desempleo,social,% de la PEA,12.91846311664872
-2005-04-01,Tasa de desempleo,social,% de la PEA,11.964514734733001
+2005-04-01,Tasa de desempleo,social,% de la PEA,11.964514734733
 2005-07-01,Tasa de desempleo,social,% de la PEA,11.121767199314279
 2005-10-01,Tasa de desempleo,social,% de la PEA,10.035494804566989
 2006-01-01,Tasa de desempleo,social,% de la PEA,11.30833634825018
@@ -65819,7 +65837,7 @@
 2010-04-01,Tasa de desempleo,social,% de la PEA,7.9
 2010-07-01,Tasa de desempleo,social,% de la PEA,7.5
 2010-10-01,Tasa de desempleo,social,% de la PEA,7.3
-2011-01-01,Tasa de desempleo,social,% de la PEA,7.3999999999999995
+2011-01-01,Tasa de desempleo,social,% de la PEA,7.399999999999999
 2011-04-01,Tasa de desempleo,social,% de la PEA,7.3
 2011-07-01,Tasa de desempleo,social,% de la PEA,7.199999999999999
 2011-10-01,Tasa de desempleo,social,% de la PEA,6.7
@@ -65837,7 +65855,7 @@
 2014-10-01,Tasa de desempleo,social,% de la PEA,6.9
 2015-01-01,Tasa de desempleo,social,% de la PEA,7.1
 2015-04-01,Tasa de desempleo,social,% de la PEA,6.6000000000000005
-2015-07-01,Tasa de desempleo,social,% de la PEA,5.8999999999999995
+2015-07-01,Tasa de desempleo,social,% de la PEA,5.9
 2016-04-01,Tasa de desempleo,social,% de la PEA,9.3
 2016-07-01,Tasa de desempleo,social,% de la PEA,8.5
 2016-10-01,Tasa de desempleo,social,% de la PEA,7.6
@@ -65849,13 +65867,13 @@
 2018-04-01,Tasa de desempleo,social,% de la PEA,9.6
 2018-07-01,Tasa de desempleo,social,% de la PEA,9.0
 2018-10-01,Tasa de desempleo,social,% de la PEA,9.1
-2019-01-01,Tasa de desempleo,social,% de la PEA,10.100000000000001
+2019-01-01,Tasa de desempleo,social,% de la PEA,10.1
 2019-04-01,Tasa de desempleo,social,% de la PEA,10.6
 2019-07-01,Tasa de desempleo,social,% de la PEA,9.69999999999999
 2019-10-01,Tasa de desempleo,social,% de la PEA,8.9
 2020-01-01,Tasa de desempleo,social,% de la PEA,10.4
 2020-04-01,Tasa de desempleo,social,% de la PEA,13.100000000000001
-2020-07-01,Tasa de desempleo,social,% de la PEA,11.700000000000001
+2020-07-01,Tasa de desempleo,social,% de la PEA,11.7
 2020-10-01,Tasa de desempleo,social,% de la PEA,10.9579322139272
 2021-01-01,Tasa de desempleo,social,% de la PEA,10.2
 2021-04-01,Tasa de desempleo,social,% de la PEA,9.60090333606911
@@ -65973,8 +65991,8 @@
 2025-01-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-54.350008150823854
 2025-02-28,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-37.56164642180414
 2025-03-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-23.86751569937308
-2025-04-30,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-12.260263669660475
-2025-05-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-10.604050661046827
+2025-04-30,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-12.260263669660477
+2025-05-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-10.604050661046829
 2025-06-30,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-5.857621921411933
 2025-07-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,3.370955141350059
 2025-08-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,30.131567249386826
@@ -65982,7 +66000,7 @@
 2025-10-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,7.50374365039092
 2025-11-30,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-0.8681935337484248
 2025-12-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-4.486260512645725
-2026-01-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-1.8493064389535405
+2026-01-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-1.8493064389535403
 2026-02-28,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-3.238974143270987
 2026-03-31,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-7.231752398849807
 2026-04-30,Tasa de interés real (TAMAR - inflación interanual),monetario_financiero,% anual,-9.975448153478425
