@@ -6679,6 +6679,7 @@
 2026-10-29,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.756410256410272
 2026-10-30,Brecha cambiaria (CCL/oficial),monetario_financiero,%,5.788461538461531
 2026-10-31,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.314102564102564
+2026-11-01,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.314102564102564
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7470,6 +7471,7 @@
 2026-10-29,CER (Coeficiente de Estabilización de Referencia),mercados,índice,861.75259534429
 2026-10-30,CER (Coeficiente de Estabilización de Referencia),mercados,índice,862.27597019861
 2026-10-31,CER (Coeficiente de Estabilización de Referencia),mercados,índice,862.79966291821
+2026-11-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,863.32367369616
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10395,6 +10397,7 @@
 2026-10-29,Canje MEP/CCL,mercados,%,5.867395588328783
 2026-10-30,Canje MEP/CCL,mercados,%,5.19505354411014
 2026-10-31,Canje MEP/CCL,mercados,%,5.301587301587296
+2026-11-01,Canje MEP/CCL,mercados,%,5.301587301587296
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -18225,6 +18228,7 @@
 2026-10-29,Dólar CCL,monetario_financiero,$/USD (venta),1665.4
 2026-10-30,Dólar CCL,monetario_financiero,$/USD (venta),1650.3
 2026-10-31,Dólar CCL,monetario_financiero,$/USD (venta),1658.5
+2026-11-01,Dólar CCL,monetario_financiero,$/USD (venta),1658.5
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -21150,6 +21154,7 @@
 2026-10-29,Dólar MEP,monetario_financiero,$/USD (venta),1573.1
 2026-10-30,Dólar MEP,monetario_financiero,$/USD (venta),1568.8
 2026-10-31,Dólar MEP,monetario_financiero,$/USD (venta),1575.0
+2026-11-01,Dólar MEP,monetario_financiero,$/USD (venta),1575.0
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -26931,6 +26936,7 @@
 2026-10-29,Dólar blue,monetario_financiero,$/USD (venta),1565.0
 2026-10-30,Dólar blue,monetario_financiero,$/USD (venta),1565.0
 2026-10-31,Dólar blue,monetario_financiero,$/USD (venta),1565.0
+2026-11-01,Dólar blue,monetario_financiero,$/USD (venta),1565.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32712,6 +32718,7 @@
 2026-10-29,Dólar oficial,monetario_financiero,$/USD (venta),1560.0
 2026-10-30,Dólar oficial,monetario_financiero,$/USD (venta),1560.0
 2026-10-31,Dólar oficial,monetario_financiero,$/USD (venta),1560.0
+2026-11-01,Dólar oficial,monetario_financiero,$/USD (venta),1560.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -56207,6 +56214,7 @@
 2026-10-29,TIR AL30 (USD),mercados,% anual,15.03946516841518
 2026-10-30,TIR AL30 (USD),mercados,% anual,14.743323431572811
 2026-10-31,TIR AL30 (USD),mercados,% anual,11.023046399516904
+2026-11-01,TIR AL30 (USD),mercados,% anual,11.041381205841564
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
@@ -56274,6 +56282,7 @@
 2026-10-19,TIR GD35 (USD),mercados,% anual,11.20622202910048
 2026-10-20,TIR GD35 (USD),mercados,% anual,11.211839453060977
 2026-10-31,TIR GD35 (USD),mercados,% anual,11.895860655586853
+2026-11-01,TIR GD35 (USD),mercados,% anual,11.902681297916951
 2024-09-02,Tasa BADLAR (bancos privados),mercados,% TNA,37.375
 2024-09-03,Tasa BADLAR (bancos privados),mercados,% TNA,39.4375
 2024-09-04,Tasa BADLAR (bancos privados),mercados,% TNA,37.75
