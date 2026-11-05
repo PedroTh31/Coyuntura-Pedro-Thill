@@ -52,12 +52,12 @@ jobs:
           MAIL_TO: ${{ secrets.MAIL_TO }}
           DATOS_AL_ENVIO: ${{ steps.estado.outputs.datos_frescos == 'false' && '1' || '0' }}
         run: python enviar_mail.py
-      - name: Registrar envío (commit de data/mail_enviado.json)
+      - name: Registrar envío (commit de data/mail_enviado.json + log de noticias)
         if: steps.estado.outputs.ya_enviado == 'false'
         run: |
           git config user.name  "coyuntura-bot"
           git config user.email "actions@github.com"
-          git add data/mail_enviado.json
+          git add data/mail_enviado.json data/noticias_log.jsonl
           git commit -m "Mail enviado $(TZ=America/Argentina/Buenos_Aires date +'%Y-%m-%d %H:%M')"
           # Si hubo fallback, run.py dejó data/ y docs/ modificados en el runner: NO se
           # commitean desde acá (eso es trabajo de coyuntura.yml); se apartan para poder

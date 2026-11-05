@@ -21,6 +21,7 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from pathlib import Path
+from urllib.parse import urlparse
 import pandas as pd
 import yaml
 
@@ -109,6 +110,17 @@ KW_ARGENTINA_CONTEXTO = [
     "la rioja", "santa cruz", "santiago del estero", "la pampa", "tierra del fuego",
 ]
 
+# "banco central" es contexto argentino DÉBIL (Bloque 3 de PROMPT_mail_v3.md): sólo cuenta si
+# la nota no menciona otro país de esta lista. Caso real (2026-11-05): notas sobre el Banco
+# Central de Paraguay (Ueno Bank) y Banxico entraban al bloque Argentina porque "banco
+# central" cumplía a la vez el filtro económico y el de contexto. No se borra de
+# KW_ARGENTINA_CONTEXTO: muchas notas argentinas dicen sólo "el Banco Central" (ej. "Tras dos
+# días sin sumar divisas, el Banco Central volvió a comprar dólares"). Lista de Pedro; se
+# compara SIN tildes (para que "mexic" reconozca "México"). Se aplica SOLO en evaluar_ar: el
+# filtro internacional no la usa, una nota sobre estos países puede seguir en Internacional.
+# Tests: tests/test_noticias.py.
+KW_OTRO_PAIS_BANCO_CENTRAL = ["paragua", "urugua", "chile", "brasil", "bolivia", "mexic", "banxico"]
+
 # notas tipo "consejo/listicle" o de relleno que no son noticia económica real (ej. "cómo
 # pagar reservas de hotel en dólares", "Dólar EN VIVO minuto a minuto", "qué significa esto
 # para tu factura"): filtro heurístico, ajustar según lo que se cuele
@@ -156,39 +168,72 @@ def _limpiar(texto):
     return t
 
 
-def _es_internacional(texto):
-    t = " " + texto.lower() + " "
-    return any(k in t for k in KW_INTERNACIONAL)
+def _motivo_tip(titulo):
+    """Qué regla de 'tip/relleno' excluye el título (None si ninguna). Filtra notas tipo
+    consejo/listicle/relleno, y (Ronda 2) notas de investigación política/periodística
+    que no son noticia económica real aunque mencionen de pasada algún término
+    económico (ej. una nota sobre la CIA y la AMIA)."""
+    t = titulo.lower().strip()
+    if _RE_LISTICLE.match(t):
+        return "listicle"
+    if t.startswith("firstft:"):
+        return "firstft"  # boletín embolsado de FT, agrupa varias notas sin relación
+    if _RE_EXCLUIR_ACRONIMOS.search(t):
+        return "acronimos"
+    if any(k in t for k in KW_EXCLUIR_TIPS):
+        return "KW_EXCLUIR_TIPS"
+    return None
 
 
 def _es_tip(titulo):
-    """Filtra notas tipo consejo/listicle/relleno, y (Ronda 2) notas de investigación
-    política/periodística que no son noticia económica real aunque mencionen de
-    pasada algún término económico (ej. una nota sobre la CIA y la AMIA)."""
-    t = titulo.lower().strip()
-    if _RE_LISTICLE.match(t):
-        return True
-    if t.startswith("firstft:"):
-        return True  # boletín embolsado de FT, agrupa varias notas sin relación
-    if _RE_EXCLUIR_ACRONIMOS.search(t):
-        return True
-    return any(k in t for k in KW_EXCLUIR_TIPS)
+    return _motivo_tip(titulo) is not None
 
 
-def _es_economico_ar(texto):
-    """Filtro positivo para notas argentinas: título o bajada tienen que mencionar algo
-    de economía real (un feriado o un calendario de pagos no matchea 'tips', pero
-    tampoco es economía -- el filtro negativo solo no alcanza para esos casos)."""
+def _coincidencias(lista, texto):
     t = " " + texto.lower() + " "
-    return any(k in t for k in KW_ECONOMICO_AR)
+    return [k for k in lista if k in t]
 
 
-def _es_argentina_contexto(texto):
-    """Filtro positivo adicional (Ronda 2): la nota tiene que mencionar Argentina en
-    algún lado -- 'deuda' o 'desempleo' solos no alcanzan si la nota es sobre otro
-    país (caso real: una nota sobre deuda de obras sociales en Colombia)."""
-    t = " " + texto.lower() + " "
-    return any(k in t for k in KW_ARGENTINA_CONTEXTO)
+def evaluar_ar(titulo, bajada):
+    """Decide si una nota de un medio argentino entra al bloque Argentina. Devuelve
+    (entra, regla, detalle): 'regla' es la que decidió (para el log de noticias y los
+    tests de regresión), 'detalle' las palabras que coincidieron. Mismo orden de reglas
+    que el filtro histórico: internacional (sólo título) -> tip -> tema económico (un
+    feriado o un calendario de pagos no matchea 'tips', pero tampoco es economía) ->
+    contexto argentino ('deuda' o 'desempleo' solos no alcanzan si la nota es de otro
+    país, caso real: deuda de obras sociales en Colombia)."""
+    texto = titulo + " " + bajada
+    intl = _coincidencias(KW_INTERNACIONAL, titulo)
+    if intl:
+        return False, "KW_INTERNACIONAL", intl
+    motivo = _motivo_tip(titulo)
+    if motivo:
+        return False, motivo, None
+    econ = _coincidencias(KW_ECONOMICO_AR, texto)
+    if not econ:
+        return False, "sin_KW_ECONOMICO_AR", None
+    contexto = _coincidencias(KW_ARGENTINA_CONTEXTO, texto)
+    if not contexto:
+        return False, "sin_KW_ARGENTINA_CONTEXTO", {"economico": econ}
+    if contexto == ["banco central"]:
+        # Único contexto = "banco central" (débil): no alcanza si la nota es de otro país.
+        sin_tildes = _normalizar_titulo(texto)
+        otros = [p for p in KW_OTRO_PAIS_BANCO_CENTRAL if p in sin_tildes]
+        if otros:
+            return False, "banco_central_otro_pais", {"economico": econ, "otro_pais": otros}
+    return True, "entra", {"economico": econ, "contexto": contexto}
+
+
+def evaluar_intl(titulo, bajada):
+    """Decide si una nota de un feed internacional pasa el filtro de relevancia (antes de
+    dedup/prioridad/corte). Mismo contrato que evaluar_ar."""
+    motivo = _motivo_tip(titulo)
+    if motivo:
+        return False, motivo, None
+    intl = _coincidencias(KW_INTERNACIONAL, titulo + " " + bajada)
+    if not intl:
+        return False, "sin_KW_INTERNACIONAL", None
+    return True, "entra", {"internacional": intl}
 
 
 def _es_economico_intl(texto):
@@ -207,14 +252,15 @@ def _normalizar_titulo(texto):
     return re.sub(r"\s+", " ", t).strip()
 
 
-def _deduplicar(items, umbral=0.6):
+def _deduplicar(items, umbral=0.6, descartes=None):
     """Colapsa notas que son la misma noticia contada por distintas fuentes (Ronda 2;
     ej. dos notas de la cotización del dólar, una con foco en Córdoba y otra en Buenos
     Aires). Compara títulos normalizados con SequenceMatcher; ante un grupo de
     duplicados se queda con el de fuente de mayor jerarquía (el orden en que aparece
     la fuente en FEEDS_MEDIOS/FEEDS_INTERNACIONAL, guardado en 'rank' por
     _recolectar) y, si empatan, con el más reciente. Preserva el orden relativo
-    original de los sobrevivientes (ya viene pre-ordenado por _recolectar)."""
+    original de los sobrevivientes (ya viene pre-ordenado por _recolectar).
+    'descartes' (lista opcional): se le agregan (descartada, ganadora) para el log."""
     normalizados = [_normalizar_titulo(x["titulo"]) for x in items]
     usados = [False] * len(items)
     resultado = []
@@ -234,6 +280,8 @@ def _deduplicar(items, umbral=0.6):
         else:
             ganador = min(grupo, key=lambda k: (items[k].get("rank", 0), -items[k]["pub"].timestamp()))
             resultado.append(items[ganador])
+            if descartes is not None:
+                descartes.extend((items[k], items[ganador]) for k in grupo if k != ganador)
     return resultado
 
 
@@ -275,7 +323,8 @@ def _recolectar(feeds, es_argentina):
                 fuente = getattr(src, "title", "") or (src.get("title", "") if isinstance(src, dict) else "")
             vistos.add(t)
             items.append(dict(titulo=t, link=getattr(e, "link", "#"),
-                              fuente=fuente, bajada=bajada, pub=pub, rank=rank))
+                              fuente=fuente, bajada=bajada, pub=pub, rank=rank,
+                              feed=urlparse(feeds[rank]).netloc))
 
     for rank, url in enumerate(feeds):
         try:
@@ -287,31 +336,87 @@ def _recolectar(feeds, es_argentina):
     return items
 
 
-def obtener_noticias(n=6):
-    """Devuelve (argentinas, internacionales), n de cada una."""
+def obtener_noticias(n=6, registro=None):
+    """Devuelve (argentinas, internacionales), n de cada una. 'registro' (lista opcional):
+    se le agrega una entrada por CADA nota evaluada con la regla que decidió (ver
+    escribir_log_noticias) -- sale de las mismas decisiones que arman el mail, no de un
+    cálculo paralelo."""
     try:
         import feedparser  # noqa: F401
     except Exception:
         return [], []
-    arg_crudo = [x for x in _recolectar(FEEDS_MEDIOS, es_argentina=True)
-           if not _es_internacional(x["titulo"]) and not _es_tip(x["titulo"])
-           and _es_economico_ar(x["titulo"] + " " + x["bajada"])
-           and _es_argentina_contexto(x["titulo"] + " " + x["bajada"])]
-    arg_crudo = _deduplicar(arg_crudo)
+
+    def _reg(x, bloque, entro, regla, detalle=None):
+        if registro is not None:
+            registro.append(dict(bloque=bloque, titulo=x["titulo"], fuente=x.get("feed", ""),
+                                 link=x["link"], entro=entro, regla=regla, detalle=detalle))
+
+    arg_crudo = []
+    for x in _recolectar(FEEDS_MEDIOS, es_argentina=True):
+        entra, regla, detalle = evaluar_ar(x["titulo"], x["bajada"])
+        if entra:
+            x["_detalle"] = detalle
+            arg_crudo.append(x)
+        else:
+            _reg(x, "ar", False, regla, detalle)
+    descartes = []
+    arg_crudo = _deduplicar(arg_crudo, descartes=descartes)
+    for x, ganador in descartes:
+        _reg(x, "ar", False, "dedup", {"duplicado_de": ganador["titulo"]})
     arg = arg_crudo[:n]
+    for k, x in enumerate(arg_crudo):
+        _reg(x, "ar", k < n, "entra" if k < n else f"corte_top_{n}", x.pop("_detalle", None))
     titulos_arg = {x["titulo"] for x in arg}
 
-    crudo_intl = _recolectar(FEEDS_INTERNACIONAL, es_argentina=False)
-    intl_crudo = [x for x in crudo_intl
-            if x["titulo"] not in titulos_arg and not _es_tip(x["titulo"])
-            and _es_internacional(x["titulo"] + " " + x["bajada"])]
-    intl_crudo = _deduplicar(intl_crudo)
+    intl_crudo = []
+    for x in _recolectar(FEEDS_INTERNACIONAL, es_argentina=False):
+        if x["titulo"] in titulos_arg:
+            _reg(x, "intl", False, "ya_en_AR")
+            continue
+        entra, regla, detalle = evaluar_intl(x["titulo"], x["bajada"])
+        if entra:
+            x["_detalle"] = detalle
+            intl_crudo.append(x)
+        else:
+            _reg(x, "intl", False, regla, detalle)
+    descartes = []
+    intl_crudo = _deduplicar(intl_crudo, descartes=descartes)
+    for x, ganador in descartes:
+        _reg(x, "intl", False, "dedup", {"duplicado_de": ganador["titulo"]})
     # Prioriza (no excluye) notas con contenido económico/de mercados por sobre las
     # puramente geopolíticas -- sort estable, mantiene el orden bajada/recencia dentro
     # de cada grupo de prioridad (ver _recolectar).
     intl_crudo.sort(key=lambda x: 0 if _es_economico_intl(x["titulo"] + " " + x["bajada"]) else 1)
     intl = intl_crudo[:n]
+    for k, x in enumerate(intl_crudo):
+        _reg(x, "intl", k < n, "entra" if k < n else f"corte_top_{n}", x.pop("_detalle", None))
     return arg, intl
+
+
+# Bloque 3 de PROMPT_mail_v3.md: log de decisiones del filtro de noticias, una línea JSON por
+# nota evaluada y por corrida. Se conservan sólo los últimos DIAS_LOG_NOTICIAS días (decisión
+# de Pedro: ~370 notas/día, ~110 KB/día) para que el repo no crezca sin límite.
+LOG_NOTICIAS = RAIZ / "data" / "noticias_log.jsonl"
+DIAS_LOG_NOTICIAS = 14
+
+
+def escribir_log_noticias(registro):
+    ahora = datetime.now(ZONA_AR)
+    corte = (ahora - timedelta(days=DIAS_LOG_NOTICIAS - 1)).date().isoformat()
+    previas = []
+    if LOG_NOTICIAS.exists():
+        for linea in LOG_NOTICIAS.read_text(encoding="utf-8").splitlines():
+            try:
+                if json.loads(linea).get("corrida", "")[:10] >= corte:
+                    previas.append(linea)
+            except json.JSONDecodeError:
+                continue  # una línea corrupta no tira abajo el log entero
+    corrida = ahora.isoformat(timespec="seconds")
+    nuevas = [json.dumps({"corrida": corrida, **r}, ensure_ascii=False) for r in registro]
+    LOG_NOTICIAS.write_text("\n".join(previas + nuevas) + "\n", encoding="utf-8")
+    entraron = sum(r["entro"] for r in registro)
+    print(f"Log de noticias -> data/{LOG_NOTICIAS.name} ({len(registro)} notas evaluadas, "
+          f"{entraron} entraron; {len(previas)} líneas previas conservadas)")
 
 
 def _fmt(v):
@@ -518,15 +623,18 @@ def main(dry_run=False):
     datos_al_envio = os.environ.get("DATOS_AL_ENVIO") == "1"
     df = pd.read_csv(CSV, parse_dates=["fecha"])
     indicadores = resumen_indicadores(df)
-    argentinas, internacionales = obtener_noticias()
+    registro = []
+    argentinas, internacionales = obtener_noticias(registro=registro)
     html = armar_html(indicadores, argentinas, internacionales, datos_al_envio=datos_al_envio)
     if dry_run:
         destino = Path(os.environ.get("MAIL_DRY_RUN_HTML", RAIZ / "_mail_preview.html"))
         destino.write_text(html, encoding="utf-8")
-        print(f"[dry-run] no se envió ni se registró nada; HTML en {destino}")
+        print(f"[dry-run] no se envió ni se registró nada; HTML en {destino} "
+              f"({len(registro)} notas evaluadas, log de noticias sin escribir)")
         return
     enviar(html)
     registrar_envio(datos_al_envio)
+    escribir_log_noticias(registro)
     print(f"Hora real de envío: {datetime.now(ZONA_AR):%Y-%m-%d %H:%M:%S} AR")
 
 

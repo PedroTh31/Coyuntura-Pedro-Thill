@@ -38,6 +38,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   asterisco numerado que cualquier indicador normal. `nav_extra` es el link cruzado entre
   páginas ("Financiera →" / "← Macro").
 - `enviar_mail.py` — resumen diario (lun-vie, indicadores + noticias arg/intl) por Gmail SMTP.
+  El filtro de noticias decide en `evaluar_ar`/`evaluar_intl` (devuelven entra + regla que
+  decidió); cada envío real deja `data/noticias_log.jsonl` (una línea por nota evaluada, últimos
+  14 días). **Antes de tocar keywords:** convertir el ejemplo real que lo justifica en un test de
+  `tests/test_noticias.py` (`python -m unittest discover tests`), y que pasen todos los demás.
 - `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie, en
   dos listas top-level: `indicadores` (macro, `docs/index.html`) e `indicadores_financiera`
   (`docs/financiera.html`).
@@ -353,6 +357,16 @@ licitaciones, panel líder completo (20 símbolos) más allá del ranking por vo
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
 todavía no tienen fuente confiable identificada: patentamientos exactos (ACARA, sin datos
 abiertos), turismo, escrituras, ISAC.
+
+**Filtro de noticias — ejemplos marcados por Pedro para la próxima ronda (NO tocados todavía):**
+- NO va en Internacional (2026-11-05, BBC Mundo, feeds.bbci.co.uk/mundo/rss.xml). Pasa
+  `evaluar_intl` por `"ee.uu"` en la bajada (KW_INTERNACIONAL); no es economía. Convertirlo en
+  test de `tests/test_noticias.py` antes de ajustar nada. Texto textual:
+  - título: `"Soy morra, cis y hetero, pero creo que es mejor tener menos novios y más amigas"`
+  - bajada: `La escritora mexicana y ganadora del Premio Biblioteca Breve 2026, conversa con BBC
+    Mundo sobre su obra y cómo es vivir al lado de la frontera con EE.UU.`
+- Decisión de Pedro: "De la Espriella adapta a Colombia el modelo de Milei de gabelas
+  tributarias a inversionistas" SÍ puede entrar en Argentina (pasa por "milei"); no es un error.
 
 **Hallazgos de `PROMPT_ronda_canje_y_macro.md` sin implementar (reportados, no forzados):**
 - **Historia larga de reservas**: `api.bcra.gob.ar` v4.0 SÍ soporta paginación real encadenando
