@@ -41,9 +41,18 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie, en
   dos listas top-level: `indicadores` (macro, `docs/index.html`) e `indicadores_financiera`
   (`docs/financiera.html`).
-- `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario; `email_diario.yml`
-  manda el mail de lunes a viernes a las 8am hora Argentina (GitHub Actions no garantiza el
-  minuto exacto de disparo de un cron; puede llegar con demora en horas pico).
+- `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario (07:00 AR) y
+  `email_diario.yml` manda el mail de lunes a viernes (08:00 AR). **El disparo principal de
+  los dos es externo** (cron-job.org → API `workflow_dispatch`, paso a paso y vencimiento del
+  PAT en `docs_internos/DISPARO_EXTERNO.md`; el PAT nunca va al repo): el `schedule` de
+  GitHub arrancaba con 4-9,5 h de demora (medido oct-nov 2026) y quedó sólo como respaldo
+  (09:53 y 11:47 UTC). Datos y envío están separados: `run.py` escribe al final
+  `data/ultima_corrida.json` (fecha/hora AR + estado por fuente); el mail NO corre `run.py`
+  salvo como fallback si ese archivo no es de hoy (con warning en el log y una línea "Datos
+  actualizados al momento del envío" en el mail). Guardia anti-duplicado:
+  `data/mail_enviado.json` (si es de hoy, no se reenvía) + `concurrency: mail-diario`.
+  `python enviar_mail.py --estado` muestra el estado sin mandar; `--dry-run` arma el HTML en
+  `_mail_preview.html` sin enviar ni registrar.
 - `docs/` — salida publicada por GitHub Pages (`index.html` + `financiera.html`). `data/` —
   CSVs históricos versionados, compartidos por las dos páginas (un solo `historico`, cada
   indicador tageado con su propio `bloque`).

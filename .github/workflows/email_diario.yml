@@ -1,29 +1,71 @@
 name: Mail de coyuntura (lun-vie, 8am Argentina)
 
 on:
-  schedule:
-    # 11:00 UTC = 8:00 Argentina (UTC-3, sin horario de verano). GitHub Actions no garantiza
-    # el minuto exacto de disparo de un cron: en horas pico puede haber demoras de 10 a 60+
-    # minutos, sin forma de eliminar esa variabilidad desde este lado -- por eso el mail puede
-    # llegar un poco más tarde algunos días, no es un bug.
-    - cron: "0 11 * * 1-5"
+  # Disparo PRINCIPAL: externo, desde cron-job.org a las 08:00 AR, vía la API de
+  # workflow_dispatch (paso a paso en docs_internos/DISPARO_EXTERNO.md). El cron de GitHub
+  # es best effort: entre el 08/10 y el 04/11/2026 arrancó con 4 a 9,5 horas de demora
+  # todos los días, así que queda sólo como RESPALDO.
   workflow_dispatch:
+  schedule:
+    # 11:47 UTC = 08:47 AR (UTC-3, sin horario de verano). Fuera del :00 a propósito: a las
+    # horas en punto se encola todo GitHub. Si el disparo externo ya mandó el mail, la
+    # guardia de data/mail_enviado.json hace que esta corrida salga sin enviar.
+    - cron: "47 11 * * 1-5"
+
+permissions:
+  contents: write   # para commitear data/mail_enviado.json (guardia anti-duplicado)
+
+concurrency:
+  # Dos disparos simultáneos (externo + respaldo + manual) se ejecutan uno detrás del otro,
+  # nunca en paralelo: el segundo ve el mail_enviado.json del primero y no reenvía.
+  group: mail-diario
+  cancel-in-progress: false
 
 jobs:
   enviar:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
+      - name: Registrar disparo
+        run: echo "Disparado por ${{ github.event_name }} · $(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d %H:%M:%S') AR"
       - uses: actions/checkout@v4
+        with:
+          # La punta de main al arrancar (no el SHA del evento): así se ven los datos que
+          # commiteó coyuntura.yml a las 7 y el mail_enviado.json de una corrida anterior.
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
-      - name: Actualizar datos
+      - name: Chequear envío previo y frescura de datos
+        id: estado
+        run: python enviar_mail.py --estado
+      - name: Fallback - actualizar datos (sólo si los commiteados no son de hoy)
+        if: steps.estado.outputs.ya_enviado == 'false' && steps.estado.outputs.datos_frescos == 'false'
         run: python run.py
       - name: Enviar el mail
+        if: steps.estado.outputs.ya_enviado == 'false'
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
+          DATOS_AL_ENVIO: ${{ steps.estado.outputs.datos_frescos == 'false' && '1' || '0' }}
         run: python enviar_mail.py
+      - name: Registrar envío (commit de data/mail_enviado.json)
+        if: steps.estado.outputs.ya_enviado == 'false'
+        run: |
+          git config user.name  "coyuntura-bot"
+          git config user.email "actions@github.com"
+          git add data/mail_enviado.json
+          git commit -m "Mail enviado $(TZ=America/Argentina/Buenos_Aires date +'%Y-%m-%d %H:%M')"
+          # Si hubo fallback, run.py dejó data/ y docs/ modificados en el runner: NO se
+          # commitean desde acá (eso es trabajo de coyuntura.yml); se apartan para poder
+          # rebasear sobre main.
+          git stash --include-untracked || true
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 10
+          done
+          echo "::error::No se pudo pushear data/mail_enviado.json: un disparo posterior podría reenviar el mail."
+          exit 1

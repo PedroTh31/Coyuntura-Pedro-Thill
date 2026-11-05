@@ -8,7 +8,11 @@ Flujo:
   4. mergea con el histórico guardado (sin perder datos viejos)
   5. regenera los CSV (largo + ancho) y el dashboard HTML
 """
+import json
+import os
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 import yaml
 import pandas as pd
 
@@ -21,6 +25,34 @@ import dashboard
 
 RAIZ = Path(__file__).resolve().parent
 CONFIG = RAIZ / "indicadores.yaml"
+# Marca de la última corrida completa del pipeline. La lee enviar_mail.py para decidir si
+# puede mandar con los datos ya commiteados o si tiene que correr run.py como fallback
+# (PROMPT_mail_v3.md, Bloque 1.2). Sólo se escribe si el pipeline llegó al final.
+ULTIMA_CORRIDA = RAIZ / "data" / "ultima_corrida.json"
+ZONA_AR = ZoneInfo("America/Argentina/Buenos_Aires")
+
+
+def _fuente_de(ind: dict) -> str:
+    """Etiqueta de fuente para agrupar el estado de la corrida (ej. 'datos_gob', 'calculo:real')."""
+    if "calculo" in ind:
+        return f"calculo:{ind['calculo']}"
+    return ind.get("fuente", "desconocida")
+
+
+def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str):
+    ahora = datetime.now(ZONA_AR)
+    datos = {
+        "fecha": ahora.date().isoformat(),
+        "hora": ahora.strftime("%H:%M:%S"),
+        "zona": "America/Argentina/Buenos_Aires",
+        "estado": estado,  # "ok" | "parcial" | "sin_datos"
+        "disparo": os.environ.get("GITHUB_EVENT_NAME", "local"),
+        "por_fuente": dict(sorted(por_fuente.items())),
+        "problemas": [{"indicador": n, "motivo": m} for n, m in problemas],
+    }
+    ULTIMA_CORRIDA.parent.mkdir(exist_ok=True)
+    ULTIMA_CORRIDA.write_text(json.dumps(datos, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"Estado de la corrida -> {ULTIMA_CORRIDA.relative_to(RAIZ)} ({estado})")
 
 
 def _fila(serie, ind):
@@ -486,6 +518,7 @@ def main():
     indicadores_financiera = cfg.get("indicadores_financiera", [])
     filas = []
     problemas = []  # (nombre, motivo) de indicadores que no trajeron datos
+    por_fuente = {}  # fuente -> {"ok": n, "falla": n}, para data/ultima_corrida.json
 
     for ind in indicadores + indicadores_financiera:
         nombre = ind["nombre"]
@@ -493,6 +526,8 @@ def main():
             continue  # sólo re-muestra en financiera.html un indicador ya fetcheado por la lista macro
         if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas"):
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
+        conteo = por_fuente.setdefault(_fuente_de(ind), {"ok": 0, "falla": 0})
+        conteo["falla"] += 1  # se revierte abajo si la serie llega bien
         try:
             if "calculo" in ind:
                 serie = _calcular(ind, start)
@@ -513,6 +548,8 @@ def main():
                 if primero:
                     serie = serie.assign(valor=serie["valor"] / primero * 100)
             filas.append(_fila(serie, ind))
+            conteo["falla"] -= 1
+            conteo["ok"] += 1
             print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()})")
         except Exception as e:
             _avisar(nombre, f"error al traer/calcular la serie: {e}")
@@ -526,6 +563,7 @@ def main():
 
     if not filas:
         print("No se trajo ningun dato.")
+        escribir_ultima_corrida(por_fuente, problemas, "sin_datos")
         return
 
     nuevos = pd.concat(filas, ignore_index=True)
@@ -556,6 +594,8 @@ def main():
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html, docs/financiera.html")
     else:
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
+
+    escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok")
 
 
 if __name__ == "__main__":

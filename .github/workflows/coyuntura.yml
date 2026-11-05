@@ -1,24 +1,40 @@
 name: Actualizar coyuntura
 
 on:
-  schedule:
-    - cron: "0 12 * * *"
+  # Disparo PRINCIPAL: externo, desde cron-job.org a las 07:00 AR (una hora antes del mail),
+  # vía la API de workflow_dispatch. Ver docs_internos/DISPARO_EXTERNO.md.
   workflow_dispatch:
+  schedule:
+    # Respaldo: 09:53 UTC = 06:53 AR, fuera del :00 a propósito. El cron de GitHub viene
+    # arrancando con horas de demora, por eso no es el disparo principal.
+    - cron: "53 9 * * *"
 
 permissions:
   contents: write
 
+concurrency:
+  # Disparo externo + respaldo no corren en paralelo (los dos commitean data/ y docs/).
+  group: coyuntura-datos
+  cancel-in-progress: false
+
 jobs:
   actualizar:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
+      - name: Registrar disparo
+        run: echo "Disparado por ${{ github.event_name }} · $(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d %H:%M:%S') AR"
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
       - name: Correr el pipeline
+        # run.py escribe data/ultima_corrida.json al terminar: el mail lo usa para decidir
+        # si manda con estos datos o corre run.py de nuevo como fallback.
         run: python run.py
       - name: Commitear datos actualizados
         run: |
@@ -27,7 +43,12 @@ jobs:
           git add data/ docs/
           if git diff --staged --quiet; then
             echo "Sin cambios hoy."
-          else
-            git commit -m "Datos coyuntura $(date +'%Y-%m-%d')"
-            git push
+            exit 0
           fi
+          git commit -m "Datos coyuntura $(TZ=America/Argentina/Buenos_Aires date +'%Y-%m-%d')"
+          # El workflow del mail puede pushear data/mail_enviado.json en el medio: rebasear.
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 10
+          done
+          exit 1

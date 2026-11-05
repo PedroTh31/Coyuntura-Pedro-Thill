@@ -11,6 +11,8 @@ Necesita 3 variables de entorno (se cargan desde GitHub Secrets):
 import os
 import re
 import ssl
+import sys
+import json
 import smtplib
 import unicodedata
 from difflib import SequenceMatcher
@@ -379,8 +381,12 @@ def _render_noticias(lista):
     return "".join(bloques)
 
 
-def armar_html(indicadores, argentinas, internacionales):
+def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False):
     hoy = datetime.now(ZONA_AR).strftime("%d/%m/%Y")
+    # Bloque 1.2: si el pipeline de las 7 no dejó datos de hoy y el mail tuvo que correr
+    # run.py por su cuenta, se avisa con una línea chica (no es un error para el lector).
+    aviso = ('<p style="color:#999;font-size:12px;margin:4px 0 0">Datos actualizados al momento del envío.</p>'
+             if datos_al_envio else "")
     filas_ind = ""
     for f in indicadores:
         if f["chg"] is None or abs(f["chg"]) <= 0.05:
@@ -400,7 +406,7 @@ def armar_html(indicadores, argentinas, internacionales):
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right;color:{color};font-family:monospace">{chg}</td></tr>')
 
     return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:#1A1A1A">
-      <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>
+      <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>{aviso}
       <h3 style="margin-top:22px">Indicadores clave <span style="color:#999;font-weight:400;font-size:13px">(variación vs. 7 días atrás)</span></h3>
       <table style="width:100%;border-collapse:collapse;font-size:14px">{filas_ind}</table>
       <h3 style="margin-top:26px">🇦🇷 Noticias argentinas</h3>
@@ -435,13 +441,97 @@ def enviar(html):
     print(f"Mail enviado a {to}")
 
 
-def main():
+# --- Bloque 1 de PROMPT_mail_v3.md: frescura de datos + guardia anti-duplicado ---------------
+# El workflow del mail ya no corre run.py siempre: lee lo que dejó commiteado coyuntura.yml
+# (07:00 AR) y sólo corre run.py como fallback si data/ultima_corrida.json no es de hoy.
+# data/mail_enviado.json registra el último envío: si ya es de hoy, no se manda otro (cubre
+# el disparo externo + el schedule de respaldo + disparos manuales).
+ULTIMA_CORRIDA = RAIZ / "data" / "ultima_corrida.json"
+MAIL_ENVIADO = RAIZ / "data" / "mail_enviado.json"
+
+
+def _hoy_ar():
+    return datetime.now(ZONA_AR).date().isoformat()
+
+
+def _leer_json(ruta):
+    try:
+        return json.loads(ruta.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"[aviso] no se pudo leer {ruta.relative_to(RAIZ)}: {e}")
+        return {}
+
+
+def ya_enviado_hoy():
+    return _leer_json(MAIL_ENVIADO).get("fecha") == _hoy_ar()
+
+
+def datos_frescos():
+    """(bool, motivo): True si la última corrida completa de run.py es de hoy y trajo datos."""
+    uc = _leer_json(ULTIMA_CORRIDA)
+    if not uc:
+        return False, "no hay data/ultima_corrida.json"
+    if uc.get("fecha") != _hoy_ar():
+        return False, f"última corrida del {uc.get('fecha')} {uc.get('hora')}, no de hoy"
+    if uc.get("estado") == "sin_datos":
+        return False, "la corrida de hoy no trajo ningún dato"
+    return True, f"corrida de hoy {uc.get('hora')} (estado: {uc.get('estado')})"
+
+
+def registrar_envio(datos_al_envio):
+    ahora = datetime.now(ZONA_AR)
+    MAIL_ENVIADO.write_text(json.dumps({
+        "fecha": ahora.date().isoformat(),
+        "hora_envio": ahora.strftime("%H:%M:%S"),
+        "zona": "America/Argentina/Buenos_Aires",
+        "disparo": os.environ.get("GITHUB_EVENT_NAME", "local"),
+        "datos_al_momento_del_envio": datos_al_envio,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def estado():
+    """Para el workflow: imprime y exporta a $GITHUB_OUTPUT si ya se mandó hoy y si los datos
+    commiteados están frescos. No manda nada."""
+    enviado = ya_enviado_hoy()
+    frescos, motivo = datos_frescos()
+    print(f"Disparo: {os.environ.get('GITHUB_EVENT_NAME', 'local')} · "
+          f"hora real: {datetime.now(ZONA_AR):%Y-%m-%d %H:%M:%S} AR")
+    if enviado:
+        print(f"Ya se envió el mail de hoy ({_leer_json(MAIL_ENVIADO).get('hora_envio')}): no se reenvía.")
+    print(f"Datos: {'frescos' if frescos else 'VIEJOS'} -- {motivo}")
+    if not enviado and not frescos:
+        # Sin fallback silencioso: queda como warning visible en el resumen del run.
+        print(f"::warning::Datos commiteados viejos ({motivo}): se corre run.py como fallback antes de mandar.")
+    salida = os.environ.get("GITHUB_OUTPUT")
+    if salida:
+        with open(salida, "a", encoding="utf-8") as f:
+            f.write(f"ya_enviado={'true' if enviado else 'false'}\n")
+            f.write(f"datos_frescos={'true' if frescos else 'false'}\n")
+
+
+def main(dry_run=False):
+    print(f"Disparo: {os.environ.get('GITHUB_EVENT_NAME', 'local')} · "
+          f"inicio: {datetime.now(ZONA_AR):%Y-%m-%d %H:%M:%S} AR")
+    if ya_enviado_hoy() and not dry_run:
+        print("Ya se envió el mail de hoy (data/mail_enviado.json): salgo sin enviar.")
+        return
+    datos_al_envio = os.environ.get("DATOS_AL_ENVIO") == "1"
     df = pd.read_csv(CSV, parse_dates=["fecha"])
     indicadores = resumen_indicadores(df)
     argentinas, internacionales = obtener_noticias()
-    html = armar_html(indicadores, argentinas, internacionales)
+    html = armar_html(indicadores, argentinas, internacionales, datos_al_envio=datos_al_envio)
+    if dry_run:
+        destino = Path(os.environ.get("MAIL_DRY_RUN_HTML", RAIZ / "_mail_preview.html"))
+        destino.write_text(html, encoding="utf-8")
+        print(f"[dry-run] no se envió ni se registró nada; HTML en {destino}")
+        return
     enviar(html)
+    registrar_envio(datos_al_envio)
+    print(f"Hora real de envío: {datetime.now(ZONA_AR):%Y-%m-%d %H:%M:%S} AR")
 
 
 if __name__ == "__main__":
-    main()
+    if "--estado" in sys.argv:
+        estado()
+    else:
+        main(dry_run="--dry-run" in sys.argv)
