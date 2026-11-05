@@ -524,7 +524,7 @@ def main():
         nombre = ind["nombre"]
         if ind.get("solo_referencia"):
             continue  # sólo re-muestra en financiera.html un indicador ya fetcheado por la lista macro
-        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas", "combo_barras_evento", "combo_rezago"):
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         conteo = por_fuente.setdefault(_fuente_de(ind), {"ok": 0, "falla": 0})
         conteo["falla"] += 1  # se revierte abajo si la serie llega bien

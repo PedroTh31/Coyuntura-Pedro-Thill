@@ -20,6 +20,7 @@ DESDE_GENERAL = "2024-01-01"
 OUT = Path(__file__).resolve().parent / "docs"
 MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diarias largas
 UMBRAL_DISCONTINUADA_DIAS = 90  # a partir de cuántos días sin datos se marca "sin datos nuevos desde..."
+UMBRAL_HISTORIA_MINIMA = 30  # por debajo de esto, no se muestra gráfico de línea (ver "acumulando historia")
 
 # Paleta institucional (Ministerio de Economía / argentina.gob.ar, sistema "Poncho"):
 # tokens oficiales tomados de poncho.min.css (--arg-azul, --arg-enlace, --arg-rojo, etc.),
@@ -333,6 +334,112 @@ def _serie_combo_barras_linea(idx, ind, historico):
     return card, serie_js
 
 
+def _serie_combo_rezago(idx, ind, historico):
+    """
+    Combo de dos líneas en dos ejes CON selector de rezago (Punto 2.1 del checklist
+    storytelling, PROMPT_fix_graficos_y_storytelling.md): para explorar la relación entre
+    una serie de emisión/política (ind['linea_izq']) y una de resultado (ind['linea_der'])
+    SIN que el equipo elija un rezago "correcto" e imponga una lectura -- se precalculan
+    server-side todas las variantes de ind.get('rezagos', [0,3,6,12]) (meses que se
+    desplaza linea_izq hacia adelante) y el usuario elige cuál ver con un toggle
+    client-side (ver .rezago-btn); Python no recomienda ninguna por default más allá de
+    "sin rezago" (0), que es la variante que se muestra al cargar la página.
+    """
+    nombre_izq, nombre_der = ind["linea_izq"], ind["linea_der"]
+    g_izq = historico[historico["indicador"] == nombre_izq].sort_values("fecha")
+    g_der = historico[historico["indicador"] == nombre_der].sort_values("fecha")
+    if g_izq.empty or g_der.empty:
+        return None
+    izq_m = g_izq.set_index("fecha")["valor"].resample("MS").last()
+    der_m = g_der.set_index("fecha")["valor"].resample("MS").last()
+
+    desde = ind.get("desde", DESDE_GENERAL)
+    rezagos = ind.get("rezagos", [0, 3, 6, 12])
+
+    def _vals(s):
+        return [round(float(v), 2) if pd.notna(v) else None for v in s]
+
+    variantes_js = {}
+    for r in rezagos:
+        izq_shift = izq_m.copy()
+        izq_shift.index = izq_shift.index + pd.DateOffset(months=r)
+        fechas_full = izq_shift.index.union(der_m.index).sort_values()
+        fechas_s = fechas_full[fechas_full >= pd.to_datetime(desde)]
+        if len(fechas_s) < 2:
+            fechas_s = fechas_full
+        izq_full = izq_shift.reindex(fechas_s)
+        der_full = der_m.reindex(fechas_s)
+        variantes_js[str(r)] = dict(x=[d.strftime("%m/%y") for d in fechas_s],
+                                     izq=_vals(izq_full), der=_vals(der_full))
+
+    unidad_izq, unidad_der = ind.get("unidad_izq", ""), ind.get("unidad_der", "")
+    ult, pct = _variacion(g_der)  # la card resume con la serie de "resultado" (der)
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_der,
+        valor=_fmt_num(ult), pct=pct, marca_fecha=None,
+        maxv=_fmt_num(g_der["valor"].max()), minv=_fmt_num(g_der["valor"].min()), nota_num=None,
+        subtitulo=ind.get("subtitulo"), grande=True, sin_filtros=True, rezagos=rezagos,
+        sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
+
+    serie_js = dict(i=idx, kind="combo_rezago", unidad_izq=unidad_izq, unidad_der=unidad_der,
+        label_izq=nombre_izq, label_der=nombre_der, rezago_default=0, variantes=variantes_js)
+    return card, serie_js
+
+
+def _serie_combo_barras_evento(idx, ind, historico):
+    """
+    Combo de una serie CONTINUA (barra, eje izquierdo) + una de EVENTO DISCRETO (marcadores
+    puntuales sin conectar, eje derecho) -- Punto 1 del checklist de
+    PROMPT_fix_graficos_y_storytelling.md: una serie que ocurre pocas veces (ej. Transferencia
+    de Utilidades del BCRA al Tesoro, 1-2 veces al año) no se grafica compartiendo eje/línea
+    continua con una serie mensual real -- el pico aplasta al resto contra el piso. Genérico,
+    no específico de Asistencia BCRA: sirve para cualquier par continua/evento ya existente.
+    ind['barra']/ind['evento'] son nombres de indicadores ya existentes en 'historico'.
+    """
+    nombre_barra, nombre_evento = ind["barra"], ind["evento"]
+    g_barra = historico[historico["indicador"] == nombre_barra].sort_values("fecha")
+    g_evento = historico[historico["indicador"] == nombre_evento].sort_values("fecha")
+    if g_barra.empty:
+        return None
+    barra_m = g_barra.set_index("fecha")["valor"].resample("MS").last()
+    evento_m = (g_evento.set_index("fecha")["valor"].resample("MS").last()
+                if not g_evento.empty else pd.Series(dtype=float))
+    fechas_full = barra_m.index.union(evento_m.index).sort_values()
+    barra_full = barra_m.reindex(fechas_full)
+    evento_full = evento_m.reindex(fechas_full)
+
+    desde = ind.get("desde", DESDE_GENERAL)
+    fechas_s = fechas_full[fechas_full >= pd.to_datetime(desde)]
+    if len(fechas_s) < 2:
+        fechas_s = fechas_full
+
+    def _vals(s):
+        return [round(float(v), 2) if pd.notna(v) else None for v in s]
+
+    def _vals_evento(s):
+        # 0 (o casi 0) = "sin evento ese mes" -> null, no se dibuja marcador (a diferencia de
+        # _vals: acá un cero es "nada pasó", no un dato real en cero).
+        return [round(float(v), 2) if pd.notna(v) and abs(v) > 1e-6 else None for v in s]
+
+    unidad_evento = ind.get("unidad_evento", ind.get("unidad", ""))
+    ult, pct = _variacion(g_barra)
+    card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        valor=_fmt_num(ult), pct=pct, marca_fecha=None,
+        maxv=_fmt_num(g_barra["valor"].max()), minv=_fmt_num(g_barra["valor"].min()), nota_num=None,
+        subtitulo=ind.get("subtitulo"), grande=ind.get("grande", False),
+        sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
+
+    serie_js = dict(i=idx, kind="combo_evento", unidad_barra=ind.get("unidad", ""), unidad_evento=unidad_evento,
+        label_barra=nombre_barra, label_evento=nombre_evento,
+        x=[d.strftime("%m/%y") for d in fechas_s],
+        full_x=[d.strftime("%m/%y") for d in fechas_full],
+        full_dates=[d.isoformat() for d in fechas_full],
+        barra=_vals(barra_full.reindex(fechas_s)), full_barra=_vals(barra_full),
+        evento=_vals_evento(evento_full.reindex(fechas_s)), full_evento=_vals_evento(evento_full))
+    return card, serie_js
+
+
 COLORES_OVERLAY = ["#0767A7", "#C62828", "#2E7D33", "#8D2D04", "#6A1B99", "#EF6C00"]
 
 
@@ -614,6 +721,39 @@ def _serie_sectores_bar(idx, ind, historico):
     return card, serie_js
 
 
+def _con_huecos_explicitos(df):
+    """
+    Punto 3 del checklist (PROMPT_fix_graficos_y_storytelling.md): si una serie tiene un
+    hueco de historia mucho más grande que su cadencia habitual (ej. Reservas ajustadas,
+    sin datos entre dic-2022 y jul-2024, nota *10), Chart.js conecta el último punto antes
+    del hueco con el primero después con una línea recta -- sugiere una transición suave
+    que no existe. Se inserta un punto sintético con valor None a mitad del hueco para que
+    Chart.js corte la línea ahí (spanGaps no está activado en baseOpts/overlayOpts para el
+    caso base, así que un None sí corta). Genérico y data-driven: el umbral de "hueco
+    grande" sale de la mediana real de intervalos de CADA serie, no de una fecha fija --
+    aplica a cualquier serie con huecos, no sólo a Reservas ajustadas.
+    """
+    if len(df) < 3:
+        return df
+    deltas = df["fecha"].diff().dropna().dt.days
+    if deltas.empty:
+        return df
+    mediana = deltas.median()
+    if mediana <= 0:
+        return df
+    umbral = max(mediana * 4, 45)  # piso de 45 días: no reaccionar al jitter normal de series diarias
+    filas = [df.iloc[0]]
+    fechas = df["fecha"].reset_index(drop=True)
+    valores = df["valor"].reset_index(drop=True)
+    for i in range(1, len(df)):
+        gap_dias = (fechas[i] - fechas[i - 1]).days
+        if gap_dias > umbral:
+            fecha_media = fechas[i - 1] + pd.Timedelta(days=gap_dias // 2)
+            filas.append(pd.Series({"fecha": fecha_media, "valor": None}))
+        filas.append(pd.Series({"fecha": fechas[i], "valor": valores[i]}))
+    return pd.DataFrame(filas).reset_index(drop=True)
+
+
 def _registrar_nota(nota, nombre, notas_dict):
     """Registra (o encuentra) el número de asterisco de una nota, dedupe por texto."""
     if not nota:
@@ -641,7 +781,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         nota = ind.get("nota")
         if ind.get("solo_componente"):
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
-        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas"):
+        if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas", "combo_barras_evento", "combo_rezago"):
             if ind["vista"] == "overlay":
                 entrada = _serie_overlay(idx, ind, historico)
             elif ind["vista"] == "incidencia_stack":
@@ -654,6 +794,10 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                 entrada = _serie_combo_barras_linea(idx, ind, historico)
             elif ind["vista"] == "combo_2lineas":
                 entrada = _serie_combo_2lineas(idx, ind, historico)
+            elif ind["vista"] == "combo_barras_evento":
+                entrada = _serie_combo_barras_evento(idx, ind, historico)
+            elif ind["vista"] == "combo_rezago":
+                entrada = _serie_combo_rezago(idx, ind, historico)
             else:
                 entrada = _serie_sectores_bar(idx, ind, historico)
             if entrada is None:
@@ -694,11 +838,23 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             dias_atraso = (pd.Timestamp.today().normalize() - serie["fecha"].max()).days
             if dias_atraso > UMBRAL_DISCONTINUADA_DIAS:
                 marca_fecha = f"Sin datos nuevos desde {serie['fecha'].max().strftime('%m/%Y')}"
+        # Punto 4 del checklist (PROMPT_fix_graficos_y_storytelling.md): una serie con muy
+        # pocos puntos porque recién empieza a trackearse (ej. datos de snapshot del MAE, que
+        # no tienen historia previa posible) se ve como un gráfico de línea roto/vacío -- se
+        # muestra sólo el valor puntual en la card, sin canvas ni filtros, hasta acumular
+        # suficiente historia. Se recalcula solo en cada corrida (no una fecha fija): en
+        # cuanto la serie cruza el umbral, el gráfico completo vuelve a aparecer sin tocar código.
+        acumulando = (f"Acumulando historia — disponible en unas semanas "
+                      f"({len(serie)}/{UMBRAL_HISTORIA_MINIMA} observaciones)"
+                      if len(serie) < UMBRAL_HISTORIA_MINIMA else None)
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
             unidad=unidad, valor=_fmt_num(ult), pct=pct, marca_fecha=marca_fecha,
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num,
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
-            subtitulo=ind.get("subtitulo")))
+            subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando)))
+        if acumulando:
+            idx += 1
+            continue
         if ind.get("vista") == "reservas_combo":
             series_js.append(_serie_reservas_combo(idx, color, unidad, serie, desde))
         else:
@@ -713,17 +869,20 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                 paso = -(-len(vieja) // MAX_PUNTOS_VIEJOS)  # ceil division
                 vieja = vieja.iloc[::paso]
             full = pd.concat([vieja, reciente]).sort_values("fecha")
+            full = _con_huecos_explicitos(full)
             full_x = [d.strftime("%d/%m/%y") for d in full["fecha"]]
-            full_y = [round(float(v), 2) for v in full["valor"]]
+            full_y = [round(float(v), 2) if pd.notna(v) else None for v in full["valor"]]
             full_dates = [d.isoformat() for d in full["fecha"]]  # ISO para comparación
             # Datos filtrados (para vista por defecto)
-            s_x = [d.strftime("%d/%m/%y") for d in s["fecha"]]
-            s_y = [round(float(v), 2) for v in s["valor"]]
+            s_gap = _con_huecos_explicitos(s)
+            s_x = [d.strftime("%d/%m/%y") for d in s_gap["fecha"]]
+            s_y = [round(float(v), 2) if pd.notna(v) else None for v in s_gap["valor"]]
             series_js.append(dict(i=idx, color=color, unidad=unidad,
                 kind="bar" if ind.get("barras") else "line",
                 x=s_x, y=s_y,  # Datos filtrados (default)
                 full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
-                min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat()))
+                min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat(),
+                eventos=ind.get("eventos")))
         idx += 1
     # extra_charts: tarjetas/gráficos armados fuera del loop yaml-driven de arriba (ej. muro de
     # vencimientos, curvas snapshot) -- fetchers.py/run.py los arma ya con card/serie_js casi
@@ -865,7 +1024,22 @@ def _card_cell(c):
             f'<div class="rango-custom" data-idx="{c["i"]}"><input type="date" class="rango-desde">'
             '<span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div>'
         )
-    grande = c.get("sin_filtros") or c.get("grande")
+    # Selector de rezago (Punto 2.1 del checklist storytelling, PROMPT_fix_graficos_y_storytelling.md):
+    # en vez de que el equipo elija UN rezago "correcto" entre una serie de emisión/política y
+    # una de resultado, se muestran botones para que el usuario explore 0/3/6/12 meses de
+    # desplazamiento -- todas las variantes ya vienen precalculadas server-side (ver
+    # _serie_combo_rezago), el click sólo cambia qué array se muestra.
+    rezago_btns = ""
+    if c.get("rezagos"):
+        botones = "".join(
+            f'<button class="rezago-btn{" active" if r == 0 else ""}" data-rezago="{r}">'
+            f'{"Sin rezago" if r == 0 else f"+{r}m"}</button>'
+            for r in c["rezagos"])
+        rezago_btns = f'<div class="rezago-btns" data-idx="{c["i"]}">{botones}</div>'
+    # "Acumulando historia" (Punto 4 del checklist): sin_filtros=True acá también, pero la
+    # tarjeta se queda de tamaño normal (no "grande") -- a diferencia de sectores_bar/muro/DDF,
+    # que sí usan sin_filtros para gráficos grandes, este es sólo un mensaje corto.
+    grande = c.get("grande") or (c.get("sin_filtros") and not c.get("acumulando"))
     cell_cls = "cell cell-ancha" if grande else "cell"
     cbox_cls = "cbox cbox-grande" if grande else "cbox"
     # Aclaración corta debajo del título (ej. grupo "Reservas", donde varios gráficos parecidos
@@ -875,11 +1049,18 @@ def _card_cell(c):
     # acá (se aplica a las ~38 tarjetas automáticamente) -- el JS compartido (fullscreenPlugin
     # más abajo) escucha el click y expande el .cell entero via Fullscreen API nativa.
     fs_btn = '<button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>'
+    # Sin canvas ni botón de pantalla completa (no hay gráfico que expandir): un mensaje corto
+    # en vez del .cbox, mismo criterio para cualquier serie con muy pocos puntos (Punto 4).
+    if c.get("acumulando"):
+        return (f'<div class="{cell_cls}"><div class="card" style="--acc:{c["color"]}">'
+                f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
+                f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
+                f'</div><div class="acumulando">⏳ {c["acumulando"]}</div>{nota_mark}</div>')
     return (f'<div class="{cell_cls}">{fs_btn}<div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
-            f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{nota_mark}</div>')
+            f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{rezago_btns}{nota_mark}</div>')
 
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
@@ -997,6 +1178,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
   .uni { color:var(--gris); }
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
   .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
+  .acumulando { color:var(--gris); font-size:12px; text-align:center; padding:20px 14px; background:var(--hover); border-radius:0 0 10px 10px; }
   .cbox { height:260px; padding:8px 10px 12px; }
   /* Punto 11 (ronda "continuación"): Pedro quiere TODAS las tarjetas del mismo tamaño por
      ahora, hasta elegir cuáles agrandar a propósito. No se tocaron los flags grande/
@@ -1011,6 +1193,10 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
   .tabla td.sec { text-align:left; background:var(--papel); font-family:"Encode Sans",system-ui,sans-serif; font-weight:400; border:1px solid var(--borde); }
   .tabla td.num { background:var(--papel); color:#333; border:1px solid var(--borde); }
   .filtros { display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
+  .rezago-btns { display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
+  .rezago-btn { background:var(--fondo); border:1px solid var(--borde); color:var(--tinta); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
+  .rezago-btn:hover { background:var(--hover); border-color:var(--gris-claro); }
+  .rezago-btn.active { background:var(--azul-enlace); color:#fff; border-color:var(--azul-enlace); }
   .filtro { background:var(--fondo); border:1px solid var(--borde); color:var(--tinta); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
   .filtro:hover { background:var(--hover); border-color:var(--gris-claro); }
   .filtro.active { background:var(--azul-enlace); color:#fff; border-color:var(--azul-enlace); }
@@ -1041,15 +1227,68 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
 <script>
 const SERIES = __DATA__;
 const charts = {};
-const baseOpts = (unidad) => ({
+// Lookup por s.i (el idx de la tarjeta), NO por posición en SERIES: las tarjetas "acumulando
+// historia" consumen un idx sin agregar serie, así que SERIES[idx] queda corrido desde la
+// primera de ellas y los botones de filtro/rezago de los gráficos siguientes apuntarían a otra serie.
+const SERIE_POR_I = {};
+SERIES.forEach(s => { SERIE_POR_I[s.i] = s; });
+// 'eventos' (opcional): [{fecha:"dd/mm/yy", texto:"..."}, ...] -- anotaciones de eventos
+// puntuales (ej. cambios de política cambiaria) dibujadas por eventosPlugin. El texto sale
+// del tooltip normal de Chart.js (afterBody), no un tooltip nuevo -- pasar el mouse cerca de
+// la fecha anotada ya muestra el texto corto de esa fecha junto al valor de la serie.
+const baseOpts = (unidad, eventos) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
   plugins:{ legend:{display:false}, tooltip:{
-    callbacks:{ label:(c)=> c.parsed.y.toLocaleString('es-AR') + (unidad? ' '+unidad:'') } } },
+    callbacks:{ label:(c)=> c.parsed.y.toLocaleString('es-AR') + (unidad? ' '+unidad:''),
+      afterBody: eventoTooltip(eventos) } } },
   scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
            y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
 });
+
+// Anotaciones de eventos puntuales sobre CUALQUIER gráfico de línea/barra estándar (Punto 2.2
+// del checklist storytelling, PROMPT_fix_graficos_y_storytelling.md) -- generaliza el mismo
+// mecanismo visual que ya usaba cruceOverlayPlugin (línea vertical punteada + texto en el
+// tooltip normal al pasar el mouse cerca) para una LISTA de eventos en vez de un solo punto
+// calculado. La lista de eventos (fechas/texto) es contenido editorial: se define en
+// indicadores.yaml, no acá.
+function eventoTooltip(eventos) {
+  return (items) => {
+    if (!eventos || !eventos.length || !items.length) return [];
+    const ev = eventos.find(e => e.fecha === items[0].label);
+    return ev ? [`▾ ${ev.texto}`] : [];
+  };
+}
+
+function eventosPlugin(eventos) {
+  return {
+    id: 'eventosPolitica',
+    afterDatasetsDraw(chart) {
+      if (!eventos || !eventos.length) return;
+      const { ctx, chartArea, scales } = chart;
+      eventos.forEach(ev => {
+        const i = chart.data.labels.indexOf(ev.fecha);
+        if (i === -1) return;
+        const x = scales.x.getPixelForValue(i);
+        ctx.save();
+        ctx.strokeStyle = '#8D2D04';
+        ctx.setLineDash([4, 3]);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, chartArea.top);
+        ctx.lineTo(x, chartArea.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#8D2D04';
+        ctx.font = '10px "Encode Sans", system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('▾', x, chartArea.top - 1);
+        ctx.restore();
+      });
+    }
+  };
+}
 
 function calcFechaCorte(rango) {
   const hoy = new Date();
@@ -1125,6 +1364,21 @@ function filtrarDatos(s, rango) {
       x: indices.map(i => s.full_x[i]),
       izq: indices.map(i => s.full_izq[i]),
       der: indices.map(i => s.full_der[i]),
+    };
+  }
+  if (s.kind === 'combo_evento') {
+    if (rango === 'default') {
+      return { x: s.x, barra: s.barra, evento: s.evento };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, barra: s.barra, evento: s.evento };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barra: indices.map(i => s.full_barra[i]),
+      evento: indices.map(i => s.full_evento[i]),
     };
   }
   if (rango === 'default') {
@@ -1210,6 +1464,13 @@ function filtrarDatosPersonalizado(s, desde, hasta) {
       x: indices.map(i => s.full_x[i]),
       izq: indices.map(i => s.full_izq[i]),
       der: indices.map(i => s.full_der[i]),
+    };
+  }
+  if (s.kind === 'combo_evento') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barra: indices.map(i => s.full_barra[i]),
+      evento: indices.map(i => s.full_evento[i]),
     };
   }
   return {
@@ -1319,6 +1580,25 @@ const comboBLOpts = (unidadBarras, unidadLinea) => ({
            y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarras, font:{size:9}, color:'#838383'} },
            y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadLinea, font:{size:9}, color:'#838383'} } },
   elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+});
+
+// Combo de una serie CONTINUA (barra, eje izquierdo) + una de EVENTO DISCRETO (marcadores
+// puntuales sin conectar, eje derecho -- ver _serie_combo_barras_evento en Python). Los
+// valores 'null' en el dataset de evento (meses sin evento) simplemente no dibujan marcador
+// -- con showLine:false Chart.js nunca conecta los puntos con una línea, así que un evento
+// que ocurre 1-2 veces al año no se lee como una serie continua con huecos.
+const comboEventoOpts = (unidadBarra, unidadEvento) => ({
+  responsive:true, maintainAspectRatio:false, animation:false,
+  interaction:{ mode:'index', intersect:false },
+  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
+    tooltip:{ callbacks:{ label:(c)=> {
+        if (c.parsed.y == null) return null;
+        const unidad = c.dataset.yAxisID === 'y1' ? unidadEvento : unidadBarra;
+        return `${c.dataset.label}: ${c.parsed.y.toLocaleString('es-AR')} ${unidad}`;
+      } } } },
+  scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
+           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarra, font:{size:9}, color:'#838383'} },
+           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadEvento, font:{size:9}, color:'#838383'} } }
 });
 
 // Combo de DOS líneas en dos ejes (ver _serie_combo_2lineas en Python): a diferencia de
@@ -1488,6 +1768,19 @@ SERIES.forEach(s => {
         { type:'line', label:s.label_izq, data:s.izq, borderColor:'#0767A7', backgroundColor:'#0767A714', yAxisID:'y', fill:false },
         { type:'line', label:s.label_der, data:s.der, borderColor:'#C62828', backgroundColor:'#C6282814', yAxisID:'y1', fill:false },
       ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
+  } else if (s.kind === 'combo_rezago') {
+    const v0 = s.variantes[String(s.rezago_default)];
+    charts[s.i] = new Chart(ctx, { data:{ labels:v0.x, datasets:[
+        { type:'line', label:s.label_izq, data:v0.izq, borderColor:'#0767A7', backgroundColor:'#0767A714', yAxisID:'y', fill:false },
+        { type:'line', label:s.label_der, data:v0.der, borderColor:'#C62828', backgroundColor:'#C6282814', yAxisID:'y1', fill:false },
+      ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
+  } else if (s.kind === 'combo_evento') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor:'#0767A7', yAxisID:'y' },
+        { type:'line', label:s.label_evento, data:s.evento, showLine:false, pointRadius:6,
+          pointHoverRadius:8, pointBackgroundColor:'#C62828', pointBorderColor:'#fff',
+          pointBorderWidth:1.5, yAxisID:'y1' },
+      ]}, options: comboEventoOpts(s.unidad_barra, s.unidad_evento) });
   } else if (s.kind === 'muro') {
     charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
         { label:d.label, data:d.y, backgroundColor:d.color }
@@ -1495,7 +1788,7 @@ SERIES.forEach(s => {
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
       data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
-      options: baseOpts(s.unidad) });
+      options: baseOpts(s.unidad, s.eventos), plugins: s.eventos ? [eventosPlugin(s.eventos)] : [] });
   }
 });
 
@@ -1530,6 +1823,9 @@ function aplicarFiltro(idx, serie, rango, datFiltrados) {
   } else if (serie.kind === 'combo_2lineas') {
     charts[idx].data.datasets[0].data = datFiltrados.izq;
     charts[idx].data.datasets[1].data = datFiltrados.der;
+  } else if (serie.kind === 'combo_evento') {
+    charts[idx].data.datasets[0].data = datFiltrados.barra;
+    charts[idx].data.datasets[1].data = datFiltrados.evento;
   } else {
     charts[idx].data.datasets[0].data = datFiltrados.y;
   }
@@ -1544,7 +1840,7 @@ document.querySelectorAll('.filtro[data-rango]').forEach(btn => {
     const filtrosContainer = this.closest('.filtros');
     const idx = parseInt(filtrosContainer.dataset.idx);
     const rango = this.dataset.rango;
-    const serie = SERIES[idx];
+    const serie = SERIE_POR_I[idx];
     if (!serie || !charts[idx]) return;
 
     // Actualizar estado del botón
@@ -1563,12 +1859,32 @@ document.querySelectorAll('.filtro[data-rango]').forEach(btn => {
   });
 });
 
+// Selector de rezago (Punto 2.1 storytelling): swap de qué variante precalculada (0/3/6/12
+// meses de desplazamiento) se muestra -- todo el cálculo ya vino hecho de Python, acá sólo
+// se reemplazan labels/datasets del chart ya creado, mismo patrón liviano que aplicarFiltro.
+document.querySelectorAll('.rezago-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const container = this.closest('.rezago-btns');
+    const idx = parseInt(container.dataset.idx);
+    const serie = SERIE_POR_I[idx];
+    if (!serie || !charts[idx]) return;
+    const variante = serie.variantes[this.dataset.rezago];
+    if (!variante) return;
+    container.querySelectorAll('.rezago-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    charts[idx].data.labels = variante.x;
+    charts[idx].data.datasets[0].data = variante.izq;
+    charts[idx].data.datasets[1].data = variante.der;
+    charts[idx].update('none');
+  });
+});
+
 // "Aplicar" del rango personalizado (Punto 6)
 document.querySelectorAll('.rango-aplicar').forEach(btn => {
   btn.addEventListener('click', function() {
     const container = this.closest('.rango-custom');
     const idx = parseInt(container.dataset.idx);
-    const serie = SERIES[idx];
+    const serie = SERIE_POR_I[idx];
     if (!serie || !charts[idx]) return;
     const desde = container.querySelector('.rango-desde').value;
     const hasta = container.querySelector('.rango-hasta').value;
