@@ -5,10 +5,13 @@ el mail programado para las 08:00 arrancó todos los días con **4 a 9,5 horas d
 eso ahora los dos workflows se disparan desde afuera, a la hora exacta, con la API
 `workflow_dispatch`. El `schedule` de GitHub queda sólo como respaldo.
 
+**Estado:** configurado por Pedro en cron-job.org el 05/11/2026 (las corridas de las 10:01 y
+10:07 de ese día fueron sus ejecuciones de prueba).
+
 | Workflow | Hora (AR) | Días | Respaldo de GitHub |
 |---|---|---|---|
-| `coyuntura.yml` (datos) | **07:00** | todos | 09:53 UTC |
-| `email_diario.yml` (mail) | **08:00** | lun a vie | 11:47 UTC (08:47 AR) |
+| `coyuntura.yml` (datos) | **06:30** | todos | 09:53 UTC (06:53 AR) |
+| `email_diario.yml` (mail) | **07:00** | lun a vie | 11:47 UTC (08:47 AR) |
 
 > ⚠️ **El token (PAT) NO va al repo.** Ni en un archivo, ni en un commit, ni en un secret de
 > GitHub. Vive sólo en el job de cron-job.org (y en tu gestor de contraseñas).
@@ -56,10 +59,10 @@ curl -i -X POST \
    Si el job tiene su propio campo de zona horaria, ponela también ahí.
 3. Creá un cronjob nuevo con estos datos:
 
-**Job 1: Datos 07:00**
+**Job 1: Datos 06:30**
 - **URL:**
   `https://api.github.com/repos/PedroTh31/Coyuntura-Pedro-Thill/actions/workflows/coyuntura.yml/dispatches`
-- **Horario:** todos los días, 07:00.
+- **Horario:** todos los días, 06:30.
 - **Método:** `POST`.
 - **Headers:**
   - `Authorization: Bearer <PAT>`
@@ -67,10 +70,10 @@ curl -i -X POST \
   - `X-GitHub-Api-Version: 2022-11-28`
 - **Body:** `{"ref":"main"}`
 
-**Job 2: Mail 08:00**
+**Job 2: Mail 07:00**
 - **URL:**
   `https://api.github.com/repos/PedroTh31/Coyuntura-Pedro-Thill/actions/workflows/email_diario.yml/dispatches`
-- **Horario:** lunes a viernes, 08:00.
+- **Horario:** lunes a viernes, 07:00.
 - **Método, headers y body:** iguales al Job 1.
 
 4. Activá las notificaciones por mail de cron-job.org **cuando el job falle**. Así te enterás
@@ -80,10 +83,10 @@ curl -i -X POST \
 
 ## 4. Qué pasa cada día
 
-1. **07:00** cron-job.org dispara `coyuntura.yml`. Corre `run.py` (unos 6 minutos), commitea
+1. **06:30** cron-job.org dispara `coyuntura.yml`. Corre `run.py` (unos 6 minutos), commitea
    `data/` y `docs/`, y escribe `data/ultima_corrida.json` con la fecha, la hora y el estado
-   por fuente.
-2. **08:00** cron-job.org dispara `email_diario.yml`. Si ya se mandó el mail de hoy, sale sin
+   por fuente. Termina alrededor de las 06:40: quedan unos 20 minutos de margen hasta el mail.
+2. **07:00** cron-job.org dispara `email_diario.yml`. Si ya se mandó el mail de hoy, sale sin
    mandar. Si no:
    - si `ultima_corrida.json` es de hoy, manda con los datos commiteados (el job tarda menos
      de 1 minuto);
@@ -107,8 +110,15 @@ Cuando se acerque el vencimiento:
 
 ### Vencimiento del token
 
-- Token actual creado el: `____/____/______`
-- **Vence el: `____/____/______`**. Ponete un recordatorio una semana antes.
+- **Token de GitHub (`cron-job-coyuntura`): vence el 05/11/2027.** Recordatorio una semana
+  antes: 29/10/2027.
 
 Si el token vence sin que lo renueves, el mail no se corta del todo: sigue saliendo por el
 respaldo de GitHub, pero con las demoras de horas de antes.
+
+### Otras credenciales con vencimiento
+
+- **Token de la API del INDEC: vence el 04/05/2027** (campo `exp` del propio token; 180
+  días). Todavía no lo usa el pipeline: es para la ronda pendiente
+  `PROMPT_ronda_macro_indec.md`. Igual que el PAT, el
+  token nunca va al repo (en Actions va como secret `INDEC_API_TOKEN`, según ese prompt).

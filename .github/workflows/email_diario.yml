@@ -1,7 +1,7 @@
-name: Mail de coyuntura (lun-vie, 8am Argentina)
+name: Mail de coyuntura (lun-vie, 7am Argentina)
 
 on:
-  # Disparo PRINCIPAL: externo, desde cron-job.org a las 08:00 AR, vía la API de
+  # Disparo PRINCIPAL: externo, desde cron-job.org a las 07:00 AR, vía la API de
   # workflow_dispatch (paso a paso en docs_internos/DISPARO_EXTERNO.md). El cron de GitHub
   # es best effort: entre el 08/10 y el 04/11/2026 arrancó con 4 a 9,5 horas de demora
   # todos los días, así que queda sólo como RESPALDO.
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           # La punta de main al arrancar (no el SHA del evento): así se ven los datos que
-          # commiteó coyuntura.yml a las 7 y el mail_enviado.json de una corrida anterior.
+          # commiteó coyuntura.yml a las 06:30 y el mail_enviado.json de una corrida anterior.
           ref: main
       - uses: actions/setup-python@v5
         with:

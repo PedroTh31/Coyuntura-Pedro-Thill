@@ -548,7 +548,7 @@ def enviar(html):
 
 # --- Bloque 1 de PROMPT_mail_v3.md: frescura de datos + guardia anti-duplicado ---------------
 # El workflow del mail ya no corre run.py siempre: lee lo que dejó commiteado coyuntura.yml
-# (07:00 AR) y sólo corre run.py como fallback si data/ultima_corrida.json no es de hoy.
+# (06:30 AR) y sólo corre run.py como fallback si data/ultima_corrida.json no es de hoy.
 # data/mail_enviado.json registra el último envío: si ya es de hoy, no se manda otro (cubre
 # el disparo externo + el schedule de respaldo + disparos manuales).
 ULTIMA_CORRIDA = RAIZ / "data" / "ultima_corrida.json"

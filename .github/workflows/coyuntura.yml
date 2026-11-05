@@ -1,7 +1,7 @@
 name: Actualizar coyuntura
 
 on:
-  # Disparo PRINCIPAL: externo, desde cron-job.org a las 07:00 AR (una hora antes del mail),
+  # Disparo PRINCIPAL: externo, desde cron-job.org a las 06:30 AR (media hora antes del mail),
   # vía la API de workflow_dispatch. Ver docs_internos/DISPARO_EXTERNO.md.
   workflow_dispatch:
   schedule:

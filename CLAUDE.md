@@ -45,13 +45,15 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `indicadores.yaml` — **el único archivo que se edita normalmente**. Define cada serie, en
   dos listas top-level: `indicadores` (macro, `docs/index.html`) e `indicadores_financiera`
   (`docs/financiera.html`).
-- `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario (07:00 AR) y
-  `email_diario.yml` manda el mail de lunes a viernes (08:00 AR). **El disparo principal de
-  los dos es externo** (cron-job.org → API `workflow_dispatch`, paso a paso y vencimiento del
-  PAT en `docs_internos/DISPARO_EXTERNO.md`; el PAT nunca va al repo): el `schedule` de
-  GitHub arrancaba con 4-9,5 h de demora (medido oct-nov 2026) y quedó sólo como respaldo
-  (09:53 y 11:47 UTC). Datos y envío están separados: `run.py` escribe al final
-  `data/ultima_corrida.json` (fecha/hora AR + estado por fuente); el mail NO corre `run.py`
+- `.github/workflows/` — `coyuntura.yml` corre el pipeline a diario (06:30 AR) y
+  `email_diario.yml` manda el mail de lunes a viernes (07:00 AR). **El disparo principal de
+  los dos es externo** (cron-job.org → API `workflow_dispatch`, configurado por Pedro el
+  05/11/2026; paso a paso en `docs_internos/DISPARO_EXTERNO.md`; el PAT nunca va al repo): el
+  `schedule` de GitHub arrancaba con 4-9,5 h de demora (medido oct-nov 2026) y quedó sólo como
+  respaldo (09:53 y 11:47 UTC = 06:53 y 08:47 AR). **Vencimientos:** PAT de GitHub
+  05/11/2027; token de la API del INDEC 04/05/2027 (campo `exp` del token, 180 días, todavía
+  sin uso en el código).
+  Datos y envío están separados: `run.py` escribe al final `data/ultima_corrida.json` (fecha/hora AR + estado por fuente); el mail NO corre `run.py`
   salvo como fallback si ese archivo no es de hoy (con warning en el log y una línea "Datos
   actualizados al momento del envío" en el mail). Guardia anti-duplicado:
   `data/mail_enviado.json` (si es de hoy, no se reenvía) + `concurrency: mail-diario`.
@@ -357,6 +359,12 @@ licitaciones, panel líder completo (20 símbolos) más allá del ranking por vo
 Ver el prompt de tareas. En general: filtros de años por gráfico, más desagregados, y series que
 todavía no tienen fuente confiable identificada: patentamientos exactos (ACARA, sin datos
 abiertos), turismo, escrituras, ISAC.
+
+**Token del INDEC (para `PROMPT_ronda_macro_indec.md`):** el prompt (punto A5) asume que el
+token vence a los 12 meses de `INDEC_TOKEN_FECHA`, pero vence a los **180 días** (el actual,
+el 04/05/2027, según el campo `exp` del propio token). Al implementar el aviso de
+vencimiento, conviene leer `exp` del token en vez de calcular un plazo fijo; confirmarlo con
+Pedro antes.
 
 **Filtro de noticias — ejemplos marcados por Pedro para la próxima ronda (NO tocados todavía):**
 - NO va en Internacional (2026-11-05, BBC Mundo, feeds.bbci.co.uk/mundo/rss.xml). Pasa

@@ -52,14 +52,15 @@ Ver `CLAUDE.md` para el resto de los campos soportados (`calculo`, `vista`, `tab
 
 ## Automatización (corre solo, sin prender la compu)
 El proyecto usa **GitHub Actions**:
-- `.github/workflows/coyuntura.yml` — corre **a diario** (12:00 UTC), actualiza los
-  CSV y el dashboard, y commitea los cambios. También se puede disparar a mano
-  desde la pestaña **Actions**.
+- `.github/workflows/coyuntura.yml` — corre **a diario** a las 06:30 hora Argentina,
+  actualiza los CSV y el dashboard, y commitea los cambios. También se puede disparar a
+  mano desde la pestaña **Actions**.
 - `.github/workflows/email_diario.yml` — manda un mail resumen de lunes a viernes a
-  las 8:00 hora Argentina (indicadores clave + noticias). Necesita los secrets
-  `GMAIL_USER`, `GMAIL_APP_PASSWORD` y opcionalmente `MAIL_TO`. GitHub Actions no
-  garantiza el minuto exacto de disparo de un cron: en horas pico puede haber demoras
-  de 10 a 60+ minutos: no es un bug, es una limitación conocida de la plataforma.
+  las 07:00 hora Argentina (indicadores clave + noticias). Necesita los secrets
+  `GMAIL_USER`, `GMAIL_APP_PASSWORD` y opcionalmente `MAIL_TO`.
+- Los dos se disparan desde **cron-job.org** a la hora exacta (paso a paso en
+  `docs_internos/DISPARO_EXTERNO.md`). El cron propio de GitHub Actions llegaba con horas
+  de demora, así que quedó sólo como respaldo (06:53 y 08:47 hora Argentina).
 
 En **Settings → Actions → General** hay que dejar activado "Read and write
 permissions" para que el workflow pueda commitear.
