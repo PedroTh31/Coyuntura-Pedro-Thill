@@ -6797,6 +6797,7 @@
 2026-11-02,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.314102564102564
 2026-11-03,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.709265175718859
 2026-11-04,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.2929936305732515
+2026-11-05,Brecha cambiaria (CCL/oficial),monetario_financiero,%,7.0318471337579735
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -10522,6 +10523,7 @@
 2026-11-02,Canje MEP/CCL,mercados,%,5.301587301587296
 2026-11-03,Canje MEP/CCL,mercados,%,5.702892588138475
 2026-11-04,Canje MEP/CCL,mercados,%,5.546771235215986
+2026-11-05,Canje MEP/CCL,mercados,%,5.778673045448834
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -18370,6 +18372,7 @@
 2026-11-02,Dólar CCL,monetario_financiero,$/USD (venta),1658.5
 2026-11-03,Dólar CCL,monetario_financiero,$/USD (venta),1670.0
 2026-11-04,Dólar CCL,monetario_financiero,$/USD (venta),1668.8
+2026-11-05,Dólar CCL,monetario_financiero,$/USD (venta),1680.4
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -21299,6 +21302,7 @@
 2026-11-02,Dólar MEP,monetario_financiero,$/USD (venta),1575.0
 2026-11-03,Dólar MEP,monetario_financiero,$/USD (venta),1579.9
 2026-11-04,Dólar MEP,monetario_financiero,$/USD (venta),1581.1
+2026-11-05,Dólar MEP,monetario_financiero,$/USD (venta),1588.6
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -27084,6 +27088,7 @@
 2026-11-02,Dólar blue,monetario_financiero,$/USD (venta),1565.0
 2026-11-03,Dólar blue,monetario_financiero,$/USD (venta),1565.0
 2026-11-04,Dólar blue,monetario_financiero,$/USD (venta),1570.0
+2026-11-05,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32869,6 +32874,7 @@
 2026-11-02,Dólar oficial,monetario_financiero,$/USD (venta),1560.0
 2026-11-03,Dólar oficial,monetario_financiero,$/USD (venta),1565.0
 2026-11-04,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
+2026-11-05,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.1861793165596
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238072
@@ -55050,6 +55056,7 @@
 2026-10-30,Riesgo país (EMBI),monetario_financiero,puntos básicos,787.0
 2026-11-02,Riesgo país (EMBI),monetario_financiero,puntos básicos,805.0
 2026-11-03,Riesgo país (EMBI),monetario_financiero,puntos básicos,831.0
+2026-11-04,Riesgo país (EMBI),monetario_financiero,puntos básicos,852.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -55578,6 +55585,7 @@
 2026-10-30,S&P MERVAL,mercados,puntos,92079.66
 2026-11-02,S&P MERVAL,mercados,puntos,89026.48
 2026-11-03,S&P MERVAL,mercados,puntos,90446.71
+2026-11-04,S&P MERVAL,mercados,puntos,88238.32
 2016-12-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,100.0
 2017-01-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.96155281207378
 2017-02-01,Salario real (deflactado por IPC),social,índice base 100 al inicio,99.23180116781083
@@ -56375,7 +56383,7 @@
 2026-11-02,TIR AL30 (USD),mercados,% anual,12.132624068007217
 2026-11-03,TIR AL30 (USD),mercados,% anual,12.138691394865832
 2026-11-04,TIR AL30 (USD),mercados,% anual,16.373921266342762
-2026-11-05,TIR AL30 (USD),mercados,% anual,16.381462800398918
+2026-11-05,TIR AL30 (USD),mercados,% anual,16.394392501755316
 2026-09-01,TIR GD30 (USD),mercados,% anual,6.39215203771069
 2026-09-02,TIR GD30 (USD),mercados,% anual,6.398502202900586
 2026-09-11,TIR GD30 (USD),mercados,% anual,6.287093028412026
