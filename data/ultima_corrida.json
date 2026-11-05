@@ -1,0 +1,171 @@
+{
+  "fecha": "2026-11-04",
+  "hora": "22:58:52",
+  "zona": "America/Argentina/Buenos_Aires",
+  "estado": "parcial",
+  "disparo": "workflow_dispatch",
+  "por_fuente": {
+    "argentinadatos": {
+      "ok": 2,
+      "falla": 0
+    },
+    "bcra": {
+      "ok": 11,
+      "falla": 0
+    },
+    "bcra_morosidad_lineas": {
+      "ok": 3,
+      "falla": 0
+    },
+    "byma": {
+      "ok": 1,
+      "falla": 0
+    },
+    "calculo:acumulado_12m": {
+      "ok": 0,
+      "falla": 1
+    },
+    "calculo:brecha": {
+      "ok": 2,
+      "falla": 0
+    },
+    "calculo:deuda_pbi": {
+      "ok": 1,
+      "falla": 0
+    },
+    "calculo:interanual": {
+      "ok": 1,
+      "falla": 0
+    },
+    "calculo:mensual": {
+      "ok": 3,
+      "falla": 0
+    },
+    "calculo:ratio": {
+      "ok": 0,
+      "falla": 1
+    },
+    "calculo:real": {
+      "ok": 6,
+      "falla": 0
+    },
+    "calculo:reservas_ajustadas": {
+      "ok": 1,
+      "falla": 0
+    },
+    "calculo:resta": {
+      "ok": 0,
+      "falla": 1
+    },
+    "calculo:spread_bono_ust": {
+      "ok": 0,
+      "falla": 1
+    },
+    "calculo:suma": {
+      "ok": 2,
+      "falla": 0
+    },
+    "calculo:tasa_real_expost": {
+      "ok": 1,
+      "falla": 0
+    },
+    "calculo:variacion_real_mensual": {
+      "ok": 1,
+      "falla": 0
+    },
+    "datos_gob": {
+      "ok": 66,
+      "falla": 12
+    },
+    "deuda_bruta": {
+      "ok": 1,
+      "falla": 0
+    },
+    "dolar": {
+      "ok": 4,
+      "falla": 0
+    },
+    "fred": {
+      "ok": 0,
+      "falla": 1
+    },
+    "mae_bono": {
+      "ok": 3,
+      "falla": 0
+    },
+    "mae_resumen": {
+      "ok": 2,
+      "falla": 0
+    }
+  },
+  "problemas": [
+    {
+      "indicador": "IPC división: Recreación y cultura",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "IPC división: Restaurantes y hoteles",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "M2 (agregado total)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Capacidad de compra del salario (RIPTE / CBT)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "EMAE · Construcción",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "EMAE · Otros servicios comunitarios",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Empleo registrado: Hoteles y restaurantes",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Empleo registrado: Inmobiliarias y empresariales",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Balance comercial energético",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Manufacturas de origen industrial (MOI)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Combustibles y energía",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Combustibles y lubricantes",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Piezas y accesorios para bienes de capital",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Resultado primario (Sector Público Nacional)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Resultado primario acumulado 12 meses",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "UST 10Y (Treasury)",
+      "motivo": "error: Falló la consulta a https://fred.stlouisfed.org/graph/fredgraph.csv: HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=30)"
+    },
+    {
+      "indicador": "Spread soberano GD30 vs. UST10Y (proxy)",
+      "motivo": "error: Falló la consulta a https://fred.stlouisfed.org/graph/fredgraph.csv: HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=30)"
+    }
+  ]
+}
