@@ -1594,6 +1594,63 @@ const comboBLOpts = (unidadBarras, unidadLinea) => ({
 // valores 'null' en el dataset de evento (meses sin evento) simplemente no dibujan marcador
 // -- con showLine:false Chart.js nunca conecta los puntos con una línea, así que un evento
 // que ocurre 1-2 veces al año no se lee como una serie continua con huecos.
+// Alinea el cero de los ejes 'y' e 'y1' (decisión de Pedro, gráfico de eventos): sin esto
+// cada eje elige su rango por separado y el cero queda a distinta altura -- un evento chico
+// (eje derecho, siempre >= 0) se dibuja a la altura de un valor negativo del eje izquierdo y
+// se lee como negativo. Los dos ejes usan los mismos N intervalos con el cero en la MISMA
+// marca k (cero alineado y grilla compartida), cada uno con su propio paso "redondo"
+// (1/2/2,5/5 × 10^n), eligiendo el k que menos altura desperdicia. Se recalcula sobre los
+// datos VISIBLES en cada update (también tras un filtro de fecha). Un eje sin rango (ej.
+// Adelantos todos en 0 en el último año) igual sigue el cero del otro.
+const N_INTERVALOS_CERO = 6;
+function _pasoRedondo(x) {
+  const p = Math.pow(10, Math.floor(Math.log10(x)));
+  const m = x / p;
+  return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p;
+}
+function _planCero(chart) {
+  const rangos = { y: { min: 0, max: 0 }, y1: { min: 0, max: 0 } };  // el 0 siempre entra
+  chart.data.datasets.forEach(d => {
+    const r = rangos[d.yAxisID || 'y'];
+    if (!r || chart.getDatasetMeta(chart.data.datasets.indexOf(d)).hidden) return;
+    (d.data || []).forEach(v => { if (v != null && isFinite(v)) { r.min = Math.min(r.min, v); r.max = Math.max(r.max, v); } });
+  });
+  const N = N_INTERVALOS_CERO;
+  let mejor = null;
+  for (let k = 0; k <= N; k++) {  // k = cantidad de intervalos debajo del cero
+    let costo = 0, pasos = {}, posible = true;
+    for (const [id, r] of Object.entries(rangos)) {
+      if (r.max === r.min) { pasos[id] = null; continue; }  // eje sin rango: se resuelve abajo
+      const abajo = r.min < 0 ? (k ? -r.min / k : Infinity) : 0;
+      const arriba = r.max > 0 ? (k < N ? r.max / (N - k) : Infinity) : 0;
+      const necesario = Math.max(abajo, arriba);
+      if (!isFinite(necesario)) { posible = false; break; }
+      pasos[id] = _pasoRedondo(necesario);
+      costo += N * pasos[id] / (r.max - r.min);  // 1 = sin desperdicio
+    }
+    if (posible && (!mejor || costo < mejor.costo)) mejor = { k, pasos, costo };
+  }
+  if (!mejor) return null;
+  // Eje sin rango (todo en 0): toma el paso del otro eje en vez de una escala 0..N inventada
+  // (en este gráfico los dos ejes están en la misma unidad); 1 si ninguno tiene rango.
+  const otroPaso = Object.values(mejor.pasos).find(p => p !== null) || 1;
+  for (const id of Object.keys(mejor.pasos)) if (mejor.pasos[id] === null) mejor.pasos[id] = otroPaso;
+  return { k: mejor.k, N, pasos: mejor.pasos };
+}
+function alinearCeroLimites(scale) {
+  const plan = _planCero(scale.chart);
+  if (!plan) return;
+  const paso = plan.pasos[scale.id];
+  scale.min = -plan.k * paso || 0;  // "|| 0": evita un -0 en el eje
+  scale.max = (plan.N - plan.k) * paso;
+}
+function alinearCeroTicks(scale) {
+  const plan = _planCero(scale.chart);
+  if (!plan) return;
+  const paso = plan.pasos[scale.id];
+  scale.ticks = Array.from({ length: plan.N + 1 }, (_, i) => ({ value: (i - plan.k) * paso || 0 }));
+}
+
 const comboEventoOpts = (unidadBarra, unidadEvento) => ({
   responsive:true, maintainAspectRatio:false, animation:false,
   interaction:{ mode:'index', intersect:false },
@@ -1604,8 +1661,8 @@ const comboEventoOpts = (unidadBarra, unidadEvento) => ({
         return `${c.dataset.label}: ${c.parsed.y.toLocaleString('es-AR')} ${unidad}`;
       } } } },
   scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarra, font:{size:9}, color:'#838383'} },
-           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadEvento, font:{size:9}, color:'#838383'} } }
+           y:{ position:'left', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarra, font:{size:9}, color:'#838383'} },
+           y1:{ position:'right', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadEvento, font:{size:9}, color:'#838383'} } }
 });
 
 // Combo de DOS líneas en dos ejes (ver _serie_combo_2lineas en Python): a diferencia de
