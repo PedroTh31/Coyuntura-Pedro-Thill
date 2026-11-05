@@ -116,7 +116,13 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `calculo: ratio` + `numerador_id` + `denominador_id` → cociente de dos series de datos_gob,
   sin rebase ni indexar (el valor crudo del cociente es la unidad que importa, ej. capacidad de
   compra = salario en pesos ÷ costo de una canasta en pesos = "canastas que compra un salario").
-- `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real).
+- `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real). Por
+  defecto rebasa a índice 100 al inicio de la serie. Con `base_fecha: "AAAA-MM-01"` devuelve
+  en cambio PESOS CONSTANTES de ese mes (nominal × IPC(base) / IPC(t)), ej. Adelantos
+  Transitorios / Transferencia de Utilidades. Mes base FIJO a propósito: la `nota` y la
+  `unidad` lo nombran ("millones de $ de ago-2026"), así que moverlo implica actualizar
+  también esos textos. Falla explícitamente si el IPC no tiene dato en `base_fecha`. Con el
+  IPC 148.3_INIVELNAL_DICI_M_26 la serie real arranca en dic-2016 (inicio de ese IPC).
 - `calculo: brecha` + `casa_alta` + `casa_base` → (alta/base − 1)·100 (brecha cambiaria).
 - `calculo: interanual` + `base_id` → variación % interanual de una serie de datos_gob.
 - `calculo: acumulado_12m` + `base_id` → suma móvil de los últimos 12 meses de una serie de

@@ -118,6 +118,17 @@ def _calcular(ind, start):
         s = s[s["ipc"] > 0].sort_values("fecha")
         if s.empty:
             return s.assign(valor=[])[["fecha", "valor"]]
+        base_fecha = ind.get("base_fecha")
+        if base_fecha:
+            # Pesos constantes de un mes base fijo: nominal × IPC(base) / IPC(t). El IPC del mes
+            # base sale de la serie de IPC (no de la unión con la nominal): la nominal puede no
+            # tener dato ese mes. Mes base fijo (no "el último disponible") para que la nota
+            # metodológica del yaml que lo nombra siga siendo cierta en cada corrida.
+            ipc_base = ipc.loc[ipc["fecha"] == pd.Timestamp(base_fecha), "ipc"]
+            if ipc_base.empty or not ipc_base.iloc[0] > 0:
+                raise ValueError(f"'base_fecha' {base_fecha} sin dato de IPC ({ind['deflactor_id']}) en {ind['nombre']}")
+            s["valor"] = s["nom"] * ipc_base.iloc[0] / s["ipc"]
+            return s[["fecha", "valor"]]
         s["valor"] = s["nom"] / s["ipc"]
         s["valor"] = s["valor"] / s["valor"].iloc[0] * 100   # base 100 al inicio de la serie
         return s[["fecha", "valor"]]

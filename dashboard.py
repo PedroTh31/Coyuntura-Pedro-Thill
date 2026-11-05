@@ -367,10 +367,16 @@ def _serie_combo_rezago(idx, ind, historico):
         fechas_s = fechas_full[fechas_full >= pd.to_datetime(desde)]
         if len(fechas_s) < 2:
             fechas_s = fechas_full
-        izq_full = izq_shift.reindex(fechas_s)
-        der_full = der_m.reindex(fechas_s)
+        # Cada variante trae su vista por defecto (desde 'desde') Y la historia completa
+        # (full_*), para que los filtros de fecha funcionen sobre el rezago elegido: el JS
+        # copia la variante activa a los campos de primer nivel y reusa la misma lógica de
+        # filtrado que combo_2lineas.
         variantes_js[str(r)] = dict(x=[d.strftime("%m/%y") for d in fechas_s],
-                                     izq=_vals(izq_full), der=_vals(der_full))
+                                     izq=_vals(izq_shift.reindex(fechas_s)), der=_vals(der_m.reindex(fechas_s)),
+                                     full_x=[d.strftime("%m/%y") for d in fechas_full],
+                                     full_dates=[d.isoformat() for d in fechas_full],
+                                     full_izq=_vals(izq_shift.reindex(fechas_full)),
+                                     full_der=_vals(der_m.reindex(fechas_full)))
 
     unidad_izq, unidad_der = ind.get("unidad_izq", ""), ind.get("unidad_der", "")
     ult, pct = _variacion(g_der)  # la card resume con la serie de "resultado" (der)
@@ -378,11 +384,12 @@ def _serie_combo_rezago(idx, ind, historico):
         color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_der,
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_der["valor"].max()), minv=_fmt_num(g_der["valor"].min()), nota_num=None,
-        subtitulo=ind.get("subtitulo"), grande=True, sin_filtros=True, rezagos=rezagos,
+        subtitulo=ind.get("subtitulo"), grande=True, rezagos=rezagos,
         sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
 
     serie_js = dict(i=idx, kind="combo_rezago", unidad_izq=unidad_izq, unidad_der=unidad_der,
-        label_izq=nombre_izq, label_der=nombre_der, rezago_default=0, variantes=variantes_js)
+        label_izq=nombre_izq, label_der=nombre_der, rezago_default=0, variantes=variantes_js,
+        **variantes_js["0"])  # campos de primer nivel = variante activa al cargar (sin rezago)
     return card, serie_js
 
 
@@ -1351,7 +1358,7 @@ function filtrarDatos(s, rango) {
       linea: indices.map(i => s.full_linea[i]),
     };
   }
-  if (s.kind === 'combo_2lineas') {
+  if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
     if (rango === 'default') {
       return { x: s.x, izq: s.izq, der: s.der };
     }
@@ -1459,7 +1466,7 @@ function filtrarDatosPersonalizado(s, desde, hasta) {
       linea: indices.map(i => s.full_linea[i]),
     };
   }
-  if (s.kind === 'combo_2lineas') {
+  if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
     return {
       x: indices.map(i => s.full_x[i]),
       izq: indices.map(i => s.full_izq[i]),
@@ -1820,7 +1827,7 @@ function aplicarFiltro(idx, serie, rango, datFiltrados) {
   } else if (serie.kind === 'combo_bl') {
     datFiltrados.barras.forEach((b, i) => { charts[idx].data.datasets[i].data = b.y; });
     charts[idx].data.datasets[datFiltrados.barras.length].data = datFiltrados.linea;
-  } else if (serie.kind === 'combo_2lineas') {
+  } else if (serie.kind === 'combo_2lineas' || serie.kind === 'combo_rezago') {
     charts[idx].data.datasets[0].data = datFiltrados.izq;
     charts[idx].data.datasets[1].data = datFiltrados.der;
   } else if (serie.kind === 'combo_evento') {
@@ -1872,10 +1879,23 @@ document.querySelectorAll('.rezago-btn').forEach(btn => {
     if (!variante) return;
     container.querySelectorAll('.rezago-btn').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
-    charts[idx].data.labels = variante.x;
-    charts[idx].data.datasets[0].data = variante.izq;
-    charts[idx].data.datasets[1].data = variante.der;
-    charts[idx].update('none');
+    // La variante elegida pasa a ser la "serie" que filtran los botones de fecha (mismos
+    // campos x/izq/der/full_* que combo_2lineas), y se reaplica el rango de fecha activo
+    // para que cambiar de rezago no resetee el período que el usuario estaba mirando.
+    Object.assign(serie, variante);
+    const rangoBtn = document.querySelector(`.filtros[data-idx='${idx}'] .filtro.active`);
+    const rango = rangoBtn ? rangoBtn.dataset.rango : 'default';
+    if (rango === 'personalizado') {
+      const custom = document.querySelector(`.rango-custom[data-idx='${idx}']`);
+      const desde = custom && custom.querySelector('.rango-desde').value;
+      const hasta = custom && custom.querySelector('.rango-hasta').value;
+      if (desde && hasta && desde <= hasta) {
+        aplicarFiltro(idx, serie, 'personalizado', filtrarDatosPersonalizado(serie, desde, hasta));
+        return;
+      }
+    }
+    aplicarFiltro(idx, serie, rango === 'personalizado' ? 'default' : rango,
+                  filtrarDatos(serie, rango === 'personalizado' ? 'default' : rango));
   });
 });
 
