@@ -1,9 +1,9 @@
 {
   "fecha": "2026-11-06",
-  "hora": "08:37:06",
+  "hora": "14:07:24",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
-  "disparo": "workflow_dispatch",
+  "disparo": "schedule",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
@@ -98,8 +98,8 @@
       "falla": 2
     },
     "mae_resumen": {
-      "ok": 1,
-      "falla": 1
+      "ok": 0,
+      "falla": 2
     }
   },
   "problemas": [
@@ -145,6 +145,10 @@
     },
     {
       "indicador": "Resultado primario acumulado 12 meses",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Caución en pesos (1 día)",
       "motivo": "vacío"
     },
     {
