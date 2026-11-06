@@ -51,8 +51,9 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   05/11/2026; paso a paso en `docs_internos/DISPARO_EXTERNO.md`; el PAT nunca va al repo): el
   `schedule` de GitHub arrancaba con 4-9,5 h de demora (medido oct-nov 2026) y quedó sólo como
   respaldo (09:53 y 11:47 UTC = 06:53 y 08:47 AR). **Vencimientos:** PAT de GitHub
-  05/11/2027; token de la API del INDEC 04/05/2027 (campo `exp` del token, 180 días, todavía
-  sin uso en el código).
+  05/11/2027; token de la API del INDEC 04/05/2027 (campo `exp` del token, 180 días; lo lee
+  `fuentes_indec.py` para avisar 30 días antes). Secrets de Actions que necesita la API del
+  INDEC: `INDEC_API_TOKEN` (secret) e `INDEC_TOKEN_FECHA` (variable, informativa).
   Datos y envío están separados: `run.py` escribe al final `data/ultima_corrida.json` (fecha/hora AR + estado por fuente); el mail NO corre `run.py`
   salvo como fallback si ese archivo no es de hoy (con warning en el log y una línea "Datos
   actualizados al momento del envío" en el mail). Guardia anti-duplicado:
@@ -63,9 +64,44 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   CSVs históricos versionados, compartidos por las dos páginas (un solo `historico`, cada
   indicador tageado con su propio `bloque`).
 
+- `fuentes_indec.py` — API del INDEC (api.indec.gob.ar/v1, beta, PostgREST, token JWT en
+  `INDEC_API_TOKEN`, local en `.env` gitignoreado; **el token nunca se imprime ni va a
+  logs/HTML/JSON/commits**). `ResolverIndec` intenta la API y, ante error o resultado vacío,
+  cae al fallback (datos.gob.ar o ArgentinaDatos) con un `::warning` en el log; tras un
+  401/403 el resto de la corrida va directo al fallback. Fetcher de bajo nivel:
+  `fetch_indec_tabla`/`fetch_indec_api` en fetchers.py (paginación de a 1000 filas ordenando
+  por la clave completa de la tabla, valida filas == `Content-Range`, reintenta 429/5xx).
+  `cerrar_corrida()` actualiza `data/indec_estado.json` (rachas de fallback, última fuente por
+  indicador, últimas 30 corridas) y manda alertas SOLO a pedrothill31@gmail.com (máx. 1 mail
+  por corrida, desde coyuntura.yml): falla de autenticación (1/día), token a ≤30 días de
+  vencer (semanal), fallback > 3 corridas seguidas (semanal por serie), una serie de fallback
+  de datos.gob con 0 filas (semanal). El dashboard agrega a la nota "Fuente: INDEC (API…)" o
+  "Fuente: INDEC vía …" según la fuente realmente usada, y un pie visible "Fuente: INDEC" bajo
+  cada gráfico con datos del INDEC (atribución). Catálogo de la API y equivalencias
+  verificadas: `fuentes/indec_catalogo.md`, `fuentes/indec_equivalencias.md`. Tests sin red:
+  `tests/test_indec_api.py`, `tests/test_fuentes_indec.py`.
+
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
 - `fuente: datos_gob` + `id: "..."` → apis.datos.gob.ar/series (IPC, EMAE, monetarias,
   fiscal, empleo, comercio exterior). Es el backbone.
+- `equivalencias_indec:` (top-level del yaml) → mapa `id de datos.gob → {tabla, filtros,
+  columna?, variaciones?}` de la API del INDEC, cada uno verificado contra el catálogo real
+  (`fuentes/indec_equivalencias.md`; regla dura #1 vale igual: nada se agrega sin verificar).
+  Cualquier `_dg(id)` de run.py (series directas y componentes de `calculo:`) con equivalencia
+  va primero a la API. `variaciones: {mensual: v_m, interanual: v_ia}` → `calculo:
+  mensual`/`interanual` sobre ese id usa la variación PUBLICADA por el INDEC (no la recalcula
+  desde el índice; si la API falla, la recalcula desde datos.gob como antes).
+- `fuente_primaria: indec_api` + `fuente_fallback: datos_gob_ar|argentinadatos` → serie
+  directa del INDEC. Con `datos_gob_ar` usa la equivalencia de su `id`; con `argentinadatos`
+  declara `indec: {tabla, filtros}` propio + `endpoint` del fallback. `factor_fallback: N` →
+  factor que se aplica SÓLO si se usó el fallback (ej. desempleo: la API publica %, datos.gob
+  fracción). `fecha_fin_mes: true` → normaliza las fechas a fin de mes (convención histórica
+  de esa serie en el CSV, ej. inflación mensual de ArgentinaDatos). Empalme: `storage` pisa
+  fechas repetidas con el dato nuevo y conserva las que la API no tiene (ej. inflación
+  mensual GBA 2017-ene/may y desempleo hasta 3T-2015 quedan de la fuente vieja, documentado
+  en la nota). Ojo: si un día se usa el fallback, vuelve a pisar con el dato viejo.
+- Comercio exterior, PBI, ISAC, supermercados y turismo siguen en datos.gob.ar (la API no
+  publica totales de comex ni esas series).
 - `fuente: bcra` + `id_variable: N` → api.bcra.gob.ar (reservas diarias, etc.).
 - `fuente: argentinadatos` + `endpoint: "..."` → api.argentinadatos.com (inflación, riesgo país).
 - `fuente: dolar` + `casa: ...` → cotizaciones de dólar por casa (ArgentinaDatos).

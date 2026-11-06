@@ -14,6 +14,7 @@ Fuentes soportadas:
   - dolar          -> api.argentinadatos.com/v1/cotizaciones/dolares (histórico por casa)
   - bcra           -> api.bcra.gob.ar/estadisticas (reservas diarias, etc.)
   - rem_bcra       -> Excel histórico único del REM (bcra.gob.ar), expectativas de mercado
+  - indec_api      -> api.indec.gob.ar/v1 (beta, PostgREST, token JWT en INDEC_API_TOKEN)
 """
 from __future__ import annotations
 import datetime
@@ -856,6 +857,189 @@ def fetch_fred(series_id: str, start_date: str | None = None) -> pd.DataFrame:
     if start_date:
         df = df[df["fecha"] >= pd.to_datetime(start_date)]
     return df.sort_values("fecha").reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
+# 9) API del INDEC (api.indec.gob.ar/v1, beta, estilo PostgREST, con token JWT)
+# ---------------------------------------------------------------------------
+# Catálogo relevado en fuentes/indec_catalogo.md (spec OpenAPI real en fuentes/indec_catalogo.json).
+# Reglas de la API confirmadas contra la respuesta real (05/11/2026):
+#   - máximo 1000 filas por respuesta, aunque se pida más -> paginar con limit/offset;
+#   - para paginar sin perder ni repetir filas hay que ordenar por la clave COMPLETA de la tabla
+#     (la publica el spec en el parámetro `order` de cada endpoint);
+#   - `Prefer: count=exact` -> total en `Content-Range: inicio-fin/total` (206 si es parcial);
+#   - 401 token faltante/inválido/vencido, 403 sin permisos.
+# El token NUNCA se imprime ni entra en mensajes de error.
+INDEC_API_BASE = "https://api.indec.gob.ar/v1"
+INDEC_PAGINA = 1000          # tope de filas por respuesta que aplica la propia API
+INDEC_REINTENTOS = 5         # ante 429/5xx/errores de red, con backoff exponencial 1-2-4-8 s
+_INDEC_CATALOGO = Path(__file__).resolve().parent / "fuentes" / "indec_catalogo.json"
+_INDEC_CLAVES: dict[str, str] = {}
+
+
+class IndecAuthError(RuntimeError):
+    """401/403 de la API del INDEC (token faltante, inválido o vencido). No se reintenta."""
+
+
+class IndecIncompletoError(RuntimeError):
+    """La API devolvió menos (o más) filas que el total informado por count=exact."""
+
+
+def _indec_token() -> str:
+    """Token del INDEC: variable de entorno INDEC_API_TOKEN (Actions) o archivo .env local."""
+    import os
+    tok = os.environ.get("INDEC_API_TOKEN", "").strip()
+    if not tok:
+        env = Path(__file__).resolve().parent / ".env"
+        if env.exists():
+            for linea in env.read_text(encoding="utf-8-sig").splitlines():
+                if linea.startswith("INDEC_API_TOKEN="):
+                    tok = linea.split("=", 1)[1].strip().strip('"').strip("'")
+    if not tok:
+        raise IndecAuthError("INDEC_API_TOKEN no está definido (ni en el entorno ni en .env)")
+    return tok
+
+
+def indec_token_exp() -> datetime.datetime | None:
+    """Vencimiento del token del INDEC, leído del campo `exp` del propio JWT (se decodifica el
+    payload SIN verificar la firma: sólo se lee una fecha, no se confía en el token para nada).
+    None si no hay token o no tiene `exp`. Nunca devuelve ni imprime el token."""
+    import base64
+    try:
+        payload = _indec_token().split(".")[1]
+    except (IndecAuthError, IndexError):
+        return None
+    try:
+        datos = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
+        return datetime.datetime.fromtimestamp(int(datos["exp"]), datetime.timezone.utc)
+    except (ValueError, KeyError, TypeError):
+        return None
+
+
+def datos_gob_filas(serie_id: str) -> int:
+    """Cantidad de filas que informa datos.gob.ar para una serie (pide 1 sola fila). Sirve para
+    detectar un fallback que dejó de funcionar: el 05/11/2026 4 ids respondían 200 con count 0."""
+    payload = _get("https://apis.datos.gob.ar/series/api/series/",
+                   params={"ids": serie_id, "format": "json", "limit": 1}).json()
+    return int(payload.get("count") or 0)
+
+
+def _indec_clave(tabla: str) -> str:
+    """Clave completa de orden de una tabla, leída del spec guardado (no se tipea a mano)."""
+    if not _INDEC_CLAVES:
+        spec = json.loads(_INDEC_CATALOGO.read_text(encoding="utf-8"))
+        for path, ops in spec["paths"].items():
+            for p in ops.get("get", {}).get("parameters", []):
+                if p.get("name") == "order" and "clave completa:" in (p.get("description") or ""):
+                    _INDEC_CLAVES[path.strip("/")] = p["description"].split("clave completa:")[-1].strip()
+    if tabla not in _INDEC_CLAVES:
+        raise ValueError(f"Tabla '{tabla}' sin clave de orden en {_INDEC_CATALOGO.name}")
+    return _INDEC_CLAVES[tabla]
+
+
+def _indec_get(tabla: str, params: dict, token: str) -> requests.Response:
+    """GET a una tabla con reintentos ante 429/5xx/red. 401/403 -> IndecAuthError sin reintentar."""
+    url = f"{INDEC_API_BASE}/{tabla}"
+    headers = {**HEADERS, "Authorization": f"Bearer {token}", "Accept": "application/json",
+               "Prefer": "count=exact"}
+    ultimo = None
+    for intento in range(INDEC_REINTENTOS):
+        try:
+            r = requests.get(url, params=params, headers=headers, timeout=TIMEOUT)
+        except requests.RequestException as e:
+            ultimo = f"error de red ({type(e).__name__})"
+        else:
+            if r.status_code in (401, 403):
+                raise IndecAuthError(f"API INDEC tabla={tabla}: HTTP {r.status_code} "
+                                     f"(token inválido, vencido o sin permisos)")
+            if r.status_code == 429 or r.status_code >= 500:
+                ultimo = f"HTTP {r.status_code}"
+            elif r.status_code >= 400:
+                try:
+                    msg = r.json().get("message")
+                except ValueError:
+                    msg = r.text[:200]
+                raise RuntimeError(f"API INDEC tabla={tabla}: HTTP {r.status_code}: {msg}")
+            else:
+                return r
+        if intento < INDEC_REINTENTOS - 1:
+            time.sleep(2 ** intento)
+    raise RuntimeError(f"API INDEC tabla={tabla}: falló tras {INDEC_REINTENTOS} intentos ({ultimo})")
+
+
+def fetch_indec_tabla(tabla: str, filtros: dict | None = None, select: list[str] | None = None) -> list[dict]:
+    """
+    Todas las filas de una tabla de la API del INDEC que cumplen `filtros`, paginando de a
+    INDEC_PAGINA filas por offset y ordenando por la clave completa de la tabla.
+    filtros : {columna: valor} -> se envía como columna=eq.valor (igualdad exacta, como en el
+              catálogo). Para otro operador, pasar el valor ya armado: {"periodo": "gte.202401"}.
+    Valida que filas recibidas == total de count=exact (si no, IndecIncompletoError).
+    """
+    t0 = time.time()
+    token = _indec_token()
+    base = {"order": _indec_clave(tabla), "limit": INDEC_PAGINA}
+    for col, val in (filtros or {}).items():
+        sval = str(val)
+        base[col] = sval if re.match(r"^(eq|neq|gt|gte|lt|lte|like|ilike|in|is)\.", sval) else f"eq.{sval}"
+    if select:
+        base["select"] = ",".join(select)
+    filas, total, offset = [], None, 0
+    while True:
+        r = _indec_get(tabla, {**base, "offset": offset}, token)
+        lote = r.json()
+        rango = r.headers.get("Content-Range", "")
+        if "/" in rango and rango.rsplit("/", 1)[1].isdigit():
+            total = int(rango.rsplit("/", 1)[1])
+        filas.extend(lote)
+        offset += len(lote)
+        if not lote or total is None or offset >= total:
+            break
+    if total is None:
+        raise IndecIncompletoError(f"API INDEC tabla={tabla}: la respuesta no trajo el total (Content-Range)")
+    if len(filas) != total:
+        raise IndecIncompletoError(f"API INDEC tabla={tabla}: {len(filas)} filas recibidas != total {total}")
+    print(f"  [indec_api] tabla={tabla} filas={len(filas)} duración={time.time() - t0:.1f}s")
+    return filas
+
+
+def _indec_periodo_a_fecha(p) -> pd.Timestamp:
+    """Período de la API -> primer día del período (misma convención que datos.gob.ar).
+    AAAAMM (mes), AAAANT (trimestre, ej. 20262T) o AAAANS (semestre, ej. 20261S)."""
+    s = str(p).strip()
+    m = re.fullmatch(r"(\d{4})(\d)([TS])", s)
+    if m:
+        anio, n, tipo = int(m.group(1)), int(m.group(2)), m.group(3)
+        mes = (n - 1) * 3 + 1 if tipo == "T" else (n - 1) * 6 + 1
+        return pd.Timestamp(anio, mes, 1)
+    if re.fullmatch(r"\d{6}", s):
+        return pd.Timestamp(int(s[:4]), int(s[4:]), 1)
+    raise ValueError(f"Período del INDEC con formato desconocido: {s!r}")
+
+
+def fetch_indec_api(tabla: str, filtros: dict | None = None, columna_valor: str = "valor",
+                    columna_periodo: str = "periodo", start_date: str | None = None) -> pd.DataFrame:
+    """
+    UNA serie de la API del INDEC como DataFrame fecha | valor.
+    Los `filtros` tienen que identificar una única serie: si queda más de una fila por período
+    se falla (mapeo ambiguo), en vez de elegir una en silencio. Las filas sin valor (razón de
+    nulo del INDEC, ej. '///') se descartan.
+    """
+    filas = fetch_indec_tabla(tabla, filtros)
+    if not filas:
+        return pd.DataFrame(columns=["fecha", "valor"])
+    df = pd.DataFrame(filas)
+    for c in (columna_periodo, columna_valor):
+        if c not in df.columns:
+            raise ValueError(f"API INDEC tabla={tabla}: no existe la columna '{c}'")
+    dup = df[columna_periodo].duplicated(keep=False)
+    if dup.any():
+        raise ValueError(f"API INDEC tabla={tabla}: los filtros {filtros} dejan {int(dup.sum())} filas "
+                         f"con período repetido (más de una serie): mapeo ambiguo")
+    out = pd.DataFrame({"fecha": df[columna_periodo].map(_indec_periodo_a_fecha),
+                        "valor": pd.to_numeric(df[columna_valor], errors="coerce")}).dropna()
+    if start_date:
+        out = out[out["fecha"] >= pd.to_datetime(start_date)]
+    return out.sort_values("fecha").reset_index(drop=True)
 
 
 # ---------------------------------------------------------------------------

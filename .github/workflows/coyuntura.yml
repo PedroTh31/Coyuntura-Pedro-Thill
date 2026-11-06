@@ -35,6 +35,13 @@ jobs:
       - name: Correr el pipeline
         # run.py escribe data/ultima_corrida.json al terminar: el mail lo usa para decidir
         # si manda con estos datos o corre run.py de nuevo como fallback.
+        # INDEC_API_TOKEN: API del INDEC (fuente primaria de las series del INDEC; nunca se
+        # imprime). GMAIL_*: sólo para las alertas a Pedro (token vencido/por vencer, fallback).
+        env:
+          INDEC_API_TOKEN: ${{ secrets.INDEC_API_TOKEN }}
+          INDEC_TOKEN_FECHA: ${{ vars.INDEC_TOKEN_FECHA }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python run.py
       - name: Commitear datos actualizados
         run: |

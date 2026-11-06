@@ -22,6 +22,7 @@ from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
                        fetch_fred, fetch_data912)
 import storage
 import dashboard
+import fuentes_indec
 
 RAIZ = Path(__file__).resolve().parent
 CONFIG = RAIZ / "indicadores.yaml"
@@ -30,16 +31,26 @@ CONFIG = RAIZ / "indicadores.yaml"
 # (PROMPT_mail_v3.md, Bloque 1.2). Sólo se escribe si el pipeline llegó al final.
 ULTIMA_CORRIDA = RAIZ / "data" / "ultima_corrida.json"
 ZONA_AR = ZoneInfo("America/Argentina/Buenos_Aires")
+# Resolver de series del INDEC (API primaria + fallback, Bloque A de PROMPT_ronda_macro_indec.md).
+# Se crea en main(); _dg() lo usa en lugar de fetch_datos_gob() para los ids con equivalencia.
+_RESOLVER = None
+
+
+def _dg(serie_id, start):
+    """fetch_datos_gob con la API del INDEC como primaria si el id tiene equivalencia en el yaml."""
+    return _RESOLVER.serie_dg(serie_id, start) if _RESOLVER else fetch_datos_gob(serie_id, start)
 
 
 def _fuente_de(ind: dict) -> str:
     """Etiqueta de fuente para agrupar el estado de la corrida (ej. 'datos_gob', 'calculo:real')."""
     if "calculo" in ind:
         return f"calculo:{ind['calculo']}"
+    if ind.get("fuente_primaria"):
+        return ind["fuente_primaria"]
     return ind.get("fuente", "desconocida")
 
 
-def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str):
+def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuentes_indec_usadas=None):
     ahora = datetime.now(ZONA_AR)
     datos = {
         "fecha": ahora.date().isoformat(),
@@ -49,6 +60,8 @@ def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str):
         "disparo": os.environ.get("GITHUB_EVENT_NAME", "local"),
         "por_fuente": dict(sorted(por_fuente.items())),
         "problemas": [{"indicador": n, "motivo": m} for n, m in problemas],
+        # Qué fuente se usó en ESTA corrida para cada serie del INDEC (API o fallback, y por qué).
+        "fuentes_indec": fuentes_indec_usadas or {},
     }
     ULTIMA_CORRIDA.parent.mkdir(exist_ok=True)
     ULTIMA_CORRIDA.write_text(json.dumps(datos, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -65,7 +78,7 @@ def _calcular(ind, start):
     """Series derivadas: 'suma' (ej. M1) o 'real' (ej. salario real deflactado por IPC)."""
     tipo = ind["calculo"]
     if tipo == "suma":
-        partes = [fetch_datos_gob(cid, start) for cid in ind["componentes"]]
+        partes = [_dg(cid, start) for cid in ind["componentes"]]
         s = partes[0].rename(columns={"valor": "v0"})[["fecha", "v0"]]
         for k, d in enumerate(partes[1:], 1):
             s = s.merge(d.rename(columns={"valor": f"v{k}"})[["fecha", f"v{k}"]],
@@ -74,8 +87,8 @@ def _calcular(ind, start):
         s["valor"] = s[cols].sum(axis=1)
         return s[["fecha", "valor"]]
     if tipo == "resta":
-        a = fetch_datos_gob(ind["minuendo_id"], start).rename(columns={"valor": "a"})
-        b = fetch_datos_gob(ind["sustraendo_id"], start).rename(columns={"valor": "b"})
+        a = _dg(ind["minuendo_id"], start).rename(columns={"valor": "a"})
+        b = _dg(ind["sustraendo_id"], start).rename(columns={"valor": "b"})
         s = a.merge(b, on="fecha", how="inner")
         s["valor"] = s["a"] - s["b"]
         return s[["fecha", "valor"]]
@@ -83,8 +96,8 @@ def _calcular(ind, start):
         # Cociente de dos series de datos_gob (ej. salario / costo de una canasta):
         # numerador_id / denominador_id, sin rebase ni indexar -- el valor crudo del
         # cociente es la unidad que importa (ej. "canastas que compra un salario").
-        num = fetch_datos_gob(ind["numerador_id"], start).rename(columns={"valor": "num"})
-        den = fetch_datos_gob(ind["denominador_id"], start).rename(columns={"valor": "den"})
+        num = _dg(ind["numerador_id"], start).rename(columns={"valor": "num"})
+        den = _dg(ind["denominador_id"], start).rename(columns={"valor": "den"})
         s = num.merge(den, on="fecha", how="inner").sort_values("fecha")
         s = s[s["den"] > 0]
         s["valor"] = s["num"] / s["den"]
@@ -99,7 +112,7 @@ def _calcular(ind, start):
         # fuentes de frecuencias distintas (mensual/trimestral/diaria) con una conversión
         # de moneda de por medio, específico para este ratio.
         deuda = fetch_deuda_bruta(start).rename(columns={"valor": "deuda_usd"})
-        pbi = fetch_datos_gob(ind["pbi_id"], start).rename(columns={"valor": "pbi_ars"}).sort_values("fecha")
+        pbi = _dg(ind["pbi_id"], start).rename(columns={"valor": "pbi_ars"}).sort_values("fecha")
         dolar = fetch_dolar("oficial", start).sort_values("fecha")
         tc_prom_trim = dolar.set_index("fecha")["valor"].resample("QS").mean()
         pbi["tc_prom"] = pbi["fecha"].map(tc_prom_trim)
@@ -112,8 +125,8 @@ def _calcular(ind, start):
         s["valor"] = s["deuda_usd"] / s["pbi_usd"] * 100
         return s[["fecha", "valor"]].dropna().sort_values("fecha").reset_index(drop=True)
     if tipo == "real":
-        nom = fetch_datos_gob(ind["nominal_id"], start).rename(columns={"valor": "nom"})
-        ipc = fetch_datos_gob(ind["deflactor_id"], start).rename(columns={"valor": "ipc"})
+        nom = _dg(ind["nominal_id"], start).rename(columns={"valor": "nom"})
+        ipc = _dg(ind["deflactor_id"], start).rename(columns={"valor": "ipc"})
         s = nom.merge(ipc, on="fecha", how="inner")
         s = s[s["ipc"] > 0].sort_values("fecha")
         if s.empty:
@@ -145,7 +158,13 @@ def _calcular(ind, start):
         base_id = ind.get("base_id")
         if not base_id:
             raise ValueError(f"Cálculo 'interanual' requiere 'base_id' en {ind['nombre']}")
-        s = fetch_datos_gob(base_id, start).sort_values("fecha").copy()
+        publicada = _variacion_publicada(base_id, "interanual", start)
+        if publicada is not None:
+            return publicada
+        return _interanual_desde_indice(_dg(base_id, start))
+    if tipo == "__interanual_desde_indice__":
+        # Cálculo interanual sobre una serie ya traída (lo usa _interanual_desde_indice).
+        s = ind["_serie"]
         s = s[s["valor"] > 0]
         if len(s) < 2:
             return s.assign(valor=[])[["fecha", "valor"]]
@@ -162,10 +181,10 @@ def _calcular(ind, start):
         base_id = ind.get("base_id")
         if not base_id:
             raise ValueError(f"Cálculo 'mensual' requiere 'base_id' en {ind['nombre']}")
-        s = fetch_datos_gob(base_id, start).sort_values("fecha").copy()
-        s = s[s["valor"] > 0]
-        s["valor"] = s["valor"].pct_change() * 100
-        return s[["fecha", "valor"]].dropna().reset_index(drop=True)
+        publicada = _variacion_publicada(base_id, "mensual", start)
+        if publicada is not None:
+            return publicada
+        return _mensual_desde_indice(_dg(base_id, start))
     if tipo == "acumulado_12m":
         # Suma móvil de los últimos 12 meses de una serie de datos_gob (ej. resultado fiscal
         # acumulado de 12 meses, para comparar con series de flujo/nivel de otra frecuencia
@@ -174,7 +193,7 @@ def _calcular(ind, start):
         base_id = ind.get("base_id")
         if not base_id:
             raise ValueError(f"Cálculo 'acumulado_12m' requiere 'base_id' en {ind['nombre']}")
-        s = fetch_datos_gob(base_id, start).sort_values("fecha").copy()
+        s = _dg(base_id, start).sort_values("fecha").copy()
         s["valor"] = s["valor"].rolling(12, min_periods=12).sum()
         return s[["fecha", "valor"]].dropna().reset_index(drop=True)
     if tipo == "variacion_real_mensual":
@@ -184,8 +203,8 @@ def _calcular(ind, start):
         deflactor_id = ind.get("deflactor_id")
         if not nominal_id or not deflactor_id:
             raise ValueError(f"Cálculo 'variacion_real_mensual' requiere 'nominal_id' y 'deflactor_id' en {ind['nombre']}")
-        nom = fetch_datos_gob(nominal_id, start).rename(columns={"valor": "nom"})
-        ipc = fetch_datos_gob(deflactor_id, start).rename(columns={"valor": "ipc"})
+        nom = _dg(nominal_id, start).rename(columns={"valor": "nom"})
+        ipc = _dg(deflactor_id, start).rename(columns={"valor": "ipc"})
         s = nom.merge(ipc, on="fecha", how="inner").sort_values("fecha")
         s = s[s["ipc"] > 0]
         s["real"] = s["nom"] / s["ipc"]
@@ -203,7 +222,7 @@ def _calcular(ind, start):
         if not componentes:
             raise ValueError(f"Cálculo 'combinado' requiere 'componentes' en {ind['nombre']}")
         suma_pesos = sum(c["peso"] for c in componentes)
-        partes = [fetch_datos_gob(c["id"], start).rename(columns={"valor": "v"}) for c in componentes]
+        partes = [_dg(c["id"], start).rename(columns={"valor": "v"}) for c in componentes]
         s = partes[0][["fecha", "v"]].rename(columns={"v": "v0"})
         for k, d in enumerate(partes[1:], 1):
             s = s.merge(d.rename(columns={"v": f"v{k}"}), on="fecha", how="inner")
@@ -284,6 +303,30 @@ def _calcular(ind, start):
         s["valor"] = s["tasa"] - s["ipc"]
         return s.reset_index().rename(columns={"index": "fecha"})[["fecha", "valor"]].dropna()
     raise ValueError(f"cálculo desconocido: {tipo}")
+
+
+def _interanual_desde_indice(s):
+    """(valor_t / valor_t-12m - 1) * 100 desde un índice de nivel (fecha | valor)."""
+    return _calcular({"calculo": "__interanual_desde_indice__", "_serie": s.sort_values("fecha").copy(),
+                      "nombre": "auxiliar"}, None)
+
+
+def _mensual_desde_indice(s):
+    """(valor_t / valor_t-1 - 1) * 100 desde un índice de nivel (fecha | valor)."""
+    s = s.sort_values("fecha").copy()
+    s = s[s["valor"] > 0]
+    s["valor"] = s["valor"].pct_change() * 100
+    return s[["fecha", "valor"]].dropna().reset_index(drop=True)
+
+
+def _variacion_publicada(base_id, calculo, start):
+    """Criterio de Pedro (Bloque A3): las variaciones del IPC son las PUBLICADAS por el INDEC (API),
+    no recalculadas desde el índice. Fallback: el cálculo de siempre sobre el índice de datos.gob.ar.
+    None si el id no declara esa variación en equivalencias_indec (se calcula como antes)."""
+    if not _RESOLVER:
+        return None
+    desde_indice = _interanual_desde_indice if calculo == "interanual" else _mensual_desde_indice
+    return _RESOLVER.variacion_publicada(base_id, calculo, lambda: desde_indice(fetch_datos_gob(base_id, start)))
 
 
 _TICKERS_MURO = ["AL30", "GD30", "GD35"]
@@ -523,8 +566,10 @@ def chequear_cambio_escala(previo: pd.DataFrame, nuevos: pd.DataFrame):
 
 
 def main():
+    global _RESOLVER
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     start = cfg.get("start_date")
+    _RESOLVER = fuentes_indec.ResolverIndec(cfg.get("equivalencias_indec"), start)
     indicadores = cfg["indicadores"]
     indicadores_financiera = cfg.get("indicadores_financiera", [])
     filas = []
@@ -539,12 +584,21 @@ def main():
             continue  # no trae datos propios: dashboard.py lo arma referenciando otros indicadores
         conteo = por_fuente.setdefault(_fuente_de(ind), {"ok": 0, "falla": 0})
         conteo["falla"] += 1  # se revierte abajo si la serie llega bien
+        _RESOLVER.empezar(nombre)
         try:
             if "calculo" in ind:
                 serie = _calcular(ind, start)
+            elif ind.get("fuente_primaria") == "indec_api":
+                serie = _RESOLVER.serie_directa(ind, start)
             else:
                 serie = traer(ind, start_date=start)
+            if ind.get("fecha_fin_mes") and not serie.empty:
+                # Normaliza la fecha al último día del mes, sea cual sea la fuente que respondió
+                # (ej. Inflación mensual: su historia de ArgentinaDatos está a fin de mes y la API
+                # del INDEC usa el 1.º del mes; sin esto el merge duplicaría cada mes).
+                serie = serie.assign(fecha=serie["fecha"].dt.to_period("M").dt.to_timestamp("M"))
             if serie.empty:
+                _RESOLVER.terminar(ok=False)
                 _avisar(nombre, "la fuente no devolvió datos (serie vacía)")
                 problemas.append((nombre, "vacío"))
                 continue
@@ -559,10 +613,12 @@ def main():
                 if primero:
                     serie = serie.assign(valor=serie["valor"] / primero * 100)
             filas.append(_fila(serie, ind))
+            _RESOLVER.terminar(ok=True)
             conteo["falla"] -= 1
             conteo["ok"] += 1
             print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()})")
         except Exception as e:
+            _RESOLVER.terminar(ok=False)
             _avisar(nombre, f"error al traer/calcular la serie: {e}")
             problemas.append((nombre, f"error: {e}"))
 
@@ -572,9 +628,13 @@ def main():
             print(f"  - {nombre}: {motivo}")
         print("(el histórico ya guardado de esos indicadores NO se toca; se reintentará en la próxima corrida)")
 
+    # Estado entre corridas + alertas a Pedro (A5); devuelve la última fuente conocida de cada
+    # indicador del INDEC, para que las notas del dashboard digan de dónde salió cada dato.
+    fuentes_por_indicador = fuentes_indec.cerrar_corrida(_RESOLVER)
+
     if not filas:
         print("No se trajo ningun dato.")
-        escribir_ultima_corrida(por_fuente, problemas, "sin_datos")
+        escribir_ultima_corrida(por_fuente, problemas, "sin_datos", _RESOLVER.por_indicador)
         return
 
     nuevos = pd.concat(filas, ignore_index=True)
@@ -589,7 +649,7 @@ def main():
 
     nav_a_financiera = '<a href="financiera.html" class="nav-pagina">Financiera →</a>'
     nav_a_macro = '<a href="index.html" class="nav-pagina">← Macro</a>'
-    dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera)
+    dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera, fuentes_indec=fuentes_por_indicador)
 
     if indicadores_financiera:
         fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
@@ -601,12 +661,12 @@ def main():
             dashboard.tabla_acciones("CEDEARs más operados", cedears, fecha_hoy)}
         dashboard.generar(historico, indicadores_financiera, archivo_salida="financiera.html",
                            extra_html=extra_html, extra_charts=extra_charts, nav_extra=nav_a_macro,
-                           titulo_pagina="Monitor financiero · Argentina")
+                           titulo_pagina="Monitor financiero · Argentina", fuentes_indec=fuentes_por_indicador)
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html, docs/financiera.html")
     else:
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
 
-    escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok")
+    escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador)
 
 
 if __name__ == "__main__":

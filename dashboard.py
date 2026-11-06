@@ -761,6 +761,39 @@ def _con_huecos_explicitos(df):
     return pd.DataFrame(filas).reset_index(drop=True)
 
 
+_CLAVES_REFERENCIA = ("series", "sectores", "barras", "linea", "linea_izq", "linea_der", "barra", "evento")
+
+
+def _usos_indec(ind, fuentes_indec):
+    """Usos de la API del INDEC (o de su fallback) del indicador y de los indicadores que referencia
+    (vistas compuestas: overlay, incidencia, sectores, combos). Lista vacía si no usa datos del INDEC."""
+    if not fuentes_indec:
+        return []
+    nombres = [ind["nombre"]]
+    for k in _CLAVES_REFERENCIA:
+        v = ind.get(k)
+        for x in (v if isinstance(v, list) else [v]):
+            if isinstance(x, str):
+                nombres.append(x)
+            elif isinstance(x, dict):
+                nombres.extend(y for y in x.values() if isinstance(y, str))
+    usos = []
+    for n in nombres:
+        for u in fuentes_indec.get(n, []):
+            if u not in usos:
+                usos.append(u)
+    return usos
+
+
+def _nota_con_fuente(nota, usos):
+    """Nota metodológica + 'Fuente: INDEC (API ...)' o 'Fuente: INDEC vía ...' (Bloque A4)."""
+    from fuentes_indec import describir_fuente
+    fuente = describir_fuente(usos)
+    if not fuente:
+        return nota
+    return f"{nota} {fuente}" if nota else fuente
+
+
 def _registrar_nota(nota, nombre, notas_dict):
     """Registra (o encuentra) el número de asterisco de una nota, dedupe por texto."""
     if not nota:
@@ -775,17 +808,20 @@ def _registrar_nota(nota, nombre, notas_dict):
 
 
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
-            extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina"):
+            extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina",
+            fuentes_indec=None):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
     notas_dict = {}  # {numero_nota: {"texto": ..., "indicadores": [...]}}
     indicadores_por_nombre = {i["nombre"]: i for i in config_indicadores}
+    usos_semaforo = []  # fuente de los datos de la tabla semáforo del EMAE (pie "Fuente: INDEC")
     idx = 0
     for ind in config_indicadores:
         nombre = ind["nombre"]; bloque = ind["bloque"]; grupo = ind.get("grupo", "Otros")
         unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
-        nota = ind.get("nota")
+        usos = _usos_indec(ind, fuentes_indec)
+        nota = _nota_con_fuente(ind.get("nota"), usos)
         if ind.get("solo_componente"):
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
         if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas", "combo_barras_evento", "combo_rezago"):
@@ -811,6 +847,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                 continue
             card, serie_js_compuesta = entrada
             card["nota_num"] = _registrar_nota(nota, nombre, notas_dict)
+            card["fuente_indec"] = bool(usos)
             charts.append(card)
             series_js.append(serie_js_compuesta)
             idx += 1
@@ -822,6 +859,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             ia, men, acum = _metricas_sector(serie)
             fecha_sem = serie["fecha"].iloc[-1].strftime("%m/%Y")
             semaforo.append(dict(nombre=nombre.replace("EMAE · ", ""), ia=ia, men=men, acum=acum))
+            usos_semaforo.extend(u for u in usos if u not in usos_semaforo)
             continue
         if ind.get("tabla"):
             ia = _interanual(serie)
@@ -858,7 +896,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             unidad=unidad, valor=_fmt_num(ult), pct=pct, marca_fecha=marca_fecha,
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num,
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
-            subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando)))
+            subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
+            fuente_indec=bool(usos)))
         if acumulando:
             idx += 1
             continue
@@ -902,9 +941,11 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         charts.append(card)
         series_js.append(serie_js_extra)
         idx += 1
+    from fuentes_indec import describir_fuente
     _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida=archivo_salida, extra_html=extra_html or {},
-                    nav_extra=nav_extra, titulo_pagina=titulo_pagina)
+                    nav_extra=nav_extra, titulo_pagina=titulo_pagina,
+                    semaforo_fuente=describir_fuente(usos_semaforo) or "")
 
 
 def _color_semaforo(v):
@@ -915,7 +956,7 @@ def _color_semaforo(v):
     return "#FBF0D5", "#7A5A10"
 
 
-def _tabla_semaforo(semaforo, fecha_sem):
+def _tabla_semaforo(semaforo, fecha_sem, fuente_html=""):
     if not semaforo:
         return ""
     orden = sorted(semaforo, key=lambda x: (x["ia"] is None, -(x["ia"] or -999)))
@@ -927,7 +968,8 @@ def _tabla_semaforo(semaforo, fecha_sem):
             '<p class="nota">Interanual · mensual (serie original, con estacionalidad) · acumulado del año. '
             'Verde: +1% o más · Amarillo: entre -1% y +1% · Rojo: -1% o menos.</p>'
             '<table class="tabla"><thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>'
-            f'<tbody>{filas}</tbody></table>')
+            f'<tbody>{filas}</tbody></table>'
+            + (f'<p class="fuente-pie fuente-tabla">{fuente_html}</p>' if fuente_html else ""))
 
 
 def _tabla_valores(titulo, filas):
@@ -1010,6 +1052,10 @@ def _card_cell(c):
     nota_mark = ""
     if c.get("nota_num"):
         nota_mark = f'<div class="nota-ref"><a href="#nota-{c["nota_num"]}">*{c["nota_num"]}</a></div>'
+    # Atribución exigida por el INDEC para los datos de su API (Bloque A6): visible al pie del
+    # gráfico, no sólo dentro de la nota metodológica.
+    if c.get("fuente_indec"):
+        nota_mark = '<div class="fuente-pie">Fuente: INDEC</div>' + nota_mark
     # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar())
     marca_html = f'<div class="marca-fecha">{c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
     # Botones de filtro (no aplican a gráficos de un solo período, ej. sectores_bar). "Personalizado"
@@ -1072,7 +1118,7 @@ def _card_cell(c):
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida="index.html", extra_html=None, nav_extra="",
-                    titulo_pagina="Monitor de coyuntura · Argentina"):
+                    titulo_pagina="Monitor de coyuntura · Argentina", semaforo_fuente=""):
     extra_html = extra_html or {}
     ahora = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
@@ -1112,7 +1158,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                 celdas = "".join(_card_cell(c) for c in cb if c["grupo"] == g)
                 cuerpo += f'<div class="grid">{celdas}</div>'
         if tiene_sem:
-            cuerpo += _tabla_semaforo(semaforo, fecha_sem)
+            cuerpo += _tabla_semaforo(semaforo, fecha_sem, semaforo_fuente)
         if bloque in extra_html:
             cuerpo += extra_html[bloque]
         secciones += (f'<section class="bloque" id="{bloque}"><h2>'
@@ -1148,6 +1194,9 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
   .ref { color:var(--gris); font-weight:400; font-size:13px; }
   .nota { color:var(--gris); font-size:12px; margin:6px 0 14px; }
   .nota-ref { font-size:10px; margin-top:4px; text-align:center; }
+  .fuente-pie { font-size:11px; color:var(--gris); margin-top:4px; padding:0 14px; text-align:left; }
+  .fuente-pie a { color:var(--azul-enlace); }
+  .fuente-tabla { margin:4px 0 14px; padding:0; }
   .nota-ref a { color:var(--azul-enlace); font-weight:600; text-decoration:none; }
   .nota-ref a:hover { text-decoration:underline; }
   .notas-list { margin:10px 0 14px 20px; font-size:12px; color:var(--gris); }
@@ -1223,7 +1272,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
 <body>
 <header class="masthead"><div class="masthead-inner">
   <h1>__TITULO__</h1>
-  <div class="sub">Actualizado __AHORA__ · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA</div>
+  <div class="sub">Actualizado __AHORA__ · fuentes: API del INDEC · apis.datos.gob.ar · ArgentinaDatos · BCRA</div>
 </div></header>
 <div class="wrap">
   <nav>__NAV__</nav>

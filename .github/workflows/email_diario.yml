@@ -43,6 +43,11 @@ jobs:
         run: python enviar_mail.py --estado
       - name: Fallback - actualizar datos (sólo si los commiteados no son de hoy)
         if: steps.estado.outputs.ya_enviado == 'false' && steps.estado.outputs.datos_frescos == 'false'
+        # Token de la API del INDEC (sin él, todas las series del INDEC irían al fallback). Sin
+        # credenciales de Gmail a propósito: las alertas las manda coyuntura.yml, cuyo estado
+        # (data/indec_estado.json) sí se commitea; acá sólo quedan en el log.
+        env:
+          INDEC_API_TOKEN: ${{ secrets.INDEC_API_TOKEN }}
         run: python run.py
       - name: Enviar el mail
         if: steps.estado.outputs.ya_enviado == 'false'
