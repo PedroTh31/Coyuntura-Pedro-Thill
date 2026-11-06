@@ -1,0 +1,438 @@
+{
+  "avisos": {
+    "vacio:11.3_TAC_2004_M_60": "2026-11-06",
+    "vacio:11.3_VMATC_2004_M_12": "2026-11-06",
+    "vacio:146.3_IRECREANAL_DICI_M_31": "2026-11-06",
+    "vacio:146.3_IRESTAUNAL_DICI_M_33": "2026-11-06"
+  },
+  "corridas": [
+    {
+      "disparo": "workflow_dispatch",
+      "error_autenticacion": false,
+      "fallbacks": [],
+      "fecha": "2026-11-06",
+      "hora": "08:36:38"
+    }
+  ],
+  "fallback_dg_vacios": [
+    "11.3_TAC_2004_M_60",
+    "11.3_VMATC_2004_M_12",
+    "146.3_IRECREANAL_DICI_M_31",
+    "146.3_IRESTAUNAL_DICI_M_33"
+  ],
+  "rachas_fallback": {
+    "11.3_AGCS_2004_M_41": 0,
+    "11.3_CMMR_2004_M_10": 0,
+    "11.3_C_2004_M_60": 0,
+    "11.3_EMC_2004_M_25": 0,
+    "11.3_HR_2004_M_24": 0,
+    "11.3_IF_2004_M_25": 0,
+    "11.3_IM_2004_M_25": 0,
+    "11.3_ISD_2004_M_26": 0,
+    "11.3_ISOM_2004_M_39": 0,
+    "11.3_ITC_2004_M_21": 0,
+    "11.3_P_2004_M_20": 0,
+    "11.3_SEGA_2004_M_48": 0,
+    "11.3_TAC_2004_M_60": 0,
+    "11.3_VIPAA_2004_M_5": 0,
+    "11.3_VMASD_2004_M_23": 0,
+    "11.3_VMATC_2004_M_12": 0,
+    "143.3_NO_PR_2004_A_21": 0,
+    "146.3_IALIMENNAL_DICI_M_45": 0,
+    "146.3_IBEBIDANAL_DICI_M_39": 0,
+    "146.3_IBIENESNAL_DICI_M_36": 0,
+    "146.3_ICOMUNINAL_DICI_M_27": 0,
+    "146.3_IEDUCACNAL_DICI_M_22": 0,
+    "146.3_IEQUIPANAL_DICI_M_46": 0,
+    "146.3_IPRENDANAL_DICI_M_35": 0,
+    "146.3_IRECREANAL_DICI_M_31": 0,
+    "146.3_IRESTAUNAL_DICI_M_33": 0,
+    "146.3_ISALUDNAL_DICI_M_18": 0,
+    "146.3_ITRANSPNAL_DICI_M_23": 0,
+    "146.3_IVIVIENNAL_DICI_M_52": 0,
+    "148.3_IESTACINAL_DICI_M_25:mensual": 0,
+    "148.3_INIVELNAL_DICI_M_26": 0,
+    "148.3_INIVELNAL_DICI_M_26:interanual": 0,
+    "148.3_INUCLEONAL_DICI_M_19:mensual": 0,
+    "148.3_IREGULANAL_DICI_M_22:mensual": 0,
+    "149.1_SOR_PRIADO_OCTU_0_25": 0,
+    "149.1_SOR_PRIADO_OCTU_0_28": 0,
+    "149.1_SOR_PUBICO_OCTU_0_14": 0,
+    "149.1_TL_INDIIOS_OCTU_0_21": 0,
+    "150.1_CSTA_BATAL_0_D_20": 0,
+    "45.2_ECTDT_0_T_33": 0,
+    "Inflación mensual (IPC)": 0
+  },
+  "token_exp": "2027-05-04",
+  "token_fecha_informativa": "2026-11-05",
+  "ultima_fuente_por_indicador": {
+    "Adelantos transitorios al Tesoro (pesos constantes)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "EMAE (actividad económica)": [
+      {
+        "clave": "143.3_NO_PR_2004_A_21",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-nivel-general"
+      }
+    ],
+    "EMAE · Administración pública y defensa": [
+      {
+        "clave": "11.3_C_2004_M_60",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Agricultura, ganadería y silvicultura": [
+      {
+        "clave": "11.3_ISOM_2004_M_39",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Comercio mayorista y minorista": [
+      {
+        "clave": "11.3_AGCS_2004_M_41",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Construcción": [
+      {
+        "clave": "11.3_VMATC_2004_M_12",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Electricidad, gas y agua": [
+      {
+        "clave": "11.3_ITC_2004_M_21",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Enseñanza": [
+      {
+        "clave": "11.3_CMMR_2004_M_10",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Explotación de minas y canteras": [
+      {
+        "clave": "11.3_ISD_2004_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Hoteles y restaurantes": [
+      {
+        "clave": "11.3_P_2004_M_20",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Impuestos netos de subsidios": [
+      {
+        "clave": "11.3_IF_2004_M_25",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Industria manufacturera": [
+      {
+        "clave": "11.3_VMASD_2004_M_23",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Inmobiliarias y empresariales": [
+      {
+        "clave": "11.3_SEGA_2004_M_48",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Intermediación financiera": [
+      {
+        "clave": "11.3_IM_2004_M_25",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Otros servicios comunitarios": [
+      {
+        "clave": "11.3_TAC_2004_M_60",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Pesca": [
+      {
+        "clave": "11.3_VIPAA_2004_M_5",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Servicios sociales y de salud": [
+      {
+        "clave": "11.3_HR_2004_M_24",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "EMAE · Transporte y comunicaciones": [
+      {
+        "clave": "11.3_EMC_2004_M_25",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "estimador-mensual-de-actividad-economica-sectores"
+      }
+    ],
+    "IPC Estacionales (var. mensual)": [
+      {
+        "clave": "148.3_IESTACINAL_DICI_M_25:mensual",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC Núcleo (var. mensual)": [
+      {
+        "clave": "148.3_INUCLEONAL_DICI_M_19:mensual",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC Regulados (var. mensual)": [
+      {
+        "clave": "148.3_IREGULANAL_DICI_M_22:mensual",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Alimentos y bebidas no alcohólicas": [
+      {
+        "clave": "146.3_IALIMENNAL_DICI_M_45",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Bebidas alcohólicas y tabaco": [
+      {
+        "clave": "146.3_IBEBIDANAL_DICI_M_39",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Bienes y servicios varios": [
+      {
+        "clave": "146.3_IBIENESNAL_DICI_M_36",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Comunicación": [
+      {
+        "clave": "146.3_ICOMUNINAL_DICI_M_27",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Educación": [
+      {
+        "clave": "146.3_IEDUCACNAL_DICI_M_22",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Equipamiento y mantenimiento del hogar": [
+      {
+        "clave": "146.3_IEQUIPANAL_DICI_M_46",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Prendas de vestir y calzado": [
+      {
+        "clave": "146.3_IPRENDANAL_DICI_M_35",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Recreación y cultura": [
+      {
+        "clave": "146.3_IRECREANAL_DICI_M_31",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Restaurantes y hoteles": [
+      {
+        "clave": "146.3_IRESTAUNAL_DICI_M_33",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Salud": [
+      {
+        "clave": "146.3_ISALUDNAL_DICI_M_18",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Transporte": [
+      {
+        "clave": "146.3_ITRANSPNAL_DICI_M_23",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "IPC división: Vivienda, agua, electricidad y otros combustibles": [
+      {
+        "clave": "146.3_IVIVIENNAL_DICI_M_52",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Inflación interanual (IPC)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26:interanual",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Inflación mensual (IPC)": [
+      {
+        "clave": "Inflación mensual (IPC)",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Préstamos al sector privado, variación % real mensual": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Salario real (deflactado por IPC)": [
+      {
+        "clave": "149.1_TL_INDIIOS_OCTU_0_21",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "indice_salarios"
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Salario real no registrado - sector privado": [
+      {
+        "clave": "149.1_SOR_PRIADO_OCTU_0_28",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "indice_salarios"
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Salario real registrado - sector privado": [
+      {
+        "clave": "149.1_SOR_PRIADO_OCTU_0_25",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "indice_salarios"
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Salario real registrado - sector público": [
+      {
+        "clave": "149.1_SOR_PUBICO_OCTU_0_14",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "indice_salarios"
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Tasa de desempleo": [
+      {
+        "clave": "45.2_ECTDT_0_T_33",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "mercado_trabajo_eph"
+      }
+    ],
+    "Tasa de interés real (TAMAR - inflación interanual)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26:interanual",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ],
+    "Transferencia de utilidades del BCRA (pesos constantes)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "ipc_nacional"
+      }
+    ]
+  }
+}

@@ -1,12 +1,12 @@
 {
   "fecha": "2026-11-06",
-  "hora": "06:36:08",
+  "hora": "08:37:06",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
   "disparo": "workflow_dispatch",
   "por_fuente": {
     "argentinadatos": {
-      "ok": 2,
+      "ok": 1,
       "falla": 0
     },
     "bcra": {
@@ -74,8 +74,8 @@
       "falla": 0
     },
     "datos_gob": {
-      "ok": 66,
-      "falla": 12
+      "ok": 40,
+      "falla": 8
     },
     "deuda_bruta": {
       "ok": 1,
@@ -89,6 +89,10 @@
       "ok": 0,
       "falla": 1
     },
+    "indec_api": {
+      "ok": 31,
+      "falla": 0
+    },
     "mae_bono": {
       "ok": 1,
       "falla": 2
@@ -100,27 +104,11 @@
   },
   "problemas": [
     {
-      "indicador": "IPC división: Recreación y cultura",
-      "motivo": "vacío"
-    },
-    {
-      "indicador": "IPC división: Restaurantes y hoteles",
-      "motivo": "vacío"
-    },
-    {
       "indicador": "M2 (agregado total)",
       "motivo": "vacío"
     },
     {
       "indicador": "Capacidad de compra del salario (RIPTE / CBT)",
-      "motivo": "vacío"
-    },
-    {
-      "indicador": "EMAE · Construcción",
-      "motivo": "vacío"
-    },
-    {
-      "indicador": "EMAE · Otros servicios comunitarios",
       "motivo": "vacío"
     },
     {
@@ -179,5 +167,375 @@
       "indicador": "Spread soberano GD30 vs. UST10Y (proxy)",
       "motivo": "error: Falló la consulta a https://fred.stlouisfed.org/graph/fredgraph.csv: HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=30)"
     }
-  ]
+  ],
+  "fuentes_indec": {
+    "Inflación mensual (IPC)": [
+      {
+        "clave": "Inflación mensual (IPC)",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "Inflación interanual (IPC)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26:interanual",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC Núcleo (var. mensual)": [
+      {
+        "clave": "148.3_INUCLEONAL_DICI_M_19:mensual",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC Regulados (var. mensual)": [
+      {
+        "clave": "148.3_IREGULANAL_DICI_M_22:mensual",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC Estacionales (var. mensual)": [
+      {
+        "clave": "148.3_IESTACINAL_DICI_M_25:mensual",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Alimentos y bebidas no alcohólicas": [
+      {
+        "clave": "146.3_IALIMENNAL_DICI_M_45",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Bebidas alcohólicas y tabaco": [
+      {
+        "clave": "146.3_IBEBIDANAL_DICI_M_39",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Prendas de vestir y calzado": [
+      {
+        "clave": "146.3_IPRENDANAL_DICI_M_35",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Vivienda, agua, electricidad y otros combustibles": [
+      {
+        "clave": "146.3_IVIVIENNAL_DICI_M_52",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Equipamiento y mantenimiento del hogar": [
+      {
+        "clave": "146.3_IEQUIPANAL_DICI_M_46",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Salud": [
+      {
+        "clave": "146.3_ISALUDNAL_DICI_M_18",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Transporte": [
+      {
+        "clave": "146.3_ITRANSPNAL_DICI_M_23",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Comunicación": [
+      {
+        "clave": "146.3_ICOMUNINAL_DICI_M_27",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Recreación y cultura": [
+      {
+        "clave": "146.3_IRECREANAL_DICI_M_31",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Educación": [
+      {
+        "clave": "146.3_IEDUCACNAL_DICI_M_22",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Restaurantes y hoteles": [
+      {
+        "clave": "146.3_IRESTAUNAL_DICI_M_33",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "IPC división: Bienes y servicios varios": [
+      {
+        "clave": "146.3_IBIENESNAL_DICI_M_36",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "Tasa de interés real (TAMAR - inflación interanual)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26:interanual",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "EMAE (actividad económica)": [
+      {
+        "clave": "143.3_NO_PR_2004_A_21",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-nivel-general",
+        "motivo": null
+      }
+    ],
+    "Tasa de desempleo": [
+      {
+        "clave": "45.2_ECTDT_0_T_33",
+        "fuente": "indec_api",
+        "tabla": "mercado_trabajo_eph",
+        "motivo": null
+      }
+    ],
+    "Salario real (deflactado por IPC)": [
+      {
+        "clave": "149.1_TL_INDIIOS_OCTU_0_21",
+        "fuente": "indec_api",
+        "tabla": "indice_salarios",
+        "motivo": null
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "Salario real registrado - sector privado": [
+      {
+        "clave": "149.1_SOR_PRIADO_OCTU_0_25",
+        "fuente": "indec_api",
+        "tabla": "indice_salarios",
+        "motivo": null
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "Salario real registrado - sector público": [
+      {
+        "clave": "149.1_SOR_PUBICO_OCTU_0_14",
+        "fuente": "indec_api",
+        "tabla": "indice_salarios",
+        "motivo": null
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "Salario real no registrado - sector privado": [
+      {
+        "clave": "149.1_SOR_PRIADO_OCTU_0_28",
+        "fuente": "indec_api",
+        "tabla": "indice_salarios",
+        "motivo": null
+      },
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "Préstamos al sector privado, variación % real mensual": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "EMAE · Agricultura, ganadería y silvicultura": [
+      {
+        "clave": "11.3_ISOM_2004_M_39",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Pesca": [
+      {
+        "clave": "11.3_VIPAA_2004_M_5",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Explotación de minas y canteras": [
+      {
+        "clave": "11.3_ISD_2004_M_26",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Industria manufacturera": [
+      {
+        "clave": "11.3_VMASD_2004_M_23",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Electricidad, gas y agua": [
+      {
+        "clave": "11.3_ITC_2004_M_21",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Construcción": [
+      {
+        "clave": "11.3_VMATC_2004_M_12",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Comercio mayorista y minorista": [
+      {
+        "clave": "11.3_AGCS_2004_M_41",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Hoteles y restaurantes": [
+      {
+        "clave": "11.3_P_2004_M_20",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Transporte y comunicaciones": [
+      {
+        "clave": "11.3_EMC_2004_M_25",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Intermediación financiera": [
+      {
+        "clave": "11.3_IM_2004_M_25",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Inmobiliarias y empresariales": [
+      {
+        "clave": "11.3_SEGA_2004_M_48",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Administración pública y defensa": [
+      {
+        "clave": "11.3_C_2004_M_60",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Enseñanza": [
+      {
+        "clave": "11.3_CMMR_2004_M_10",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Servicios sociales y de salud": [
+      {
+        "clave": "11.3_HR_2004_M_24",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Otros servicios comunitarios": [
+      {
+        "clave": "11.3_TAC_2004_M_60",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "EMAE · Impuestos netos de subsidios": [
+      {
+        "clave": "11.3_IF_2004_M_25",
+        "fuente": "indec_api",
+        "tabla": "estimador-mensual-de-actividad-economica-sectores",
+        "motivo": null
+      }
+    ],
+    "Adelantos transitorios al Tesoro (pesos constantes)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ],
+    "Transferencia de utilidades del BCRA (pesos constantes)": [
+      {
+        "clave": "148.3_INIVELNAL_DICI_M_26",
+        "fuente": "indec_api",
+        "tabla": "ipc_nacional",
+        "motivo": null
+      }
+    ]
+  }
 }
