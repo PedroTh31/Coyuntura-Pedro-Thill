@@ -1,9 +1,9 @@
 {
-  "fecha": "2026-11-05",
-  "hora": "14:50:57",
+  "fecha": "2026-11-06",
+  "hora": "06:36:08",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
-  "disparo": "schedule",
+  "disparo": "workflow_dispatch",
   "por_fuente": {
     "argentinadatos": {
       "ok": 2,
@@ -90,12 +90,12 @@
       "falla": 1
     },
     "mae_bono": {
-      "ok": 2,
-      "falla": 1
+      "ok": 1,
+      "falla": 2
     },
     "mae_resumen": {
-      "ok": 2,
-      "falla": 0
+      "ok": 1,
+      "falla": 1
     }
   },
   "problemas": [
@@ -157,6 +157,14 @@
     },
     {
       "indicador": "Resultado primario acumulado 12 meses",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Caución en dólares (1 día)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "TIR AL30 (USD)",
       "motivo": "vacío"
     },
     {
