@@ -66,6 +66,15 @@
   .chg.malo { color:#C62828; } .chg.bueno { color:#2E7D33; } .chg.flat { color:var(--gris); }
   .uni { color:var(--gris); }
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
+  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + azul para
+     "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
+     El estado nunca va sólo en color: lleva ícono y texto. */
+  .cf { font-size:11px; color:#7A8C9A; margin-top:5px; line-height:1.35; }
+  .cf .per { color:#4A5A68; font-weight:600; }
+  .cf .ok { color:#3A7CA5; font-weight:600; }
+  .cf .atr { color:#2E3A45; font-weight:700; }
+  .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
+  .cf.grave .per { color:#2E3A45; }
   .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
   .acumulando { color:var(--gris); font-size:12px; text-align:center; padding:20px 14px; background:var(--hover); border-radius:0 0 10px 10px; }
   .cbox { height:260px; padding:8px 10px 12px; }
@@ -105,7 +114,7 @@
 <body>
 <header class="masthead"><div class="masthead-inner">
   <h1>Monitor financiero · Argentina</h1>
-  <div class="sub">Actualizado 07/11/2026 13:15 · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA · BYMA · MAE · FRED · data912</div>
+  <div class="sub">Actualizado 07/11/2026 17:49 · fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA · BYMA · MAE · FRED · data912</div>
 </div></header>
 <div class="wrap">
   <nav><a href="index.html" class="nav-pagina">← Macro</a><a href="#mercados">Mercados</a></nav>
