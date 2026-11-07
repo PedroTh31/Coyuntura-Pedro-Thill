@@ -1,6 +1,6 @@
 {
   "fecha": "2026-11-07",
-  "hora": "17:49:32",
+  "hora": "18:47:51",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
   "disparo": "workflow_dispatch",
@@ -543,6 +543,242 @@
         "fuente": "indec_api",
         "tabla": "ipc_nacional",
         "motivo": null
+      }
+    ]
+  },
+  "agenda": {
+    "calendario": {
+      "fecha": "2026-11-07",
+      "estado": "ok",
+      "bajado": null,
+      "feriado_hoy": null,
+      "primer_habil_semana": false,
+      "hoy": [],
+      "semana": [
+        {
+          "dia": "jue 12/11",
+          "hora": "16 h",
+          "titulos": [
+            "IPC de octubre"
+          ]
+        },
+        {
+          "dia": "vie 13/11",
+          "hora": "16 h",
+          "titulos": [
+            "Índice de salarios de septiembre"
+          ]
+        }
+      ],
+      "hasta": "mar 17/11",
+      "proxima": null
+    },
+    "publicaciones": {
+      "ipc": {
+        "nombre_corto": "IPC",
+        "periodo": "2026-09",
+        "titulo": "IPC de septiembre",
+        "estado": "al_dia",
+        "linea": "sep-26 · ✓ al día · próximo 12/11, 16 h",
+        "titulo_publicado": "IPC de septiembre",
+        "publicado": "13/10, 16 h",
+        "fuente": "INDEC",
+        "ancla": "precios",
+        "apertura": {
+          "titular": "Inflación de septiembre: 1,9% mensual",
+          "detalle": null,
+          "filas": [
+            {
+              "etiqueta": "Mensual",
+              "valor": "1,9%",
+              "ref": "agosto 1,7%",
+              "var": "▲ 0,2 pp"
+            },
+            {
+              "etiqueta": "Interanual",
+              "valor": "33,4%",
+              "ref": "agosto 33,5%",
+              "var": "▼ 0,1 pp"
+            },
+            {
+              "etiqueta": "Núcleo",
+              "valor": "1,7%",
+              "ref": "agosto 1,8%",
+              "var": "▼ 0,1 pp"
+            }
+          ]
+        }
+      },
+      "salarios": {
+        "nombre_corto": "Índice de salarios",
+        "periodo": "2026-08",
+        "titulo": "Índice de salarios de agosto",
+        "estado": "al_dia",
+        "linea": "ago-26 · ✓ al día · próximo 13/11, 16 h",
+        "titulo_publicado": "Índice de salarios de agosto",
+        "publicado": "21/10, 16 h",
+        "fuente": "INDEC",
+        "ancla": "social",
+        "apertura": {
+          "titular": "Salario real de agosto: +1,1% contra julio",
+          "detalle": null,
+          "filas": [
+            {
+              "etiqueta": "Salario real (índice)",
+              "valor": "79,0",
+              "ref": "julio 78,2",
+              "var": "▲ 1,1%"
+            }
+          ]
+        }
+      },
+      "emae": {
+        "nombre_corto": "EMAE",
+        "periodo": "2026-08",
+        "titulo": "EMAE de agosto",
+        "estado": "al_dia",
+        "linea": "ago-26 · ✓ al día · próximo 24/11, 16 h",
+        "titulo_publicado": "EMAE de agosto",
+        "publicado": "21/10, 16 h",
+        "fuente": "INDEC",
+        "ancla": null,
+        "apertura": {
+          "titular": "EMAE de agosto: −1,7% interanual",
+          "detalle": null,
+          "filas": [
+            {
+              "etiqueta": "Índice (2004=100)",
+              "valor": "147,8",
+              "ref": "ago-25 150,4",
+              "var": "▼ 1,7%"
+            }
+          ]
+        }
+      },
+      "ica": {
+        "nombre_corto": "Comercio exterior (ICA)",
+        "periodo": "2026-08",
+        "titulo": "Comercio exterior (ICA) de agosto",
+        "estado": "atrasado",
+        "linea": "ago-26 · ⚠ atrasado · sep-26 se publicó el 19/10",
+        "titulo_publicado": "Comercio exterior (ICA) de septiembre",
+        "publicado": "18/09, 16 h",
+        "fuente": "INDEC",
+        "ancla": "externo",
+        "apertura": {
+          "titular": "Saldo comercial de agosto: USD 2.187 M",
+          "detalle": null,
+          "filas": [
+            {
+              "etiqueta": "Saldo",
+              "valor": "USD 2.187 M",
+              "ref": "ago-25 USD 1.440 M",
+              "var": "▲ USD 746 M"
+            },
+            {
+              "etiqueta": "Exportaciones",
+              "valor": "USD 8.883 M",
+              "ref": "ago-25 USD 7.903 M",
+              "var": "▲ 12,4%"
+            },
+            {
+              "etiqueta": "Importaciones",
+              "valor": "USD 6.696 M",
+              "ref": "ago-25 USD 6.463 M",
+              "var": "▲ 3,6%"
+            }
+          ]
+        }
+      },
+      "mercado_trabajo": {
+        "nombre_corto": "Mercado de trabajo (EPH)",
+        "periodo": "2026Q2",
+        "titulo": "Mercado de trabajo (EPH) del segundo trimestre",
+        "estado": "al_dia",
+        "linea": "2T-26 · ✓ al día · próximo 18/12, 16 h",
+        "titulo_publicado": "Mercado de trabajo (EPH) del segundo trimestre",
+        "publicado": "17/09, 16 h",
+        "fuente": "INDEC",
+        "ancla": "social",
+        "apertura": {
+          "titular": "Desempleo del segundo trimestre: 7,9%",
+          "detalle": null,
+          "filas": [
+            {
+              "etiqueta": "Desempleo",
+              "valor": "7,9%",
+              "ref": "2T-25 7,6%",
+              "var": "▲ 0,3 pp"
+            },
+            {
+              "etiqueta": "Informalidad",
+              "valor": "37,9%",
+              "ref": "2T-25 37,7%",
+              "var": "▲ 0,2 pp"
+            }
+          ]
+        }
+      },
+      "informe_avance": {
+        "nombre_corto": "Informe de avance del nivel de actividad",
+        "periodo": "2026Q2",
+        "titulo": "Informe de avance del nivel de actividad del segundo trimestre",
+        "estado": "al_dia",
+        "linea": "2T-26 · ✓ al día · próximo 16/12, 16 h",
+        "titulo_publicado": "Informe de avance del nivel de actividad del segundo trimestre",
+        "publicado": "17/09, 16 h",
+        "fuente": "INDEC",
+        "ancla": "fiscal",
+        "apertura": {
+          "titular": "Informe de avance del segundo trimestre: se incorporó al dashboard",
+          "detalle": "PBI nominal y deuda pública bruta / PBI, actualizados al 2T-26.",
+          "filas": []
+        }
+      }
+    },
+    "atrasados": [
+      {
+        "clave": "atrasado:ica:ago-26",
+        "publicacion": "ica",
+        "texto": "Comercio exterior (ICA) · ago-26 · ⚠ atrasado · sep-26 se publicó el 19/10"
+      }
+    ],
+    "graves": [
+      {
+        "clave": "Tipo de cambio real multilateral|28/01/26",
+        "nombre": "Tipo de cambio real multilateral",
+        "texto": "⏸ Tipo de cambio real multilateral: 28/01/26 · sin datos nuevos hace 9 meses · sin calendario oficial",
+        "dias": 283
+      },
+      {
+        "clave": "Compras netas de divisas por contraparte|may-26",
+        "nombre": "Compras netas de divisas por contraparte",
+        "texto": "⏸ Compras netas de divisas por contraparte: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
+        "dias": 160
+      },
+      {
+        "clave": "Compras netas de divisas del BCRA|may-26",
+        "nombre": "Compras netas de divisas del BCRA",
+        "texto": "⏸ Compras netas de divisas del BCRA: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
+        "dias": 160
+      },
+      {
+        "clave": "Asistencia monetaria del BCRA al Tesoro|may-26",
+        "nombre": "Asistencia monetaria del BCRA al Tesoro",
+        "texto": "⏸ Asistencia monetaria del BCRA al Tesoro: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
+        "dias": 160
+      },
+      {
+        "clave": "Reservas ajustadas (swap China + organismos internacionales)|jun-26",
+        "nombre": "Reservas ajustadas (swap China + organismos internacionales)",
+        "texto": "⏸ Reservas ajustadas (swap China + organismos internacionales): jun-26 · sin datos nuevos hace 4 meses · sin calendario oficial",
+        "dias": 130
+      },
+      {
+        "clave": "Capacidad de compra del salario (RIPTE / CBT)|jul-26",
+        "nombre": "Capacidad de compra del salario (RIPTE / CBT)",
+        "texto": "⏸ Capacidad de compra del salario (RIPTE / CBT): jul-26 · sin datos nuevos hace 3 meses · sin calendario oficial",
+        "dias": 99
       }
     ]
   }
