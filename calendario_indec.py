@@ -153,18 +153,19 @@ def cargar_cache(ruta: Path = CACHE) -> dict:
 
 
 def obtener_publicaciones(hoy: date, meses_a_bajar: int, cache: dict | None = None,
-                          bajar=bajar_mes) -> tuple[list[Publicacion], dict, list[str]]:
-    """Baja el mes actual y los siguientes. Si un mes falla, usa el último caché válido de ese mes
+                          bajar=bajar_mes, meses_atras: int = 0) -> tuple[list[Publicacion], dict, list[str]]:
+    """Baja los `meses_atras` meses anteriores (para saber qué ya se publicó: estado "atrasado" de
+    la línea de frescura, ver frescura.py), el mes actual y los siguientes. Si un mes falla, usa el último caché válido de ese mes
     (marcado como tal en `estado`). Devuelve (publicaciones, estado por mes, errores) y actualiza
     `cache` en el lugar (sólo con descargas exitosas: un mes fallido nunca pisa uno válido)."""
     cache = cache if cache is not None else cargar_cache()
     pubs, estado, errores = [], {}, []
     ahora = datetime.now(ZONA_AR).isoformat(timespec="seconds")
-    for n in range(meses_a_bajar):
+    for n in range(-meses_atras, meses_a_bajar):
         a, m = _sumar_meses(hoy.year, hoy.month, n)
         k = _clave_mes(a, m)
         try:
-            del_mes = bajar(a, m, exigir_publicaciones=n < MESES_EXIGIDOS)
+            del_mes = bajar(a, m, exigir_publicaciones=0 <= n < MESES_EXIGIDOS)
             cache["meses"][k] = {"bajado": ahora, "publicaciones": [_a_dict(p) for p in del_mes]}
             estado[k] = {"fuente": "endpoint", "bajado": ahora}
         except Exception as e:

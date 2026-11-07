@@ -22,6 +22,7 @@ from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
                        fetch_fred, fetch_data912)
 import storage
 import dashboard
+import frescura
 import fuentes_indec
 
 RAIZ = Path(__file__).resolve().parent
@@ -650,8 +651,17 @@ def main():
     nav_a_financiera = '<a href="financiera.html" class="nav-pagina">Financiera →</a>'
     nav_a_macro = '<a href="index.html" class="nav-pagina">← Macro</a>'
     todos = indicadores + indicadores_financiera
+    # Línea de frescura de cada card (Bloque B2, sólo pestaña macro). Usa la caché del calendario
+    # que dejó verificar_calendario.py en la corrida anterior; si algo falla, el dashboard sale sin
+    # la línea en vez de cortar la corrida.
+    try:
+        frescura_ctx = frescura.cargar_contexto()
+    except Exception as e:
+        print(f"::warning title=Frescura::sin línea de frescura en esta corrida: {type(e).__name__}: {e}")
+        frescura_ctx = None
     dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera, fuentes_indec=fuentes_por_indicador,
-                      fuentes_pagina=dashboard.fuentes_de_pagina(indicadores, fuentes_por_indicador, todos))
+                      fuentes_pagina=dashboard.fuentes_de_pagina(indicadores, fuentes_por_indicador, todos),
+                      frescura_ctx=frescura_ctx)
 
     if indicadores_financiera:
         fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")

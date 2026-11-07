@@ -1,7 +1,597 @@
 {
  "meses": {
+  "2026-07": {
+   "bajado": "2026-11-07T17:38:42-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2026-07-07",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-07",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-08",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-08",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción (ISAC). Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-13",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Abril de 2026"
+    },
+    {
+     "fecha": "2026-07-14",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Junio de 2026"
+    },
+    {
+     "fecha": "2026-07-14",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Junio de 2026"
+    },
+    {
+     "fecha": "2026-07-15",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-16",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Junio de 2026"
+    },
+    {
+     "fecha": "2026-07-16",
+     "hora": "16:00",
+     "titulo": "Cuenta de generación del ingreso e insumo de mano de obra. Primer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-07-17",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Junio de 2026"
+    },
+    {
+     "fecha": "2026-07-17",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Junio de 2026"
+    },
+    {
+     "fecha": "2026-07-20",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Junio de 2026"
+    },
+    {
+     "fecha": "2026-07-20",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-22",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Supermercados y autoservicios mayoristas. Expectativas julio-septiembre de 2026"
+    },
+    {
+     "fecha": "2026-07-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Industria manufacturera. Expectativas julio-septiembre de 2026"
+    },
+    {
+     "fecha": "2026-07-23",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-23",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-23",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Mayo de 2026"
+    },
+    {
+     "fecha": "2026-07-24",
+     "hora": "16:00",
+     "titulo": "Índices de patentamientos. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-07-27",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Junio y segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-07-29",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    },
+    {
+     "fecha": "2026-07-30",
+     "hora": "16:00",
+     "titulo": "Índices de precios y cantidades del comercio exterior. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-07-31",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Junio de 2026"
+    }
+   ]
+  },
+  "2026-08": {
+   "bajado": "2026-11-07T17:38:42-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2026-08-03",
+     "hora": "16:00",
+     "titulo": "Bases de microdatos de la Encuesta Permanente de Hogares. Primer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-08-04",
+     "hora": "16:00",
+     "titulo": "Argentine Foreign Trade Statistics. Merchandise. Preliminary data for the first half of 2026"
+    },
+    {
+     "fecha": "2026-08-06",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-06",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-07",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-07",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción. Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-11",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Mayo de 2026"
+    },
+    {
+     "fecha": "2026-08-12",
+     "hora": "16:00",
+     "titulo": "Cuenta satélite de cultura. Valor agregado bruto, comercio exterior, puestos de trabajo, generación del ingreso y consumo privado cultural. Año 2025"
+    },
+    {
+     "fecha": "2026-08-13",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Julio de 2026"
+    },
+    {
+     "fecha": "2026-08-13",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Julio de 2026"
+    },
+    {
+     "fecha": "2026-08-14",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-18",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Julio de 2026"
+    },
+    {
+     "fecha": "2026-08-18",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Julio de 2026"
+    },
+    {
+     "fecha": "2026-08-18",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Julio de 2026"
+    },
+    {
+     "fecha": "2026-08-19",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Supermercados y autoservicios mayoristas. Expectativas agosto-octubre de 2026"
+    },
+    {
+     "fecha": "2026-08-19",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Industria manufacturera. Expectativas agosto-octubre de 2026"
+    },
+    {
+     "fecha": "2026-08-20",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Julio de 2026"
+    },
+    {
+     "fecha": "2026-08-20",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-20",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-21",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-21",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-21",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Junio de 2026"
+    },
+    {
+     "fecha": "2026-08-21",
+     "hora": "16:00",
+     "titulo": "Encuesta de comercios de electrodomésticos y artículos para el hogar. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-08-24",
+     "hora": "16:00",
+     "titulo": "Cuenta de energía. Flujos físicos de energía. Año 2023"
+    },
+    {
+     "fecha": "2026-08-25",
+     "hora": "16:00",
+     "titulo": "Remuneración al trabajo asalariado ingreso mixto e insumo de mano de obra por sexo y tramos de edad. Año 2025"
+    },
+    {
+     "fecha": "2026-08-25",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Julio de 2026"
+    },
+    {
+     "fecha": "2026-08-26",
+     "hora": "16:00",
+     "titulo": "Complejos exportadores. Primer semestre de 2026"
+    },
+    {
+     "fecha": "2026-08-27",
+     "hora": "16:00",
+     "titulo": "Ingreso nacional y ahorro nacional. Año 2025"
+    },
+    {
+     "fecha": "2026-08-27",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    },
+    {
+     "fecha": "2026-08-28",
+     "hora": "16:00",
+     "titulo": "Informe de la industria de maquinaria agrícola. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-08-31",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Julio de 2026"
+    }
+   ]
+  },
+  "2026-09": {
+   "bajado": "2026-11-07T17:38:42-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2026-09-02",
+     "hora": "16:00",
+     "titulo": "Origen provincial de las exportaciones. Bienes. Primer semestre de 2026"
+    },
+    {
+     "fecha": "2026-09-02",
+     "hora": "16:00",
+     "titulo": "Accesos a internet. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-09-03",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-08",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-08",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción (ISAC). Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-09",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Junio de 2026"
+    },
+    {
+     "fecha": "2026-09-09",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-10",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-10",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-14",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-15",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-16",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-16",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-17",
+     "hora": "16:00",
+     "titulo": "Mercado de trabajo. Tasas e indicadores socioeconómicos. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-09-17",
+     "hora": "16:00",
+     "titulo": "Informe de avance del nivel de actividad. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-09-17",
+     "hora": "16:00",
+     "titulo": "Industria farmacéutica en la Argentina. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-09-18",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-21",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Supermercados y autoservicios mayoristas. Expectativas septiembre-noviembre de 2026"
+    },
+    {
+     "fecha": "2026-09-21",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Industria manufacturera. Expectativas septiembre-noviembre de 2026"
+    },
+    {
+     "fecha": "2026-09-22",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-23",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-23",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-23",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-24",
+     "hora": "16:00",
+     "titulo": "Incidencia de la pobreza y la indigencia en 31 aglomerados urbanos. Primer semestre de 2026"
+    },
+    {
+     "fecha": "2026-09-24",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Julio de 2026"
+    },
+    {
+     "fecha": "2026-09-25",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-28",
+     "hora": "16:00",
+     "titulo": "Estadísticas de productos industriales (EPI)"
+    },
+    {
+     "fecha": "2026-09-28",
+     "hora": "16:00",
+     "titulo": "Indicadores del sector energético. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-09-29",
+     "hora": "16:00",
+     "titulo": "Balanza de pagos, posición de inversión internacional y deuda externa. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-09-29",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    },
+    {
+     "fecha": "2026-09-30",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-09-30",
+     "hora": "16:00",
+     "titulo": "Dosier estadístico de personas mayores 2026"
+    }
+   ]
+  },
+  "2026-10": {
+   "bajado": "2026-11-07T17:38:42-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2026-10-01",
+     "hora": "16:00",
+     "titulo": "Evolución de la distribución del ingreso (EPH). Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-10-02",
+     "hora": "16:00",
+     "titulo": "Medición de la productividad 2016-2025 y el stock de capital 2004-2025 de la República Argentina"
+    },
+    {
+     "fecha": "2026-10-06",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-07",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-07",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción (ISAC). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-08",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-08",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Julio de 2026"
+    },
+    {
+     "fecha": "2026-10-13",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-10-13",
+     "hora": "16:00",
+     "titulo": "Índices de patentamientos. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-10-13",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-10-15",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-15",
+     "hora": "16:00",
+     "titulo": "Cuenta de generación del ingreso e insumo de mano de obra. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-10-16",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-10-16",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-10-16",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-10-19",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-10-20",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Supermercados y autoservicios mayoristas. Expectativas octubre-diciembre de 2026"
+    },
+    {
+     "fecha": "2026-10-20",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Industria manufacturera. Expectativas octubre-diciembre de 2026"
+    },
+    {
+     "fecha": "2026-10-21",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-21",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-22",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Agosto de 2026"
+    },
+    {
+     "fecha": "2026-10-26",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Septiembre y tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-10-28",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    },
+    {
+     "fecha": "2026-10-30",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Septiembre de 2026"
+    }
+   ]
+  },
   "2026-11": {
-   "bajado": "2026-11-07T13:15:18-03:00",
+   "bajado": "2026-11-07T17:38:42-03:00",
    "publicaciones": [
     {
      "fecha": "2026-11-03",
@@ -151,7 +741,7 @@
    ]
   },
   "2026-12": {
-   "bajado": "2026-11-07T13:15:18-03:00",
+   "bajado": "2026-11-07T17:38:42-03:00",
    "publicaciones": [
     {
      "fecha": "2026-12-02",
@@ -331,7 +921,7 @@
    ]
   },
   "2027-01": {
-   "bajado": "2026-11-07T13:15:18-03:00",
+   "bajado": "2026-11-07T17:38:42-03:00",
    "publicaciones": [
     {
      "fecha": "2027-01-06",
@@ -461,7 +1051,7 @@
    ]
   },
   "2027-02": {
-   "bajado": "2026-11-07T13:15:18-03:00",
+   "bajado": "2026-11-07T17:38:42-03:00",
    "publicaciones": [
     {
      "fecha": "2027-02-02",
@@ -611,7 +1201,7 @@
    ]
   },
   "2027-03": {
-   "bajado": "2026-11-07T13:15:18-03:00",
+   "bajado": "2026-11-07T17:38:42-03:00",
    "publicaciones": [
     {
      "fecha": "2027-03-03",

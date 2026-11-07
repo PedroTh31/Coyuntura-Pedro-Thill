@@ -16,10 +16,12 @@ from collections import defaultdict
 import json
 import pandas as pd
 
+import frescura
+
 DESDE_GENERAL = "2024-01-01"
 OUT = Path(__file__).resolve().parent / "docs"
 MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diarias largas
-UMBRAL_DISCONTINUADA_DIAS = 90  # a partir de cuántos días sin datos se marca "sin datos nuevos desde..."
+UMBRAL_DISCONTINUADA_DIAS = frescura.UMBRAL_DISCONTINUADA_DIAS  # días sin datos para "sin datos nuevos" (una sola fuente de verdad)
 UMBRAL_HISTORIA_MINIMA = 30  # por debajo de esto, no se muestra gráfico de línea (ver "acumulando historia")
 
 # Paleta institucional (Ministerio de Economía / argentina.gob.ar, sistema "Poncho"):
@@ -865,9 +867,51 @@ def _registrar_nota(nota, nombre, notas_dict):
     return nota_num
 
 
+# Serie que resume cada card compuesta (la misma que usa su _serie_* para el valor de la card):
+# de ella sale la línea de frescura (Bloque B2). sectores_bar no lleva línea (es la foto de un período).
+def _serie_resumen(ind):
+    v = ind.get("vista")
+    if v in ("overlay", "incidencia_stack"):
+        return ind["series"][-1] if v == "overlay" else ind["series"][0]
+    return {"balance_cambiario": lambda: ind["series"][1],
+            "comercio_espejo": lambda: ind["series"][2],
+            "combo_2lineas": lambda: ind["linea_izq"],
+            "combo_barras_linea": lambda: ind["linea"],
+            "combo_rezago": lambda: ind["linea_der"],
+            "combo_barras_evento": lambda: ind["barra"]}.get(v, lambda: ind["nombre"])()
+
+
+def _series_de_card(ind):
+    """Todas las series que dibuja una card (para detectar cards mixtas: alguna frenada y otra no)."""
+    v = ind.get("vista")
+    if v in ("overlay", "incidencia_stack", "balance_cambiario", "comercio_espejo"):
+        return list(ind["series"])
+    if v in ("combo_2lineas", "combo_rezago"):
+        return [ind["linea_izq"], ind["linea_der"]]
+    if v == "combo_barras_linea":
+        return [b["serie"] for b in ind["barras"]] + [ind["linea"]]
+    if v == "combo_barras_evento":
+        return [ind["barra"], ind["evento"]]
+    return [ind["nombre"]]
+
+
+def _linea_frescura(ind, historico, ctx, indicadores_por_nombre):
+    if ctx is None or ind.get("vista") == "sectores_bar":
+        return ""
+    estados = []
+    for nombre in _series_de_card(ind):
+        # cada serie con su propia config (ej. rezago_normal_dias del TCR dentro de un overlay)
+        cfg = indicadores_por_nombre.get(nombre, ind)
+        fechas = historico.loc[historico["indicador"] == nombre, "fecha"]
+        estados.append((nombre, frescura.calcular(cfg, nombre, fechas, ctx)))
+    return frescura.html_card(estados, _serie_resumen(ind))
+
+
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
             extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina",
-            fuentes_indec=None, fuentes_pagina=None):
+            fuentes_indec=None, fuentes_pagina=None, frescura_ctx=None):
+    """frescura_ctx: frescura.Contexto (Bloque B2) para mostrar la línea de frescura en cada card;
+    None = sin línea (pestaña financiera, fuera de esa ronda)."""
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
@@ -906,6 +950,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             card, serie_js_compuesta = entrada
             card["nota_num"] = _registrar_nota(nota, nombre, notas_dict)
             card["fuente_indec"] = bool(usos)
+            card["frescura"] = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
             charts.append(card)
             series_js.append(serie_js_compuesta)
             idx += 1
@@ -936,8 +981,10 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         # de política monetaria). Se calcula de la última fecha REAL de la serie en cada
         # corrida: si la fuente retoma la publicación, la marca se actualiza o desaparece
         # sola (no queda un texto fijo desactualizado).
+        # Con la línea de frescura (Bloque B2) el rezago grave lo muestra esa línea, para todas las
+        # series: el cartel viejo queda sólo para las páginas sin línea (financiera).
         marca_fecha = None
-        if ind.get("marca_fecha"):
+        if ind.get("marca_fecha") and frescura_ctx is None:
             dias_atraso = (pd.Timestamp.today().normalize() - serie["fecha"].max()).days
             if dias_atraso > UMBRAL_DISCONTINUADA_DIAS:
                 marca_fecha = f"Sin datos nuevos desde {serie['fecha'].max().strftime('%m/%Y')}"
@@ -955,7 +1002,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num,
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
             subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
-            fuente_indec=bool(usos)))
+            fuente_indec=bool(usos), frescura=_linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)))
         if acumulando:
             idx += 1
             continue
@@ -1167,10 +1214,11 @@ def _card_cell(c):
         return (f'<div class="{cell_cls}"><div class="card" style="--acc:{c["color"]}">'
                 f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
                 f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
-                f'</div><div class="acumulando">⏳ {c["acumulando"]}</div>{nota_mark}</div>')
+                f'{c.get("frescura", "")}</div><div class="acumulando">⏳ {c["acumulando"]}</div>{nota_mark}</div>')
     return (f'<div class="{cell_cls}">{fs_btn}<div class="card" style="--acc:{c["color"]}">'
             f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
             f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
+            f'{c.get("frescura", "")}'
             f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
             f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{rezago_btns}{nota_mark}</div>')
 
@@ -1293,6 +1341,15 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
   .chg.malo { color:#C62828; } .chg.bueno { color:#2E7D33; } .chg.flat { color:var(--gris); }
   .uni { color:var(--gris); }
   .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
+  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + azul para
+     "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
+     El estado nunca va sólo en color: lleva ícono y texto. */
+  .cf { font-size:11px; color:#7A8C9A; margin-top:5px; line-height:1.35; }
+  .cf .per { color:#4A5A68; font-weight:600; }
+  .cf .ok { color:#3A7CA5; font-weight:600; }
+  .cf .atr { color:#2E3A45; font-weight:700; }
+  .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
+  .cf.grave .per { color:#2E3A45; }
   .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
   .acumulando { color:var(--gris); font-size:12px; text-align:center; padding:20px 14px; background:var(--hover); border-radius:0 0 10px 10px; }
   .cbox { height:260px; padding:8px 10px 12px; }

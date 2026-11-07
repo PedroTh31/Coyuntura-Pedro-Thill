@@ -14,6 +14,10 @@ fuente:
   pagina: "https://www.indec.gob.ar/indec/web/Calendario-Fecha-0"
   # Meses a bajar en cada corrida: el actual + 4 (alcanza para la próxima fecha de las trimestrales).
   meses_a_bajar: 5
+  # Meses ANTERIORES al actual que también se bajan: la línea de frescura del dashboard (frescura.py)
+  # necesita saber qué períodos ya se publicaron para marcar "atrasado". 4 alcanza para las
+  # trimestrales (la publicación anterior a la vigente puede ser de hace ~3 meses).
+  meses_atras: 4
 
 # Publicaciones del INDEC que alimentan indicadores del dashboard (decisión de Pedro: sólo esas).
 #  - titulo_regex: se aplica al título tal cual lo publica el INDEC; el grupo `periodo` es el período

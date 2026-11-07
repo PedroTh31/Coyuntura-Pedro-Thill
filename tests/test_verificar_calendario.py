@@ -99,6 +99,17 @@ class TestCacheYAsignacion(unittest.TestCase):
         C.obtener_publicaciones(date(2026, 11, 7), 5, {"meses": {}}, bajar)
         self.assertEqual(pedidos, [True, True, True, False, False])
 
+    def test_meses_atras_se_bajan_sin_exigir_publicaciones(self):
+        pedidos = []
+
+        def bajar(a, m, exigir_publicaciones=False):
+            pedidos.append(((a, m), exigir_publicaciones))
+            return POR_MES.get((a, m), [])
+        cache = {"meses": {}}
+        C.obtener_publicaciones(date(2026, 11, 7), 5, cache, bajar, meses_atras=2)
+        self.assertEqual(pedidos[:3], [((2026, 9), False), ((2026, 10), False), ((2026, 11), True)])
+        self.assertIn("2026-09", cache["meses"])
+
     def test_titulo_que_matchea_dos_patrones(self):
         c = cfg()
         c["publicaciones"][1]["_re"] = re.compile(r"^Índice de precios (?P<periodo>.+)$")

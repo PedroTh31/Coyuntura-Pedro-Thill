@@ -120,6 +120,19 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     no está publicado; un año sin publicar va como `verificado: false`, desde ArgentinaDatos).
   - Tests sin red: `tests/test_calendario_indec.py`, `tests/test_verificar_calendario.py`.
 
+- `frescura.py` — línea de frescura bajo el valor de cada card (Bloque B2, sólo `index.html`;
+  `run.py` le pasa `frescura_ctx` a `dashboard.generar`): período del último dato, estado y próximo
+  dato. Con calendario (indicador en `calendario.yaml`): "✓ al día · próximo DD/MM, 16 h", "X
+  publicado el DD/MM, entra en la próxima actualización" (margen: publicación + 1 día hábil) o "⚠
+  atrasado · X se publicó el DD/MM" (para eso `calendario.yaml` baja también `meses_atras` meses
+  anteriores). Sin calendario: "próximo: sin calendario oficial"; diarias: "próximo DD/MM
+  (estimado)" (próximo día hábil). Rezago grave (franja "⏸ … sin datos nuevos hace N meses"): días
+  desde el CIERRE del período > 90 (trimestrales 90 + 92; piso `rezago_normal_dias`), N = meses
+  completos desde ese cierre. Cards con varias series: si alguna está frenada y otra no, la franja
+  nombra la frenada. Colores: grises + azul "al día", NUNCA el arena (es el de los negativos del
+  Bloque C). Ojo: el chequeo de frescura de `run.py` (alertas) mide desde la fecha cruda del dato,
+  no desde el cierre. Tests: `tests/test_frescura.py`.
+
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
 - `fuente: datos_gob` + `id: "..."` → apis.datos.gob.ar/series (IPC, EMAE, monetarias,
   fiscal, empleo, comercio exterior). Es el backbone.

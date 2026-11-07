@@ -1,7 +1,7 @@
 """Verificación diaria del calendario (Bloque B1 de PROMPT_ronda_macro_indec.md). Corre en el cron
 de datos (coyuntura.yml), después de run.py.
 
-1. Baja el calendario del INDEC (mes actual + `meses_a_bajar` - 1) y actualiza la caché
+1. Baja el calendario del INDEC (`meses_atras` meses anteriores, mes actual + `meses_a_bajar` - 1) y actualiza la caché
    data/calendario_indec.json. Un mes que falla usa su último caché válido (marcado como tal).
 2. Avisa a Pedro (un solo mail por corrida, mismo mecanismo que las alertas del INDEC) si:
    - la descarga o el formato fallan (el parser no devuelve silencio: ver calendario_indec.py);
@@ -96,7 +96,8 @@ def verificar(hoy: date, cfg: dict, cache: dict, bajar=C.bajar_mes, oficiales=fe
     """Núcleo sin efectos de disco ni mail (testeable). Devuelve (items_diarios, items_semanales,
     asignadas, estado_meses)."""
     diarios, semanales = [], []
-    pubs, estado_meses, errores = C.obtener_publicaciones(hoy, cfg["fuente"]["meses_a_bajar"], cache, bajar)
+    pubs, estado_meses, errores = C.obtener_publicaciones(hoy, cfg["fuente"]["meses_a_bajar"], cache, bajar,
+                                                        cfg["fuente"].get("meses_atras", 0))
     for e in errores:
         diarios.append((f"descarga:{e.split(':')[0]}", f"Calendario del INDEC: {e}"))
     asignadas, err_asig = C.asignar(pubs, cfg)
