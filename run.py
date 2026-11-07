@@ -649,7 +649,9 @@ def main():
 
     nav_a_financiera = '<a href="financiera.html" class="nav-pagina">Financiera →</a>'
     nav_a_macro = '<a href="index.html" class="nav-pagina">← Macro</a>'
-    dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera, fuentes_indec=fuentes_por_indicador)
+    todos = indicadores + indicadores_financiera
+    dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera, fuentes_indec=fuentes_por_indicador,
+                      fuentes_pagina=dashboard.fuentes_de_pagina(indicadores, fuentes_por_indicador, todos))
 
     if indicadores_financiera:
         fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
@@ -661,7 +663,11 @@ def main():
             dashboard.tabla_acciones("CEDEARs más operados", cedears, fecha_hoy)}
         dashboard.generar(historico, indicadores_financiera, archivo_salida="financiera.html",
                            extra_html=extra_html, extra_charts=extra_charts, nav_extra=nav_a_macro,
-                           titulo_pagina="Monitor financiero · Argentina", fuentes_indec=fuentes_por_indicador)
+                           titulo_pagina="Monitor financiero · Argentina", fuentes_indec=fuentes_por_indicador,
+                           fuentes_pagina=dashboard.fuentes_de_pagina(
+                               indicadores_financiera, fuentes_por_indicador, todos,
+                               # dólar futuro y muro de vencimientos: MAE; tablas de acciones/CEDEARs: data912
+                               extra=(["MAE"] if extra_charts else []) + (["data912"] if acciones or cedears else [])))
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html, docs/financiera.html")
     else:
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")

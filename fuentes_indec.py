@@ -43,6 +43,9 @@ API = "indec_api"
 FALLBACK_DG = "datos_gob_ar"
 FALLBACK_AD = "argentinadatos"
 DOCS_API = "https://api.indec.gob.ar/docs"
+# Ficha pública de cada tabla: el slug es el nombre de la tabla de la API (verificado el 07/11/2026
+# para las 6 tablas en uso; un slug inexistente muestra "Dataset no encontrado" con HTTP 200).
+DATASET_API = "https://api.indec.gob.ar/datasets/{tabla}"
 
 
 def _hoy() -> str:
@@ -287,7 +290,8 @@ def describir_fuente(usos: list[dict]) -> str | None:
     api_tablas = sorted({u["tabla"] for u in usos if u["fuente"] == API})
     partes = []
     if api_tablas:
-        tablas = ", ".join(f"<code>{t}</code>" for t in api_tablas)
+        tablas = ", ".join(f'<a href="{DATASET_API.format(tabla=t)}" target="_blank" rel="noopener">'
+                           f"<code>{t}</code></a>" for t in api_tablas)
         partes.append(f'Fuente: INDEC (<a href="{DOCS_API}" target="_blank" rel="noopener">API del INDEC</a>, '
                       f'tabla{"s" if len(api_tablas) > 1 else ""} {tablas}).')
     if any(u["fuente"] == FALLBACK_DG for u in usos):

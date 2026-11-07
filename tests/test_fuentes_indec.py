@@ -177,6 +177,7 @@ class TestDescribirFuente(unittest.TestCase):
         api = [{"clave": "a", "fuente": FI.API, "tabla": "ipc_nacional"}]
         self.assertIn("Fuente: INDEC (", FI.describir_fuente(api))
         self.assertIn("ipc_nacional", FI.describir_fuente(api))
+        self.assertIn('href="https://api.indec.gob.ar/datasets/ipc_nacional"', FI.describir_fuente(api))
         dg = [{"clave": "a", "fuente": FI.FALLBACK_DG, "tabla": "ipc_nacional"}]
         self.assertIn("Fuente: INDEC vía", FI.describir_fuente(dg))
         self.assertIsNone(FI.describir_fuente([]))

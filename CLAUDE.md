@@ -77,7 +77,11 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   vencer (semanal), fallback > 3 corridas seguidas (semanal por serie), una serie de fallback
   de datos.gob con 0 filas (semanal). El dashboard agrega a la nota "Fuente: INDEC (API…)" o
   "Fuente: INDEC vía …" según la fuente realmente usada, y un pie visible "Fuente: INDEC" bajo
-  cada gráfico con datos del INDEC (atribución). Catálogo de la API y equivalencias
+  cada gráfico con datos del INDEC (atribución). Cada tabla de la nota enlaza a su ficha
+  `api.indec.gob.ar/datasets/<tabla>` (verificada; un slug inexistente da "Dataset no
+  encontrado" con HTTP 200), y el encabezado "fuentes: …" de cada página sale de
+  `dashboard.fuentes_de_pagina()` (fuentes efectivamente usadas, no lista fija; un `fuente:` o
+  `calculo:` nuevo con otra fuente → sumarlo a `ETIQUETA_FUENTE`/`FUENTES_CALCULO`). Catálogo de la API y equivalencias
   verificadas: `fuentes/indec_catalogo.md`, `fuentes/indec_equivalencias.md`. Tests sin red:
   `tests/test_indec_api.py`, `tests/test_fuentes_indec.py`.
 

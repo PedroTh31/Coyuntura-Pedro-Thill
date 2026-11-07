@@ -785,6 +785,64 @@ def _usos_indec(ind, fuentes_indec):
     return usos
 
 
+# Fuentes del encabezado ("fuentes: ...") de cada página, armadas a partir de los indicadores que
+# esa página muestra (no una lista fija): así financiera.html no lista el INDEC, y si una serie del
+# INDEC cae al fallback, el encabezado lo refleja.
+FUENTES_HEADER_DEFAULT = "API del INDEC · apis.datos.gob.ar · ArgentinaDatos · BCRA"
+ORDEN_FUENTES = ["API del INDEC", "apis.datos.gob.ar", "ArgentinaDatos", "BCRA",
+                 "Secretaría de Finanzas", "BYMA", "MAE", "FRED", "data912"]
+ETIQUETA_FUENTE = {"datos_gob": "apis.datos.gob.ar", "argentinadatos": "ArgentinaDatos",
+                   "dolar": "ArgentinaDatos", "bcra": "BCRA", "rem_bcra": "BCRA",
+                   "bcra_morosidad_lineas": "BCRA", "deuda_bruta": "Secretaría de Finanzas",
+                   "byma": "BYMA", "mae_bono": "MAE", "mae_resumen": "MAE", "fred": "FRED"}
+ETIQUETA_USO_INDEC = {"indec_api": "API del INDEC", "datos_gob_ar": "apis.datos.gob.ar",
+                      "argentinadatos": "ArgentinaDatos"}
+# Fuentes que un `calculo:` usa por fuera de sus ids de datos.gob (ver _calcular en run.py).
+FUENTES_CALCULO = {"brecha": ["ArgentinaDatos"], "reservas_ajustadas": ["BCRA"],
+                   "tasa_real_expost": ["BCRA"], "spread_bono_ust": ["MAE", "FRED"],
+                   "deuda_pbi": ["Secretaría de Finanzas", "ArgentinaDatos"]}
+CAMPOS_ID_DG = ("id", "base_id", "nominal_id", "deflactor_id", "numerador_id", "denominador_id",
+                "minuendo_id", "sustraendo_id", "pbi_id", "ipc_base_id")
+
+
+def _fuentes_de_indicador(ind, fuentes_indec):
+    """Etiquetas de fuente de un indicador: la declarada en el yaml y, para las series del
+    INDEC, la que el resolver usó de verdad (API o fallback)."""
+    if ind.get("vista"):
+        return set()   # las vistas sólo combinan indicadores que ya cuentan por su cuenta
+    usos = fuentes_indec.get(ind["nombre"], [])
+    etiquetas = {ETIQUETA_USO_INDEC.get(u["fuente"], u["fuente"]) for u in usos}
+    cubiertos = {u["clave"].split(":")[0] for u in usos} | {ind["nombre"]}
+    if ind.get("fuente_primaria") == "indec_api" and not usos:
+        etiquetas.add("API del INDEC")   # sin registro de esta corrida: la fuente declarada
+    if ind.get("fuente") in ETIQUETA_FUENTE:
+        if ind["fuente"] != "datos_gob" or ind.get("id") not in cubiertos:
+            etiquetas.add(ETIQUETA_FUENTE[ind["fuente"]])
+    calculo = ind.get("calculo")
+    if calculo:
+        etiquetas.update(FUENTES_CALCULO.get(calculo, []))
+        ids = [ind[c] for c in CAMPOS_ID_DG if isinstance(ind.get(c), str)]
+        ids += [c if isinstance(c, str) else c.get("id") for c in ind.get("componentes", [])]
+        if any(i and i not in cubiertos for i in ids):
+            etiquetas.add("apis.datos.gob.ar")
+    return etiquetas
+
+
+def fuentes_de_pagina(config_pagina, fuentes_indec=None, todos_los_indicadores=None, extra=()):
+    """Texto del encabezado 'fuentes: ...' de una página. `todos_los_indicadores` resuelve los
+    `solo_referencia` (el dato lo trae un indicador de la otra lista, con el mismo nombre);
+    `extra`: fuentes de lo que se inyecta por fuera del yaml (extra_charts/extra_html)."""
+    fuentes_indec = fuentes_indec or {}
+    por_nombre = {i["nombre"]: i for i in (todos_los_indicadores or []) if not i.get("solo_referencia")}
+    etiquetas = set(extra)
+    for ind in config_pagina:
+        if ind.get("solo_referencia"):
+            ind = por_nombre.get(ind["nombre"], ind)
+        etiquetas |= _fuentes_de_indicador(ind, fuentes_indec)
+    orden = [e for e in ORDEN_FUENTES if e in etiquetas] + sorted(etiquetas - set(ORDEN_FUENTES))
+    return " · ".join(orden)
+
+
 def _nota_con_fuente(nota, usos):
     """Nota metodológica + 'Fuente: INDEC (API ...)' o 'Fuente: INDEC vía ...' (Bloque A4)."""
     from fuentes_indec import describir_fuente
@@ -809,7 +867,7 @@ def _registrar_nota(nota, nombre, notas_dict):
 
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
             extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina",
-            fuentes_indec=None):
+            fuentes_indec=None, fuentes_pagina=None):
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
@@ -945,7 +1003,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
     _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida=archivo_salida, extra_html=extra_html or {},
                     nav_extra=nav_extra, titulo_pagina=titulo_pagina,
-                    semaforo_fuente=describir_fuente(usos_semaforo) or "")
+                    semaforo_fuente=describir_fuente(usos_semaforo) or "",
+                    fuentes_pagina=fuentes_pagina)
 
 
 def _color_semaforo(v):
@@ -1118,7 +1177,8 @@ def _card_cell(c):
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida="index.html", extra_html=None, nav_extra="",
-                    titulo_pagina="Monitor de coyuntura · Argentina", semaforo_fuente=""):
+                    titulo_pagina="Monitor de coyuntura · Argentina", semaforo_fuente="",
+                    fuentes_pagina=None):
     extra_html = extra_html or {}
     ahora = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
@@ -1272,7 +1332,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
 <body>
 <header class="masthead"><div class="masthead-inner">
   <h1>__TITULO__</h1>
-  <div class="sub">Actualizado __AHORA__ · fuentes: API del INDEC · apis.datos.gob.ar · ArgentinaDatos · BCRA</div>
+  <div class="sub">Actualizado __AHORA__ · fuentes: __FUENTES__</div>
 </div></header>
 <div class="wrap">
   <nav>__NAV__</nav>
@@ -2071,6 +2131,7 @@ if (tieneFullscreenNativo) {
 </body></html>"""
 
     html = (plantilla.replace("__AHORA__", ahora).replace("__NAV__", nav)
+            .replace("__FUENTES__", fuentes_pagina or FUENTES_HEADER_DEFAULT)
             .replace("__TITULO__", titulo_pagina)
             .replace("__SECCIONES__", secciones)
             .replace("__NOTAS__", notas_html)
