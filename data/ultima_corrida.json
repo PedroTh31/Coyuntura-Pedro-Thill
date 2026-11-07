@@ -1,9 +1,9 @@
 {
-  "fecha": "2026-11-06",
-  "hora": "14:07:24",
+  "fecha": "2026-11-07",
+  "hora": "06:37:19",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
-  "disparo": "schedule",
+  "disparo": "workflow_dispatch",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
@@ -94,8 +94,8 @@
       "falla": 0
     },
     "mae_bono": {
-      "ok": 1,
-      "falla": 2
+      "ok": 0,
+      "falla": 3
     },
     "mae_resumen": {
       "ok": 0,
@@ -161,6 +161,10 @@
     },
     {
       "indicador": "TIR GD30 (USD)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "TIR GD35 (USD)",
       "motivo": "vacío"
     },
     {
