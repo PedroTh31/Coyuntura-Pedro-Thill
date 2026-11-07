@@ -1,9 +1,9 @@
 {
   "fecha": "2026-11-07",
-  "hora": "12:18:19",
+  "hora": "13:04:26",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
-  "disparo": "workflow_dispatch",
+  "disparo": "schedule",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
