@@ -1,0 +1,789 @@
+{
+ "meses": {
+  "2026-11": {
+   "bajado": "2026-11-07T13:15:18-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2026-11-03",
+     "hora": "16:00",
+     "titulo": "Índices de precios y cantidades del comercio exterior. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-11-04",
+     "hora": "16:00",
+     "titulo": "Indicadores de condiciones de vida de los hogares (EPH). Primer semestre de 2026"
+    },
+    {
+     "fecha": "2026-11-04",
+     "hora": "16:00",
+     "titulo": "Bases de microdatos de la Encuesta Permanente de Hogares. Segundo trimestre de 2026"
+    },
+    {
+     "fecha": "2026-11-05",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-05",
+     "hora": "16:00",
+     "titulo": "Argentine Foreign Trade Statistics. Preliminary data for the nine months of 2026"
+    },
+    {
+     "fecha": "2026-11-06",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-06",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-06",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-11",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Agosto de 2026"
+    },
+    {
+     "fecha": "2026-11-12",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-11-12",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-11-13",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-13",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-16",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-11-17",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-11-17",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-11-18",
+     "hora": "16:00",
+     "titulo": "Dosier estadístico en conmemoración del Día Mundial del Niño. Sexta edición"
+    },
+    {
+     "fecha": "2026-11-19",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-11-19",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Supermercados y autoservicios mayoristas. Expectativas noviembre de 2026-enero de 2027"
+    },
+    {
+     "fecha": "2026-11-19",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Industria manufacturera. Expectativas noviembre de 2026- enero de 2027"
+    },
+    {
+     "fecha": "2026-11-24",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-25",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-25",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-25",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-11-25",
+     "hora": "16:00",
+     "titulo": "Encuesta de comercios de electrodomésticos y artículos para el hogar. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-11-27",
+     "hora": "16:00",
+     "titulo": "Informe de la industria de maquinaria agrícola. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-11-27",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-11-30",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Octubre 2026"
+    },
+    {
+     "fecha": "2026-11-30",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    }
+   ]
+  },
+  "2026-12": {
+   "bajado": "2026-11-07T13:15:18-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2026-12-02",
+     "hora": "16:00",
+     "titulo": "Sistema integrado de estadísticas sociales (SIES). Actualización de fuentes a diciembre de 2026"
+    },
+    {
+     "fecha": "2026-12-03",
+     "hora": "16:00",
+     "titulo": "Formación bruta de capital fijo del sector gobierno general. Año 2025"
+    },
+    {
+     "fecha": "2026-12-03",
+     "hora": "16:00",
+     "titulo": "Cuentas por sectores institucionales. Sector gobierno general. Año 2025"
+    },
+    {
+     "fecha": "2026-12-03",
+     "hora": "16:00",
+     "titulo": "Cuentas por sectores institucionales. Sector sociedades financieras. Subsectores banco central, sociedades de depósito excepto el banco central y fondos del mercado monetario. Año 2025"
+    },
+    {
+     "fecha": "2026-12-03",
+     "hora": "16:00",
+     "titulo": "Cuentas por sectores institucionales. El resto del mundo. Año 2025"
+    },
+    {
+     "fecha": "2026-12-04",
+     "hora": "16:00",
+     "titulo": "Accesos a internet. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-12-04",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-09",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-09",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-09",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-10",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Septiembre de 2026"
+    },
+    {
+     "fecha": "2026-12-15",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-15",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-16",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-16",
+     "hora": "16:00",
+     "titulo": "Informe de avance del nivel de actividad. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-12-16",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-17",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-17",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-17",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-18",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-18",
+     "hora": "16:00",
+     "titulo": "Mercado de trabajo. Tasas e indicadores socioeconómicos. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-12-21",
+     "hora": "16:00",
+     "titulo": "Industria farmacéutica en la Argentina. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-12-21",
+     "hora": "16:00",
+     "titulo": "Indicadores del sector energético. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-12-21",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-22",
+     "hora": "16:00",
+     "titulo": "Balanza de pagos, posición de inversión internacional y deuda externa. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-12-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Supermercados y autoservicios mayoristas. Expectativas diciembre de 2026-febrero de 2027"
+    },
+    {
+     "fecha": "2026-12-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de tendencia de negocios. Industria manufacturera. Expectativas diciembre de 2026-febrero de 2027"
+    },
+    {
+     "fecha": "2026-12-23",
+     "hora": "16:00",
+     "titulo": "Evolución de la distribución del ingreso (EPH). Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2026-12-23",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-28",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-28",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-28",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Octubre de 2026"
+    },
+    {
+     "fecha": "2026-12-29",
+     "hora": "16:00",
+     "titulo": "Estadísticas de productos industriales (EPI)"
+    },
+    {
+     "fecha": "2026-12-30",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Noviembre de 2026"
+    },
+    {
+     "fecha": "2026-12-30",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    }
+   ]
+  },
+  "2027-01": {
+   "bajado": "2026-11-07T13:15:18-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2027-01-06",
+     "hora": "16:00",
+     "titulo": "Encuesta Nacional a Grandes Empresas. Año 2025"
+    },
+    {
+     "fecha": "2027-01-07",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-07",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-08",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-08",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción. Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-11",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Octubre de 2026"
+    },
+    {
+     "fecha": "2027-01-13",
+     "hora": "16:00",
+     "titulo": "Índices de patentamientos. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-01-14",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-01-14",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-01-15",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-18",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-01-19",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-01-19",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-01-20",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-01-20",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-21",
+     "hora": "16:00",
+     "titulo": "Cuenta de generación del ingreso e insumo de mano de obra. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2027-01-21",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-22",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-01-26",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Diciembre, cuarto trimestre y año 2026"
+    },
+    {
+     "fecha": "2027-01-27",
+     "hora": "16:00",
+     "titulo": "Encuesta de Tendencia de Negocios. Supermercados y autoservicios mayoristas. Expectativas enero-marzo 2027"
+    },
+    {
+     "fecha": "2027-01-27",
+     "hora": "16:00",
+     "titulo": "Encuesta de Tendencia de Negocios. Industria manufacturera. Expectativas enero-marzo 2027"
+    },
+    {
+     "fecha": "2027-01-28",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    },
+    {
+     "fecha": "2027-01-29",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Diciembre de 2026"
+    }
+   ]
+  },
+  "2027-02": {
+   "bajado": "2026-11-07T13:15:18-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2027-02-02",
+     "hora": "16:00",
+     "titulo": "Índices de precios y cantidades del comercio exterior. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-02-04",
+     "hora": "16:00",
+     "titulo": "Argentine Foreign Trade Statistics. Preliminary data for 2026"
+    },
+    {
+     "fecha": "2027-02-04",
+     "hora": "16:00",
+     "titulo": "Bases de microdatos de la Encuesta Permanente de Hogares. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2027-02-05",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-05",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-10",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-11",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-11",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Noviembre de 2026"
+    },
+    {
+     "fecha": "2027-02-12",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-12",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-16",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-16",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-17",
+     "hora": "16:00",
+     "titulo": "Encuesta permanente de hogares (EPH) total urbano. Principales tasas del tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2027-02-17",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-18",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-18",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-19",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-19",
+     "hora": "16:00",
+     "titulo": "Encuesta permanente de hogares (EPH) total urbano. Evolución de la distribución del ingreso. Tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2027-02-22",
+     "hora": "16:00",
+     "titulo": "EPH Total urbano. Bases de microdatos del tercer trimestre de 2026"
+    },
+    {
+     "fecha": "2027-02-23",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-24",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-24",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-24",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-02-24",
+     "hora": "16:00",
+     "titulo": "Encuesta de comercios de electrodomésticos y artículos para el hogar. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-02-25",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-25",
+     "hora": "16:00",
+     "titulo": "Encuesta de Tendencia de Negocios. Supermercados y autoservicios mayoristas. Expectativas febrero-abril de 2027"
+    },
+    {
+     "fecha": "2027-02-25",
+     "hora": "16:00",
+     "titulo": "Encuesta de Tendencia de Negocios. Industria manufacturera. Expectativas febrero-abril de 2027"
+    },
+    {
+     "fecha": "2027-02-26",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Enero de 2027"
+    },
+    {
+     "fecha": "2027-02-26",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    }
+   ]
+  },
+  "2027-03": {
+   "bajado": "2026-11-07T13:15:18-03:00",
+   "publicaciones": [
+    {
+     "fecha": "2027-03-03",
+     "hora": "16:00",
+     "titulo": "Complejos exportadores. Año 2026"
+    },
+    {
+     "fecha": "2027-03-04",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial pesquero (IPI pesquero). Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-05",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial minero (IPI minero). Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-05",
+     "hora": "16:00",
+     "titulo": "Dosier estadístico en conmemoración del 116° Día Internacional de la Mujer"
+    },
+    {
+     "fecha": "2027-03-09",
+     "hora": "16:00",
+     "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-09",
+     "hora": "16:00",
+     "titulo": "Indicadores de coyuntura de la actividad de la construcción (ISAC). Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-09",
+     "hora": "16:00",
+     "titulo": "Origen provincial de las exportaciones. Bienes. Año 2026"
+    },
+    {
+     "fecha": "2027-03-10",
+     "hora": "16:00",
+     "titulo": "Indicador sintético de servicios públicos (ISSP). Diciembre de 2026"
+    },
+    {
+     "fecha": "2027-03-10",
+     "hora": "16:00",
+     "titulo": "Accesos a internet. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-03-12",
+     "hora": "16:00",
+     "titulo": "Índice de precios al consumidor (IPC). Cobertura nacional. Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-12",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta básica alimentaria (CBA) y de la canasta básica total (CBT). Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-16",
+     "hora": "16:00",
+     "titulo": "Valorización mensual de la canasta de crianza de la primera infancia, la niñez y la adolescencia. Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-16",
+     "hora": "16:00",
+     "titulo": "Índice de salarios. Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-16",
+     "hora": "16:00",
+     "titulo": "Utilización de la capacidad instalada en la industria (UCII). Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-17",
+     "hora": "16:00",
+     "titulo": "Índice del costo de la construcción (ICC). Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-17",
+     "hora": "16:00",
+     "titulo": "Sistema de índices de precios mayoristas (SIPM). Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-18",
+     "hora": "16:00",
+     "titulo": "Mercado de trabajo. Tasas e indicadores socioeconómicos. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-03-18",
+     "hora": "16:00",
+     "titulo": "Informe de avance del nivel de actividad. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-03-19",
+     "hora": "16:00",
+     "titulo": "Intercambio comercial argentino (ICA). Bienes. Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-19",
+     "hora": "16:00",
+     "titulo": "Encuesta de Tendencia de Negocios. Supermercados y autoservicios mayoristas. Expectativas marzo-mayo de 2027"
+    },
+    {
+     "fecha": "2027-03-19",
+     "hora": "16:00",
+     "titulo": "Encuesta de Tendencia de Negocios. Industria manufacturera. Expectativas marzo-mayo de 2027"
+    },
+    {
+     "fecha": "2027-03-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de supermercados. Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-22",
+     "hora": "16:00",
+     "titulo": "Encuesta de autoservicios mayoristas. Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-22",
+     "hora": "16:00",
+     "titulo": "Encuesta nacional de centros de compras. Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-23",
+     "hora": "16:00",
+     "titulo": "Balanza de pagos, posición de inversión internacional y deuda externa. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-03-23",
+     "hora": "16:00",
+     "titulo": "Estadísticas de turismo internacional. Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-23",
+     "hora": "16:00",
+     "titulo": "Estimador mensual de actividad económica (EMAE). Enero de 2027"
+    },
+    {
+     "fecha": "2027-03-29",
+     "hora": "16:00",
+     "titulo": "Industria farmacéutica en la Argentina. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-03-29",
+     "hora": "16:00",
+     "titulo": "Estadísticas de Productos Industriales (EPI)"
+    },
+    {
+     "fecha": "2027-03-30",
+     "hora": "16:00",
+     "titulo": "Indicadores del sector energético. Cuarto trimestre de 2026"
+    },
+    {
+     "fecha": "2027-03-30",
+     "hora": "16:00",
+     "titulo": "INDEC Informa"
+    },
+    {
+     "fecha": "2027-03-31",
+     "hora": "16:00",
+     "titulo": "Incidencia de la pobreza y la indigencia en 31 aglomerados urbanos. Segundo semestre de 2026"
+    },
+    {
+     "fecha": "2027-03-31",
+     "hora": "16:00",
+     "titulo": "Dotación de personal de la administración pública nacional, empresas y sociedades. Febrero de 2027"
+    },
+    {
+     "fecha": "2027-03-31",
+     "hora": "16:00",
+     "titulo": "Informe de la industria de maquinaria agrícola. Cuarto trimestre de 2026"
+    }
+   ]
+  }
+ }
+}

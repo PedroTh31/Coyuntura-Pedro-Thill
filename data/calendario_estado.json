@@ -1,0 +1,27 @@
+{
+  "alertas_hoy": [],
+  "avisos": {},
+  "meses": {
+    "2026-11": {
+      "bajado": "2026-11-07T13:15:18-03:00",
+      "fuente": "endpoint"
+    },
+    "2026-12": {
+      "bajado": "2026-11-07T13:15:18-03:00",
+      "fuente": "endpoint"
+    },
+    "2027-01": {
+      "bajado": "2026-11-07T13:15:18-03:00",
+      "fuente": "endpoint"
+    },
+    "2027-02": {
+      "bajado": "2026-11-07T13:15:18-03:00",
+      "fuente": "endpoint"
+    },
+    "2027-03": {
+      "bajado": "2026-11-07T13:15:18-03:00",
+      "fuente": "endpoint"
+    }
+  },
+  "ultima_verificacion": "2026-11-07T13:15:26-03:00"
+}
