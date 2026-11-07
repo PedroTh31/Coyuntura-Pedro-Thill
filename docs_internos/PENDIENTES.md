@@ -76,3 +76,14 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       #1: no adivinarla) y refrescar la caché desde `run.py`. Recién ahí entra la fila del REM en la
       apertura del IPC (`calendario.yaml`, `apertura` de `ipc`), con la regla que defina Pedro (D2 del
       diseño del B3: la encuesta más reciente publicada antes del IPC que tenga pronóstico para ese mes).
+
+11. **Reenvío del mail si falla el push de `data/mail_enviado.json`** — anotado el 07/11/2026.
+    Riesgo aceptado por Pedro (ya existía desde el Bloque 1 de `PROMPT_mail_v3.md`).
+    - Si fallan los 3 intentos de `pull --rebase` + push del último paso de `email_diario.yml`, el
+      mail ya salió pero `mail_enviado.json` no queda en `main`. El workflow termina en rojo
+      (`::error::No se pudo pushear data/mail_enviado.json`) y el disparo de respaldo de las 08:47
+      reenvía el mail completo. Desde el Bloque B3, además, repite el "Dato nuevo" (tampoco quedó
+      guardado `periodos_anunciados`) y vuelve a mostrar las series que entraron en rezago grave
+      ese día (`graves_vistos`).
+    - Mientras tanto: si el workflow del mail termina en rojo por ese error, revisar a mano antes de
+      las 08:47 (o cancelar esa corrida de respaldo).
