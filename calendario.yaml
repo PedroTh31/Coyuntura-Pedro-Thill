@@ -1,0 +1,207 @@
+# calendario.yaml — Bloque B (frescura de cada dato y calendario), PROMPT_ronda_macro_indec.md.
+#
+# Guarda SÓLO lo estable (diseño de Pedro, 07/11/2026):
+#   1. qué publicación del INDEC alimenta qué indicadores, con el patrón de título que la identifica;
+#   2. los feriados.
+# Las FECHAS de publicación NO van acá: se bajan del calendario oficial en cada corrida
+# (calendario_indec.py), con caché en data/ y fallback al último caché válido, marcado como tal.
+#
+# Calendario oficial de difusión del INDEC: https://www.indec.gob.ar/indec/web/Calendario-Fecha-0
+# Esa página arma cada mes con https://www.indec.gob.ar/Calendario/FiltrosCalendario/mes/{Mes}-{AAAA}/0
+# (no documentado, devuelve HTML; ver el docstring de calendario_indec.py).
+
+fuente:
+  pagina: "https://www.indec.gob.ar/indec/web/Calendario-Fecha-0"
+  # Meses a bajar en cada corrida: el actual + 4 (alcanza para la próxima fecha de las trimestrales).
+  meses_a_bajar: 5
+
+# Publicaciones del INDEC que alimentan indicadores del dashboard (decisión de Pedro: sólo esas).
+#  - titulo_regex: se aplica al título tal cual lo publica el INDEC; el grupo `periodo` es el período
+#    de referencia ("Octubre de 2026", "Tercer trimestre de 2026"). Verificados contra los 13 meses
+#    cargados el 07/11/2026 (sep-2026 a sep-2027): cada patrón matchea exactamente una publicación
+#    por mes (mensuales) o por trimestre (trimestrales), y ningún otro título.
+#  - meses_siguientes_alerta: si ni en el mes actual ni en los N meses siguientes aparece una fecha
+#    que matchee, se alerta a Pedro (posible cambio de título). Mensuales: 1; trimestrales: 3 (Pedro).
+#  - indicadores: `nombre` exacto en indicadores.yaml. Un indicador va acá sólo si ESTA publicación
+#    es la que agrega su período nuevo (la de mayor rezago entre sus componentes).
+publicaciones:
+  - id: ipc
+    nombre: "IPC (cobertura nacional)"
+    titulo_regex: '^Índice de precios al consumidor \(IPC\)\. Cobertura nacional\. (?P<periodo>.+)$'
+    frecuencia: mensual
+    meses_siguientes_alerta: 1
+    indicadores:
+      - "Inflación mensual (IPC)"
+      - "Inflación interanual (IPC)"
+      - "IPC Núcleo (var. mensual)"
+      - "IPC Regulados (var. mensual)"
+      - "IPC Estacionales (var. mensual)"
+      - "IPC división: Alimentos y bebidas no alcohólicas"
+      - "IPC división: Bebidas alcohólicas y tabaco"
+      - "IPC división: Prendas de vestir y calzado"
+      - "IPC división: Vivienda, agua, electricidad y otros combustibles"
+      - "IPC división: Equipamiento y mantenimiento del hogar"
+      - "IPC división: Salud"
+      - "IPC división: Transporte"
+      - "IPC división: Comunicación"
+      - "IPC división: Recreación y cultura"
+      - "IPC división: Educación"
+      - "IPC división: Restaurantes y hoteles"
+      - "IPC división: Bienes y servicios varios"
+      - "Tasa de interés real (TAMAR - inflación interanual)"   # TAMAR es diaria: el IPC fija el período
+
+  - id: salarios
+    nombre: "Índice de salarios"
+    titulo_regex: '^Índice de salarios\. (?P<periodo>.+)$'
+    frecuencia: mensual
+    meses_siguientes_alerta: 1
+    indicadores:   # salario real = salarios ÷ IPC; los salarios salen con más rezago que el IPC
+      - "Salario real (deflactado por IPC)"
+      - "Salario real registrado - sector privado"
+      - "Salario real registrado - sector público"
+      - "Salario real no registrado - sector privado"
+
+  - id: emae
+    nombre: "EMAE"
+    titulo_regex: '^Estimador mensual de actividad económica \(EMAE\)\. (?P<periodo>.+)$'
+    frecuencia: mensual
+    meses_siguientes_alerta: 1
+    indicadores:
+      - "EMAE (actividad económica)"
+      - "EMAE · Agricultura, ganadería y silvicultura"
+      - "EMAE · Pesca"
+      - "EMAE · Explotación de minas y canteras"
+      - "EMAE · Industria manufacturera"
+      - "EMAE · Electricidad, gas y agua"
+      - "EMAE · Construcción"
+      - "EMAE · Comercio mayorista y minorista"
+      - "EMAE · Hoteles y restaurantes"
+      - "EMAE · Transporte y comunicaciones"
+      - "EMAE · Intermediación financiera"
+      - "EMAE · Inmobiliarias y empresariales"
+      - "EMAE · Administración pública y defensa"
+      - "EMAE · Enseñanza"
+      - "EMAE · Servicios sociales y de salud"
+      - "EMAE · Otros servicios comunitarios"
+      - "EMAE · Impuestos netos de subsidios"
+
+  - id: ica
+    nombre: "Intercambio comercial argentino (ICA)"
+    titulo_regex: '^Intercambio comercial argentino \(ICA\)\. Bienes\. (?P<periodo>.+)$'
+    frecuencia: mensual
+    meses_siguientes_alerta: 1
+    indicadores:
+      - "Exportaciones totales"
+      - "Importaciones totales"
+      - "Saldo comercial"
+      - "Balance comercial energético"
+      - "Productos primarios"
+      - "Manufacturas de origen agropecuario (MOA)"
+      - "Manufacturas de origen industrial (MOI)"
+      - "Combustibles y energía"
+      - "Bienes de capital"
+      - "Bienes intermedios"
+      - "Combustibles y lubricantes"
+      - "Piezas y accesorios para bienes de capital"
+      - "Bienes de consumo"
+      - "Vehículos automotores de pasajeros"
+      - "Resto (importaciones por uso)"
+
+  - id: mercado_trabajo
+    nombre: "Mercado de trabajo (EPH)"
+    # No confundir con "Encuesta permanente de hogares (EPH) total urbano. Principales tasas ..."
+    # (otra publicación, cobertura total urbano): el patrón no la matchea.
+    titulo_regex: '^Mercado de trabajo\. Tasas e indicadores socioeconómicos(?: \(EPH\))?\. (?P<periodo>.+)$'
+    frecuencia: trimestral
+    meses_siguientes_alerta: 3   # mar/jun/sep/dic: desde fines de dic, la próxima es en marzo
+    indicadores:
+      - "Tasa de desempleo"
+      # Verificado el 07/11/2026: el informe "Mercado de trabajo... Segundo trimestre de 2026"
+      # (indec.gob.ar/uploads/informesdeprensa/mercado_trabajo_eph_2trim26433FCBC5A8.pdf, p. 10,
+      # "Asalariados - Sin descuento jubilatorio (informal)") publica 37,7 / 36,7 / 36,3 / 37,9 / 37,9
+      # para 2T-25 a 2T-26, idénticos a 52.2_ASDJ_0_0_37 (×100).
+      - "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"
+
+  - id: informe_avance
+    nombre: "Informe de avance del nivel de actividad"
+    titulo_regex: '^Informe de avance del nivel de actividad\. (?P<periodo>.+)$'
+    frecuencia: trimestral
+    meses_siguientes_alerta: 3
+    indicadores:   # oferta y demanda globales a precios corrientes (4.4_OGP_2004_T_17)
+      - "PBI nominal (precios corrientes)"
+      - "Deuda pública bruta / PBI"   # la deuda es mensual: el PBI trimestral fija el período
+
+# Indicadores con componentes del INDEC que NO van en una publicación (quedan "sin calendario
+# oficial"), porque su período lo fija un componente sin calendario:
+#  - "Capacidad de compra del salario (RIPTE / CBT)": RIPTE (Secretaría de Trabajo); la CBT sí es
+#    del INDEC ("Valorización mensual de la canasta básica...", sale con el IPC).
+#  - "Préstamos al sector privado, variación % real mensual", "Adelantos transitorios / Transferencia
+#    de utilidades (pesos constantes)": BCRA + IPC. Decisión de Pedro (07/11/2026): no se asocian.
+#    La regla de "mayor rezago" no se cumple: en el historial del bot (jul-nov 2026) los préstamos
+#    salieron DESPUÉS que el IPC en jun-2026 y sep-2026, y adelantos/transferencias están frenados
+#    en may-2026.
+
+# Feriados: días no hábiles para "próximo día hábil" (series diarias) y para "fecha + 1 día hábil"
+# (criterio de atrasado). Criterio de Pedro: cuenta un día si en él NO operan el INDEC, el BCRA y
+# BYMA. Eso incluye los feriados nacionales (inamovibles, trasladables y turísticos) y los
+# especiales que la norma extiende a esos organismos. NO cuentan los "días no laborables"
+# religiosos (optativos) ni los feriados de jurisdicciones donde esos organismos operan igual.
+#  - 2026: verificado el 07/11/2026 contra https://www.argentina.gob.ar/feriados (los 20 nacionales
+#    coinciden con ArgentinaDatos /v1/feriados/2026).
+#  - 10/11/2026 (especial): Decreto DNU 1103/2026, art. 3 (feriado en Córdoba y CABA; los
+#    considerandos lo extienden a "los organismos, dependencias y actividades sujetos a jurisdicción
+#    nacional que desarrollan sus funciones en los territorios comprendidos"),
+#    https://www.boletinoficial.gob.ar/detalleAviso/primera/348022/20260928 ; BCRA: feriado bancario
+#    en todo el país, Comunicación "A" 8487 (01/10/2026),
+#    https://www.bcra.gob.ar/Pdfs/comytexord/A8487.pdf ; BYMA lo lista en su calendario bursátil
+#    "según el Decreto 1.103/26", https://www.byma.com.ar/en/market/calendario-bursatil .
+#  - 11/11/2026 (sólo Provincia de Buenos Aires, art. 4): NO cuenta. El INDEC publica ese día (ISSP
+#    en su calendario) y no hay feriado bancario.
+#  - 2027: argentina.gob.ar todavía no publica 2027. Provisorio, de ArgentinaDatos /v1/feriados/2027
+#    (verificado: false). verificar_calendario.py lo cruza contra la oficial cuando aparezca.
+feriados:
+  "2026":
+    verificado: true
+    fechas:
+      - {fecha: "2026-01-01", tipo: inamovible, nombre: "Año Nuevo"}
+      - {fecha: "2026-02-16", tipo: inamovible, nombre: "Carnaval"}
+      - {fecha: "2026-02-17", tipo: inamovible, nombre: "Carnaval"}
+      - {fecha: "2026-03-23", tipo: turistico, nombre: "Día no laborable con fines turísticos"}
+      - {fecha: "2026-03-24", tipo: inamovible, nombre: "Día Nacional de la Memoria por la Verdad y la Justicia"}
+      - {fecha: "2026-04-02", tipo: inamovible, nombre: "Día del Veterano y de los Caídos en la Guerra de Malvinas"}
+      - {fecha: "2026-04-03", tipo: inamovible, nombre: "Viernes Santo Festividad Cristiana"}
+      - {fecha: "2026-05-01", tipo: inamovible, nombre: "Día del Trabajador"}
+      - {fecha: "2026-05-25", tipo: inamovible, nombre: "Día de la Revolución de Mayo"}
+      - {fecha: "2026-06-15", tipo: trasladable, nombre: "Paso a la Inmortalidad del Gral. Don Martín Miguel de Güemes (17/6)"}
+      - {fecha: "2026-06-20", tipo: inamovible, nombre: "Paso a la Inmortalidad del Gral. Manuel Belgrano"}
+      - {fecha: "2026-07-09", tipo: inamovible, nombre: "Día de la Independencia"}
+      - {fecha: "2026-07-10", tipo: turistico, nombre: "Día no laborable con fines turísticos"}
+      - {fecha: "2026-08-17", tipo: trasladable, nombre: "Paso a la Inmortalidad del Gral. José de San Martín"}
+      - {fecha: "2026-10-12", tipo: trasladable, nombre: "Día de la Raza"}
+      - {fecha: "2026-11-09", tipo: inamovible, nombre: "Visita de Su Santidad el Papa León XIV"}
+      - {fecha: "2026-11-10", tipo: especial, nombre: "Visita de Su Santidad el Papa León XIV (Decreto 1103/2026 art. 3; feriado bancario BCRA A 8487; BYMA)"}
+      - {fecha: "2026-11-23", tipo: trasladable, nombre: "Día de la Soberanía Nacional (20/11)"}
+      - {fecha: "2026-12-07", tipo: turistico, nombre: "Día no laborable con fines turísticos"}
+      - {fecha: "2026-12-08", tipo: inamovible, nombre: "Inmaculada Concepción de María"}
+      - {fecha: "2026-12-25", tipo: inamovible, nombre: "Navidad"}
+    especiales_descartados:   # feriados "especiales" oficiales ya evaluados que NO cuentan
+      - {fecha: "2026-11-11", motivo: "Sólo Provincia de Buenos Aires (Decreto 1103/2026 art. 4); el INDEC publica ese día y no hay feriado bancario"}
+  "2027":
+    verificado: false   # provisorio: ArgentinaDatos /v1/feriados/2027, sin verificar contra la oficial
+    fechas:
+      - {fecha: "2027-01-01", tipo: inamovible, nombre: "Año nuevo"}
+      - {fecha: "2027-02-08", tipo: inamovible, nombre: "Carnaval"}
+      - {fecha: "2027-02-09", tipo: inamovible, nombre: "Carnaval"}
+      - {fecha: "2027-03-24", tipo: inamovible, nombre: "Día Nacional de la Memoria por la Verdad y la Justicia"}
+      - {fecha: "2027-03-26", tipo: inamovible, nombre: "Viernes Santo"}
+      - {fecha: "2027-04-02", tipo: inamovible, nombre: "Día del Veterano y de los Caídos en la Guerra de Malvinas"}
+      - {fecha: "2027-05-01", tipo: inamovible, nombre: "Día del Trabajador"}
+      - {fecha: "2027-05-25", tipo: inamovible, nombre: "Día de la Revolución de Mayo"}
+      - {fecha: "2027-06-17", tipo: trasladable, nombre: "Paso a la Inmortalidad del General Martín Güemes"}
+      - {fecha: "2027-06-20", tipo: inamovible, nombre: "Paso a la Inmortalidad del General Manuel Belgrano"}
+      - {fecha: "2027-07-09", tipo: inamovible, nombre: "Día de la Independencia"}
+      - {fecha: "2027-08-17", tipo: trasladable, nombre: "Paso a la Inmortalidad del Gral. José de San Martín"}
+      - {fecha: "2027-10-12", tipo: trasladable, nombre: "Día del Respeto a la Diversidad Cultural"}
+      - {fecha: "2027-11-20", tipo: trasladable, nombre: "Día de la Soberanía Nacional"}
+      - {fecha: "2027-12-08", tipo: inamovible, nombre: "Día de la Inmaculada Concepción de María"}
+      - {fecha: "2027-12-25", tipo: inamovible, nombre: "Navidad"}

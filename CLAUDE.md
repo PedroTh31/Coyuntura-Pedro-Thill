@@ -85,6 +85,41 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   verificadas: `fuentes/indec_catalogo.md`, `fuentes/indec_equivalencias.md`. Tests sin red:
   `tests/test_indec_api.py`, `tests/test_fuentes_indec.py`.
 
+- **Calendario de publicaciones** (Bloque B de `PROMPT_ronda_macro_indec.md`):
+  - `calendario.yaml` guarda SÓLO lo estable: qué publicación del INDEC alimenta qué indicadores
+    (`titulo_regex` con grupo `periodo`, `frecuencia`, `meses_siguientes_alerta`) y los feriados.
+    Las FECHAS no van ahí: se bajan en cada corrida. Un indicador va asociado a una publicación
+    sólo si esa publicación es la que agrega su período nuevo (el componente de mayor rezago,
+    verificado con datos); si no, "sin calendario oficial", nunca una fecha estimada (decisión de
+    Pedro). Así quedan préstamos real, adelantos/transferencias en pesos constantes (BCRA + IPC: la
+    regla no se cumple) y capacidad de compra (RIPTE).
+  - Fuente: calendario oficial https://www.indec.gob.ar/indec/web/Calendario-Fecha-0, que arma
+    cada mes con `/Calendario/FiltrosCalendario/mes/{Mes}-{AAAA}/0` (`Mes` con mayúscula inicial,
+    ej. "Noviembre-2026"): endpoint NO documentado que devuelve HTML. `calendario_indec.py` lo
+    parsea y falla ruidosamente (`CalendarioFormatoError`) ante cualquier formato desconocido o 0
+    publicaciones en el mes actual y los 2 siguientes; nunca devuelve silencio. El servidor
+    rechaza navegadores headless (HTTP 500) pero acepta `requests` (también desde GitHub Actions,
+    probado el 07/11/2026).
+  - Caché: `data/calendario_indec.json`, por mes. Si un mes falla, se usa su último caché válido,
+    marcado como tal (`fuente: cache`); una descarga fallida nunca pisa un caché válido.
+  - `verificar_calendario.py` corre en `coyuntura.yml` después de `run.py` (`continue-on-error`,
+    nunca corta el pipeline) y avisa SOLO a Pedro, máx. 1 mail por corrida, con el mismo
+    mecanismo que las alertas del INDEC (estado en `data/calendario_estado.json`). Diario: falla de
+    descarga/formato, título que matchea dos patrones, error al bajar feriados. Semanal:
+    publicación sin fecha en su ventana (mes actual + `meses_siguientes_alerta`: 1 mensuales, 3
+    trimestrales; posible cambio de título), feriados del yaml distintos de los oficiales, feriado
+    "especial" oficial sin evaluar, año oficial ya publicado que el yaml tiene como provisorio,
+    falta el año siguiente en diciembre.
+  - Feriados (criterio de Pedro): un día es no hábil si en él NO operan el INDEC, el BCRA y BYMA.
+    Cuentan los nacionales (inamovibles, trasladables, turísticos) y los "especiales" que la norma
+    extiende a esos organismos (ej. 10/11/2026, Decreto 1103/2026 + Com. "A" 8487 del BCRA +
+    calendario de BYMA); NO cuentan los días no laborables religiosos ni los feriados de otras
+    jurisdicciones (los evaluados y descartados van en `especiales_descartados`, con el motivo).
+    Fuente oficial verificable sin navegador: el JSON que carga argentina.gob.ar/feriados,
+    `https://www.argentina.gob.ar/sites/default/files/holidays-{AAAA}-es.json` (404 mientras el año
+    no está publicado; un año sin publicar va como `verificado: false`, desde ArgentinaDatos).
+  - Tests sin red: `tests/test_calendario_indec.py`, `tests/test_verificar_calendario.py`.
+
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
 - `fuente: datos_gob` + `id: "..."` → apis.datos.gob.ar/series (IPC, EMAE, monetarias,
   fiscal, empleo, comercio exterior). Es el backbone.
