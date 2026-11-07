@@ -28,12 +28,31 @@ fuente:
 #    que matchee, se alerta a Pedro (posible cambio de título). Mensuales: 1; trimestrales: 3 (Pedro).
 #  - indicadores: `nombre` exacto en indicadores.yaml. Un indicador va acá sólo si ESTA publicación
 #    es la que agrega su período nuevo (la de mayor rezago entre sus componentes).
+#  - nombre_corto: cómo se nombra en el mail diario ("IPC de octubre", "Mercado de trabajo (EPH) del
+#    tercer trimestre") y en sus avisos de atrasado (Bloque B3).
+#  - apertura: el bloque "Dato nuevo" que abre el mail el primer día en que el período nuevo está en el
+#    dashboard (Bloque B3, decisión D3 de Pedro, 07/11/2026). Sólo series que el dashboard ya calcula
+#    (`serie` = `nombre` de indicadores.yaml); el mail no calcula series propias.
+#      titular: plantilla descriptiva (nunca causas): {periodo} (en prosa), {valor} (valor de la primera
+#               fila), {var} (su variación con signo), {ref} (período de comparación de la primera fila);
+#      filas: [{serie, etiqueta, unidad: "%"|"USD M"|"", compara: anterior|interanual,
+#               variacion: pp|pct|dif}]; una fila sin dato para el período se omite;
+#      serie_periodo: la serie que fija el período de la publicación (default: la de la primera fila);
+#      detalle: línea fija opcional bajo el titular (para publicaciones sin filas);
+#    Sin fila del REM (decisión de Pedro: fuera del B3, ver docs_internos/PENDIENTES.md).
 publicaciones:
   - id: ipc
     nombre: "IPC (cobertura nacional)"
+    nombre_corto: "IPC"
     titulo_regex: '^Índice de precios al consumidor \(IPC\)\. Cobertura nacional\. (?P<periodo>.+)$'
     frecuencia: mensual
     meses_siguientes_alerta: 1
+    apertura:
+      titular: "Inflación de {periodo}: {valor} mensual"
+      filas:
+        - {serie: "Inflación mensual (IPC)", etiqueta: "Mensual", unidad: "%", compara: anterior, variacion: pp}
+        - {serie: "Inflación interanual (IPC)", etiqueta: "Interanual", unidad: "%", compara: anterior, variacion: pp}
+        - {serie: "IPC Núcleo (var. mensual)", etiqueta: "Núcleo", unidad: "%", compara: anterior, variacion: pp}
     indicadores:
       - "Inflación mensual (IPC)"
       - "Inflación interanual (IPC)"
@@ -56,9 +75,14 @@ publicaciones:
 
   - id: salarios
     nombre: "Índice de salarios"
+    nombre_corto: "Índice de salarios"
     titulo_regex: '^Índice de salarios\. (?P<periodo>.+)$'
     frecuencia: mensual
     meses_siguientes_alerta: 1
+    apertura:
+      titular: "Salario real de {periodo}: {var} contra {ref}"
+      filas:
+        - {serie: "Salario real (deflactado por IPC)", etiqueta: "Salario real (índice)", unidad: "", compara: anterior, variacion: pct}
     indicadores:   # salario real = salarios ÷ IPC; los salarios salen con más rezago que el IPC
       - "Salario real (deflactado por IPC)"
       - "Salario real registrado - sector privado"
@@ -67,9 +91,16 @@ publicaciones:
 
   - id: emae
     nombre: "EMAE"
+    nombre_corto: "EMAE"
     titulo_regex: '^Estimador mensual de actividad económica \(EMAE\)\. (?P<periodo>.+)$'
     frecuencia: mensual
     meses_siguientes_alerta: 1
+    apertura:
+      # Interanual: la serie del dashboard es la original (sin desestacionalizar); contra el mes
+      # anterior mostraría estacionalidad (decisión D3 de Pedro).
+      titular: "EMAE de {periodo}: {var} interanual"
+      filas:
+        - {serie: "EMAE (actividad económica)", etiqueta: "Índice (2004=100)", unidad: "", compara: interanual, variacion: pct}
     indicadores:
       - "EMAE (actividad económica)"
       - "EMAE · Agricultura, ganadería y silvicultura"
@@ -91,9 +122,16 @@ publicaciones:
 
   - id: ica
     nombre: "Intercambio comercial argentino (ICA)"
+    nombre_corto: "Comercio exterior (ICA)"
     titulo_regex: '^Intercambio comercial argentino \(ICA\)\. Bienes\. (?P<periodo>.+)$'
     frecuencia: mensual
     meses_siguientes_alerta: 1
+    apertura:
+      titular: "Saldo comercial de {periodo}: {valor}"
+      filas:   # interanual por estacionalidad (decisión D3 de Pedro)
+        - {serie: "Saldo comercial", etiqueta: "Saldo", unidad: "USD M", compara: interanual, variacion: dif}
+        - {serie: "Exportaciones totales", etiqueta: "Exportaciones", unidad: "USD M", compara: interanual, variacion: pct}
+        - {serie: "Importaciones totales", etiqueta: "Importaciones", unidad: "USD M", compara: interanual, variacion: pct}
     indicadores:
       - "Exportaciones totales"
       - "Importaciones totales"
@@ -113,11 +151,17 @@ publicaciones:
 
   - id: mercado_trabajo
     nombre: "Mercado de trabajo (EPH)"
+    nombre_corto: "Mercado de trabajo (EPH)"
     # No confundir con "Encuesta permanente de hogares (EPH) total urbano. Principales tasas ..."
     # (otra publicación, cobertura total urbano): el patrón no la matchea.
     titulo_regex: '^Mercado de trabajo\. Tasas e indicadores socioeconómicos(?: \(EPH\))?\. (?P<periodo>.+)$'
     frecuencia: trimestral
     meses_siguientes_alerta: 3   # mar/jun/sep/dic: desde fines de dic, la próxima es en marzo
+    apertura:
+      titular: "Desempleo del {periodo}: {valor}"
+      filas:   # contra el mismo trimestre del año anterior (decisión D3 de Pedro)
+        - {serie: "Tasa de desempleo", etiqueta: "Desempleo", unidad: "%", compara: interanual, variacion: pp}
+        - {serie: "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)", etiqueta: "Informalidad", unidad: "%", compara: interanual, variacion: pp}
     indicadores:
       - "Tasa de desempleo"
       # Verificado el 07/11/2026: el informe "Mercado de trabajo... Segundo trimestre de 2026"
@@ -128,9 +172,17 @@ publicaciones:
 
   - id: informe_avance
     nombre: "Informe de avance del nivel de actividad"
+    nombre_corto: "Informe de avance del nivel de actividad"
     titulo_regex: '^Informe de avance del nivel de actividad\. (?P<periodo>.+)$'
     frecuencia: trimestral
     meses_siguientes_alerta: 3
+    apertura:
+      # Sin variación: el PBI nominal contra el trimestre anterior no dice nada con esta inflación
+      # (decisión D3 de Pedro).
+      titular: "Informe de avance del {periodo}: se incorporó al dashboard"
+      serie_periodo: "PBI nominal (precios corrientes)"
+      detalle: "PBI nominal y deuda pública bruta / PBI, actualizados al {periodo_corto}."
+      filas: []
     indicadores:   # oferta y demanda globales a precios corrientes (4.4_OGP_2004_T_17)
       - "PBI nominal (precios corrientes)"
       - "Deuda pública bruta / PBI"   # la deuda es mensual: el PBI trimestral fija el período
@@ -159,6 +211,9 @@ publicaciones:
 #    en todo el país, Comunicación "A" 8487 (01/10/2026),
 #    https://www.bcra.gob.ar/Pdfs/comytexord/A8487.pdf ; BYMA lo lista en su calendario bursátil
 #    "según el Decreto 1.103/26", https://www.byma.com.ar/en/market/calendario-bursatil .
+#  - 09/11/2026 (inamovible): Decreto DNU 1103/2026, art. 2, "feriado nacional el día lunes 9 de noviembre
+#    de 2026 en todo el territorio de la República", https://www.argentina.gob.ar/normativa/nacional/norma-430580/texto
+#    (verificado el 07/11/2026; también en el JSON oficial de argentina.gob.ar/feriados y en ArgentinaDatos).
 #  - 11/11/2026 (sólo Provincia de Buenos Aires, art. 4): NO cuenta. El INDEC publica ese día (ISSP
 #    en su calendario) y no hay feriado bancario.
 #  - 2027: argentina.gob.ar todavía no publica 2027. Provisorio, de ArgentinaDatos /v1/feriados/2027
@@ -182,7 +237,7 @@ feriados:
       - {fecha: "2026-07-10", tipo: turistico, nombre: "Día no laborable con fines turísticos"}
       - {fecha: "2026-08-17", tipo: trasladable, nombre: "Paso a la Inmortalidad del Gral. José de San Martín"}
       - {fecha: "2026-10-12", tipo: trasladable, nombre: "Día de la Raza"}
-      - {fecha: "2026-11-09", tipo: inamovible, nombre: "Visita de Su Santidad el Papa León XIV"}
+      - {fecha: "2026-11-09", tipo: inamovible, nombre: "Visita de Su Santidad el Papa León XIV (Decreto 1103/2026 art. 2)"}
       - {fecha: "2026-11-10", tipo: especial, nombre: "Visita de Su Santidad el Papa León XIV (Decreto 1103/2026 art. 3; feriado bancario BCRA A 8487; BYMA)"}
       - {fecha: "2026-11-23", tipo: trasladable, nombre: "Día de la Soberanía Nacional (20/11)"}
       - {fecha: "2026-12-07", tipo: turistico, nombre: "Día no laborable con fines turísticos"}

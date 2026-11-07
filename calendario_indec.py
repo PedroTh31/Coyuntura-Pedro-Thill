@@ -222,6 +222,13 @@ def feriados(cfg: dict) -> set[date]:
     return {date.fromisoformat(f["fecha"]) for anio in cfg["feriados"].values() for f in anio["fechas"]}
 
 
+def nombres_feriados(cfg: dict) -> dict[date, str]:
+    """{fecha: nombre} para mostrar (mail diario, Bloque B3). Sin la cita normativa entre paréntesis
+    que algunos nombres llevan en calendario.yaml (ej. "(Decreto 1103/2026 art. 3; ...)")."""
+    return {date.fromisoformat(f["fecha"]): re.sub(r"\s*\((?:Decreto|DNU)[^)]*\)\s*$", "", f["nombre"])
+            for anio in cfg["feriados"].values() for f in anio["fechas"]}
+
+
 def es_habil(d: date, no_habiles: set[date]) -> bool:
     return d.weekday() < 5 and d not in no_habiles
 

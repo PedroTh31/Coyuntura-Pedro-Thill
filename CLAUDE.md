@@ -133,6 +133,30 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   Bloque C). Ojo: el chequeo de frescura de `run.py` (alertas) mide desde la fecha cruda del dato,
   no desde el cierre. Tests: `tests/test_frescura.py`.
 
+- **Calendario y avisos en el mail diario** (Bloque B3, diseño aprobado por Pedro el 07/11/2026):
+  - `agenda.py` (funciones puras) arma en `run.py`, después del dashboard macro, la clave `agenda` de
+    `data/ultima_corrida.json`: `calendario` (hoy / esta semana = hoy + 4 días hábiles, o los 5
+    siguientes si hoy no es hábil / próxima, feriado, primer día hábil de la semana, estado de la
+    caché: `ok`, `cache_vieja` si un mes de la ventana se bajó hace más de 7 días, `no_disponible`),
+    `publicaciones` (por publicación de `calendario.yaml`: período del dashboard, estado del B2 y
+    bloque "Dato nuevo" según `apertura`), `atrasados` (uno por publicación) y `graves` (deduplicados
+    por serie). Las líneas salen de `ctx.registro`, que llena `dashboard._linea_frescura`, con la
+    misma redacción del dashboard (`frescura.texto_linea`). El mail (`mail_agenda.py`) NO recalcula
+    nada; si la agenda no es de hoy, muestra "Calendario del INDEC no disponible hoy".
+  - Orden del mail: Dato nuevo → Hoy se publica → Esta semana → Indicadores → Datos demorados →
+    noticias. Sólo publicaciones del INDEC; sólo la pestaña macro; sin fila del REM (pendiente #10).
+  - "Dato nuevo": abre el PRIMER mail en que el período del dashboard supera a
+    `periodos_anunciados` de `data/mail_enviado.json` (lo commitea `email_diario.yml`; se escribe sólo
+    tras un envío exitoso, nunca en `--dry-run`). Sin esa clave se inicializa sin anunciar.
+    `apertura` en `calendario.yaml`: sólo series que el dashboard ya calcula.
+  - Frecuencias (D1): atrasado en el mail todos los días (máx. 3 + "y N más") y aviso a Pedro semanal
+    por publicación (`agenda.avisar_atrasados`, estado en `data/frescura_estado.json`); rezago grave en
+    el mail el primer día hábil de la semana y el día en que una serie entra (`graves_vistos`), sin
+    aviso aparte.
+  - `verificar_calendario.py` corre ANTES de `run.py` en `coyuntura.yml` (`continue-on-error`).
+  - Colores de las secciones nuevas: `tema.py` (paleta del Bloque C; el Bloque 2 de
+    `PROMPT_mail_v3.md` debería leer de ahí). Tests: `tests/test_agenda.py`, `tests/test_mail_agenda.py`.
+
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
 - `fuente: datos_gob` + `id: "..."` → apis.datos.gob.ar/series (IPC, EMAE, monetarias,
   fiscal, empleo, comercio exterior). Es el backbone.

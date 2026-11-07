@@ -25,6 +25,8 @@ from urllib.parse import urlparse
 import pandas as pd
 import yaml
 
+import mail_agenda
+
 RAIZ = Path(__file__).resolve().parent
 CSV = RAIZ / "data" / "series_largo.csv"
 CONFIG = RAIZ / "indicadores.yaml"
@@ -486,7 +488,7 @@ def _render_noticias(lista):
     return "".join(bloques)
 
 
-def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False):
+def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False, agenda=None):
     hoy = datetime.now(ZONA_AR).strftime("%d/%m/%Y")
     # Bloque 1.2: si el pipeline de las 7 no dejó datos de hoy y el mail tuvo que correr
     # run.py por su cuenta, se avisa con una línea chica (no es un error para el lector).
@@ -510,10 +512,21 @@ def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False):
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:monospace;text-align:right"><b>{f["valor"]}</b> <span style="color:#999;font-size:11px">{f["unidad"]}</span></td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right;color:{color};font-family:monospace">{chg}</td></tr>')
 
+    # Bloque B3 (mail_agenda.py): Dato nuevo, Hoy se publica y Esta semana arriba; Datos demorados
+    # después de los indicadores. Sin agenda (None) el mail queda como antes.
+    if agenda is None:
+        feriado = apertura = calendario = avisos = ""
+    else:
+        feriado = mail_agenda.html_feriado(agenda)
+        apertura = mail_agenda.html_apertura(agenda, DASHBOARD_URL)
+        calendario = mail_agenda.html_calendario(agenda)
+        avisos = mail_agenda.html_avisos(agenda, DASHBOARD_URL)
     return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:#1A1A1A">
-      <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>{aviso}
+      <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>{aviso}{feriado}
+      {apertura}{calendario}
       <h3 style="margin-top:22px">Indicadores clave <span style="color:#999;font-weight:400;font-size:13px">(variación vs. 7 días atrás)</span></h3>
       <table style="width:100%;border-collapse:collapse;font-size:14px">{filas_ind}</table>
+      {avisos}
       <h3 style="margin-top:26px">🇦🇷 Noticias argentinas</h3>
       {_render_noticias(argentinas)}
       <h3 style="margin-top:26px">🌎 Noticias internacionales</h3>
@@ -583,15 +596,22 @@ def datos_frescos():
     return True, f"corrida de hoy {uc.get('hora')} (estado: {uc.get('estado')})"
 
 
-def registrar_envio(datos_al_envio):
+def registrar_envio(datos_al_envio, estado_agenda=None):
+    """Se llama sólo después de un envío exitoso. `estado_agenda` (Bloque B3, mail_agenda.seleccionar):
+    periodos_anunciados / graves_vistos. Se mergea con lo anterior para no perderlo los días en que la
+    agenda no está disponible."""
     ahora = datetime.now(ZONA_AR)
-    MAIL_ENVIADO.write_text(json.dumps({
+    previo = _leer_json(MAIL_ENVIADO)
+    datos = {k: previo[k] for k in ("periodos_anunciados", "graves_vistos") if k in previo}
+    datos.update(estado_agenda or {})
+    datos.update({
         "fecha": ahora.date().isoformat(),
         "hora_envio": ahora.strftime("%H:%M:%S"),
         "zona": "America/Argentina/Buenos_Aires",
         "disparo": os.environ.get("GITHUB_EVENT_NAME", "local"),
         "datos_al_momento_del_envio": datos_al_envio,
-    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    })
+    MAIL_ENVIADO.write_text(json.dumps(datos, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def estado():
@@ -625,7 +645,8 @@ def main(dry_run=False):
     indicadores = resumen_indicadores(df)
     registro = []
     argentinas, internacionales = obtener_noticias(registro=registro)
-    html = armar_html(indicadores, argentinas, internacionales, datos_al_envio=datos_al_envio)
+    vista, estado_agenda = mail_agenda.seleccionar(_leer_json(ULTIMA_CORRIDA), _hoy_ar(), _leer_json(MAIL_ENVIADO))
+    html = armar_html(indicadores, argentinas, internacionales, datos_al_envio=datos_al_envio, agenda=vista)
     if dry_run:
         destino = Path(os.environ.get("MAIL_DRY_RUN_HTML", RAIZ / "_mail_preview.html"))
         destino.write_text(html, encoding="utf-8")
@@ -633,7 +654,7 @@ def main(dry_run=False):
               f"({len(registro)} notas evaluadas, log de noticias sin escribir)")
         return
     enviar(html)
-    registrar_envio(datos_al_envio)
+    registrar_envio(datos_al_envio, estado_agenda)
     escribir_log_noticias(registro)
     print(f"Hora real de envío: {datetime.now(ZONA_AR):%Y-%m-%d %H:%M:%S} AR")
 

@@ -65,3 +65,14 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
      de la financiera (morosidad, spread GD30) no le avisan nada al lector.
    - A hacer: extender la línea a `financiera.html` (en `run.py`, pasarle `frescura_ctx` también a
      la segunda llamada a `dashboard.generar`) cuando se decida.
+
+10. **Mediana del REM en el "Dato nuevo" del IPC (mail diario)** — anotado el 07/11/2026 (decisión de
+    Pedro: fuera del Bloque B3).
+    - Hoy el IPC abre el mail sin fila del REM. El Excel histórico del BCRA (el que baja
+      `fetch_rem_variable`) llegaba el 07/11/2026 sólo hasta la encuesta de fines de agosto, aunque el
+      REM de octubre ya se había publicado (~05/11). Además, `data/_cache_rem.csv` es del 23/07: ningún
+      indicador activo usa el REM, así que nadie la refresca.
+    - A hacer: investigar si el BCRA publica cada encuesta del REM con una URL verificable (regla dura
+      #1: no adivinarla) y refrescar la caché desde `run.py`. Recién ahí entra la fila del REM en la
+      apertura del IPC (`calendario.yaml`, `apertura` de `ipc`), con la regla que defina Pedro (D2 del
+      diseño del B3: la encuesta más reciente publicada antes del IPC que tenga pronóstico para ese mes).

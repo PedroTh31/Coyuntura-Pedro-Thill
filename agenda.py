@@ -1,0 +1,304 @@
+"""Agenda de publicaciones y avisos de frescura para el mail diario (Bloque B3 de
+PROMPT_ronda_macro_indec.md, diseño aprobado por Pedro el 07/11/2026).
+
+run.py llama a `armar()` después de generar el dashboard y guarda el resultado en
+data/ultima_corrida.json (clave "agenda"). El mail (enviar_mail.py + mail_agenda.py) NO recalcula
+nada: sólo elige qué mostrar y arma el HTML. Todo sale de:
+  - el calendario del INDEC ya cacheado (frescura.Contexto: fechas, meses bajados, feriados);
+  - el histórico (períodos y valores de las series que el dashboard ya calcula);
+  - las líneas de frescura del B2 que registró dashboard.generar (ctx.registro), con su misma
+    redacción (frescura.texto_linea).
+
+Funciones puras (sin red ni disco), salvo `avisar_atrasados`, que manda el aviso semanal a Pedro.
+"""
+from __future__ import annotations
+
+import json
+from datetime import date, datetime, time, timedelta
+from pathlib import Path
+
+import pandas as pd
+
+import calendario_indec as C
+import frescura as F
+
+DIAS_SEMANA = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"]
+ORDINALES = {1: "primer", 2: "segundo", 3: "tercer", 4: "cuarto"}
+CACHE_VIEJA_DIAS = 7          # un mes de la ventana bajado hace más que esto: "caché vieja"
+VENTANA_DIAS_HABILES = 5      # "Esta semana": hoy + los 4 días hábiles siguientes
+UMBRAL_SIN_CAMBIO = 0.05
+ESTADO_AVISOS = C.RAIZ / "data" / "frescura_estado.json"
+REPETIR_AVISO_DIAS = 7
+
+
+# ---------------------------------------------------------------------------------------------
+# Textos
+# ---------------------------------------------------------------------------------------------
+def dia_corto(d: date) -> str:
+    return f"{DIAS_SEMANA[d.weekday()]} {d:%d/%m}"
+
+
+def nombre_periodo(p: pd.Period, anio_ref: int) -> str:
+    """"octubre" / "octubre de 2025" / "tercer trimestre" (el año sólo si no es `anio_ref`)."""
+    t = f"{ORDINALES[p.quarter]} trimestre" if p.freqstr.startswith("Q") else F.MESES_LARGOS[p.month - 1]
+    return t if p.year == anio_ref else f"{t} de {p.year}"
+
+
+def titulo_publicacion(pub: dict, periodo: pd.Period, anio_ref: int) -> str:
+    """"IPC de octubre", "Mercado de trabajo (EPH) del tercer trimestre"."""
+    conector = "del" if periodo.freqstr.startswith("Q") else "de"
+    return f"{pub['nombre_corto']} {conector} {nombre_periodo(periodo, anio_ref)}"
+
+
+def _num(v: float, dec: int) -> str:
+    return f"{v:,.{dec}f}".replace(",", "@").replace(".", ",").replace("@", ".")
+
+
+def fmt_valor(v: float, unidad: str) -> str:
+    if unidad == "%":
+        return f"{_num(v, 1)}%"
+    if unidad == "USD M":
+        return f"USD {_num(v, 0)} M"
+    return _num(v, 1)
+
+
+def fmt_variacion(var: float, tipo: str, unidad: str) -> str:
+    """"▲ 0,2 pp", "▼ 1,1%", "▲ USD 88 M", "= sin cambios"."""
+    if abs(var) < UMBRAL_SIN_CAMBIO:
+        return "= sin cambios"
+    flecha = "▲" if var > 0 else "▼"
+    if tipo == "pp":
+        return f"{flecha} {_num(abs(var), 1)} pp"
+    if tipo == "pct":
+        return f"{flecha} {_num(abs(var), 1)}%"
+    return f"{flecha} {fmt_valor(abs(var), unidad)}"
+
+
+def _con_signo(var: float, tipo: str, unidad: str) -> str:
+    """Para el titular: "+1,1%", "−2,2%", "+0,2 pp"."""
+    if abs(var) < UMBRAL_SIN_CAMBIO:
+        return "sin cambios"
+    signo = "+" if var > 0 else "−"
+    if tipo == "pp":
+        return f"{signo}{_num(abs(var), 1)} pp"
+    if tipo == "pct":
+        return f"{signo}{_num(abs(var), 1)}%"
+    return f"{signo}{fmt_valor(abs(var), unidad)}"
+
+
+# ---------------------------------------------------------------------------------------------
+# Calendario: hoy, esta semana, próxima
+# ---------------------------------------------------------------------------------------------
+def _momento(d: dict) -> datetime:
+    return datetime.combine(date.fromisoformat(d["fecha"]), time.fromisoformat(d["hora"]))
+
+
+def primer_habil_de_la_semana(hoy: date, no_habiles: set) -> bool:
+    return C.es_habil(hoy, no_habiles) and not any(
+        C.es_habil(hoy - timedelta(days=k), no_habiles) for k in range(1, hoy.weekday() + 1))
+
+
+def armar_calendario(ctx: F.Contexto, cfg: dict) -> dict:
+    """Ventana = hoy + los 4 días hábiles siguientes (si hoy no es hábil, los 5 siguientes). Las
+    publicaciones se muestran en la fecha del calendario del INDEC aunque caigan en un día que
+    calendario.yaml marca como no hábil (los feriados sólo definen la ventana)."""
+    hoy = ctx.hoy
+    habil = C.es_habil(hoy, ctx.no_habiles)
+    fin = C.sumar_dias_habiles(hoy, VENTANA_DIAS_HABILES - 1 if habil else VENTANA_DIAS_HABILES, ctx.no_habiles)
+    out = {"fecha": hoy.isoformat(), "estado": "ok", "bajado": None,
+           "feriado_hoy": None if habil else ctx.nombres_feriados.get(hoy),
+           "primer_habil_semana": primer_habil_de_la_semana(hoy, ctx.no_habiles),
+           "hoy": [], "semana": [], "hasta": dia_corto(fin), "proxima": None}
+    if ctx.fechas is None:
+        out["estado"] = "no_disponible"
+        return out
+    meses = {f"{hoy.year}-{hoy.month:02d}", f"{fin.year}-{fin.month:02d}"}
+    bajados = [ctx.meses_bajado.get(m) for m in sorted(meses)]
+    if any(b is None for b in bajados):
+        out["estado"] = "no_disponible"
+        return out
+    mas_viejo = min(datetime.fromisoformat(b).date() for b in bajados)
+    if (hoy - mas_viejo).days > CACHE_VIEJA_DIAS:
+        out["estado"], out["bajado"] = "cache_vieja", mas_viejo.strftime("%d/%m")
+
+    items = []   # (fecha, hora, orden en el yaml, título, fuente)
+    for orden, pub in enumerate(cfg["publicaciones"]):
+        for d in ctx.fechas.get(pub["id"], []):
+            items.append((date.fromisoformat(d["fecha"]), d["hora"], orden,
+                          titulo_publicacion(pub, d["periodo"], hoy.year), pub.get("fuente", "INDEC")))
+    items.sort()
+    out["hoy"] = [{"titulo": t, "fuente": fu, "hora": F._hora(h)} for f, h, _, t, fu in items if f == hoy]
+    filas: dict[tuple, list] = {}
+    for f, h, _, t, _fu in items:
+        if hoy < f <= fin:
+            filas.setdefault((f, h), []).append(t)
+    out["semana"] = [{"dia": dia_corto(f), "hora": F._hora(h), "titulos": ts} for (f, h), ts in filas.items()]
+    if not out["semana"]:
+        prox = next((x for x in items if x[0] > fin), None)
+        if prox:
+            out["proxima"] = {"titulo": prox[3], "dia": dia_corto(prox[0]), "hora": F._hora(prox[1])}
+    return out
+
+
+# ---------------------------------------------------------------------------------------------
+# Estado de cada publicación + bloque "Dato nuevo"
+# ---------------------------------------------------------------------------------------------
+def _serie_por_periodo(historico: pd.DataFrame, nombre: str) -> tuple[dict, str | None]:
+    s = historico.loc[historico["indicador"] == nombre, ["fecha", "valor"]].dropna()
+    if s.empty:
+        return {}, None
+    frec = F.frecuencia(s["fecha"])
+    return {F.periodo_de(pd.Timestamp(f), frec): float(v) for f, v in zip(s["fecha"], s["valor"])}, frec
+
+
+def _ref(p: pd.Period, compara: str) -> pd.Period:
+    if compara == "anterior":
+        return p - 1
+    return p - (4 if p.freqstr.startswith("Q") else 12)
+
+
+def _etiqueta_ref(ref: pd.Period, compara: str, per: pd.Period) -> str:
+    if compara == "anterior" and ref.freqstr.startswith("M"):
+        return nombre_periodo(ref, per.year)      # "agosto", "diciembre de 2025"
+    return F.texto_periodo(ref)                    # "sep-25", "2T-26"
+
+
+def armar_apertura(historico: pd.DataFrame, pub: dict, per: pd.Period, anio_ref: int) -> dict:
+    ap = pub["apertura"]
+    filas = []
+    for fila in ap.get("filas", []):
+        valores, _ = _serie_por_periodo(historico, fila["serie"])
+        p = per.asfreq(next(iter(valores)).freqstr, how="end") if valores else per
+        if p not in valores:
+            continue   # fila sin dato para el período: se omite
+        v, compara, tipo, unidad = valores[p], fila.get("compara", "anterior"), fila.get("variacion", "pct"), fila.get("unidad", "")
+        ref = _ref(p, compara)
+        r = valores.get(ref)
+        var = None
+        if r is not None:
+            var = (v - r) if tipo in ("pp", "dif") else ((v / r - 1) * 100 if r else None)
+        filas.append({"etiqueta": fila["etiqueta"], "valor": fmt_valor(v, unidad),
+                      "ref": f"{_etiqueta_ref(ref, compara, p)} {fmt_valor(r, unidad)}" if r is not None else None,
+                      "var": fmt_variacion(var, tipo, unidad) if var is not None else None,
+                      "_var_signo": _con_signo(var, tipo, unidad) if var is not None else None,
+                      "_ref": _etiqueta_ref(ref, compara, p)})
+    campos = {"periodo": nombre_periodo(per, anio_ref), "periodo_corto": F.texto_periodo(per),
+              "valor": filas[0]["valor"] if filas else "", "var": (filas[0]["_var_signo"] or "") if filas else "",
+              "ref": filas[0]["_ref"] if filas else ""}
+    if ap.get("filas") and (not filas or "{var}" in ap["titular"] and not filas[0]["_var_signo"]):
+        titular = titulo_publicacion(pub, per, anio_ref)   # sin datos para la plantilla: título neutro
+    else:
+        titular = ap["titular"].format(**campos)
+    return {"titular": titular, "detalle": ap["detalle"].format(**campos) if ap.get("detalle") else None,
+            "filas": [{k: v for k, v in f.items() if not k.startswith("_")} for f in filas]}
+
+
+def estado_publicaciones(historico: pd.DataFrame, ind_por_nombre: dict, cfg: dict, ctx: F.Contexto) -> dict:
+    """Por publicación: período que muestra el dashboard, estado del B2 y bloque de apertura."""
+    out = {}
+    for pub in cfg["publicaciones"]:
+        ap = pub.get("apertura")
+        if not ap:
+            continue
+        serie = ap.get("serie_periodo") or ap["filas"][0]["serie"]
+        fechas = historico.loc[historico["indicador"] == serie, "fecha"]
+        if fechas.empty:
+            continue
+        frec = F.frecuencia(fechas)
+        per = F.periodo_de(pd.to_datetime(fechas).max(), frec)
+        f = F.calcular(ind_por_nombre.get(serie, {"nombre": serie}), serie, fechas, ctx)
+        pubs = (ctx.fechas or {}).get(pub["id"], [])
+        del_periodo = next((d for d in pubs if F._misma_frecuencia(d["periodo"], frec) == per), None)
+        ya = [d for d in pubs if _momento(d) <= ctx.ahora]
+        ultimo = max(ya, key=lambda d: d["periodo"].end_time) if ya else None
+        # "ver gráfico" sólo si la serie se ve en alguna card del dashboard (ej. el EMAE general no tiene
+        # card: abre el mail sin link; decisión de Pedro 07/11/2026). Anclado a la sección del bloque.
+        en_card = any(serie in dict(estados) for estados, _ in ctx.registro.values())
+        bloque = ind_por_nombre.get(serie, {}).get("bloque") if en_card else None
+        out[pub["id"]] = {
+            "nombre_corto": pub["nombre_corto"],
+            "periodo": str(per),
+            "titulo": titulo_publicacion(pub, per, ctx.hoy.year),
+            "estado": f.estado if f else None,
+            "linea": F.texto_linea(f) if f else None,
+            "titulo_publicado": (titulo_publicacion(pub, F._misma_frecuencia(ultimo["periodo"], frec), ctx.hoy.year)
+                                 if ultimo else None),
+            "publicado": (f"{date.fromisoformat(del_periodo['fecha']):%d/%m}, {F._hora(del_periodo['hora'])}"
+                          if del_periodo else None),
+            "fuente": pub.get("fuente", "INDEC"),
+            "ancla": bloque,
+            "apertura": armar_apertura(historico, pub, per, ctx.hoy.year),
+        }
+    return out
+
+
+# ---------------------------------------------------------------------------------------------
+# Avisos: atrasados (por publicación) y rezago grave (por card / grupo de series)
+# ---------------------------------------------------------------------------------------------
+def resumen_frescura(ctx: F.Contexto, cfg: dict) -> tuple[list[dict], list[dict]]:
+    """A partir de las cards que registró dashboard.generar. Misma redacción que el dashboard."""
+    cortos = {p["id"]: p["nombre_corto"] for p in cfg["publicaciones"]}
+    atrasados, candidatos = {}, []
+    for card, (estados, resumen) in ctx.registro.items():
+        for serie, f, quien in F.lineas_card(estados, resumen):
+            if f.grave:
+                nombre = quien or card
+                clave_f = (f.periodo, f.grave, f.estado, f.detalle)
+                series = frozenset(n for n, g in estados
+                                   if g is not None and g.grave and (g.periodo, g.grave, g.estado, g.detalle) == clave_f)
+                candidatos.append({"clave": f"{nombre}|{f.periodo}", "nombre": nombre,
+                                   "texto": F.texto_linea(f, nombre), "dias": f.dias_rezago or 0,
+                                   "_series": series, "_periodo": f.periodo})
+            elif f.estado == "atrasado":
+                pid = ctx.pub_de_indicador.get(serie) or ctx.pub_de_indicador.get(card)
+                texto = F.texto_linea(f)
+                clave = f"atrasado:{pid or card}:{f.periodo}"
+                atrasados.setdefault(clave, {"clave": clave, "publicacion": pid,
+                                             "texto": f"{cortos.get(pid, card)} · {texto}"})
+    orden_pub = [p["id"] for p in cfg["publicaciones"]]
+    lista_atr = sorted(atrasados.values(),
+                       key=lambda a: orden_pub.index(a["publicacion"]) if a["publicacion"] in orden_pub else 99)
+    # Una serie frenada que aparece en varias cards va una sola vez: se descarta la línea cuyas series
+    # ya están cubiertas por otra del mismo período (ej. "Adelantos transitorios (pesos constantes)"
+    # dentro de "Asistencia monetaria del BCRA al Tesoro"). Gana la de más series; a igual tamaño, la
+    # primera card del dashboard.
+    graves = []
+    for c in sorted(candidatos, key=lambda c: -len(c["_series"])):
+        if not any(c["_periodo"] == g["_periodo"] and c["_series"] <= g["_series"] for g in graves):
+            graves.append(c)
+    orden = {id(c): k for k, c in enumerate(candidatos)}
+    graves.sort(key=lambda g: (-g["dias"], orden[id(g)]))
+    return lista_atr, [{k: v for k, v in g.items() if not k.startswith("_")} for g in graves]
+
+
+def armar(historico: pd.DataFrame, indicadores: list[dict], ctx: F.Contexto, cfg: dict) -> dict:
+    atrasados, graves = resumen_frescura(ctx, cfg)
+    return {"calendario": armar_calendario(ctx, cfg),
+            "publicaciones": estado_publicaciones(historico, {i["nombre"]: i for i in indicadores}, cfg, ctx),
+            "atrasados": atrasados, "graves": graves}
+
+
+def avisar_atrasados(atrasados: list[dict], hoy: date, ruta: Path = ESTADO_AVISOS, enviar=None) -> list[str]:
+    """Aviso a Pedro (decisión D1): semanal por publicación y período atrasado, máx. 1 mail por corrida.
+    El estado sólo se actualiza si el mail salió (sin credenciales, p. ej. en el fallback del workflow
+    del mail, no se manda ni se marca)."""
+    if enviar is None:
+        from fuentes_indec import enviar_alerta as enviar
+    from fuentes_indec import _toca_aviso
+    estado = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {}
+    avisos = estado.setdefault("avisos", {})
+    hoy_s = hoy.isoformat()
+    toca = [a for a in atrasados if _toca_aviso(avisos, a["clave"], hoy_s, REPETIR_AVISO_DIAS)]
+    if toca:
+        cuerpo = ("Publicaciones del INDEC que ya salieron y el dashboard todavía no muestra (pasó el margen "
+                  "de 1 día hábil). Puede ser una demora de la fuente intermedia o una falla de la descarga:\n\n"
+                  + "\n".join(f"- {a['texto']}" for a in toca)
+                  + "\n\nEste aviso se repite cada 7 días mientras siga atrasado.")
+        if enviar(f"[Coyuntura] {len(toca)} publicación(es) atrasada(s)", cuerpo):
+            for a in toca:
+                avisos[a["clave"]] = hoy_s
+    estado["ultima_verificacion"] = hoy_s
+    estado["atrasados_hoy"] = [a["texto"] for a in atrasados]
+    ruta.parent.mkdir(exist_ok=True)
+    ruta.write_text(json.dumps(estado, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return [a["clave"] for a in toca]

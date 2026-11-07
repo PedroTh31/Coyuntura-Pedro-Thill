@@ -32,25 +32,27 @@ jobs:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
+      - name: Verificar calendario de publicaciones
+        # Baja el calendario del INDEC (caché en data/calendario_indec.json) y chequea feriados;
+        # avisa a Pedro si algo cambió. Nunca corta el pipeline de datos. Corre ANTES de run.py
+        # (Bloque B3): la línea de frescura del dashboard y la agenda del mail usan la caché de hoy.
+        continue-on-error: true
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python verificar_calendario.py
       - name: Correr el pipeline
         # run.py escribe data/ultima_corrida.json al terminar: el mail lo usa para decidir
         # si manda con estos datos o corre run.py de nuevo como fallback.
         # INDEC_API_TOKEN: API del INDEC (fuente primaria de las series del INDEC; nunca se
-        # imprime). GMAIL_*: sólo para las alertas a Pedro (token vencido/por vencer, fallback).
+        # imprime). GMAIL_*: sólo para las alertas a Pedro (token vencido/por vencer, fallback,
+        # publicaciones atrasadas del Bloque B3).
         env:
           INDEC_API_TOKEN: ${{ secrets.INDEC_API_TOKEN }}
           INDEC_TOKEN_FECHA: ${{ vars.INDEC_TOKEN_FECHA }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python run.py
-      - name: Verificar calendario de publicaciones
-        # Baja el calendario del INDEC (caché en data/calendario_indec.json) y chequea feriados;
-        # avisa a Pedro si algo cambió. Nunca corta el pipeline de datos.
-        continue-on-error: true
-        env:
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-        run: python verificar_calendario.py
       - name: Commitear datos actualizados
         run: |
           git config user.name  "coyuntura-bot"

@@ -105,6 +105,11 @@ class Contexto:
     no_habiles: set = field(default_factory=set)
     pub_de_indicador: dict = field(default_factory=dict)   # nombre -> id de publicación
     fechas: dict | None = None                      # id -> [{fecha, hora, periodo(Period)}]; None = sin caché
+    meses_bajado: dict = field(default_factory=dict)       # "AAAA-MM" -> ISO de la última descarga válida (caché)
+    nombres_feriados: dict = field(default_factory=dict)   # date -> nombre del feriado (calendario.yaml)
+    # Bloque B3: dashboard.generar registra acá las series de cada card (nombre de la card ->
+    # (estados, serie resumen)) para que el mail use exactamente las mismas líneas que el dashboard.
+    registro: dict = field(default_factory=dict)
 
     @property
     def hoy(self) -> date:
@@ -117,9 +122,11 @@ def cargar_contexto(ahora: datetime | None = None) -> Contexto:
     ahora = ahora or datetime.now(C.ZONA_AR).replace(tzinfo=None)
     cfg = C.cargar_config()
     ctx = Contexto(ahora=ahora, no_habiles=C.feriados(cfg),
-                   pub_de_indicador={n: p["id"] for p in cfg["publicaciones"] for n in p["indicadores"]})
+                   pub_de_indicador={n: p["id"] for p in cfg["publicaciones"] for n in p["indicadores"]},
+                   nombres_feriados=C.nombres_feriados(cfg))
     try:
         cache = C.cargar_cache()
+        ctx.meses_bajado = {k: v["bajado"] for k, v in cache["meses"].items()}
         pubs = [C._de_dict(d) for mes in cache["meses"].values() for d in mes["publicaciones"]]
         asignadas, _ = C.asignar(pubs, cfg)
         fechas = {}
@@ -146,6 +153,7 @@ class Frescura:
     detalle: str            # resto de la línea (HTML ya armado, sin el período ni el estado)
     tooltip: str
     grave: str | None = None   # "sin datos nuevos hace 5 meses" si hay rezago grave
+    dias_rezago: int | None = None   # días desde el cierre del período (para ordenar los avisos del mail)
 
 
 def calcular(ind: dict, nombre_serie: str, fechas: pd.Series, ctx: Contexto) -> Frescura | None:
@@ -182,6 +190,7 @@ def calcular(ind: dict, nombre_serie: str, fechas: pd.Series, ctx: Contexto) -> 
         f = Frescura(per_txt, "sin_calendario", "próximo: sin calendario oficial",
                      "Esta serie no tiene un calendario oficial de publicación.")
     f.grave = grave
+    f.dias_rezago = dias
     if grave:
         f.tooltip = (f"Último dato: {per_txt}. La fuente no publica datos nuevos desde hace "
                      f"{dias} días contados desde el cierre de ese período. " + f.tooltip)
@@ -224,46 +233,67 @@ def _con_calendario(per, frec, per_txt, ctx, pid) -> Frescura:
 # ---------------------------------------------------------------------------------------------
 ESTADO_HTML = {"al_dia": '<span class="ok">✓ al día</span>',
                "atrasado": '<span class="atr">⚠ atrasado</span>'}
+ESTADO_TEXTO = {"al_dia": "✓ al día", "atrasado": "⚠ atrasado"}
+
+
+def _partes(f: Frescura, series: str | None, como_html: bool) -> list[str]:
+    """Las partes de la línea, en el orden del B2. Única fuente de la redacción: la usan la línea del
+    dashboard (HTML) y los avisos del mail (texto plano, Bloque B3)."""
+    esc = html.escape if como_html else (lambda x: x)
+    per = f'<span class="per">{f.periodo}</span>' if como_html else f.periodo
+    partes = [per]
+    if f.grave:
+        quien = f"{esc(series)}: " if series else ""
+        partes = [f"⏸ {quien}{per}", f.grave]
+    if f.estado in ESTADO_HTML:
+        partes.append((ESTADO_HTML if como_html else ESTADO_TEXTO)[f.estado])
+    if f.grave and f.estado in ("sin_calendario", "diaria"):
+        partes.append("sin calendario oficial")   # una fecha "estimada" no tiene sentido si la serie está frenada
+    elif f.detalle:
+        partes.append(f.detalle)
+    return partes
 
 
 def html_linea(f: Frescura | None, series: str | None = None) -> str:
     """`series`: nombre(s) de la(s) serie(s) frenada(s), sólo en cards mixtas (ver html_card)."""
     if f is None:
         return ""
-    partes = [f'<span class="per">{f.periodo}</span>']
-    if f.grave:
-        quien = f"{html.escape(series)}: " if series else ""
-        partes = [f'⏸ {quien}<span class="per">{f.periodo}</span>', f.grave]
-    if f.estado in ESTADO_HTML:
-        partes.append(ESTADO_HTML[f.estado])
-    if f.grave and f.estado in ("sin_calendario", "diaria"):
-        partes.append("sin calendario oficial")   # una fecha "estimada" no tiene sentido si la serie está frenada
-    elif f.detalle:
-        partes.append(f.detalle)
     clase = "cf grave" if f.grave else "cf"
-    return f'<div class="{clase}" title="{html.escape(f.tooltip)}">{" · ".join(partes)}</div>'
+    return f'<div class="{clase}" title="{html.escape(f.tooltip)}">{" · ".join(_partes(f, series, True))}</div>'
 
 
-def html_card(estados: list[tuple[str, Frescura | None]], resumen: str) -> str:
-    """Línea(s) de una card. `estados`: [(nombre de la serie, Frescura)] de todas sus series; `resumen`:
-    la que da el valor de la card. Una sola serie, o todas frenadas: una sola línea, sin nombres. Card
-    mixta (alguna frenada y alguna no; decisión de Pedro 07/11/2026): la línea normal de la serie
-    resumen (o de la primera no frenada, si la resumen es la frenada) y una franja por cada grupo de
-    series frenadas con el mismo período, que dice cuáles son."""
+def texto_linea(f: Frescura, series: str | None = None) -> str:
+    """La misma línea que html_linea, en texto plano (avisos del mail diario, Bloque B3)."""
+    return " · ".join(_partes(f, series, False))
+
+
+def lineas_card(estados: list[tuple[str, Frescura | None]], resumen: str) -> list[tuple[str, Frescura, str | None]]:
+    """Qué líneas lleva una card: [(serie, Frescura, nombres a mostrar o None)]. `estados`: [(nombre de
+    la serie, Frescura)] de todas sus series; `resumen`: la que da el valor de la card. Una sola serie,
+    o todas frenadas: una sola línea, sin nombres. Card mixta (alguna frenada y alguna no; decisión de
+    Pedro 07/11/2026): la línea normal de la serie resumen (o de la primera no frenada, si la resumen
+    es la frenada) y una franja por cada grupo de series frenadas con el mismo período, que dice
+    cuáles son."""
     validos = [(n, f) for n, f in estados if f is not None]
     if not validos:
-        return ""
+        return []
     graves = [(n, f) for n, f in validos if f.grave]
     if not graves or len(graves) == len(validos):
-        return html_linea(dict(validos).get(resumen) or validos[0][1])
+        n = resumen if resumen in dict(validos) else validos[0][0]
+        return [(n, dict(validos)[n], None)]
     no_graves = dict((n, f) for n, f in validos if not f.grave)
-    principal = no_graves.get(resumen) or next(iter(no_graves.values()))
-    salida = html_linea(principal)
+    n_princ = resumen if resumen in no_graves else next(iter(no_graves))
+    salida = [(n_princ, no_graves[n_princ], None)]
     grupos: dict[tuple, list] = {}
     for n, f in graves:
         grupos.setdefault((f.periodo, f.grave, f.estado, f.detalle), []).append((n, f))
     for miembros in grupos.values():
         nombres = [n for n, _ in miembros]
         quien = nombres[0] if len(nombres) == 1 else ", ".join(nombres[:-1]) + " y " + nombres[-1]
-        salida += html_linea(miembros[0][1], series=quien)
+        salida.append((miembros[0][0], miembros[0][1], quien))
     return salida
+
+
+def html_card(estados: list[tuple[str, Frescura | None]], resumen: str) -> str:
+    """Línea(s) de una card (ver lineas_card)."""
+    return "".join(html_linea(f, series=quien) for _, f, quien in lineas_card(estados, resumen))

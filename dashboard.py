@@ -904,6 +904,7 @@ def _linea_frescura(ind, historico, ctx, indicadores_por_nombre):
         cfg = indicadores_por_nombre.get(nombre, ind)
         fechas = historico.loc[historico["indicador"] == nombre, "fecha"]
         estados.append((nombre, frescura.calcular(cfg, nombre, fechas, ctx)))
+    ctx.registro[ind["nombre"]] = (estados, _serie_resumen(ind))   # avisos del mail diario (Bloque B3)
     return frescura.html_card(estados, _serie_resumen(ind))
 
 

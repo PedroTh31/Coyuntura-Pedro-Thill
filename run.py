@@ -23,6 +23,8 @@ from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
 import storage
 import dashboard
 import frescura
+import agenda
+import calendario_indec
 import fuentes_indec
 
 RAIZ = Path(__file__).resolve().parent
@@ -51,7 +53,8 @@ def _fuente_de(ind: dict) -> str:
     return ind.get("fuente", "desconocida")
 
 
-def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuentes_indec_usadas=None):
+def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuentes_indec_usadas=None,
+                            agenda_mail=None):
     ahora = datetime.now(ZONA_AR)
     datos = {
         "fecha": ahora.date().isoformat(),
@@ -63,6 +66,9 @@ def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuen
         "problemas": [{"indicador": n, "motivo": m} for n, m in problemas],
         # Qué fuente se usó en ESTA corrida para cada serie del INDEC (API o fallback, y por qué).
         "fuentes_indec": fuentes_indec_usadas or {},
+        # Bloque B3: calendario, estado de cada publicación y avisos de frescura para el mail diario
+        # (agenda.py). El mail no recalcula nada: si falta (o la corrida no es de hoy), no muestra fechas.
+        "agenda": agenda_mail,
     }
     ULTIMA_CORRIDA.parent.mkdir(exist_ok=True)
     ULTIMA_CORRIDA.write_text(json.dumps(datos, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -652,8 +658,8 @@ def main():
     nav_a_macro = '<a href="index.html" class="nav-pagina">← Macro</a>'
     todos = indicadores + indicadores_financiera
     # Línea de frescura de cada card (Bloque B2, sólo pestaña macro). Usa la caché del calendario
-    # que dejó verificar_calendario.py en la corrida anterior; si algo falla, el dashboard sale sin
-    # la línea en vez de cortar la corrida.
+    # que acaba de bajar verificar_calendario.py (corre antes en coyuntura.yml; en el fallback del
+    # mail, la última commiteada); si algo falla, el dashboard sale sin la línea en vez de cortar.
     try:
         frescura_ctx = frescura.cargar_contexto()
     except Exception as e:
@@ -662,6 +668,16 @@ def main():
     dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera, fuentes_indec=fuentes_por_indicador,
                       fuentes_pagina=dashboard.fuentes_de_pagina(indicadores, fuentes_por_indicador, todos),
                       frescura_ctx=frescura_ctx)
+    # Bloque B3: agenda del mail diario + aviso semanal a Pedro de publicaciones atrasadas. Usa las
+    # líneas de frescura que acaba de registrar dashboard.generar (misma redacción que el dashboard).
+    agenda_mail = None
+    if frescura_ctx is not None:
+        try:
+            agenda_mail = agenda.armar(historico, indicadores, frescura_ctx, calendario_indec.cargar_config())
+            agenda.avisar_atrasados(agenda_mail["atrasados"], frescura_ctx.hoy)
+        except Exception as e:
+            print(f"::warning title=Agenda del mail::no se pudo armar: {type(e).__name__}: {e}")
+            agenda_mail = None
 
     if indicadores_financiera:
         fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
@@ -682,7 +698,8 @@ def main():
     else:
         print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
 
-    escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador)
+    escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador,
+                            agenda_mail=agenda_mail)
 
 
 if __name__ == "__main__":
