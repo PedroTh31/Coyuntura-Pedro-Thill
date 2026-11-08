@@ -746,11 +746,12 @@ def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuent
         print(f"::warning title=Temas::'{it}' está en más de un tema")
     temas_nav = [(t["titulo"], t["slug"]) for t in temas_cfg]
     macro = {i["nombre"] for i in indicadores}   # titulares por reglas: sólo las cards macro (D1 del Bloque C)
-    try:   # próxima publicación de cada tema (bajada), de la caché del calendario: nunca estimada
-        proximas = agenda.proximas(frescura_ctx, calendario_indec.cargar_config()) if frescura_ctx else {}
+    try:   # próxima publicación (bajada del tema, "Próximo dato" de la serie): de la caché, nunca estimada
+        cal_cfg = calendario_indec.cargar_config()
+        proximas = agenda.proximas(frescura_ctx, cal_cfg) if frescura_ctx else {}
     except Exception as e:
-        print(f"::warning title=Temas::sin próximas publicaciones en la bajada: {type(e).__name__}: {e}")
-        proximas = {}
+        print(f"::warning title=Temas::sin calendario para temas y series: {type(e).__name__}: {e}")
+        cal_cfg, proximas = None, {}
     cards_sitio = {}
     for t in temas_cfg:
         its = set(temas.items(t))
@@ -765,7 +766,7 @@ def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuent
                     [i for i in inds if temas.item_de(i) in its], fuentes_por_indicador, todos,
                     extra=(["MAE"] if ecs else []) + (["data912"] if eh else [])),
                 frescura_ctx=frescura_ctx, con_titulares=macro,
-                tema=dict(t, miga='<a href="../">Inicio</a> › ' + t["titulo"], proximas=proximas),
+                tema=dict(t, miga='<a href="../">Inicio</a> › ' + t["titulo"], proximas=proximas, cal_cfg=cal_cfg),
                 temas_nav=temas_nav, raiz="../")
         except Exception as e:
             print(f"::warning title=Tema {t['slug']}::no se pudo generar la página: {type(e).__name__}: {e}")

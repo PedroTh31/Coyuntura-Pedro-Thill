@@ -289,6 +289,21 @@ def armar_apertura(historico: pd.DataFrame, pub: dict, per: pd.Period, anio_ref:
             "filas": [{k: v for k, v in f.items() if not k.startswith("_")} for f in filas]}
 
 
+def url_serie(serie: str, ctx: F.Contexto, ind_por_nombre: dict) -> str | None:
+    """Página de serie (Bloque E4, relativa a la raíz del sitio) donde se ve `serie`: su card propia (mismo
+    nombre); si no, la card que la tiene como serie principal; si no, la primera card que la dibuja; si no tiene card, su propia página cuando
+    el yaml la marca con `pagina_serie` (ej. EMAE general). None = sin página."""
+    import sitio
+    cards = [(card, resumen) for card, (estados, resumen) in ctx.registro.items() if serie in dict(estados)]
+    elegida = next((card for card, _ in cards if card == serie),          # la card propia de la serie
+                   next((card for card, resumen in cards if resumen == serie), cards[0][0] if cards else None))
+    if elegida is None and ind_por_nombre.get(serie, {}).get("pagina_serie"):
+        elegida = serie
+    if elegida is None:
+        return None
+    return f"serie/{sitio.slug(elegida, ind_por_nombre.get(elegida))}/"
+
+
 def estado_publicaciones(historico: pd.DataFrame, ind_por_nombre: dict, cfg: dict, ctx: F.Contexto) -> dict:
     """Por publicación: período que muestra el dashboard, estado del B2 y bloque de apertura."""
     out = {}
@@ -311,6 +326,7 @@ def estado_publicaciones(historico: pd.DataFrame, ind_por_nombre: dict, cfg: dic
         # card: abre el mail sin link; decisión de Pedro 07/11/2026). Anclado a la sección del bloque.
         en_card = any(serie in dict(estados) for estados, _ in ctx.registro.values())
         bloque = ind_por_nombre.get(serie, {}).get("bloque") if en_card else None
+        url = url_serie(serie, ctx, ind_por_nombre)
         out[pub["id"]] = {
             "nombre_corto": pub["nombre_corto"],
             "periodo": str(per),
@@ -323,6 +339,7 @@ def estado_publicaciones(historico: pd.DataFrame, ind_por_nombre: dict, cfg: dic
                           if del_periodo else None),
             "fuente": pub.get("fuente", "INDEC"),
             "ancla": bloque,
+            "url": url,
             "apertura": armar_apertura(historico, pub, per, ctx.hoy.year),
         }
     return out

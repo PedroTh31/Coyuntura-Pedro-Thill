@@ -17,6 +17,7 @@ import json
 import pandas as pd
 
 import frescura
+import dataclasses
 import titulares
 import sitio
 from tema import TEMA
@@ -819,8 +820,9 @@ CAMPOS_ID_DG = ("id", "base_id", "nominal_id", "deflactor_id", "numerador_id", "
 def _fuentes_de_indicador(ind, fuentes_indec):
     """Etiquetas de fuente de un indicador: la declarada en el yaml y, para las series del
     INDEC, la que el resolver usó de verdad (API o fallback)."""
-    if ind.get("vista"):
-        return set()   # las vistas sólo combinan indicadores que ya cuentan por su cuenta
+    if ind.get("vista") and not any(ind.get(k) for k in ("fuente", "fuente_primaria", "calculo")):
+        return set()   # vistas que sólo combinan indicadores que ya cuentan por su cuenta
+        # (reservas_combo sí trae su propia serie: `fuente: bcra`)
     usos = fuentes_indec.get(ind["nombre"], [])
     etiquetas = {ETIQUETA_USO_INDEC.get(u["fuente"], u["fuente"]) for u in usos}
     cubiertos = {u["clave"].split(":")[0] for u in usos} | {ind["nombre"]}
@@ -1026,7 +1028,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
         usos = _usos_indec(ind, fuentes_indec)
         nota = _nota_con_fuente(ind.get("nota"), usos)
-        if ind.get("solo_componente"):
+        solo_serie = bool(tema is not None and ind.get("solo_componente") and ind.get("pagina_serie") == tema["slug"])
+        if ind.get("solo_componente") and not solo_serie:
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
         if ind.get("vista") in ("overlay", "incidencia_stack", "sectores_bar", "balance_cambiario", "comercio_espejo", "combo_barras_linea", "combo_2lineas", "combo_barras_evento", "combo_rezago"):
             if ind["vista"] == "overlay":
@@ -1083,8 +1086,11 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         if len(s) < 2:
             s = serie
         ult, pct = _variacion(serie)
-        nota_num = _registrar_nota(nota, nombre, notas_dict)
-        linea_fr, grave = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
+        # `pagina_serie` (E4): su nota va sólo en su página de serie, no en las notas del tema
+        nota_num = _registrar_nota(nota, nombre, notas_dict) if not solo_serie else None
+        # `pagina_serie` (E4): la serie no tiene card en el tema; su línea no entra en la agenda del mail
+        ctx_card = dataclasses.replace(frescura_ctx, registro={}) if (solo_serie and frescura_ctx is not None) else frescura_ctx
+        linea_fr, grave = _linea_frescura(ind, historico, ctx_card, indicadores_por_nombre)
         # Marca de "datos hasta MM/AAAA" para series que pueden discontinuarse (ej. tasa
         # de política monetaria). Se calcula de la última fecha REAL de la serie en cada
         # corrida: si la fuente retoma la publicación, la marca se actualiza o desaparece
@@ -1111,7 +1117,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             nota_num=nota_num,
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
             subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
-            fuente_indec=bool(usos), frescura=linea_fr, slug=sitio.slug(nombre, ind)))
+            fuente_indec=bool(usos), frescura=linea_fr, slug=sitio.slug(nombre, ind), solo_serie=solo_serie,
+            nota_texto=nota if solo_serie else None))
         _completar_card(charts[-1], ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio)
         if tema is not None:
             charts[-1]["mini"] = _mini_card(ind, None, historico)
@@ -1169,7 +1176,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
     etiquetas = {i["nombre"]: i["etiqueta"] for i in config_indicadores if i.get("etiqueta")}
     if tema is not None:
         tema = dict(tema, bajada=_bajada_tema(charts, frescura_ctx, tema.get("proximas") or {}))
-        _escribir_series(charts, series_js, notas_dict, tema, temas_nav, fuentes_pagina, etiquetas)
+        _escribir_series(charts, series_js, notas_dict, tema, temas_nav, etiquetas, historico, indicadores_por_nombre,
+                         frescura_ctx, fuentes_indec, config_indicadores)
         series_js = []   # la página del tema sólo lleva los minis (los datos completos van en cada serie)
     _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida=archivo_salida, extra_html=extra_html or {},
@@ -1266,7 +1274,7 @@ def tabla_acciones(titulo, filas, fecha_str):
             f'<tbody>{cuerpo}</tbody></table>')
 
 
-def _card_cell(c):
+def _card_cell(c, solo_grafico=False):
     """Card del Bloque C: (kicker con el nombre +) titular o nombre, valor con su variación contra lo mismo
     que el titular (D13, triángulo gris sin juicio, D3), línea de frescura del B2 tal cual, leyenda en
     prosa (la llena el JS con los colores reales de cada serie), gráfico, selector "Vista" (D5) y pie con
@@ -1324,6 +1332,9 @@ def _card_cell(c):
     cbox_cls = "cbox cbox-grande" if grande else "cbox"
     frescura_html = c.get("frescura", "")
     ancla = f' id="{c["slug"]}"' if c.get("slug") else ""   # Bloque E2: la home linkea a <tema>/#<slug>
+    if solo_grafico:   # E4: página de serie, la cabecera (titular, valor, frescura, aviso) la arma _cabeza_serie
+        cabeza = subtitulo_html = fila = frescura_html = marca_html = ""
+        ancla = ' id="grafico"'
     # "Acumulando historia" (Punto 4 del checklist): sin canvas ni pantalla completa, un mensaje corto.
     if c.get("acumulando"):
         return (f'<div class="{cell_cls}"{ancla}>{cabeza}{subtitulo_html}{fila}{frescura_html}'
@@ -1465,6 +1476,7 @@ def _bajada_tema(charts, ctx, proximas):
     """'N series · X al día con el calendario del INDEC · Y sin datos nuevos hace más de 3 meses · próxima
     publicación del INDEC: …'. Todo de lo que ya calculó la frescura (ctx.registro) y de la caché del
     calendario (agenda.proximas). Nada se estima."""
+    charts = [c for c in charts if not c.get("solo_serie")]
     n = len(charts)
     partes = [f'{n} {"serie" if n == 1 else "series"}']
     if ctx is not None:
@@ -1491,27 +1503,154 @@ def _bajada_tema(charts, ctx, proximas):
     return " · ".join(partes)
 
 
-def _escribir_series(charts, series_js, notas_dict, tema, temas_nav, fuentes_pagina, etiquetas):
-    """Una página por card: docs/serie/<slug>/index.html, con la card completa de siempre (gráfico,
-    selector de vista, pantalla completa) y su nota metodológica (renumerada como *1). E4 le suma el
-    próximo dato, el contexto y los últimos datos."""
+def _proximo_dato(f, resumen, ctx, proximas):
+    """Caja "Próximo dato" de la página de serie (E4): la fecha del calendario oficial del INDEC si la
+    publicación la tiene en la caché; si no, lo mismo que dice la línea del B2 (diarias: "próximo DD/MM
+    (estimado)"; sin calendario: "sin calendario oficial"). Nada se estima acá."""
+    if ctx is None:
+        return ""
+    pid = ctx.pub_de_indicador.get(resumen)
+    ver = '<a href="../../calendario/">ver calendario</a>'
+    if pid and pid in proximas:
+        d = proximas[pid]
+        txt = f'<b>{d["titulo"]}</b> · {d["dia"]}, {d["hora"]} · según el calendario oficial del INDEC · {ver}'
+    elif pid:
+        txt = f"todavía sin fecha en el calendario oficial del INDEC · {ver}"
+    elif f is not None and f.estado == "diaria":
+        prox = [x for x in F_texto(f).split(" · ") if x.startswith("próximo")]
+        txt = prox[0] if prox else "el próximo día hábil (estimado)"
+    else:
+        txt = "sin calendario oficial (la fuente no anuncia fechas; el monitor no las estima)"
+    return f'<div class="s-prox"><span class="s-prox-l">Próximo dato</span>{txt}</div>'
+
+
+def F_texto(f):
+    return frescura.texto_linea(f)
+
+
+def _cabeza_serie(c, ind, f, resumen, ctx, proximas):
+    tit = c.get("titular")
+    if tit == c["nombre"]:
+        tit = None
+    desc = (ind or {}).get("descripcion") or c.get("subtitulo")
+    chg = ""
+    if c.get("cambio"):
+        ch = c["cambio"]
+        tri = {1: "▲", -1: "▼"}.get(ch["signo"], "•")
+        chg = f'<div class="chg"><span class="tri">{tri}</span>{ch["texto"]} vs. {ch["ref"]}</div>'
+    izq = ((f'<div class="cn">{c["nombre"]}</div><h2 class="s-tit">{tit}</h2>' if tit else f'<h2 class="s-tit">{c["nombre"]}</h2>')
+           + (f'<p class="s-desc">{desc}</p>' if desc else ""))
+    marca = f'<div class="marca-fecha">⏸ {c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
+    der = (f'<div class="s-val"><span class="cv">{c["valor"]}</span> <span class="uni">{c.get("unidad", "")}</span></div>{chg}'
+           f'{c.get("frescura", "")}{marca}{_aviso_html(c)}{_proximo_dato(f, resumen, ctx, proximas)}')
+    if c.get("acumulando"):
+        der += f'<div class="acumulando">⏳ {c["acumulando"]}</div>'
+    return f'<div class="s-cab"><div class="s-izq">{izq}</div><div class="s-der">{der}</div></div>'
+
+
+def _tabla_ultimos(ind, historico, por_nombre, n=13):
+    """"Últimos 13 datos" (E4): la serie que resume la card y, si son pocas (hasta 4), las otras de la
+    card, alineadas por fecha. También es la vista accesible del gráfico."""
+    if ind is None or ind.get("vista") == "sectores_bar":
+        return ""
+    resumen = _serie_resumen(ind)
+    nombres = _series_de_card(ind)
+    if len(nombres) > 4:
+        nombres = [resumen]
+    nombres = [resumen] + [x for x in nombres if x != resumen]
+    base = _serie_hist(historico, resumen)
+    if base.empty:
+        return ""
+    _, freq = _ventana_mini(base)
+    fechas = list(base.index[-n:])[::-1]
+    cols = []
+    for nom in nombres:
+        sr = _serie_hist(historico, nom)
+        if nom != resumen and (sr.empty or _ventana_mini(sr)[1] != freq):
+            continue   # otra frecuencia (ej. compras netas mensuales en una card diaria): saldría toda "s/d"
+        u = por_nombre.get(nom, ind).get("unidad", ind.get("unidad", ""))
+        cols.append((por_nombre.get(nom, {}).get("etiqueta") or nom, u, sr))
+    cab = "".join(f"<th>{et}</th>" for et, _, _ in cols)
+    filas = ""
+    for d in fechas:
+        celdas = "".join(f'<td class="num">{titulares.fmt_valor(sr.get(d), u) if pd.notna(sr.get(d, float("nan"))) else "s/d"}</td>'
+                         for _, u, sr in cols)
+        filas += f'<tr><td class="sec">{_etiqueta_mini(d, freq)}</td>{celdas}</tr>'
+    unidades = " · ".join(dict.fromkeys(u for _, u, _ in cols if u))
+    return (f'<h3 class="grupo">Últimos {len(fechas)} datos</h3>'
+            f'<table class="tabla s-ult"><thead><tr><th>Período</th>{cab}</tr></thead><tbody>{filas}</tbody></table>'
+            f'<p class="nota">{unidades}</p>')
+
+
+def _contexto_serie(ind, historico, ctx, cal_cfg):
+    """"Último dato, en contexto" (E4): las mismas filas del "Dato nuevo" del mail (agenda.armar_apertura,
+    sin recalcular nada) de la publicación del INDEC cuya serie está en esta card."""
+    if ind is None or not cal_cfg or ctx is None:
+        return ""
+    import agenda
+    nombres = set(_series_de_card(ind))
+    for pub in cal_cfg.get("publicaciones", []):
+        ap = pub.get("apertura")
+        if not ap:
+            continue
+        serie = ap.get("serie_periodo") or ap["filas"][0]["serie"]
+        if serie not in nombres:
+            continue
+        fechas = historico.loc[historico["indicador"] == serie, "fecha"]
+        if fechas.empty:
+            return ""
+        per = frescura.periodo_de(pd.to_datetime(fechas).max(), frescura.frecuencia(fechas))
+        a = agenda.armar_apertura(historico, pub, per, ctx.hoy.year)
+        filas = "".join(f'<tr><td class="sec">{f["etiqueta"]}</td><td class="num"><b>{f["valor"]}</b></td>'
+                        f'<td class="sec">{" · ".join(x for x in (f.get("ref"), f.get("var")) if x)}</td></tr>'
+                        for f in a["filas"])
+        det = f'<p class="bajada">{a["detalle"]}</p>' if a.get("detalle") else ""
+        return (f'<h3 class="grupo">Último dato, en contexto</h3><p class="s-ctx-tit">{a["titular"]}</p>{det}'
+                f'<table class="tabla s-ctx"><tbody>{filas}</tbody></table>')
+    return ""
+
+
+def _escribir_series(charts, series_js, notas_dict, tema, temas_nav, etiquetas, historico, por_nombre, ctx,
+                     fuentes_indec, config):
+    """Una página por card (E3/E4): docs/serie/<slug>/index.html. Cabecera (titular, descripción, valor,
+    variación, frescura, aviso y "Próximo dato"), el gráfico completo de siempre (selector, pantalla
+    completa), "Último dato, en contexto", "Últimos 13 datos", la nota (como *1) y "También en <tema>".
+    El encabezado "fuentes:" es el de la serie, no el del tema."""
     sj_por_i = {sj["i"]: sj for sj in series_js if "i" in sj}
     texto_de = {v["numero"]: t for t, v in notas_dict.items()}
+    proximas = tema.get("proximas") or {}
+    hermanas = [c for c in charts if not c.get("solo_serie")]
     for c in charts:
         if not c.get("slug"):
             continue
+        ind = por_nombre.get(c["nombre"])
         card = dict(c, i=0)
         notas = {}
-        if c.get("nota_num") in texto_de:
-            notas = {texto_de[c["nota_num"]]: {"numero": 1, "indicadores": [c["nombre"]]}}
+        texto = c.get("nota_texto") or texto_de.get(c.get("nota_num"))
+        if texto:
+            notas = {texto: {"numero": 1, "indicadores": [c["nombre"]]}}
             card["nota_num"] = 1
         sj = [dict(sj_por_i[c["i"]], i=0)] if c["i"] in sj_por_i else []
+        f = resumen = None
+        if ind is not None:
+            resumen = _serie_resumen(ind)
+            if ctx is not None:
+                fechas = historico.loc[historico["indicador"] == resumen, "fecha"]
+                f = frescura.calcular(por_nombre.get(resumen, ind), resumen, fechas, ctx)
+            componentes = [por_nombre[x] for x in _series_de_card(ind) if x in por_nombre]
+            fuentes = fuentes_de_pagina([ind] + componentes, fuentes_indec, config)
+        else:   # cards que arma run.py aparte (dólar futuro, muro de vencimientos): MAE
+            fuentes = "MAE"
+        otras = "".join(f'<li><a href="../{h["slug"]}/">{h["nombre"]}</a></li>' for h in hermanas if h is not c)
+        despues = (_contexto_serie(ind, historico, ctx, tema.get("cal_cfg")) + _tabla_ultimos(ind, historico, por_nombre)
+                   + (f'<h3 class="grupo">También en {tema["titulo"]}</h3><ul class="s-otras">{otras}</ul>' if otras else ""))
         pagina = {"slug": c["slug"], "titulo": tema["titulo"], "titulo_html": c["nombre"], "serie": True,
                   "nav_activo": tema["titulo"],
                   "miga": f'<a href="../../">Inicio</a> › <a href="../../{tema["slug"]}/">{tema["titulo"]}</a> › {c["nombre"]}',
+                  "cabeza": _cabeza_serie(card, ind, f, resumen, ctx, proximas), "despues": despues,
                   "secciones": [{"titulo": "", "items": [c["nombre"]]}]}
         _escribir_html([card], sj, [], "", {}, notas, archivo_salida=f"serie/{c['slug']}/index.html",
-                       fuentes_pagina=fuentes_pagina, etiquetas=etiquetas, tema=pagina, temas_nav=temas_nav,
+                       fuentes_pagina=fuentes, etiquetas=etiquetas, tema=pagina, temas_nav=temas_nav,
                        raiz="../../")
 
 
@@ -1569,7 +1708,7 @@ def _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuent
         for it in sec["items"]:
             if it in por_nombre:
                 c = por_nombre[it]
-                celdas.append(_card_cell(c) if tema.get("serie") else _card_compacta(c))
+                celdas.append(_card_cell(c, solo_grafico=True) if tema.get("serie") else _card_compacta(c))
                 continue
             _cerrar()
             if it == T.SEMAFORO and semaforo:
@@ -1583,9 +1722,11 @@ def _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuent
             cuerpo += (f'<h3 class="grupo">{sec["titulo"]}</h3>' if sec.get("titulo") else "") + "".join(partes)
     miga = f'<div class="miga">{tema["miga"]}</div>' if tema.get("miga") else ""
     if tema.get("serie"):
-        return f'<section class="bloque serie" id="serie">{miga}{cuerpo}</section>'
+        return (f'<section class="bloque serie" id="serie">{miga}{tema.get("cabeza", "")}{cuerpo}'
+                f'{tema.get("despues", "")}</section>')
     minis = {str(c["i"]): c["mini"] for c in charts if c.get("mini")}
     bajada = f'<p class="tema-bajada">{tema["bajada"]}</p>' if tema.get("bajada") else ""
+    charts = [c for c in charts if not c.get("solo_serie")]
     return (f'<section class="bloque" id="{tema["slug"]}">{miga}<h2>{tema["titulo"]}</h2>{bajada}{cuerpo}</section>'
             f'<script>{_JS_MINIS.replace("__MINIS__", json.dumps(minis, ensure_ascii=False))}</script>')
 
@@ -1691,6 +1832,20 @@ __VARS__
   .tema-bajada { font-size:14px; color:var(--texto-2); margin:8px 0 0; max-width:820px; }
   .grid.ccgrid { grid-template-columns:repeat(3, minmax(0, 1fr)); column-gap:34px; }
   .grid.una { grid-template-columns:minmax(0, 1fr); }
+  .s-cab { display:grid; grid-template-columns:minmax(0, 3fr) minmax(0, 2fr); column-gap:40px; padding:10px 0 4px; }
+  .s-tit { font-size:26px; line-height:1.2; margin:6px 0 0; }
+  .s-desc { font-size:14px; color:var(--texto-2); margin:8px 0 0; }
+  .s-val .cv { font-size:34px; }
+  .s-der .chg { margin-top:2px; } .s-der .cf { margin-top:6px; font-size:12px; }
+  .s-prox { margin-top:10px; padding:8px 10px; border-left:3px solid var(--azul-1); background:var(--franja-fondo); font-size:13px; color:var(--texto-2); }
+  .s-prox-l { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); margin-bottom:2px; }
+  .s-prox b { color:var(--texto); }
+  .grid.una .cell { border-top:0; padding-top:0; }
+  .s-ctx-tit { font-size:16px; font-weight:700; margin:8px 0 2px; }
+  .tabla.s-ctx td, .tabla.s-ult td { font-weight:400; }
+  .tabla.s-ult { max-width:760px; }
+  .s-otras { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); column-gap:30px; margin:8px 0 0; padding-left:18px; font-size:14px; }
+  .s-otras li { margin:3px 0; }
   .grid.una .cbox { height:420px; }
   a.cc { display:flex; flex-direction:column; color:inherit; border-top:1px solid var(--linea); padding:14px 0 18px; min-width:0; }
   a.cc:hover { text-decoration:none; } a.cc:hover .ct { color:var(--azul-2); }
@@ -1780,6 +1935,9 @@ __VARS__
     header .sub { font-size:13px; }
     .grid, .grid.ccgrid { grid-template-columns:minmax(0, 1fr); }
     .grid.una .cbox { height:300px; }
+    .s-cab { grid-template-columns:minmax(0, 1fr); row-gap:10px; }
+    .s-tit { font-size:21px; } .s-val .cv { font-size:28px; }
+    .s-otras { grid-template-columns:minmax(0, 1fr); }
     section.bloque { padding-top:24px; }
     section.bloque > h2 { font-size:21px; }
     .ct { font-size:17px; }

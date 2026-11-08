@@ -191,6 +191,18 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     tiene `docs/serie/<slug>/index.html` (`_escribir_series`: la card completa de siempre + su nota como *1;
     E4 le suma próximo dato, contexto y últimos datos). Los datos clave de la home linkean a su serie.
     `financiera.html` es una redirección a `mercados/` (`pagina_home.generar_redireccion`).
+  - E4: la página de serie lleva miga, kicker (tema), titular, `descripcion:` del yaml (si falta, `subtitulo`),
+    valor/variación/frescura, caja "Próximo dato" (`_proximo_dato`: fecha de la caché del calendario,
+    "todavía sin fecha" o "sin calendario oficial"; nunca estimada salvo la línea de las diarias del B2),
+    el gráfico completo (`_card_cell(solo_grafico=True)`), "Último dato, en contexto" (las mismas filas del
+    "Dato nuevo" del mail, `agenda.armar_apertura`, sin recalcular), "Últimos 13 datos" (`_tabla_ultimos`:
+    la serie resumen + hasta 3 más de la card CON SU MISMA FRECUENCIA; también es la vista accesible del
+    gráfico), la nota completa y "También en <tema>". El encabezado "fuentes:" de cada serie es el de esa
+    serie, no el de todo el tema. `pagina_serie: <slug de tema>` en un `solo_componente` le da página de
+    serie sin card en el tema (hoy: EMAE general, con `titular_regla: direccion`, sujeto "El EMAE").
+    Agenda: cada publicación lleva `url` (`agenda.url_serie`: la card cuya serie resumen es esa; si no, la
+    primera card que la dibuja; si no, su `pagina_serie`); el "Dato nuevo" del mail linkea ahí y cae al
+    `#ancla` si no hay `url`. El link de "Datos demorados" del mail va a `calendario/#demorados`.
   - Decisiones ya tomadas para las etapas siguientes: 9 datos clave en la home (los 8 propuestos + EMAE,
     que tiene página de serie pero no card de tema; `titular_regla: direccion`, sujeto "El EMAE", en E4);
     tasas bancarias en "Dinero y crédito", cauciones y CER en "Mercados" (D8 opción A); riesgo país en

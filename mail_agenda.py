@@ -98,8 +98,8 @@ def _bloque_dato_nuevo(p: dict, dashboard_url: str) -> str:
                   f'<td style="padding:3px 8px 3px 0;font-size:14px;color:{T["texto"]};font-weight:700;width:95px;'
                   f'white-space:nowrap">{escape(f["valor"])}</td>'
                   f'<td style="padding:3px 0;font-size:13px;color:{T["texto_2"]}">{comp}</td></tr>')
-    if p.get("ancla"):   # sin card en el dashboard (ej. EMAE general): sin link
-        url = f'{dashboard_url}#{p["ancla"]}'
+    if p.get("url") or p.get("ancla"):   # E4: la página de la serie; si no hay, el #ancla de siempre
+        url = f'{dashboard_url}{p["url"]}' if p.get("url") else f'{dashboard_url}#{p["ancla"]}'
         filas += (f'<tr><td colspan="3" style="padding:6px 12px 8px;font-size:12px"><a href="{escape(url)}" '
                   f'style="color:{T["azul_2"]};text-decoration:none">ver gráfico →</a></td></tr>')
     else:
@@ -172,6 +172,6 @@ def html_avisos(vista: dict, dashboard_url: str) -> str:
         if vista["graves_mas"]:
             mas = vista["graves_mas"]
             filas += (f'<tr><td colspan="3" style="padding:2px 0 0;font-size:12px;color:{T["texto_3"]}">'
-                      f'y {len(mas)} más ({escape(", ".join(mas))}) · <a href="{escape(dashboard_url)}" '
+                      f'y {len(mas)} más ({escape(", ".join(mas))}) · <a href="{escape(dashboard_url)}calendario/#demorados" '
                       f'style="color:{T["azul_2"]};text-decoration:none">ver en el dashboard →</a></td></tr>')
     return _tabla(filas, "margin-top:22px")

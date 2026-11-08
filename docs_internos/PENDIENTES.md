@@ -177,3 +177,40 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       Tiene que quedar visible, con un aviso del tipo "la fuente no devolvió datos hoy" (mismo criterio que
       la línea de frescura del B2), para el muro y para cualquier otro extra o serie que hoy se saltea en
       silencio. No se resuelve en E2.
+    - Agregado el 08/11/2026: las TIR de AL30, GD30 y GD35 (`fuente: mae_bono`) salen del MISMO endpoint
+      (`flujofondoscotiz/H`) y también vienen vacías ("Indicador sin datos" en las corridas del 06/11 y del
+      08/11; GD35 trajo dato el 06/11). Últimos datos en el CSV: AL30 y GD30 05/11, GD35 06/11. Probable misma
+      causa que el muro, sin verificar. Arrastra al spread GD30 vs. UST10Y (#8).
+
+21. **Series de datos.gob.ar que devuelven 0 filas en cada corrida** — anotado el 08/11/2026 (revisión de
+    los avisos "Indicador sin datos" de E4, no arreglado).
+    - Aparecen en las corridas de producción del 06/11 y del 08/11 y en las locales de E1 a E4. El histórico
+      no se pierde (merge idempotente), pero no entra ningún dato nuevo. Último dato en el CSV:
+      - `90.1_AMTM2_0_0_31` M2 (agregado total): ago-2026.
+      - `324.1_H_HOTELES_ADO__60` y `324.1_K_ACT_INMOADO__57` (empleo registrado SIPA, Hoteles y restaurantes /
+        Inmobiliarias y empresariales, componentes del gráfico de actividad y empleo por sector): ene-2026.
+      - Comercio exterior desagregado: `74.3_IEMOI_0_M_46` MOI, `74.3_IECE_0_M_35` Combustibles y energía,
+        `74.3_IICL_0_M_42` Combustibles y lubricantes, `74.3_IIPABC_0_M_50` Piezas y accesorios para bienes de
+        capital, y el balance comercial energético que se calcula con dos de ellas: ago-2026. No es lo mismo
+        que el #4 (atraso de septiembre en los totales): acá la fuente no devuelve nada.
+      - `379.9_RESULTADO_017__31_73` Resultado primario del SPN y su acumulado de 12 meses: ago-2026.
+    - Causa no verificada (¿id cambiado o serie discontinuada en datos.gob.ar, falla del pedido en lote?).
+      A hacer: diagnosticar id por id contra la ficha del dataset (regla dura #1).
+
+22. **Cauciones (MAE) vacías en la corrida** — anotado el 08/11/2026 (no arreglado).
+    - Caución en pesos y en dólares (1 día) (`mae_resumen`, tipo `CAU`): "Indicador sin datos" en las
+      corridas del 06/11 (viernes, de tarde) y del 08/11; últimos datos 06/11 (pesos) y 05/11 (dólares). Es
+      un snapshot sin historia: un día vacío es un día perdido. Ver también el #13 (valor 0,00 guardado
+      como dato). Causa no verificada (¿hora de la corrida respecto de la operatoria, cambio del ticker?).
+
+## Contenido (textos del sitio, no datos)
+
+C1. **Descripciones de las páginas de serie (`descripcion:` del yaml)** — anotado el 08/11/2026 (E4,
+    decisión de Pedro: opción A).
+    - Hoy ninguna serie tiene `descripcion:`; la página de serie muestra el `subtitulo` cuando existe (9
+      series, todos textos redactados en rondas anteriores, ninguno de metadata oficial) y nada en las 50
+      restantes. "Actividad y empleo por sector" quedó sin descripción a propósito: su advertencia del SIPA
+      pasó a la nota.
+    - A hacer: redactar las descripciones (1-2 líneas por serie), indicando la fuente de cada texto
+      (metadata oficial de datos.gob.ar/INDEC/BCRA o redacción propia). Las redactadas las revisa Pedro
+      antes de publicar.

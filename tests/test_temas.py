@@ -103,12 +103,12 @@ class TestHome(unittest.TestCase):
         dc = CFG["home"]["datos_clave"]
         self.assertEqual(len(dc), 9)
         de = T.tema_de_item(CFG["temas"])
+        por_nombre = {i["nombre"]: i for i in LISTA}
+        slugs = [t["slug"] for t in CFG["temas"]]
         for d in dc:
-            if d.get("card"):
-                self.assertIn(d["card"], de, d)
-            else:
-                self.assertIn(d["tema"], [t["slug"] for t in CFG["temas"]])
-        self.assertIn("EMAE (actividad económica)", [d.get("serie") for d in dc])
+            # card de un tema, o serie sin card con página propia (`pagina_serie: <tema>`, ej. EMAE)
+            self.assertTrue(d["card"] in de or por_nombre[d["card"]].get("pagina_serie") in slugs, d)
+        self.assertEqual(por_nombre["EMAE (actividad económica)"]["pagina_serie"], "actividad")
 
     def test_redireccion_anclas(self):
         js = H.js_redireccion()
