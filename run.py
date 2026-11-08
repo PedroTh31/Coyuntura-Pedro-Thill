@@ -30,6 +30,7 @@ import pagina_calendario
 import pagina_home
 import temas
 import fuentes_indec
+import fuentes_datos_gob
 
 RAIZ = Path(__file__).resolve().parent
 CONFIG = RAIZ / "indicadores.yaml"
@@ -41,11 +42,19 @@ ZONA_AR = ZoneInfo("America/Argentina/Buenos_Aires")
 # Resolver de series del INDEC (API primaria + fallback, Bloque A de PROMPT_ronda_macro_indec.md).
 # Se crea en main(); _dg() lo usa en lugar de fetch_datos_gob() para los ids con equivalencia.
 _RESOLVER = None
+# Fallback de la API de series de datos.gob.ar al CSV de distribución (#21 de PENDIENTES): toda serie de
+# datos.gob.ar pasa por acá (directas, componentes de `calculo:` y el fallback de las del INDEC).
+_RESOLVER_DG = None
 
 
 def _dg(serie_id, start):
     """fetch_datos_gob con la API del INDEC como primaria si el id tiene equivalencia en el yaml."""
     return _RESOLVER.serie_dg(serie_id, start) if _RESOLVER else fetch_datos_gob(serie_id, start)
+
+
+def _dg_directo(serie_id, start):
+    """datos.gob.ar sin pasar por la API del INDEC, con el fallback al CSV de distribución."""
+    return _RESOLVER_DG.serie(serie_id, start) if _RESOLVER_DG else fetch_datos_gob(serie_id, start)
 
 
 def _fuente_de(ind: dict) -> str:
@@ -58,7 +67,7 @@ def _fuente_de(ind: dict) -> str:
 
 
 def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuentes_indec_usadas=None,
-                            agenda_mail=None):
+                            agenda_mail=None, datos_gob_csv=None, datos_gob_descartados=None):
     ahora = datetime.now(ZONA_AR)
     datos = {
         "fecha": ahora.date().isoformat(),
@@ -70,6 +79,11 @@ def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuen
         "problemas": [{"indicador": n, "motivo": m} for n, m in problemas],
         # Qué fuente se usó en ESTA corrida para cada serie del INDEC (API o fallback, y por qué).
         "fuentes_indec": fuentes_indec_usadas or {},
+        # Series de datos.gob.ar que en ESTA corrida salieron del CSV de distribución: motivo,
+        # indicadores que las usan y racha de corridas seguidas (fuentes_datos_gob.py).
+        "datos_gob_csv": datos_gob_csv or {},
+        # Períodos del CSV descartados porque repetían exactamente el valor anterior (guarda anti-RIPTE).
+        "datos_gob_csv_descartados": datos_gob_descartados or {},
         # Bloque B3: calendario, estado de cada publicación y avisos de frescura para el mail diario
         # (agenda.py). El mail no recalcula nada: si falta (o la corrida no es de hoy), no muestra fechas.
         "agenda": agenda_mail,
@@ -337,7 +351,7 @@ def _variacion_publicada(base_id, calculo, start):
     if not _RESOLVER:
         return None
     desde_indice = _interanual_desde_indice if calculo == "interanual" else _mensual_desde_indice
-    return _RESOLVER.variacion_publicada(base_id, calculo, lambda: desde_indice(fetch_datos_gob(base_id, start)))
+    return _RESOLVER.variacion_publicada(base_id, calculo, lambda: desde_indice(_dg_directo(base_id, start)))
 
 
 _TICKERS_MURO = ["AL30", "GD30", "GD35"]
@@ -579,12 +593,17 @@ def chequear_cambio_escala(previo: pd.DataFrame, nuevos: pd.DataFrame):
 
 
 def main():
-    global _RESOLVER
+    global _RESOLVER, _RESOLVER_DG
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     start = cfg.get("start_date")
-    _RESOLVER = fuentes_indec.ResolverIndec(cfg.get("equivalencias_indec"), start)
+    _RESOLVER_DG = fuentes_datos_gob.ResolverDatosGob(cfg.get("fallback_csv_excluir"))
+    _RESOLVER = fuentes_indec.ResolverIndec(cfg.get("equivalencias_indec"), start, fetch_dg=_RESOLVER_DG.serie)
     indicadores = cfg["indicadores"]
     indicadores_financiera = cfg.get("indicadores_financiera", [])
+    # Coherencia por card del fallback al CSV: nada de mezclar API y CSV de una misma distribución en un gráfico.
+    _RESOLVER_DG.preparar(fuentes_datos_gob.grupos_por_card(
+        [i for i in indicadores + indicadores_financiera if not i.get("solo_referencia")],
+        cfg.get("equivalencias_indec")))
     filas = []
     problemas = []  # (nombre, motivo) de indicadores que no trajeron datos
     por_fuente = {}  # fuente -> {"ok": n, "falla": n}, para data/ultima_corrida.json
@@ -598,11 +617,14 @@ def main():
         conteo = por_fuente.setdefault(_fuente_de(ind), {"ok": 0, "falla": 0})
         conteo["falla"] += 1  # se revierte abajo si la serie llega bien
         _RESOLVER.empezar(nombre)
+        _RESOLVER_DG.empezar(nombre)
         try:
             if "calculo" in ind:
                 serie = _calcular(ind, start)
             elif ind.get("fuente_primaria") == "indec_api":
                 serie = _RESOLVER.serie_directa(ind, start)
+            elif ind.get("fuente") == "datos_gob":
+                serie = _RESOLVER_DG.serie(ind["id"], start)
             else:
                 serie = traer(ind, start_date=start)
             if ind.get("fecha_fin_mes") and not serie.empty:
@@ -612,6 +634,7 @@ def main():
                 serie = serie.assign(fecha=serie["fecha"].dt.to_period("M").dt.to_timestamp("M"))
             if serie.empty:
                 _RESOLVER.terminar(ok=False)
+                _RESOLVER_DG.terminar(ok=False)
                 _avisar(nombre, "la fuente no devolvió datos (serie vacía)")
                 problemas.append((nombre, "vacío"))
                 continue
@@ -627,11 +650,13 @@ def main():
                     serie = serie.assign(valor=serie["valor"] / primero * 100)
             filas.append(_fila(serie, ind))
             _RESOLVER.terminar(ok=True)
+            _RESOLVER_DG.terminar(ok=True)
             conteo["falla"] -= 1
             conteo["ok"] += 1
             print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()})")
         except Exception as e:
             _RESOLVER.terminar(ok=False)
+            _RESOLVER_DG.terminar(ok=False)
             _avisar(nombre, f"error al traer/calcular la serie: {e}")
             problemas.append((nombre, f"error: {e}"))
 
@@ -644,10 +669,14 @@ def main():
     # Estado entre corridas + alertas a Pedro (A5); devuelve la última fuente conocida de cada
     # indicador del INDEC, para que las notas del dashboard digan de dónde salió cada dato.
     fuentes_por_indicador = fuentes_indec.cerrar_corrida(_RESOLVER)
+    # Series de datos.gob.ar que salieron del CSV de distribución: estado, racha y alerta a Pedro.
+    datos_gob_csv, datos_gob_descartados = fuentes_datos_gob.cerrar_corrida(_RESOLVER_DG)
+    fuentes_csv = _RESOLVER_DG.por_indicador
 
     if not filas:
         print("No se trajo ningun dato.")
-        escribir_ultima_corrida(por_fuente, problemas, "sin_datos", _RESOLVER.por_indicador)
+        escribir_ultima_corrida(por_fuente, problemas, "sin_datos", _RESOLVER.por_indicador,
+                                datos_gob_csv=datos_gob_csv, datos_gob_descartados=datos_gob_descartados)
         return
 
     nuevos = pd.concat(filas, ignore_index=True)
@@ -680,7 +709,8 @@ def main():
 
     # Bloque E2: una página por tema (docs/<tema>/index.html), con las cards de las dos listas del yaml.
     cards_sitio, temas_cfg = _generar_temas(cfg, historico, indicadores, financiera_propios, todos,
-                                            fuentes_por_indicador, frescura_ctx, extra_charts, tablas_acciones)
+                                            fuentes_por_indicador, frescura_ctx, extra_charts, tablas_acciones,
+                                            fuentes_csv)
     temas_nav = [(t["titulo"], t["slug"]) for t in temas_cfg]
 
     # Bloque B3: agenda del mail diario + aviso semanal a Pedro de publicaciones atrasadas. Usa las
@@ -718,7 +748,8 @@ def main():
     print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/ (home, temas, series, calendario)")
 
     escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador,
-                            agenda_mail=agenda_mail)
+                            agenda_mail=agenda_mail, datos_gob_csv=datos_gob_csv,
+                            datos_gob_descartados=datos_gob_descartados)
 
 
 def _ctx_solo(ctx, indicadores):
@@ -731,7 +762,7 @@ def _ctx_solo(ctx, indicadores):
 
 
 def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuentes_por_indicador, frescura_ctx,
-                   extra_charts, tablas_acciones):
+                   extra_charts, tablas_acciones, fuentes_csv=None):
     """Bloque E2/E3: docs/<tema>/index.html por cada tema del bloque `temas:` del yaml (cards compactas con
     mini gráfico) y docs/serie/<slug>/index.html por cada card (la card completa). Devuelve ({nombre: card}
     de todas las páginas, temas)."""
@@ -761,7 +792,7 @@ def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuent
         try:
             cards = dashboard.generar(
                 historico, inds, archivo_salida=f"{t['slug']}/index.html", extra_html=eh, extra_charts=ecs,
-                fuentes_indec=fuentes_por_indicador,
+                fuentes_indec=fuentes_por_indicador, fuentes_csv=fuentes_csv,
                 fuentes_pagina=dashboard.fuentes_de_pagina(
                     [i for i in inds if temas.item_de(i) in its], fuentes_por_indicador, todos,
                     extra=(["MAE"] if ecs else []) + (["data912"] if eh else [])),

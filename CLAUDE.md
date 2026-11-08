@@ -275,7 +275,25 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
 - `fuente: datos_gob` + `id: "..."` → apis.datos.gob.ar/series (IPC, EMAE, monetarias,
-  fiscal, empleo, comercio exterior). Es el backbone.
+  fiscal, empleo, comercio exterior). Es el backbone. **Fallback al CSV de distribución**
+  (`fuentes_datos_gob.py`, decisión de Pedro del 08/11/2026, #21 de PENDIENTES): toda serie de datos.gob.ar
+  (directa, componente de `calculo:` o fallback de una del INDEC) se compara con el CSV de distribución del
+  mismo catálogo (`downloadURL` y título del campo de la metadata) y se usa el CSV si la API devuelve 0
+  filas, menos filas que su `time_index_size`, si los últimos 12 períodos comunes difieren más de 1% (la
+  mayor diferencia sobre el promedio de |CSV| en la ventana) o si el CSV tiene períodos más nuevos que la
+  API. **Guarda anti-RIPTE:** si el período más nuevo del CSV repite EXACTAMENTE el valor del anterior, ese
+  período no se usa (si era el único motivo, queda la API) y sale alerta semanal (clave
+  `datos_gob_csv_descartados` de `ultima_corrida.json`). **Coherencia por card** (`grupos_por_card` +
+  `ResolverDatosGob.preparar`, antes del loop de run.py): si un id cae al CSV, los demás ids de la MISMA
+  distribución que dibuja la misma card (combos, espejos, overlays, tablas, componentes de `calculo:`)
+  también usan el CSV; nada de mezclar API y CSV en un gráfico. La guarda no salta si la API publica ese
+  mismo período con el mismo valor. Alertas a Pedro sólo por 0 filas, historia cortada, diferencia >
+  tolerancia y la guarda; el disparador 4 y la coherencia quedan en `datos_gob_csv`, la racha y la nota. La API puede tener la metadata al día y aun
+  así devolver vacío, historia cortada o valores erróneos (base monetaria jun-2026). Cada uso: clave
+  `datos_gob_csv` de `data/ultima_corrida.json`, racha en `data/datos_gob_estado.json`, alerta a Pedro el
+  primer día y semanal (máx. 1 mail por corrida) y la nota de la serie agrega "Datos vía CSV de
+  distribución de datos.gob.ar". `fallback_csv_excluir:` (top-level del yaml) = ids que nunca lo usan (hoy
+  el RIPTE: su CSV trae ago-2026 con el valor de jun-2026). Tests: `tests/test_fuentes_datos_gob.py`.
 - `equivalencias_indec:` (top-level del yaml) → mapa `id de datos.gob → {tabla, filtros,
   columna?, variaciones?}` de la API del INDEC, cada uno verificado contra el catálogo real
   (`fuentes/indec_equivalencias.md`; regla dura #1 vale igual: nada se agrega sin verificar).
@@ -295,6 +313,12 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - Comercio exterior, PBI, ISAC, supermercados y turismo siguen en datos.gob.ar (la API no
   publica totales de comex ni esas series).
 - `fuente: bcra` + `id_variable: N` → api.bcra.gob.ar (reservas diarias, etc.).
+  Con `agregacion_mensual: promedio_corridos|promedio_habiles|fin_de_mes` la serie diaria se trae
+  COMPLETA desde `start_date` (`fetch_bcra_historia`, en ventanas de 4 años; `fetch_bcra` no se toca) y se
+  mensualiza (`agregar_mensual`, sin el mes en curso). `promedio_corridos` (fines de semana y feriados
+  arrastran el último hábil) es el "promedio mensual" que publica datos.gob.ar: 0,000% de diferencia en
+  base monetaria (idVariable 15, desde el 08/11/2026) y 0,001% en M2 (idVariable 109, "M2 " de
+  Series.xlsm, desde el 08/11/2026) en 24 meses.
 - `fuente: argentinadatos` + `endpoint: "..."` → api.argentinadatos.com (inflación, riesgo país).
 - `fuente: dolar` + `casa: ...` → cotizaciones de dólar por casa (ArgentinaDatos).
 - `fuente: byma` + `symbol: "..."` → índices históricos de BYMA (open.bymadata.com.ar,
@@ -491,6 +515,17 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `factor: N` → multiplica el valor crudo de la fuente por N antes de guardarlo (ej. `factor:
   100` cuando la fuente publica una tasa como fracción 0-1 pese a declararla "Porcentaje").
   Usar siempre esto en vez de parchear el número a mano en el código.
+- `rebase_vista: true` en un `vista: overlay` → las series se guardan en NIVELES y `dashboard.rebase_vista`
+  las rebasa a 100 al dibujar, en el primer mes del `desde` de la card (decirlo en la `nota` y la
+  `unidad`). Preferirlo a `rebase_100`: un valor guardado ya rebasado depende de la primera fila que
+  devolvió la fuente, y si una corrida trae historia parcial el merge mezcla bases (pasó con M1/M2/M3,
+  #23 de PENDIENTES). `reconstruir_series.py` borra (con backup fuera de data/) todas las filas de un
+  indicador para que la corrida siguiente lo reescriba desde una sola fuente: única excepción al merge
+  idempotente, sólo con OK de Pedro.
+- `cortar_comun: true` en un `vista: overlay` → la card y el gráfico llegan sólo hasta el último período
+  que tienen TODAS sus series (`dashboard.cortar_comun`, sobre la copia del histórico de la página; lo
+  guardado no se toca). Para series que sólo dibuja ese overlay (`solo_componente`): ej. M2 del BCRA va un
+  mes adelante de M3 de datos.gob.ar.
 - `rebase_100: true` → rebasa la serie a 100 en su primer valor disponible antes de guardarla
   (aplica sobre el resultado de cualquier `fuente:`/`calculo:`, es un paso genérico, no un
   cálculo propio). Para cuando un indicador sólo tiene sentido combinado en un `vista: overlay`
@@ -547,13 +582,14 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 Precios (inflación mensual/interanual, IPC nivel general, incidencia por división de consumo);
 Dólar (oficial/blue/MEP/CCL); Brecha cambiaria; Tipo de
 cambio real (diario, 116.4_TCRZE_2015_D_36_4); Riesgo país; Reservas (BCRA diario, combo,
-compras netas de divisas por contraparte); Agregados monetarios (base, M1/M2/M3 combinados en
-un overlay rebasado a 100); Tasas (TAMAR total bancos, reemplaza a BADLAR); Crédito (préstamos
+compras netas de divisas por contraparte); Agregados monetarios (base monetaria; M2 y M3 en
+un overlay rebasado a 100 al dibujar; el M1 quedó definido en el yaml pero fuera del gráfico desde el
+08/11/2026, su definición está en revisión, PENDIENTES #23); Tasas (TAMAR total bancos, reemplaza a BADLAR); Crédito (préstamos
 al sector privado, variación % real mensual, por tipo de
 deudor Familias/Empresas; tasa de interés real ex-post (TAMAR - inflación interanual, opción A,
 ex-ante con REM pendiente de confirmación de Pedro); semáforo del EMAE por 16 sectores +
-actividad por sector en barras con burbuja de empleo, ordenadas por variación de actividad
-(SIPA) -- EMAE general, EMAE Urbano vs. No urbano e IPI manufacturero se sacaron del dashboard
+actividad por sector en barras con burbuja de empleo (puestos asalariados registrados de la Cuenta de
+Generación del Ingreso del INDEC, no SIPA), ordenadas por variación de actividad -- EMAE general, EMAE Urbano vs. No urbano e IPI manufacturero se sacaron del dashboard
 a pedido de Pedro (siguen en indicadores.yaml donde hace falta, ver `solo_componente`); Sector
 externo (expo/impo/saldo en gráfico espejo + tablas de desagregado por rubro y por uso); Social
 (desempleo, tasa de informalidad laboral, salario real por tipo de empleo, salario real

@@ -776,11 +776,8 @@ def _con_huecos_explicitos(df):
 _CLAVES_REFERENCIA = ("series", "sectores", "barras", "linea", "linea_izq", "linea_der", "barra", "evento")
 
 
-def _usos_indec(ind, fuentes_indec):
-    """Usos de la API del INDEC (o de su fallback) del indicador y de los indicadores que referencia
-    (vistas compuestas: overlay, incidencia, sectores, combos). Lista vacía si no usa datos del INDEC."""
-    if not fuentes_indec:
-        return []
+def _nombres_referenciados(ind):
+    """El indicador y los indicadores que referencia (vistas compuestas: overlay, incidencia, sectores, combos)."""
     nombres = [ind["nombre"]]
     for k in _CLAVES_REFERENCIA:
         v = ind.get(k)
@@ -789,6 +786,65 @@ def _usos_indec(ind, fuentes_indec):
                 nombres.append(x)
             elif isinstance(x, dict):
                 nombres.extend(y for y in x.values() if isinstance(y, str))
+    return nombres
+
+
+def _ids_csv(ind, fuentes_csv):
+    """Ids de datos.gob.ar que en esta corrida salieron del CSV de distribución, del indicador y de los que
+    referencia (fuentes_datos_gob.py). Lista vacía si la API respondió bien."""
+    if not fuentes_csv:
+        return []
+    return sorted({sid for n in _nombres_referenciados(ind) for sid in fuentes_csv.get(n, [])})
+
+
+def rebase_vista(historico, indicadores):
+    """`rebase_vista: true` en un overlay (yaml): cada serie que dibuja se guarda en niveles y se rebasa a
+    100 recién acá, en el primer mes del `desde` de la card (si ese mes no tiene dato, en el primero
+    posterior). Así una respuesta parcial de la fuente nunca mezcla bases en el histórico guardado
+    (#23 de PENDIENTES). Devuelve una copia; las series sin dato desde el `desde` quedan como estaban."""
+    overlays = [i for i in indicadores if i.get("vista") == "overlay" and i.get("rebase_vista")]
+    if not overlays:
+        return historico
+    h = historico.copy()
+    fechas = pd.to_datetime(h["fecha"])
+    for ind in overlays:
+        base_fecha = pd.to_datetime(ind.get("desde", DESDE_GENERAL)).to_period("M").to_timestamp()
+        for nombre in ind["series"]:
+            filas = (h["indicador"] == nombre)
+            desde_base = filas & (fechas >= base_fecha) & h["valor"].notna()
+            if not desde_base.any():
+                continue
+            base = h.loc[fechas[desde_base].sort_values().index[0], "valor"]
+            if base:
+                h.loc[filas, "valor"] = h.loc[filas, "valor"] / base * 100
+    return h
+
+
+def cortar_comun(historico, indicadores):
+    """`cortar_comun: true` en un overlay (yaml): sus series se dibujan sólo hasta el último período que
+    tienen TODAS (ej. M2 del BCRA llega un mes antes que M3 de datos.gob.ar). No toca lo guardado: devuelve
+    una copia del histórico de esta página sin las fechas posteriores de esas series (pensado para series
+    que sólo dibuja ese overlay, `solo_componente`)."""
+    overlays = [i for i in indicadores if i.get("vista") == "overlay" and i.get("cortar_comun")]
+    if not overlays:
+        return historico
+    h = historico
+    for ind in overlays:
+        filas = h["indicador"].isin(ind["series"]) & h["valor"].notna()
+        fines = pd.to_datetime(h.loc[filas, "fecha"]).groupby(h.loc[filas, "indicador"]).max()
+        if len(fines) < len(set(ind["series"])):
+            continue   # alguna serie sin datos: no hay período común
+        fin = fines.min()
+        h = h[~(h["indicador"].isin(ind["series"]) & (pd.to_datetime(h["fecha"]) > fin))]
+    return h.copy()
+
+
+def _usos_indec(ind, fuentes_indec):
+    """Usos de la API del INDEC (o de su fallback) del indicador y de los indicadores que referencia
+    (vistas compuestas: overlay, incidencia, sectores, combos). Lista vacía si no usa datos del INDEC."""
+    if not fuentes_indec:
+        return []
+    nombres = _nombres_referenciados(ind)
     usos = []
     for n in nombres:
         for u in fuentes_indec.get(n, []):
@@ -856,13 +912,13 @@ def fuentes_de_pagina(config_pagina, fuentes_indec=None, todos_los_indicadores=N
     return " · ".join(orden)
 
 
-def _nota_con_fuente(nota, usos):
-    """Nota metodológica + 'Fuente: INDEC (API ...)' o 'Fuente: INDEC vía ...' (Bloque A4)."""
+def _nota_con_fuente(nota, usos, ids_csv=None):
+    """Nota metodológica + 'Fuente: INDEC (API ...)' o 'Fuente: INDEC vía ...' (Bloque A4) + 'Datos vía
+    CSV de distribución de datos.gob.ar' mientras se use ese fallback (fuentes_datos_gob.py)."""
     from fuentes_indec import describir_fuente
-    fuente = describir_fuente(usos)
-    if not fuente:
-        return nota
-    return f"{nota} {fuente}" if nota else fuente
+    from fuentes_datos_gob import describir_csv
+    partes = [p for p in (nota, describir_fuente(usos), describir_csv(ids_csv or [])) if p]
+    return " ".join(partes) if partes else nota
 
 
 def _registrar_nota(nota, nombre, notas_dict):
@@ -1006,7 +1062,7 @@ def _extender_hasta_hoy(sj, hoy):
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
             extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina",
             fuentes_indec=None, fuentes_pagina=None, frescura_ctx=None, con_titulares=False,
-            tema=None, temas_nav=None, raiz=""):
+            tema=None, temas_nav=None, raiz="", fuentes_csv=None):
     """frescura_ctx: frescura.Contexto (Bloque B2) para mostrar la línea de frescura en cada card;
     None = sin línea (pestaña financiera, fuera de esa ronda).
     con_titulares: titulares por reglas del Bloque C (sólo las cards macro, decisión de Pedro D1): True/False
@@ -1025,6 +1081,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
     else:
         anio, hoy = datetime.now().year, pd.Timestamp.today().normalize()
     OUT.mkdir(parents=True, exist_ok=True)
+    historico = rebase_vista(historico, config_indicadores)   # overlays en niveles -> base 100 al dibujar
+    historico = cortar_comun(historico, config_indicadores)   # overlays hasta el último período común
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
     notas_dict = {}  # {numero_nota: {"texto": ..., "indicadores": [...]}}
@@ -1035,7 +1093,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         nombre = ind["nombre"]; bloque = ind["bloque"]; grupo = ind.get("grupo", "Otros")
         unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
         usos = _usos_indec(ind, fuentes_indec)
-        nota = _nota_con_fuente(ind.get("nota"), usos)
+        nota = _nota_con_fuente(ind.get("nota"), usos, _ids_csv(ind, fuentes_csv))
         solo_serie = bool(tema is not None and ind.get("solo_componente") and ind.get("pagina_serie") == tema["slug"])
         if ind.get("solo_componente") and not solo_serie:
             continue  # sólo alimenta un 'vista' compuesta; no tiene tarjeta propia
@@ -1582,6 +1640,8 @@ def _tabla_ultimos(ind, historico, por_nombre, n=13):
         if nom != resumen and (sr.empty or _ventana_mini(sr)[1] != freq):
             continue   # otra frecuencia (ej. compras netas mensuales en una card diaria): saldría toda "s/d"
         u = por_nombre.get(nom, ind).get("unidad", ind.get("unidad", ""))
+        if ind.get("rebase_vista"):
+            u = ind.get("unidad", "")   # el historico llega rebasado (rebase_vista): la unidad es la de la card
         cols.append((por_nombre.get(nom, {}).get("etiqueta") or nom, u, sr))
     cab = "".join(f"<th>{et}</th>" for et, _, _ in cols)
     filas = ""

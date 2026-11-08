@@ -93,6 +93,42 @@ def fetch_datos_gob(serie_id: str, start_date: str | None = None) -> pd.DataFram
     return df.dropna().drop_duplicates(subset="fecha").sort_values("fecha").reset_index(drop=True)
 
 
+# --- Fallback al CSV de distribución de datos.gob.ar (diagnóstico del #21 de PENDIENTES, 08/11/2026) ---
+# La API de series puede tener la metadata al día y aun así devolver 0 filas, historia cortada o valores
+# erróneos (ej. base monetaria desde jun-2026), mientras el CSV de distribución del MISMO catálogo trae la
+# serie completa. La decisión de cuándo usar el CSV la toma fuentes_datos_gob.py; acá sólo se baja.
+_CSV_DISTRIBUCION: dict[str, pd.DataFrame] = {}   # caché por URL dentro de la corrida (varias series por CSV)
+
+
+def datos_gob_meta(serie_id: str) -> dict:
+    """Metadata de una serie: {size, fin, url, columna}. `url` = downloadURL de su distribución y
+    `columna` = el título del campo en ese CSV (el catálogo publica ambos en metadata=full)."""
+    payload = _get("https://apis.datos.gob.ar/series/api/series/",
+                   params={"ids": serie_id, "format": "json", "limit": 1, "metadata": "full"}).json()
+    meta = payload.get("meta") or []
+    campo = next((m["field"] for m in meta if isinstance(m, dict) and "field" in m), {})
+    distrib = next((m["distribution"] for m in meta if isinstance(m, dict) and "distribution" in m), {})
+    size = campo.get("time_index_size")
+    return {"size": int(size) if size not in (None, "") else None, "fin": campo.get("time_index_end"),
+            "url": distrib.get("downloadURL"), "columna": campo.get("title")}
+
+
+def fetch_datos_gob_csv(url: str, columna: str, start_date: str | None = None) -> pd.DataFrame:
+    """Una columna del CSV de distribución de datos.gob.ar, como DataFrame fecha|valor. Falla con
+    ValueError si el CSV no tiene `indice_tiempo` o esa columna (formato desconocido: nunca se adivina)."""
+    if url not in _CSV_DISTRIBUCION:
+        _CSV_DISTRIBUCION[url] = pd.read_csv(io.BytesIO(_get(url).content))
+    tabla = _CSV_DISTRIBUCION[url]
+    if "indice_tiempo" not in tabla.columns or columna not in tabla.columns:
+        raise ValueError(f"el CSV {url} no tiene las columnas indice_tiempo/{columna}")
+    df = tabla[["indice_tiempo", columna]].rename(columns={"indice_tiempo": "fecha", columna: "valor"})
+    df = df.assign(fecha=pd.to_datetime(df["fecha"]), valor=pd.to_numeric(df["valor"], errors="coerce"))
+    df = df.dropna().drop_duplicates(subset="fecha").sort_values("fecha")
+    if start_date:
+        df = df[df["fecha"] >= pd.to_datetime(start_date)]
+    return df.reset_index(drop=True)
+
+
 # ---------------------------------------------------------------------------
 # 2) ArgentinaDatos -> inflación, riesgo país (endpoints tipo {fecha, valor})
 # ---------------------------------------------------------------------------
@@ -224,6 +260,64 @@ def fetch_bcra(id_variable: int, start_date: str | None = None) -> pd.DataFrame:
     if start_date:
         df = df[df["fecha"] >= pd.to_datetime(start_date)]
     return df[["fecha", "valor"]].reset_index(drop=True)
+
+
+# Mensualización de una serie diaria del BCRA (`fuente: bcra` + `agregacion_mensual:` en el yaml).
+# promedio_corridos = cada día del mes vale lo del último día hábil informado (fines de semana y feriados
+# arrastran el dato anterior) y se promedia: es lo que publica datos.gob.ar como "promedio mensual" (base
+# monetaria y M2: diferencia 0,000-0,012% en los 24 meses comparados el 08/11/2026).
+AGREGACIONES_MENSUALES = ("promedio_corridos", "promedio_habiles", "fin_de_mes")
+
+
+def agregar_mensual(df: pd.DataFrame, regla: str) -> pd.DataFrame:
+    """Serie diaria fecha|valor -> mensual con fecha el día 1 de cada mes. El mes en curso (incompleto)
+    no se incluye: un promedio de medio mes no es el dato del mes."""
+    if regla not in AGREGACIONES_MENSUALES:
+        raise ValueError(f"agregacion_mensual desconocida: {regla!r} (válidas: {AGREGACIONES_MENSUALES})")
+    if df.empty:
+        return pd.DataFrame(columns=["fecha", "valor"])
+    s = (df.assign(fecha=pd.to_datetime(df["fecha"])).drop_duplicates("fecha", keep="last")
+         .set_index("fecha")["valor"].sort_index())
+    if regla == "promedio_corridos":
+        # hasta el último día del último mes con datos (si el mes cierra en fin de semana, esos días
+        # arrastran el último hábil aunque todavía no haya dato del mes siguiente)
+        dias = pd.date_range(s.index.min(), s.index.max() + pd.offsets.MonthEnd(0), freq="D")
+        m = s.reindex(dias).ffill().resample("MS").mean()
+    elif regla == "promedio_habiles":
+        m = s.resample("MS").mean()
+    else:
+        m = s.resample("MS").last()
+    hoy = pd.Timestamp.today().normalize()
+    m = m[m.index < hoy.replace(day=1)]
+    return m.dropna().rename_axis("fecha").reset_index(name="valor")
+
+
+def fetch_bcra_historia(id_variable: int, start_date: str | None = None, anios_por_pedido: int = 4) -> pd.DataFrame:
+    """Historia diaria COMPLETA de una variable del BCRA (API v4.0) desde start_date, en ventanas de
+    `anios_por_pedido` años (cada una entra en el límite de 3000 filas por pedido). Función aparte de
+    fetch_bcra() a propósito: aquella trae una ventana deslizante de ~2 años y alimenta reservas y reservas
+    ajustadas, y cambiarla necesita confirmación de Pedro. Si una ventana falla tras los reintentos de
+    _get, falla toda la serie (nunca una historia con huecos)."""
+    desde = pd.to_datetime(start_date or "2003-01-01")
+    hoy = pd.Timestamp.today().normalize()
+    url = f"https://api.bcra.gob.ar/estadisticas/v4.0/monetarias/{id_variable}"
+    filas = []
+    while desde <= hoy:
+        hasta = min(desde + pd.DateOffset(years=anios_por_pedido) - pd.Timedelta(days=1), hoy)
+        r = _get(url, params={"desde": desde.strftime("%Y-%m-%d"), "hasta": hasta.strftime("%Y-%m-%d"),
+                              "limit": 3000})
+        bloque = _parsear_respuesta_bcra(r.json())
+        if len(bloque) >= 3000:
+            raise RuntimeError(f"BCRA {id_variable}: la ventana {desde.date()}-{hasta.date()} llegó al límite "
+                               "de 3000 filas (achicar anios_por_pedido)")
+        filas.extend(bloque)
+        desde = hasta + pd.Timedelta(days=1)
+    if not filas:
+        return pd.DataFrame(columns=["fecha", "valor"])
+    df = pd.DataFrame(filas)
+    df["fecha"] = pd.to_datetime(df["fecha"], errors="coerce")
+    df["valor"] = pd.to_numeric(df["valor"], errors="coerce")
+    return df.dropna().drop_duplicates("fecha", keep="last").sort_values("fecha").reset_index(drop=True)
 
 
 # ---------------------------------------------------------------------------
@@ -1054,6 +1148,9 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
     if fuente == "dolar":
         return fetch_dolar(indicador["casa"], start_date)
     if fuente == "bcra":
+        if indicador.get("agregacion_mensual"):   # serie mensual armada desde la diaria, historia completa
+            return agregar_mensual(fetch_bcra_historia(indicador["id_variable"], start_date),
+                                   indicador["agregacion_mensual"])
         return fetch_bcra(indicador["id_variable"], start_date)
     if fuente == "rem_bcra":
         return fetch_rem_variable(indicador["variable"], indicador["referencia"], start_date)

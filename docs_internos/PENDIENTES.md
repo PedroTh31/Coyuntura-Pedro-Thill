@@ -36,6 +36,11 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
      línea de frescura del Bloque B2 lo marca "⚠ atrasado" en exportaciones, importaciones, saldo,
      balance energético y los gráficos que los usan.
    - A hacer: revisar una fuente alternativa verificada (regla dura #1).
+   - **RESUELTO el 08/11/2026** (decisión C de Pedro, 4.º disparador del fallback del #21): el CSV de
+     distribución del ICA ya trae sep-2026, así que exportaciones, importaciones, saldo, balance energético
+     y el desagregado por rubro y por uso salen del CSV (coherencia por card: nada de mezclar API y CSV en un
+     gráfico). Corrida local del 08/11: todas hasta sep-26, sello "al día" con próximo dato el 19/11. Si la
+     API vuelve a ponerse al día, el disparador deja de saltar solo.
 
 5. **TCR multilateral y compras netas de divisas frenados** — anotado el 07/11/2026.
    - TCR multilateral (`116.4_TCRZE_2015_D_36_4`): último dato 28/01/2026, ~10 meses, contra un
@@ -60,7 +65,11 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
    - Serie diaria (TIR del GD30 del MAE − DGS10 de FRED). Causa no verificada (¿falla la TIR del
      GD30 en el MAE o el cruce con FRED?). A hacer: diagnosticar.
 
-9. **La pestaña financiera no tiene línea de frescura** — anotado el 07/11/2026.
+9. **La pestaña financiera no tiene línea de frescura** — anotado el 07/11/2026. **CERRADO el 08/11/2026:**
+   lo resolvió el Bloque E2 (D4: frescura en todas las cards de todos los temas). Verificado en `docs/`
+   generado: `mercados/` 7/7 cards con sello y `dinero-y-credito/` 15/15 (morosidad con franja ⏸ "sin datos
+   nuevos hace 5/6 meses"); el spread GD30 lleva sello "sep-26 · sin calendario oficial" y no tiene franja
+   porque su atraso (68 días al 08/11) todavía no pasa el umbral de 90. Texto original:
    - El Bloque B2 la dejó fuera de la ronda (sólo `index.html`). Consecuencia: los gráficos frenados
      de la financiera (morosidad, spread GD30) no le avisan nada al lector.
    - A hacer: extender la línea a `financiera.html` (en `run.py`, pasarle `frescura_ctx` también a
@@ -107,7 +116,9 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       real. Pendiente: tratar 0 como sin dato en `mae_resumen` (o usar otro campo), con un test.
 
 14. **Base monetaria: la serie cae a la mitad en jun-2026** — anotado el 07/11/2026 (visto en el Bloque
-    C, no arreglado).
+    C). **CERRADO el 08/11/2026:** pasa al BCRA (idVariable 15, promedio de días corridos, historia completa;
+    0,000% de diferencia con el CSV de datos.gob.ar en 24 meses); se sacaron `titular:` fijo y
+    `ocultar_variacion`.
     - `90.1_BMT_0_0_20` (datos.gob.ar, "millones de $") en `data/series_largo.csv`: 41.399.340 en
       may-2026 y 18.185.780 en jun-2026 (−56% en un mes); después 21.504.650 (jul) y 22.520.769 (ago).
       Ningún movimiento parecido en el resto de la serie. Con el titular por reglas salía "La base
@@ -117,6 +128,11 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       publica un titular sobre un posible corte de la fuente). Al resolverlo, sacar ese override.
     - Pendiente: revisar la metadata y las notas de la serie en datos.gob.ar y en el BCRA y decidir con
       Pedro cómo empalmar.
+    - **Causa encontrada el 08/11/2026** (diagnóstico del #21): no es un corte de la fuente. La API de
+      datos.gob.ar devuelve valores erróneos desde jun-2026 (18.185.776 en jun), mientras que el CSV de
+      distribución del mismo dataset (90.1) y el BCRA (API v4, idVariable 15, promedio mensual) dan 43,3
+      billones en jun, 45,6 en jul y 46,4 en ago, sin ningún salto. Lo mismo pasa con el circulante
+      (`90.1_BMCMP_0_0_44`, componente de M1). Se resuelve junto con el #23.
 
 15. **Tramo sin datos más angosto que el tiempo real en series frenadas** — anotado el 07/11/2026.
     - El sombreado del Bloque C (D9) se dibuja sobre el eje de categorías de Chart.js: cada dato ocupa
@@ -187,7 +203,8 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
     - Aparecen en las corridas de producción del 06/11 y del 08/11 y en las locales de E1 a E4. El histórico
       no se pierde (merge idempotente), pero no entra ningún dato nuevo. Último dato en el CSV:
       - `90.1_AMTM2_0_0_31` M2 (agregado total): ago-2026.
-      - `324.1_H_HOTELES_ADO__60` y `324.1_K_ACT_INMOADO__57` (empleo registrado SIPA, Hoteles y restaurantes /
+      - `324.1_H_HOTELES_ADO__60` y `324.1_K_ACT_INMOADO__57` (puestos asalariados registrados de la Cuenta de
+        Generación del Ingreso del INDEC, no SIPA; Hoteles y restaurantes /
         Inmobiliarias y empresariales, componentes del gráfico de actividad y empleo por sector): ene-2026.
       - Comercio exterior desagregado: `74.3_IEMOI_0_M_46` MOI, `74.3_IECE_0_M_35` Combustibles y energía,
         `74.3_IICL_0_M_42` Combustibles y lubricantes, `74.3_IIPABC_0_M_50` Piezas y accesorios para bienes de
@@ -196,12 +213,73 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       - `379.9_RESULTADO_017__31_73` Resultado primario del SPN y su acumulado de 12 meses: ago-2026.
     - Causa no verificada (¿id cambiado o serie discontinuada en datos.gob.ar, falla del pedido en lote?).
       A hacer: diagnosticar id por id contra la ficha del dataset (regla dura #1).
+    - **Diagnóstico del 08/11/2026:** los ids no cambiaron y las series no están discontinuadas. La API de
+      datos.gob.ar tiene la metadata al día pero devuelve 0 filas (o historia cortada: `74.3_IICL_0_M_42`
+      sólo 1992-01 → 2003-06), mientras que los CSV de distribución del mismo catálogo (regenerados el
+      07/11/2026) traen un período más (sep-2026; 2T-2026 en el 324). Decisión de Pedro: fallback al CSV de
+      distribución (salvo el RIPTE, cuyo CSV trae agosto con el valor de junio; ver el #1), M2 al BCRA
+      (idVariable 109) y RIPTE desde la página de la Secretaría de Trabajo. En curso: el fallback al CSV
+      está implementado (`fuentes_datos_gob.py`), con 4 disparadores (0 filas, historia cortada, últimos 12
+      períodos con más de 1% de diferencia, CSV con períodos más nuevos), guarda anti-RIPTE (último período
+      del CSV que repite exactamente el anterior: no se usa y alerta) y coherencia por card. M2 ya sale del
+      BCRA (idVariable 109, promedio de días corridos: 0,001% de diferencia promedio con datos.gob.ar en 24
+      meses). Falta el RIPTE.
+    - Visto en la corrida local del 08/11/2026 la guarda cortó 2T-2026 de la tasa de
+      informalidad (`52.2_ASDJ_0_0_37`, 0,379 igual que el 1T), aunque la API también publica 2T-2026 con
+      0,379. Como la API está cortada (91 de 93 filas) la serie igual sale del CSV, sin ese trimestre (el
+      punto guardado se conserva por el merge). **Ajustado el 08/11/2026** (decisión de Pedro): la guarda no
+      salta si la API publica ese mismo período con el mismo valor. Alertas sólo por 0 filas, historia
+      cortada, diferencia > tolerancia y la guarda (14 series en la corrida local del 08/11; el disparador 4 y
+      la coherencia no alertan). Además, un id que entra al CSV por coherencia no pasa por la guarda (hoy:
+      adelantos transitorios, ceros repetidos legítimos).
 
 22. **Cauciones (MAE) vacías en la corrida** — anotado el 08/11/2026 (no arreglado).
     - Caución en pesos y en dólares (1 día) (`mae_resumen`, tipo `CAU`): "Indicador sin datos" en las
       corridas del 06/11 (viernes, de tarde) y del 08/11; últimos datos 06/11 (pesos) y 05/11 (dólares). Es
       un snapshot sin historia: un día vacío es un día perdido. Ver también el #13 (valor 0,00 guardado
       como dato). Causa no verificada (¿hora de la corrida respecto de la operatoria, cambio del ticker?).
+
+23. **Agregados monetarios (M1, M2, M3) mezclan bases de rebase** — anotado el 08/11/2026 (diagnóstico
+    del #21; prioridad 1 por decisión de Pedro: es un dato falso publicado).
+    - `rebase_100` rebasa sobre el primer valor que devuelve la API y el merge pisa sólo las fechas que
+      vinieron. La API devolvió historia parcial o valores erróneos en distintas corridas (hoy: M2 0 filas,
+      M3 sólo desde 2014-04, depósitos en cuenta corriente `90.1_DCCT_0_0_32` sólo hasta 2012-02,
+      circulante con valores erróneos desde jun-2026), así que el histórico guardado quedó con varias
+      bases mezcladas: M2 alterna entre dos bases (±2,7%) en 116 tramos, incluso dentro de 2026; M3 salta
+      ×8,4 en abr-2014; M1 cae ~40% en jun-2026.
+    - La card llevaba `aviso:` + `ocultar_variacion: true` mientras tanto; se sacaron el 08/11/2026 al quedar
+      sólo M2 y M3 (ver abajo).
+    - Hecho el 08/11/2026: M1/M2/M3 se guardan en niveles (millones de $) y el overlay los rebasa al dibujar
+      (`rebase_vista: true`, base ene-2026 = 100); las 816 filas rebasadas se borraron con
+      `reconstruir_series.py` (backup fuera del repo) y se reescriben desde datos.gob.ar (CSV de
+      distribución: la API de los cuatro ids del dataset 90 está vacía, cortada o con valores erróneos).
+    - M2 pasó al BCRA (idVariable 109, "M2 ", Series.xlsm, saldos diarios en millones de $; promedio de días
+      corridos). M3 sigue en datos.gob.ar (vía CSV de distribución).
+    - **Sigue abierto por el M1** (decisión de Pedro del 08/11/2026: se saca del overlay, que pasa a llamarse
+      "Agregados monetarios (M2, M3)"; el M1 queda definido en el yaml, sin mostrarse, y no se implementa
+      nada nuevo hasta decidir la definición). Diagnóstico acotado contra el M1 de datos.gob.ar
+      (`174.1_AGADOS_M1_0_0_28`, hasta abr-2026), 24 meses (may-2024 a abr-2026), diferencia % de cada
+      armado contra ese M1 (promedio / promedio del valor absoluto / máximo del valor absoluto):
+
+      | Armado | Fuente | Prom. | Prom. abs. | Máx. abs. |
+      |---|---|---|---|---|
+      | circulante + cta. cte. "total" (definición actual) | CSV dataset 90 | −40,17 | 40,17 | 48,00 |
+      | circulante + cta. cte. privada | CSV dataset 90 | −22,62 | 22,62 | 31,71 |
+      | circulante + cta. cte. pública | CSV dataset 90 | −3,12 | 3,87 | 13,70 |
+      | circulante + cta. cte. total, promedio | BCRA (17 + series.xlsm) | −9,12 | 9,12 | 18,48 |
+      | circulante + cta. cte. privada, promedio | BCRA | −26,63 | 26,63 | 34,82 |
+      | circulante + cta. cte. pública, promedio | BCRA | −42,16 | 42,16 | 49,04 |
+      | circulante + cta. cte. privada, fin de mes | BCRA | −57,96 | 57,96 | 62,98 |
+      | circulante + cta. cte. total, fin de mes | BCRA | −57,51 | 57,51 | 72,65 |
+
+      Ningún armado reproduce el M1 publicado. Llama la atención que en el CSV del dataset 90 la columna de
+      cuenta corriente "total" sea menor que la "privada" (hipótesis no verificada: columnas rotuladas al
+      revés). Nada se cambió por esta tabla.
+
+24. **Spread soberano GD30 vs. UST10Y: el sello dice "sin calendario oficial"** — anotado el 08/11/2026.
+    - Es una serie diaria (snapshot del MAE), así que debería llevar el "próximo DD/MM (estimado)" de las
+      diarias del B2. Hoy: "sep-26 · próximo: sin calendario oficial". Causa no verificada (¿se clasifica
+      la frecuencia por la cantidad de puntos, que es chica porque la serie es un snapshot?).
 
 ## Bloques futuros (después del Bloque E; no implementar todavía)
 
@@ -225,7 +303,7 @@ C1. **Descripciones de las páginas de serie (`descripcion:` del yaml)** — ano
     decisión de Pedro: opción A).
     - Hoy ninguna serie tiene `descripcion:`; la página de serie muestra el `subtitulo` cuando existe (9
       series, todos textos redactados en rondas anteriores, ninguno de metadata oficial) y nada en las 50
-      restantes. "Actividad y empleo por sector" quedó sin descripción a propósito: su advertencia del SIPA
+      restantes. "Actividad y empleo por sector" quedó sin descripción a propósito: su advertencia sobre la fuente del empleo
       pasó a la nota.
     - A hacer: redactar las descripciones (1-2 líneas por serie), indicando la fuente de cada texto
       (metadata oficial de datos.gob.ar/INDEC/BCRA o redacción propia). Las redactadas las revisa Pedro

@@ -53,14 +53,21 @@ def _hoy() -> str:
 
 
 class ResolverIndec:
-    def __init__(self, equivalencias: dict | None, start: str | None):
+    def __init__(self, equivalencias: dict | None, start: str | None, fetch_dg=None):
         self.eq = equivalencias or {}
+        # cómo se baja una serie de datos.gob.ar (fallback y series sin equivalencia); run.py pasa el
+        # ResolverDatosGob (con el fallback al CSV de distribución)
+        self._fetch_dg = fetch_dg
         self.start = start
         self._memo: dict[str, tuple[pd.DataFrame, dict]] = {}
         self.auth_error: str | None = None        # 1er 401/403: el resto de la corrida va directo al fallback
         self.por_indicador: dict[str, list[dict]] = {}
         self.por_clave: dict[str, dict] = {}       # clave (id o nombre) -> uso de esta corrida
         self._actual: list[dict] | None = None
+
+    def fetch_dg(self, serie_id: str, start: str | None):
+        # el default se busca al llamar (no al crear el resolver): los tests parchean fetch_datos_gob
+        return (self._fetch_dg or fetch_datos_gob)(serie_id, start)
 
     # --- contexto: qué indicador se está calculando -------------------------------------------
     def empezar(self, nombre: str):
@@ -119,8 +126,8 @@ class ResolverIndec:
         es la primaria y datos.gob.ar el fallback; si no, datos.gob.ar directo (como siempre)."""
         spec = self.eq.get(serie_id)
         if not spec:
-            return fetch_datos_gob(serie_id, start)
-        return self._con_fallback(serie_id, spec, lambda: fetch_datos_gob(serie_id, start),
+            return self.fetch_dg(serie_id, start)
+        return self._con_fallback(serie_id, spec, lambda: self.fetch_dg(serie_id, start),
                                   FALLBACK_DG, f"datos.gob.ar {serie_id}")
 
     def variacion_publicada(self, serie_id: str, calculo: str, fallback) -> pd.DataFrame | None:
@@ -143,7 +150,7 @@ class ResolverIndec:
             spec = self.eq.get(ind["id"])
             if not spec:
                 raise ValueError(f"'{ind['id']}' no tiene entrada en equivalencias_indec")
-            clave, fallback, etiqueta = ind["id"], (lambda: fetch_datos_gob(ind["id"], start)), f"datos.gob.ar {ind['id']}"
+            clave, fallback, etiqueta = ind["id"], (lambda: self.fetch_dg(ind["id"], start)), f"datos.gob.ar {ind['id']}"
         elif fb == FALLBACK_AD:
             spec = ind.get("indec")
             if not spec:
@@ -188,10 +195,10 @@ def _toca_aviso(avisos: dict, clave: str, hoy: str, repetir_dias: int | None) ->
     return (datetime.fromisoformat(hoy) - datetime.fromisoformat(ultimo)).days >= repetir_dias
 
 
-def enviar_alerta(asunto: str, cuerpo: str) -> bool:
+def enviar_alerta(asunto: str, cuerpo: str, titulo: str = "Alerta INDEC") -> bool:
     """Mail SÓLO a Pedro. Sin credenciales (corrida local, o el fallback del workflow del mail),
     no se envía: queda en el log y como anotación de Actions."""
-    print(f"::warning title=Alerta INDEC::{asunto}")
+    print(f"::warning title={titulo}::{asunto}")
     user, pw = os.environ.get("GMAIL_USER"), os.environ.get("GMAIL_APP_PASSWORD")
     destino = os.environ.get("ALERTA_MAIL_TO") or ALERTA_DESTINO
     if not user or not pw:
