@@ -64,6 +64,14 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   CSVs históricos versionados, compartidos por las dos páginas (un solo `historico`, cada
   indicador tageado con su propio `bloque`).
 
+- `fuentes_mercados.py` — bloque MAE (08/11/2026): cauciones del histórico de cierre del MAE (`mae_caucion`),
+  UST del Tesoro con respaldo H.15 (`tesoro_ust`), último dato válido de los extras de run.py (muro, dólar
+  futuro) en `data/extras_ultimo.json` y alertas a Pedro (máx. 1 mail por corrida; primer día y semanal; estado
+  en `data/mercados_estado.json`; resumen en la clave `mercados` de `ultima_corrida.json`). **Extras vacíos**
+  (`run._extras_con_respaldo`): la card se arma con el último dato válido, el sello marca su antigüedad
+  (frecuencia diaria), aviso "La fuente no devolvió datos en esta corrida" y alerta; un extra nuevo de run.py
+  -> pasarlo por ahí. Tests: `tests/test_fuentes_mercados.py`.
+
 - `fuentes_indec.py` — API del INDEC (api.indec.gob.ar/v1, beta, PostgREST, token JWT en
   `INDEC_API_TOKEN`, local en `.env` gitignoreado; **el token nunca se imprime ni va a
   logs/HTML/JSON/commits**). `ResolverIndec` intenta la API y, ante error o resultado vacío,
@@ -128,7 +136,11 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   anteriores). Sin calendario: "próximo: sin calendario oficial"; diarias: "próximo DD/MM
   (estimado)" (próximo día hábil). Rezago grave (franja "⏸ … sin datos nuevos hace N meses"): días
   desde el CIERRE del período > 90 (trimestrales 90 + 92; piso `rezago_normal_dias`), N = meses
-  completos desde ese cierre. Cards con varias series: si alguna está frenada y otra no, la franja
+  completos desde ese cierre. **Diarias: a los 10 días hábiles sin datos** (`UMBRAL_DIARIAS_HABILES`,
+  mismo piso; bloque MAE, 08/11/2026). **Frecuencia** (`frecuencia_de`): campo opcional `frecuencia:
+  diaria|mensual|trimestral` del yaml > fuente (`FUENTES_DIARIAS`/`CALCULOS_DIARIOS`: mae_*, tesoro_ust,
+  byma, dolar, spread_bono_ust, brecha) > separación de las fechas, SÓLO con 2 puntos o más (con uno se
+  muestra la fecha, nunca se adivina el período; #24). Una fuente diaria nueva -> sumarla a esos sets. Cards con varias series: si alguna está frenada y otra no, la franja
   nombra la frenada. Colores: grises + `principal_2` "al día", NUNCA el arena (es el de los negativos del
   Bloque C). Ojo: el chequeo de frescura de `run.py` (alertas) mide desde la fecha cruda del dato,
   no desde el cierre. Tests: `tests/test_frescura.py`.
@@ -327,28 +339,50 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   estándar de certifi: el fetcher pide con `verify=False` (conexión sigue siendo TLS, sólo se
   salta la validación de cadena), mismo criterio que las librerías públicas de BYMA
   (`pyhomebroker`, `bymadata`).
+- **Fechas y snapshots (bloque MAE, 08/11/2026):** el runner de Actions está en UTC; para "hoy" usar
+  `fetchers.hoy_ar()` (fecha de Argentina), NUNCA `pd.Timestamp.today()`/`date.today()`/`datetime.now()` sin
+  zona. Un snapshot del día se fecha con la fecha que informe la fuente (`fetchers.fecha_snapshot_mae`) o, si no
+  la trae, con `hoy_ar()`, y run.py descarta los puntos de fines de semana y feriados de las fuentes
+  snapshot (`run.FUENTES_SNAPSHOT`/`CALCULOS_SNAPSHOT`, `run.solo_habiles`). Un 0 de un snapshot del MAE es "sin
+  operaciones", no un dato.
 - `fuente: mae_bono` + `ticker: "..."` + `campo: tir|md` (opcional `letra`, default "H") →
   TIR o duración modificada de un bono hard-dollar, Mercado Abierto Electrónico
   (`fetch_mae_bono_campo`/`fetch_mae_flujofondos` en fetchers.py, endpoint
   `emisiones/flujofondoscotiz/{letra}`, no documentado oficialmente por el MAE, `letra: "H"` =
   bonos hard-dollar step-up tipo AL30/GD30/GD35, `"B"` = BOPREAL). Snapshot del día, SIN
-  endpoint histórico: la serie sólo acumula un punto por corrida desde que se empieza a
-  trackearla, sin backfill posible. El mismo endpoint también trae el flujo de fondos completo
-  (`detalle[]`: fechaPago + amortizacion, esta última en % del valor nominal ORIGINAL de cada
-  bono) -- usado para el "muro de vencimientos" (ver `vista`/`kind` más abajo), no para una
-  serie fecha/valor normal.
+  endpoint histórico ni fecha propia: la serie sólo acumula un punto por corrida, sin backfill posible. Viene
+  vacío fines de semana y feriados, y también días hábiles si el bono no operó en el MAE. **Las tres TIR, la
+  curva y el spread están EN REVISIÓN** (PENDIENTES #28: la TIR del MAE es ruidosa contra la que sale de los
+  cierres de BYMA + flujo de fondos).
+- **Muro de vencimientos:** `fetch_mae_flujofondos_ticker(ticker)` (endpoint `emisiones/flujofondos/{ticker}`,
+  el de la ficha del título): `detalle[]` con fechaPago, amortizacion (% del VN ORIGINAL), renta, cashFlow y
+  valor residual. No depende de que el bono cotice (responde fines de semana).
 - `fuente: mae_resumen` + `tipo: "..."` + `ticker: "..."` + `campo` (opcional, default
-  "ultimo") → un campo de un instrumento puntual del resumen del MAE (`tipo: "CAU"` =
-  cauciones, `"RF"` = renta fija, `"DDF"` = dólar futuro, `"FOR"` = forwards). Snapshot del
-  día, mismas limitaciones que `mae_bono` (sin historia propia).
-- `fuente: fred` + `id: "..."` → series de EEUU vía FRED (Federal Reserve Economic Data,
-  `fetch_fred` en fetchers.py, endpoint público `fredgraph.csv`, sin API key). Serie histórica
-  real (no snapshot), ej. `DGS10` = rendimiento del Treasury a 10 años.
-- `calculo: spread_bono_ust` + `ticker_bono: "..."` + `fred_id: "..."` → (TIR del bono vía
-  `mae_bono` − rendimiento FRED) × 100, en puntos básicos. Usa `pd.merge_asof` con
-  `direction="backward"` (NO merge exacto por fecha): la TIR del bono es de hoy pero FRED
-  suele publicar el cierre de UST con 1 día hábil de rezago, un merge exacto casi nunca
-  matchea. Pensado para un "spread soberano (proxy)" -- etiquetar SIEMPRE así, nunca como
+  "ultimo") → un campo de un instrumento puntual del resumen del MAE (`"RF"` = renta fija, `"DDF"` = dólar
+  futuro, `"FOR"` = forwards). Snapshot del día, mismas limitaciones que `mae_bono`. Ya no se usa para las
+  cauciones (ver `mae_caucion`).
+- `fuente: mae_caucion` + `ticker: "CAARS"|"CAUSD"` + `desde_historia` → caución del MAE desde el histórico de
+  cierre (`fuentes_mercados.serie_caucion`, endpoint `mercado/titulo/historicocauciones?oTitulo={"fechaDesde",
+  "fechaHasta"}`, el que usa marketdata.mae.com.ar; ventanas de 3 meses: con un año da 400), hasta el día hábil
+  anterior que informa `mercado/fechahabilanterior`. Por día: `tasaPP` (promedio ponderado) del plazo MÁS CORTO
+  operado (001 de lunes a jueves, 003 los viernes, 004-006 antes de feriados); tasa o monto 0 = sin dato (el
+  `ultimo` del cierre es siempre 0, #13). Historia: pesos desde ene-2024, dólares desde el 02/07/2025 (primer
+  día del histórico del MAE). Umbral (`filtrar_monto_minimo`): si el monto del plazo más corto es < 5% de la
+  mediana de los 20 días hábiles previos, el día queda sin dato, sin sustituto (decisión de Pedro, #13). Otros endpoints históricos
+  del MAE sin clave, verificados: `mercado/titulo/historicorentafija` (+ `/detalle?oTitulo={"fecha"}`, precios
+  por operación, sin TIR). La API oficial con clave (`api.mae.com.ar/MarketData/v1`) no se usa.
+- `fuente: tesoro_ust` + `plazo: "10 Yr"` → rendimiento del Treasury (`fuentes_mercados.serie_ust`): CSV de la
+  curva par del Tesoro de EE.UU. (`daily-treasury-rates.csv/{año}/all?type=daily_treasury_yield_curve`, un
+  archivo por año) y, si falla, el H.15 de la Fed (`Output.aspx?rel=H15&series=bf17364827e38702b42a58cf8eaa3f78`,
+  `from` y `to` juntos con las barras sin codificar) con alerta a Pedro; si fallan los dos, queda el histórico,
+  con alerta. Mismos números que el DGS10 de FRED (verificado en 5.673 fechas). **FRED se sacó**: Akamai retiene
+  la conexión desde GitHub Actions (nunca funcionó ahí, #8).
+- `calculo: spread_bono_ust` + `ticker_bono: "..."` + `ust_plazo: "10 Yr"` → (TIR del bono vía
+  `mae_bono` − rendimiento del Treasury de `tesoro_ust`) × 100, en puntos básicos. Usa `pd.merge_asof` con
+  `direction="backward"` (NO merge exacto por fecha): la TIR del bono es de hoy pero el Treasury
+  suele publicar el cierre con 1 día hábil de rezago, un merge exacto casi nunca
+  matchea. EN REVISIÓN (#28); al resolverlo, comparar contra el Treasury interpolado a la duration del bono
+  (plazos 1/2/3 años del Tesoro), no contra el de 10 años (decisión de Pedro, #8). Pensado para un "spread soberano (proxy)" -- etiquetar SIEMPRE así, nunca como
   "riesgo país" a secas: no es el EMBI+ oficial, compara TIR puntual contra un Treasury de
   plazo fijo sin ajustar por duración exacta.
 - `solo_referencia: true` → el indicador NO se fetchea (run.py lo saltea en el loop): reusa el
@@ -541,7 +575,8 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   devolvió la fuente, y si una corrida trae historia parcial el merge mezcla bases (pasó con M1/M2/M3,
   #23 de PENDIENTES). `reconstruir_series.py` borra (con backup fuera de data/) todas las filas de un
   indicador para que la corrida siguiente lo reescriba desde una sola fuente: única excepción al merge
-  idempotente, sólo con OK de Pedro.
+  idempotente, sólo con OK de Pedro. Con `--solo-no-habiles` borra sólo las filas fechadas en fines de
+  semana y feriados (snapshots sin historia en la fuente, bloque MAE).
 - `cortar_comun: true` en un `vista: overlay` → la card y el gráfico llegan sólo hasta el último período
   que tienen TODAS sus series (`dashboard.cortar_comun`, sobre la copia del histórico de la página; lo
   guardado no se toca). Para series que sólo dibuja ese overlay (`solo_componente`): ej. M2 del BCRA va un
@@ -636,7 +671,8 @@ página separada con nav cruzado hacia/desde la macro. FX/brechas y TAMAR (total
 referenciados desde la pestaña macro (`solo_referencia`, mismo dato, sin refetch); CER (BCRA,
 idVariable 30); S&P MERVAL (BYMA, serie histórica diaria); TAMAR bancos privados (idVariable
 44, variante que referencian los bonos duales) y BADLAR (idVariable 7), plazo fijo a 30 días,
-cauciones pesos/USD (MAE); curva de rendimientos AL30/GD30/GD35 (TIR en el tiempo vía MAE, no
+cauciones pesos/USD (MAE, histórico de cierre, plazo más corto del día); curva de rendimientos
+AL30/GD30/GD35 (EN REVISIÓN, #28; TIR en el tiempo vía MAE, no
 snapshot puntual -- el pedido original de un gráfico X=duración/Y=TIR se cambió por una serie
 temporal de las 3 TIR, ver la nota del indicador); spread soberano GD30 vs. UST10Y (proxy, NO
 es el EMBI+ oficial); muro de vencimientos de AL30/GD30/GD35 (barras agrupadas por año, % del
@@ -664,6 +700,7 @@ vencimiento, conviene leer `exp` del token en vez de calcular un plazo fijo; con
 Pedro antes.
 
 **Filtro de noticias — ejemplos marcados por Pedro para la próxima ronda (NO tocados todavía):**
+- Zona horaria de las notas (PENDIENTES #29): `published_parsed` (UTC) se compara contra un límite en hora AR.
 - NO va en Internacional (2026-11-05, BBC Mundo, feeds.bbci.co.uk/mundo/rss.xml). Pasa
   `evaluar_intl` por `"ee.uu"` en la bajada (KW_INTERNACIONAL); no es economía. Convertirlo en
   test de `tests/test_noticias.py` antes de ajustar nada. Texto textual:

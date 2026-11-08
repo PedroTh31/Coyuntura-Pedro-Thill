@@ -19,8 +19,8 @@ import pandas as pd
 
 from fetchers import (traer, fetch_datos_gob, fetch_dolar, fetch_bcra,
                        fetch_bcra_organismos_internacionales, fetch_bcra_swap_china,
-                       fetch_deuda_bruta, fetch_mae_ddf, fetch_mae_bono_campo, fetch_mae_flujofondos,
-                       fetch_fred, fetch_data912)
+                       fetch_deuda_bruta, fetch_mae_ddf, fetch_mae_bono_campo, fetch_mae_flujofondos_ticker,
+                       fetch_data912, hoy_ar)
 import storage
 import dashboard
 import frescura
@@ -32,6 +32,7 @@ import temas
 import fuentes_indec
 import fuentes_datos_gob
 import fuentes_trabajo
+import fuentes_mercados
 
 RAIZ = Path(__file__).resolve().parent
 CONFIG = RAIZ / "indicadores.yaml"
@@ -68,7 +69,8 @@ def _fuente_de(ind: dict) -> str:
 
 
 def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuentes_indec_usadas=None,
-                            agenda_mail=None, datos_gob_csv=None, datos_gob_descartados=None, trabajo_ripte=None):
+                            agenda_mail=None, datos_gob_csv=None, datos_gob_descartados=None, trabajo_ripte=None,
+                            mercados=None):
     ahora = datetime.now(ZONA_AR)
     datos = {
         "fecha": ahora.date().isoformat(),
@@ -88,6 +90,9 @@ def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuen
         # RIPTE de la Secretaría de Trabajo (fuentes_trabajo.py): de dónde salió en ESTA corrida (pdf, pdf_cache,
         # tabla o error), motivo y racha de corridas seguidas sin el PDF.
         "trabajo_ripte": trabajo_ripte,
+        # Mercados (fuentes_mercados.py): de dónde salió el UST (tesoro, h15 o error), extras de run.py
+        # mostrados con su último dato válido y las alertas de la corrida.
+        "mercados": mercados,
         # Bloque B3: calendario, estado de cada publicación y avisos de frescura para el mail diario
         # (agenda.py). El mail no recalcula nada: si falta (o la corrida no es de hoy), no muestra fechas.
         "agenda": agenda_mail,
@@ -95,6 +100,23 @@ def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuen
     ULTIMA_CORRIDA.parent.mkdir(exist_ok=True)
     ULTIMA_CORRIDA.write_text(json.dumps(datos, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Estado de la corrida -> {ULTIMA_CORRIDA.relative_to(RAIZ)} ({estado})")
+
+
+# Snapshots del día (sin historia propia en la fuente): nunca se guardan puntos de fines de semana ni feriados
+# (bloque MAE, decisión de Pedro del 08/11/2026). Las cauciones salen del histórico de cierre del MAE, que sólo
+# trae días operados, pero pasan igual por la guarda.
+FUENTES_SNAPSHOT = {"mae_bono", "mae_resumen", "mae_caucion"}
+CALCULOS_SNAPSHOT = {"spread_bono_ust"}
+
+
+def es_snapshot_diario(ind: dict) -> bool:
+    return ind.get("fuente") in FUENTES_SNAPSHOT or ind.get("calculo") in CALCULOS_SNAPSHOT
+
+
+def solo_habiles(serie: pd.DataFrame, no_habiles: set) -> tuple[pd.DataFrame, list]:
+    """(serie sin las filas de días no hábiles, fechas descartadas)."""
+    habil = serie["fecha"].map(lambda f: calendario_indec.es_habil(pd.Timestamp(f).date(), no_habiles))
+    return serie[habil], [pd.Timestamp(f).date() for f in serie.loc[~habil, "fecha"]]
 
 
 def _fila(serie, ind):
@@ -288,18 +310,18 @@ def _calcular(ind, start):
     if tipo == "spread_bono_ust":
         # Spread soberano PROXY (Punto 4, Ronda 2 financiera): TIR de un bono hard-dollar
         # argentino (MAE, snapshot del día, sin historia propia) menos el rendimiento del
-        # Treasury americano comparable (FRED, histórico real), en puntos básicos. NO es el
+        # Treasury americano comparable (Tesoro de EE.UU., respaldo H.15; antes FRED, #8), en puntos básicos. NO es el
         # EMBI+ oficial (ver 'Riesgo país (EMBI)' en la pestaña macro) -- metodología
         # simplificada, compara TIR puntual contra un Treasury de plazo fijo (ej. 10 años),
         # sin ajustar por la duración exacta del bono argentino. Como la TIR del bono sólo
         # tiene UN dato por día (hoy) y sin backfill posible, el merge con la serie completa
-        # de FRED sólo produce un punto por corrida -- la serie se acumula día a día desde
+        # del Treasury sólo produce un punto por corrida -- la serie se acumula día a día desde
         # que el pipeline empieza a trackearla, igual que el resto de los datos del MAE.
         bono = fetch_mae_bono_campo(ind["ticker_bono"], "tir").rename(columns={"valor": "tir"})
-        ust = fetch_fred(ind["fred_id"], start).rename(columns={"valor": "ust"})
+        ust = fuentes_mercados.serie_ust(ind.get("ust_plazo", "10 Yr"), start).rename(columns={"valor": "ust"})
         if bono.empty or ust.empty:
             return pd.DataFrame(columns=["fecha", "valor"])
-        # merge_asof (no merge exacto): la TIR del bono es de HOY, pero FRED suele publicar
+        # merge_asof (no merge exacto): la TIR del bono es de HOY, pero el Treasury suele publicar
         # el cierre de UST10Y con 1 día hábil de rezago (fines de semana/feriados EEUU) -- un
         # merge por fecha exacta casi nunca matchea. Se toma el último UST10Y disponible a
         # esa fecha o antes (tolerancia 5 días, cubre un fin de semana largo sin arrastrar un
@@ -367,15 +389,17 @@ _COLORES_MURO = {"AL30": "#0767A7", "GD30": "#EF6C00", "GD35": "#6A1B99"}
 def _muro_vencimientos(anios_adelante=10):
     """
     Amortización de capital de AL30/GD30/GD35 por año de pago (Punto 5, Ronda 2
-    financiera), a partir del flujo de fondos del MAE (fetch_mae_flujofondos,
+    financiera), a partir del flujo de fondos del MAE (fetch_mae_flujofondos_ticker,
     campo 'detalle' de cada bono: fechaPago + amortizacion). 'amortizacion'
     viene en % del valor nominal ORIGINAL de cada bono -- bases distintas entre
     bonos, así que se arma como gráfico de barras AGRUPADAS (no apiladas), ver
     la nota en dashboard.py/muroOpts. Devuelve un dict {card, serie_js, nota}
     para 'extra_charts' de dashboard.generar(), o None si no hay datos.
     """
-    bonos = fetch_mae_flujofondos("H")
-    hoy = pd.Timestamp.today()
+    # Flujo de fondos de cada bono (emisiones/flujofondos/{ticker}): no depende de que el bono cotice ese día
+    # (antes salía de flujofondoscotiz/H, que viene vacío fines de semana y feriados y hacía desaparecer el muro, #20).
+    bonos = [b for b in (fetch_mae_flujofondos_ticker(t) for t in _TICKERS_MURO) if b]
+    hoy = hoy_ar()
     anio_max = hoy.year + anios_adelante
     por_anio = {}
     for b in bonos:
@@ -409,12 +433,33 @@ def _muro_vencimientos(anios_adelante=10):
     serie_js = dict(kind="muro", x=[str(a) for a in anios], datasets=datasets, unidad="% VN")
     nota = ("Amortización de capital de AL30, GD30 y GD35 por año de pago, en % del valor nominal "
             "ORIGINAL de cada bono (campo 'amortizacion' del flujo de fondos del MAE, endpoint "
-            "emisiones/flujofondoscotiz, no documentado oficialmente por el MAE). Barras agrupadas, "
+            "emisiones/flujofondos/{bono}, no documentado oficialmente por el MAE). Barras agrupadas, "
             "NO apiladas: cada bono amortiza sobre SU PROPIO valor nominal -- apilar sumaría "
             "porcentajes de bases distintas en una altura sin significado. Universo acotado a estos "
             "3 bonos hard-dollar (alcance definido por Pedro para esta ronda, no incluye LECAPs/"
             "BONCAPs en pesos ni otros soberanos).")
     return {"card": card, "serie_js": serie_js, "nota": nota}
+
+
+def _extras_con_respaldo(ctx):
+    """Muro y dólar futuro (#20): si la fuente viene vacía, la card se arma con el último dato válido
+    (data/extras_ultimo.json) + aviso, el sello marca la antigüedad del dato y sale la alerta a Pedro."""
+    hoy = hoy_ar()
+    salida = []
+    for nombre, armar in (("Dólar futuro (DDF)", _ddf_chart), ("Muro de vencimientos (AL30/GD30/GD35)", _muro_vencimientos)):
+        try:
+            ec = armar()
+        except Exception as e:
+            print(f"::warning title=Mercados::{nombre}: {type(e).__name__}: {e}")
+            ec = None
+        ec, fecha = fuentes_mercados.extra_con_respaldo(nombre, ec, hoy)
+        if ec is None:
+            continue
+        if ctx is not None:
+            f = frescura.calcular({"nombre": nombre, "frecuencia": "diaria"}, nombre, pd.Series([fecha]), ctx)
+            ec["card"] = dict(ec["card"], frescura=frescura.html_linea(f), sello=frescura.html_sello(f))
+        salida.append(ec)
+    return salida
 
 
 def _ddf_chart():
@@ -507,7 +552,7 @@ def chequear_frescura(historico: pd.DataFrame, indicadores: list[dict]):
     de forma sistemática, no por una falla puntual); ese valor pone un piso
     adicional al umbral para no repetir la misma alerta todos los días.
     """
-    hoy = pd.Timestamp.today().normalize()
+    hoy = hoy_ar()
     nombres_activos = {ind["nombre"] for ind in indicadores}
     nombres_excluidos = {ind["nombre"] for ind in indicadores if ind.get("marca_fecha")}
     rezago_normal = {ind["nombre"]: ind["rezago_normal_dias"] for ind in indicadores if ind.get("rezago_normal_dias")}
@@ -610,6 +655,11 @@ def main():
     _RESOLVER_DG.preparar(fuentes_datos_gob.grupos_por_card(
         [i for i in indicadores + indicadores_financiera if not i.get("solo_referencia")],
         cfg.get("equivalencias_indec")))
+    try:
+        no_habiles = calendario_indec.feriados(calendario_indec.cargar_config())
+    except Exception as e:
+        print(f"::warning title=Feriados::no se pudo leer calendario.yaml, sólo se descartan fines de semana: {e}")
+        no_habiles = set()
     filas = []
     problemas = []  # (nombre, motivo) de indicadores que no trajeron datos
     por_fuente = {}  # fuente -> {"ok": n, "falla": n}, para data/ultima_corrida.json
@@ -638,6 +688,11 @@ def main():
                 # (ej. Inflación mensual: su historia de ArgentinaDatos está a fin de mes y la API
                 # del INDEC usa el 1.º del mes; sin esto el merge duplicaría cada mes).
                 serie = serie.assign(fecha=serie["fecha"].dt.to_period("M").dt.to_timestamp("M"))
+            if es_snapshot_diario(ind) and not serie.empty:
+                serie, descartadas = solo_habiles(serie, no_habiles)
+                if descartadas:
+                    print(f"  [info]   {nombre}: se descartan {len(descartadas)} punto(s) de días no hábiles "
+                          f"({', '.join(f'{d:%d/%m}' for d in descartadas[:5])})")
             if serie.empty:
                 _RESOLVER.terminar(ok=False)
                 _RESOLVER_DG.terminar(ok=False)
@@ -684,6 +739,7 @@ def main():
     except Exception as e:
         print(f"::warning title=RIPTE (Secretaría de Trabajo)::no se pudo cerrar el estado: {type(e).__name__}: {e}")
         trabajo_ripte = None
+    # Mercados (UST del Tesoro / H.15, extras vacíos): el cierre va al final, después de armar los extras.
 
     if not filas:
         print("No se trajo ningun dato.")
@@ -713,8 +769,8 @@ def main():
         frescura_ctx = None
 
     # Datos de Mercados que no salen del yaml (dólar futuro, muro de vencimientos, tablas de acciones).
-    fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
-    extra_charts = [ec for ec in (_ddf_chart(), _muro_vencimientos()) if ec is not None] if indicadores_financiera else []
+    fecha_hoy = hoy_ar().strftime("%d/%m/%Y")
+    extra_charts = _extras_con_respaldo(frescura_ctx) if indicadores_financiera else []
     acciones = _ranking_data912("/live/arg_stocks")[:18] if indicadores_financiera else []
     cedears = _ranking_data912("/live/arg_cedears")[:15] if indicadores_financiera else []
     tablas_acciones = (dashboard.tabla_acciones("Acciones más operadas (MERVAL)", acciones, fecha_hoy) +
@@ -760,9 +816,16 @@ def main():
     pagina_home.generar_redireccion("financiera.html", "mercados/")
     print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/ (home, temas, series, calendario)")
 
+    # Mercados: UST (Tesoro / H.15) y extras vacíos -> como mucho un mail a Pedro.
+    try:
+        mercados = fuentes_mercados.cerrar_corrida()
+    except Exception as e:
+        print(f"::warning title=Mercados::no se pudo cerrar el estado: {type(e).__name__}: {e}")
+        mercados = None
     escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador,
                             agenda_mail=agenda_mail, datos_gob_csv=datos_gob_csv,
-                            datos_gob_descartados=datos_gob_descartados, trabajo_ripte=trabajo_ripte)
+                            datos_gob_descartados=datos_gob_descartados, trabajo_ripte=trabajo_ripte,
+                            mercados=mercados)
 
 
 def _ctx_solo(ctx, indicadores):

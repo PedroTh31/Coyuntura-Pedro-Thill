@@ -314,7 +314,7 @@ def _recolectar(feeds, es_argentina):
             try:
                 pub = datetime(*e.published_parsed[:6])
             except Exception:
-                pub = datetime.now()
+                pub = datetime.now(ZONA_AR).replace(tzinfo=None)
             if pub < limite:
                 continue
             bajada = _limpiar(getattr(e, "summary", "") or getattr(e, "description", ""))

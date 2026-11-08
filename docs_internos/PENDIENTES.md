@@ -77,6 +77,19 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
      `fred.stlouisfed.org/graph/fredgraph.csv`, en todas las corridas del bot registradas en
      `ultima_corrida.json` desde el 04/11/2026); desde la máquina local responde. Último dato del UST 10Y
      guardado: 03/09/2026. Se trata en el bloque del MAE.
+   - **Bloque MAE (08/11/2026):** FRED nunca respondió desde Actions (la primera corrida con el indicador, el
+     03/09, ya dio timeout; los datos del 01/09 y del 03/09 son de corridas locales). Está detrás de Akamai Bot
+     Manager, que retiene la conexión sin contestar (no es rate limit ni 403). **Resuelto en el código:** el UST
+     10Y sale del CSV del Tesoro de EE.UU. (curva par, columna "10 Yr", año por año desde 2004) con respaldo en
+     el H.15 de la Fed (alerta a Pedro si entra el respaldo o si fallan los dos); FRED se sacó. Las 5.673 fechas
+     guardadas de FRED coinciden exactamente con el Tesoro y con el H.15. **Falta verificar** que el Tesoro
+     responda desde Actions: la prueba es la primera corrida del bot (no se creó repo de diagnóstico, decisión de
+     Pedro).
+   - **El spread sigue frenado y queda EN REVISIÓN** (titular fijo, sin variación, aviso "Dato en revisión"),
+     porque depende de la TIR del GD30 del MAE (ver #28). Al resolver la TIR, el spread se calcula contra el
+     Treasury **interpolado a la duration del GD30** con los plazos de 1, 2 y 3 años del mismo CSV del Tesoro
+     (columnas "1 Yr", "2 Yr", "3 Yr"; `fuentes_mercados.H15_SERIE` ya tiene sus ids del H.15), no contra el de
+     10 años (decisión de Pedro del 08/11/2026).
 
 9. **La pestaña financiera no tiene línea de frescura** — anotado el 07/11/2026. **CERRADO el 08/11/2026:**
    lo resolvió el Bloque E2 (D4: frescura en todas las cards de todos los temas). Verificado en `docs/`
@@ -128,6 +141,19 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
     - Caución en pesos (1 día): 0,0 % TNA el 05/11/2026, entre 26,0 (04/11) y 30,0 (06/11).
     - Parece un snapshot del MAE tomado sin operaciones (campo `ultimo` en 0) que se guarda como dato
       real. Pendiente: tratar 0 como sin dato en `mae_resumen` (o usar otro campo), con un test.
+    - **CERRADO el 08/11/2026 (bloque MAE):** el 0 venía del MAE (el campo `ultimo` del cierre es siempre 0; la
+      tasa está en `ultimaTasa`/`tasaPP`). Las cauciones pasaron a `fuente: mae_caucion` (fuentes_mercados.py):
+      histórico de cierre `mercado/titulo/historicocauciones` hasta el día hábil anterior que informa el MAE,
+      tasa promedio ponderada (`tasaPP`) del plazo más corto operado del día (1 día hábil), tasa o monto 0 = sin
+      dato (tests en tests/test_fuentes_mercados.py; `mae_resumen` también descarta el 0). Serie reconstruida
+      desde ene-2024 (pesos; dólares desde el 02/07/2025, primer día del histórico del MAE) con
+      reconstruir_series.py, backup en Desktop\backup_datos\cauciones_2026-11-08.csv.
+    - Umbral de monto (decisión de Pedro del 08/11/2026, `fuentes_mercados.filtrar_monto_minimo`): si el monto del
+      plazo más corto del día es menor al 5% de la mediana de los 20 días hábiles previos (misma moneda), ese día
+      queda SIN DATO; no se lo sustituye por otro plazo. Desde ene-2024 pasa UN solo día: 05/11/2026 en pesos,
+      plazo 001 con $12.932 MM (0,5% de la mediana, ~$2,96 billones; el grueso se operó a 006). En dólares,
+      ningún día. Test con ese caso en tests/test_fuentes_mercados.py; dicho en la nota de las dos cauciones.
+      **#13 cerrado completo.**
 
 14. **Base monetaria: la serie cae a la mitad en jun-2026** — anotado el 07/11/2026 (visto en el Bloque
     C). **CERRADO el 08/11/2026:** pasa al BCRA (idVariable 15, promedio de días corridos, historia completa;
@@ -211,6 +237,13 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       (`flujofondoscotiz/H`) y también vienen vacías ("Indicador sin datos" en las corridas del 06/11 y del
       08/11; GD35 trajo dato el 06/11). Últimos datos en el CSV: AL30 y GD30 05/11, GD35 06/11. Probable misma
       causa que el muro, sin verificar. Arrastra al spread GD30 vs. UST10Y (#8).
+    - **CERRADO el 08/11/2026 (bloque MAE):** el muro sale de `emisiones/flujofondos/{ticker}` (flujo de fondos
+      de cada bono, no depende de que cotice; responde también fines de semana). Criterio general implementado
+      para los extras de run.py (muro y dólar futuro, `run._extras_con_respaldo`): el último dato válido se
+      guarda en `data/extras_ultimo.json`; si la fuente viene vacía la card se arma con ese dato, el sello marca
+      su antigüedad (frecuencia diaria), lleva el aviso "La fuente no devolvió datos en esta corrida" y sale la
+      alerta a Pedro (primer día y semanal, `data/mercados_estado.json`). Si nunca hubo dato, no hay card pero sí
+      alerta. Las series del yaml ya mantenían su último dato (sin cambios). Las TIR siguen en el #28.
 
 21. **Series de datos.gob.ar que devuelven 0 filas en cada corrida** — anotado el 08/11/2026 (revisión de
     los avisos "Indicador sin datos" de E4, no arreglado).
@@ -252,6 +285,11 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       corridas del 06/11 (viernes, de tarde) y del 08/11; últimos datos 06/11 (pesos) y 05/11 (dólares). Es
       un snapshot sin historia: un día vacío es un día perdido. Ver también el #13 (valor 0,00 guardado
       como dato). Causa no verificada (¿hora de la corrida respecto de la operatoria, cambio del ticker?).
+    - **CERRADO el 08/11/2026 (bloque MAE):** causa verificada con los logs de Actions y el histórico del MAE: (1)
+      los viernes y antes de feriados el "1 día" no es el ticker `001` sino `003`/`004`/`006`, así que nunca hubo
+      viernes guardados; (2) las corridas de las 06:30 son antes de la rueda; (3) la fecha salía de la UTC del
+      runner (la corrida de las 22:53 del 04/11 guardó el cierre del 04/11 como 05/11). Resuelto con el histórico
+      de cierre (ver #13).
 
 23. **Agregados monetarios (M1, M2, M3) mezclan bases de rebase** — anotado el 08/11/2026 (diagnóstico
     del #21; prioridad 1 por decisión de Pedro: es un dato falso publicado).
@@ -294,6 +332,12 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
     - Es una serie diaria (snapshot del MAE), así que debería llevar el "próximo DD/MM (estimado)" de las
       diarias del B2. Hoy: "sep-26 · próximo: sin calendario oficial". Causa no verificada (¿se clasifica
       la frecuencia por la cantidad de puntos, que es chica porque la serie es un snapshot?).
+    - **CERRADO el 08/11/2026 (bloque MAE):** con un solo punto `frescura.frecuencia()` devolvía "mensual" por
+      defecto, y el rezago se contaba desde el 30/09 (sin franja ⏸). Ahora la frecuencia sale del campo
+      `frecuencia:` del yaml, si no de la fuente (`frescura.FUENTES_DIARIAS`/`CALCULOS_DIARIOS`: snapshots del
+      MAE, Tesoro, BYMA, dólar, spread, brecha) y sólo si no, de las fechas (con 2 puntos o más; con uno, se
+      muestra la fecha y no se adivina). Las diarias pasan a franja ⏸ a los 10 días hábiles sin datos (piso
+      `rezago_normal_dias`); las demás frecuencias no cambian. El spread hoy: "⏸ 01/09/26 · sin datos nuevos".
 
 25. **Series huérfanas en el histórico** — anotado el 08/11/2026 (limpieza aparte, no tocadas).
     - Filas de `data/series_largo.csv` (y columnas de `series_ancho.csv`) con un nombre que ya no está en
@@ -345,17 +389,46 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
     - A hacer: decidir si la nota de una componente se suma a la de su card (y cómo, sin repetir) o si se
       revisan a mano las notas de esas cards.
 
-27. **Tres mecanismos de alerta con un mail de tope cada uno** — anotado el 08/11/2026 (ver también el #2 y
+27. **Cuatro mecanismos de alerta con un mail de tope cada uno** (eran tres; Mercados se sumó el 08/11/2026) — anotado el 08/11/2026 (ver también el #2 y
     el #11).
     - Hoy cada corrida puede mandar a Pedro hasta tres mails: INDEC (`fuentes_indec.cerrar_corrida`), fallback
       al CSV de datos.gob.ar (`fuentes_datos_gob.cerrar_corrida`) y RIPTE de la Secretaría de Trabajo
-      (`fuentes_trabajo.cerrar_corrida`), más los del calendario (`verificar_calendario.py`) y los de frescura
+      (`fuentes_trabajo.cerrar_corrida`), Mercados (`fuentes_mercados.cerrar_corrida`: UST y extras vacíos,
+      desde el 08/11/2026), más los del calendario (`verificar_calendario.py`) y los de frescura
       (`agenda.avisar_atrasados`), cada uno con su propio estado y su tope de 1 mail por corrida.
     - A evaluar: un solo mail por corrida con secciones, que junte los avisos que tocan ese día (cada
       mecanismo conservaría su estado y su frecuencia; sólo cambiaría el envío).
     - La alerta del fallback al CSV de datos.gob.ar incluye componentes de series que no se muestran (en la
       del 08/11/2026: 90.1_BMCMP_0_0_44 y 90.1_DCCT_0_0_32, componentes del M1, que salió del gráfico, #23).
       Evaluar excluirlas al unificar las alertas.
+
+28. **TIR de AL30/GD30/GD35 (MAE) en revisión** — anotado el 08/11/2026 (bloque MAE, no implementado).
+    - Las tres TIR, la curva de rendimientos y el spread GD30 vs. UST10Y quedan como dato en revisión
+      (`titular` = nombre, `ocultar_variacion: true`, `aviso: "Dato en revisión"`). Se siguen bajando de
+      `flujofondoscotiz/H` (snapshot, fechado con la fecha de Argentina; ese endpoint no informa fecha), sin
+      puntos de fines de semana ni feriados (30 borrados el 08/11/2026, backup en
+      Desktop\backup_datos\mae_no_habiles_2026-11-08.csv). Ojo: la corrida de las 06:30 puede seguir
+      tomando el estado del día hábil anterior con la fecha de hoy (la fecha del snapshot no la informa el MAE).
+    - Diagnóstico (08/11/2026): cierres diarios de BYMA (`chart/historical-series/history`, símbolo con el plazo:
+      "AL30D 24HS", "GD30D 24HS", "GD35D 24HS"; sin el sufijo da `no_data`) + flujo de fondos del MAE
+      (`emisiones/flujofondos/{ticker}`, `cashFlow` por 100 de VN original), liquidación T+1 hábil, TIR efectiva
+      anual ACT/365. Contra las TIR guardadas del MAE en los mismos días: AL30 mediana +1,24 pp y hasta +4,15 pp
+      (la del MAE salta 1,25 pp por día en la mediana; la de BYMA 0,21 pp); GD30 mediana −0,08 pp, hasta 2,66 pp;
+      GD35 mediana +0,75 pp, hasta 1,48 pp. En muchos días coinciden a la centésima, así que la fórmula es la
+      misma: la diferencia es el precio (el MAE toma la última operación propia, poco líquida y a veces en otra
+      moneda o plazo). Tabla completa en el informe de la ronda.
+    - Otra fecha mal puesta, no borrada (es día hábil): TIR GD30 del 05/11/2026 = la corrida de las 22:53 del
+      04/11 (valor del 04/11).
+    - A decidir: pasar las TIR a precio de cierre de BYMA + flujo de fondos (con `nota`), y después el spread
+      contra el Treasury interpolado a la duration (#8).
+
+29. **Filtro de noticias del mail diario** — anotado el 08/11/2026 (los ejemplos marcados por Pedro para la
+    próxima ronda están en CLAUDE.md, "Filtro de noticias — ejemplos marcados por Pedro").
+    - Zona horaria (visto en el bloque MAE, no tocado por decisión de Pedro): en `enviar_mail._recolectar`,
+      `published_parsed` de los feeds viene en UTC y se compara contra `_limite()`, que está en hora argentina
+      sin zona. Pueden entrar notas hasta 3 horas más viejas que la ventana (1 día; 3 los lunes; 7 en
+      internacional). Arreglo posible: pasar `published_parsed` a hora argentina antes de comparar, con un
+      test en tests/test_noticias.py.
 
 ## Bloques futuros (después del Bloque E; no implementar todavía)
 

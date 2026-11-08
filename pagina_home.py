@@ -168,7 +168,7 @@ def armar_datos_clave(datos_clave: list[dict], cards: dict[str, dict], tema_de: 
             ctx_local = dataclasses.replace(ctx, registro={}) if ctx is not None else None
             fr, grave = dashboard._linea_frescura(ind, historico, ctx_local, por_nombre)
             card = {"unidad": ind.get("unidad", "")}
-            anio = ctx.ahora.year if ctx is not None else pd.Timestamp.today().year
+            anio = ctx.ahora.year if ctx is not None else pd.Timestamp.now(tz="America/Argentina/Buenos_Aires").year
             dashboard._completar_card(card, ind, historico, por_nombre, grave, True, anio)
             resumen, unidad = d["serie"], ind.get("unidad", "")
             item = dict(etiqueta=d.get("etiqueta", d["serie"]), valor=card.get("valor"), unidad=unidad,

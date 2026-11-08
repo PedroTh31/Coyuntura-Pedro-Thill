@@ -15,6 +15,7 @@ Fuentes soportadas:
   - bcra           -> api.bcra.gob.ar/estadisticas (reservas diarias, etc.)
   - rem_bcra       -> Excel histórico único del REM (bcra.gob.ar), expectativas de mercado
   - indec_api      -> api.indec.gob.ar/v1 (beta, PostgREST, token JWT en INDEC_API_TOKEN)
+  - mae_caucion, tesoro_ust -> fuentes_mercados.py (cauciones históricas del MAE; UST del Tesoro / H.15)
 """
 from __future__ import annotations
 import datetime
@@ -23,6 +24,7 @@ import json
 import re
 import time
 from pathlib import Path
+from zoneinfo import ZoneInfo
 import requests
 import pandas as pd
 import xlrd
@@ -34,6 +36,13 @@ TIMEOUT = 30
 # cabecera HTTP) causaba un 502 consistente y reproducible en api.bcra.gob.ar -- probado en
 # vivo, era la causa real de que "Reservas internacionales (BCRA)" no se actualizara.
 HEADERS = {"User-Agent": "coyuntura-tracker/1.0 (uso academico)"}
+ZONA_AR = ZoneInfo("America/Argentina/Buenos_Aires")
+
+
+def hoy_ar() -> pd.Timestamp:
+    """Fecha de hoy en Argentina (naive, 00:00). El runner de GitHub Actions está en UTC: entre las 21 y las
+    24 h de Argentina `pd.Timestamp.today()` ya es el día siguiente (bloque MAE, 08/11/2026)."""
+    return pd.Timestamp.now(tz=ZONA_AR).tz_localize(None).normalize()
 
 
 def _get(url: str, params: dict | None = None, reintentos: int = 3) -> requests.Response:
@@ -218,7 +227,7 @@ def fetch_bcra(id_variable: int, start_date: str | None = None) -> pd.DataFrame:
     backoff. Si todo falla, loguea el error y devuelve un DataFrame vacío SIN
     tocar el histórico ya guardado (storage.py sólo agrega, nunca borra).
     """
-    end_date = pd.Timestamp.today()
+    end_date = hoy_ar()
     ventanas_dias = [730, 180, 30]  # 2 años, 6 meses, 1 mes
     reintentos_por_ventana = 4
     filas = []
@@ -287,7 +296,7 @@ def agregar_mensual(df: pd.DataFrame, regla: str) -> pd.DataFrame:
         m = s.resample("MS").mean()
     else:
         m = s.resample("MS").last()
-    hoy = pd.Timestamp.today().normalize()
+    hoy = hoy_ar()
     m = m[m.index < hoy.replace(day=1)]
     return m.dropna().rename_axis("fecha").reset_index(name="valor")
 
@@ -299,7 +308,7 @@ def fetch_bcra_historia(id_variable: int, start_date: str | None = None, anios_p
     ajustadas, y cambiarla necesita confirmación de Pedro. Si una ventana falla tras los reintentos de
     _get, falla toda la serie (nunca una historia con huecos)."""
     desde = pd.to_datetime(start_date or "2003-01-01")
-    hoy = pd.Timestamp.today().normalize()
+    hoy = hoy_ar()
     url = f"https://api.bcra.gob.ar/estadisticas/v4.0/monetarias/{id_variable}"
     filas = []
     while desde <= hoy:
@@ -384,7 +393,7 @@ def fetch_rem_variable(variable: str, referencia: str, start_date: str | None = 
         try:
             meta = json.loads(_REM_CACHE_META.read_text(encoding="utf-8"))
             descargado = pd.to_datetime(meta.get("descargado"))
-            if (pd.Timestamp.today().normalize() - descargado).days < REM_FRESCURA_DIAS:
+            if (hoy_ar() - descargado).days < REM_FRESCURA_DIAS:
                 cache = pd.read_csv(_REM_CACHE_CSV, parse_dates=["fecha"])
                 if ((cache["variable"] == variable) & (cache["referencia"] == referencia)).any():
                     completo = cache
@@ -396,7 +405,7 @@ def fetch_rem_variable(variable: str, referencia: str, start_date: str | None = 
         _CACHE_DIR.mkdir(parents=True, exist_ok=True)
         completo.to_csv(_REM_CACHE_CSV, index=False)
         _REM_CACHE_META.write_text(
-            json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+            json.dumps({"descargado": hoy_ar().isoformat()}), encoding="utf-8")
 
     sub = completo[(completo["variable"] == variable) & (completo["referencia"] == referencia)]
     if sub.empty:
@@ -438,7 +447,7 @@ def fetch_bcra_organismos_internacionales() -> pd.DataFrame:
         try:
             meta = json.loads(_ORGANISMOS_CACHE_META.read_text(encoding="utf-8"))
             descargado = pd.to_datetime(meta.get("descargado"))
-            if (pd.Timestamp.today().normalize() - descargado).days < ORGANISMOS_FRESCURA_DIAS:
+            if (hoy_ar() - descargado).days < ORGANISMOS_FRESCURA_DIAS:
                 completo = pd.read_csv(_ORGANISMOS_CACHE_CSV, parse_dates=["fecha"])
         except (ValueError, KeyError, OSError, json.JSONDecodeError):
             completo = None
@@ -448,7 +457,7 @@ def fetch_bcra_organismos_internacionales() -> pd.DataFrame:
         _CACHE_DIR.mkdir(parents=True, exist_ok=True)
         completo.to_csv(_ORGANISMOS_CACHE_CSV, index=False)
         _ORGANISMOS_CACHE_META.write_text(
-            json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+            json.dumps({"descargado": hoy_ar().isoformat()}), encoding="utf-8")
     return completo[["fecha", "valor"]].reset_index(drop=True)
 
 
@@ -550,7 +559,7 @@ def fetch_bcra_swap_china() -> pd.DataFrame:
 
     meses_tenidos = set(cache["fecha"].dt.to_period("M")) if not cache.empty else set()
     mes_cursor = SWAP_CHINA_INICIO.to_period("M")
-    mes_final = pd.Timestamp.today().to_period("M")
+    mes_final = hoy_ar().to_period("M")
     nuevas = []
     while mes_cursor <= mes_final:
         if mes_cursor not in meses_tenidos:
@@ -656,7 +665,7 @@ def fetch_bcra_morosidad_lineas(serie: str, start_date: str | None = None) -> pd
         try:
             meta = json.loads(_MOROSIDAD_LINEAS_CACHE_META.read_text(encoding="utf-8"))
             descargado = pd.to_datetime(meta.get("descargado"))
-            if (pd.Timestamp.today().normalize() - descargado).days < MOROSIDAD_LINEAS_FRESCURA_DIAS:
+            if (hoy_ar() - descargado).days < MOROSIDAD_LINEAS_FRESCURA_DIAS:
                 completo = pd.read_csv(_MOROSIDAD_LINEAS_CACHE_CSV, parse_dates=["fecha"])
         except (ValueError, KeyError, OSError, json.JSONDecodeError):
             completo = None
@@ -666,7 +675,7 @@ def fetch_bcra_morosidad_lineas(serie: str, start_date: str | None = None) -> pd
         _CACHE_DIR.mkdir(parents=True, exist_ok=True)
         completo.to_csv(_MOROSIDAD_LINEAS_CACHE_CSV, index=False)
         _MOROSIDAD_LINEAS_CACHE_META.write_text(
-            json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+            json.dumps({"descargado": hoy_ar().isoformat()}), encoding="utf-8")
 
     sub = completo[completo["serie"] == serie]
     if sub.empty:
@@ -747,7 +756,7 @@ def fetch_deuda_bruta(start_date: str | None = None) -> pd.DataFrame:
         try:
             meta = json.loads(_DEUDA_CACHE_META.read_text(encoding="utf-8"))
             descargado = pd.to_datetime(meta.get("descargado"))
-            if (pd.Timestamp.today().normalize() - descargado).days < DEUDA_FRESCURA_DIAS:
+            if (hoy_ar() - descargado).days < DEUDA_FRESCURA_DIAS:
                 cache = pd.read_csv(_DEUDA_CACHE_CSV, parse_dates=["fecha"])
         except (ValueError, KeyError, OSError, json.JSONDecodeError):
             cache = None
@@ -757,7 +766,7 @@ def fetch_deuda_bruta(start_date: str | None = None) -> pd.DataFrame:
         _CACHE_DIR.mkdir(parents=True, exist_ok=True)
         cache.to_csv(_DEUDA_CACHE_CSV, index=False)
         _DEUDA_CACHE_META.write_text(
-            json.dumps({"descargado": pd.Timestamp.today().normalize().isoformat()}), encoding="utf-8")
+            json.dumps({"descargado": hoy_ar().isoformat()}), encoding="utf-8")
 
     df = cache[["fecha", "valor"]].sort_values("fecha").drop_duplicates(subset="fecha").reset_index(drop=True)
     if start_date:
@@ -782,7 +791,7 @@ def fetch_byma_indice(symbol: str, start_date: str | None = None) -> pd.DataFram
     """
     desde_dt = pd.to_datetime(start_date) if start_date else pd.Timestamp("2024-01-01")
     desde_unix = int(desde_dt.timestamp())
-    hasta_unix = int(pd.Timestamp.today().timestamp())
+    hasta_unix = int(time.time())
     url = f"{_BYMA_BASE}/chart/index-historical-series/history"
     params = {"symbol": symbol, "resolution": "D", "from": desde_unix, "to": hasta_unix}
 
@@ -869,14 +878,30 @@ def fetch_mae_resumen(tipo: str) -> list[dict]:
     return data
 
 
+CAMPOS_FECHA_MAE = ("fecha", "fechaCotizacion", "fechaOperacion", "fechaConcertacion")
+
+
+def fecha_snapshot_mae(item: dict) -> pd.Timestamp:
+    """Fecha de un snapshot del MAE: la que trae el propio ítem si la informa; si no, la fecha de Argentina
+    (nunca la UTC del runner). run.py descarta después los puntos de fines de semana y feriados."""
+    for campo in CAMPOS_FECHA_MAE:
+        if item.get(campo):
+            try:
+                return pd.Timestamp(item[campo]).tz_localize(None).normalize()
+            except (TypeError, ValueError):
+                pass
+    return hoy_ar()
+
+
 def fetch_mae_resumen_campo(tipo: str, ticker: str, campo: str = "ultimo") -> pd.DataFrame:
-    """Un campo de un instrumento puntual del resumen MAE, snapshot del día (sin historia)."""
+    """Un campo de un instrumento puntual del resumen MAE, snapshot del día (sin historia). Un 0 es "sin
+    operaciones", no un dato (#13): devuelve vacío."""
     for item in fetch_mae_resumen(tipo):
         if item.get("ticker") == ticker:
             valor = item.get(campo)
-            if valor is None:
+            if valor is None or float(valor) == 0:
                 break
-            return pd.DataFrame({"fecha": [pd.Timestamp.today().normalize()], "valor": [float(valor)]})
+            return pd.DataFrame({"fecha": [fecha_snapshot_mae(item)], "valor": [float(valor)]})
     return pd.DataFrame(columns=["fecha", "valor"])
 
 
@@ -913,10 +938,25 @@ def fetch_mae_bono_campo(ticker: str, campo: str, letra: str = "H") -> pd.DataFr
     for bono in fetch_mae_flujofondos(letra):
         if bono.get("especie") == ticker:
             valor = bono.get(campo)
-            if valor is None:
+            if valor is None or float(valor) == 0:
                 break
-            return pd.DataFrame({"fecha": [pd.Timestamp.today().normalize()], "valor": [float(valor)]})
+            return pd.DataFrame({"fecha": [fecha_snapshot_mae(bono)], "valor": [float(valor)]})
     return pd.DataFrame(columns=["fecha", "valor"])
+
+
+def fetch_mae_flujofondos_ticker(ticker: str) -> dict | None:
+    """Flujo de fondos de UN bono (emisiones/flujofondos/{ticker}, el que usa la ficha del título en
+    marketdata.mae.com.ar): cupones con fechaPago, amortizacion (% del VN original), renta y valor residual.
+    No depende de que el bono cotice ese día (responde también fines de semana, verificado el 08/11/2026),
+    a diferencia de flujofondoscotiz. Lo usa el muro de vencimientos (#20). None si falla o viene vacío."""
+    try:
+        data = _get(f"{_MAE_BASE}/emisiones/flujofondos/{ticker}").json()
+    except (RuntimeError, ValueError) as e:
+        print(f"  [ADVERTENCIA] fetch_mae_flujofondos_ticker {ticker}: {e}")
+        return None
+    if not isinstance(data, dict) or data.get("especie") != ticker or not data.get("detalle"):
+        return None
+    return data
 
 
 # ---------------------------------------------------------------------------
@@ -936,21 +976,6 @@ def fetch_data912(endpoint: str) -> list[dict]:
     except (RuntimeError, ValueError) as e:
         print(f"  [ADVERTENCIA] fetch_data912 endpoint={endpoint}: {e}")
         return []
-
-
-# ---------------------------------------------------------------------------
-# 8) FRED (Federal Reserve Economic Data) -> series de EEUU, sin API key
-# ---------------------------------------------------------------------------
-def fetch_fred(series_id: str, start_date: str | None = None) -> pd.DataFrame:
-    """Serie histórica de FRED vía el endpoint público de descarga CSV (sin API key)."""
-    r = _get("https://fred.stlouisfed.org/graph/fredgraph.csv", params={"id": series_id})
-    df = pd.read_csv(io.StringIO(r.text))
-    df.columns = ["fecha", "valor"]
-    df = df[df["valor"] != "."]  # FRED usa "." para datos faltantes
-    df = df.assign(fecha=pd.to_datetime(df["fecha"]), valor=df["valor"].astype(float))
-    if start_date:
-        df = df[df["fecha"] >= pd.to_datetime(start_date)]
-    return df.sort_values("fecha").reset_index(drop=True)
 
 
 # ---------------------------------------------------------------------------
@@ -1164,8 +1189,12 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
         return fetch_mae_resumen_campo(indicador["tipo"], indicador["ticker"], indicador.get("campo", "ultimo"))
     if fuente == "mae_bono":
         return fetch_mae_bono_campo(indicador["ticker"], indicador["campo"], indicador.get("letra", "H"))
-    if fuente == "fred":
-        return fetch_fred(indicador["id"], start_date)
+    if fuente == "mae_caucion":   # histórico de cierre del MAE, plazo más corto del día (fuentes_mercados.py)
+        import fuentes_mercados
+        return fuentes_mercados.serie_caucion(indicador["ticker"], indicador.get("desde_historia"))[["fecha", "valor"]]
+    if fuente == "tesoro_ust":   # Tesoro de EE.UU., respaldo H.15 de la Fed (fuentes_mercados.py)
+        import fuentes_mercados
+        return fuentes_mercados.serie_ust(indicador.get("plazo", "10 Yr"), start_date)
     if fuente == "trabajo_ripte":   # Secretaría de Trabajo: PDF + tabla de la página, con controles
         import fuentes_trabajo
         return fuentes_trabajo.serie(start_date)

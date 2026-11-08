@@ -19,10 +19,10 @@ class TestFuentesDePagina(unittest.TestCase):
         fin = [{"nombre": "Dólar oficial", "solo_referencia": True},
                {"nombre": "TAMAR", "solo_referencia": True},
                {"nombre": "S&P MERVAL", "fuente": "byma", "symbol": "M"},
-               {"nombre": "Spread", "calculo": "spread_bono_ust", "ticker_bono": "GD30", "fred_id": "DGS10"},
+               {"nombre": "Spread", "calculo": "spread_bono_ust", "ticker_bono": "GD30", "ust_plazo": "10 Yr"},
                {"nombre": "Combo", "vista": "overlay", "series": ["TAMAR"]}]
         txt = D.fuentes_de_pagina(fin, {}, macro + fin, extra=["MAE", "data912"])
-        self.assertEqual(txt, "ArgentinaDatos · BCRA · BYMA · MAE · FRED · data912")
+        self.assertEqual(txt, "ArgentinaDatos · BCRA · BYMA · MAE · Tesoro de EE.UU. · data912")
         self.assertNotIn("INDEC", txt)
 
     def test_indec_api_vs_fallback(self):

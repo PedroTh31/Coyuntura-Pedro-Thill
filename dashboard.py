@@ -858,17 +858,18 @@ def _usos_indec(ind, fuentes_indec):
 # INDEC cae al fallback, el encabezado lo refleja.
 FUENTES_HEADER_DEFAULT = "API del INDEC · apis.datos.gob.ar · ArgentinaDatos · BCRA"
 ORDEN_FUENTES = ["API del INDEC", "apis.datos.gob.ar", "ArgentinaDatos", "BCRA",
-                 "Secretaría de Finanzas", "Secretaría de Trabajo", "BYMA", "MAE", "FRED", "data912"]
+                 "Secretaría de Finanzas", "Secretaría de Trabajo", "BYMA", "MAE", "Tesoro de EE.UU.", "data912"]
 ETIQUETA_FUENTE = {"datos_gob": "apis.datos.gob.ar", "argentinadatos": "ArgentinaDatos",
                    "dolar": "ArgentinaDatos", "bcra": "BCRA", "rem_bcra": "BCRA",
                    "bcra_morosidad_lineas": "BCRA", "deuda_bruta": "Secretaría de Finanzas",
-                   "byma": "BYMA", "mae_bono": "MAE", "mae_resumen": "MAE", "fred": "FRED",
+                   "byma": "BYMA", "mae_bono": "MAE", "mae_resumen": "MAE", "mae_caucion": "MAE",
+                   "tesoro_ust": "Tesoro de EE.UU.",
                    "trabajo_ripte": "Secretaría de Trabajo"}
 ETIQUETA_USO_INDEC = {"indec_api": "API del INDEC", "datos_gob_ar": "apis.datos.gob.ar",
                       "argentinadatos": "ArgentinaDatos"}
 # Fuentes que un `calculo:` usa por fuera de sus ids de datos.gob (ver _calcular en run.py).
 FUENTES_CALCULO = {"brecha": ["ArgentinaDatos"], "reservas_ajustadas": ["BCRA"],
-                   "tasa_real_expost": ["BCRA"], "spread_bono_ust": ["MAE", "FRED"],
+                   "tasa_real_expost": ["BCRA"], "spread_bono_ust": ["MAE", "Tesoro de EE.UU."],
                    "deuda_pbi": ["Secretaría de Finanzas", "ArgentinaDatos"]}
 CAMPOS_ID_DG = ("id", "base_id", "nominal_id", "deflactor_id", "numerador_id", "denominador_id",
                 "minuendo_id", "sustraendo_id", "pbi_id", "ipc_base_id")
@@ -1083,7 +1084,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
     if frescura_ctx is not None:
         anio, hoy = frescura_ctx.ahora.year, pd.Timestamp(frescura_ctx.ahora).normalize()
     else:
-        anio, hoy = datetime.now().year, pd.Timestamp.today().normalize()
+        hoy = pd.Timestamp.now(tz=ZoneInfo("America/Argentina/Buenos_Aires")).tz_localize(None).normalize()
+        anio = hoy.year
     OUT.mkdir(parents=True, exist_ok=True)
     historico = rebase_vista(historico, config_indicadores)   # overlays en niveles -> base 100 al dibujar
     historico = cortar_comun(historico, config_indicadores)   # overlays hasta el último período común
@@ -1170,7 +1172,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         # series: el cartel viejo queda sólo para las páginas sin línea (financiera).
         marca_fecha = None
         if ind.get("marca_fecha") and frescura_ctx is None:
-            dias_atraso = (pd.Timestamp.today().normalize() - serie["fecha"].max()).days
+            dias_atraso = (hoy - serie["fecha"].max()).days
             if dias_atraso > UMBRAL_DISCONTINUADA_DIAS:
                 marca_fecha = f"Sin datos nuevos desde {serie['fecha'].max().strftime('%m/%Y')}"
         # Punto 4 del checklist (PROMPT_fix_graficos_y_storytelling.md): una serie con muy

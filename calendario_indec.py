@@ -246,7 +246,7 @@ if __name__ == "__main__":
     # Prueba de conectividad y formato (la usa el workflow temporal de prueba). Exige
     # publicaciones en el mes actual y los 2 siguientes: el INDEC carga ~10 meses por adelantado.
     import sys
-    hoy = date.today()
+    hoy = datetime.now(ZONA_AR).date()
     errores = 0
     for n in range(3):
         a, m = _sumar_meses(hoy.year, hoy.month, n)

@@ -19,6 +19,12 @@ próximo. Diseño aprobado por Pedro el 07/11/2026:
   UMBRAL_DISCONTINUADA_DIAS (90), con piso en `rezago_normal_dias` del indicador. Las trimestrales
   suman un trimestre de tolerancia (90 + 92): el dato de un trimestre sigue siendo el último
   publicado hasta ~170 días después de su cierre (ej. EPH del 2T, vigente hasta el 18/12).
+  Series DIARIAS (bloque MAE, decisión de Pedro del 08/11/2026): rezago grave a los
+  UMBRAL_DIARIAS_HABILES (10) días hábiles sin datos nuevos, también con piso en `rezago_normal_dias`.
+- Frecuencia: la del campo `frecuencia:` del yaml si está; si no, la de la fuente (FUENTES_DIARIAS,
+  CALCULOS_DIARIOS: snapshots del MAE, Tesoro, BYMA, dólar); si no, la separación típica de las fechas,
+  SÓLO con 2 puntos o más. Con un solo punto y sin frecuencia declarada no se adivina (#24: el spread
+  con un único dato salía "mensual" y decía "sep-26").
 - Días hábiles: feriados de calendario.yaml (días en que no operan INDEC, BCRA y BYMA).
 """
 from __future__ import annotations
@@ -33,6 +39,10 @@ import pandas as pd
 import calendario_indec as C
 
 UMBRAL_DISCONTINUADA_DIAS = 90
+UMBRAL_DIARIAS_HABILES = 10
+FRECUENCIAS = ("diaria", "mensual", "trimestral")
+FUENTES_DIARIAS = {"mae_bono", "mae_resumen", "mae_caucion", "tesoro_ust", "byma", "dolar"}
+CALCULOS_DIARIOS = {"spread_bono_ust", "brecha"}
 TOLERANCIA_TRIMESTRAL_DIAS = 92
 MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 MESES_LARGOS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
@@ -56,6 +66,30 @@ def frecuencia(fechas: pd.Series) -> str:
     if g >= 60:
         return "trimestral"
     return "mensual"
+
+
+def frecuencia_de(ind: dict, fechas: pd.Series) -> str | None:
+    """`frecuencia:` del yaml > frecuencia de la fuente > separación de las fechas (con 2 puntos o más).
+    None si no se puede saber (un solo punto, sin frecuencia declarada ni fuente conocida)."""
+    declarada = ind.get("frecuencia")
+    if declarada:
+        if declarada not in FRECUENCIAS:
+            raise ValueError(f"{ind.get('nombre')}: frecuencia '{declarada}' (válidas: {', '.join(FRECUENCIAS)})")
+        return declarada
+    if ind.get("fuente") in FUENTES_DIARIAS or ind.get("calculo") in CALCULOS_DIARIOS:
+        return "diaria"
+    if pd.Series(pd.to_datetime(fechas)).nunique() < 2:
+        return None
+    return frecuencia(fechas)
+
+
+def dias_habiles_entre(desde: date, hasta: date, no_habiles: set) -> int:
+    """Días hábiles en (desde, hasta]: los días hábiles transcurridos sin un dato posterior a `desde`."""
+    n, d = 0, desde
+    while d < hasta:
+        d = date.fromordinal(d.toordinal() + 1)
+        n += C.es_habil(d, no_habiles)
+    return n
 
 
 def periodo_de(fecha: pd.Timestamp, frec: str) -> pd.Period:
@@ -160,9 +194,13 @@ def calcular(ind: dict, nombre_serie: str, fechas: pd.Series, ctx: Contexto) -> 
     if fechas is None or len(fechas) == 0:
         return None
     ultima = pd.to_datetime(fechas).max()
-    frec = frecuencia(fechas)
-    per = periodo_de(ultima, frec)
-    per_txt = texto_periodo(per)
+    frec = frecuencia_de(ind, fechas)
+    if frec is None:   # un solo punto sin frecuencia conocida: se muestra la fecha, sin adivinar el período
+        print(f"::warning title=Frescura::{nombre_serie}: un solo dato y sin `frecuencia:` en el yaml")
+        per, per_txt = periodo_de(ultima, "diaria"), ultima.strftime("%d/%m/%y")
+    else:
+        per = periodo_de(ultima, frec)
+        per_txt = texto_periodo(per)
 
     # Rezago grave: días desde el FIN del período del último dato.
     fin = per.end_time.normalize().date()
@@ -170,13 +208,17 @@ def calcular(ind: dict, nombre_serie: str, fechas: pd.Series, ctx: Contexto) -> 
     umbral = max(UMBRAL_DISCONTINUADA_DIAS + (TOLERANCIA_TRIMESTRAL_DIAS if frec == "trimestral" else 0),
                  ind.get("rezago_normal_dias", 0))
     grave = None
-    if dias > umbral:
+    habiles = dias_habiles_entre(fin, ctx.hoy, ctx.no_habiles) if frec == "diaria" else None
+    if frec == "diaria" and habiles >= UMBRAL_DIARIAS_HABILES and dias > ind.get("rezago_normal_dias", 0):
+        meses = (ctx.hoy.year * 12 + ctx.hoy.month) - (fin.year * 12 + fin.month) - (ctx.hoy.day < fin.day)
+        grave = f"sin datos nuevos hace {meses} meses" if meses >= 2 else f"sin datos nuevos hace {habiles} días hábiles"
+    elif frec != "diaria" and dias > umbral:
         # Meses COMPLETOS desde el cierre del período (misma base que `dias`): may-26 cierra el 31/05,
         # al 07/11 van 160 días = 5 meses completos (no 6, que sería contar desde el 01/05).
         meses = (ctx.hoy.year * 12 + ctx.hoy.month) - (fin.year * 12 + fin.month) - (ctx.hoy.day < fin.day)
         grave = f"sin datos nuevos hace {meses} meses" if meses >= 2 else f"sin datos nuevos hace {dias} días"
 
-    if grave and frec == "diaria":
+    if grave and frec in ("diaria", None):
         per_txt = ultima.strftime("%d/%m/%y")   # frenada hace meses: sin el año, "28/01" se lee mal
     pid = ctx.pub_de_indicador.get(nombre_serie) or ctx.pub_de_indicador.get(ind.get("nombre"))
     if pid is not None:
