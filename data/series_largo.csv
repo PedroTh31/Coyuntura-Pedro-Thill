@@ -6800,6 +6800,7 @@
 2026-11-05,Brecha cambiaria (CCL/oficial),monetario_financiero,%,7.0318471337579735
 2026-11-06,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.044585987261142
 2026-11-07,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.044585987261142
+2026-11-08,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.044585987261142
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -10531,6 +10532,7 @@
 2026-11-05,Canje MEP/CCL,mercados,%,5.778673045448834
 2026-11-06,Canje MEP/CCL,mercados,%,4.842569269521424
 2026-11-07,Canje MEP/CCL,mercados,%,4.849171862207946
+2026-11-08,Canje MEP/CCL,mercados,%,4.849171862207946
 2016-04-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.828856935414313
 2016-05-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.7099434317382665
 2016-06-01,Capacidad de compra del salario (RIPTE / CBT),social,canastas,4.635835613936749
@@ -18385,6 +18387,7 @@
 2026-11-05,Dólar CCL,monetario_financiero,$/USD (venta),1680.4
 2026-11-06,Dólar CCL,monetario_financiero,$/USD (venta),1664.9
 2026-11-07,Dólar CCL,monetario_financiero,$/USD (venta),1664.9
+2026-11-08,Dólar CCL,monetario_financiero,$/USD (venta),1664.9
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -21317,6 +21320,7 @@
 2026-11-05,Dólar MEP,monetario_financiero,$/USD (venta),1588.6
 2026-11-06,Dólar MEP,monetario_financiero,$/USD (venta),1588.0
 2026-11-07,Dólar MEP,monetario_financiero,$/USD (venta),1587.9
+2026-11-08,Dólar MEP,monetario_financiero,$/USD (venta),1587.9
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -27105,6 +27109,7 @@
 2026-11-05,Dólar blue,monetario_financiero,$/USD (venta),1560.0
 2026-11-06,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2026-11-07,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-11-08,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -32893,6 +32898,7 @@
 2026-11-05,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2026-11-06,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2026-11-07,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
+2026-11-08,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.18617931655959
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238073
