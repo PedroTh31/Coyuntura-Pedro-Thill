@@ -157,6 +157,52 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   - Colores de las secciones nuevas: `tema.py` (paleta del Bloque C; el Bloque 2 de
     `PROMPT_mail_v3.md` debería leer de ahí). Tests: `tests/test_agenda.py`, `tests/test_mail_agenda.py`.
 
+- **Estética del dashboard** (Bloque C, diseño aprobado por Pedro el 07/11/2026; mismo estilo en las dos
+  páginas):
+  - Colores y tipografía SÓLO de `tema.py` (`TEMA`): el CSS (variables `--azul-1`, …) y el JS (`TEMA`,
+    `Chart.defaults` + plugins globales `etiquetasDirectas`, `tramoSinDatos`, `lineaCero`) se generan desde
+    ahí. Ningún gráfico se estiliza por separado; la jerarquía la da el orden: protagonista `azul_1`,
+    luego `azul_2`, `azul_3` (punteado), contexto `azul_contexto`. En un overlay la protagonista es la
+    ÚLTIMA serie de `series:` (la que resume la card). `ACENTO`/`AZUL_ENLACE` quedan sólo por compatibilidad.
+  - Arena (`negativo`) = SÓLO valores negativos (D2). La variación bajo el valor va en gris azulado, sin
+    juicio (D3): `sube_es_bueno`/`neutral` ya no pintan la card del dashboard (el mail los sigue usando
+    hasta su Bloque 2).
+  - Sin leyendas de Chart.js: etiquetas directas al final de cada serie + leyenda en prosa sobre el
+    gráfico (`.cdesc`, la arma el JS con los colores reales). Campo opcional `etiqueta: "..."` en el yaml
+    = texto corto de la etiqueta directa (si no hay y el nombre es largo, va sólo el valor).
+  - Decimales según la unidad y pp para tasas (D4, `titulares.decimales`/`decDe` en JS). Fuente del
+    sistema (Helvetica Neue/Helvetica/Arial), sin Google Fonts (D6).
+  - Selector "Vista: desde mmm-aa · 6M · 1A · 5A · Máx · Rango…" (D5): la vista inicial es el `desde`.
+  - Serie con franja ⏸ (rezago grave del B2): el eje sigue hasta hoy con nulls y el tramo sin datos va
+    sombreado (D9, `_extender_hasta_hoy`). máx/mín van en el pie, junto a la fuente y el asterisco (D11).
+  - La línea de frescura del B2 (`.cf`) NO se toca.
+- `titulares.py` (funciones puras, tests en `tests/test_titulares.py`) — titular por reglas de cada card
+  de la pestaña macro (sólo macro, D1; `generar(con_titulares=True)` desde run.py) y la variación bajo el
+  valor, que compara contra lo mismo que el titular (D13). Campos del yaml: `titular_regla:
+  direccion|signo|saldo|aporte`, `titular_sujeto` (con artículo: define género/número del verbo),
+  `titular_formato` (ej. `"USD {} M"`), `titular` (texto fijo, override). Sin regla, en rezago grave o sin
+  dato de comparación, la card muestra el nombre. Períodos: trimestrales siempre con año ("2.º trimestre
+  de 2026"); mensuales con año sólo si no es el año en curso.
+  - `comparar:` política por defecto (D7): las diarias contra el dato anterior; las mensuales y
+    trimestrales (ninguna serie del dashboard está desestacionalizada, verificado en la metadata de
+    datos.gob.ar) contra el MISMO período del año anterior, tanto la dirección como la racha, y sin
+    "Máximo/Mínimo desde" (D12). **Excepción explícita en el yaml** con `comparar: anterior`: inflación
+    mensual y núcleo/regulados/estacionales (decisión de Pedro del 07/11/2026: es como se comunica el
+    dato, "La inflación mensual sube a 1,9% en septiembre"), más las series que ya son una variación
+    interanual o una tasa real (inflación interanual, tasa real). Nunca hardcodear la excepción en el código.
+  - Incidencia del IPC: `top_n: 3` + Resto (D8); titular `aporte` con la división de mayor aporte.
+  - Rachas ("n.º mes seguido"), decisiones de Pedro: desde 3 períodos. Las de DIRECCIÓN (suba/baja, por
+    encima/debajo del año anterior) se omiten si pasan de 24 (`MAX_RACHA`) y en series nominales en pesos,
+    marcadas en el yaml con `nominal_pesos: true` (hoy: base monetaria, préstamos al sector privado, PBI
+    nominal, resultado fiscal; el dólar no, es un tipo de cambio). Las de SIGNO (superávit, déficit, tasa
+    negativa) van siempre: sin tope y también en pesos. Una serie nueva en pesos corrientes con titular
+    → marcarla.
+  - `titular:` con el mismo texto que el `nombre` = la card muestra sólo el nombre (sin antetítulo), y
+    `ocultar_variacion: true` saca la variación bajo el valor. Se usan para no publicar un titular ni una
+    variación sobre un dato dudoso mientras se revisa (base monetaria, PENDIENTES #14).
+  - `unidad_linea:` en `vista: balance_cambiario` = unidad de la línea, que es también la del valor de la
+    card (ej. reservas en millones de USD, con las barras de compras netas en millones de $).
+
 ## Fuentes de datos y cómo se declaran en indicadores.yaml
 - `fuente: datos_gob` + `id: "..."` → apis.datos.gob.ar/series (IPC, EMAE, monetarias,
   fiscal, empleo, comercio exterior). Es el backbone.

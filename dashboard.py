@@ -17,6 +17,8 @@ import json
 import pandas as pd
 
 import frescura
+import titulares
+from tema import TEMA
 
 DESDE_GENERAL = "2024-01-01"
 OUT = Path(__file__).resolve().parent / "docs"
@@ -24,9 +26,10 @@ MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diari
 UMBRAL_DISCONTINUADA_DIAS = frescura.UMBRAL_DISCONTINUADA_DIAS  # días sin datos para "sin datos nuevos" (una sola fuente de verdad)
 UMBRAL_HISTORIA_MINIMA = 30  # por debajo de esto, no se muestra gráfico de línea (ver "acumulando historia")
 
-# Paleta institucional (Ministerio de Economía / argentina.gob.ar, sistema "Poncho"):
-# tokens oficiales tomados de poncho.min.css (--arg-azul, --arg-enlace, --arg-rojo, etc.),
-# elegidos para separarse bien entre sí incluso con daltonismo (protanopia/deuteranopia).
+# Colores: TODOS salen de tema.py (Bloque C, paleta de prensa económica en azules + arena para los
+# negativos) y los aplica el tema único de Chart.js del template (ver _escribir_html): ningún gráfico se
+# estiliza por separado. ACENTO/AZUL_* quedan sólo por compatibilidad (run.py arma extra_charts con
+# ACENTO["mercados"]); el campo 'color' de cards/series ya no se usa para dibujar.
 ACENTO = {"precios": "#C62828", "monetario_financiero": "#0767A7",
           "externo": "#EF6C00", "real": "#50B7B2", "social": "#6A1B99", "fiscal": "#8D2D04",
           "mercados": "#0767A7"}
@@ -152,14 +155,21 @@ def _serie_balance_cambiario(idx, ind, historico):
         return [round(float(v), 2) if pd.notna(v) else None for v in s]
 
     ult, pct = _variacion(g_linea)
+    # El valor de la card es el de la LÍNEA: si la línea tiene otra unidad que las barras (ej. reservas en
+    # USD vs. compras netas en pesos), `unidad_linea` del yaml rotula el valor y el tooltip de la línea.
+    unidad_linea = ind.get("unidad_linea", ind.get("unidad", ""))
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_linea,
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None,
         subtitulo=ind.get("subtitulo"),
         sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
 
-    serie_js = dict(i=idx, color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""), kind="combo",
+    serie_js = dict(i=idx, color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        unidad_linea=unidad_linea, kind="combo",
+        # Rótulo de las barras: acá son las compras netas del BCRA, no la variación del stock (que es lo
+        # que dibuja el combo de 'Reservas internacionales', mismo kind "combo").
+        label_barras="Compras netas", titulo_barras=f"Compras netas ({ind.get('unidad', '')})",
         x=[d.strftime("%m/%y") for d in fechas_s], y=_vals(linea_s), flujo=_vals(barras_s),
         full_x=[d.strftime("%m/%y") for d in fechas_full], full_y=_vals(linea_full),
         full_flujo=_vals(barras_full), full_dates=[d.isoformat() for d in fechas_full],
@@ -314,7 +324,7 @@ def _serie_combo_barras_linea(idx, ind, historico):
     barras_js = []
     for i, (nombre_b, serie_m, signo) in enumerate(series_barras):
         serie_full = serie_m.reindex(fechas_full)
-        barras_js.append(dict(label=nombre_b, color=COLORES_OVERLAY[i % len(COLORES_OVERLAY)],
+        barras_js.append(dict(label=nombre_b,
             y=_vals(serie_full.reindex(fechas_s), signo), full_y=_vals(serie_full, signo)))
 
     unidad_linea = ind.get("unidad_linea", ind.get("unidad", ""))
@@ -449,7 +459,6 @@ def _serie_combo_barras_evento(idx, ind, historico):
     return card, serie_js
 
 
-COLORES_OVERLAY = ["#0767A7", "#C62828", "#2E7D33", "#8D2D04", "#6A1B99", "#EF6C00"]
 
 
 def _serie_overlay(idx, ind, historico):
@@ -483,7 +492,7 @@ def _serie_overlay(idx, ind, historico):
         valores_por_fecha = dict(zip(g["fecha"], g["valor"]))
         def _en(fechas_, vpf=valores_por_fecha):
             return [round(float(vpf[d]), 2) if d in vpf else None for d in fechas_]
-        datasets.append(dict(label=nombre_serie, color=COLORES_OVERLAY[i % len(COLORES_OVERLAY)],
+        datasets.append(dict(label=nombre_serie,
             y=_en(fechas_default), full_y=_en(fechas_full)))
 
     # Marca de "cambio de liderazgo": la fecha en la que la serie que termina arriba (la de
@@ -525,8 +534,6 @@ def _serie_overlay(idx, ind, historico):
     return card, serie_js
 
 
-COLORES_INCIDENCIA = ["#C62828", "#0767A7", "#EF6C00", "#50B7B2", "#6A1B99", "#8D2D04",
-                       "#2E7D33", "#EC407A", "#F79D00", "#3A3796", "#C2185B", "#6EA015"]
 
 
 def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
@@ -577,7 +584,7 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
         valores_por_fecha = dict(zip(g["fecha"], g["incidencia"]))
         def _en(fechas_, vpf=valores_por_fecha):
             return [round(float(vpf[d]), 3) if d in vpf else None for d in fechas_]
-        datasets.append(dict(label=etiqueta, color=COLORES_INCIDENCIA[i % len(COLORES_INCIDENCIA)],
+        datasets.append(dict(label=etiqueta,
             y=_en(fechas_default), full_y=_en(fechas_full)))
 
     # Detalle de "Resto" por mes (Punto 11, Ronda 4): las divisiones agrupadas en "Resto" no
@@ -599,7 +606,7 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
             resto_detalle[label].sort(key=lambda d: abs(d["valor"]), reverse=True)
         def _en_resto(fechas_):
             return [round(float(valores_por_fecha_resto[d]), 3) if d in valores_por_fecha_resto else None for d in fechas_]
-        datasets.append(dict(label=f"Resto ({len(resto)} divisiones)", color="#9E9E9E",
+        datasets.append(dict(label=f"Resto ({len(resto)} divisiones)",
             y=_en_resto(fechas_default), full_y=_en_resto(fechas_full)))
 
     # tarjeta: suma de incidencias del último mes (aproxima la variación del nivel general)
@@ -650,6 +657,7 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
     hoy = fechas_full[-1]
     cortes = {
         "default": pd.to_datetime(desde),
+        "6m": hoy - pd.DateOffset(months=6),
         "1a": hoy - pd.DateOffset(years=1),
         "5a": hoy - pd.DateOffset(years=5),
         "2008": pd.to_datetime("2008-01-01"),
@@ -896,23 +904,104 @@ def _series_de_card(ind):
 
 
 def _linea_frescura(ind, historico, ctx, indicadores_por_nombre):
+    """(HTML de la línea de frescura del B2, ¿la serie que resume la card está en rezago grave?)."""
     if ctx is None or ind.get("vista") == "sectores_bar":
-        return ""
+        return "", False
     estados = []
     for nombre in _series_de_card(ind):
         # cada serie con su propia config (ej. rezago_normal_dias del TCR dentro de un overlay)
         cfg = indicadores_por_nombre.get(nombre, ind)
         fechas = historico.loc[historico["indicador"] == nombre, "fecha"]
         estados.append((nombre, frescura.calcular(cfg, nombre, fechas, ctx)))
-    ctx.registro[ind["nombre"]] = (estados, _serie_resumen(ind))   # avisos del mail diario (Bloque B3)
-    return frescura.html_card(estados, _serie_resumen(ind))
+    resumen = _serie_resumen(ind)
+    ctx.registro[ind["nombre"]] = (estados, resumen)   # avisos del mail diario (Bloque B3)
+    grave = any(n == resumen and getattr(f, "grave", False) for n, f in estados)
+    return frescura.html_card(estados, resumen), grave
+
+
+_MESES_ABREV_C = ["", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
+
+
+def _desde_txt(desde):
+    d = pd.to_datetime(desde)
+    return f"desde {_MESES_ABREV_C[d.month]}-{str(d.year)[2:]}"
+
+
+def _completar_card(card, ind, historico, indicadores_por_nombre, grave, con_titulares, anio, serie_js=None):
+    """Bloque C: titular por reglas (sólo con_titulares, pestaña macro), variación de la card contra lo
+    mismo que el titular (D13; pp en tasas, D4) y valor con decimales según la unidad (D4). Todo sobre la
+    serie que resume la card (la misma de la línea de frescura). Ver titulares.py."""
+    card["desde_txt"] = _desde_txt(ind.get("desde", DESDE_GENERAL))
+    card["titular"], card["cambio"] = None, None
+    if ind.get("vista") == "sectores_bar":
+        return
+    nombre_r = _serie_resumen(ind)
+    cfg_r = indicadores_por_nombre.get(nombre_r, ind)
+    unidad_r = cfg_r.get("unidad", card.get("unidad", ""))
+    g = historico[historico["indicador"] == nombre_r].sort_values("fecha")
+    serie = pd.Series(g["valor"].values, index=pd.to_datetime(g["fecha"].values)).dropna()
+    if serie.empty:
+        return
+    freq = titulares.frecuencia(serie.index)
+    comparar = titulares.comparar_de(ind, freq) if con_titulares else "anterior"
+    if ind.get("vista") != "incidencia_stack":
+        # `ocultar_variacion: true` (yaml): sin variación bajo el valor mientras se revisa un dato dudoso
+        # (ej. base monetaria, PENDIENTES #14)
+        if not ind.get("ocultar_variacion"):
+            card["cambio"] = titulares.cambio(serie, unidad_r, comparar, freq)
+        card["valor"] = titulares.fmt_valor(serie.iloc[-1], unidad_r)
+    if not con_titulares:
+        return
+    if ind.get("titular_regla") == "aporte":
+        if grave or not serie_js or not serie_js.get("datasets"):
+            return
+        candidatos = [(d["full_y"][-1], d["label"]) for d in serie_js["datasets"]
+                      if not d["label"].startswith("Resto") and d.get("full_y") and d["full_y"][-1] is not None]
+        if candidatos:
+            valor, nombre = max(candidatos)
+            card["titular"] = titulares.titular_aporte(ind, nombre, valor, serie_js["full_dates"][-1], anio)
+        return
+    card["titular"] = titulares.titular(ind, serie, unidad_r, anio, grave=grave, freq=freq)
+
+
+def _extender_hasta_hoy(sj, hoy):
+    """Serie frenada (franja ⏸): el eje sigue hasta hoy con nulls (gaps como null, nunca interpolados)
+    y el tema sombrea el tramo sin datos (plugin tramoSinDatos, D9)."""
+    fechas = pd.to_datetime(sj["full_dates"])
+    if len(fechas) < 2:
+        return
+    paso = pd.Series(fechas).diff().dropna().tail(12).median().days
+    ult = fechas[-1]
+    if paso <= 7:
+        nuevas = pd.bdate_range(ult + pd.Timedelta(days=1), hoy)
+    elif paso <= 45:
+        nuevas = pd.date_range(ult, hoy, freq="ME" if ult.is_month_end else "MS")[1:]
+    else:
+        nuevas = pd.date_range(ult, hoy, freq="QS" if ult.day == 1 else "QE")[1:]
+    if not len(nuevas):
+        return
+    fmt = "%d/%m/%y" if paso <= 7 else "%m/%y"
+    etiquetas = [d.strftime(fmt) for d in nuevas]
+    sj["full_x"] = list(sj["full_x"]) + etiquetas
+    sj["full_y"] = list(sj["full_y"]) + [None] * len(nuevas)
+    sj["full_dates"] = list(sj["full_dates"]) + [d.isoformat() for d in nuevas]
+    if "x" in sj:
+        sj["x"] = list(sj["x"]) + etiquetas
+        sj["y"] = list(sj["y"]) + [None] * len(nuevas)
+    sj["frenada"] = True
 
 
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
             extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina",
-            fuentes_indec=None, fuentes_pagina=None, frescura_ctx=None):
+            fuentes_indec=None, fuentes_pagina=None, frescura_ctx=None, con_titulares=False):
     """frescura_ctx: frescura.Contexto (Bloque B2) para mostrar la línea de frescura en cada card;
-    None = sin línea (pestaña financiera, fuera de esa ronda)."""
+    None = sin línea (pestaña financiera, fuera de esa ronda).
+    con_titulares: titulares por reglas del Bloque C (sólo la pestaña macro, decisión de Pedro D1); sin
+    ellos, la variación bajo el valor de cada card compara contra el dato anterior."""
+    if frescura_ctx is not None:
+        anio, hoy = frescura_ctx.ahora.year, pd.Timestamp(frescura_ctx.ahora).normalize()
+    else:
+        anio, hoy = datetime.now().year, pd.Timestamp.today().normalize()
     OUT.mkdir(parents=True, exist_ok=True)
     charts, series_js, semaforo, fecha_sem = [], [], [], ""
     tablas = defaultdict(list)
@@ -951,7 +1040,9 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             card, serie_js_compuesta = entrada
             card["nota_num"] = _registrar_nota(nota, nombre, notas_dict)
             card["fuente_indec"] = bool(usos)
-            card["frescura"] = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
+            card["frescura"], grave = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
+            _completar_card(card, ind, historico, indicadores_por_nombre, grave, con_titulares, anio,
+                            serie_js_compuesta)
             charts.append(card)
             series_js.append(serie_js_compuesta)
             idx += 1
@@ -978,6 +1069,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             s = serie
         ult, pct = _variacion(serie)
         nota_num = _registrar_nota(nota, nombre, notas_dict)
+        linea_fr, grave = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
         # Marca de "datos hasta MM/AAAA" para series que pueden discontinuarse (ej. tasa
         # de política monetaria). Se calcula de la última fecha REAL de la serie en cada
         # corrida: si la fuente retoma la publicación, la marca se actualiza o desaparece
@@ -999,11 +1091,13 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                       f"({len(serie)}/{UMBRAL_HISTORIA_MINIMA} observaciones)"
                       if len(serie) < UMBRAL_HISTORIA_MINIMA else None)
         charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
-            unidad=unidad, valor=_fmt_num(ult), pct=pct, marca_fecha=marca_fecha,
-            maxv=_fmt_num(s["valor"].max()), minv=_fmt_num(s["valor"].min()), nota_num=nota_num,
+            unidad=unidad, valor=titulares.fmt_valor(ult, unidad), pct=pct, marca_fecha=marca_fecha,
+            maxv=titulares.fmt_valor(s["valor"].max(), unidad), minv=titulares.fmt_valor(s["valor"].min(), unidad),
+            nota_num=nota_num,
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
             subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
-            fuente_indec=bool(usos), frescura=_linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)))
+            fuente_indec=bool(usos), frescura=linea_fr))
+        _completar_card(charts[-1], ind, historico, indicadores_por_nombre, grave, con_titulares, anio)
         if acumulando:
             idx += 1
             continue
@@ -1035,12 +1129,16 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                 full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
                 min_date=serie["fecha"].min().isoformat(), max_date=serie["fecha"].max().isoformat(),
                 eventos=ind.get("eventos")))
+            if grave:
+                _extender_hasta_hoy(series_js[-1], hoy)
         idx += 1
     # extra_charts: tarjetas/gráficos armados fuera del loop yaml-driven de arriba (ej. muro de
     # vencimientos, curvas snapshot) -- fetchers.py/run.py los arma ya con card/serie_js casi
     # completos, acá sólo se les asigna el índice 'i' que les toca según el orden de inserción.
     for ec in (extra_charts or []):
         card = dict(ec["card"], i=idx)
+        card.setdefault("cambio", None)
+        card.setdefault("titular", None)
         if ec.get("nota"):
             card["nota_num"] = _registrar_nota(ec["nota"], card["nombre"], notas_dict)
         serie_js_extra = dict(ec["serie_js"], i=idx)
@@ -1052,15 +1150,18 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                     archivo_salida=archivo_salida, extra_html=extra_html or {},
                     nav_extra=nav_extra, titulo_pagina=titulo_pagina,
                     semaforo_fuente=describir_fuente(usos_semaforo) or "",
-                    fuentes_pagina=fuentes_pagina)
+                    fuentes_pagina=fuentes_pagina,
+                    etiquetas={i["nombre"]: i["etiqueta"] for i in config_indicadores if i.get("etiqueta")})
 
 
 def _color_semaforo(v):
+    """Celdas de tabla (Bloque C): +1% o más en azul de contexto, -1% o menos en un tinte del arena (el
+    color de los negativos), en el medio sin color. Todo de tema.py."""
     if v is None or pd.isna(v):
-        return "#F0F0F0", TINTA
-    if v > 1:  return "#DCEEDD", "#1E5C2E"
-    if v < -1: return "#F6DCD8", "#8A2A1C"
-    return "#FBF0D5", "#7A5A10"
+        return "transparent", TEMA["texto_3"]
+    if v > 1:  return TEMA["azul_contexto"], TEMA["azul_1"]
+    if v < -1: return _mezclar(TEMA["negativo"], 0.35), TEMA["texto"]
+    return "transparent", TEMA["texto_2"]
 
 
 def _tabla_semaforo(semaforo, fecha_sem, fuente_html=""):
@@ -1073,7 +1174,7 @@ def _tabla_semaforo(semaforo, fecha_sem, fuente_html=""):
     filas = "".join(f'<tr><td class="sec">{s["nombre"]}</td>{celda(s["ia"])}{celda(s["men"])}{celda(s["acum"])}</tr>' for s in orden)
     return (f'<h3 class="sub">EMAE por sector <span class="ref">({fecha_sem})</span></h3>'
             '<p class="nota">Interanual · mensual (serie original, con estacionalidad) · acumulado del año. '
-            'Verde: +1% o más · Amarillo: entre -1% y +1% · Rojo: -1% o menos.</p>'
+            'Azul: +1% o más · sin color: entre -1% y +1% · arena: -1% o menos.</p>'
             '<table class="tabla"><thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>'
             f'<tbody>{filas}</tbody></table>'
             + (f'<p class="fuente-pie fuente-tabla">{fuente_html}</p>' if fuente_html else ""))
@@ -1140,94 +1241,82 @@ def tabla_acciones(titulo, filas, fecha_str):
 
 
 def _card_cell(c):
-    if c["pct"] is None or abs(c["pct"]) <= 0.05:
-        fl, cls = "•", "flat"
-    else:
-        sube = c["pct"] > 0.05
-        fl = "▲" if sube else "▼"
-        if c.get("neutral"):
-            # El indicador declara 'neutral': subir no es ni buena ni mala noticia por sí
-            # solo (ej. agregados monetarios, préstamos): se muestra la flecha sin pintarla.
-            cls = "flat"
-        else:
-            # Genérico: subir = malo (rojo) salvo que el indicador declare 'sube_es_bueno'
-            # (ej. EMAE: que la actividad suba es una buena noticia, no una mala).
-            bueno = sube if c.get("sube_es_bueno") else not sube
-            cls = "bueno" if bueno else "malo"
-    chg = f'{fl} {abs(c["pct"]):.1f}%' if c["pct"] is not None else "—"
-    # Asterisco numerado y clickeable: salta a su nota en el pie de página.
-    nota_mark = ""
-    if c.get("nota_num"):
-        nota_mark = f'<div class="nota-ref"><a href="#nota-{c["nota_num"]}">*{c["nota_num"]}</a></div>'
-    # Atribución exigida por el INDEC para los datos de su API (Bloque A6): visible al pie del
-    # gráfico, no sólo dentro de la nota metodológica.
+    """Card del Bloque C: (kicker con el nombre +) titular o nombre, valor con su variación contra lo mismo
+    que el titular (D13, triángulo gris sin juicio, D3), línea de frescura del B2 tal cual, leyenda en
+    prosa (la llena el JS con los colores reales de cada serie), gráfico, selector "Vista" (D5) y pie con
+    fuente · máx/mín (D11) · asterisco de la nota."""
+    i = c["i"]
+    tit = c.get("titular")
+    if tit == c["nombre"]:
+        tit = None   # override manual con el nombre de la card (ej. base monetaria): sin repetirlo arriba
+    cabeza = (f'<div class="cn">{c["nombre"]}</div><div class="ct">{tit}</div>' if tit
+              else f'<div class="ct">{c["nombre"]}</div>')
+    subtitulo_html = f'<div class="csub">{c["subtitulo"]}</div>' if c.get("subtitulo") else ""
+    chg = ""
+    if c.get("cambio"):
+        ch = c["cambio"]
+        tri = {1: "▲", -1: "▼"}.get(ch["signo"], "•")
+        chg = f'<span class="chg"><span class="tri">{tri}</span>{ch["texto"]} vs. {ch["ref"]}</span>'
+    fila = (f'<div class="cm"><span class="cv">{c["valor"]}</span>'
+            f'<span class="uni">{c.get("unidad", "")}</span>{chg}</div>')
+    # Pie (D11): atribución del INDEC exigida para los datos de su API (Bloque A6) · máx/mín de la vista
+    # inicial · asterisco numerado y clickeable que salta a su nota en el pie de página.
+    pie = []
     if c.get("fuente_indec"):
-        nota_mark = '<div class="fuente-pie">Fuente: INDEC</div>' + nota_mark
-    # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar())
-    marca_html = f'<div class="marca-fecha">{c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
-    # Botones de filtro (no aplican a gráficos de un solo período, ej. sectores_bar). "Personalizado"
-    # despliega un selector de fechas (desde/hasta) en vez de filtrar al tocarlo directamente.
-    # Rediseño de tarjetas: 4 botones visibles (Default/1A/5A/Todo, "Desde 2008" se saca por ser
-    # el más redundante: "Todo" ya cubre el histórico completo y "5A" el mediano plazo) + un
-    # ícono de calendario para el rango personalizado, en vez de 6 botones siempre visibles.
-    # Mismos atributos (class="filtro" data-rango="...") que antes: el JS de filtrado
-    # (calcFechaCorte/filtrarDatos/aplicarFiltro y el listener de .filtro[data-rango]) no cambia,
-    # sólo el HTML/CSS que arma la fila de filtros.
+        pie.append("Fuente: INDEC")
+    if c.get("maxv") not in (None, "s/d") and not c.get("acumulando"):
+        pie.append(f'máx. {c["maxv"]} · mín. {c["minv"]}')
+    if c.get("nota_num"):
+        pie.append(f'<a href="#nota-{c["nota_num"]}">*{c["nota_num"]}</a>')
+    pie_html = f'<div class="fuente-pie">{" · ".join(pie)}</div>' if pie else ""
+    # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar(); sólo páginas sin línea de frescura)
+    marca_html = f'<div class="marca-fecha">⏸ {c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
+    # Selector de rango (D5): "Vista: desde mmm-aa · 6M · 1A · 5A · Máx · Rango…". La vista inicial es el
+    # `desde` del yaml. Mismos atributos de siempre (class="filtro" data-rango="..."): el JS de filtrado
+    # (calcFechaCorte/filtrarDatos/aplicarFiltro) no cambia salvo el corte nuevo de 6 meses.
     filtros = ""
     if not c.get("sin_filtros"):
-        filtros = (
-            f'<div class="filtros" data-idx="{c["i"]}">'
-            '<div class="filtros-seg"><button class="filtro active" data-rango="default">Default</button>'
-            '<button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button>'
-            '<button class="filtro" data-rango="todo">Todo</button></div>'
-            '<button class="filtro filtro-cal" data-rango="personalizado" title="Rango personalizado" aria-label="Rango personalizado">📅</button></div>'
-            f'<div class="rango-custom" data-idx="{c["i"]}"><input type="date" class="rango-desde">'
-            '<span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div>'
-        )
-    # Selector de rezago (Punto 2.1 del checklist storytelling, PROMPT_fix_graficos_y_storytelling.md):
-    # en vez de que el equipo elija UN rezago "correcto" entre una serie de emisión/política y
-    # una de resultado, se muestran botones para que el usuario explore 0/3/6/12 meses de
-    # desplazamiento -- todas las variantes ya vienen precalculadas server-side (ver
-    # _serie_combo_rezago), el click sólo cambia qué array se muestra.
+        opciones = [("default", c.get("desde_txt") or "Inicial"), ("6m", "6M"), ("1a", "1A"), ("5a", "5A"),
+                    ("todo", "Máx"), ("personalizado", "Rango…")]
+        botones = "".join(f'<button class="filtro{" active" if k == "default" else ""}" data-rango="{k}">{t}</button>'
+                          for k, t in opciones)
+        filtros = (f'<div class="filtros" data-idx="{i}"><span class="vista">Vista:</span>{botones}</div>'
+                   f'<div class="rango-custom" data-idx="{i}"><input type="date" class="rango-desde">'
+                   '<span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div>')
+    # Selector de rezago (Punto 2.1 del checklist storytelling): variantes precalculadas en Python
+    # (_serie_combo_rezago), el click sólo cambia qué array se muestra.
     rezago_btns = ""
     if c.get("rezagos"):
         botones = "".join(
             f'<button class="rezago-btn{" active" if r == 0 else ""}" data-rezago="{r}">'
             f'{"Sin rezago" if r == 0 else f"+{r}m"}</button>'
             for r in c["rezagos"])
-        rezago_btns = f'<div class="rezago-btns" data-idx="{c["i"]}">{botones}</div>'
-    # "Acumulando historia" (Punto 4 del checklist): sin_filtros=True acá también, pero la
-    # tarjeta se queda de tamaño normal (no "grande") -- a diferencia de sectores_bar/muro/DDF,
-    # que sí usan sin_filtros para gráficos grandes, este es sólo un mensaje corto.
+        rezago_btns = f'<div class="rezago-btns" data-idx="{i}"><span class="vista">Rezago:</span>{botones}</div>'
     grande = c.get("grande") or (c.get("sin_filtros") and not c.get("acumulando"))
     cell_cls = "cell cell-ancha" if grande else "cell"
     cbox_cls = "cbox cbox-grande" if grande else "cbox"
-    # Aclaración corta debajo del título (ej. grupo "Reservas", donde varios gráficos parecidos
-    # se confundían entre sí leyendo sólo el nombre): visible sin tener que abrir la nota al pie.
-    subtitulo_html = f'<div class="csub">{c["subtitulo"]}</div>' if c.get("subtitulo") else ""
-    # Ícono de pantalla completa (Punto 11): un solo botón por tarjeta, implementado UNA vez
-    # acá (se aplica a las ~38 tarjetas automáticamente) -- el JS compartido (fullscreenPlugin
-    # más abajo) escucha el click y expande el .cell entero via Fullscreen API nativa.
-    fs_btn = '<button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>'
-    # Sin canvas ni botón de pantalla completa (no hay gráfico que expandir): un mensaje corto
-    # en vez del .cbox, mismo criterio para cualquier serie con muy pocos puntos (Punto 4).
+    frescura_html = c.get("frescura", "")
+    # "Acumulando historia" (Punto 4 del checklist): sin canvas ni pantalla completa, un mensaje corto.
     if c.get("acumulando"):
-        return (f'<div class="{cell_cls}"><div class="card" style="--acc:{c["color"]}">'
-                f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
-                f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
-                f'{c.get("frescura", "")}</div><div class="acumulando">⏳ {c["acumulando"]}</div>{nota_mark}</div>')
-    return (f'<div class="{cell_cls}">{fs_btn}<div class="card" style="--acc:{c["color"]}">'
-            f'<div class="cn">{c["nombre"]}</div>{subtitulo_html}<div class="cv">{c["valor"]}</div>'
-            f'<div class="cm"><span class="chg {cls}">{chg}</span><span class="uni">{c["unidad"]}</span></div>'
-            f'{c.get("frescura", "")}'
-            f'<div class="mm">máx {c["maxv"]} · mín {c["minv"]}</div>{marca_html}</div>'
-            f'<div class="{cbox_cls}"><canvas id="ch{c["i"]}"></canvas></div>{filtros}{rezago_btns}{nota_mark}</div>')
+        return (f'<div class="{cell_cls}">{cabeza}{subtitulo_html}{fila}{frescura_html}'
+                f'<div class="acumulando">⏳ {c["acumulando"]}</div>{pie_html}</div>')
+    # Ícono de pantalla completa (Punto 11): el JS compartido expande el .cell entero.
+    fs_btn = '<button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>'
+    return (f'<div class="{cell_cls}">{fs_btn}{cabeza}{subtitulo_html}{fila}{frescura_html}{marca_html}'
+            f'<div class="cdesc" data-idx="{i}"></div>'
+            f'<div class="{cbox_cls}"><canvas id="ch{i}"></canvas></div>{filtros}{rezago_btns}{pie_html}</div>')
+
+
+def _mezclar(hex_color, a):
+    """Color `hex_color` con opacidad `a` sobre blanco, como hex (para fondos de celdas de tabla)."""
+    r, g, b = (int(hex_color[k:k + 2], 16) for k in (1, 3, 5))
+    return "#" + "".join(f"{round(255 - (255 - v) * a):02X}" for v in (r, g, b))
 
 
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida="index.html", extra_html=None, nav_extra="",
                     titulo_pagina="Monitor de coyuntura · Argentina", semaforo_fuente="",
-                    fuentes_pagina=None):
+                    fuentes_pagina=None, etiquetas=None):
     extra_html = extra_html or {}
     ahora = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
@@ -1245,7 +1334,7 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
             notas_items.append(f'<li id="nota-{num}"><strong>*{num}</strong> {nota_texto}</li>')
         notas_html = '<h3 class="sub">Notas metodológicas y fuentes</h3><ul class="notas-list">' + "".join(notas_items) + '</ul>'
 
-    nav, secciones = nav_extra, ""
+    nav, secciones = "", ""
     for bloque in ORDEN_BLOQUES:
         cb = [c for c in charts if c["bloque"] == bloque]
         grupos_chart = {c["grupo"] for c in cb}
@@ -1263,85 +1352,76 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                 cuerpo += _tabla_valores(titulo, filas)
             else:
                 if multi:
-                    cuerpo += f'<h3 class="sub">{g}</h3>'
+                    cuerpo += f'<h3 class="grupo">{g}</h3>'
                 celdas = "".join(_card_cell(c) for c in cb if c["grupo"] == g)
                 cuerpo += f'<div class="grid">{celdas}</div>'
         if tiene_sem:
             cuerpo += _tabla_semaforo(semaforo, fecha_sem, semaforo_fuente)
         if bloque in extra_html:
             cuerpo += extra_html[bloque]
-        secciones += (f'<section class="bloque" id="{bloque}"><h2>'
-                      f'<span class="dot" style="background:{ACENTO.get(bloque,AZUL_ENLACE)}"></span>'
-                      f'{TITULO_BLOQUE.get(bloque, bloque)}</h2>{cuerpo}</section>')
+        secciones += (f'<section class="bloque" id="{bloque}"><h2>{TITULO_BLOQUE.get(bloque, bloque)}</h2>'
+                      f'{cuerpo}</section>')
+    # El link cruzado entre páginas va al final de la barra, empujado a la derecha (CSS .nav-pagina).
+    nav += nav_extra
+
+    css_vars = "\n".join(f"    --{k.replace('_', '-')}: {v};" for k, v in TEMA.items() if k != "fuente")
+    fuente_css = '"Helvetica Neue", ' + TEMA["fuente"]
+    tema_js = dict(TEMA, fuente=fuente_css)
 
     plantilla = """<!doctype html><html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>__TITULO__</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-  /* Paleta institucional (argentina.gob.ar / Ministerio de Economía, sistema "Poncho") */
+  /* Bloque C: colores y tipografía de tema.py (una sola fuente de verdad, la misma que el mail). */
   :root {
-    --papel:#FFFFFF; --fondo:#F4F6F8; --tinta:#141414; --gris:#555555; --gris-claro:#838383;
-    --borde:#DEE2E6; --hover:#F0F0F0; --azul-marca:#232D4F; --azul-enlace:#0767A7; --azul-claro:#68C3EF;
+__VARS__
+    --linea:#E3E8ED; --grilla:#EEEEEE;
   }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--fondo); color:var(--tinta); font-family:"Encode Sans",system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.45; }
-  .wrap { max-width:1180px; margin:0 auto; padding:0 22px 80px; }
-  header.masthead { background:var(--azul-marca); color:#fff; margin-bottom:22px; }
-  .masthead-inner { max-width:1180px; margin:0 auto; padding:26px 22px; }
-  header h1 { font-size:26px; margin:0; font-weight:700; letter-spacing:-.01em; }
-  header .sub { color:#C8D0DA; font-size:13px; margin-top:6px; }
-  nav { display:flex; flex-wrap:wrap; gap:18px; margin:0 0 28px; padding-bottom:14px; border-bottom:1px solid var(--borde); font-size:13px; }
-  nav a { color:var(--azul-enlace); text-decoration:none; font-weight:600; } nav a:hover { text-decoration:underline; }
-  nav a.nav-pagina { background:var(--azul-marca); color:#fff; padding:4px 12px; border-radius:14px; margin-right:6px; }
-  nav a.nav-pagina:hover { text-decoration:none; opacity:.88; }
-  .bloque { margin:40px 0; scroll-margin-top:16px; }
-  .bloque h2 { font-size:18px; font-weight:700; display:flex; align-items:center; gap:9px; border-bottom:2px solid var(--azul-marca); padding-bottom:8px; color:var(--azul-marca); }
-  .sub { font-size:14px; font-weight:600; margin:24px 0 12px; color:var(--azul-marca); }
-  .ref { color:var(--gris); font-weight:400; font-size:13px; }
-  .nota { color:var(--gris); font-size:12px; margin:6px 0 14px; }
-  .nota-ref { font-size:10px; margin-top:4px; text-align:center; }
-  .fuente-pie { font-size:11px; color:var(--gris); margin-top:4px; padding:0 14px; text-align:left; }
-  .fuente-pie a { color:var(--azul-enlace); }
-  .fuente-tabla { margin:4px 0 14px; padding:0; }
-  .nota-ref a { color:var(--azul-enlace); font-weight:600; text-decoration:none; }
-  .nota-ref a:hover { text-decoration:underline; }
-  .notas-list { margin:10px 0 14px 20px; font-size:12px; color:var(--gris); }
-  .notas-list li { margin:6px 0; scroll-margin-top:16px; }
-  .notas-list strong { color:var(--tinta); }
-  .dot { width:11px; height:11px; border-radius:2px; display:inline-block; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,460px)); justify-content:start; gap:18px; margin-bottom:8px; }
-  .cell { position:relative; border:1px solid var(--borde); border-radius:10px; overflow:hidden; background:var(--papel); box-shadow:0 1px 2px rgba(20,20,20,.04); }
-  /* Punto 11: ícono de pantalla completa, esquina superior derecha de cada tarjeta. */
-  .fs-btn { position:absolute; top:6px; right:6px; z-index:5; width:24px; height:24px; padding:0;
-    border:1px solid var(--borde); border-radius:5px; background:var(--fondo); color:var(--gris);
-    font-size:13px; line-height:1; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; opacity:0.55; transition:opacity 0.15s; }
-  .fs-btn:hover { opacity:1; background:var(--hover); }
-  /* Estado :fullscreen (Fullscreen API nativa) -- overflow:visible para no recortar el
-     gráfico/leyenda al expandirse, y tipografía más grande para aprovechar el espacio. */
-  .cell:fullscreen, .cell:-webkit-full-screen { overflow:visible; background:var(--papel);
-    display:flex; flex-direction:column; padding:16px; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--fondo); color:var(--texto); font-family:__FUENTE__; line-height:1.45; -webkit-font-smoothing:antialiased; }
+  a { color:var(--azul-2); text-decoration:none; } a:hover { text-decoration:underline; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
+  main.wrap { padding-bottom:60px; }
+  header.masthead { border-top:4px solid var(--azul-1); padding:26px 0 16px; }
+  header h1 { font-size:30px; line-height:1.15; margin:0; font-weight:700; letter-spacing:-.01em; }
+  header .sub { font-size:14px; color:var(--texto-2); margin-top:6px; }
+  nav.secciones { position:sticky; top:0; z-index:20; background:var(--fondo); border-bottom:1px solid var(--linea); }
+  nav.secciones .wrap { display:flex; align-items:center; gap:22px; overflow-x:auto; scrollbar-width:none; }
+  nav.secciones .wrap::-webkit-scrollbar { display:none; }
+  nav.secciones a { flex:none; font-size:14px; color:var(--texto-2); padding:12px 0 10px; border-bottom:3px solid transparent; }
+  nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  nav.secciones a:hover { color:var(--texto); text-decoration:none; }
+  nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
+  section.bloque { padding-top:34px; scroll-margin-top:44px; }
+  section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
+  h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }
+  .sub { font-size:14px; font-weight:700; margin:26px 0 8px; color:var(--texto); }
+  .ref { color:var(--texto-3); font-weight:400; font-size:13px; }
+  .nota { color:var(--texto-2); font-size:12px; margin:4px 0 12px; }
+  .notas-list { margin:10px 0 14px 20px; padding:0; font-size:12px; color:var(--texto-2); }
+  .notas-list li { margin:6px 0; scroll-margin-top:50px; }
+  .notas-list strong { color:var(--texto); }
+  .grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); column-gap:44px; }
+  .cell { position:relative; border-top:1px solid var(--linea); padding:16px 0 22px; min-width:0; background:var(--fondo); }
+  .fs-btn { position:absolute; top:12px; right:0; z-index:5; width:24px; height:24px; padding:0; border:0;
+    background:none; color:var(--texto-3); font-size:13px; line-height:1; cursor:pointer; opacity:.7; }
+  .fs-btn:hover { opacity:1; color:var(--texto); }
+  .cell:fullscreen, .cell:-webkit-full-screen { overflow:auto; background:var(--fondo); display:flex; flex-direction:column; padding:24px; }
   .cell:fullscreen .cbox, .cell:-webkit-full-screen .cbox { flex:1 1 auto; height:auto !important; }
-  .cell:fullscreen .cv, .cell:-webkit-full-screen .cv { font-size:32px; }
-  .cell:fullscreen .cn, .cell:-webkit-full-screen .cn { font-size:13px; }
-  /* Fallback para navegadores sin Fullscreen API nativa (Safari iOS histórico): mismo
-     resultado visual vía position:fixed, con el mismo botón ahora usado para cerrar. */
-  .cell.fs-fallback { position:fixed; inset:12px; z-index:1000; overflow:auto; display:flex;
-    flex-direction:column; padding:16px; box-shadow:0 4px 24px rgba(0,0,0,.25); }
+  .cell.fs-fallback { position:fixed; inset:12px; z-index:1000; overflow:auto; display:flex; flex-direction:column;
+    padding:16px; box-shadow:0 4px 24px rgba(0,0,0,.25); }
   .cell.fs-fallback .cbox { flex:1 1 auto; height:auto !important; }
-  .cell.fs-fallback .fs-btn { opacity:1; }
-  .card { border-left:4px solid var(--acc); padding:12px 14px 8px; }
-  .cn { font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--gris); min-height:28px; }
-  .csub { font-size:11px; color:var(--tinta); opacity:0.75; margin-top:-4px; margin-bottom:4px; line-height:1.3; }
-  .cv { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:24px; font-weight:600; margin:2px 0; }
-  .cm { display:flex; justify-content:space-between; align-items:baseline; font-size:11px; }
-  .chg { font-family:ui-monospace,monospace; font-weight:600; }
-  .chg.malo { color:#C62828; } .chg.bueno { color:#2E7D33; } .chg.flat { color:var(--gris); }
-  .uni { color:var(--gris); }
-  .mm { color:var(--gris); font-size:11px; margin-top:4px; font-family:ui-monospace,monospace; }
+  .cn { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; padding-right:30px; }
+  .ct { font-size:18px; line-height:1.28; font-weight:700; margin:5px 0 0; color:var(--texto); padding-right:30px; }
+  .csub { font-size:13px; color:var(--texto-2); margin-top:3px; line-height:1.35; }
+  .cm { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-top:8px; }
+  .cv { font-size:26px; font-weight:700; color:var(--azul-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .uni { font-size:13px; color:var(--texto-2); }
+  /* D3: variación en gris azulado, sin juicio (el arena queda reservado a los valores negativos). */
+  .chg { font-size:13px; color:var(--texto-2); font-variant-numeric:tabular-nums; }
+  .chg .tri { font-size:11px; margin-right:3px; }
   /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + azul para
      "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
      El estado nunca va sólo en color: lleva ícono y texto. */
@@ -1351,82 +1431,211 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
   .cf .atr { color:#2E3A45; font-weight:700; }
   .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
   .cf.grave .per { color:#2E3A45; }
-  .marca-fecha { color:#8D2D04; background:#F3DDB0; font-size:10px; font-weight:600; padding:3px 7px; border-radius:4px; margin-top:6px; display:inline-block; }
-  .acumulando { color:var(--gris); font-size:12px; text-align:center; padding:20px 14px; background:var(--hover); border-radius:0 0 10px 10px; }
-  .cbox { height:260px; padding:8px 10px 12px; }
-  /* Punto 11 (ronda "continuación"): Pedro quiere TODAS las tarjetas del mismo tamaño por
-     ahora, hasta elegir cuáles agrandar a propósito. No se tocaron los flags grande/
-     sin_filtros en indicadores.yaml (siguen marcados en el dato) -- sólo se neutralizó acá
-     la diferencia visual, así que volver a diferenciarlas es reactivar estas 2 líneas:
-     .cbox-grande { height:400px; }
-     .cell-ancha { grid-column: span 2; } */
-  .tabla { width:100%; border-collapse:separate; border-spacing:3px; font-size:13px; margin-bottom:8px; }
-  .tabla th { text-align:right; color:var(--gris); font-weight:600; font-size:11px; text-transform:uppercase; padding:4px 10px; }
+  .marca-fecha { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
+    padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
+  .cdesc { font-size:13px; line-height:1.4; color:var(--texto-2); margin:10px 0 4px; }
+  .cdesc:empty { display:none; }
+  .ley { display:inline-block; max-width:100%; margin-right:12px; }
+  .sw { display:inline-block; width:10px; height:10px; margin-right:5px; vertical-align:-1px; }
+  .sw.sw-l { width:18px; height:0; vertical-align:middle; margin-bottom:2px; }
+  .ley-x { display:inline-block; }
+  .acumulando { color:var(--texto-2); font-size:12px; text-align:center; padding:20px 14px; background:var(--franja-fondo); margin-top:10px; }
+  .cbox { position:relative; height:250px; margin-top:4px; }
+  /* Pedro quiere TODAS las tarjetas del mismo tamaño por ahora (flags grande/sin_filtros siguen en el yaml):
+     .cbox-grande { height:400px; } .cell-ancha { grid-column: span 2; } */
+  .filtros, .rezago-btns { display:flex; align-items:baseline; flex-wrap:wrap; gap:2px; font-size:12px; color:var(--texto-3); margin-top:6px; }
+  .vista { margin-right:6px; }
+  .filtro, .rezago-btn { font:inherit; background:none; border:0; padding:2px 5px; color:var(--texto-2); cursor:pointer; border-bottom:2px solid transparent; }
+  .filtro:hover, .rezago-btn:hover { color:var(--texto); }
+  .filtro.active, .rezago-btn.active { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  .rango-custom { display:none; align-items:center; gap:6px; margin-top:6px; font-size:12px; color:var(--texto-2); }
+  .rango-custom input[type=date] { font:inherit; font-size:12px; padding:2px 4px; border:1px solid var(--linea); background:var(--fondo); color:var(--texto); }
+  .rango-aplicar { font:inherit; font-size:12px; background:var(--azul-1); color:#fff; border:0; padding:3px 10px; cursor:pointer; }
+  .fuente-pie { font-size:11px; color:var(--texto-3); line-height:1.45; margin-top:6px; }
+  .fuente-pie a { color:var(--texto-3); text-decoration:underline; text-decoration-color:#C9D3DC; }
+  .fuente-tabla { margin:4px 0 14px; }
+  .tabla { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:8px; font-variant-numeric:tabular-nums; }
+  .tabla th { text-align:right; color:var(--texto-3); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--texto); }
   .tabla th:first-child { text-align:left; }
-  .tabla td { padding:8px 10px; text-align:right; border-radius:5px; font-family:ui-monospace,monospace; font-weight:600; }
-  .tabla td.sec { text-align:left; background:var(--papel); font-family:"Encode Sans",system-ui,sans-serif; font-weight:400; border:1px solid var(--borde); }
-  .tabla td.num { background:var(--papel); color:#333; border:1px solid var(--borde); }
-  .filtros { display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
-  .rezago-btns { display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px 0; font-size:11px; }
-  .rezago-btn { background:var(--fondo); border:1px solid var(--borde); color:var(--tinta); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
-  .rezago-btn:hover { background:var(--hover); border-color:var(--gris-claro); }
-  .rezago-btn.active { background:var(--azul-enlace); color:#fff; border-color:var(--azul-enlace); }
-  .filtro { background:var(--fondo); border:1px solid var(--borde); color:var(--tinta); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; transition:all 0.15s; }
-  .filtro:hover { background:var(--hover); border-color:var(--gris-claro); }
-  .filtro.active { background:var(--azul-enlace); color:#fff; border-color:var(--azul-enlace); }
-  /* Rediseño de tarjetas: segmented control para los 4 botones de rango + ícono de calendario
-     aparte para "Personalizado" -- mismos elementos .filtro/data-rango de siempre, sólo cambia
-     el envoltorio visual. */
-  .filtros-seg { display:flex; background:var(--fondo); border:1px solid var(--borde); border-radius:6px; padding:2px; }
-  .filtros-seg .filtro { border:none; background:transparent; }
-  .filtros-seg .filtro.active { background:var(--azul-enlace); color:#fff; }
-  .filtro-cal { width:26px; height:26px; padding:0; display:flex; align-items:center; justify-content:center; font-size:13px; line-height:1; }
-  .rango-custom { display:none; align-items:center; gap:6px; padding:8px 10px 0; font-size:11px; color:var(--gris); }
-  .rango-custom input[type=date] { font-size:11px; padding:3px 5px; border:1px solid var(--borde); border-radius:4px; background:var(--fondo); color:var(--tinta); font-family:inherit; }
-  .rango-aplicar { background:var(--azul-enlace); color:#fff; border:none; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11px; }
-  .rango-aplicar:hover { opacity:0.85; }
-  footer { color:var(--gris); font-size:12px; border-top:1px solid var(--borde); padding-top:14px; margin-top:20px; }
+  .tabla td { padding:7px 10px; text-align:right; border-bottom:1px solid var(--linea); font-weight:600; }
+  .tabla td.sec { text-align:left; font-weight:400; }
+  .tabla td.num { color:var(--texto); font-weight:400; }
+  footer { margin:40px 0 0; padding-top:12px; border-top:1px solid var(--texto); font-size:11px; color:var(--texto-3); }
+  @media (max-width:760px) {
+    .wrap { padding:0 16px; }
+    header.masthead { padding:18px 0 12px; }
+    header h1 { font-size:23px; }
+    header .sub { font-size:13px; }
+    .grid { grid-template-columns:minmax(0, 1fr); }
+    section.bloque { padding-top:24px; }
+    section.bloque > h2 { font-size:21px; }
+    .ct { font-size:17px; }
+    .cv { font-size:24px; }
+    .cbox { height:220px; }
+    nav.secciones a { font-size:13px; }
+    .tabla { font-size:12px; } .tabla td, .tabla th { padding:6px 5px; }
+  }
 </style></head>
 <body>
-<header class="masthead"><div class="masthead-inner">
+<header class="masthead"><div class="wrap">
   <h1>__TITULO__</h1>
   <div class="sub">Actualizado __AHORA__ · fuentes: __FUENTES__</div>
 </div></header>
-<div class="wrap">
-  <nav>__NAV__</nav>
+<nav class="secciones"><div class="wrap">__NAV__</div></nav>
+<main class="wrap">
   __SECCIONES__
   __NOTAS__
   <footer>Pasá el cursor sobre cualquier gráfico para ver el valor. Editá indicadores en indicadores.yaml.</footer>
-</div>
+</main>
 <script>
 const SERIES = __DATA__;
+const TEMA = __TEMA__;
+const ETIQUETAS = __ETIQUETAS__;
 const charts = {};
 // Lookup por s.i (el idx de la tarjeta), NO por posición en SERIES: las tarjetas "acumulando
-// historia" consumen un idx sin agregar serie, así que SERIES[idx] queda corrido desde la
-// primera de ellas y los botones de filtro/rezago de los gráficos siguientes apuntarían a otra serie.
+// historia" consumen un idx sin agregar serie.
 const SERIE_POR_I = {};
 SERIES.forEach(s => { SERIE_POR_I[s.i] = s; });
-// 'eventos' (opcional): [{fecha:"dd/mm/yy", texto:"..."}, ...] -- anotaciones de eventos
-// puntuales (ej. cambios de política cambiaria) dibujadas por eventosPlugin. El texto sale
-// del tooltip normal de Chart.js (afterBody), no un tooltip nuevo -- pasar el mouse cerca de
-// la fecha anotada ya muestra el texto corto de esa fecha junto al valor de la serie.
-const baseOpts = (unidad, eventos) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:false}, tooltip:{
-    callbacks:{ label:(c)=> c.parsed.y.toLocaleString('es-AR') + (unidad? ' '+unidad:''),
-      afterBody: eventoTooltip(eventos) } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
-  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
-});
 
-// Anotaciones de eventos puntuales sobre CUALQUIER gráfico de línea/barra estándar (Punto 2.2
-// del checklist storytelling, PROMPT_fix_graficos_y_storytelling.md) -- generaliza el mismo
-// mecanismo visual que ya usaba cruceOverlayPlugin (línea vertical punteada + texto en el
-// tooltip normal al pasar el mouse cerca) para una LISTA de eventos en vez de un solo punto
-// calculado. La lista de eventos (fechas/texto) es contenido editorial: se define en
-// indicadores.yaml, no acá.
+/* ---------- C1: tema único. Todos los gráficos heredan de acá; ninguno se estiliza por separado ---------- */
+const FUENTE = TEMA.fuente;
+const GRILLA = '#EEEEEE';
+const NIVEL = [TEMA.azul_1, TEMA.azul_2, TEMA.azul_3, TEMA.azul_contexto];   // jerarquía: 0 = protagonista
+const ANCHO = [2.5, 1.75, 1.75, 1.25];
+const TRAZO = [[], [], [5, 3], [2, 2]];
+const alfa = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+const esPP = u => u === 'p.p.' || u === 'pp';
+const esPct = u => !!u && (u.includes('%') || esPP(u));
+// Decimales según la unidad (D4, mismo criterio que titulares.decimales en Python)
+function decDe(u, v) {
+  if (esPct(u)) return esPP(u) ? 2 : 1;
+  if (u && /millones|miles|puntos/.test(u)) return 0;
+  const a = Math.abs(v || 0); return a >= 1000 ? 0 : a >= 10 ? 1 : 2;
+}
+const sufijo = u => esPP(u) ? ' pp' : (esPct(u) ? '%' : '');
+const fmtN = (v, d) => v == null ? 's/d' : v.toLocaleString('es-AR', {minimumFractionDigits:d, maximumFractionDigits:d}).replace('-', '−');
+const fmtU = (v, u) => fmtN(v, decDe(u, v));
+const nivel = (i, n) => Math.min(n - 1 - i, 3);   // overlays: la ÚLTIMA serie es la protagonista (resume la card)
+function ultimoIdx(arr) { let k = (arr || []).length - 1; while (k >= 0 && arr[k] == null) k--; return k; }
+const colorSigno = (pos, neg) => c => (c.raw != null && c.raw < 0) ? neg : pos;
+const tieneNeg = arr => (arr || []).some(v => v != null && v < 0);
+
+Chart.defaults.font.family = FUENTE;
+Chart.defaults.font.size = 11;
+Chart.defaults.color = TEMA.texto_3;
+Chart.defaults.responsive = true;
+Chart.defaults.maintainAspectRatio = false;
+Chart.defaults.animation = false;
+Chart.defaults.plugins.legend.display = false;          // leyenda en prosa, sobre el gráfico (.cdesc)
+Chart.defaults.elements.point.radius = 0;
+Chart.defaults.elements.point.hoverRadius = 3;
+Chart.defaults.elements.point.hitRadius = 8;
+Chart.defaults.elements.line.borderWidth = 2;
+Chart.defaults.elements.line.tension = 0;
+Chart.defaults.elements.bar.borderWidth = 0;
+Chart.defaults.interaction = { mode:'index', intersect:false };
+Chart.defaults.scale.grid.color = GRILLA;
+Chart.defaults.scale.border.display = false;
+Chart.defaults.scale.ticks.color = TEMA.texto_3;
+Object.assign(Chart.defaults.plugins.tooltip, {
+  backgroundColor:'#FFFFFF', borderColor:TEMA.azul_contexto, borderWidth:1, titleColor:TEMA.texto,
+  bodyColor:TEMA.texto_2, footerColor:TEMA.texto_2, padding:8, cornerRadius:2, boxWidth:8, boxHeight:8,
+  titleFont:{ weight:'700' }, filter: it => it.raw != null,
+});
+const ejeX = (extra) => Object.assign({ grid:{ display:false }, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0 } }, extra || {});
+const ejeY = (extra) => Object.assign({ grid:{ color:GRILLA, drawTicks:false },
+  ticks:{ padding:6, maxTicksLimit:5, callback:(v) => Number(v).toLocaleString('es-AR') } }, extra || {});
+const tituloEje = (t) => ({ display:!!t, text:t, font:{ size:10 }, color:TEMA.texto_3 });
+
+// Etiquetas directas (C1): al final de cada línea (o arriba del último punto en gráficos de dos ejes) y
+// sobre la barra destacada, con anti-superposición vertical simple. Reemplazan a la leyenda.
+function textoEtiqueta(e, v) { return (e.texto ? e.texto + ' ' : '') + fmtU(v, e.u) + sufijo(e.u); }
+const etiquetasDirectas = {
+  id:'etiquetasDirectas',
+  beforeUpdate(chart) {
+    const x = chart.options.scales && chart.options.scales.x;
+    if (x && x.ticks && chart.width && chart.width < 500) x.ticks.maxTicksLimit = 4;   // pantallas angostas
+    const ctx = chart.ctx; let ancho = 0;
+    ctx.save(); ctx.font = `700 12px ${FUENTE}`;
+    chart.data.datasets.forEach(ds => {
+      const e = ds.etiqueta; if (!e || e.arriba !== undefined) return;
+      const k = (e.idx !== undefined && e.idx !== null) ? e.idx : ultimoIdx(ds.data); if (k < 0) return;
+      const w = ctx.measureText(textoEtiqueta(e, ds.data[k])).width;
+      // barra: la etiqueta va centrada sobre la barra, sólo necesita media etiqueta de margen
+      ancho = Math.max(ancho, e.barra ? w / 2 : w);
+    });
+    ctx.restore();
+    chart.options.layout.padding = { top:18, right: ancho ? ancho + 12 : 8, left:0, bottom:0 };
+  },
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart, items = [];
+    chart.data.datasets.forEach((ds, i) => {
+      const e = ds.etiqueta; if (!e || !chart.isDatasetVisible(i)) return;
+      const k = (e.idx !== undefined && e.idx !== null) ? e.idx : ultimoIdx(ds.data);
+      if (k < 0 || ds.data[k] == null) return;
+      const el = chart.getDatasetMeta(i).data[k]; if (!el) return;
+      const txt = textoEtiqueta(e, ds.data[k]);
+      if (e.barra) items.push({ x:el.x, y: ds.data[k] < 0 ? el.y + 11 : el.y - 8, txt, color:TEMA.texto, align:'center', bold:true });
+      else if (e.arriba !== undefined) items.push({ x:el.x - 2, y:el.y + e.arriba, txt, color:e.color || ds.borderColor, align:'right', bold:e.bold });
+      else items.push({ x:el.x + 6, y:el.y, txt, color:e.color || ds.borderColor, align:'left', bold:e.bold });
+    });
+    items.filter(o => o.align === 'left').sort((a, b) => a.y - b.y).forEach((o, j, arr) => {
+      if (j && o.y - arr[j - 1].y < 13) o.y = arr[j - 1].y + 13;
+    });
+    ctx.save(); ctx.textBaseline = 'middle';
+    items.forEach(o => {
+      ctx.font = `${o.bold ? '700' : '400'} 12px ${FUENTE}`;
+      ctx.textAlign = o.align;
+      const w = ctx.measureText(o.txt).width;
+      const x0 = o.align === 'left' ? o.x - 2 : o.align === 'right' ? o.x - w - 2 : o.x - w / 2 - 2;
+      ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(x0, o.y - 7, w + 4, 14);
+      ctx.fillStyle = o.color; ctx.fillText(o.txt, o.x, o.y);
+    });
+    ctx.restore();
+  },
+};
+// Serie frenada (franja ⏸ del B2, D9): el eje sigue hasta hoy y se sombrea el tramo sin datos.
+const tramoSinDatos = {
+  id:'tramoSinDatos',
+  beforeDatasetsDraw(chart, _a, opts) {
+    if (!opts || !opts.activo) return;
+    const d = chart.data.datasets[0].data, k = ultimoIdx(d);
+    if (k < 0 || k >= d.length - 1) return;
+    const a = chart.chartArea, x0 = chart.scales.x.getPixelForValue(k), { ctx } = chart;
+    ctx.save();
+    ctx.fillStyle = TEMA.franja_fondo; ctx.fillRect(x0, a.top, a.right - x0, a.bottom - a.top);
+    ctx.fillStyle = TEMA.texto_3; ctx.font = `11px ${FUENTE}`; ctx.textAlign = 'center';
+    ctx.fillText('sin datos', (x0 + a.right) / 2, a.top + 10);
+    ctx.restore();
+  },
+};
+// Línea del cero, fina y oscura, en todo gráfico con negativos.
+const lineaCero = {
+  id:'lineaCero',
+  beforeDatasetsDraw(chart) {
+    const y = chart.scales.y; if (!y || y.type === 'logarithmic' || !(y.min < 0 && y.max > 0)) return;
+    const p = y.getPixelForValue(0), a = chart.chartArea, { ctx } = chart;
+    ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(a.left, p); ctx.lineTo(a.right, p); ctx.stroke(); ctx.restore();
+  },
+};
+Chart.register(etiquetasDirectas, tramoSinDatos, lineaCero);
+
+// Leyenda en prosa (C1): muestras con el color real de cada serie, sobre el gráfico.
+function escribirLeyenda(i, items, extra) {
+  const el = document.querySelector(`.cdesc[data-idx='${i}']`); if (!el) return;
+  const partes = items.filter(it => it.label).map(it => {
+    const sw = it.linea
+      ? `<span class="sw sw-l" style="border-top:${it.ancho || 2}px ${it.dash ? 'dashed' : 'solid'} ${it.color}"></span>`
+      : `<span class="sw" style="background:${it.color}"></span>`;
+    return `<span class="ley">${sw}${it.label}</span>`;
+  });
+  if (extra) partes.push(`<span class="ley-x">${extra}</span>`);
+  el.innerHTML = partes.join('');
+}
+
+// 'eventos' (opcional): [{fecha:"dd/mm/yy", texto:"..."}, ...] -- anotaciones de eventos puntuales
+// dibujadas por eventosPlugin; el texto sale en el tooltip normal (afterBody).
 function eventoTooltip(eventos) {
   return (items) => {
     if (!eventos || !eventos.length || !items.length) return [];
@@ -1437,7 +1646,7 @@ function eventoTooltip(eventos) {
 
 function eventosPlugin(eventos) {
   return {
-    id: 'eventosPolitica',
+    id:'eventosPolitica',
     afterDatasetsDraw(chart) {
       if (!eventos || !eventos.length) return;
       const { ctx, chartArea, scales } = chart;
@@ -1445,20 +1654,10 @@ function eventosPlugin(eventos) {
         const i = chart.data.labels.indexOf(ev.fecha);
         if (i === -1) return;
         const x = scales.x.getPixelForValue(i);
-        ctx.save();
-        ctx.strokeStyle = '#8D2D04';
-        ctx.setLineDash([4, 3]);
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x, chartArea.top);
-        ctx.lineTo(x, chartArea.bottom);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.fillStyle = '#8D2D04';
-        ctx.font = '10px "Encode Sans", system-ui, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('▾', x, chartArea.top - 1);
-        ctx.restore();
+        ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.setLineDash([4, 3]); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+        ctx.setLineDash([]); ctx.fillStyle = TEMA.texto_2; ctx.font = `10px ${FUENTE}`; ctx.textAlign = 'center';
+        ctx.fillText('▾', x, chartArea.top - 1); ctx.restore();
       });
     }
   };
@@ -1466,14 +1665,11 @@ function eventosPlugin(eventos) {
 
 function calcFechaCorte(rango) {
   const hoy = new Date();
-  const hace1a = new Date(hoy.getFullYear()-1, hoy.getMonth(), hoy.getDate());
-  const hace5a = new Date(hoy.getFullYear()-5, hoy.getMonth(), hoy.getDate());
-  const desde2008 = new Date(2008, 0, 1);
-  
+  const hace = (meses) => new Date(hoy.getFullYear(), hoy.getMonth() - meses, hoy.getDate()).toISOString().split('T')[0];
   switch(rango) {
-    case '1a': return hace1a.toISOString().split('T')[0];
-    case '5a': return hace5a.toISOString().split('T')[0];
-    case '2008': return '2008-01-01';
+    case '6m': return hace(6);
+    case '1a': return hace(12);
+    case '5a': return hace(60);
     case 'todo': return '1900-01-01';
     default: return null;
   }
@@ -1654,121 +1850,73 @@ function filtrarDatosPersonalizado(s, desde, hasta) {
   };
 }
 
+const tooltipU = (unidad) => (c) => ` ${c.dataset.label ? c.dataset.label + ': ' : ''}${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, unidad)} ${unidad || ''}`;
+
+const baseOpts = (s) => ({
+  plugins:{ tramoSinDatos:{ activo: !!s.frenada },
+    tooltip:{ callbacks:{ label: tooltipU(s.unidad), afterBody: eventoTooltip(s.eventos) } } },
+  scales:{ x: ejeX(s.x && s.x.length < 30 && !s.full_dates ? { ticks:{ maxRotation:0, autoSkip:true } } : undefined),
+           y: s.kind === 'bar' ? { display:false, grace:'8%' } : ejeY() },
+});
+
 const espejoOpts = (unidad) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> {
-        const v = c.dataset.type === 'line' ? c.parsed.y : Math.abs(c.parsed.y);
-        return `${c.dataset.label}: ${v == null ? 's/d' : v.toLocaleString('es-AR')} ${unidad}`;
-      } } } },
-  scales:{ x:{ stacked:true, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ stacked:true, ticks:{ color:'#838383', font:{size:10}, callback:(v)=> Math.abs(v).toLocaleString('es-AR') },
-               grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} } },
+  plugins:{ tooltip:{ callbacks:{ label:(c) => {
+      const v = c.dataset.type === 'line' ? c.parsed.y : Math.abs(c.parsed.y);
+      return ` ${c.dataset.label}: ${v == null ? 's/d' : fmtU(v, unidad)} ${unidad}`;
+    } } } },
+  scales:{ x: ejeX({ stacked:true }), y: ejeY({ stacked:true, ticks:{ padding:6, maxTicksLimit:5, callback:(v) => Math.abs(v).toLocaleString('es-AR') } }) },
 });
 
-const overlayOpts = (unidad, radioPunto, cruce, escalaLog) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  // spanGaps: si dos series superpuestas tienen frecuencias muy distintas (ej. una
-  // trimestral + una diaria, como Deuda/PBI vs. TCR), la de menor frecuencia queda con
-  // huecos (null) en la mayoría de las fechas del eje compartido -- sin esto, Chart.js
-  // corta la línea en cada hueco en vez de interpolarla entre los puntos reales.
+const overlayOpts = (s) => ({
+  // spanGaps: series superpuestas de frecuencias distintas (ej. trimestral + diaria) dejan huecos (null)
+  // en el eje compartido; sin esto la de menor frecuencia no se dibuja como línea.
   spanGaps: true,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{
-      label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}`,
-      afterBody:(items)=> (cruce && items.length && items[0].label === cruce.fecha) ? [`◆ ${cruce.texto}`] : []
-    } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ type: escalaLog ? 'logarithmic' : 'linear',
-               ticks:{ color:'#838383', font:{size:10}, callback:(v)=> v.toLocaleString('es-AR') }, grid:{color:'#EFEFEF'} } },
-  elements:{ point:{radius: radioPunto || 0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+  plugins:{ tooltip:{ callbacks:{ label: tooltipU(s.unidad),
+      afterBody:(items) => (s.cruce && items.length && items[0].label === s.cruce.fecha) ? [`◆ ${s.cruce.texto}`] : [] } } },
+  scales:{ x: ejeX(), y: ejeY({ type: s.escala_log ? 'logarithmic' : 'linear' }) },
+  elements:{ point:{ radius: s.radio_punto || 0 } },
 });
 
-// Barras AGRUPADAS (no apiladas) por categoría (año) a partir de un snapshot -- sin filtros
-// de rango de fecha (no es una serie temporal con historia propia). Agrupadas y no apiladas
-// a propósito: cada bono amortiza en % de SU PROPIO valor nominal (bases distintas entre
-// bonos), apilarlas sumaría porcentajes de bases distintas en una altura sin significado real.
-// Usado por 'muro de vencimientos' (Ronda 2 financiera).
+// Barras AGRUPADAS (no apiladas): cada bono amortiza en % de SU PROPIO valor nominal.
 const muroOpts = (unidad) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y.toLocaleString('es-AR')} ${unidad}` } } },
-  scales:{ x:{ ticks:{ color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } }
+  plugins:{ tooltip:{ callbacks:{ label: tooltipU(unidad) } } },
+  scales:{ x:{ grid:{ display:false } }, y: ejeY() },
 });
 
-// Marca vertical de "cambio de liderazgo" en un overlay (ver 'cruce' en _serie_overlay,
-// dashboard.py): útil cuando dos líneas se cruzan en un ángulo demasiado cerrado para notarlo
-// a simple vista, pero el momento del cruce es el dato más importante del gráfico.
+// Marca vertical de "cambio de liderazgo" en un overlay (ver 'cruce' en _serie_overlay).
 function cruceOverlayPlugin(cruce) {
   return {
-    id: 'cruceOverlay',
+    id:'cruceOverlay',
     afterDatasetsDraw(chart) {
       if (!cruce) return;
       const i = chart.data.labels.indexOf(cruce.fecha);
       if (i === -1) return;
       const { ctx, chartArea, scales } = chart;
       const x = scales.x.getPixelForValue(i);
-      ctx.save();
-      ctx.strokeStyle = '#8D2D04';
-      ctx.setLineDash([4, 3]);
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.moveTo(x, chartArea.top);
-      ctx.lineTo(x, chartArea.bottom);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.fillStyle = '#8D2D04';
-      ctx.font = 'bold 11px "Encode Sans", system-ui, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('◆', x, chartArea.top - 2);
-      ctx.restore();
+      ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+      ctx.setLineDash([]); ctx.fillStyle = TEMA.texto_2; ctx.font = `bold 11px ${FUENTE}`; ctx.textAlign = 'center';
+      ctx.fillText('◆', x, chartArea.top - 2); ctx.restore();
     }
   };
 }
 
-const comboOpts = (unidad) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${c.dataset.yAxisID==='y1' ? unidad : ''}` } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:'Var. mensual', font:{size:9}, color:'#838383'} },
-           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:'Stock', font:{size:9}, color:'#838383'} } },
-  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+const comboOpts = (unidad, unidadLinea, tituloBarras) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? (unidadLinea || unidad) : unidad;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(tituloBarras || 'Var. mensual') }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje('Stock') }) },
 });
 
-// Combo genérico de 1-2 barras + 1 línea (ver _serie_combo_barras_linea en Python): a
-// diferencia de comboOpts (una sola barra fija, título de eje fijo "Var. mensual"/"Stock"),
-// acá el título y la unidad de cada eje se pasan como parámetro porque el indicador de
-// barras y el de línea pueden ser cualquier par (no siempre reservas).
+// Combo genérico de 1-2 barras + 1 línea (ver _serie_combo_barras_linea en Python).
 const comboBLOpts = (unidadBarras, unidadLinea) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${c.dataset.yAxisID==='y1' ? unidadLinea : unidadBarras}` } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarras, font:{size:9}, color:'#838383'} },
-           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadLinea, font:{size:9}, color:'#838383'} } },
-  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? unidadLinea : unidadBarras;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(unidadBarras) }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje(unidadLinea) }) },
 });
 
-// Combo de una serie CONTINUA (barra, eje izquierdo) + una de EVENTO DISCRETO (marcadores
-// puntuales sin conectar, eje derecho -- ver _serie_combo_barras_evento en Python). Los
-// valores 'null' en el dataset de evento (meses sin evento) simplemente no dibujan marcador
-// -- con showLine:false Chart.js nunca conecta los puntos con una línea, así que un evento
-// que ocurre 1-2 veces al año no se lee como una serie continua con huecos.
-// Alinea el cero de los ejes 'y' e 'y1' (decisión de Pedro, gráfico de eventos): sin esto
-// cada eje elige su rango por separado y el cero queda a distinta altura -- un evento chico
-// (eje derecho, siempre >= 0) se dibuja a la altura de un valor negativo del eje izquierdo y
-// se lee como negativo. Los dos ejes usan los mismos N intervalos con el cero en la MISMA
-// marca k (cero alineado y grilla compartida), cada uno con su propio paso "redondo"
-// (1/2/2,5/5 × 10^n), eligiendo el k que menos altura desperdicia. Se recalcula sobre los
-// datos VISIBLES en cada update (también tras un filtro de fecha). Un eje sin rango (ej.
-// Adelantos todos en 0 en el último año) igual sigue el cero del otro.
+// Alinea el cero de los ejes 'y' e 'y1' del gráfico de eventos (decisión de Pedro): ver _planCero.
 const N_INTERVALOS_CERO = 6;
 function _pasoRedondo(x) {
   const p = Math.pow(10, Math.floor(Math.log10(x)));
@@ -1819,218 +1967,215 @@ function alinearCeroTicks(scale) {
 }
 
 const comboEventoOpts = (unidadBarra, unidadEvento) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> {
-        if (c.parsed.y == null) return null;
-        const unidad = c.dataset.yAxisID === 'y1' ? unidadEvento : unidadBarra;
-        return `${c.dataset.label}: ${c.parsed.y.toLocaleString('es-AR')} ${unidad}`;
-      } } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ position:'left', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadBarra, font:{size:9}, color:'#838383'} },
-           y1:{ position:'right', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadEvento, font:{size:9}, color:'#838383'} } }
+  plugins:{ tooltip:{ callbacks:{ label:(c) => {
+      if (c.parsed.y == null) return null;
+      const u = c.dataset.yAxisID === 'y1' ? unidadEvento : unidadBarra;
+      return ` ${c.dataset.label}: ${fmtU(c.parsed.y, u)} ${u}`;
+    } } } },
+  scales:{ x: ejeX(),
+           y:{ position:'left', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, grid:{ color:GRILLA, drawTicks:false }, title: tituloEje(unidadBarra) },
+           y1:{ position:'right', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, grid:{ display:false }, title: tituloEje(unidadEvento) } },
 });
 
-// Combo de DOS líneas en dos ejes (ver _serie_combo_2lineas en Python): a diferencia de
-// comboBLOpts (barras + línea), acá las dos series son líneas -- útil cuando ninguna de
-// las dos tiene sentido como barra (ej. dos índices/niveles de magnitud incomparable).
+// Combo de DOS líneas en dos ejes (ver _serie_combo_2lineas en Python).
 const combo2LOpts = (unidadIzq, unidadDer) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:10}, color:'#555555'}},
-    tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${c.dataset.yAxisID==='y1' ? unidadDer : unidadIzq}` } } },
-  scales:{ x:{ ticks:{ maxTicksLimit:8, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ position:'left', ticks:{ color:'#838383', font:{size:9} }, grid:{color:'#EFEFEF'}, title:{display:true, text:unidadIzq, font:{size:9}, color:'#838383'} },
-           y1:{ position:'right', ticks:{ color:'#838383', font:{size:9} }, grid:{display:false}, title:{display:true, text:unidadDer, font:{size:9}, color:'#838383'} } },
-  elements:{ point:{radius:0, hitRadius:8}, line:{borderWidth:1.9, tension:0.12} }
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? unidadDer : unidadIzq;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(unidadIzq) }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje(unidadDer) }) },
 });
 
 const incidenciaOpts = (unidad, yMax, yMin) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
-  interaction:{ mode:'index', intersect:false },
-  layout:{ padding:{ top:18, bottom:8 } },
-  plugins:{ legend:{display:true, position:'top', labels:{boxWidth:11, font:{size:9}, color:'#555555'}},
-    tooltip:{ callbacks:{
-      label:(c)=> `${c.dataset.label}: ${c.parsed.y == null ? 's/d' : c.parsed.y.toLocaleString('es-AR')} ${unidad}`,
-      afterBody:(items)=> {
+  plugins:{ tooltip:{ callbacks:{
+      label:(c) => ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtN(c.parsed.y, 2)} pp`,
+      afterBody:(items) => {
         if (!items.length) return [];
         const lineas = [];
         const atipicos = items[0].chart.$atipicos;
         const total = atipicos ? atipicos[items[0].label] : undefined;
         if (total !== undefined) {
-          lineas.push(`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${total.toLocaleString('es-AR')} ${unidad}`);
+          lineas.push(`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${fmtN(total, 2)} pp`);
         }
-        // Detalle de "Resto" (Punto 11): qué divisiones lo componen y cuánto aportó cada una
-        // ESE mes -- no una lista fija, se recalcula con el dato real de cada período.
+        // Detalle de "Resto": qué divisiones lo componen y cuánto aportó cada una ESE mes.
         const restoDetalle = items[0].chart.$restoDetalle;
         const detalle = restoDetalle ? restoDetalle[items[0].label] : null;
         if (detalle && detalle.length) {
           lineas.push('Detalle de "Resto":');
-          detalle.forEach(d => lineas.push(`  ${d.nombre}: ${d.valor > 0 ? '+' : ''}${d.valor.toLocaleString('es-AR')} ${unidad}`));
+          detalle.forEach(d => lineas.push(`  ${d.nombre}: ${d.valor > 0 ? '+' : ''}${fmtN(d.valor, 2)} pp`));
         }
         return lineas;
       } } } },
-  scales:{ x:{ stacked:true, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0, color:'#838383', font:{size:10} }, grid:{display:false} },
-           y:{ stacked:true, max:yMax ?? undefined, min:yMin ?? undefined, ticks:{ color:'#838383', font:{size:10} }, grid:{color:'#EFEFEF'} } },
+  scales:{ x: ejeX({ stacked:true }), y: ejeY({ stacked:true, max: yMax ?? undefined, min: yMin ?? undefined }) },
 });
 
-// Marca los meses "atípicos" (fuera del rango normal del eje, ver y_max/y_min en Python) con
-// un ⚠ arriba o abajo de la barra recortada, para no perder el dato aunque el eje ya no se
-// estire para incluirlo. Lee 'chart.$atipicos' (asignado al crear el chart y reasignado en cada
-// click de filtro, ver 'ejes' en Python y el handler de .filtro) en vez de un valor cerrado sobre
-// la función, porque el diccionario fecha->valor cambia según la ventana de filtro activa.
+// Marca los meses "atípicos" (fuera del rango normal del eje) con un ⚠ arriba o abajo de la barra recortada.
 const atipicosIncidenciaPlugin = {
-  id: 'atipicosIncidencia',
+  id:'atipicosIncidencia',
   afterDatasetsDraw(chart) {
     const atipicos = chart.$atipicos;
     if (!atipicos || !Object.keys(atipicos).length) return;
     const { ctx, chartArea, scales } = chart;
-    ctx.save();
-    ctx.font = 'bold 12px "Encode Sans", system-ui, sans-serif';
-    ctx.textAlign = 'center';
+    ctx.save(); ctx.font = `bold 12px ${FUENTE}`; ctx.fillStyle = TEMA.texto_2; ctx.textAlign = 'center';
     chart.data.labels.forEach((label, i) => {
       if (atipicos[label] === undefined) return;
       const x = scales.x.getPixelForValue(i);
-      const arriba = atipicos[label] >= 0;
-      ctx.fillText('⚠', x, arriba ? chartArea.top - 2 : chartArea.bottom + 16);
+      ctx.fillText('⚠', x, atipicos[label] >= 0 ? chartArea.top - 2 : chartArea.bottom + 16);
     });
     ctx.restore();
   }
 };
 
-// Opciones del gráfico de barras categóricas "Actividad por sector" (reemplaza el
-// gráfico de burbujas de dos ejes continuos: cada sector tiene su propia columna,
-// ordenadas por el VALOR de actividad -- no por empleo --, sin necesidad de
-// anti-colisión de etiquetas ni límites de eje robustos, una barra por sector no
-// puede superponerse con otra). Padding arriba: deja lugar a la burbuja que dibuja
-// burbujaSectorPlugin en la punta de cada columna sin que se corte contra el borde.
+// "Actividad por sector": una columna por sector, ordenadas por la variación de actividad, con burbuja
+// de % del empleo en la punta (radio ~ raíz del %, para que el ÁREA sea proporcional al peso).
 const sectorBarOpts = (empleoPct) => ({
-  responsive:true, maintainAspectRatio:false, animation:false,
   layout:{ padding:{ top:18 } },
-  plugins:{ legend:{display:false},
-    tooltip:{ callbacks:{
-      label:(c)=> {
-        const v = c.parsed.y;
-        const pct = empleoPct[c.dataIndex];
-        return [`Actividad (EMAE, i.a.): ${v > 0 ? '+' : ''}${v.toFixed(1)}%`,
-                `% del empleo total: ${pct.toFixed(1)}%`];
-      } } } },
-  scales:{ x:{ ticks:{ color:'#838383', font:{size:9}, maxRotation:60, minRotation:60 }, grid:{display:false} },
-           y:{ title:{display:true, text:'Variación % interanual de actividad (EMAE)', font:{size:10}, color:'#555555'},
-               ticks:{ color:'#838383', font:{size:10} }, grid:{color:(c)=> c.tick.value===0 ? '#B5B5B5' : '#EFEFEF'} } },
+  plugins:{ tooltip:{ callbacks:{
+      label:(c) => [`Actividad (EMAE, i.a.): ${c.parsed.y > 0 ? '+' : ''}${fmtN(c.parsed.y, 1)}%`,
+                    `% del empleo total: ${fmtN(empleoPct[c.dataIndex], 1)}%`] } } },
+  scales:{ x:{ grid:{ display:false }, ticks:{ font:{ size:9 }, maxRotation:60, minRotation:60 } },
+           y: ejeY({ title: tituloEje('Variación % interanual de actividad (EMAE)') }) },
 });
-
-// Dibuja una burbuja centrada en la punta de cada columna, con radio escalado por el
-// % del empleo total que representa ese sector (el dato que antes definía el orden del
-// eje X, ahora sólo una dimensión visual encima de las barras -- referencia: slide de
-// MAP LATAM que mandó Pedro). Radio ~ raíz cuadrada del %, no el % directo, para que sea
-// el ÁREA del círculo -- no el radio -- la que quede proporcional al peso (estándar en
-// gráficos de burbujas, evita exagerar visualmente las diferencias entre sectores).
 function burbujaSectorPlugin(empleoPct) {
   return {
-    id: 'burbujaSector',
+    id:'burbujaSector',
     afterDatasetsDraw(chart) {
-      const meta = chart.getDatasetMeta(0);
-      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0), { ctx } = chart;
       ctx.save();
       meta.data.forEach((bar, i) => {
         const r = Math.max(3, Math.sqrt(empleoPct[i] || 0) * 6);
-        ctx.beginPath();
-        ctx.arc(bar.x, bar.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = '#0767A7B0';
-        ctx.strokeStyle = '#0767A7';
-        ctx.lineWidth = 1;
-        ctx.fill();
-        ctx.stroke();
+        ctx.beginPath(); ctx.arc(bar.x, bar.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = alfa(TEMA.azul_1, .55); ctx.strokeStyle = TEMA.azul_1; ctx.lineWidth = 1;
+        ctx.fill(); ctx.stroke();
       });
       ctx.restore();
     }
   };
 }
 
+const NEG_TXT = 'Valores negativos en arena.';
 SERIES.forEach(s => {
-  const el = document.getElementById('ch'+s.i);
-  if(!el) return;
+  const el = document.getElementById('ch' + s.i);
+  if (!el) return;
   const ctx = el.getContext('2d');
+  let ley = [], extra = '';
   if (s.kind === 'combo') {
-    const coloresBarras = s.flujo.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label:'Variación mensual', data:s.flujo, backgroundColor:coloresBarras, yAxisID:'y' },
-        { type:'line', label:'Stock', data:s.y, borderColor:s.color, backgroundColor:s.color+'14', yAxisID:'y1', fill:false }
-      ]}, options: comboOpts(s.unidad) });
+        { type:'bar', label: s.label_barras || 'Variación mensual', data:s.flujo, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:'Stock', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, yAxisID:'y1', order:0,
+          etiqueta:{ u:s.unidad_linea || s.unidad, arriba:-12, bold:true } }
+      ]}, options: comboOpts(s.unidad, s.unidad_linea, s.titulo_barras) });
+    ley = [{ label:'Stock (eje derecho)', color:TEMA.azul_1, linea:true },
+           { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.azul_3 }];
+    if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? 'Ventas netas (negativos) en arena.' : 'Caídas en arena.';
   } else if (s.kind === 'overlay') {
-    charts[s.i] = new Chart(ctx, { type: s.barras ? 'bar' : 'line', data:{ labels:s.x, datasets: s.datasets.map(d => (
-        s.barras
-          ? { label:d.label, data:d.y, backgroundColor:d.color, borderRadius:2 }
-          : { label:d.label, data:d.y, borderColor:d.color, backgroundColor:d.color+'10', fill:false }
-      )) }, options: overlayOpts(s.unidad, s.radio_punto, s.cruce, s.escala_log),
-      plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
+    const n = s.datasets.length;
+    const dss = s.datasets.map((d, i) => {
+      const r = nivel(i, n), col = NIVEL[r];
+      if (s.barras) {
+        const neg = r === 0 ? TEMA.negativo : alfa(TEMA.negativo, .5);
+        return { label:d.label, data:d.y, backgroundColor: colorSigno(col, neg), order:r };
+      }
+      return { label:d.label, data:d.y, borderColor:col, backgroundColor:col, borderWidth:ANCHO[r], borderDash:TRAZO[r], order:r,
+               etiqueta:{ texto: ETIQUETAS[d.label] || (d.label.length <= 16 ? d.label : ''), u:s.unidad, bold: r === 0,
+                          color: r === 3 ? TEMA.texto_3 : col } };
+    });
+    charts[s.i] = new Chart(ctx, { type: s.barras ? 'bar' : 'line', data:{ labels:s.x, datasets:dss },
+      options: overlayOpts(s), plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
+    ley = s.datasets.map((d, i) => { const r = nivel(i, n);
+      return { label:d.label, color:NIVEL[r], linea:!s.barras, ancho:ANCHO[r], dash:TRAZO[r].length > 0 }; }).reverse();
+    if (s.barras && s.datasets.some(d => tieneNeg(d.full_y || d.y))) extra = NEG_TXT;
+    if (s.cruce) extra = (extra ? extra + ' ' : '') + '◆ marca el cambio de liderazgo.';
   } else if (s.kind === 'incidencia') {
-    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
-        { label:d.label, data:d.y, backgroundColor:d.color, stack:'incidencia' }
-      )) }, options: incidenciaOpts(s.unidad, s.y_max, s.y_min),
-      plugins: [atipicosIncidenciaPlugin] });
+    const dss = s.datasets.map((d, i) => {
+      const r = d.label.startsWith('Resto') ? 3 : Math.min(i, 2);
+      return { label:d.label, data:d.y, backgroundColor: colorSigno(NIVEL[r], TEMA.negativo), stack:'incidencia' };
+    });
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets:dss },
+      options: incidenciaOpts(s.unidad, s.y_max, s.y_min), plugins:[atipicosIncidenciaPlugin] });
     charts[s.i].$atipicos = s.atipicos;
     charts[s.i].$restoDetalle = s.resto_detalle;
+    ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[d.label.startsWith('Resto') ? 3 : Math.min(i, 2)] }));
+    extra = 'Aportes negativos en arena.';
   } else if (s.kind === 'espejo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:'#0767A7', stack:'comercio' },
-        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:'#EF6C00', stack:'comercio' },
-        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:'#232D4F', backgroundColor:'#232D4F14', fill:false, tension:0.12, pointRadius:0, borderWidth:1.9 },
+        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.azul_3, stack:'comercio', order:2 },
+        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:TEMA.azul_contexto, stack:'comercio', order:2 },
+        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.25, order:1,
+          segment:{ borderColor: g => (g.p0.parsed.y < 0 || g.p1.parsed.y < 0) ? TEMA.negativo : undefined },
+          etiqueta:{ texto:'Saldo', u:s.unidad, bold:true } },
       ]}, options: espejoOpts(s.unidad) });
+    ley = [{ label:'Exportaciones (arriba)', color:TEMA.azul_3 }, { label:'importaciones (abajo)', color:TEMA.azul_contexto },
+           { label:'saldo', color:TEMA.azul_1, linea:true }];
+    if (tieneNeg(s.full_saldo || s.saldo)) extra = 'Saldo negativo en arena.';
   } else if (s.kind === 'bar') {
+    const dest = s.destacar;
+    const bg = (c) => {
+      const k = (dest !== undefined && dest !== null) ? dest : ultimoIdx(c.chart.data.datasets[0].data);
+      const ult = c.dataIndex === k;
+      if (c.raw != null && c.raw < 0) return ult ? TEMA.negativo : alfa(TEMA.negativo, .45);
+      return ult ? TEMA.azul_1 : TEMA.azul_contexto;
+    };
     charts[s.i] = new Chart(ctx, { type:'bar',
-      data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:s.color, borderRadius:2 }] },
-      options: baseOpts(s.unidad) });
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor:bg, categoryPercentage:.85, barPercentage:.9,
+                                     etiqueta:{ barra:true, idx:dest, u:s.unidad } }] },
+      options: baseOpts(s) });
+    extra = (dest !== undefined && dest !== null) ? 'En azul oscuro, el contrato más cercano.' : 'En azul oscuro, el último dato.';
+    if (tieneNeg(s.full_y || s.y)) extra += ' ' + NEG_TXT;
   } else if (s.kind === 'bar_sectores') {
-    const coloresBarras = s.y.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
     charts[s.i] = new Chart(ctx, { type:'bar',
-      data:{ labels:s.x, datasets:[{ data:s.y, backgroundColor:coloresBarras, borderRadius:2 }] },
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo) }] },
       options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
+    extra = 'Barras: variación interanual de la actividad (caídas en arena). Burbujas: peso de cada sector en el empleo.';
   } else if (s.kind === 'combo_bl') {
-    const datasets = s.barras.map(b => ({ type:'bar', label:b.label, data:b.y,
-        backgroundColor:b.color, yAxisID:'y' }));
-    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:'#232D4F',
-        backgroundColor:'#232D4F14', fill:false, tension:0.12, pointRadius:0, borderWidth:1.9, yAxisID:'y1' });
+    const nb = s.barras.length;
+    const datasets = s.barras.map((b, i) => ({ type:'bar', label:b.label, data:b.y, yAxisID:'y', order:1,
+        backgroundColor: nb === 1 ? colorSigno(TEMA.azul_3, TEMA.negativo) : (i === 0 ? TEMA.azul_3 : TEMA.azul_contexto) }));
+    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1,
+        yAxisID:'y1', order:0, etiqueta:{ u:s.unidad_linea, arriba:-12, bold:true } });
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets }, options: comboBLOpts(s.unidad_barras, s.unidad_linea) });
-  } else if (s.kind === 'combo_2lineas') {
-    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'line', label:s.label_izq, data:s.izq, borderColor:'#0767A7', backgroundColor:'#0767A714', yAxisID:'y', fill:false },
-        { type:'line', label:s.label_der, data:s.der, borderColor:'#C62828', backgroundColor:'#C6282814', yAxisID:'y1', fill:false },
-      ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
-  } else if (s.kind === 'combo_rezago') {
-    const v0 = s.variantes[String(s.rezago_default)];
+    ley = s.barras.map((b, i) => ({ label: b.label + (i === nb - 1 ? ' (eje izquierdo)' : ''), color: nb === 1 || i === 0 ? TEMA.azul_3 : TEMA.azul_contexto }))
+          .concat([{ label: s.linea_label + ' (eje derecho)', color:TEMA.azul_1, linea:true }]);
+    if (nb === 1 && tieneNeg(s.barras[0].full_y || s.barras[0].y)) extra = NEG_TXT;
+  } else if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
+    const v0 = s.kind === 'combo_rezago' ? s.variantes[String(s.rezago_default)] : s;
     charts[s.i] = new Chart(ctx, { data:{ labels:v0.x, datasets:[
-        { type:'line', label:s.label_izq, data:v0.izq, borderColor:'#0767A7', backgroundColor:'#0767A714', yAxisID:'y', fill:false },
-        { type:'line', label:s.label_der, data:v0.der, borderColor:'#C62828', backgroundColor:'#C6282814', yAxisID:'y1', fill:false },
+        { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.5, yAxisID:'y',
+          etiqueta:{ u:s.unidad_izq, arriba:-12, bold:true } },
+        { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.azul_3, backgroundColor:TEMA.azul_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
+          etiqueta:{ u:s.unidad_der, arriba:13 } },
       ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
+    ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.azul_1, linea:true, ancho:2.5 },
+           { label: s.label_der + ' (eje derecho)', color:TEMA.azul_3, linea:true, dash:true }];
   } else if (s.kind === 'combo_evento') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor:'#0767A7', yAxisID:'y' },
-        { type:'line', label:s.label_evento, data:s.evento, showLine:false, pointRadius:6,
-          pointHoverRadius:8, pointBackgroundColor:'#C62828', pointBorderColor:'#fff',
-          pointBorderWidth:1.5, yAxisID:'y1' },
+        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:s.label_evento, data:s.evento, showLine:false, pointRadius:6, pointHoverRadius:8,
+          pointBackgroundColor:TEMA.azul_1, pointBorderColor:'#fff', pointBorderWidth:1.5, yAxisID:'y1', order:0 },
       ]}, options: comboEventoOpts(s.unidad_barra, s.unidad_evento) });
+    ley = [{ label: s.label_barra + ' (barras, eje izquierdo)', color:TEMA.azul_3 }, { label: s.label_evento + ' (puntos, eje derecho)', color:TEMA.azul_1 }];
+    if (tieneNeg(s.full_barra || s.barra)) extra = NEG_TXT;
   } else if (s.kind === 'muro') {
-    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map(d => (
-        { label:d.label, data:d.y, backgroundColor:d.color }
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map((d, i) => (
+        { label:d.label, data:d.y, backgroundColor: NIVEL[Math.min(i, 3)] }
       )) }, options: muroOpts(s.unidad) });
+    ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[Math.min(i, 3)] }));
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
-      data:{ labels:s.x, datasets:[{ data:s.y, borderColor:s.color, backgroundColor:s.color+'14', fill:true }] },
-      options: baseOpts(s.unidad, s.eventos), plugins: s.eventos ? [eventosPlugin(s.eventos)] : [] });
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, fill:false,
+                                     etiqueta:{ u:s.unidad, bold:true } }] },
+      options: baseOpts(s), plugins: s.eventos ? [eventosPlugin(s.eventos)] : [] });
+    if (s.eventos && s.eventos.length) extra = '▾ marca eventos (detalle en el tooltip).';
   }
+  if (s.frenada) extra = (extra ? extra + ' ' : '') + 'El tramo sombreado no tiene datos de la fuente.';
+  escribirLeyenda(s.i, ley, extra);
 });
 
 // Redibuja un chart ya creado con los datos ya filtrados (por un botón de rango fijo o por
-// el rango "Personalizado"). Factorizado para que ambos caminos compartan la misma lógica.
+// el rango "Personalizado"). Los colores son funciones del valor (tema), no hace falta recolorear.
 function aplicarFiltro(idx, serie, rango, datFiltrados) {
   charts[idx].data.labels = datFiltrados.x;
   if (serie.kind === 'combo') {
-    const coloresBarras = datFiltrados.flujo.map(v => (v||0) >= 0 ? '#2E7D33' : '#C62828');
     charts[idx].data.datasets[0].data = datFiltrados.flujo;
-    charts[idx].data.datasets[0].backgroundColor = coloresBarras;
     charts[idx].data.datasets[1].data = datFiltrados.y;
   } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
     datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
@@ -2185,14 +2330,27 @@ if (tieneFullscreenNativo) {
     }
   });
 }
+
+// Barra de secciones: resalta la sección que se está leyendo.
+const navLinks = [...document.querySelectorAll('nav.secciones a[href^="#"]')];
+function marcarNav() {
+  let activo = navLinks[0];
+  navLinks.forEach(a => { const sec = document.querySelector(a.getAttribute('href')); if (sec && sec.getBoundingClientRect().top < 90) activo = a; });
+  navLinks.forEach(a => a.classList.toggle('activo', a === activo));
+}
+window.addEventListener('scroll', marcarNav, { passive:true });
+marcarNav();
 </script>
 </body></html>"""
 
-    html = (plantilla.replace("__AHORA__", ahora).replace("__NAV__", nav)
+    html = (plantilla.replace("__VARS__", css_vars).replace("__FUENTE__", fuente_css)
+            .replace("__AHORA__", ahora).replace("__NAV__", nav)
             .replace("__FUENTES__", fuentes_pagina or FUENTES_HEADER_DEFAULT)
             .replace("__TITULO__", titulo_pagina)
             .replace("__SECCIONES__", secciones)
             .replace("__NOTAS__", notas_html)
+            .replace("__TEMA__", json.dumps(tema_js, ensure_ascii=False))
+            .replace("__ETIQUETAS__", json.dumps(etiquetas or {}, ensure_ascii=False))
             .replace("__DATA__", json.dumps(series_js, ensure_ascii=False)))
     OUT.mkdir(exist_ok=True)
     (OUT / archivo_salida).write_text(html, encoding="utf-8")

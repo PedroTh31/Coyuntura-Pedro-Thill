@@ -87,3 +87,67 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       ese día (`graves_vistos`).
     - Mientras tanto: si el workflow del mail termina en rojo por ese error, revisar a mano antes de
       las 08:47 (o cancelar esa corrida de respaldo).
+
+12. **S&P MERVAL: corte de escala el 19/10/2026** — anotado el 07/11/2026 (visto en el Bloque C, no
+    arreglado a pedido de Pedro).
+    - En `data/series_largo.csv` la serie (BYMA, `symbol: "M"`) viene en ~2,8-3,0 millones de puntos
+      hasta el 15/10/2026 y desde el 19/10/2026 en ~84.000-92.000 (último: 84.093,11 el 06/11). El
+      cociente entre un día y el anterior en el corte es 0,034 (≈ 1/29), sin ningún otro salto así en
+      la serie (desde 02/09/2024).
+    - Se ve en la card de la pestaña financiera (antes y después del rediseño): la línea cae a casi 0.
+    - Pendiente: confirmar en BYMA si cambió la base/divisor del índice o la unidad del endpoint, y
+      decidir con Pedro cómo empalmar (no reescalar a mano sin una fuente que lo documente).
+
+13. **Cauciones: valor 0,00 en un día con dato** — anotado el 07/11/2026 (visto en el Bloque C, no
+    arreglado).
+    - Caución en dólares (1 día): último dato 0,00 % TNA el 05/11/2026 (los días previos entre 0,90 y
+      1,20). Es el valor que muestra la card.
+    - Caución en pesos (1 día): 0,0 % TNA el 05/11/2026, entre 26,0 (04/11) y 30,0 (06/11).
+    - Parece un snapshot del MAE tomado sin operaciones (campo `ultimo` en 0) que se guarda como dato
+      real. Pendiente: tratar 0 como sin dato en `mae_resumen` (o usar otro campo), con un test.
+
+14. **Base monetaria: la serie cae a la mitad en jun-2026** — anotado el 07/11/2026 (visto en el Bloque
+    C, no arreglado).
+    - `90.1_BMT_0_0_20` (datos.gob.ar, "millones de $") en `data/series_largo.csv`: 41.399.340 en
+      may-2026 y 18.185.780 en jun-2026 (−56% en un mes); después 21.504.650 (jul) y 22.520.769 (ago).
+      Ningún movimiento parecido en el resto de la serie. Con el titular por reglas salía "La base
+      monetaria de agosto está 48,1% por debajo de la de un año antes": parece un corte de la fuente
+      (cambio de definición o de escala), no un dato económico.
+    - Mientras tanto la card lleva `titular: "Base monetaria"` en el yaml (decisión de Pedro: no se
+      publica un titular sobre un posible corte de la fuente). Al resolverlo, sacar ese override.
+    - Pendiente: revisar la metadata y las notas de la serie en datos.gob.ar y en el BCRA y decidir con
+      Pedro cómo empalmar.
+
+15. **Tramo sin datos más angosto que el tiempo real en series frenadas** — anotado el 07/11/2026.
+    - El sombreado del Bloque C (D9) se dibuja sobre el eje de categorías de Chart.js: cada dato ocupa
+      el mismo ancho aunque las fechas no estén equiespaciadas. En el TCR multilateral (frenado el
+      28/01/2026) los ~9 meses sin datos se ven más angostos que 9 meses de historia, porque la serie
+      vieja tiene más puntos por mes que los días hábiles que se agregan hasta hoy.
+    - No se arregla en el Bloque C (decisión de Pedro). Opción a evaluar: eje de tiempo real
+      (`type: 'time'`, necesita un adaptador de fechas para Chart.js) o rellenar con la misma
+      frecuencia que la historia.
+
+16. **Dólar futuro: contrato "nov/2026" duplicado con valor 3** — anotado el 07/11/2026 (visto en el
+    Bloque C, no arreglado).
+    - En la curva DDF del MAE (`_ddf_chart` en run.py) aparecen dos contratos rotulados "nov/2026": uno
+      en 1.570 y otro con último = 3 (barra casi invisible; el pie de la card dice "mín. 3").
+    - Pendiente: ver qué ticker es (posible contrato de otro tipo o sin operaciones con un precio no
+      comparable) y filtrarlo con un criterio documentado, con un test.
+
+17. **Convertir los depósitos en moneda extranjera (idVariable 104) a USD** — anotado el 07/11/2026.
+    - El BCRA publica la 104 "En millones de ARS", moneda extranjera: dólares VALUADOS EN PESOS. Desde el
+      Bloque C se rotula así ("millones de $ (dólares valuados en pesos)"), sin convertir.
+    - ⚠️ DECISIÓN PEDRO: con qué tipo de cambio convertir (ej. A3500/oficial del mismo día, que es el
+      que usa el BCRA para valuar). Recién con eso se agrega la conversión, documentada en la nota.
+
+18. **Escala de la metadata del BCRA en depósitos (981, 209, 229)** — anotado el 07/11/2026.
+    - La API de Estadísticas Monetarias v4.0 dice "En miles de ARS" para 981 (total privado), 209 y 229
+      (sector público, pesos y moneda extranjera), y "En millones de ARS" para 100 y 104.
+    - Al 31/08/2026: 100 (126.016.828) + 104 (61.719.152) = 187.735.980 ≈ 981 (187.655.774, 0,04% de
+      diferencia): la 981 está en la MISMA escala que 100/104 (millones), no en miles.
+    - La 229 (3.050.621 al 31/08) no se pudo confirmar con una suma así: si fueran millones de ARS serían
+      ~USD 2.000 M (plausible); si fueran miles, ~USD 2 M. Su `unidad` en el yaml (componente interno,
+      "millones de USD") sigue sin corregir hasta confirmarlo.
+    - Desde el Bloque C las cards de depósitos en pesos con `factor: 0.001` se rotulan "miles de millones
+      de $" (coherente con millones × 0,001). Pendiente: confirmar con el BCRA y, si corresponde, revisar
+      el factor de la 209.

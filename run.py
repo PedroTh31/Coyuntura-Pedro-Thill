@@ -404,7 +404,9 @@ def _ddf_chart():
         pct=None, marca_fecha=None, maxv=_fmt_ultimo(max(valores)) if valores else "—",
         minv=_fmt_ultimo(min(valores)) if valores else "—", sube_es_bueno=False, neutral=True,
         sin_filtros=True, subtitulo="Curva de contratos por vencimiento mensual")
-    serie_js = dict(kind="bar", x=labels, y=valores, color=dashboard.ACENTO["mercados"], unidad="$")
+    # destacar=0: la barra resaltada (azul oscuro + etiqueta) es el contrato más cercano, el mismo que
+    # muestra el valor de la card (no el último de la curva, que es el más lejano).
+    serie_js = dict(kind="bar", x=labels, y=valores, color=dashboard.ACENTO["mercados"], unidad="$", destacar=0)
     nota = ('Curva de contratos de dólar futuro (DDF) por vencimiento mensual, Mercado Abierto '
             'Electrónico (MAE, endpoint emisiones/resumen/DDF, no documentado oficialmente por el '
             'MAE, datos delayed 5-15 min intradía). Snapshot del día -- no es una serie histórica '
@@ -667,7 +669,7 @@ def main():
         frescura_ctx = None
     dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera, fuentes_indec=fuentes_por_indicador,
                       fuentes_pagina=dashboard.fuentes_de_pagina(indicadores, fuentes_por_indicador, todos),
-                      frescura_ctx=frescura_ctx)
+                      frescura_ctx=frescura_ctx, con_titulares=True)
     # Bloque B3: agenda del mail diario + aviso semanal a Pedro de publicaciones atrasadas. Usa las
     # líneas de frescura que acaba de registrar dashboard.generar (misma redacción que el dashboard).
     agenda_mail = None
