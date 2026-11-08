@@ -1,6 +1,6 @@
 {
-  "fecha": "2026-11-07",
-  "hora": "23:51:41",
+  "fecha": "2026-11-08",
+  "hora": "06:37:20",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
   "disparo": "workflow_dispatch",
@@ -548,7 +548,7 @@
   },
   "agenda": {
     "calendario": {
-      "fecha": "2026-11-07",
+      "fecha": "2026-11-08",
       "estado": "ok",
       "bajado": null,
       "feriado_hoy": null,
@@ -748,37 +748,37 @@
         "clave": "Tipo de cambio real multilateral|28/01/26",
         "nombre": "Tipo de cambio real multilateral",
         "texto": "⏸ Tipo de cambio real multilateral: 28/01/26 · sin datos nuevos hace 9 meses · sin calendario oficial",
-        "dias": 283
+        "dias": 284
       },
       {
         "clave": "Compras netas de divisas por contraparte|may-26",
         "nombre": "Compras netas de divisas por contraparte",
         "texto": "⏸ Compras netas de divisas por contraparte: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 160
+        "dias": 161
       },
       {
         "clave": "Compras netas de divisas del BCRA|may-26",
         "nombre": "Compras netas de divisas del BCRA",
         "texto": "⏸ Compras netas de divisas del BCRA: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 160
+        "dias": 161
       },
       {
         "clave": "Asistencia monetaria del BCRA al Tesoro|may-26",
         "nombre": "Asistencia monetaria del BCRA al Tesoro",
         "texto": "⏸ Asistencia monetaria del BCRA al Tesoro: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 160
+        "dias": 161
       },
       {
         "clave": "Reservas ajustadas (swap China + organismos internacionales)|jun-26",
         "nombre": "Reservas ajustadas (swap China + organismos internacionales)",
         "texto": "⏸ Reservas ajustadas (swap China + organismos internacionales): jun-26 · sin datos nuevos hace 4 meses · sin calendario oficial",
-        "dias": 130
+        "dias": 131
       },
       {
         "clave": "Capacidad de compra del salario (RIPTE / CBT)|jul-26",
         "nombre": "Capacidad de compra del salario (RIPTE / CBT)",
         "texto": "⏸ Capacidad de compra del salario (RIPTE / CBT): jul-26 · sin datos nuevos hace 3 meses · sin calendario oficial",
-        "dias": 99
+        "dias": 100
       }
     ]
   }
