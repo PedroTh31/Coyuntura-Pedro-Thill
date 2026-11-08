@@ -598,6 +598,15 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
    inventar números sin base.
 5. **Merge idempotente:** no tocar la lógica de `storage.py` que preserva el histórico.
 
+## Reglas de trabajo con git
+- **Antes de cualquier push**, correr `git fetch` + `git log origin/main..HEAD` y mostrarle a Pedro TODOS los
+  commits que van a subir (hash, mensaje completo y `--stat`). Si hay alguno que no es el de la ronda actual,
+  frenar y preguntar antes de pushear.
+- Nunca `pull --rebase` + push en el mismo paso sin ese chequeo: un rebase puede arrastrar commits locales
+  viejos que nunca se aprobaron para subir. Pasó el 08/11/2026: el commit de la ronda anterior (fd5d1f5,
+  fallback al CSV de datos.gob.ar) estaba sólo en local y salió junto con el del RIPTE. Pedro decidió dejarlo.
+- Commit y push, sólo con el OK explícito de Pedro para cada uno.
+
 ## Estado actual (ya implementado)
 Precios (inflación mensual/interanual, IPC nivel general, incidencia por división de consumo);
 Dólar (oficial/blue/MEP/CCL); Brecha cambiaria; Tipo de

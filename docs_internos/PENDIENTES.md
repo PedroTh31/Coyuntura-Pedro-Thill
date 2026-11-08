@@ -73,6 +73,10 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
 8. **Spread soberano GD30 vs. UST10Y frenado en 01/09/2026** — anotado el 07/11/2026.
    - Serie diaria (TIR del GD30 del MAE − DGS10 de FRED). Causa no verificada (¿falla la TIR del
      GD30 en el MAE o el cruce con FRED?). A hacer: diagnosticar.
+   - **Causa (08/11/2026):** FRED da timeout desde GitHub Actions (`Read timed out. (read timeout=30)` contra
+     `fred.stlouisfed.org/graph/fredgraph.csv`, en todas las corridas del bot registradas en
+     `ultima_corrida.json` desde el 04/11/2026); desde la máquina local responde. Último dato del UST 10Y
+     guardado: 03/09/2026. Se trata en el bloque del MAE.
 
 9. **La pestaña financiera no tiene línea de frescura** — anotado el 07/11/2026. **CERRADO el 08/11/2026:**
    lo resolvió el Bloque E2 (D4: frescura en todas las cards de todos los temas). Verificado en `docs/`
@@ -349,6 +353,9 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       (`agenda.avisar_atrasados`), cada uno con su propio estado y su tope de 1 mail por corrida.
     - A evaluar: un solo mail por corrida con secciones, que junte los avisos que tocan ese día (cada
       mecanismo conservaría su estado y su frecuencia; sólo cambiaría el envío).
+    - La alerta del fallback al CSV de datos.gob.ar incluye componentes de series que no se muestran (en la
+      del 08/11/2026: 90.1_BMCMP_0_0_44 y 90.1_DCCT_0_0_32, componentes del M1, que salió del gráfico, #23).
+      Evaluar excluirlas al unificar las alertas.
 
 ## Bloques futuros (después del Bloque E; no implementar todavía)
 
