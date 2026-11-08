@@ -1,0 +1,1010 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agregados monetarios (M1, M2, M3) · Monitor de coyuntura · Argentina</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* Bloque C: colores y tipografía de tema.py (una sola fuente de verdad, la misma que el mail). */
+  :root {
+    --azul-1: #0B3C5D;
+    --azul-2: #3A7CA5;
+    --azul-3: #81B1D3;
+    --azul-contexto: #DCE8F1;
+    --texto: #111111;
+    --texto-2: #4A5A68;
+    --texto-3: #7A8C9A;
+    --negativo: #C9A66B;
+    --atrasado: #2E3A45;
+    --franja-fondo: #EEF1F4;
+    --franja-borde: #4A5A68;
+    --fondo: #FFFFFF;
+    --linea:#E3E8ED; --grilla:#EEEEEE;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--fondo); color:var(--texto); font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; line-height:1.45; -webkit-font-smoothing:antialiased; }
+  a { color:var(--azul-2); text-decoration:none; } a:hover { text-decoration:underline; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
+  main.wrap { padding-bottom:60px; }
+  header.masthead { border-top:4px solid var(--azul-1); padding:26px 0 16px; }
+  header h1 { font-size:30px; line-height:1.15; margin:0; font-weight:700; letter-spacing:-.01em; }
+  nav.secciones { position:sticky; top:0; z-index:20; background:var(--fondo); border-bottom:1px solid var(--linea); }
+  nav.secciones .wrap { display:flex; align-items:center; gap:22px; overflow-x:auto; scrollbar-width:none; }
+  nav.secciones .wrap::-webkit-scrollbar { display:none; }
+  nav.secciones a { flex:none; font-size:14px; color:var(--texto-2); padding:12px 0 10px; border-bottom:3px solid transparent; }
+  nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  nav.secciones a:hover { color:var(--texto); text-decoration:none; }
+  nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
+  nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }
+  header h1 a.h1-link { color:inherit; } header h1 a.h1-link:hover { text-decoration:none; }
+  /* Bloque E3: página de tema (cards compactas) y de serie (card completa a todo el ancho). */
+  .miga { font-size:12px; color:var(--texto-3); padding-top:10px; }
+  .miga a { color:var(--texto-2); }
+  section.bloque .miga + h2 { margin-top:6px; }
+  section.bloque.serie { border:0; }
+  .tema-bajada { font-size:14px; color:var(--texto-2); margin:8px 0 0; max-width:820px; }
+  .grid.ccgrid { grid-template-columns:repeat(3, minmax(0, 1fr)); column-gap:34px; }
+  .grid.una { grid-template-columns:minmax(0, 1fr); }
+  .grid.una .cbox { height:420px; }
+  a.cc { display:flex; flex-direction:column; color:inherit; border-top:1px solid var(--linea); padding:14px 0 18px; min-width:0; }
+  a.cc:hover { text-decoration:none; } a.cc:hover .ct { color:var(--azul-2); }
+  a.cc .ct { font-size:16px; margin-top:4px; padding-right:0; }
+  a.cc .cn { padding-right:0; }
+  a.cc .cv { font-size:22px; }
+  .mbox { position:relative; height:84px; margin:10px 0 6px; }
+  .mtexto { font-size:12px; color:var(--texto-3); background:var(--franja-fondo); padding:12px 10px; margin:10px 0 6px; }
+  a.cc .cf { margin-top:2px; }
+  .cc-pie { display:flex; justify-content:space-between; gap:10px; font-size:11px; color:var(--texto-3); margin-top:auto; padding-top:8px; }
+  .cc-ver { color:var(--azul-2); font-weight:600; white-space:nowrap; }   /* Calendario + Financiera/Macro, juntos a la derecha */
+  section.bloque { padding-top:34px; scroll-margin-top:44px; }
+  section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
+  h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }
+  .sub { font-size:14px; font-weight:700; margin:26px 0 8px; color:var(--texto); }
+  .ref { color:var(--texto-3); font-weight:400; font-size:13px; }
+  header .sub { font-size:14px; color:var(--texto-2); margin:6px 0 0; font-weight:400; }   /* después de .sub (notas) */
+  .nota { color:var(--texto-2); font-size:12px; margin:4px 0 12px; }
+  .notas-list { margin:10px 0 14px 20px; padding:0; font-size:12px; color:var(--texto-2); }
+  .notas-list li { margin:6px 0; scroll-margin-top:50px; }
+  .notas-list strong { color:var(--texto); }
+  .grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); column-gap:44px; }
+  .cell { position:relative; border-top:1px solid var(--linea); padding:16px 0 22px; min-width:0; background:var(--fondo); }
+  .fs-btn { position:absolute; top:12px; right:0; z-index:5; width:24px; height:24px; padding:0; border:0;
+    background:none; color:var(--texto-3); font-size:13px; line-height:1; cursor:pointer; opacity:.7; }
+  .fs-btn:hover { opacity:1; color:var(--texto); }
+  .cell:fullscreen, .cell:-webkit-full-screen { overflow:auto; background:var(--fondo); display:flex; flex-direction:column; padding:24px; }
+  .cell:fullscreen .cbox, .cell:-webkit-full-screen .cbox { flex:1 1 auto; height:auto !important; }
+  .cell.fs-fallback { position:fixed; inset:12px; z-index:1000; overflow:auto; display:flex; flex-direction:column;
+    padding:16px; box-shadow:0 4px 24px rgba(0,0,0,.25); }
+  .cell.fs-fallback .cbox { flex:1 1 auto; height:auto !important; }
+  .cn { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; padding-right:30px; }
+  .ct { font-size:18px; line-height:1.28; font-weight:700; margin:5px 0 0; color:var(--texto); padding-right:30px; }
+  .csub { font-size:13px; color:var(--texto-2); margin-top:3px; line-height:1.35; }
+  .cm { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-top:8px; }
+  .cv { font-size:26px; font-weight:700; color:var(--azul-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .uni { font-size:13px; color:var(--texto-2); }
+  /* D3: variación en gris azulado, sin juicio (el arena queda reservado a los valores negativos). */
+  .chg { font-size:13px; color:var(--texto-2); font-variant-numeric:tabular-nums; }
+  .chg .tri { font-size:11px; margin-right:3px; }
+  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + azul para
+     "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
+     El estado nunca va sólo en color: lleva ícono y texto. */
+  .cf { font-size:11px; color:#7A8C9A; margin-top:5px; line-height:1.35; }
+  .cf .per { color:#4A5A68; font-weight:600; }
+  .cf .ok { color:#3A7CA5; font-weight:600; }
+  .cf .atr { color:#2E3A45; font-weight:700; }
+  .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
+  .cf.grave .per { color:#2E3A45; }
+  .aviso-card { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
+    padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
+  .marca-fecha { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
+    padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
+  .cdesc { font-size:13px; line-height:1.4; color:var(--texto-2); margin:10px 0 4px; }
+  .cdesc:empty { display:none; }
+  .ley { display:inline-block; max-width:100%; margin-right:12px; }
+  .sw { display:inline-block; width:10px; height:10px; margin-right:5px; vertical-align:-1px; }
+  .sw.sw-l { width:18px; height:0; vertical-align:middle; margin-bottom:2px; }
+  .ley-x { display:inline-block; }
+  .acumulando { color:var(--texto-2); font-size:12px; text-align:center; padding:20px 14px; background:var(--franja-fondo); margin-top:10px; }
+  .cbox { position:relative; height:250px; margin-top:4px; }
+  /* Pedro quiere TODAS las tarjetas del mismo tamaño por ahora (flags grande/sin_filtros siguen en el yaml):
+     .cbox-grande { height:400px; } .cell-ancha { grid-column: span 2; } */
+  .filtros, .rezago-btns { display:flex; align-items:baseline; flex-wrap:wrap; gap:2px; font-size:12px; color:var(--texto-3); margin-top:6px; }
+  .vista { margin-right:6px; }
+  .filtro, .rezago-btn { font:inherit; background:none; border:0; padding:2px 5px; color:var(--texto-2); cursor:pointer; border-bottom:2px solid transparent; }
+  .filtro:hover, .rezago-btn:hover { color:var(--texto); }
+  .filtro.active, .rezago-btn.active { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  .rango-custom { display:none; align-items:center; gap:6px; margin-top:6px; font-size:12px; color:var(--texto-2); }
+  .rango-custom input[type=date] { font:inherit; font-size:12px; padding:2px 4px; border:1px solid var(--linea); background:var(--fondo); color:var(--texto); }
+  .rango-aplicar { font:inherit; font-size:12px; background:var(--azul-1); color:#fff; border:0; padding:3px 10px; cursor:pointer; }
+  .fuente-pie { font-size:11px; color:var(--texto-3); line-height:1.45; margin-top:6px; }
+  .fuente-pie a { color:var(--texto-3); text-decoration:underline; text-decoration-color:#C9D3DC; }
+  .fuente-tabla { margin:4px 0 14px; }
+  .tabla { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:8px; font-variant-numeric:tabular-nums; }
+  .tabla th { text-align:right; color:var(--texto-3); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--texto); }
+  .tabla th:first-child { text-align:left; }
+  .tabla td { padding:7px 10px; text-align:right; border-bottom:1px solid var(--linea); font-weight:600; }
+  .tabla td.sec { text-align:left; font-weight:400; }
+  .tabla td.num { color:var(--texto); font-weight:400; }
+  footer { margin:40px 0 0; padding-top:12px; border-top:1px solid var(--texto); font-size:11px; color:var(--texto-3); }
+  @media (max-width:980px) and (min-width:761px) { .grid.ccgrid { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
+  @media (max-width:760px) {
+    .wrap { padding:0 16px; }
+    header.masthead { padding:18px 0 12px; }
+    header h1 { font-size:23px; }
+    header .sub { font-size:13px; }
+    .grid, .grid.ccgrid { grid-template-columns:minmax(0, 1fr); }
+    .grid.una .cbox { height:300px; }
+    section.bloque { padding-top:24px; }
+    section.bloque > h2 { font-size:21px; }
+    .ct { font-size:17px; }
+    .cv { font-size:24px; }
+    .cbox { height:220px; }
+    nav.secciones a { font-size:13px; }
+    .tabla { font-size:12px; } .tabla td, .tabla th { padding:6px 5px; }
+  }
+</style></head>
+<body>
+<header class="masthead"><div class="wrap">
+  <h1><a href="../../" class="h1-link">Monitor de coyuntura · Argentina</a></h1>
+  <div class="sub">Actualizado 08/11/2026 09:12 · fuentes: API del INDEC · apis.datos.gob.ar · BCRA</div>
+</div></header>
+<nav class="secciones"><div class="wrap"><a href="../../">Inicio</a><a href="../../calendario/">Calendario</a><a href="../../precios/">Precios</a><a href="../../actividad/">Actividad</a><a href="../../empleo-y-salarios/">Empleo y salarios</a><a href="../../dolar-y-reservas/">Dólar y reservas</a><a href="../../dinero-y-credito/" class="activo">Dinero y crédito</a><a href="../../sector-externo/">Sector externo</a><a href="../../fiscal-y-deuda/">Fiscal y deuda</a><a href="../../mercados/">Mercados</a></div></nav>
+<main class="wrap">
+  <section class="bloque serie" id="serie"><div class="miga"><a href="../../">Inicio</a> › <a href="../../dinero-y-credito/">Dinero y crédito</a> › Agregados monetarios (M1, M2, M3)</div><div class="grid una"><div class="cell" id="agregados-monetarios"><button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><div class="ct">Agregados monetarios (M1, M2, M3)</div><div class="cm"><span class="cv">19.581</span><span class="uni">índice base 100 al inicio</span><span class="chg"><span class="tri">▲</span>+30,3% vs. ago-25</span></div><div class="cf" title="Esta serie no tiene un calendario oficial de publicación."><span class="per">ago-26</span> · próximo: sin calendario oficial</div><div class="cdesc" data-idx="0"></div><div class="cbox"><canvas id="ch0"></canvas></div><div class="filtros" data-idx="0"><span class="vista">Vista:</span><button class="filtro active" data-rango="default">desde ene-26</button><button class="filtro" data-rango="6m">6M</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="todo">Máx</button><button class="filtro" data-rango="personalizado">Rango…</button></div><div class="rango-custom" data-idx="0"><input type="date" class="rango-desde"><span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div><div class="fuente-pie">máx. 19.581 · mín. 100,0 · <a href="#nota-1">*1</a></div></div></div></section>
+  <h3 class="sub">Notas metodológicas y fuentes</h3><ul class="notas-list"><li id="nota-1"><strong>*1</strong> M1, M2 y M3 (BCRA, vía datos.gob.ar), cada uno rebasado a 100 de forma independiente en su primer período disponible. M1 ⊂ M2 ⊂ M3 en magnitud (M3 es varias veces más grande que M1 en pesos): mostrarlos en niveles absolutos en el mismo eje aplastaría a M1 y M2 contra el cero, así que el gráfico compara TRAYECTORIA relativa desde el mismo punto de partida, no la brecha de nivel en pesos entre los tres agregados.</li></ul>
+  <footer>Gráficos interactivos: pasá el cursor (o tocá) para ver cada valor.<br>Monitor de coyuntura · Argentina. Proyecto iniciado el <a href="https://github.com/PedroTh31/Coyuntura-Pedro-Thill/commit/730dd39">9 de julio de 2026</a>. <a href="../../acerca/">Acerca del monitor</a> · Contacto: <a href="#" class="mail">mail</a> · <a href="https://www.linkedin.com/in/pedro-thill-286076218/" rel="noopener">LinkedIn</a><script>document.querySelectorAll('a.mail').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const r=x=>x.split('').reverse().join('');location.href='mailto:'+r('13llihtordep')+'@'+r('moc.liamg');}));</script></footer>
+</main>
+<script>
+const SERIES = [{"i": 0, "kind": "overlay", "unidad": "índice base 100 al inicio", "x": ["01/26", "02/26", "03/26", "04/26", "05/26", "06/26", "07/26", "08/26"], "full_x": ["01/04", "02/04", "03/04", "04/04", "05/04", "06/04", "07/04", "08/04", "09/04", "10/04", "11/04", "12/04", "01/05", "02/05", "03/05", "04/05", "05/05", "06/05", "07/05", "08/05", "09/05", "10/05", "11/05", "12/05", "01/06", "02/06", "03/06", "04/06", "05/06", "06/06", "07/06", "08/06", "09/06", "10/06", "11/06", "12/06", "01/07", "02/07", "03/07", "04/07", "05/07", "06/07", "07/07", "08/07", "09/07", "10/07", "11/07", "12/07", "01/08", "02/08", "03/08", "04/08", "05/08", "06/08", "07/08", "08/08", "09/08", "10/08", "11/08", "12/08", "01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09", "11/09", "12/09", "01/10", "02/10", "03/10", "04/10", "05/10", "06/10", "07/10", "08/10", "09/10", "10/10", "11/10", "12/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11", "11/11", "12/11", "01/12", "02/12", "03/12", "04/12", "05/12", "06/12", "07/12", "08/12", "09/12", "10/12", "11/12", "12/12", "01/13", "02/13", "03/13", "04/13", "05/13", "06/13", "07/13", "08/13", "09/13", "10/13", "11/13", "12/13", "01/14", "02/14", "03/14", "04/14", "05/14", "06/14", "07/14", "08/14", "09/14", "10/14", "11/14", "12/14", "01/15", "02/15", "03/15", "04/15", "05/15", "06/15", "07/15", "08/15", "09/15", "10/15", "11/15", "12/15", "01/16", "02/16", "03/16", "04/16", "05/16", "06/16", "07/16", "08/16", "09/16", "10/16", "11/16", "12/16", "01/17", "02/17", "03/17", "04/17", "05/17", "06/17", "07/17", "08/17", "09/17", "10/17", "11/17", "12/17", "01/18", "02/18", "03/18", "04/18", "05/18", "06/18", "07/18", "08/18", "09/18", "10/18", "11/18", "12/18", "01/19", "02/19", "03/19", "04/19", "05/19", "06/19", "07/19", "08/19", "09/19", "10/19", "11/19", "12/19", "01/20", "02/20", "03/20", "04/20", "05/20", "06/20", "07/20", "08/20", "09/20", "10/20", "11/20", "12/20", "01/21", "02/21", "03/21", "04/21", "05/21", "06/21", "07/21", "08/21", "09/21", "10/21", "11/21", "12/21", "01/22", "02/22", "03/22", "04/22", "05/22", "06/22", "07/22", "08/22", "09/22", "10/22", "11/22", "12/22", "01/23", "02/23", "03/23", "04/23", "05/23", "06/23", "07/23", "08/23", "09/23", "10/23", "11/23", "12/23", "01/24", "02/24", "03/24", "04/24", "05/24", "06/24", "07/24", "08/24", "09/24", "10/24", "11/24", "12/24", "01/25", "02/25", "03/25", "04/25", "05/25", "06/25", "07/25", "08/25", "09/25", "10/25", "11/25", "12/25", "01/26", "02/26", "03/26", "04/26", "05/26", "06/26", "07/26", "08/26"], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00", "2026-06-01T00:00:00", "2026-07-01T00:00:00", "2026-08-01T00:00:00"], "datasets": [{"label": "M1 (circulante + cta. cte.)", "y": [100743.27, 97814.94, 101233.04, 99483.9, 101298.46, 62516.84, 64034.94, 74238.1], "full_y": [100.0, 101.53, 97.91, 99.63, 108.14, 112.79, 118.91, 118.62, 117.86, 119.94, 122.64, 131.16, 132.88, 127.76, 128.32, 129.13, 133.01, 135.71, 141.84, 142.0, 143.16, 146.31, 151.09, 165.59, 171.9, 165.1, 165.48, 163.98, 168.41, 176.17, 181.98, 180.9, 182.46, 186.56, 193.36, 203.88, 210.53, 207.96, 208.67, 209.58, 215.77, 214.76, 225.04, 219.95, 212.24, 213.76, 215.89, 222.8, 245.58, 233.13, 227.09, 231.26, 239.31, 250.2, 260.59, 249.75, 262.88, 262.68, 258.7, 291.79, 303.21, 284.98, 278.33, 271.1, 276.26, 288.5, 290.4, 290.8, 298.38, 297.12, 297.2, 326.67, 341.62, 340.22, 321.95, 322.34, 322.19, 326.87, 348.41, 346.09, 352.08, 366.67, 371.52, 405.33, 450.92, 421.45, 425.8, 427.85, 440.61, 451.0, 463.87, 473.58, 474.83, 480.32, 490.38, 529.39, 585.35, 553.31, 542.16, 539.37, 557.91, 591.65, 656.49, 672.96, 643.19, 661.58, 688.42, 749.38, 799.52, 745.77, 740.78, 743.76, 756.53, 794.91, 821.75, 866.55, 860.52, 863.29, 861.6, 937.22, 1064.01, 961.76, 917.02, 905.04, 920.31, 976.45, 1015.28, 1029.13, 1037.36, 1058.59, 1100.49, 1222.6, 1311.97, 1178.08, 1194.18, 1213.63, 1259.52, 1317.26, 1391.35, 1403.49, 1424.72, 1462.17, 1504.54, 1680.89, 1747.57, 1622.73, 1558.63, 1502.83, 1519.37, 1563.91, 1617.07, 1608.5, 1622.76, 1659.66, 1728.67, 1940.31, 2049.24, 1958.75, 2028.49, 2034.29, 2008.3, 2122.61, 2172.08, 2187.6, 2270.09, 2276.42, 2262.02, 2535.02, 2628.87, 2560.75, 2523.74, 2535.72, 2691.59, 2933.0, 2760.75, 2758.21, 2985.98, 2564.28, 2473.03, 2703.52, 2781.84, 2673.35, 2645.79, 2608.75, 2711.23, 2806.81, 2938.31, 2992.28, 2951.51, 3051.48, 3016.0, 3384.28, 3691.51, 3682.16, 3792.34, 4091.07, 4477.6, 4930.86, 5095.2, 5455.52, 5429.71, 5508.9, 5504.74, 5937.34, 6278.42, 5992.66, 6139.47, 6199.03, 6533.44, 6583.97, 6817.93, 7023.56, 7330.05, 7498.8, 8086.6, 8683.86, 9703.25, 9160.48, 9246.97, 9168.25, 9412.74, 10067.96, 10951.87, 10946.91, 11170.36, 12121.63, 11834.07, 13044.96, 14602.26, 13698.58, 13712.06, 14105.48, 15132.22, 15778.6, 17283.51, 18667.62, 19502.29, 21674.01, 23920.17, 25824.46, 29942.74, 31395.64, 33948.13, 37049.02, 42785.28, 49268.57, 52825.32, 54997.95, 57796.54, 63405.23, 67327.97, 75548.71, 77652.93, 75984.68, 78758.4, 80593.79, 83886.85, 86484.33, 91871.43, 94741.63, 94935.48, 93987.78, 96988.21, 100182.89, 100743.27, 97814.94, 101233.04, 99483.9, 101298.46, 62516.84, 64034.94, 74238.1]}, {"label": "M2 (agregado total)", "y": [127974.61, 125307.74, 126807.33, 122514.51, 126683.13, 135461.3, 141225.0, 138943.92], "full_y": [100.0, 103.3, 100.0, 103.78, 108.1, 114.63, 118.68, 120.47, 120.65, 118.06, 119.82, 126.51, 132.27, 126.2, 127.54, 131.81, 135.4, 139.0, 144.7, 145.7, 142.13, 149.24, 148.23, 157.82, 161.57, 159.88, 165.7, 164.27, 169.28, 166.79, 171.52, 174.7, 170.77, 174.33, 183.79, 192.87, 192.23, 192.02, 192.51, 196.26, 201.98, 204.17, 213.08, 211.73, 207.88, 215.94, 212.36, 221.61, 241.25, 230.79, 233.83, 231.62, 235.4, 237.28, 251.63, 239.29, 247.38, 246.28, 242.33, 263.17, 278.35, 267.97, 261.31, 259.51, 263.52, 266.14, 267.38, 266.0, 271.49, 279.6, 274.95, 307.15, 310.14, 317.25, 300.1, 310.93, 313.83, 313.43, 339.93, 330.25, 336.14, 358.12, 363.85, 393.45, 409.97, 397.19, 401.28, 408.42, 421.18, 431.07, 450.31, 455.97, 453.37, 457.3, 460.69, 493.61, 540.84, 528.11, 517.38, 536.76, 538.41, 582.1, 623.25, 630.46, 623.92, 614.3, 654.29, 710.19, 722.22, 716.38, 721.69, 729.01, 735.97, 746.48, 777.37, 811.44, 802.32, 832.79, 809.39, 878.89, 933.56, 876.4, 872.71, 855.02, 873.1, 955.06, 998.96, 982.74, 1024.0, 1045.8, 1074.31, 1171.73, 1225.8, 1157.17, 1128.7, 1186.34, 1216.76, 1239.64, 1308.21, 1358.44, 1344.97, 1373.91, 1417.77, 1562.87, 1585.81, 1491.45, 1450.43, 1414.48, 1483.87, 1478.0, 1554.25, 1551.26, 1615.33, 1657.72, 1726.55, 1912.43, 1939.84, 1934.79, 1969.44, 1913.73, 1925.99, 2015.42, 2097.32, 2178.15, 2211.26, 2225.48, 2207.51, 2438.0, 2608.61, 2470.41, 2453.35, 2463.57, 2608.83, 2699.45, 2696.72, 2673.36, 2852.97, 2604.38, 2567.72, 2908.77, 2859.55, 2780.09, 2810.57, 2846.63, 2934.65, 3007.38, 3131.47, 3265.81, 3300.15, 3400.62, 3431.84, 3817.37, 4145.44, 4260.62, 4513.96, 5166.01, 5595.74, 5941.25, 6251.06, 6308.05, 6445.91, 6433.49, 6581.32, 7226.35, 7221.56, 7296.62, 7211.45, 7522.57, 7876.63, 8152.28, 8633.14, 8623.39, 8889.52, 9336.21, 9874.11, 11113.91, 11438.92, 11479.36, 11525.57, 11682.79, 12294.15, 13160.8, 13951.17, 14040.75, 15141.6, 15875.11, 16235.56, 18034.93, 18891.84, 20083.48, 20013.32, 21226.75, 22186.88, 23926.03, 25813.2, 28242.11, 31198.16, 36054.09, 37994.36, 43704.43, 53372.14, 52527.38, 56296.39, 56034.02, 63372.32, 71298.67, 77361.58, 78902.66, 82881.67, 85755.35, 87179.57, 99411.08, 101045.44, 96039.96, 101762.58, 105295.14, 110043.09, 114807.83, 120383.82, 116571.69, 113778.22, 115918.88, 117346.57, 128480.21, 127974.61, 125307.74, 126807.33, 122514.51, 126683.13, 135461.3, 141225.0, 138943.92]}, {"label": "M3 (agregado amplio)", "y": [16552.8, 16641.52, 16965.44, 17488.4, 18069.1, 18534.13, 19006.26, 19580.87], "full_y": [100.0, 101.77, 100.0, 102.4, 104.35, 107.66, 110.51, 112.32, 113.32, 114.31, 116.63, 119.68, 122.28, 122.93, 125.02, 125.41, 128.39, 131.02, 133.83, 135.36, 136.6, 138.42, 140.82, 145.09, 148.09, 147.72, 149.19, 150.48, 154.28, 158.29, 161.83, 164.06, 166.85, 169.74, 173.28, 178.66, 183.02, 185.9, 187.75, 191.09, 195.56, 198.29, 203.13, 206.25, 207.01, 207.3, 208.89, 215.99, 222.81, 226.44, 230.59, 230.3, 231.12, 230.77, 236.98, 239.06, 242.77, 243.25, 239.58, 240.4, 243.57, 242.01, 239.1, 236.17, 239.3, 242.9, 243.03, 245.46, 250.66, 252.67, 256.47, 266.88, 274.44, 275.47, 277.26, 282.37, 291.77, 300.99, 314.28, 320.49, 329.49, 340.28, 348.15, 361.69, 377.59, 382.99, 391.75, 399.05, 410.06, 419.45, 436.17, 443.29, 448.66, 453.26, 458.55, 472.58, 490.9, 496.91, 504.32, 513.98, 526.52, 544.43, 568.14, 582.57, 594.87, 603.65, 620.98, 647.83, 668.88, 672.95, 678.07, 687.25, 700.19, 715.63, 736.46, 755.41, 767.58, 784.02, 795.01, 820.05, 837.81, 834.54, 831.01, 100.0, 101.26, 103.74, 106.52, 108.53, 110.2, 112.42, 114.87, 120.96, 126.87, 127.56, 128.21, 129.65, 132.88, 137.53, 143.73, 146.6, 149.29, 152.48, 156.56, 165.67, 168.93, 166.95, 165.5, 163.12, 165.59, 169.97, 176.8, 176.98, 179.38, 183.15, 189.76, 200.89, 208.2, 213.23, 213.76, 213.03, 214.54, 220.58, 227.5, 229.15, 231.44, 233.69, 239.22, 255.3, 268.8, 281.21, 286.69, 286.74, 293.36, 297.02, 310.16, 321.58, 326.51, 330.99, 344.39, 357.27, 365.44, 366.72, 366.16, 365.46, 375.74, 384.77, 396.92, 405.71, 404.94, 406.31, 407.59, 440.49, 478.13, 500.82, 527.66, 575.33, 620.98, 670.34, 709.63, 732.94, 749.92, 764.22, 769.66, 807.87, 842.22, 852.96, 882.99, 911.72, 950.04, 983.48, 1030.05, 1060.83, 1096.07, 1135.47, 1180.41, 1254.42, 1323.67, 1337.74, 1373.01, 1419.38, 1499.15, 1603.59, 1744.73, 1800.67, 1903.8, 2031.36, 2121.2, 2294.02, 2441.52, 2516.59, 2624.88, 2782.11, 3009.66, 3236.83, 3478.26, 3783.21, 4044.43, 4327.93, 4488.7, 4865.81, 5749.93, 6123.35, 6729.08, 7294.93, 8101.75, 8613.33, 9168.12, 9546.02, 9963.97, 10562.4, 11181.02, 11978.64, 12386.33, 12716.81, 12986.0, 13361.21, 13915.31, 14479.23, 15072.58, 15028.91, 15408.98, 15567.62, 15819.16, 16641.78, 16552.8, 16641.52, 16965.44, 17488.4, 18069.1, 18534.13, 19006.26, 19580.87]}], "radio_punto": 0, "cruce": null, "escala_log": false, "barras": false}];
+const TEMA = {"azul_1": "#0B3C5D", "azul_2": "#3A7CA5", "azul_3": "#81B1D3", "azul_contexto": "#DCE8F1", "texto": "#111111", "texto_2": "#4A5A68", "texto_3": "#7A8C9A", "negativo": "#C9A66B", "atrasado": "#2E3A45", "franja_fondo": "#EEF1F4", "franja_borde": "#4A5A68", "fondo": "#FFFFFF", "fuente": "\"Helvetica Neue\", Helvetica, Arial, sans-serif"};
+const ETIQUETAS = {"IPC Núcleo (var. mensual)": "Núcleo", "IPC Regulados (var. mensual)": "Regulados", "IPC Estacionales (var. mensual)": "Estacionales"};
+const charts = {};
+// Lookup por s.i (el idx de la tarjeta), NO por posición en SERIES: las tarjetas "acumulando
+// historia" consumen un idx sin agregar serie.
+const SERIE_POR_I = {};
+SERIES.forEach(s => { SERIE_POR_I[s.i] = s; });
+
+/* ---------- C1: tema único. Todos los gráficos heredan de acá; ninguno se estiliza por separado ---------- */
+const FUENTE = TEMA.fuente;
+const GRILLA = '#EEEEEE';
+const NIVEL = [TEMA.azul_1, TEMA.azul_2, TEMA.azul_3, TEMA.azul_contexto];   // jerarquía: 0 = protagonista
+const ANCHO = [2.5, 1.75, 1.75, 1.25];
+const TRAZO = [[], [], [5, 3], [2, 2]];
+const alfa = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+const esPP = u => u === 'p.p.' || u === 'pp';
+const esPct = u => !!u && (u.includes('%') || esPP(u));
+// Decimales según la unidad (D4, mismo criterio que titulares.decimales en Python)
+function decDe(u, v) {
+  if (esPct(u)) return esPP(u) ? 2 : 1;
+  if (u && /millones|miles|puntos/.test(u)) return 0;
+  const a = Math.abs(v || 0); return a >= 1000 ? 0 : a >= 10 ? 1 : 2;
+}
+const sufijo = u => esPP(u) ? ' pp' : (esPct(u) ? '%' : '');
+const fmtN = (v, d) => v == null ? 's/d' : v.toLocaleString('es-AR', {minimumFractionDigits:d, maximumFractionDigits:d}).replace('-', '−');
+const fmtU = (v, u) => fmtN(v, decDe(u, v));
+const nivel = (i, n) => Math.min(n - 1 - i, 3);   // overlays: la ÚLTIMA serie es la protagonista (resume la card)
+function ultimoIdx(arr) { let k = (arr || []).length - 1; while (k >= 0 && arr[k] == null) k--; return k; }
+const colorSigno = (pos, neg) => c => (c.raw != null && c.raw < 0) ? neg : pos;
+const tieneNeg = arr => (arr || []).some(v => v != null && v < 0);
+
+Chart.defaults.font.family = FUENTE;
+Chart.defaults.font.size = 11;
+Chart.defaults.color = TEMA.texto_3;
+Chart.defaults.responsive = true;
+Chart.defaults.maintainAspectRatio = false;
+Chart.defaults.animation = false;
+Chart.defaults.plugins.legend.display = false;          // leyenda en prosa, sobre el gráfico (.cdesc)
+Chart.defaults.elements.point.radius = 0;
+Chart.defaults.elements.point.hoverRadius = 3;
+Chart.defaults.elements.point.hitRadius = 8;
+Chart.defaults.elements.line.borderWidth = 2;
+Chart.defaults.elements.line.tension = 0;
+Chart.defaults.elements.bar.borderWidth = 0;
+Chart.defaults.interaction = { mode:'index', intersect:false };
+Chart.defaults.scale.grid.color = GRILLA;
+Chart.defaults.scale.border.display = false;
+Chart.defaults.scale.ticks.color = TEMA.texto_3;
+Object.assign(Chart.defaults.plugins.tooltip, {
+  backgroundColor:'#FFFFFF', borderColor:TEMA.azul_contexto, borderWidth:1, titleColor:TEMA.texto,
+  bodyColor:TEMA.texto_2, footerColor:TEMA.texto_2, padding:8, cornerRadius:2, boxWidth:8, boxHeight:8,
+  titleFont:{ weight:'700' }, filter: it => it.raw != null,
+});
+const ejeX = (extra) => Object.assign({ grid:{ display:false }, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0 } }, extra || {});
+const ejeY = (extra) => Object.assign({ grid:{ color:GRILLA, drawTicks:false },
+  ticks:{ padding:6, maxTicksLimit:5, callback:(v) => Number(v).toLocaleString('es-AR') } }, extra || {});
+const tituloEje = (t) => ({ display:!!t, text:t, font:{ size:10 }, color:TEMA.texto_3 });
+
+// Etiquetas directas (C1): al final de cada línea (o arriba del último punto en gráficos de dos ejes) y
+// sobre la barra destacada, con anti-superposición vertical simple. Reemplazan a la leyenda.
+function textoEtiqueta(e, v) { return (e.texto ? e.texto + ' ' : '') + fmtU(v, e.u) + sufijo(e.u); }
+const etiquetasDirectas = {
+  id:'etiquetasDirectas',
+  beforeUpdate(chart) {
+    const x = chart.options.scales && chart.options.scales.x;
+    if (x && x.ticks && chart.width && chart.width < 500) x.ticks.maxTicksLimit = 4;   // pantallas angostas
+    const ctx = chart.ctx; let ancho = 0;
+    ctx.save(); ctx.font = `700 12px ${FUENTE}`;
+    chart.data.datasets.forEach(ds => {
+      const e = ds.etiqueta; if (!e || e.arriba !== undefined) return;
+      const k = (e.idx !== undefined && e.idx !== null) ? e.idx : ultimoIdx(ds.data); if (k < 0) return;
+      const w = ctx.measureText(textoEtiqueta(e, ds.data[k])).width;
+      // barra: la etiqueta va centrada sobre la barra, sólo necesita media etiqueta de margen
+      ancho = Math.max(ancho, e.barra ? w / 2 : w);
+    });
+    ctx.restore();
+    chart.options.layout.padding = { top:18, right: ancho ? ancho + 12 : 8, left:0, bottom:0 };
+  },
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart, items = [];
+    chart.data.datasets.forEach((ds, i) => {
+      const e = ds.etiqueta; if (!e || !chart.isDatasetVisible(i)) return;
+      const k = (e.idx !== undefined && e.idx !== null) ? e.idx : ultimoIdx(ds.data);
+      if (k < 0 || ds.data[k] == null) return;
+      const el = chart.getDatasetMeta(i).data[k]; if (!el) return;
+      const txt = textoEtiqueta(e, ds.data[k]);
+      if (e.barra) items.push({ x:el.x, y: ds.data[k] < 0 ? el.y + 11 : el.y - 8, txt, color:TEMA.texto, align:'center', bold:true });
+      else if (e.arriba !== undefined) items.push({ x:el.x - 2, y:el.y + e.arriba, txt, color:e.color || ds.borderColor, align:'right', bold:e.bold });
+      else items.push({ x:el.x + 6, y:el.y, txt, color:e.color || ds.borderColor, align:'left', bold:e.bold });
+    });
+    items.filter(o => o.align === 'left').sort((a, b) => a.y - b.y).forEach((o, j, arr) => {
+      if (j && o.y - arr[j - 1].y < 13) o.y = arr[j - 1].y + 13;
+    });
+    ctx.save(); ctx.textBaseline = 'middle';
+    items.forEach(o => {
+      ctx.font = `${o.bold ? '700' : '400'} 12px ${FUENTE}`;
+      ctx.textAlign = o.align;
+      const w = ctx.measureText(o.txt).width;
+      const x0 = o.align === 'left' ? o.x - 2 : o.align === 'right' ? o.x - w - 2 : o.x - w / 2 - 2;
+      ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(x0, o.y - 7, w + 4, 14);
+      ctx.fillStyle = o.color; ctx.fillText(o.txt, o.x, o.y);
+    });
+    ctx.restore();
+  },
+};
+// Serie frenada (franja ⏸ del B2, D9): el eje sigue hasta hoy y se sombrea el tramo sin datos.
+const tramoSinDatos = {
+  id:'tramoSinDatos',
+  beforeDatasetsDraw(chart, _a, opts) {
+    if (!opts || !opts.activo) return;
+    const d = chart.data.datasets[0].data, k = ultimoIdx(d);
+    if (k < 0 || k >= d.length - 1) return;
+    const a = chart.chartArea, x0 = chart.scales.x.getPixelForValue(k), { ctx } = chart;
+    ctx.save();
+    ctx.fillStyle = TEMA.franja_fondo; ctx.fillRect(x0, a.top, a.right - x0, a.bottom - a.top);
+    ctx.fillStyle = TEMA.texto_3; ctx.font = `11px ${FUENTE}`; ctx.textAlign = 'center';
+    ctx.fillText('sin datos', (x0 + a.right) / 2, a.top + 10);
+    ctx.restore();
+  },
+};
+// Línea del cero, fina y oscura, en todo gráfico con negativos.
+const lineaCero = {
+  id:'lineaCero',
+  beforeDatasetsDraw(chart) {
+    const y = chart.scales.y; if (!y || y.type === 'logarithmic' || !(y.min < 0 && y.max > 0)) return;
+    const p = y.getPixelForValue(0), a = chart.chartArea, { ctx } = chart;
+    ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(a.left, p); ctx.lineTo(a.right, p); ctx.stroke(); ctx.restore();
+  },
+};
+Chart.register(etiquetasDirectas, tramoSinDatos, lineaCero);
+
+// Leyenda en prosa (C1): muestras con el color real de cada serie, sobre el gráfico.
+function escribirLeyenda(i, items, extra) {
+  const el = document.querySelector(`.cdesc[data-idx='${i}']`); if (!el) return;
+  const partes = items.filter(it => it.label).map(it => {
+    const sw = it.linea
+      ? `<span class="sw sw-l" style="border-top:${it.ancho || 2}px ${it.dash ? 'dashed' : 'solid'} ${it.color}"></span>`
+      : `<span class="sw" style="background:${it.color}"></span>`;
+    return `<span class="ley">${sw}${it.label}</span>`;
+  });
+  if (extra) partes.push(`<span class="ley-x">${extra}</span>`);
+  el.innerHTML = partes.join('');
+}
+
+// 'eventos' (opcional): [{fecha:"dd/mm/yy", texto:"..."}, ...] -- anotaciones de eventos puntuales
+// dibujadas por eventosPlugin; el texto sale en el tooltip normal (afterBody).
+function eventoTooltip(eventos) {
+  return (items) => {
+    if (!eventos || !eventos.length || !items.length) return [];
+    const ev = eventos.find(e => e.fecha === items[0].label);
+    return ev ? [`▾ ${ev.texto}`] : [];
+  };
+}
+
+function eventosPlugin(eventos) {
+  return {
+    id:'eventosPolitica',
+    afterDatasetsDraw(chart) {
+      if (!eventos || !eventos.length) return;
+      const { ctx, chartArea, scales } = chart;
+      eventos.forEach(ev => {
+        const i = chart.data.labels.indexOf(ev.fecha);
+        if (i === -1) return;
+        const x = scales.x.getPixelForValue(i);
+        ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.setLineDash([4, 3]); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+        ctx.setLineDash([]); ctx.fillStyle = TEMA.texto_2; ctx.font = `10px ${FUENTE}`; ctx.textAlign = 'center';
+        ctx.fillText('▾', x, chartArea.top - 1); ctx.restore();
+      });
+    }
+  };
+}
+
+function calcFechaCorte(rango) {
+  const hoy = new Date();
+  const hace = (meses) => new Date(hoy.getFullYear(), hoy.getMonth() - meses, hoy.getDate()).toISOString().split('T')[0];
+  switch(rango) {
+    case '6m': return hace(6);
+    case '1a': return hace(12);
+    case '5a': return hace(60);
+    case 'todo': return '1900-01-01';
+    default: return null;
+  }
+}
+
+function filtrarDatos(s, rango) {
+  if (s.kind === 'overlay' || s.kind === 'incidencia') {
+    if (rango === 'default') {
+      return { x: s.x, datasets: s.datasets.map(d => ({ label: d.label, y: d.y })) };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, datasets: s.datasets.map(d => ({ label: d.label, y: d.y })) };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      datasets: s.datasets.map(d => ({ label: d.label, y: indices.map(i => d.full_y[i]) }))
+    };
+  }
+  if (s.kind === 'espejo') {
+    if (rango === 'default') {
+      return { x: s.x, expo: s.expo, impo: s.impo, saldo: s.saldo };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, expo: s.expo, impo: s.impo, saldo: s.saldo };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      expo: indices.map(i => s.full_expo[i]),
+      impo: indices.map(i => s.full_impo[i]),
+      saldo: indices.map(i => s.full_saldo[i]),
+    };
+  }
+  if (s.kind === 'combo_bl') {
+    if (rango === 'default') {
+      return { x: s.x, barras: s.barras.map(b => ({ label: b.label, y: b.y })), linea: s.linea };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, barras: s.barras.map(b => ({ label: b.label, y: b.y })), linea: s.linea };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barras: s.barras.map(b => ({ label: b.label, y: indices.map(i => b.full_y[i]) })),
+      linea: indices.map(i => s.full_linea[i]),
+    };
+  }
+  if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
+    if (rango === 'default') {
+      return { x: s.x, izq: s.izq, der: s.der };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, izq: s.izq, der: s.der };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      izq: indices.map(i => s.full_izq[i]),
+      der: indices.map(i => s.full_der[i]),
+    };
+  }
+  if (s.kind === 'combo_evento') {
+    if (rango === 'default') {
+      return { x: s.x, barra: s.barra, evento: s.evento };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, barra: s.barra, evento: s.evento };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barra: indices.map(i => s.full_barra[i]),
+      evento: indices.map(i => s.full_evento[i]),
+    };
+  }
+  if (rango === 'default') {
+    return { x: s.x, y: s.y, flujo: s.flujo };
+  }
+  const fechaCorte = calcFechaCorte(rango);
+  const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+  if (indices.length === 0) {
+    return { x: s.x, y: s.y, flujo: s.flujo };
+  }
+  return {
+    x: indices.map(i => s.full_x[i]),
+    y: indices.map(i => s.full_y[i]),
+    flujo: s.full_flujo ? indices.map(i => s.full_flujo[i]) : undefined
+  };
+}
+
+// Percentil con interpolación lineal (mismo método que pandas .quantile() por defecto),
+// para que el eje calculado en el navegador para un rango "Personalizado" arbitrario sea
+// consistente con el que ya viene precalculado en Python para Default/1A/5A/2008/Todo.
+function percentil(arr, p) {
+  if (!arr.length) return null;
+  const orden = [...arr].sort((a, b) => a - b);
+  const idx = p * (orden.length - 1);
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  if (lo === hi) return orden[lo];
+  return orden[lo] + (orden[hi] - orden[lo]) * (idx - lo);
+}
+
+// Recalcula el eje (percentil 95 + atípicos) de incidencia_stack para un rango de fechas
+// arbitrario (ver Punto 6): mismo mecanismo que _serie_incidencia en Python, pero aplicado a
+// los índices que caen dentro del rango "Personalizado" que eligió el usuario, ya que ese rango
+// no es uno de los 5 precalculados server-side.
+function calcularEjeIncidencia(s, indices) {
+  const MARGEN = 1.15;
+  const totales = indices.map(i => {
+    let pos = 0, neg = 0;
+    s.datasets.forEach(d => { const v = d.full_y[i]; if (v > 0) pos += v; else if (v < 0) neg += v; });
+    return [pos, neg];
+  });
+  const positivos = totales.filter(([p]) => p > 0).map(([p]) => p);
+  const negativos = totales.filter(([, n]) => n < 0).map(([, n]) => Math.abs(n));
+  const yMax = positivos.length ? Math.round(percentil(positivos, 0.95) * MARGEN * 100) / 100 : undefined;
+  const yMin = negativos.length ? Math.round(-percentil(negativos, 0.95) * MARGEN * 100) / 100 : undefined;
+  const atipicos = {};
+  indices.forEach((i, k) => {
+    const [pos, neg] = totales[k];
+    if ((yMax !== undefined && pos > yMax) || (yMin !== undefined && neg < yMin)) {
+      atipicos[s.full_x[i]] = Math.round((pos + neg) * 100) / 100;
+    }
+  });
+  return { y_max: yMax, y_min: yMin, atipicos };
+}
+
+// Filtro de rango personalizado (Punto 6): reutiliza los mismos arrays full_* que ya alimentan
+// filtrarDatos(), sólo cambia el criterio de selección de índices (desde/hasta elegidos por el
+// usuario en vez de uno de los 5 rangos fijos).
+function filtrarDatosPersonalizado(s, desde, hasta) {
+  const hastaCmp = hasta + 'T23:59:59';
+  const indices = s.full_dates.map((d, i) => (d >= desde && d <= hastaCmp) ? i : -1).filter(i => i >= 0);
+  if (s.kind === 'overlay' || s.kind === 'incidencia') {
+    const resultado = { x: indices.map(i => s.full_x[i]), datasets: s.datasets.map(d => ({ label: d.label, y: indices.map(i => d.full_y[i]) })) };
+    if (s.kind === 'incidencia') resultado.eje = calcularEjeIncidencia(s, indices);
+    return resultado;
+  }
+  if (s.kind === 'espejo') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      expo: indices.map(i => s.full_expo[i]),
+      impo: indices.map(i => s.full_impo[i]),
+      saldo: indices.map(i => s.full_saldo[i]),
+    };
+  }
+  if (s.kind === 'combo_bl') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barras: s.barras.map(b => ({ label: b.label, y: indices.map(i => b.full_y[i]) })),
+      linea: indices.map(i => s.full_linea[i]),
+    };
+  }
+  if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      izq: indices.map(i => s.full_izq[i]),
+      der: indices.map(i => s.full_der[i]),
+    };
+  }
+  if (s.kind === 'combo_evento') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barra: indices.map(i => s.full_barra[i]),
+      evento: indices.map(i => s.full_evento[i]),
+    };
+  }
+  return {
+    x: indices.map(i => s.full_x[i]),
+    y: indices.map(i => s.full_y[i]),
+    flujo: s.full_flujo ? indices.map(i => s.full_flujo[i]) : undefined
+  };
+}
+
+const tooltipU = (unidad) => (c) => ` ${c.dataset.label ? c.dataset.label + ': ' : ''}${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, unidad)} ${unidad || ''}`;
+
+const baseOpts = (s) => ({
+  plugins:{ tramoSinDatos:{ activo: !!s.frenada },
+    tooltip:{ callbacks:{ label: tooltipU(s.unidad), afterBody: eventoTooltip(s.eventos) } } },
+  scales:{ x: ejeX(s.x && s.x.length < 30 && !s.full_dates ? { ticks:{ maxRotation:0, autoSkip:true } } : undefined),
+           y: s.kind === 'bar' ? { display:false, grace:'8%' } : ejeY() },
+});
+
+const espejoOpts = (unidad) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => {
+      const v = c.dataset.type === 'line' ? c.parsed.y : Math.abs(c.parsed.y);
+      return ` ${c.dataset.label}: ${v == null ? 's/d' : fmtU(v, unidad)} ${unidad}`;
+    } } } },
+  scales:{ x: ejeX({ stacked:true }), y: ejeY({ stacked:true, ticks:{ padding:6, maxTicksLimit:5, callback:(v) => Math.abs(v).toLocaleString('es-AR') } }) },
+});
+
+const overlayOpts = (s) => ({
+  // spanGaps: series superpuestas de frecuencias distintas (ej. trimestral + diaria) dejan huecos (null)
+  // en el eje compartido; sin esto la de menor frecuencia no se dibuja como línea.
+  spanGaps: true,
+  plugins:{ tooltip:{ callbacks:{ label: tooltipU(s.unidad),
+      afterBody:(items) => (s.cruce && items.length && items[0].label === s.cruce.fecha) ? [`◆ ${s.cruce.texto}`] : [] } } },
+  scales:{ x: ejeX(), y: ejeY({ type: s.escala_log ? 'logarithmic' : 'linear' }) },
+  elements:{ point:{ radius: s.radio_punto || 0 } },
+});
+
+// Barras AGRUPADAS (no apiladas): cada bono amortiza en % de SU PROPIO valor nominal.
+const muroOpts = (unidad) => ({
+  plugins:{ tooltip:{ callbacks:{ label: tooltipU(unidad) } } },
+  scales:{ x:{ grid:{ display:false } }, y: ejeY() },
+});
+
+// Marca vertical de "cambio de liderazgo" en un overlay (ver 'cruce' en _serie_overlay).
+function cruceOverlayPlugin(cruce) {
+  return {
+    id:'cruceOverlay',
+    afterDatasetsDraw(chart) {
+      if (!cruce) return;
+      const i = chart.data.labels.indexOf(cruce.fecha);
+      if (i === -1) return;
+      const { ctx, chartArea, scales } = chart;
+      const x = scales.x.getPixelForValue(i);
+      ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+      ctx.setLineDash([]); ctx.fillStyle = TEMA.texto_2; ctx.font = `bold 11px ${FUENTE}`; ctx.textAlign = 'center';
+      ctx.fillText('◆', x, chartArea.top - 2); ctx.restore();
+    }
+  };
+}
+
+const comboOpts = (unidad, unidadLinea, tituloBarras) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? (unidadLinea || unidad) : unidad;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(tituloBarras || 'Var. mensual') }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje('Stock') }) },
+});
+
+// Combo genérico de 1-2 barras + 1 línea (ver _serie_combo_barras_linea en Python).
+const comboBLOpts = (unidadBarras, unidadLinea) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? unidadLinea : unidadBarras;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(unidadBarras) }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje(unidadLinea) }) },
+});
+
+// Alinea el cero de los ejes 'y' e 'y1' del gráfico de eventos (decisión de Pedro): ver _planCero.
+const N_INTERVALOS_CERO = 6;
+function _pasoRedondo(x) {
+  const p = Math.pow(10, Math.floor(Math.log10(x)));
+  const m = x / p;
+  return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p;
+}
+function _planCero(chart) {
+  const rangos = { y: { min: 0, max: 0 }, y1: { min: 0, max: 0 } };  // el 0 siempre entra
+  chart.data.datasets.forEach(d => {
+    const r = rangos[d.yAxisID || 'y'];
+    if (!r || chart.getDatasetMeta(chart.data.datasets.indexOf(d)).hidden) return;
+    (d.data || []).forEach(v => { if (v != null && isFinite(v)) { r.min = Math.min(r.min, v); r.max = Math.max(r.max, v); } });
+  });
+  const N = N_INTERVALOS_CERO;
+  let mejor = null;
+  for (let k = 0; k <= N; k++) {  // k = cantidad de intervalos debajo del cero
+    let costo = 0, pasos = {}, posible = true;
+    for (const [id, r] of Object.entries(rangos)) {
+      if (r.max === r.min) { pasos[id] = null; continue; }  // eje sin rango: se resuelve abajo
+      const abajo = r.min < 0 ? (k ? -r.min / k : Infinity) : 0;
+      const arriba = r.max > 0 ? (k < N ? r.max / (N - k) : Infinity) : 0;
+      const necesario = Math.max(abajo, arriba);
+      if (!isFinite(necesario)) { posible = false; break; }
+      pasos[id] = _pasoRedondo(necesario);
+      costo += N * pasos[id] / (r.max - r.min);  // 1 = sin desperdicio
+    }
+    if (posible && (!mejor || costo < mejor.costo)) mejor = { k, pasos, costo };
+  }
+  if (!mejor) return null;
+  // Eje sin rango (todo en 0): toma el paso del otro eje en vez de una escala 0..N inventada
+  // (en este gráfico los dos ejes están en la misma unidad); 1 si ninguno tiene rango.
+  const otroPaso = Object.values(mejor.pasos).find(p => p !== null) || 1;
+  for (const id of Object.keys(mejor.pasos)) if (mejor.pasos[id] === null) mejor.pasos[id] = otroPaso;
+  return { k: mejor.k, N, pasos: mejor.pasos };
+}
+function alinearCeroLimites(scale) {
+  const plan = _planCero(scale.chart);
+  if (!plan) return;
+  const paso = plan.pasos[scale.id];
+  scale.min = -plan.k * paso || 0;  // "|| 0": evita un -0 en el eje
+  scale.max = (plan.N - plan.k) * paso;
+}
+function alinearCeroTicks(scale) {
+  const plan = _planCero(scale.chart);
+  if (!plan) return;
+  const paso = plan.pasos[scale.id];
+  scale.ticks = Array.from({ length: plan.N + 1 }, (_, i) => ({ value: (i - plan.k) * paso || 0 }));
+}
+
+const comboEventoOpts = (unidadBarra, unidadEvento) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => {
+      if (c.parsed.y == null) return null;
+      const u = c.dataset.yAxisID === 'y1' ? unidadEvento : unidadBarra;
+      return ` ${c.dataset.label}: ${fmtU(c.parsed.y, u)} ${u}`;
+    } } } },
+  scales:{ x: ejeX(),
+           y:{ position:'left', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, grid:{ color:GRILLA, drawTicks:false }, title: tituloEje(unidadBarra) },
+           y1:{ position:'right', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, grid:{ display:false }, title: tituloEje(unidadEvento) } },
+});
+
+// Combo de DOS líneas en dos ejes (ver _serie_combo_2lineas en Python).
+const combo2LOpts = (unidadIzq, unidadDer) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? unidadDer : unidadIzq;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(unidadIzq) }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje(unidadDer) }) },
+});
+
+const incidenciaOpts = (unidad, yMax, yMin) => ({
+  plugins:{ tooltip:{ callbacks:{
+      label:(c) => ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtN(c.parsed.y, 2)} pp`,
+      afterBody:(items) => {
+        if (!items.length) return [];
+        const lineas = [];
+        const atipicos = items[0].chart.$atipicos;
+        const total = atipicos ? atipicos[items[0].label] : undefined;
+        if (total !== undefined) {
+          lineas.push(`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${fmtN(total, 2)} pp`);
+        }
+        // Detalle de "Resto": qué divisiones lo componen y cuánto aportó cada una ESE mes.
+        const restoDetalle = items[0].chart.$restoDetalle;
+        const detalle = restoDetalle ? restoDetalle[items[0].label] : null;
+        if (detalle && detalle.length) {
+          lineas.push('Detalle de "Resto":');
+          detalle.forEach(d => lineas.push(`  ${d.nombre}: ${d.valor > 0 ? '+' : ''}${fmtN(d.valor, 2)} pp`));
+        }
+        return lineas;
+      } } } },
+  scales:{ x: ejeX({ stacked:true }), y: ejeY({ stacked:true, max: yMax ?? undefined, min: yMin ?? undefined }) },
+});
+
+// Marca los meses "atípicos" (fuera del rango normal del eje) con un ⚠ arriba o abajo de la barra recortada.
+const atipicosIncidenciaPlugin = {
+  id:'atipicosIncidencia',
+  afterDatasetsDraw(chart) {
+    const atipicos = chart.$atipicos;
+    if (!atipicos || !Object.keys(atipicos).length) return;
+    const { ctx, chartArea, scales } = chart;
+    ctx.save(); ctx.font = `bold 12px ${FUENTE}`; ctx.fillStyle = TEMA.texto_2; ctx.textAlign = 'center';
+    chart.data.labels.forEach((label, i) => {
+      if (atipicos[label] === undefined) return;
+      const x = scales.x.getPixelForValue(i);
+      ctx.fillText('⚠', x, atipicos[label] >= 0 ? chartArea.top - 2 : chartArea.bottom + 16);
+    });
+    ctx.restore();
+  }
+};
+
+// "Actividad por sector": una columna por sector, ordenadas por la variación de actividad, con burbuja
+// de % del empleo en la punta (radio ~ raíz del %, para que el ÁREA sea proporcional al peso).
+const sectorBarOpts = (empleoPct) => ({
+  layout:{ padding:{ top:18 } },
+  plugins:{ tooltip:{ callbacks:{
+      label:(c) => [`Actividad (EMAE, i.a.): ${c.parsed.y > 0 ? '+' : ''}${fmtN(c.parsed.y, 1)}%`,
+                    `% del empleo total: ${fmtN(empleoPct[c.dataIndex], 1)}%`] } } },
+  scales:{ x:{ grid:{ display:false }, ticks:{ font:{ size:9 }, maxRotation:60, minRotation:60 } },
+           y: ejeY({ title: tituloEje('Variación % interanual de actividad (EMAE)') }) },
+});
+function burbujaSectorPlugin(empleoPct) {
+  return {
+    id:'burbujaSector',
+    afterDatasetsDraw(chart) {
+      const meta = chart.getDatasetMeta(0), { ctx } = chart;
+      ctx.save();
+      meta.data.forEach((bar, i) => {
+        const r = Math.max(3, Math.sqrt(empleoPct[i] || 0) * 6);
+        ctx.beginPath(); ctx.arc(bar.x, bar.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = alfa(TEMA.azul_1, .55); ctx.strokeStyle = TEMA.azul_1; ctx.lineWidth = 1;
+        ctx.fill(); ctx.stroke();
+      });
+      ctx.restore();
+    }
+  };
+}
+
+const NEG_TXT = 'Valores negativos en arena.';
+SERIES.forEach(s => {
+  const el = document.getElementById('ch' + s.i);
+  if (!el) return;
+  const ctx = el.getContext('2d');
+  let ley = [], extra = '';
+  if (s.kind === 'combo') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label: s.label_barras || 'Variación mensual', data:s.flujo, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:'Stock', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, yAxisID:'y1', order:0,
+          etiqueta:{ u:s.unidad_linea || s.unidad, arriba:-12, bold:true } }
+      ]}, options: comboOpts(s.unidad, s.unidad_linea, s.titulo_barras) });
+    ley = [{ label:'Stock (eje derecho)', color:TEMA.azul_1, linea:true },
+           { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.azul_3 }];
+    if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? 'Ventas netas (negativos) en arena.' : 'Caídas en arena.';
+  } else if (s.kind === 'overlay') {
+    const n = s.datasets.length;
+    const dss = s.datasets.map((d, i) => {
+      const r = nivel(i, n), col = NIVEL[r];
+      if (s.barras) {
+        const neg = r === 0 ? TEMA.negativo : alfa(TEMA.negativo, .5);
+        return { label:d.label, data:d.y, backgroundColor: colorSigno(col, neg), order:r };
+      }
+      return { label:d.label, data:d.y, borderColor:col, backgroundColor:col, borderWidth:ANCHO[r], borderDash:TRAZO[r], order:r,
+               etiqueta:{ texto: ETIQUETAS[d.label] || (d.label.length <= 16 ? d.label : ''), u:s.unidad, bold: r === 0,
+                          color: r === 3 ? TEMA.texto_3 : col } };
+    });
+    charts[s.i] = new Chart(ctx, { type: s.barras ? 'bar' : 'line', data:{ labels:s.x, datasets:dss },
+      options: overlayOpts(s), plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
+    ley = s.datasets.map((d, i) => { const r = nivel(i, n);
+      return { label:d.label, color:NIVEL[r], linea:!s.barras, ancho:ANCHO[r], dash:TRAZO[r].length > 0 }; }).reverse();
+    if (s.barras && s.datasets.some(d => tieneNeg(d.full_y || d.y))) extra = NEG_TXT;
+    if (s.cruce) extra = (extra ? extra + ' ' : '') + '◆ marca el cambio de liderazgo.';
+  } else if (s.kind === 'incidencia') {
+    const dss = s.datasets.map((d, i) => {
+      const r = d.label.startsWith('Resto') ? 3 : Math.min(i, 2);
+      return { label:d.label, data:d.y, backgroundColor: colorSigno(NIVEL[r], TEMA.negativo), stack:'incidencia' };
+    });
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets:dss },
+      options: incidenciaOpts(s.unidad, s.y_max, s.y_min), plugins:[atipicosIncidenciaPlugin] });
+    charts[s.i].$atipicos = s.atipicos;
+    charts[s.i].$restoDetalle = s.resto_detalle;
+    ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[d.label.startsWith('Resto') ? 3 : Math.min(i, 2)] }));
+    extra = 'Aportes negativos en arena.';
+  } else if (s.kind === 'espejo') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.azul_3, stack:'comercio', order:2 },
+        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:TEMA.azul_contexto, stack:'comercio', order:2 },
+        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.25, order:1,
+          segment:{ borderColor: g => (g.p0.parsed.y < 0 || g.p1.parsed.y < 0) ? TEMA.negativo : undefined },
+          etiqueta:{ texto:'Saldo', u:s.unidad, bold:true } },
+      ]}, options: espejoOpts(s.unidad) });
+    ley = [{ label:'Exportaciones (arriba)', color:TEMA.azul_3 }, { label:'importaciones (abajo)', color:TEMA.azul_contexto },
+           { label:'saldo', color:TEMA.azul_1, linea:true }];
+    if (tieneNeg(s.full_saldo || s.saldo)) extra = 'Saldo negativo en arena.';
+  } else if (s.kind === 'bar') {
+    const dest = s.destacar;
+    const bg = (c) => {
+      const k = (dest !== undefined && dest !== null) ? dest : ultimoIdx(c.chart.data.datasets[0].data);
+      const ult = c.dataIndex === k;
+      if (c.raw != null && c.raw < 0) return ult ? TEMA.negativo : alfa(TEMA.negativo, .45);
+      return ult ? TEMA.azul_1 : TEMA.azul_contexto;
+    };
+    charts[s.i] = new Chart(ctx, { type:'bar',
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor:bg, categoryPercentage:.85, barPercentage:.9,
+                                     etiqueta:{ barra:true, idx:dest, u:s.unidad } }] },
+      options: baseOpts(s) });
+    extra = (dest !== undefined && dest !== null) ? 'En azul oscuro, el contrato más cercano.' : 'En azul oscuro, el último dato.';
+    if (tieneNeg(s.full_y || s.y)) extra += ' ' + NEG_TXT;
+  } else if (s.kind === 'bar_sectores') {
+    charts[s.i] = new Chart(ctx, { type:'bar',
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo) }] },
+      options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
+    extra = 'Barras: variación interanual de la actividad (caídas en arena). Burbujas: peso de cada sector en el empleo.';
+  } else if (s.kind === 'combo_bl') {
+    const nb = s.barras.length;
+    const datasets = s.barras.map((b, i) => ({ type:'bar', label:b.label, data:b.y, yAxisID:'y', order:1,
+        backgroundColor: nb === 1 ? colorSigno(TEMA.azul_3, TEMA.negativo) : (i === 0 ? TEMA.azul_3 : TEMA.azul_contexto) }));
+    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1,
+        yAxisID:'y1', order:0, etiqueta:{ u:s.unidad_linea, arriba:-12, bold:true } });
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets }, options: comboBLOpts(s.unidad_barras, s.unidad_linea) });
+    ley = s.barras.map((b, i) => ({ label: b.label + (i === nb - 1 ? ' (eje izquierdo)' : ''), color: nb === 1 || i === 0 ? TEMA.azul_3 : TEMA.azul_contexto }))
+          .concat([{ label: s.linea_label + ' (eje derecho)', color:TEMA.azul_1, linea:true }]);
+    if (nb === 1 && tieneNeg(s.barras[0].full_y || s.barras[0].y)) extra = NEG_TXT;
+  } else if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
+    const v0 = s.kind === 'combo_rezago' ? s.variantes[String(s.rezago_default)] : s;
+    charts[s.i] = new Chart(ctx, { data:{ labels:v0.x, datasets:[
+        { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.5, yAxisID:'y',
+          etiqueta:{ u:s.unidad_izq, arriba:-12, bold:true } },
+        { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.azul_3, backgroundColor:TEMA.azul_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
+          etiqueta:{ u:s.unidad_der, arriba:13 } },
+      ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
+    ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.azul_1, linea:true, ancho:2.5 },
+           { label: s.label_der + ' (eje derecho)', color:TEMA.azul_3, linea:true, dash:true }];
+  } else if (s.kind === 'combo_evento') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:s.label_evento, data:s.evento, showLine:false, pointRadius:6, pointHoverRadius:8,
+          pointBackgroundColor:TEMA.azul_1, pointBorderColor:'#fff', pointBorderWidth:1.5, yAxisID:'y1', order:0 },
+      ]}, options: comboEventoOpts(s.unidad_barra, s.unidad_evento) });
+    ley = [{ label: s.label_barra + ' (barras, eje izquierdo)', color:TEMA.azul_3 }, { label: s.label_evento + ' (puntos, eje derecho)', color:TEMA.azul_1 }];
+    if (tieneNeg(s.full_barra || s.barra)) extra = NEG_TXT;
+  } else if (s.kind === 'muro') {
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map((d, i) => (
+        { label:d.label, data:d.y, backgroundColor: NIVEL[Math.min(i, 3)] }
+      )) }, options: muroOpts(s.unidad) });
+    ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[Math.min(i, 3)] }));
+  } else {
+    charts[s.i] = new Chart(ctx, { type:'line',
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, fill:false,
+                                     etiqueta:{ u:s.unidad, bold:true } }] },
+      options: baseOpts(s), plugins: s.eventos ? [eventosPlugin(s.eventos)] : [] });
+    if (s.eventos && s.eventos.length) extra = '▾ marca eventos (detalle en el tooltip).';
+  }
+  if (s.frenada) extra = (extra ? extra + ' ' : '') + 'El tramo sombreado no tiene datos de la fuente.';
+  escribirLeyenda(s.i, ley, extra);
+});
+
+// Redibuja un chart ya creado con los datos ya filtrados (por un botón de rango fijo o por
+// el rango "Personalizado"). Los colores son funciones del valor (tema), no hace falta recolorear.
+function aplicarFiltro(idx, serie, rango, datFiltrados) {
+  charts[idx].data.labels = datFiltrados.x;
+  if (serie.kind === 'combo') {
+    charts[idx].data.datasets[0].data = datFiltrados.flujo;
+    charts[idx].data.datasets[1].data = datFiltrados.y;
+  } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
+    datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
+    if (serie.kind === 'incidencia') {
+      // Rangos fijos usan el eje precalculado en Python (serie.ejes); "Personalizado" trae el
+      // suyo ya calculado en JS (ver calcularEjeIncidencia) dentro de datFiltrados.eje.
+      const eje = (serie.ejes && serie.ejes[rango]) || datFiltrados.eje;
+      if (eje) {
+        charts[idx].options.scales.y.max = eje.y_max ?? undefined;
+        charts[idx].options.scales.y.min = eje.y_min ?? undefined;
+        charts[idx].$atipicos = eje.atipicos;
+      }
+    }
+  } else if (serie.kind === 'espejo') {
+    charts[idx].data.datasets[0].data = datFiltrados.expo;
+    charts[idx].data.datasets[1].data = datFiltrados.impo;
+    charts[idx].data.datasets[2].data = datFiltrados.saldo;
+  } else if (serie.kind === 'combo_bl') {
+    datFiltrados.barras.forEach((b, i) => { charts[idx].data.datasets[i].data = b.y; });
+    charts[idx].data.datasets[datFiltrados.barras.length].data = datFiltrados.linea;
+  } else if (serie.kind === 'combo_2lineas' || serie.kind === 'combo_rezago') {
+    charts[idx].data.datasets[0].data = datFiltrados.izq;
+    charts[idx].data.datasets[1].data = datFiltrados.der;
+  } else if (serie.kind === 'combo_evento') {
+    charts[idx].data.datasets[0].data = datFiltrados.barra;
+    charts[idx].data.datasets[1].data = datFiltrados.evento;
+  } else {
+    charts[idx].data.datasets[0].data = datFiltrados.y;
+  }
+  charts[idx].update('none');
+}
+
+// Event listeners para botones de filtro (rango de fecha). Selector acotado a
+// '.filtro[data-rango]' (no todo '.filtro') por si en el futuro se reusa la misma
+// clase visual con otro atributo data-* para un mecanismo distinto.
+document.querySelectorAll('.filtro[data-rango]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const filtrosContainer = this.closest('.filtros');
+    const idx = parseInt(filtrosContainer.dataset.idx);
+    const rango = this.dataset.rango;
+    const serie = SERIE_POR_I[idx];
+    if (!serie || !charts[idx]) return;
+
+    // Actualizar estado del botón
+    filtrosContainer.querySelectorAll('.filtro').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+
+    const customDiv = document.querySelector(`.rango-custom[data-idx='${idx}']`);
+    if (rango === 'personalizado') {
+      // Sólo despliega el selector de fechas; el filtrado real ocurre al tocar "Aplicar".
+      if (customDiv) customDiv.style.display = 'flex';
+      return;
+    }
+    if (customDiv) customDiv.style.display = 'none';
+
+    aplicarFiltro(idx, serie, rango, filtrarDatos(serie, rango));
+  });
+});
+
+// Selector de rezago (Punto 2.1 storytelling): swap de qué variante precalculada (0/3/6/12
+// meses de desplazamiento) se muestra -- todo el cálculo ya vino hecho de Python, acá sólo
+// se reemplazan labels/datasets del chart ya creado, mismo patrón liviano que aplicarFiltro.
+document.querySelectorAll('.rezago-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const container = this.closest('.rezago-btns');
+    const idx = parseInt(container.dataset.idx);
+    const serie = SERIE_POR_I[idx];
+    if (!serie || !charts[idx]) return;
+    const variante = serie.variantes[this.dataset.rezago];
+    if (!variante) return;
+    container.querySelectorAll('.rezago-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    // La variante elegida pasa a ser la "serie" que filtran los botones de fecha (mismos
+    // campos x/izq/der/full_* que combo_2lineas), y se reaplica el rango de fecha activo
+    // para que cambiar de rezago no resetee el período que el usuario estaba mirando.
+    Object.assign(serie, variante);
+    const rangoBtn = document.querySelector(`.filtros[data-idx='${idx}'] .filtro.active`);
+    const rango = rangoBtn ? rangoBtn.dataset.rango : 'default';
+    if (rango === 'personalizado') {
+      const custom = document.querySelector(`.rango-custom[data-idx='${idx}']`);
+      const desde = custom && custom.querySelector('.rango-desde').value;
+      const hasta = custom && custom.querySelector('.rango-hasta').value;
+      if (desde && hasta && desde <= hasta) {
+        aplicarFiltro(idx, serie, 'personalizado', filtrarDatosPersonalizado(serie, desde, hasta));
+        return;
+      }
+    }
+    aplicarFiltro(idx, serie, rango === 'personalizado' ? 'default' : rango,
+                  filtrarDatos(serie, rango === 'personalizado' ? 'default' : rango));
+  });
+});
+
+// "Aplicar" del rango personalizado (Punto 6)
+document.querySelectorAll('.rango-aplicar').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const container = this.closest('.rango-custom');
+    const idx = parseInt(container.dataset.idx);
+    const serie = SERIE_POR_I[idx];
+    if (!serie || !charts[idx]) return;
+    const desde = container.querySelector('.rango-desde').value;
+    const hasta = container.querySelector('.rango-hasta').value;
+    if (!desde || !hasta || desde > hasta) return;
+    aplicarFiltro(idx, serie, 'personalizado', filtrarDatosPersonalizado(serie, desde, hasta));
+  });
+});
+
+// Ícono de pantalla completa (Punto 11): implementado UNA sola vez acá para las ~38
+// tarjetas -- cada botón .fs-btn expande el .cell que lo contiene entero (no sólo el
+// <canvas>) para que título/valor/filtros también se vean grandes. Usa la Fullscreen API
+// nativa del navegador; si no existe (Safari iOS históricamente irregular), cae a un
+// fallback con position:fixed (.fs-fallback en el CSS) controlado a mano.
+function redimensionarChartDe(cell) {
+  const canvas = cell.querySelector('canvas');
+  if (!canvas) return;
+  const idx = parseInt(canvas.id.replace('ch', ''));
+  if (charts[idx]) charts[idx].resize();
+}
+
+const tieneFullscreenNativo = !!(document.documentElement.requestFullscreen);
+
+document.querySelectorAll('.fs-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const cell = this.closest('.cell');
+    if (!cell) return;
+    if (tieneFullscreenNativo) {
+      if (document.fullscreenElement === cell) {
+        document.exitFullscreen();
+      } else {
+        cell.requestFullscreen().catch(() => {});
+      }
+    } else {
+      // Fallback sin Fullscreen API: el mismo botón alterna la clase a mano.
+      cell.classList.toggle('fs-fallback');
+      redimensionarChartDe(cell);
+    }
+  });
+});
+
+if (tieneFullscreenNativo) {
+  let cellFullscreenAnterior = null;
+  document.addEventListener('fullscreenchange', () => {
+    // Chart.js no redimensiona solo si el contenedor cambia de tamaño por la Fullscreen
+    // API (no dispara resize del window) -- hay que llamarlo a mano, tanto al entrar como
+    // al salir (document.fullscreenElement es null al salir, por eso se guarda la anterior).
+    const actual = document.fullscreenElement;
+    if (actual && actual.classList.contains('cell')) {
+      redimensionarChartDe(actual);
+      cellFullscreenAnterior = actual;
+    } else if (cellFullscreenAnterior) {
+      redimensionarChartDe(cellFullscreenAnterior);
+      cellFullscreenAnterior = null;
+    }
+  });
+}
+
+// Barra de secciones: resalta la sección que se está leyendo.
+const navLinks = [...document.querySelectorAll('nav.secciones a[href^="#"]')];
+function marcarNav() {
+  let activo = navLinks[0];
+  navLinks.forEach(a => { const sec = document.querySelector(a.getAttribute('href')); if (sec && sec.getBoundingClientRect().top < 90) activo = a; });
+  navLinks.forEach(a => a.classList.toggle('activo', a === activo));
+}
+window.addEventListener('scroll', marcarNav, { passive:true });
+marcarNav();
+</script>
+</body></html>
