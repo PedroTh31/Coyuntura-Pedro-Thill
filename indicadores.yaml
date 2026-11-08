@@ -21,6 +21,114 @@
 # ============================================================================
 start_date: "2004-01-01"   # se baja historia larga; cada gráfico se recorta con 'desde'
 
+# ============================================================================
+#  TEMAS DEL SITIO (Bloque E, decisión de Pedro D5): cada página de tema es docs/<slug>/index.html.
+#  Cada card va en UN solo tema. Ítems de `items`: el `nombre` de una card de `indicadores` o de
+#  `indicadores_financiera` (las `solo_referencia` no: son la misma card que ya está en su tema), el
+#  `tabla:` de las tablas de comercio exterior, "Semáforo del EMAE", y las cards/tablas que arma run.py
+#  aparte ("Muro de vencimientos (AL30/GD30/GD35)", "Dólar futuro (DDF)", "Acciones y CEDEARs más
+#  operados"). Una card nueva sin tema no desaparece: sale en el tema de su `bloque`, en "Sin tema
+#  asignado", con un ::warning en el log (y falla tests/test_temas.py).
+# ============================================================================
+temas:
+  - slug: precios
+    titulo: Precios
+    secciones:
+      - titulo: Precios al consumidor
+        items: ["Inflación mensual (IPC)", "Inflación interanual (IPC)",
+                "Inflación mensual por categoría (Núcleo/Regulados/Estacionales)",
+                "Incidencia en inflación por división de consumo"]
+  - slug: actividad
+    titulo: Actividad
+    secciones:
+      - titulo: Actividad por sector
+        items: ["Actividad y empleo por sector", "Semáforo del EMAE"]
+      - titulo: PBI
+        items: ["PBI nominal (precios corrientes)"]
+  - slug: empleo-y-salarios
+    titulo: Empleo y salarios
+    secciones:
+      - titulo: Empleo
+        items: ["Tasa de desempleo", "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"]
+      - titulo: Salarios
+        items: ["Salario real por tipo de empleo (privado registrado / público / no registrado)",
+                "Salario real y capacidad de compra"]
+  - slug: dolar-y-reservas
+    titulo: Dólar y reservas
+    secciones:
+      - titulo: Dólar
+        items: ["Dólar oficial", "Dólar blue", "Dólar MEP", "Dólar CCL"]
+      - titulo: Brechas y tipo de cambio real
+        items: ["Brecha cambiaria (CCL/oficial)", "Canje MEP/CCL", "Tipo de cambio real multilateral"]
+      - titulo: Reservas
+        items: ["Reservas internacionales (BCRA)", "Compras netas de divisas por contraparte",
+                "Balance cambiario (compras netas + reservas brutas)",
+                "Reservas ajustadas (swap China + organismos internacionales)"]
+      - titulo: Dólar futuro
+        items: ["Dólar futuro (DDF)"]
+  - slug: dinero-y-credito
+    titulo: Dinero y crédito
+    secciones:
+      - titulo: Dinero
+        items: ["Base monetaria", "Agregados monetarios (M1, M2, M3)"]
+      - titulo: Tasas
+        items: ["Tasa TAMAR (total bancos)", "Tasa TAMAR bancos privados (bonos duales)",
+                "Tasa BADLAR (bancos privados)", "Tasa de plazo fijo a 30 días",
+                "Tasa de interés real (TAMAR - inflación interanual)"]
+      - titulo: Crédito
+        items: ["Préstamos al sector privado", "Préstamos al sector privado, variación % real mensual",
+                "Préstamos por tipo de deudor (aprox. Familias/Empresas)",
+                "Depósitos bancarios (privado vs. público)", "Depósitos: sector privado en pesos",
+                "Depósitos en moneda extranjera (privado y público)"]
+      - titulo: Morosidad
+        items: ["Morosidad del crédito (irregularidad de cartera)", "Morosidad de Familias por línea de crédito"]
+  - slug: sector-externo
+    titulo: Sector externo
+    secciones:
+      - titulo: Comercio exterior
+        items: ["Exportaciones totales", "Importaciones totales", "Saldo comercial",
+                "Comercio exterior (expo/impo espejo)", "Balance comercial energético"]
+      - titulo: Por rubro y por uso
+        items: ["Exportaciones por gran rubro", "Importaciones por uso económico"]
+  - slug: fiscal-y-deuda
+    titulo: Fiscal y deuda
+    secciones:
+      - titulo: Resultado fiscal
+        items: ["Resultado fiscal (primario y financiero)", "Superávit gemelos (fiscal y comercial)",
+                "¿El mercado premia la mejora fiscal?", "Resultado primario vs. intereses de deuda"]
+      - titulo: Asistencia del BCRA al Tesoro
+        items: ["Adelantos Transitorios vs. Inflación interanual (con rezago)",
+                "Asistencia monetaria del BCRA al Tesoro"]
+      - titulo: Deuda
+        items: ["Deuda pública bruta (Administración Central)", "Deuda pública bruta / PBI",
+                "Deuda/PBI vs. tipo de cambio real"]
+  - slug: mercados
+    titulo: Mercados
+    secciones:
+      - titulo: Acciones
+        items: ["S&P MERVAL", "Acciones y CEDEARs más operados"]
+      - titulo: Renta fija y riesgo país
+        items: ["Riesgo país (EMBI)", "Curva de rendimientos (AL30/GD30/GD35)",
+                "Spread soberano GD30 vs. UST10Y (proxy)", "Muro de vencimientos (AL30/GD30/GD35)"]
+      - titulo: Cauciones y CER
+        items: ["Caución en pesos (1 día)", "Caución en dólares (1 día)",
+                "CER (Coeficiente de Estabilización de Referencia)"]
+
+# Datos clave de la home (decisión de Pedro D1 + EMAE por D3). `card`: el nombre de la card (valor y
+# variación salen de ella, idénticos a su tema; la línea de frescura y el mini gráfico son los de la serie
+# que resume la card, sin las otras series de una card combinada). `serie` + `tema`: un dato sin card (EMAE general, `solo_componente`).
+home:
+  datos_clave:
+    - {card: "Inflación mensual (IPC)", etiqueta: "Inflación mensual"}
+    - {card: "Inflación interanual (IPC)", etiqueta: "Inflación interanual"}
+    - {serie: "EMAE (actividad económica)", tema: actividad, etiqueta: "Actividad (EMAE)"}
+    - {card: "Dólar oficial", etiqueta: "Dólar oficial"}
+    - {card: "Brecha cambiaria (CCL/oficial)", etiqueta: "Brecha CCL / oficial"}
+    - {card: "Reservas internacionales (BCRA)", etiqueta: "Reservas brutas"}
+    - {card: "Riesgo país (EMBI)", etiqueta: "Riesgo país"}
+    - {card: "Salario real y capacidad de compra", etiqueta: "Salario real"}
+    - {card: "Resultado fiscal (primario y financiero)", etiqueta: "Resultado fiscal"}
+
 indicadores:
 
   # ---------------- PRECIOS ----------------

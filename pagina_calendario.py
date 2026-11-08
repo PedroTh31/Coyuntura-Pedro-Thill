@@ -26,7 +26,6 @@ import sitio
 
 SALIDA = Path(__file__).resolve().parent / "docs" / "calendario" / "index.html"
 URL_CALENDARIO_INDEC = "https://www.indec.gob.ar/indec/web/Calendario-Fecha-0"
-NAV = [("Macro", "../index.html"), ("Financiera", "../financiera.html"), ("Calendario", "./")]
 MESES_CORTOS = F.MESES_CORTOS
 MARCA = {"incorporado": ("✓", "ya está en el monitor"), "atrasado": ("⚠", "atrasado: salió y el monitor no lo muestra"),
          "publicado": ("•", "publicado, entra en la próxima actualización"), "proximo": ("", "")}
@@ -227,7 +226,7 @@ def html(agenda: dict | None, meses: list[dict], prox: dict, sin_cal: list[str],
         cuerpo = ('<h2 class="cal-h2">Calendario de publicaciones</h2>'
                   '<p class="aviso">Calendario del INDEC no disponible hoy: no se muestran fechas de publicación.</p>')
         return sitio.pagina("Calendario · Monitor de coyuntura", "Monitor de coyuntura · Argentina", sub,
-                            sitio.nav(NAV, "Calendario"), cuerpo, css=CSS)
+                            sitio.nav_sitio("../", "Calendario"), cuerpo, css=CSS, pie=sitio.pie_sitio("../"))
     cal, publicaciones = agenda["calendario"], agenda["publicaciones"]
     dias = {d["fecha"]: d for m in meses for d in m["dias"]}
     actual = f"{ctx.hoy.year}-{ctx.hoy.month:02d}"
@@ -273,7 +272,7 @@ Las series del BCRA, del Ministerio de Economía y de los mercados no tienen cal
     pie = (f'Fechas: <a href="{URL_CALENDARIO_INDEC}">calendario oficial del INDEC</a>. Días no hábiles: los días en '
            'que no operan el INDEC, el BCRA y BYMA (feriados nacionales y los especiales que alcanzan a esos organismos).')
     return sitio.pagina("Calendario · Monitor de coyuntura", "Monitor de coyuntura · Argentina", sub,
-                        sitio.nav(NAV, "Calendario"), cuerpo, css=CSS, js=JS, pie=pie)
+                        sitio.nav_sitio("../", "Calendario"), cuerpo, css=CSS, js=JS, pie=sitio.pie_sitio("../", pie))
 
 
 def generar(agenda: dict | None, meses: list[dict], prox: dict, sin_cal: list[str], ctx: F.Contexto, cfg: dict,

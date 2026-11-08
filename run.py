@@ -8,6 +8,7 @@ Flujo:
   4. mergea con el histórico guardado (sin perder datos viejos)
   5. regenera los CSV (largo + ancho) y el dashboard HTML
 """
+import dataclasses
 import json
 import os
 from datetime import datetime
@@ -26,6 +27,9 @@ import frescura
 import agenda
 import calendario_indec
 import pagina_calendario
+import pagina_home
+import sitio
+import temas
 import fuentes_indec
 
 RAIZ = Path(__file__).resolve().parent
@@ -657,60 +661,123 @@ def main():
     chequear_frescura(historico, indicadores + financiera_propios)
     chequear_plausibilidad(historico, indicadores + financiera_propios)
 
-    # Bloque E1: link a la página del calendario (docs/calendario/) en las dos páginas actuales.
-    nav_calendario = '<a href="calendario/" class="nav-pagina">Calendario</a>'
-    nav_a_financiera = nav_calendario + '<a href="financiera.html" class="nav-pagina">Financiera →</a>'
-    nav_a_macro = nav_calendario + '<a href="index.html" class="nav-pagina">← Macro</a>'
     todos = indicadores + indicadores_financiera
-    # Línea de frescura de cada card (Bloque B2, sólo pestaña macro). Usa la caché del calendario
-    # que acaba de bajar verificar_calendario.py (corre antes en coyuntura.yml; en el fallback del
-    # mail, la última commiteada); si algo falla, el dashboard sale sin la línea en vez de cortar.
+    # Línea de frescura de cada card (Bloque B2; desde E2 también las de la ex pestaña financiera, D4). Usa
+    # la caché del calendario que acaba de bajar verificar_calendario.py (corre antes en coyuntura.yml; en
+    # el fallback del mail, la última commiteada); si algo falla, las páginas salen sin la línea.
     try:
         frescura_ctx = frescura.cargar_contexto()
     except Exception as e:
         print(f"::warning title=Frescura::sin línea de frescura en esta corrida: {type(e).__name__}: {e}")
         frescura_ctx = None
-    dashboard.generar(historico, indicadores, nav_extra=nav_a_financiera, fuentes_indec=fuentes_por_indicador,
-                      fuentes_pagina=dashboard.fuentes_de_pagina(indicadores, fuentes_por_indicador, todos),
-                      frescura_ctx=frescura_ctx, con_titulares=True)
+
+    # Datos de Mercados que no salen del yaml (dólar futuro, muro de vencimientos, tablas de acciones).
+    fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
+    extra_charts = [ec for ec in (_ddf_chart(), _muro_vencimientos()) if ec is not None] if indicadores_financiera else []
+    acciones = _ranking_data912("/live/arg_stocks")[:18] if indicadores_financiera else []
+    cedears = _ranking_data912("/live/arg_cedears")[:15] if indicadores_financiera else []
+    tablas_acciones = (dashboard.tabla_acciones("Acciones más operadas (MERVAL)", acciones, fecha_hoy) +
+                       dashboard.tabla_acciones("CEDEARs más operados", cedears, fecha_hoy)) if acciones or cedears else ""
+
+    # Bloque E2: una página por tema (docs/<tema>/index.html), con las cards de las dos listas del yaml.
+    cards_sitio, temas_cfg = _generar_temas(cfg, historico, indicadores, financiera_propios, todos,
+                                            fuentes_por_indicador, frescura_ctx, extra_charts, tablas_acciones)
+    temas_nav = [(t["titulo"], t["slug"]) for t in temas_cfg]
+
     # Bloque B3: agenda del mail diario + aviso semanal a Pedro de publicaciones atrasadas. Usa las
-    # líneas de frescura que acaba de registrar dashboard.generar (misma redacción que el dashboard).
+    # líneas de frescura que acaban de registrar las páginas de tema, SÓLO las de las cards macro (así el
+    # mail no cambia con la frescura nueva de las cards financieras, D4).
+    ctx_mail = _ctx_solo(frescura_ctx, indicadores)
     agenda_mail = None
-    if frescura_ctx is not None:
+    if ctx_mail is not None:
         try:
-            agenda_mail = agenda.armar(historico, indicadores, frescura_ctx, calendario_indec.cargar_config())
-            agenda.avisar_atrasados(agenda_mail["atrasados"], frescura_ctx.hoy)
+            agenda_mail = agenda.armar(historico, indicadores, ctx_mail, calendario_indec.cargar_config())
+            agenda.avisar_atrasados(agenda_mail["atrasados"], ctx_mail.hoy)
         except Exception as e:
             print(f"::warning title=Agenda del mail::no se pudo armar: {type(e).__name__}: {e}")
             agenda_mail = None
     # Bloque E1: página del calendario (docs/calendario/index.html), con la agenda que se acaba de armar.
     # Nunca corta el pipeline: si falla, queda la página de la corrida anterior y un warning.
     try:
-        _generar_calendario(agenda_mail, frescura_ctx)
+        _generar_calendario(agenda_mail, ctx_mail)
     except Exception as e:
         print(f"::warning title=Calendario::no se pudo generar la página: {type(e).__name__}: {e}")
+    # Bloque E2: home (docs/index.html) y Acerca. Si falla, queda la home de la corrida anterior.
+    try:
+        ahora_txt = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
+        datos = pagina_home.armar_datos_clave((cfg.get("home") or {}).get("datos_clave", []), cards_sitio,
+                                              temas.tema_de_item(temas_cfg), historico,
+                                              indicadores + financiera_propios, frescura_ctx)
+        pagina_home.generar(datos, pagina_home.resumen_temas(temas_cfg, cards_sitio), agenda_mail, ahora_txt, temas_nav)
+        pagina_home.generar_acerca(ahora_txt, temas_nav)
+    except Exception as e:
+        print(f"::warning title=Home::no se pudo generar: {type(e).__name__}: {e}")
 
     if indicadores_financiera:
-        fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
-        extra_charts = [ec for ec in (_ddf_chart(), _muro_vencimientos()) if ec is not None]
-        acciones = _ranking_data912("/live/arg_stocks")[:18]
-        cedears = _ranking_data912("/live/arg_cedears")[:15]
-        extra_html = {"mercados":
-            dashboard.tabla_acciones("Acciones más operadas (MERVAL)", acciones, fecha_hoy) +
-            dashboard.tabla_acciones("CEDEARs más operados", cedears, fecha_hoy)}
+        # financiera.html sigue como hasta E1 (pasa a redirigir a /mercados/ en E3).
+        nav_a_inicio = ('<a href="calendario/" class="nav-pagina">Calendario</a>'
+                        '<a href="index.html" class="nav-pagina">← Inicio</a>')
         dashboard.generar(historico, indicadores_financiera, archivo_salida="financiera.html",
-                           extra_html=extra_html, extra_charts=extra_charts, nav_extra=nav_a_macro,
+                           extra_html={"mercados": tablas_acciones} if tablas_acciones else {},
+                           extra_charts=extra_charts, nav_extra=nav_a_inicio,
                            titulo_pagina="Monitor financiero · Argentina", fuentes_indec=fuentes_por_indicador,
                            fuentes_pagina=dashboard.fuentes_de_pagina(
                                indicadores_financiera, fuentes_por_indicador, todos,
                                # dólar futuro y muro de vencimientos: MAE; tablas de acciones/CEDEARs: data912
-                               extra=(["MAE"] if extra_charts else []) + (["data912"] if acciones or cedears else [])))
-        print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html, docs/financiera.html")
-    else:
-        print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/index.html")
+                               extra=(["MAE"] if extra_charts else []) + (["data912"] if tablas_acciones else [])))
+    print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/ (home, temas, calendario"
+          + (", financiera.html)" if indicadores_financiera else ")"))
 
     escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador,
                             agenda_mail=agenda_mail)
+
+
+def _ctx_solo(ctx, indicadores):
+    """Copia del contexto de frescura con el registro de líneas SÓLO de las cards de `indicadores`, en el
+    orden del yaml (el mismo registro que dejaba la pestaña macro antes del Bloque E2)."""
+    if ctx is None:
+        return None
+    reg = {i["nombre"]: ctx.registro[i["nombre"]] for i in indicadores if i["nombre"] in ctx.registro}
+    return dataclasses.replace(ctx, registro=reg)
+
+
+def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuentes_por_indicador, frescura_ctx,
+                   extra_charts, tablas_acciones):
+    """Bloque E2: docs/<tema>/index.html por cada tema del bloque `temas:` del yaml, con las cards grandes
+    de siempre (las compactas llegan en E3). Devuelve ({nombre: card} de todas las páginas, temas)."""
+    lista = indicadores + financiera_propios
+    presentes = [ec["card"]["nombre"] for ec in extra_charts] + ([temas.ACCIONES] if tablas_acciones else [])
+    temas_cfg, sin_tema, inexistentes = temas.completar(cfg.get("temas") or [], lista, presentes)
+    for it in sin_tema:
+        print(f"::warning title=Temas::'{it}' no está en ningún tema de indicadores.yaml: va a '{temas.SIN_TEMA}'")
+    for it in inexistentes:
+        print(f"::warning title=Temas::'{it}' figura en `temas:` pero no es una card de esta corrida")
+    for it in temas.repetidos(temas_cfg):
+        print(f"::warning title=Temas::'{it}' está en más de un tema")
+    temas_nav = [(t["titulo"], t["slug"]) for t in temas_cfg]
+    macro = {i["nombre"] for i in indicadores}   # titulares por reglas: sólo las cards macro (D1 del Bloque C)
+    cards_sitio = {}
+    for t in temas_cfg:
+        its = set(temas.items(t))
+        inds = temas.indicadores_de(t, lista)
+        ecs = [ec for ec in extra_charts if ec["card"]["nombre"] in its]
+        eh = {temas.ACCIONES: tablas_acciones} if tablas_acciones and temas.ACCIONES in its else {}
+        try:
+            cards = dashboard.generar(
+                historico, inds, archivo_salida=f"{t['slug']}/index.html", extra_html=eh, extra_charts=ecs,
+                fuentes_indec=fuentes_por_indicador,
+                fuentes_pagina=dashboard.fuentes_de_pagina(
+                    [i for i in inds if temas.item_de(i) in its], fuentes_por_indicador, todos,
+                    extra=(["MAE"] if ecs else []) + (["data912"] if eh else [])),
+                frescura_ctx=frescura_ctx, con_titulares=macro, tema=t,
+                nav_html=sitio.nav_sitio("../", t["titulo"], temas_nav),
+                pie_html=sitio.pie_sitio("../", "Pasá el cursor (o tocá) sobre cualquier gráfico para ver cada valor."),
+                raiz="../")
+        except Exception as e:
+            print(f"::warning title=Tema {t['slug']}::no se pudo generar la página: {type(e).__name__}: {e}")
+            continue
+        cards_sitio.update({c["nombre"]: c for c in cards})
+    return cards_sitio, temas_cfg
 
 
 def _generar_calendario(agenda_mail, frescura_ctx):

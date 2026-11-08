@@ -166,3 +166,14 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       número de 7 cifras en millones de pesos no se lee (opciones: billones de $, o convertir a USD con el
       tipo de cambio del mes, documentado en la nota).
     - Nada se cambia hasta revisarlo (regla dura #4: no corregir a ojo).
+
+20. **Muro de vencimientos (AL30/GD30/GD35): desaparece cuando el MAE no devuelve bonos** — anotado el
+    07/11/2026 (visto en E2, no arreglado).
+    - El 07/11/2026 `fetch_mae_flujofondos("H")` (endpoint `emisiones/flujofondoscotiz/H`, no documentado)
+      devuelve 0 bonos: `run._muro_vencimientos()` da None y la card no se genera. Ya falta en el sitio
+      publicado desde la corrida de la mañana del 07/11 (commit e2f1202). Revisar si el endpoint cambió o si
+      es algo del fin de semana; el ítem sigue asignado a Mercados en `temas:` y vuelve solo si el MAE responde.
+    - Criterio general (decisión de Pedro): una card NO debería desaparecer cuando la fuente devuelve 0 filas.
+      Tiene que quedar visible, con un aviso del tipo "la fuente no devolvió datos hoy" (mismo criterio que
+      la línea de frescura del B2), para el muro y para cualquier otro extra o serie que hoy se saltea en
+      silencio. No se resuelve en E2.

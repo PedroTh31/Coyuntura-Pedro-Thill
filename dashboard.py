@@ -18,6 +18,7 @@ import pandas as pd
 
 import frescura
 import titulares
+import sitio
 from tema import TEMA
 
 DESDE_GENERAL = "2024-01-01"
@@ -993,11 +994,20 @@ def _extender_hasta_hoy(sj, hoy):
 
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
             extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina",
-            fuentes_indec=None, fuentes_pagina=None, frescura_ctx=None, con_titulares=False):
+            fuentes_indec=None, fuentes_pagina=None, frescura_ctx=None, con_titulares=False,
+            tema=None, nav_html=None, pie_html=None, raiz=""):
     """frescura_ctx: frescura.Contexto (Bloque B2) para mostrar la línea de frescura en cada card;
     None = sin línea (pestaña financiera, fuera de esa ronda).
-    con_titulares: titulares por reglas del Bloque C (sólo la pestaña macro, decisión de Pedro D1); sin
-    ellos, la variación bajo el valor de cada card compara contra el dato anterior."""
+    con_titulares: titulares por reglas del Bloque C (sólo las cards macro, decisión de Pedro D1): True/False
+    para toda la página o el conjunto de nombres de card que lo llevan; sin ellos, la variación bajo el
+    valor de cada card compara contra el dato anterior.
+    tema (Bloque E2): dict de temas.py ({slug, titulo, secciones: [{titulo, items}]}) -> la página es UNA
+    sección con los subtítulos e ítems del tema, en ese orden (en vez de una sección por `bloque`).
+    nav_html / pie_html: navegación y pie del sitio (sitio.nav_sitio / sitio.pie_sitio); raiz: ruta
+    relativa a docs/ ("../" en docs/<tema>/index.html).
+    Devuelve la lista de cards (dicts) de la página, para la home."""
+    def _con_tit(nombre):
+        return con_titulares if isinstance(con_titulares, bool) else nombre in con_titulares
     if frescura_ctx is not None:
         anio, hoy = frescura_ctx.ahora.year, pd.Timestamp(frescura_ctx.ahora).normalize()
     else:
@@ -1041,7 +1051,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             card["nota_num"] = _registrar_nota(nota, nombre, notas_dict)
             card["fuente_indec"] = bool(usos)
             card["frescura"], grave = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
-            _completar_card(card, ind, historico, indicadores_por_nombre, grave, con_titulares, anio,
+            card["slug"] = sitio.slug(nombre, ind)
+            _completar_card(card, ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio,
                             serie_js_compuesta)
             charts.append(card)
             series_js.append(serie_js_compuesta)
@@ -1096,8 +1107,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             nota_num=nota_num,
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
             subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
-            fuente_indec=bool(usos), frescura=linea_fr))
-        _completar_card(charts[-1], ind, historico, indicadores_por_nombre, grave, con_titulares, anio)
+            fuente_indec=bool(usos), frescura=linea_fr, slug=sitio.slug(nombre, ind)))
+        _completar_card(charts[-1], ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio)
         if acumulando:
             idx += 1
             continue
@@ -1137,6 +1148,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
     # completos, acá sólo se les asigna el índice 'i' que les toca según el orden de inserción.
     for ec in (extra_charts or []):
         card = dict(ec["card"], i=idx)
+        card.setdefault("slug", sitio.slug(card["nombre"]))
         card.setdefault("cambio", None)
         card.setdefault("titular", None)
         if ec.get("nota"):
@@ -1151,7 +1163,9 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
                     nav_extra=nav_extra, titulo_pagina=titulo_pagina,
                     semaforo_fuente=describir_fuente(usos_semaforo) or "",
                     fuentes_pagina=fuentes_pagina,
-                    etiquetas={i["nombre"]: i["etiqueta"] for i in config_indicadores if i.get("etiqueta")})
+                    etiquetas={i["nombre"]: i["etiqueta"] for i in config_indicadores if i.get("etiqueta")},
+                    tema=tema, nav_html=nav_html, pie_html=pie_html, raiz=raiz)
+    return charts
 
 
 def _color_semaforo(v):
@@ -1296,15 +1310,48 @@ def _card_cell(c):
     cell_cls = "cell cell-ancha" if grande else "cell"
     cbox_cls = "cbox cbox-grande" if grande else "cbox"
     frescura_html = c.get("frescura", "")
+    ancla = f' id="{c["slug"]}"' if c.get("slug") else ""   # Bloque E2: la home linkea a <tema>/#<slug>
     # "Acumulando historia" (Punto 4 del checklist): sin canvas ni pantalla completa, un mensaje corto.
     if c.get("acumulando"):
-        return (f'<div class="{cell_cls}">{cabeza}{subtitulo_html}{fila}{frescura_html}'
+        return (f'<div class="{cell_cls}"{ancla}>{cabeza}{subtitulo_html}{fila}{frescura_html}'
                 f'<div class="acumulando">⏳ {c["acumulando"]}</div>{pie_html}</div>')
     # Ícono de pantalla completa (Punto 11): el JS compartido expande el .cell entero.
     fs_btn = '<button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>'
-    return (f'<div class="{cell_cls}">{fs_btn}{cabeza}{subtitulo_html}{fila}{frescura_html}{marca_html}'
+    return (f'<div class="{cell_cls}"{ancla}>{fs_btn}{cabeza}{subtitulo_html}{fila}{frescura_html}{marca_html}'
             f'<div class="cdesc" data-idx="{i}"></div>'
             f'<div class="{cbox_cls}"><canvas id="ch{i}"></canvas></div>{filtros}{rezago_btns}{pie_html}</div>')
+
+
+def _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuente, extra_html):
+    """Página de tema (Bloque E2): una sección con el título del tema y, por cada subtítulo del yaml, sus
+    ítems en ese orden: cards (en grilla), tablas de comercio exterior, semáforo del EMAE o HTML de
+    extra_html (ej. tablas de acciones). Un ítem sin datos en esta corrida simplemente no se imprime."""
+    import temas as T
+    por_nombre = {c["nombre"]: c for c in charts}
+    tablas = {titulo: filas for titulo, filas in grupo_tabla.values()}
+    cuerpo = ""
+    for sec in tema["secciones"]:
+        partes, celdas = [], []
+
+        def _cerrar():
+            if celdas:
+                partes.append(f'<div class="grid">{"".join(celdas)}</div>')
+                celdas.clear()
+        for it in sec["items"]:
+            if it in por_nombre:
+                celdas.append(_card_cell(por_nombre[it]))
+                continue
+            _cerrar()
+            if it == T.SEMAFORO and semaforo:
+                partes.append(_tabla_semaforo(semaforo, fecha_sem, semaforo_fuente))
+            elif it in tablas:
+                partes.append(_tabla_valores(it, tablas[it]))
+            elif it in extra_html:
+                partes.append(extra_html[it])
+        _cerrar()
+        if partes:
+            cuerpo += f'<h3 class="grupo">{sec["titulo"]}</h3>' + "".join(partes)
+    return f'<section class="bloque" id="{tema["slug"]}"><h2>{tema["titulo"]}</h2>{cuerpo}</section>'
 
 
 def _mezclar(hex_color, a):
@@ -1316,7 +1363,7 @@ def _mezclar(hex_color, a):
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida="index.html", extra_html=None, nav_extra="",
                     titulo_pagina="Monitor de coyuntura · Argentina", semaforo_fuente="",
-                    fuentes_pagina=None, etiquetas=None):
+                    fuentes_pagina=None, etiquetas=None, tema=None, nav_html=None, pie_html=None, raiz=""):
     extra_html = extra_html or {}
     ahora = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
@@ -1363,6 +1410,10 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                       f'{cuerpo}</section>')
     # El link cruzado entre páginas va al final de la barra, empujado a la derecha (CSS .nav-pagina).
     nav += nav_extra
+    if tema is not None:
+        secciones = _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuente, extra_html)
+    if nav_html is not None:
+        nav = nav_html
 
     css_vars = "\n".join(f"    --{k.replace('_', '-')}: {v};" for k, v in TEMA.items() if k != "fuente")
     fuente_css = '"Helvetica Neue", ' + TEMA["fuente"]
@@ -1386,7 +1437,6 @@ __VARS__
   main.wrap { padding-bottom:60px; }
   header.masthead { border-top:4px solid var(--azul-1); padding:26px 0 16px; }
   header h1 { font-size:30px; line-height:1.15; margin:0; font-weight:700; letter-spacing:-.01em; }
-  header .sub { font-size:14px; color:var(--texto-2); margin-top:6px; }
   nav.secciones { position:sticky; top:0; z-index:20; background:var(--fondo); border-bottom:1px solid var(--linea); }
   nav.secciones .wrap { display:flex; align-items:center; gap:22px; overflow-x:auto; scrollbar-width:none; }
   nav.secciones .wrap::-webkit-scrollbar { display:none; }
@@ -1394,12 +1444,14 @@ __VARS__
   nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
   nav.secciones a:hover { color:var(--texto); text-decoration:none; }
   nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
-  nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }   /* Calendario + Financiera/Macro, juntos a la derecha */
+  nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }
+  header h1 a.h1-link { color:inherit; } header h1 a.h1-link:hover { text-decoration:none; }   /* Calendario + Financiera/Macro, juntos a la derecha */
   section.bloque { padding-top:34px; scroll-margin-top:44px; }
   section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
   h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }
   .sub { font-size:14px; font-weight:700; margin:26px 0 8px; color:var(--texto); }
   .ref { color:var(--texto-3); font-weight:400; font-size:13px; }
+  header .sub { font-size:14px; color:var(--texto-2); margin:6px 0 0; font-weight:400; }   /* después de .sub (notas) */
   .nota { color:var(--texto-2); font-size:12px; margin:4px 0 12px; }
   .notas-list { margin:10px 0 14px 20px; padding:0; font-size:12px; color:var(--texto-2); }
   .notas-list li { margin:6px 0; scroll-margin-top:50px; }
@@ -1479,14 +1531,14 @@ __VARS__
 </style></head>
 <body>
 <header class="masthead"><div class="wrap">
-  <h1>__TITULO__</h1>
+  <h1>__H1__</h1>
   <div class="sub">Actualizado __AHORA__ · fuentes: __FUENTES__</div>
 </div></header>
 <nav class="secciones"><div class="wrap">__NAV__</div></nav>
 <main class="wrap">
   __SECCIONES__
   __NOTAS__
-  <footer>Pasá el cursor sobre cualquier gráfico para ver el valor. Editá indicadores en indicadores.yaml.</footer>
+  <footer>__PIE__</footer>
 </main>
 <script>
 const SERIES = __DATA__;
@@ -2347,11 +2399,15 @@ marcarNav();
     html = (plantilla.replace("__VARS__", css_vars).replace("__FUENTE__", fuente_css)
             .replace("__AHORA__", ahora).replace("__NAV__", nav)
             .replace("__FUENTES__", fuentes_pagina or FUENTES_HEADER_DEFAULT)
-            .replace("__TITULO__", titulo_pagina)
+            .replace("__H1__", f'<a href="{raiz or "./"}" class="h1-link">{titulo_pagina}</a>' if tema is not None
+                     else titulo_pagina)
+            .replace("__TITULO__", titulo_pagina if tema is None else f'{tema["titulo"]} · {titulo_pagina}')
+            .replace("__PIE__", pie_html if pie_html is not None else
+                     "Pasá el cursor sobre cualquier gráfico para ver el valor. Editá indicadores en indicadores.yaml.")
             .replace("__SECCIONES__", secciones)
             .replace("__NOTAS__", notas_html)
             .replace("__TEMA__", json.dumps(tema_js, ensure_ascii=False))
             .replace("__ETIQUETAS__", json.dumps(etiquetas or {}, ensure_ascii=False))
             .replace("__DATA__", json.dumps(series_js, ensure_ascii=False)))
-    OUT.mkdir(exist_ok=True)
+    (OUT / archivo_salida).parent.mkdir(parents=True, exist_ok=True)
     (OUT / archivo_salida).write_text(html, encoding="utf-8")

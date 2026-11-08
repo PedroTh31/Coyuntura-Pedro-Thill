@@ -1,12 +1,13 @@
 """Armazón común de las páginas nuevas del sitio (Bloque E de organización): cabecera, navegación, pie
 y estilos base, todo con los colores y la tipografía de tema.py.
 
-E1 lo usa sólo la página del calendario (docs/calendario/index.html). En E2-E4 lo van a usar también la
-home, las páginas de tema y las de serie, y el CSS/JS compartido pasa a docs/assets/. La identidad
-aprobada (serif + ciruela + sello) se aplica recién en E5, cambiando tema.py: acá no hay colores fijos.
+Lo usan el calendario (E1), la home y la página "Acerca" (E2); las páginas de tema (dashboard.py) toman de
+acá la navegación y el pie. La identidad aprobada (serif + ciruela + sello) se aplica recién en E5,
+cambiando tema.py: acá no hay colores fijos.
 """
 from __future__ import annotations
 
+import re
 from html import escape
 
 from tema import TEMA
@@ -59,6 +60,59 @@ CSS_BASE = """
 """
 
 
+URL_REPO = "https://github.com/PedroTh31/Coyuntura-Pedro-Thill"
+PRIMER_COMMIT = "730dd39"           # 9 de julio de 2026 (git log --reverse)
+LINKEDIN = "https://www.linkedin.com/in/pedro-thill-286076218/"
+# Mail de contacto OFUSCADO (pedido de Pedro: nunca completo en el HTML). Va en dos partes invertidas;
+# el JS lo arma recién al hacer click. Ver JS_MAIL.
+_MAIL_U, _MAIL_D = "pedrothill31"[::-1], "gmail.com"[::-1]
+
+# (título, carpeta) de las 8 páginas de tema, en el orden del nav. Lo completa run.py desde el bloque
+# `temas:` de indicadores.yaml (temas.py); este default es el mismo orden, para tests y para el calendario.
+TEMAS_NAV = [("Precios", "precios"), ("Actividad", "actividad"), ("Empleo y salarios", "empleo-y-salarios"),
+             ("Dólar y reservas", "dolar-y-reservas"), ("Dinero y crédito", "dinero-y-credito"),
+             ("Sector externo", "sector-externo"), ("Fiscal y deuda", "fiscal-y-deuda"), ("Mercados", "mercados")]
+
+# Anclas del dashboard viejo (index.html#<bloque>, las usan los mails ya enviados) -> página de tema.
+REDIRECCION_ANCLAS = {"precios": "precios/", "monetario_financiero": "dolar-y-reservas/", "externo": "sector-externo/",
+                      "real": "actividad/", "social": "empleo-y-salarios/", "fiscal": "fiscal-y-deuda/",
+                      "mercados": "mercados/"}
+
+
+def slug(nombre: str, ind: dict | None = None) -> str:
+    """Slug de URL/ancla de una card (D7): sale del nombre, sin lo que va entre paréntesis; `slug:` en el
+    yaml lo congela si un día se renombra la card."""
+    if ind and ind.get("slug"):
+        return ind["slug"]
+    s = nombre.lower()
+    for a, b in zip("áéíóúñü", "aeiounu"):
+        s = s.replace(a, b)
+    s = re.sub(r"\(.*?\)", "", s)
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")[:60]
+
+
+def nav_sitio(raiz: str, activo: str, temas_nav=None) -> str:
+    """Inicio · Calendario · los 8 temas. `raiz`: ruta relativa a docs/ desde la página ("" o "../")."""
+    items = [("Inicio", raiz or "./"), ("Calendario", f"{raiz}calendario/")]
+    items += [(t, f"{raiz}{c}/") for t, c in (temas_nav or TEMAS_NAV)]
+    return nav(items, activo)
+
+
+JS_MAIL = (f"document.querySelectorAll('a.mail').forEach(a=>a.addEventListener('click',e=>{{e.preventDefault();"
+           f"const r=x=>x.split('').reverse().join('');location.href='mailto:'+r('{_MAIL_U}')+'@'+r('{_MAIL_D}');}}));")
+
+
+def pie_sitio(raiz: str, extra: str = "") -> str:
+    """Pie común: fecha de inicio del proyecto con link al primer commit, contacto (mail ofuscado y
+    LinkedIn) y Acerca. `extra`: texto propio de la página, antes."""
+    return (f'{extra}{"<br>" if extra else ""}'
+            f'Monitor de coyuntura · Argentina. Proyecto iniciado el '
+            f'<a href="{URL_REPO}/commit/{PRIMER_COMMIT}">9 de julio de 2026</a>. '
+            f'<a href="{raiz}acerca/">Acerca del monitor</a> · Contacto: '
+            f'<a href="#" class="mail">mail</a> · <a href="{LINKEDIN}" rel="noopener">LinkedIn</a>'
+            f'<script>{JS_MAIL}</script>')
+
+
 def nav(items: list[tuple[str, str]], activo: str) -> str:
     """items: [(texto, href)]."""
     activa = ' class="activo"'
@@ -66,11 +120,11 @@ def nav(items: list[tuple[str, str]], activo: str) -> str:
 
 
 def pagina(titulo: str, titulo_sitio: str, sub: str, nav_html: str, cuerpo: str, css: str = "", js: str = "",
-           pie: str = "", inicio: str = "../") -> str:
+           pie: str = "", inicio: str = "../", head: str = "") -> str:
     fuente_css = '"Helvetica Neue", ' + TEMA["fuente"]
     return f"""<!doctype html><html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{escape(titulo)}</title>
+<title>{escape(titulo)}</title>{head}
 <style>
   :root {{
 {css_variables()}

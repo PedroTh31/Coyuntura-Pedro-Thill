@@ -166,8 +166,22 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     `incorporado`/`publicado`/`atrasado`/`proximo`), datos demorados y series sin calendario
     (`agenda.sin_calendario`). Las publicaciones del INDEC que el monitor no usa van ocultas detrás de un
     checkbox (D6). Sin agenda: "Calendario del INDEC no disponible hoy". Nada estimado.
-  - `sitio.py`: armazón común de las páginas nuevas (cabecera, nav, pie, CSS base desde tema.py). En E2-E4
-    lo usan también la home, los temas y las series.
+  - `sitio.py`: armazón común de las páginas nuevas (cabecera, nav, pie, CSS base desde tema.py), `slug()` de
+    las cards (D7, `slug:` opcional en el yaml), `nav_sitio()` (Inicio · Calendario · 8 temas), `pie_sitio()`
+    (inicio del proyecto + link al commit 730dd39, Acerca, LinkedIn y el mail OFUSCADO: va invertido en dos
+    partes y lo arma el JS al hacer click; nunca escribir la dirección completa en un HTML).
+  - E2: `temas.py` + bloque `temas:` de indicadores.yaml (cada ítem = nombre de card, `tabla:`, "Semáforo
+    del EMAE" o los extras de run.py; cada card en UN solo tema, sin las `solo_referencia`). run.py
+    (`_generar_temas`) llama a `dashboard.generar(..., tema=, nav_html=, pie_html=, raiz="../")` una vez por
+    tema -> `docs/<slug>/index.html`, provisoriamente con las cards grandes (las compactas son E3). Card nueva
+    sin tema: sale en "Sin tema asignado" del tema de su bloque + `::warning` (y falla tests/test_temas.py).
+    `con_titulares` acepta el conjunto de nombres macro (titulares sólo en esas). Frescura en todas las cards
+    (D4), pero la agenda del mail usa `run._ctx_solo(ctx, indicadores)`: el registro SÓLO de las macro, en el
+    orden del yaml (el mail queda idéntico). `pagina_home.py`: `docs/index.html` (franja Hoy/Esta semana de
+    la agenda, 9 datos clave del bloque `home:` del yaml con valor/variación de la MISMA card de su tema y
+    frescura + mini Chart.js SÓLO de la serie que la resume (decisión de Pedro); EMAE con las funciones de card sin registrarse en la
+    agenda; temas con 2 titulares; datos demorados; redirección de las anclas viejas `#precios`… a su tema,
+    `sitio.REDIRECCION_ANCLAS`) y `docs/acerca/index.html`. financiera.html se sigue generando igual hasta E3.
   - Decisiones ya tomadas para las etapas siguientes: 9 datos clave en la home (los 8 propuestos + EMAE,
     que tiene página de serie pero no card de tema; `titular_regla: direccion`, sujeto "El EMAE", en E4);
     tasas bancarias en "Dinero y crédito", cauciones y CER en "Mercados" (D8 opción A); riesgo país en
