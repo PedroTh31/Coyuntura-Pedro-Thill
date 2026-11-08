@@ -1,6 +1,6 @@
 {
   "fecha": "2026-11-08",
-  "hora": "09:12:10",
+  "hora": "09:46:00",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
   "disparo": "workflow_dispatch",
@@ -584,6 +584,7 @@
         "publicado": "13/10, 16 h",
         "fuente": "INDEC",
         "ancla": "precios",
+        "url": "serie/inflacion-mensual/",
         "apertura": {
           "titular": "Inflación de septiembre: 1,9% mensual",
           "detalle": null,
@@ -619,6 +620,7 @@
         "publicado": "21/10, 16 h",
         "fuente": "INDEC",
         "ancla": "social",
+        "url": "serie/salario-real-y-capacidad-de-compra/",
         "apertura": {
           "titular": "Salario real de agosto: +1,1% contra julio",
           "detalle": null,
@@ -642,6 +644,7 @@
         "publicado": "21/10, 16 h",
         "fuente": "INDEC",
         "ancla": null,
+        "url": "serie/emae/",
         "apertura": {
           "titular": "EMAE de agosto: −1,7% interanual",
           "detalle": null,
@@ -665,6 +668,7 @@
         "publicado": "18/09, 16 h",
         "fuente": "INDEC",
         "ancla": "externo",
+        "url": "serie/saldo-comercial/",
         "apertura": {
           "titular": "Saldo comercial de agosto: USD 2.187 M",
           "detalle": null,
@@ -700,6 +704,7 @@
         "publicado": "17/09, 16 h",
         "fuente": "INDEC",
         "ancla": "social",
+        "url": "serie/tasa-de-desempleo/",
         "apertura": {
           "titular": "Desempleo del segundo trimestre: 7,9%",
           "detalle": null,
@@ -729,6 +734,7 @@
         "publicado": "17/09, 16 h",
         "fuente": "INDEC",
         "ancla": "fiscal",
+        "url": "serie/pbi-nominal/",
         "apertura": {
           "titular": "Informe de avance del segundo trimestre: se incorporó al dashboard",
           "detalle": "PBI nominal y deuda pública bruta / PBI, actualizados al 2T-26.",
