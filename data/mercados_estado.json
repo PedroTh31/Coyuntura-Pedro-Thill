@@ -1,0 +1,19 @@
+{
+  "activas": [],
+  "avisos": {},
+  "ultima": {
+    "fecha": "2026-11-08",
+    "resumen": {
+      "extra:Dólar futuro (DDF)": {
+        "estado": "ok"
+      },
+      "extra:Muro de vencimientos (AL30/GD30/GD35)": {
+        "estado": "ok"
+      },
+      "ust:10 Yr": {
+        "fuente": "tesoro",
+        "ultimo": "2026-11-06"
+      }
+    }
+  }
+}
