@@ -28,7 +28,6 @@ import agenda
 import calendario_indec
 import pagina_calendario
 import pagina_home
-import sitio
 import temas
 import fuentes_indec
 
@@ -713,20 +712,10 @@ def main():
     except Exception as e:
         print(f"::warning title=Home::no se pudo generar: {type(e).__name__}: {e}")
 
-    if indicadores_financiera:
-        # financiera.html sigue como hasta E1 (pasa a redirigir a /mercados/ en E3).
-        nav_a_inicio = ('<a href="calendario/" class="nav-pagina">Calendario</a>'
-                        '<a href="index.html" class="nav-pagina">← Inicio</a>')
-        dashboard.generar(historico, indicadores_financiera, archivo_salida="financiera.html",
-                           extra_html={"mercados": tablas_acciones} if tablas_acciones else {},
-                           extra_charts=extra_charts, nav_extra=nav_a_inicio,
-                           titulo_pagina="Monitor financiero · Argentina", fuentes_indec=fuentes_por_indicador,
-                           fuentes_pagina=dashboard.fuentes_de_pagina(
-                               indicadores_financiera, fuentes_por_indicador, todos,
-                               # dólar futuro y muro de vencimientos: MAE; tablas de acciones/CEDEARs: data912
-                               extra=(["MAE"] if extra_charts else []) + (["data912"] if tablas_acciones else [])))
-    print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/ (home, temas, calendario"
-          + (", financiera.html)" if indicadores_financiera else ")"))
+    # Bloque E3: financiera.html pasa a ser una redirección a /mercados/ (su contenido está repartido por
+    # tema); se mantiene el archivo para los links viejos.
+    pagina_home.generar_redireccion("financiera.html", "mercados/")
+    print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/ (home, temas, series, calendario)")
 
     escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador,
                             agenda_mail=agenda_mail)
@@ -743,8 +732,9 @@ def _ctx_solo(ctx, indicadores):
 
 def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuentes_por_indicador, frescura_ctx,
                    extra_charts, tablas_acciones):
-    """Bloque E2: docs/<tema>/index.html por cada tema del bloque `temas:` del yaml, con las cards grandes
-    de siempre (las compactas llegan en E3). Devuelve ({nombre: card} de todas las páginas, temas)."""
+    """Bloque E2/E3: docs/<tema>/index.html por cada tema del bloque `temas:` del yaml (cards compactas con
+    mini gráfico) y docs/serie/<slug>/index.html por cada card (la card completa). Devuelve ({nombre: card}
+    de todas las páginas, temas)."""
     lista = indicadores + financiera_propios
     presentes = [ec["card"]["nombre"] for ec in extra_charts] + ([temas.ACCIONES] if tablas_acciones else [])
     temas_cfg, sin_tema, inexistentes = temas.completar(cfg.get("temas") or [], lista, presentes)
@@ -756,6 +746,11 @@ def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuent
         print(f"::warning title=Temas::'{it}' está en más de un tema")
     temas_nav = [(t["titulo"], t["slug"]) for t in temas_cfg]
     macro = {i["nombre"] for i in indicadores}   # titulares por reglas: sólo las cards macro (D1 del Bloque C)
+    try:   # próxima publicación de cada tema (bajada), de la caché del calendario: nunca estimada
+        proximas = agenda.proximas(frescura_ctx, calendario_indec.cargar_config()) if frescura_ctx else {}
+    except Exception as e:
+        print(f"::warning title=Temas::sin próximas publicaciones en la bajada: {type(e).__name__}: {e}")
+        proximas = {}
     cards_sitio = {}
     for t in temas_cfg:
         its = set(temas.items(t))
@@ -769,10 +764,9 @@ def _generar_temas(cfg, historico, indicadores, financiera_propios, todos, fuent
                 fuentes_pagina=dashboard.fuentes_de_pagina(
                     [i for i in inds if temas.item_de(i) in its], fuentes_por_indicador, todos,
                     extra=(["MAE"] if ecs else []) + (["data912"] if eh else [])),
-                frescura_ctx=frescura_ctx, con_titulares=macro, tema=t,
-                nav_html=sitio.nav_sitio("../", t["titulo"], temas_nav),
-                pie_html=sitio.pie_sitio("../", "Pasá el cursor (o tocá) sobre cualquier gráfico para ver cada valor."),
-                raiz="../")
+                frescura_ctx=frescura_ctx, con_titulares=macro,
+                tema=dict(t, miga='<a href="../">Inicio</a> › ' + t["titulo"], proximas=proximas),
+                temas_nav=temas_nav, raiz="../")
         except Exception as e:
             print(f"::warning title=Tema {t['slug']}::no se pudo generar la página: {type(e).__name__}: {e}")
             continue

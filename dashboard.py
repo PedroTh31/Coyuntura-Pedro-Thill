@@ -933,6 +933,7 @@ def _completar_card(card, ind, historico, indicadores_por_nombre, grave, con_tit
     mismo que el titular (D13; pp en tasas, D4) y valor con decimales según la unidad (D4). Todo sobre la
     serie que resume la card (la misma de la línea de frescura). Ver titulares.py."""
     card["desde_txt"] = _desde_txt(ind.get("desde", DESDE_GENERAL))
+    card["aviso"] = ind.get("aviso")   # `aviso:` del yaml: dato en revisión, línea visible (no se corrige el dato)
     card["titular"], card["cambio"] = None, None
     if ind.get("vista") == "sectores_bar":
         return
@@ -995,16 +996,17 @@ def _extender_hasta_hoy(sj, hoy):
 def generar(historico, config_indicadores, archivo_salida="index.html", extra_html=None,
             extra_charts=None, nav_extra="", titulo_pagina="Monitor de coyuntura · Argentina",
             fuentes_indec=None, fuentes_pagina=None, frescura_ctx=None, con_titulares=False,
-            tema=None, nav_html=None, pie_html=None, raiz=""):
+            tema=None, temas_nav=None, raiz=""):
     """frescura_ctx: frescura.Contexto (Bloque B2) para mostrar la línea de frescura en cada card;
     None = sin línea (pestaña financiera, fuera de esa ronda).
     con_titulares: titulares por reglas del Bloque C (sólo las cards macro, decisión de Pedro D1): True/False
     para toda la página o el conjunto de nombres de card que lo llevan; sin ellos, la variación bajo el
     valor de cada card compara contra el dato anterior.
-    tema (Bloque E2): dict de temas.py ({slug, titulo, secciones: [{titulo, items}]}) -> la página es UNA
-    sección con los subtítulos e ítems del tema, en ese orden (en vez de una sección por `bloque`).
-    nav_html / pie_html: navegación y pie del sitio (sitio.nav_sitio / sitio.pie_sitio); raiz: ruta
-    relativa a docs/ ("../" en docs/<tema>/index.html).
+    tema (Bloque E2/E3): dict de temas.py ({slug, titulo, secciones: [{titulo, items}], proximas}) -> la
+    página del tema es UNA sección con los subtítulos e ítems del tema, en ese orden, con cards COMPACTAS
+    (mini gráfico; toda la card linkea a su serie), y además se escribe una página por card en
+    docs/serie/<slug>/index.html con la card completa de siempre y su nota. temas_nav: [(título, carpeta)]
+    para la navegación del sitio; raiz: ruta relativa a docs/ ("../" en docs/<tema>/index.html).
     Devuelve la lista de cards (dicts) de la página, para la home."""
     def _con_tit(nombre):
         return con_titulares if isinstance(con_titulares, bool) else nombre in con_titulares
@@ -1052,6 +1054,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             card["fuente_indec"] = bool(usos)
             card["frescura"], grave = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
             card["slug"] = sitio.slug(nombre, ind)
+            if tema is not None:
+                card["mini"] = _mini_card(ind, serie_js_compuesta, historico)
             _completar_card(card, ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio,
                             serie_js_compuesta)
             charts.append(card)
@@ -1109,6 +1113,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
             fuente_indec=bool(usos), frescura=linea_fr, slug=sitio.slug(nombre, ind)))
         _completar_card(charts[-1], ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio)
+        if tema is not None:
+            charts[-1]["mini"] = _mini_card(ind, None, historico)
         if acumulando:
             idx += 1
             continue
@@ -1154,17 +1160,23 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         if ec.get("nota"):
             card["nota_num"] = _registrar_nota(ec["nota"], card["nombre"], notas_dict)
         serie_js_extra = dict(ec["serie_js"], i=idx)
+        if tema is not None:
+            card["mini"] = _mini_extra(serie_js_extra)
         charts.append(card)
         series_js.append(serie_js_extra)
         idx += 1
     from fuentes_indec import describir_fuente
+    etiquetas = {i["nombre"]: i["etiqueta"] for i in config_indicadores if i.get("etiqueta")}
+    if tema is not None:
+        tema = dict(tema, bajada=_bajada_tema(charts, frescura_ctx, tema.get("proximas") or {}))
+        _escribir_series(charts, series_js, notas_dict, tema, temas_nav, fuentes_pagina, etiquetas)
+        series_js = []   # la página del tema sólo lleva los minis (los datos completos van en cada serie)
     _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida=archivo_salida, extra_html=extra_html or {},
                     nav_extra=nav_extra, titulo_pagina=titulo_pagina,
                     semaforo_fuente=describir_fuente(usos_semaforo) or "",
                     fuentes_pagina=fuentes_pagina,
-                    etiquetas={i["nombre"]: i["etiqueta"] for i in config_indicadores if i.get("etiqueta")},
-                    tema=tema, nav_html=nav_html, pie_html=pie_html, raiz=raiz)
+                    etiquetas=etiquetas, tema=tema, temas_nav=temas_nav, raiz=raiz)
     return charts
 
 
@@ -1285,6 +1297,7 @@ def _card_cell(c):
     pie_html = f'<div class="fuente-pie">{" · ".join(pie)}</div>' if pie else ""
     # Marca "sin datos nuevos desde MM/AAAA" (dinámica, ver generar(); sólo páginas sin línea de frescura)
     marca_html = f'<div class="marca-fecha">⏸ {c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
+    marca_html += _aviso_html(c)
     # Selector de rango (D5): "Vista: desde mmm-aa · 6M · 1A · 5A · Máx · Rango…". La vista inicial es el
     # `desde` del yaml. Mismos atributos de siempre (class="filtro" data-rango="..."): el JS de filtrado
     # (calcFechaCorte/filtrarDatos/aplicarFiltro) no cambia salvo el corte nuevo de 6 meses.
@@ -1322,6 +1335,221 @@ def _card_cell(c):
             f'<div class="{cbox_cls}"><canvas id="ch{i}"></canvas></div>{filtros}{rezago_btns}{pie_html}</div>')
 
 
+# ------------------------------------------------------------------------------------------------
+# Bloque E3: cards compactas, minis y páginas de serie
+# ------------------------------------------------------------------------------------------------
+def _serie_hist(historico, nombre):
+    g = historico[historico["indicador"] == nombre].sort_values("fecha")
+    return pd.Series(g["valor"].values, index=pd.to_datetime(g["fecha"].values)).dropna()
+
+
+def _ventana_mini(s):
+    """Últimos 12 meses de una diaria, 24 datos de una mensual, 8 de una trimestral."""
+    freq = titulares.frecuencia(s.index)
+    if freq == "diaria":
+        return s[s.index >= s.index[-1] - pd.DateOffset(years=1)], freq
+    return s.tail(24 if freq == "mensual" else 8), freq
+
+
+def _etiqueta_mini(d, freq):
+    if freq == "diaria":
+        return d.strftime("%d/%m/%y")
+    if freq == "trimestral":
+        return f"{(d.month - 1) // 3 + 1}T-{str(d.year)[2:]}"
+    return f"{_MESES_ABREV_C[d.month]}-{str(d.year)[2:]}"
+
+
+def _mini_series(historico, nombres, unidad, barras=False, signo=True):
+    """Mini de una o varias series del histórico (la ÚLTIMA es la protagonista, como en los overlays),
+    alineadas sobre las fechas de la ventana de la protagonista."""
+    prot = _serie_hist(historico, nombres[-1])
+    if len(prot) < 2:
+        return None
+    ventana, freq = _ventana_mini(prot)
+    if freq == "diaria":
+        fechas = ventana.index
+    else:   # todas las fechas de las series dentro de la ventana (mensuales: mismo calendario)
+        fechas = ventana.index
+    ds = []
+    for k, n in enumerate(nombres):
+        s = _serie_hist(historico, n).reindex(fechas)
+        ds.append({"label": n, "y": [round(float(v), 3) if pd.notna(v) else None for v in s.values],
+                   "rol": min(len(nombres) - 1 - k, 3), "bar": bool(barras), "signo": signo})
+    return {"x": [_etiqueta_mini(d, freq) for d in fechas], "u": unidad, "ds": ds}
+
+
+TEXTO_MINI_COMPLETO = "Gráfico completo en la página de la serie"
+
+
+def _mini_card(ind, sj, historico):
+    """Mini gráfico de una card (Bloque E3, punto 4 de la propuesta). Sale del histórico (la serie que
+    resume la card, o todas las de un overlay) o del serie_js ya armado (incidencia, sectores). Los combos
+    con rezago y con evento no se leen en chico: texto que manda a la página de la serie."""
+    v = ind.get("vista")
+    u = ind.get("unidad", "")
+    if v in ("combo_rezago", "combo_barras_evento"):
+        return {"texto": TEXTO_MINI_COMPLETO}
+    if v == "overlay":
+        return _mini_series(historico, list(ind["series"]), u, barras=ind.get("barras", False))
+    if v == "comercio_espejo":
+        expo, impo, saldo = ind["series"]
+        m = _mini_series(historico, [expo, impo, saldo], u, barras=False)
+        if m:
+            m["ds"][0].update(bar=True, rol=2, signo=False)
+            m["ds"][1].update(bar=True, rol=2, signo=False, y=[-v if v is not None else None for v in m["ds"][1]["y"]])
+            m["ds"][2].update(rol=0, linea=True)
+        return m
+    if v == "incidencia_stack" and sj:
+        x = [str(e) for e in sj["full_x"][-13:]]
+        ds = [{"label": d["label"], "y": d["full_y"][-13:], "rol": min(k, 3), "bar": True, "signo": False}
+              for k, d in enumerate(sj["datasets"])]
+        return {"x": x, "u": u, "ds": ds, "apilado": True}
+    if v == "sectores_bar" and sj:
+        return {"x": sj["x"], "u": "% i.a.", "ds": [{"label": "Actividad", "y": sj["y"], "rol": 0, "bar": True, "signo": True}],
+                "categorias": True}
+    nombre = _serie_resumen(ind)
+    return _mini_series(historico, [nombre], u, barras=bool(ind.get("barras")) and v is None)
+
+
+def _mini_extra(sj):
+    """Minis de las cards que arma run.py aparte (dólar futuro: barras; muro: barras agrupadas)."""
+    if sj.get("kind") == "bar":
+        return {"x": sj["x"], "u": sj.get("unidad", ""), "categorias": True,
+                "ds": [{"label": "Contrato", "y": sj["y"], "rol": 0, "bar": True, "signo": True}]}
+    if sj.get("kind") == "muro":
+        n = len(sj["datasets"])
+        return {"x": sj["x"], "u": sj.get("unidad", ""), "categorias": True,
+                "ds": [{"label": d["label"], "y": d["y"], "rol": min(n - 1 - k, 3), "bar": True, "signo": True}
+                       for k, d in enumerate(sj["datasets"])]}
+    return {"texto": TEXTO_MINI_COMPLETO}
+
+
+def _aviso_html(c):
+    """Línea del campo `aviso:` del yaml (ej. "Dato en revisión: …"), con el estilo gris de las franjas del B2."""
+    return f'<div class="aviso-card">{c["aviso"]}</div>' if c.get("aviso") else ""
+
+
+def _card_compacta(c):
+    """Card de la página de tema (E3): kicker + titular (o nombre), valor + variación, mini gráfico,
+    línea de frescura del B2 tal cual y pie "Fuente · *n · Ver serie →". Toda la card es un <a> a la
+    página de la serie: el asterisco va como texto (no se anidan links); la nota completa está en la
+    serie y al pie de esta página."""
+    tit = c.get("titular")
+    if tit == c["nombre"]:
+        tit = None
+    cabeza = (f'<div class="cn">{c["nombre"]}</div><div class="ct">{tit}</div>' if tit
+              else f'<div class="ct">{c["nombre"]}</div>')
+    chg = ""
+    if c.get("cambio"):
+        ch = c["cambio"]
+        tri = {1: "▲", -1: "▼"}.get(ch["signo"], "•")
+        chg = f'<span class="chg"><span class="tri">{tri}</span>{ch["texto"]} vs. {ch["ref"]}</span>'
+    fila = f'<div class="cm"><span class="cv">{c["valor"]}</span><span class="uni">{c.get("unidad", "")}</span>{chg}</div>'
+    m = c.get("mini") or {}
+    if c.get("acumulando"):
+        grafico = f'<div class="mtexto">⏳ {c["acumulando"]}</div>'
+    elif m.get("texto") or not m:
+        grafico = f'<div class="mtexto">{m.get("texto", TEXTO_MINI_COMPLETO)}</div>'
+    else:
+        grafico = f'<div class="mbox"><canvas data-mini="{c["i"]}" aria-label="{c["nombre"]}"></canvas></div>'
+    marca = f'<div class="marca-fecha">⏸ {c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
+    marca += _aviso_html(c)
+    pie = [x for x in ("Fuente: INDEC" if c.get("fuente_indec") else "",
+                       f'*{c["nota_num"]}' if c.get("nota_num") else "") if x]
+    return (f'<a class="cc" id="{c.get("slug", "")}" href="../serie/{c.get("slug", "")}/">{cabeza}{fila}{grafico}'
+            f'{c.get("frescura", "")}{marca}<div class="cc-pie"><span>{" · ".join(pie)}</span>'
+            f'<span class="cc-ver">Ver serie →</span></div></a>')
+
+
+def _bajada_tema(charts, ctx, proximas):
+    """'N series · X al día con el calendario del INDEC · Y sin datos nuevos hace más de 3 meses · próxima
+    publicación del INDEC: …'. Todo de lo que ya calculó la frescura (ctx.registro) y de la caché del
+    calendario (agenda.proximas). Nada se estima."""
+    n = len(charts)
+    partes = [f'{n} {"serie" if n == 1 else "series"}']
+    if ctx is not None:
+        al_dia = graves = 0
+        pids = set()
+        for c in charts:
+            reg = ctx.registro.get(c["nombre"])
+            if not reg:
+                continue
+            estados, resumen = reg
+            f = dict(estados).get(resumen)
+            if f is not None and f.grave:
+                graves += 1
+            elif f is not None and f.estado == "al_dia":
+                al_dia += 1
+            pids |= {ctx.pub_de_indicador[s] for s, _ in estados if s in ctx.pub_de_indicador}
+        if al_dia:
+            partes.append(f"{al_dia} al día con el calendario del INDEC")
+        if graves:
+            partes.append(f"{graves} sin datos nuevos de la fuente hace más de 3 meses")
+        prox = sorted((proximas[p] for p in pids if p in proximas), key=lambda d: d["fecha"])
+        if prox:
+            partes.append(f'próxima publicación del INDEC: {prox[0]["titulo"]}, {prox[0]["dia"]}, {prox[0]["hora"]}')
+    return " · ".join(partes)
+
+
+def _escribir_series(charts, series_js, notas_dict, tema, temas_nav, fuentes_pagina, etiquetas):
+    """Una página por card: docs/serie/<slug>/index.html, con la card completa de siempre (gráfico,
+    selector de vista, pantalla completa) y su nota metodológica (renumerada como *1). E4 le suma el
+    próximo dato, el contexto y los últimos datos."""
+    sj_por_i = {sj["i"]: sj for sj in series_js if "i" in sj}
+    texto_de = {v["numero"]: t for t, v in notas_dict.items()}
+    for c in charts:
+        if not c.get("slug"):
+            continue
+        card = dict(c, i=0)
+        notas = {}
+        if c.get("nota_num") in texto_de:
+            notas = {texto_de[c["nota_num"]]: {"numero": 1, "indicadores": [c["nombre"]]}}
+            card["nota_num"] = 1
+        sj = [dict(sj_por_i[c["i"]], i=0)] if c["i"] in sj_por_i else []
+        pagina = {"slug": c["slug"], "titulo": tema["titulo"], "titulo_html": c["nombre"], "serie": True,
+                  "nav_activo": tema["titulo"],
+                  "miga": f'<a href="../../">Inicio</a> › <a href="../../{tema["slug"]}/">{tema["titulo"]}</a> › {c["nombre"]}',
+                  "secciones": [{"titulo": "", "items": [c["nombre"]]}]}
+        _escribir_html([card], sj, [], "", {}, notas, archivo_salida=f"serie/{c['slug']}/index.html",
+                       fuentes_pagina=fuentes_pagina, etiquetas=etiquetas, tema=pagina, temas_nav=temas_nav,
+                       raiz="../../")
+
+
+_JS_MINIS = """(function(){
+const T = __TEMA_MINI__, MINIS = __MINIS__;
+const ROL = [T.azul_1, T.azul_2, T.azul_3, T.azul_contexto];
+const esPP = u => u === 'p.p.' || u === 'pp';
+const esPct = u => !!u && (u.includes('%') || esPP(u));
+function decDe(u, v) { if (esPct(u)) return esPP(u) ? 2 : 1; if (u && /millones|miles|puntos/.test(u)) return 0;
+  const a = Math.abs(v || 0); return a >= 1000 ? 0 : a >= 10 ? 1 : 2; }
+const fmt = (v, u) => v == null ? 's/d' : v.toLocaleString('es-AR', {minimumFractionDigits:decDe(u, v), maximumFractionDigits:decDe(u, v)}).replace('-', '−');
+document.querySelectorAll('canvas[data-mini]').forEach(cv => {
+  const m = MINIS[cv.dataset.mini]; if (!m) return;
+  const hayBar = m.ds.some(d => d.bar);
+  const ds = m.ds.map(d => {
+    const col = ROL[d.rol];
+    if (d.bar) return { type:'bar', label:d.label, data:d.y, order:2, stack:m.apilado ? 's' : undefined,
+      backgroundColor:d.signo ? d.y.map(v => v != null && v < 0 ? T.negativo : col) : col,
+      barPercentage:.85, categoryPercentage:.9, borderRadius:0 };
+    const n = d.y.length;
+    return { type:'line', label:d.label, data:d.y, order:1, borderColor:col, borderWidth:d.rol === 0 ? 1.75 : 1.25,
+      borderDash:d.rol === 2 && !hayBar ? [4, 2] : [], tension:0, spanGaps:false,
+      pointRadius:d.rol === 0 && !m.categorias ? d.y.map((v, k) => k === n - 1 ? 2.5 : 0) : 0,
+      pointBackgroundColor:col, pointHoverRadius:3 };
+  });
+  new Chart(cv, { type:hayBar ? 'bar' : 'line', data:{ labels:m.x, datasets:ds },
+    options:{ responsive:true, maintainAspectRatio:false, animation:false,
+      interaction:{ mode:'index', intersect:false }, layout:{ padding:{ top:3, right:4, bottom:1, left:1 } },
+      scales:{ x:{ display:false, stacked:!!m.apilado }, y:{ display:false, stacked:!!m.apilado, grace:'4%' } },
+      plugins:{ legend:{ display:false }, etiquetasDirectas:false, tramoSinDatos:false, lineaCero:false,
+        tooltip:{ displayColors:ds.length > 1, backgroundColor:'#FFFFFF', borderColor:T.azul_contexto, borderWidth:1,
+          titleColor:T.texto, bodyColor:T.texto_2, padding:6, cornerRadius:2, boxWidth:8, boxHeight:8,
+          filter:it => it.raw != null,
+          callbacks:{ label:c => (ds.length > 1 ? c.dataset.label + ': ' : '') + fmt(c.raw, m.u) + ' ' + m.u } } } } });
+});
+})();""".replace("__TEMA_MINI__", json.dumps(TEMA, ensure_ascii=False))
+
+
 def _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuente, extra_html):
     """Página de tema (Bloque E2): una sección con el título del tema y, por cada subtítulo del yaml, sus
     ítems en ese orden: cards (en grilla), tablas de comercio exterior, semáforo del EMAE o HTML de
@@ -1335,11 +1563,13 @@ def _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuent
 
         def _cerrar():
             if celdas:
-                partes.append(f'<div class="grid">{"".join(celdas)}</div>')
+                clase = "grid una" if tema.get("serie") else "grid ccgrid"
+                partes.append(f'<div class="{clase}">{"".join(celdas)}</div>')
                 celdas.clear()
         for it in sec["items"]:
             if it in por_nombre:
-                celdas.append(_card_cell(por_nombre[it]))
+                c = por_nombre[it]
+                celdas.append(_card_cell(c) if tema.get("serie") else _card_compacta(c))
                 continue
             _cerrar()
             if it == T.SEMAFORO and semaforo:
@@ -1350,8 +1580,14 @@ def _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuent
                 partes.append(extra_html[it])
         _cerrar()
         if partes:
-            cuerpo += f'<h3 class="grupo">{sec["titulo"]}</h3>' + "".join(partes)
-    return f'<section class="bloque" id="{tema["slug"]}"><h2>{tema["titulo"]}</h2>{cuerpo}</section>'
+            cuerpo += (f'<h3 class="grupo">{sec["titulo"]}</h3>' if sec.get("titulo") else "") + "".join(partes)
+    miga = f'<div class="miga">{tema["miga"]}</div>' if tema.get("miga") else ""
+    if tema.get("serie"):
+        return f'<section class="bloque serie" id="serie">{miga}{cuerpo}</section>'
+    minis = {str(c["i"]): c["mini"] for c in charts if c.get("mini")}
+    bajada = f'<p class="tema-bajada">{tema["bajada"]}</p>' if tema.get("bajada") else ""
+    return (f'<section class="bloque" id="{tema["slug"]}">{miga}<h2>{tema["titulo"]}</h2>{bajada}{cuerpo}</section>'
+            f'<script>{_JS_MINIS.replace("__MINIS__", json.dumps(minis, ensure_ascii=False))}</script>')
 
 
 def _mezclar(hex_color, a):
@@ -1363,7 +1599,7 @@ def _mezclar(hex_color, a):
 def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                     archivo_salida="index.html", extra_html=None, nav_extra="",
                     titulo_pagina="Monitor de coyuntura · Argentina", semaforo_fuente="",
-                    fuentes_pagina=None, etiquetas=None, tema=None, nav_html=None, pie_html=None, raiz=""):
+                    fuentes_pagina=None, etiquetas=None, tema=None, temas_nav=None, raiz=""):
     extra_html = extra_html or {}
     ahora = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).strftime("%d/%m/%Y %H:%M")
     grupo_tabla = {}
@@ -1410,10 +1646,11 @@ def _escribir_html(charts, series_js, semaforo, fecha_sem, tablas, notas_dict,
                       f'{cuerpo}</section>')
     # El link cruzado entre páginas va al final de la barra, empujado a la derecha (CSS .nav-pagina).
     nav += nav_extra
+    pie_html = None
     if tema is not None:
         secciones = _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuente, extra_html)
-    if nav_html is not None:
-        nav = nav_html
+        nav = sitio.nav_sitio(raiz, tema.get("nav_activo", tema["titulo"]), temas_nav)
+        pie_html = sitio.pie_sitio(raiz, "Gráficos interactivos: pasá el cursor (o tocá) para ver cada valor.")
 
     css_vars = "\n".join(f"    --{k.replace('_', '-')}: {v};" for k, v in TEMA.items() if k != "fuente")
     fuente_css = '"Helvetica Neue", ' + TEMA["fuente"]
@@ -1445,7 +1682,26 @@ __VARS__
   nav.secciones a:hover { color:var(--texto); text-decoration:none; }
   nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
   nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }
-  header h1 a.h1-link { color:inherit; } header h1 a.h1-link:hover { text-decoration:none; }   /* Calendario + Financiera/Macro, juntos a la derecha */
+  header h1 a.h1-link { color:inherit; } header h1 a.h1-link:hover { text-decoration:none; }
+  /* Bloque E3: página de tema (cards compactas) y de serie (card completa a todo el ancho). */
+  .miga { font-size:12px; color:var(--texto-3); padding-top:10px; }
+  .miga a { color:var(--texto-2); }
+  section.bloque .miga + h2 { margin-top:6px; }
+  section.bloque.serie { border:0; }
+  .tema-bajada { font-size:14px; color:var(--texto-2); margin:8px 0 0; max-width:820px; }
+  .grid.ccgrid { grid-template-columns:repeat(3, minmax(0, 1fr)); column-gap:34px; }
+  .grid.una { grid-template-columns:minmax(0, 1fr); }
+  .grid.una .cbox { height:420px; }
+  a.cc { display:flex; flex-direction:column; color:inherit; border-top:1px solid var(--linea); padding:14px 0 18px; min-width:0; }
+  a.cc:hover { text-decoration:none; } a.cc:hover .ct { color:var(--azul-2); }
+  a.cc .ct { font-size:16px; margin-top:4px; padding-right:0; }
+  a.cc .cn { padding-right:0; }
+  a.cc .cv { font-size:22px; }
+  .mbox { position:relative; height:84px; margin:10px 0 6px; }
+  .mtexto { font-size:12px; color:var(--texto-3); background:var(--franja-fondo); padding:12px 10px; margin:10px 0 6px; }
+  a.cc .cf { margin-top:2px; }
+  .cc-pie { display:flex; justify-content:space-between; gap:10px; font-size:11px; color:var(--texto-3); margin-top:auto; padding-top:8px; }
+  .cc-ver { color:var(--azul-2); font-weight:600; white-space:nowrap; }   /* Calendario + Financiera/Macro, juntos a la derecha */
   section.bloque { padding-top:34px; scroll-margin-top:44px; }
   section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
   h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }
@@ -1484,6 +1740,8 @@ __VARS__
   .cf .atr { color:#2E3A45; font-weight:700; }
   .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
   .cf.grave .per { color:#2E3A45; }
+  .aviso-card { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
+    padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
   .marca-fecha { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
     padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
   .cdesc { font-size:13px; line-height:1.4; color:var(--texto-2); margin:10px 0 4px; }
@@ -1514,12 +1772,14 @@ __VARS__
   .tabla td.sec { text-align:left; font-weight:400; }
   .tabla td.num { color:var(--texto); font-weight:400; }
   footer { margin:40px 0 0; padding-top:12px; border-top:1px solid var(--texto); font-size:11px; color:var(--texto-3); }
+  @media (max-width:980px) and (min-width:761px) { .grid.ccgrid { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
   @media (max-width:760px) {
     .wrap { padding:0 16px; }
     header.masthead { padding:18px 0 12px; }
     header h1 { font-size:23px; }
     header .sub { font-size:13px; }
-    .grid { grid-template-columns:minmax(0, 1fr); }
+    .grid, .grid.ccgrid { grid-template-columns:minmax(0, 1fr); }
+    .grid.una .cbox { height:300px; }
     section.bloque { padding-top:24px; }
     section.bloque > h2 { font-size:21px; }
     .ct { font-size:17px; }
@@ -2401,7 +2661,7 @@ marcarNav();
             .replace("__FUENTES__", fuentes_pagina or FUENTES_HEADER_DEFAULT)
             .replace("__H1__", f'<a href="{raiz or "./"}" class="h1-link">{titulo_pagina}</a>' if tema is not None
                      else titulo_pagina)
-            .replace("__TITULO__", titulo_pagina if tema is None else f'{tema["titulo"]} · {titulo_pagina}')
+            .replace("__TITULO__", titulo_pagina if tema is None else f'{tema.get("titulo_html", tema["titulo"])} · {titulo_pagina}')
             .replace("__PIE__", pie_html if pie_html is not None else
                      "Pasá el cursor sobre cualquier gráfico para ver el valor. Editá indicadores en indicadores.yaml.")
             .replace("__SECCIONES__", secciones)

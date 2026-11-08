@@ -172,8 +172,8 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     partes y lo arma el JS al hacer click; nunca escribir la dirección completa en un HTML).
   - E2: `temas.py` + bloque `temas:` de indicadores.yaml (cada ítem = nombre de card, `tabla:`, "Semáforo
     del EMAE" o los extras de run.py; cada card en UN solo tema, sin las `solo_referencia`). run.py
-    (`_generar_temas`) llama a `dashboard.generar(..., tema=, nav_html=, pie_html=, raiz="../")` una vez por
-    tema -> `docs/<slug>/index.html`, provisoriamente con las cards grandes (las compactas son E3). Card nueva
+    (`_generar_temas`) llama a `dashboard.generar(..., tema=, temas_nav=, raiz="../")` una vez por tema ->
+    `docs/<slug>/index.html`. Card nueva
     sin tema: sale en "Sin tema asignado" del tema de su bloque + `::warning` (y falla tests/test_temas.py).
     `con_titulares` acepta el conjunto de nombres macro (titulares sólo en esas). Frescura en todas las cards
     (D4), pero la agenda del mail usa `run._ctx_solo(ctx, indicadores)`: el registro SÓLO de las macro, en el
@@ -181,7 +181,16 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     la agenda, 9 datos clave del bloque `home:` del yaml con valor/variación de la MISMA card de su tema y
     frescura + mini Chart.js SÓLO de la serie que la resume (decisión de Pedro); EMAE con las funciones de card sin registrarse en la
     agenda; temas con 2 titulares; datos demorados; redirección de las anclas viejas `#precios`… a su tema,
-    `sitio.REDIRECCION_ANCLAS`) y `docs/acerca/index.html`. financiera.html se sigue generando igual hasta E3.
+    `sitio.REDIRECCION_ANCLAS`) y `docs/acerca/index.html`.
+  - E3: la página de tema lleva cards COMPACTAS (`dashboard._card_compacta`: toda la card es un `<a>` a
+    `../serie/<slug>/`, asterisco como texto, mini Chart.js sin ejes de `_mini_card`/`_mini_extra`: últimos 12
+    meses de una diaria, 24 datos de una mensual, 8 de una trimestral; overlay con todas sus series, espejo,
+    incidencia apilada 13 meses, sectores; combos con rezago/evento: "Gráfico completo en la página de la
+    serie") y una bajada (`_bajada_tema`: series, al día, sin datos nuevos, próxima publicación de la caché,
+    nunca estimada). Sólo los minis van embebidos (la página ya no carga las series completas). Cada card
+    tiene `docs/serie/<slug>/index.html` (`_escribir_series`: la card completa de siempre + su nota como *1;
+    E4 le suma próximo dato, contexto y últimos datos). Los datos clave de la home linkean a su serie.
+    `financiera.html` es una redirección a `mercados/` (`pagina_home.generar_redireccion`).
   - Decisiones ya tomadas para las etapas siguientes: 9 datos clave en la home (los 8 propuestos + EMAE,
     que tiene página de serie pero no card de tema; `titular_regla: direccion`, sujeto "El EMAE", en E4);
     tasas bancarias en "Dinero y crédito", cauciones y CER en "Mercados" (D8 opción A); riesgo país en
@@ -482,6 +491,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
 - `nota: "..."` → aclaración metodológica; se muestra como asterisco bajo el gráfico y en el
   pie de la página. Obligatoria en toda serie calculada, estimada, proxy o rascada de Excel,
   o con `factor` aplicado.
+- `aviso: "..."` → línea visible (franja gris del B2) en la card, tanto en la página de tema como en la
+  de la serie, para un dato EN REVISIÓN que no se corrige (regla dura #4). Genérico: va junto con
+  `ocultar_variacion: true` mientras esté abierto el pendiente. Hoy: S&P MERVAL ("Dato en revisión: posible
+  cambio de escala en la fuente desde el 19/10/2026", PENDIENTES #12). Sacar los dos campos al cerrarlo.
 - `subtitulo: "..."` → aclaración corta (una línea) visible directamente debajo del nombre de
   la tarjeta, sin tener que abrir la nota al pie. Usar cuando el nombre solo no alcanza para
   distinguir un indicador de otros parecidos (ej. el grupo "Reservas", donde varios gráficos

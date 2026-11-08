@@ -18,6 +18,8 @@
 #        dato se comunica contra el mes anterior, igual que en el mail del B3;
 #      * series que ya son interanuales (inflación interanual, tasa real ex-post).
 #  - etiqueta: rótulo corto de la serie para la etiqueta directa al final de su línea (opcional).
+#  - aviso: línea visible en la card (tema y página de serie) para un dato en revisión, sin corregirlo
+#    (ej. S&P MERVAL mientras está abierto PENDIENTES #12, junto con `ocultar_variacion: true`).
 # ============================================================================
 start_date: "2004-01-01"   # se baja historia larga; cada gráfico se recorta con 'desde'
 
@@ -454,7 +456,7 @@ indicadores_financiera:
   - {nombre: "Tasa TAMAR (total bancos)", bloque: mercados, grupo: "Tasas y CER", unidad: "% TNA", desde: "2026-01-01", neutral: true, solo_referencia: true, nota: "TAMAR = Tasa Mayorista Argentina, idVariable 135 (bancos públicos y privados). Mismo indicador que en la pestaña macro, referenciado acá (no se vuelve a fetchear). Para leer los bonos duales (TTM26, TTJ26, etc.) la variante legalmente relevante es OTRA, TAMAR bancos privados (idVariable 44, confirmada contra el texto de las Resoluciones Conjuntas de Finanzas/Hacienda que emiten esos bonos) -- no usar esta tarjeta para ese cálculo."}
   - {nombre: "CER (Coeficiente de Estabilización de Referencia)", bloque: mercados, grupo: "Tasas y CER", fuente: bcra, id_variable: 30, unidad: "índice", desde: "2024-01-01", neutral: true, nota: "Coeficiente de Estabilización de Referencia (base 2.2.2002=1), API de Estadísticas Monetarias del BCRA v4.0 (idVariable 30, 'Principales Variables'), diario. Usado para ajustar contratos/bonos indexados por inflación (ej. lectura de bonos duales TAMAR vs. CER)."}
 
-  - {nombre: "S&P MERVAL", bloque: mercados, grupo: "Acciones", fuente: byma, symbol: "M", unidad: "puntos", desde: "2024-01-01", sube_es_bueno: true, nota: "Índice S&P MERVAL (símbolo 'M'), serie histórica diaria de BYMA (open.bymadata.com.ar, endpoint público sin auth). El certificado de BYMA tiene una CA intermedia fuera del bundle estándar de certifi: el fetcher pide con verify=False (conexión sigue siendo TLS, sólo se salta la validación de cadena), mismo criterio que las librerías públicas de BYMA (pyhomebroker, bymadata)."}
+  - {nombre: "S&P MERVAL", bloque: mercados, grupo: "Acciones", fuente: byma, symbol: "M", unidad: "puntos", desde: "2024-01-01", sube_es_bueno: true, ocultar_variacion: true, aviso: "Dato en revisión: posible cambio de escala en la fuente desde el 19/10/2026", nota: "Índice S&P MERVAL (símbolo 'M'), serie histórica diaria de BYMA (open.bymadata.com.ar, endpoint público sin auth). El certificado de BYMA tiene una CA intermedia fuera del bundle estándar de certifi: el fetcher pide con verify=False (conexión sigue siendo TLS, sólo se salta la validación de cadena), mismo criterio que las librerías públicas de BYMA (pyhomebroker, bymadata)."}
 
   # ---------------------------------------------------------------------------------------
   # RONDA 2 (PROMPT_ronda2_financiera.md)

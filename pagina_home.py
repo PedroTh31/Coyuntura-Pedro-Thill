@@ -151,7 +151,7 @@ def armar_datos_clave(datos_clave: list[dict], cards: dict[str, dict], tema_de: 
                 continue
             resumen = dashboard._serie_resumen(ind)
             unidad = por_nombre.get(resumen, ind).get("unidad", c.get("unidad", ""))
-            href = f'{tema_de.get(d["card"], "")}/#{c.get("slug", "")}'
+            href = f'serie/{c.get("slug", "")}/'
             item = dict(etiqueta=d.get("etiqueta", d["card"]), valor=c.get("valor"), unidad=unidad,
                         cambio=c.get("cambio"), frescura=_frescura_resumen(historico, resumen, por_nombre.get(resumen, ind), ctx),
                         href=href)
@@ -314,6 +314,21 @@ oficial. El <a href="{sitio.URL_REPO}">código es público en GitHub</a>.</p>
 </article>"""
     return sitio.pagina(f"Acerca · {TITULO_SITIO}", TITULO_SITIO, f"Actualizado {escape(ahora_txt)}",
                         sitio.nav_sitio("../", "", temas_nav), cuerpo, css=CSS_ACERCA, pie=sitio.pie_sitio("../"))
+
+
+def html_redireccion(destino: str) -> str:
+    """Página mínima que manda a `destino` (relativo a docs/): meta refresh + location.replace, con link
+    visible por si el navegador no redirige."""
+    return (f'<!doctype html><html lang="es"><head><meta charset="utf-8">'
+            f'<meta http-equiv="refresh" content="0; url={destino}"><title>{TITULO_SITIO}</title>'
+            f'<script>location.replace("{destino}");</script></head>'
+            f'<body><p>Esta página se mudó: <a href="{destino}">{destino}</a></p></body></html>')
+
+
+def generar_redireccion(archivo: str, destino: str) -> Path:
+    ruta = DOCS / archivo
+    ruta.write_text(html_redireccion(destino), encoding="utf-8")
+    return ruta
 
 
 def generar_acerca(ahora_txt: str, temas_nav=None, ruta: Path = DOCS / "acerca" / "index.html") -> Path:
