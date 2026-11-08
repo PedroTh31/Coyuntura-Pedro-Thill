@@ -117,6 +117,13 @@
       "fallbacks": [],
       "fecha": "2026-11-08",
       "hora": "13:33:33"
+    },
+    {
+      "disparo": "workflow_dispatch",
+      "error_autenticacion": false,
+      "fallbacks": [],
+      "fecha": "2026-11-08",
+      "hora": "15:18:04"
     }
   ],
   "fallback_dg_vacios": [
@@ -457,6 +464,14 @@
         "fuente": "indec_api",
         "motivo": null,
         "tabla": "ipc_nacional"
+      }
+    ],
+    "RIPTE medido en canastas básicas (CBT, GBA)": [
+      {
+        "clave": "150.1_CSTA_BATAL_0_D_20",
+        "fuente": "indec_api",
+        "motivo": null,
+        "tabla": "valorizacion_canastas_cba_cbt"
       }
     ],
     "Salario real (deflactado por IPC)": [
