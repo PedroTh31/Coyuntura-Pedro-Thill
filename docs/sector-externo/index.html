@@ -1,0 +1,987 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sector externo · Monitor de coyuntura · Argentina</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* Bloque C: colores y tipografía de tema.py (una sola fuente de verdad, la misma que el mail). */
+  :root {
+    --azul-1: #0B3C5D;
+    --azul-2: #3A7CA5;
+    --azul-3: #81B1D3;
+    --azul-contexto: #DCE8F1;
+    --texto: #111111;
+    --texto-2: #4A5A68;
+    --texto-3: #7A8C9A;
+    --negativo: #C9A66B;
+    --atrasado: #2E3A45;
+    --franja-fondo: #EEF1F4;
+    --franja-borde: #4A5A68;
+    --fondo: #FFFFFF;
+    --linea:#E3E8ED; --grilla:#EEEEEE;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--fondo); color:var(--texto); font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; line-height:1.45; -webkit-font-smoothing:antialiased; }
+  a { color:var(--azul-2); text-decoration:none; } a:hover { text-decoration:underline; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
+  main.wrap { padding-bottom:60px; }
+  header.masthead { border-top:4px solid var(--azul-1); padding:26px 0 16px; }
+  header h1 { font-size:30px; line-height:1.15; margin:0; font-weight:700; letter-spacing:-.01em; }
+  nav.secciones { position:sticky; top:0; z-index:20; background:var(--fondo); border-bottom:1px solid var(--linea); }
+  nav.secciones .wrap { display:flex; align-items:center; gap:22px; overflow-x:auto; scrollbar-width:none; }
+  nav.secciones .wrap::-webkit-scrollbar { display:none; }
+  nav.secciones a { flex:none; font-size:14px; color:var(--texto-2); padding:12px 0 10px; border-bottom:3px solid transparent; }
+  nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  nav.secciones a:hover { color:var(--texto); text-decoration:none; }
+  nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
+  nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }
+  header h1 a.h1-link { color:inherit; } header h1 a.h1-link:hover { text-decoration:none; }   /* Calendario + Financiera/Macro, juntos a la derecha */
+  section.bloque { padding-top:34px; scroll-margin-top:44px; }
+  section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
+  h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }
+  .sub { font-size:14px; font-weight:700; margin:26px 0 8px; color:var(--texto); }
+  .ref { color:var(--texto-3); font-weight:400; font-size:13px; }
+  header .sub { font-size:14px; color:var(--texto-2); margin:6px 0 0; font-weight:400; }   /* después de .sub (notas) */
+  .nota { color:var(--texto-2); font-size:12px; margin:4px 0 12px; }
+  .notas-list { margin:10px 0 14px 20px; padding:0; font-size:12px; color:var(--texto-2); }
+  .notas-list li { margin:6px 0; scroll-margin-top:50px; }
+  .notas-list strong { color:var(--texto); }
+  .grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); column-gap:44px; }
+  .cell { position:relative; border-top:1px solid var(--linea); padding:16px 0 22px; min-width:0; background:var(--fondo); }
+  .fs-btn { position:absolute; top:12px; right:0; z-index:5; width:24px; height:24px; padding:0; border:0;
+    background:none; color:var(--texto-3); font-size:13px; line-height:1; cursor:pointer; opacity:.7; }
+  .fs-btn:hover { opacity:1; color:var(--texto); }
+  .cell:fullscreen, .cell:-webkit-full-screen { overflow:auto; background:var(--fondo); display:flex; flex-direction:column; padding:24px; }
+  .cell:fullscreen .cbox, .cell:-webkit-full-screen .cbox { flex:1 1 auto; height:auto !important; }
+  .cell.fs-fallback { position:fixed; inset:12px; z-index:1000; overflow:auto; display:flex; flex-direction:column;
+    padding:16px; box-shadow:0 4px 24px rgba(0,0,0,.25); }
+  .cell.fs-fallback .cbox { flex:1 1 auto; height:auto !important; }
+  .cn { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; padding-right:30px; }
+  .ct { font-size:18px; line-height:1.28; font-weight:700; margin:5px 0 0; color:var(--texto); padding-right:30px; }
+  .csub { font-size:13px; color:var(--texto-2); margin-top:3px; line-height:1.35; }
+  .cm { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-top:8px; }
+  .cv { font-size:26px; font-weight:700; color:var(--azul-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .uni { font-size:13px; color:var(--texto-2); }
+  /* D3: variación en gris azulado, sin juicio (el arena queda reservado a los valores negativos). */
+  .chg { font-size:13px; color:var(--texto-2); font-variant-numeric:tabular-nums; }
+  .chg .tri { font-size:11px; margin-right:3px; }
+  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + azul para
+     "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
+     El estado nunca va sólo en color: lleva ícono y texto. */
+  .cf { font-size:11px; color:#7A8C9A; margin-top:5px; line-height:1.35; }
+  .cf .per { color:#4A5A68; font-weight:600; }
+  .cf .ok { color:#3A7CA5; font-weight:600; }
+  .cf .atr { color:#2E3A45; font-weight:700; }
+  .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
+  .cf.grave .per { color:#2E3A45; }
+  .marca-fecha { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
+    padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
+  .cdesc { font-size:13px; line-height:1.4; color:var(--texto-2); margin:10px 0 4px; }
+  .cdesc:empty { display:none; }
+  .ley { display:inline-block; max-width:100%; margin-right:12px; }
+  .sw { display:inline-block; width:10px; height:10px; margin-right:5px; vertical-align:-1px; }
+  .sw.sw-l { width:18px; height:0; vertical-align:middle; margin-bottom:2px; }
+  .ley-x { display:inline-block; }
+  .acumulando { color:var(--texto-2); font-size:12px; text-align:center; padding:20px 14px; background:var(--franja-fondo); margin-top:10px; }
+  .cbox { position:relative; height:250px; margin-top:4px; }
+  /* Pedro quiere TODAS las tarjetas del mismo tamaño por ahora (flags grande/sin_filtros siguen en el yaml):
+     .cbox-grande { height:400px; } .cell-ancha { grid-column: span 2; } */
+  .filtros, .rezago-btns { display:flex; align-items:baseline; flex-wrap:wrap; gap:2px; font-size:12px; color:var(--texto-3); margin-top:6px; }
+  .vista { margin-right:6px; }
+  .filtro, .rezago-btn { font:inherit; background:none; border:0; padding:2px 5px; color:var(--texto-2); cursor:pointer; border-bottom:2px solid transparent; }
+  .filtro:hover, .rezago-btn:hover { color:var(--texto); }
+  .filtro.active, .rezago-btn.active { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  .rango-custom { display:none; align-items:center; gap:6px; margin-top:6px; font-size:12px; color:var(--texto-2); }
+  .rango-custom input[type=date] { font:inherit; font-size:12px; padding:2px 4px; border:1px solid var(--linea); background:var(--fondo); color:var(--texto); }
+  .rango-aplicar { font:inherit; font-size:12px; background:var(--azul-1); color:#fff; border:0; padding:3px 10px; cursor:pointer; }
+  .fuente-pie { font-size:11px; color:var(--texto-3); line-height:1.45; margin-top:6px; }
+  .fuente-pie a { color:var(--texto-3); text-decoration:underline; text-decoration-color:#C9D3DC; }
+  .fuente-tabla { margin:4px 0 14px; }
+  .tabla { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:8px; font-variant-numeric:tabular-nums; }
+  .tabla th { text-align:right; color:var(--texto-3); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--texto); }
+  .tabla th:first-child { text-align:left; }
+  .tabla td { padding:7px 10px; text-align:right; border-bottom:1px solid var(--linea); font-weight:600; }
+  .tabla td.sec { text-align:left; font-weight:400; }
+  .tabla td.num { color:var(--texto); font-weight:400; }
+  footer { margin:40px 0 0; padding-top:12px; border-top:1px solid var(--texto); font-size:11px; color:var(--texto-3); }
+  @media (max-width:760px) {
+    .wrap { padding:0 16px; }
+    header.masthead { padding:18px 0 12px; }
+    header h1 { font-size:23px; }
+    header .sub { font-size:13px; }
+    .grid { grid-template-columns:minmax(0, 1fr); }
+    section.bloque { padding-top:24px; }
+    section.bloque > h2 { font-size:21px; }
+    .ct { font-size:17px; }
+    .cv { font-size:24px; }
+    .cbox { height:220px; }
+    nav.secciones a { font-size:13px; }
+    .tabla { font-size:12px; } .tabla td, .tabla th { padding:6px 5px; }
+  }
+</style></head>
+<body>
+<header class="masthead"><div class="wrap">
+  <h1><a href="../" class="h1-link">Monitor de coyuntura · Argentina</a></h1>
+  <div class="sub">Actualizado 07/11/2026 23:51 · fuentes: apis.datos.gob.ar</div>
+</div></header>
+<nav class="secciones"><div class="wrap"><a href="../">Inicio</a><a href="../calendario/">Calendario</a><a href="../precios/">Precios</a><a href="../actividad/">Actividad</a><a href="../empleo-y-salarios/">Empleo y salarios</a><a href="../dolar-y-reservas/">Dólar y reservas</a><a href="../dinero-y-credito/">Dinero y crédito</a><a href="../sector-externo/" class="activo">Sector externo</a><a href="../fiscal-y-deuda/">Fiscal y deuda</a><a href="../mercados/">Mercados</a></div></nav>
+<main class="wrap">
+  <section class="bloque" id="sector-externo"><h2>Sector externo</h2><h3 class="grupo">Comercio exterior</h3><div class="grid"><div class="cell" id="exportaciones-totales"><button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><div class="cn">Exportaciones totales</div><div class="ct">Las exportaciones de agosto están 12,4% por encima de las de un año antes · 6.º mes seguido por encima del año anterior</div><div class="cm"><span class="cv">8.883</span><span class="uni">millones de USD</span><span class="chg"><span class="tri">▲</span>+12,4% vs. ago-25</span></div><div class="cf" title="El INDEC publicó sep-26 el 19/10 y ya pasó el margen de 1 día hábil (20/10): el dashboard sigue mostrando ago-26. Puede ser una demora de la fuente intermedia o una falla de la descarga."><span class="per">ago-26</span> · <span class="atr">⚠ atrasado</span> · sep-26 se publicó el 19/10</div><div class="cdesc" data-idx="0"></div><div class="cbox"><canvas id="ch0"></canvas></div><div class="filtros" data-idx="0"><span class="vista">Vista:</span><button class="filtro active" data-rango="default">desde ene-24</button><button class="filtro" data-rango="6m">6M</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="todo">Máx</button><button class="filtro" data-rango="personalizado">Rango…</button></div><div class="rango-custom" data-idx="0"><input type="date" class="rango-desde"><span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div><div class="fuente-pie">máx. 9.578 · mín. 5.412</div></div><div class="cell" id="importaciones-totales"><button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><div class="cn">Importaciones totales</div><div class="ct">Las importaciones de agosto están 3,6% por encima de las de un año antes</div><div class="cm"><span class="cv">6.696</span><span class="uni">millones de USD</span><span class="chg"><span class="tri">▲</span>+3,6% vs. ago-25</span></div><div class="cf" title="El INDEC publicó sep-26 el 19/10 y ya pasó el margen de 1 día hábil (20/10): el dashboard sigue mostrando ago-26. Puede ser una demora de la fuente intermedia o una falla de la descarga."><span class="per">ago-26</span> · <span class="atr">⚠ atrasado</span> · sep-26 se publicó el 19/10</div><div class="cdesc" data-idx="1"></div><div class="cbox"><canvas id="ch1"></canvas></div><div class="filtros" data-idx="1"><span class="vista">Vista:</span><button class="filtro active" data-rango="default">desde ene-24</button><button class="filtro" data-rango="6m">6M</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="todo">Máx</button><button class="filtro" data-rango="personalizado">Rango…</button></div><div class="rango-custom" data-idx="1"><input type="date" class="rango-desde"><span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div><div class="fuente-pie">máx. 7.191 · mín. 4.118</div></div><div class="cell" id="saldo-comercial"><button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><div class="cn">Saldo comercial</div><div class="ct">Superávit comercial de USD 2.187 M en agosto: 33.º mes seguido</div><div class="cm"><span class="cv">2.187</span><span class="uni">millones de USD</span><span class="chg"><span class="tri">▲</span>+51,8% vs. ago-25</span></div><div class="cf" title="El INDEC publicó sep-26 el 19/10 y ya pasó el margen de 1 día hábil (20/10): el dashboard sigue mostrando ago-26. Puede ser una demora de la fuente intermedia o una falla de la descarga."><span class="per">ago-26</span> · <span class="atr">⚠ atrasado</span> · sep-26 se publicó el 19/10</div><div class="cdesc" data-idx="2"></div><div class="cbox"><canvas id="ch2"></canvas></div><div class="filtros" data-idx="2"><span class="vista">Vista:</span><button class="filtro active" data-rango="default">desde ene-24</button><button class="filtro" data-rango="6m">6M</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="todo">Máx</button><button class="filtro" data-rango="personalizado">Rango…</button></div><div class="rango-custom" data-idx="2"><input type="date" class="rango-desde"><span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div><div class="fuente-pie">máx. 3.450 · mín. 162</div></div><div class="cell" id="comercio-exterior"><button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><div class="cn">Comercio exterior (expo/impo espejo)</div><div class="ct">Superávit comercial de USD 2.187 M en agosto: 33.º mes seguido</div><div class="cm"><span class="cv">2.187</span><span class="uni">millones de USD</span><span class="chg"><span class="tri">▲</span>+51,8% vs. ago-25</span></div><div class="cf" title="El INDEC publicó sep-26 el 19/10 y ya pasó el margen de 1 día hábil (20/10): el dashboard sigue mostrando ago-26. Puede ser una demora de la fuente intermedia o una falla de la descarga."><span class="per">ago-26</span> · <span class="atr">⚠ atrasado</span> · sep-26 se publicó el 19/10</div><div class="cdesc" data-idx="3"></div><div class="cbox"><canvas id="ch3"></canvas></div><div class="filtros" data-idx="3"><span class="vista">Vista:</span><button class="filtro active" data-rango="default">desde ene-24</button><button class="filtro" data-rango="6m">6M</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="todo">Máx</button><button class="filtro" data-rango="personalizado">Rango…</button></div><div class="rango-custom" data-idx="3"><input type="date" class="rango-desde"><span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div><div class="fuente-pie">máx. 9.578 · mín. -8.664 · <a href="#nota-1">*1</a></div></div><div class="cell" id="balance-comercial-energetico"><button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><div class="cn">Balance comercial energético</div><div class="ct">Superávit energético de USD 976 M en agosto: 26.º mes seguido</div><div class="csub">Exportaciones de combustibles y energía menos importaciones de combustibles y lubricantes</div><div class="cm"><span class="cv">976</span><span class="uni">millones de USD</span><span class="chg"><span class="tri">▲</span>+30,0% vs. ago-25</span></div><div class="cf" title="El INDEC publicó sep-26 el 19/10 y ya pasó el margen de 1 día hábil (20/10): el dashboard sigue mostrando ago-26. Puede ser una demora de la fuente intermedia o una falla de la descarga."><span class="per">ago-26</span> · <span class="atr">⚠ atrasado</span> · sep-26 se publicó el 19/10</div><div class="cdesc" data-idx="4"></div><div class="cbox"><canvas id="ch4"></canvas></div><div class="filtros" data-idx="4"><span class="vista">Vista:</span><button class="filtro active" data-rango="default">desde ene-24</button><button class="filtro" data-rango="6m">6M</button><button class="filtro" data-rango="1a">1A</button><button class="filtro" data-rango="5a">5A</button><button class="filtro" data-rango="todo">Máx</button><button class="filtro" data-rango="personalizado">Rango…</button></div><div class="rango-custom" data-idx="4"><input type="date" class="rango-desde"><span>a</span><input type="date" class="rango-hasta"><button class="rango-aplicar">Aplicar</button></div><div class="fuente-pie">máx. 1.478 · mín. −160 · <a href="#nota-2">*2</a></div></div></div><h3 class="grupo">Por rubro y por uso</h3><h3 class="sub">Exportaciones por gran rubro <span class="ref">(08/2026)</span></h3><table class="tabla"><thead><tr><th>Rubro</th><th>Último (USD M)</th><th>Interanual</th></tr></thead><tbody><tr><td class="sec">Productos primarios</td><td class="num">1.731</td><td style="background:#ECE0CB;color:#111111">-14.2%</td></tr><tr><td class="sec">Manufacturas de origen agropecuario (MOA)</td><td class="num">3.301</td><td style="background:#DCE8F1;color:#0B3C5D">+16.7%</td></tr><tr><td class="sec">Manufacturas de origen industrial (MOI)</td><td class="num">2.356</td><td style="background:#DCE8F1;color:#0B3C5D">+18.0%</td></tr><tr><td class="sec">Combustibles y energía</td><td class="num">1.494</td><td style="background:#DCE8F1;color:#0B3C5D">+41.2%</td></tr></tbody></table><h3 class="sub">Importaciones por uso económico <span class="ref">(08/2026)</span></h3><table class="tabla"><thead><tr><th>Rubro</th><th>Último (USD M)</th><th>Interanual</th></tr></thead><tbody><tr><td class="sec">Bienes de capital</td><td class="num">1.310</td><td style="background:#DCE8F1;color:#0B3C5D">+3.1%</td></tr><tr><td class="sec">Bienes intermedios</td><td class="num">2.235</td><td style="background:#DCE8F1;color:#0B3C5D">+13.4%</td></tr><tr><td class="sec">Combustibles y lubricantes</td><td class="num">517,2</td><td style="background:#DCE8F1;color:#0B3C5D">+68.5%</td></tr><tr><td class="sec">Piezas y accesorios para bienes de capital</td><td class="num">1.159</td><td style="background:#ECE0CB;color:#111111">-8.8%</td></tr><tr><td class="sec">Bienes de consumo</td><td class="num">941,4</td><td style="background:#ECE0CB;color:#111111">-5.1%</td></tr><tr><td class="sec">Vehículos automotores de pasajeros</td><td class="num">423,4</td><td style="background:#ECE0CB;color:#111111">-23.6%</td></tr><tr><td class="sec">Resto (importaciones por uso)</td><td class="num">109,2</td><td style="background:#DCE8F1;color:#0B3C5D">+12.9%</td></tr></tbody></table></section>
+  <h3 class="sub">Notas metodológicas y fuentes</h3><ul class="notas-list"><li id="nota-1"><strong>*1</strong> Gráfico espejo (barras divergentes): exportaciones arriba/positivas, importaciones abajo/negativas -- mismo valor que su tarjeta individual, sólo se invierte el signo para el gráfico (el dato guardado en el histórico no cambia). Convención elegida: exportaciones = divisas que 'entran' al país, arriba; importaciones = divisas que 'salen', abajo. Saldo comercial superpuesto como línea sobre el mismo eje.</li><li id="nota-2"><strong>*2</strong> Proxy del balance energético = 'Exportación de combustibles y energía' (INDEC, clasificación CUCI por grandes rubros, id 74.3_IECE_0_M_35) menos 'Importaciones de combustibles y lubricantes' (INDEC, clasificación CUODE por uso económico, id 74.3_IICL_0_M_42) -- ambas del Intercambio Comercial Argentino (dataset 74), en millones de USD corrientes. Es un proxy, NO el 'Balance Energético Nacional' que publica la Secretaría de Energía: ese balance está en unidades físicas (Tep/BEP, no USD) y usa una clasificación específica del sector (puede incluir/excluir rubros que la categoría aduanera genérica de INDEC no distingue, ej. electricidad importada/exportada por interconexión, gas natural licuado desagregado). No se encontró un dataset de la Secretaría de Energía con ese detalle en datos.gob.ar/series (el mismo catálogo que usa el resto del proyecto); este proxy usa lo que sí está disponible con fuente verificable y consistente con el resto del bloque de comercio exterior.</li></ul>
+  <footer>Pasá el cursor (o tocá) sobre cualquier gráfico para ver cada valor.<br>Monitor de coyuntura · Argentina. Proyecto iniciado el <a href="https://github.com/PedroTh31/Coyuntura-Pedro-Thill/commit/730dd39">9 de julio de 2026</a>. <a href="../acerca/">Acerca del monitor</a> · Contacto: <a href="#" class="mail">mail</a> · <a href="https://www.linkedin.com/in/pedro-thill-286076218/" rel="noopener">LinkedIn</a><script>document.querySelectorAll('a.mail').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const r=x=>x.split('').reverse().join('');location.href='mailto:'+r('13llihtordep')+'@'+r('moc.liamg');}));</script></footer>
+</main>
+<script>
+const SERIES = [{"i": 0, "color": "#EF6C00", "unidad": "millones de USD", "kind": "line", "x": ["01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "y": [5412.32, 5550.15, 6491.95, 6511.29, 7666.53, 6567.23, 7185.79, 6757.79, 6952.88, 7032.25, 6526.0, 7049.02, 5914.85, 6139.7, 6642.35, 6674.33, 7095.18, 7275.26, 7760.56, 7903.01, 8128.18, 7962.63, 8132.73, 7482.41, 7245.3, 5963.34, 8697.09, 8915.94, 9577.82, 9111.85, 8853.86, 8882.58], "full_x": ["01/01/04", "01/02/04", "01/03/04", "01/04/04", "01/05/04", "01/06/04", "01/07/04", "01/08/04", "01/09/04", "01/10/04", "01/11/04", "01/12/04", "01/01/05", "01/02/05", "01/03/05", "01/04/05", "01/05/05", "01/06/05", "01/07/05", "01/08/05", "01/09/05", "01/10/05", "01/11/05", "01/12/05", "01/01/06", "01/02/06", "01/03/06", "01/04/06", "01/05/06", "01/06/06", "01/07/06", "01/08/06", "01/09/06", "01/10/06", "01/11/06", "01/12/06", "01/01/07", "01/02/07", "01/03/07", "01/04/07", "01/05/07", "01/06/07", "01/07/07", "01/08/07", "01/09/07", "01/10/07", "01/11/07", "01/12/07", "01/01/08", "01/02/08", "01/03/08", "01/04/08", "01/05/08", "01/06/08", "01/07/08", "01/08/08", "01/09/08", "01/10/08", "01/11/08", "01/12/08", "01/01/09", "01/02/09", "01/03/09", "01/04/09", "01/05/09", "01/06/09", "01/07/09", "01/08/09", "01/09/09", "01/10/09", "01/11/09", "01/12/09", "01/01/10", "01/02/10", "01/03/10", "01/04/10", "01/05/10", "01/06/10", "01/07/10", "01/08/10", "01/09/10", "01/10/10", "01/11/10", "01/12/10", "01/01/11", "01/02/11", "01/03/11", "01/04/11", "01/05/11", "01/06/11", "01/07/11", "01/08/11", "01/09/11", "01/10/11", "01/11/11", "01/12/11", "01/01/12", "01/02/12", "01/03/12", "01/04/12", "01/05/12", "01/06/12", "01/07/12", "01/08/12", "01/09/12", "01/10/12", "01/11/12", "01/12/12", "01/01/13", "01/02/13", "01/03/13", "01/04/13", "01/05/13", "01/06/13", "01/07/13", "01/08/13", "01/09/13", "01/10/13", "01/11/13", "01/12/13", "01/01/14", "01/02/14", "01/03/14", "01/04/14", "01/05/14", "01/06/14", "01/07/14", "01/08/14", "01/09/14", "01/10/14", "01/11/14", "01/12/14", "01/01/15", "01/02/15", "01/03/15", "01/04/15", "01/05/15", "01/06/15", "01/07/15", "01/08/15", "01/09/15", "01/10/15", "01/11/15", "01/12/15", "01/01/16", "01/02/16", "01/03/16", "01/04/16", "01/05/16", "01/06/16", "01/07/16", "01/08/16", "01/09/16", "01/10/16", "01/11/16", "01/12/16", "01/01/17", "01/02/17", "01/03/17", "01/04/17", "01/05/17", "01/06/17", "01/07/17", "01/08/17", "01/09/17", "01/10/17", "01/11/17", "01/12/17", "01/01/18", "01/02/18", "01/03/18", "01/04/18", "01/05/18", "01/06/18", "01/07/18", "01/08/18", "01/09/18", "01/10/18", "01/11/18", "01/12/18", "01/01/19", "01/02/19", "01/03/19", "01/04/19", "01/05/19", "01/06/19", "01/07/19", "01/08/19", "01/09/19", "01/10/19", "01/11/19", "01/12/19", "01/01/20", "01/02/20", "01/03/20", "01/04/20", "01/05/20", "01/06/20", "01/07/20", "01/08/20", "01/09/20", "01/10/20", "01/11/20", "01/12/20", "01/01/21", "01/02/21", "01/03/21", "01/04/21", "01/05/21", "01/06/21", "01/07/21", "01/08/21", "01/09/21", "01/10/21", "01/11/21", "01/12/21", "01/01/22", "01/02/22", "01/03/22", "01/04/22", "01/05/22", "01/06/22", "01/07/22", "01/08/22", "01/09/22", "01/10/22", "01/11/22", "01/12/22", "01/01/23", "01/02/23", "01/03/23", "01/04/23", "01/05/23", "01/06/23", "01/07/23", "01/08/23", "01/09/23", "01/10/23", "01/11/23", "01/12/23", "01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "full_y": [2322.45, 2395.04, 2657.57, 3039.75, 3394.4, 2950.7, 3034.29, 2944.95, 3001.94, 2830.65, 3041.86, 2962.14, 2781.11, 2606.26, 3054.43, 3560.86, 3695.29, 3450.19, 3601.0, 3837.37, 3482.93, 3398.86, 3273.91, 3644.57, 3187.53, 3089.95, 3647.99, 3925.34, 4181.29, 3847.78, 3816.86, 4246.16, 4048.11, 4203.73, 4110.08, 4241.37, 3389.55, 3587.34, 4172.59, 4298.56, 4855.84, 4521.09, 4614.25, 4921.64, 4827.81, 5580.78, 5424.21, 5786.65, 5818.33, 5225.66, 4990.84, 5845.66, 6240.29, 5407.03, 7010.52, 7366.7, 6918.73, 6061.19, 4902.92, 4230.97, 3714.72, 3944.76, 4263.71, 5052.3, 5203.36, 5211.3, 4924.72, 4351.91, 4530.72, 4807.73, 4872.38, 4794.48, 4408.16, 3958.95, 4687.5, 6208.02, 6502.82, 6369.26, 5983.8, 6382.99, 6374.98, 5898.6, 5915.33, 5484.03, 5185.12, 5398.02, 6098.11, 7042.87, 7932.88, 7816.98, 7225.6, 8328.46, 7718.2, 7435.42, 6493.17, 6306.26, 5399.28, 6004.53, 6199.97, 6714.96, 7080.83, 6822.17, 7655.11, 7451.1, 6803.13, 6889.21, 6649.43, 6312.67, 5383.03, 4905.87, 6159.95, 6895.39, 8393.25, 7483.39, 6930.66, 7199.54, 6544.81, 6026.98, 5089.56, 4950.55, 4275.0, 4648.0, 4913.0, 6479.0, 7179.0, 7204.0, 6417.0, 6420.0, 5685.0, 5794.0, 4889.0, 4502.0, 3796.0, 3872.0, 4381.0, 5155.0, 5206.0, 6046.0, 5569.0, 5136.0, 5162.0, 5033.0, 3999.0, 3429.0, 3875.0, 4143.0, 4426.0, 4743.0, 5377.0, 5307.0, 4991.0, 5770.0, 5042.0, 4729.0, 4848.0, 4628.0, 4291.0, 3899.0, 4564.0, 4867.0, 5493.0, 5152.0, 5298.0, 5265.0, 5268.0, 5280.0, 4668.0, 4577.0, 4810.0, 4304.0, 5417.0, 5216.0, 5163.0, 5133.0, 5415.0, 5202.0, 5037.0, 5398.0, 5350.0, 5336.0, 4585.0, 4448.0, 5137.0, 5337.0, 6044.0, 5239.0, 5856.0, 5568.0, 5746.0, 5889.0, 5893.0, 5374.0, 4579.0, 4378.0, 4383.0, 4349.0, 5078.0, 4786.0, 4931.0, 4955.0, 4727.0, 4674.0, 4500.0, 3544.0, 4912.0, 4775.0, 5720.0, 6143.0, 6813.0, 7010.0, 7252.0, 8099.0, 7570.0, 6863.0, 6191.0, 6587.0, 5548.0, 6452.0, 7354.0, 8337.0, 8254.0, 8433.0, 7805.0, 7541.0, 7518.0, 7962.0, 7122.0, 6119.0, 4925.33, 5239.19, 5734.57, 5898.25, 6261.86, 5414.91, 6060.34, 5910.27, 5750.69, 5396.47, 4923.23, 5273.39, 5412.32, 5550.15, 6491.95, 6511.29, 7666.53, 6567.23, 7185.79, 6757.79, 6952.88, 7032.25, 6526.0, 7049.02, 5914.85, 6139.7, 6642.35, 6674.33, 7095.18, 7275.26, 7760.56, 7903.01, 8128.18, 7962.63, 8132.73, 7482.41, 7245.3, 5963.34, 8697.09, 8915.94, 9577.82, 9111.85, 8853.86, 8882.58], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00", "2026-06-01T00:00:00", "2026-07-01T00:00:00", "2026-08-01T00:00:00"], "min_date": "2004-01-01T00:00:00", "max_date": "2026-08-01T00:00:00", "eventos": null}, {"i": 1, "color": "#EF6C00", "unidad": "millones de USD", "kind": "line", "x": ["01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "y": [4603.95, 4118.06, 4331.57, 4704.52, 5012.12, 4687.45, 5727.05, 4882.94, 5970.96, 6120.46, 5249.07, 5367.41, 5752.75, 5864.29, 6018.85, 6459.96, 6487.97, 6395.91, 6853.67, 6462.72, 7191.13, 7149.97, 5597.99, 5555.9, 5056.67, 5166.57, 6115.9, 6203.14, 6128.03, 6876.66, 6755.73, 6695.99], "full_x": ["01/01/04", "01/02/04", "01/03/04", "01/04/04", "01/05/04", "01/06/04", "01/07/04", "01/08/04", "01/09/04", "01/10/04", "01/11/04", "01/12/04", "01/01/05", "01/02/05", "01/03/05", "01/04/05", "01/05/05", "01/06/05", "01/07/05", "01/08/05", "01/09/05", "01/10/05", "01/11/05", "01/12/05", "01/01/06", "01/02/06", "01/03/06", "01/04/06", "01/05/06", "01/06/06", "01/07/06", "01/08/06", "01/09/06", "01/10/06", "01/11/06", "01/12/06", "01/01/07", "01/02/07", "01/03/07", "01/04/07", "01/05/07", "01/06/07", "01/07/07", "01/08/07", "01/09/07", "01/10/07", "01/11/07", "01/12/07", "01/01/08", "01/02/08", "01/03/08", "01/04/08", "01/05/08", "01/06/08", "01/07/08", "01/08/08", "01/09/08", "01/10/08", "01/11/08", "01/12/08", "01/01/09", "01/02/09", "01/03/09", "01/04/09", "01/05/09", "01/06/09", "01/07/09", "01/08/09", "01/09/09", "01/10/09", "01/11/09", "01/12/09", "01/01/10", "01/02/10", "01/03/10", "01/04/10", "01/05/10", "01/06/10", "01/07/10", "01/08/10", "01/09/10", "01/10/10", "01/11/10", "01/12/10", "01/01/11", "01/02/11", "01/03/11", "01/04/11", "01/05/11", "01/06/11", "01/07/11", "01/08/11", "01/09/11", "01/10/11", "01/11/11", "01/12/11", "01/01/12", "01/02/12", "01/03/12", "01/04/12", "01/05/12", "01/06/12", "01/07/12", "01/08/12", "01/09/12", "01/10/12", "01/11/12", "01/12/12", "01/01/13", "01/02/13", "01/03/13", "01/04/13", "01/05/13", "01/06/13", "01/07/13", "01/08/13", "01/09/13", "01/10/13", "01/11/13", "01/12/13", "01/01/14", "01/02/14", "01/03/14", "01/04/14", "01/05/14", "01/06/14", "01/07/14", "01/08/14", "01/09/14", "01/10/14", "01/11/14", "01/12/14", "01/01/15", "01/02/15", "01/03/15", "01/04/15", "01/05/15", "01/06/15", "01/07/15", "01/08/15", "01/09/15", "01/10/15", "01/11/15", "01/12/15", "01/01/16", "01/02/16", "01/03/16", "01/04/16", "01/05/16", "01/06/16", "01/07/16", "01/08/16", "01/09/16", "01/10/16", "01/11/16", "01/12/16", "01/01/17", "01/02/17", "01/03/17", "01/04/17", "01/05/17", "01/06/17", "01/07/17", "01/08/17", "01/09/17", "01/10/17", "01/11/17", "01/12/17", "01/01/18", "01/02/18", "01/03/18", "01/04/18", "01/05/18", "01/06/18", "01/07/18", "01/08/18", "01/09/18", "01/10/18", "01/11/18", "01/12/18", "01/01/19", "01/02/19", "01/03/19", "01/04/19", "01/05/19", "01/06/19", "01/07/19", "01/08/19", "01/09/19", "01/10/19", "01/11/19", "01/12/19", "01/01/20", "01/02/20", "01/03/20", "01/04/20", "01/05/20", "01/06/20", "01/07/20", "01/08/20", "01/09/20", "01/10/20", "01/11/20", "01/12/20", "01/01/21", "01/02/21", "01/03/21", "01/04/21", "01/05/21", "01/06/21", "01/07/21", "01/08/21", "01/09/21", "01/10/21", "01/11/21", "01/12/21", "01/01/22", "01/02/22", "01/03/22", "01/04/22", "01/05/22", "01/06/22", "01/07/22", "01/08/22", "01/09/22", "01/10/22", "01/11/22", "01/12/22", "01/01/23", "01/02/23", "01/03/23", "01/04/23", "01/05/23", "01/06/23", "01/07/23", "01/08/23", "01/09/23", "01/10/23", "01/11/23", "01/12/23", "01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "full_y": [1608.58, 1363.73, 1690.06, 1650.88, 1792.16, 2039.34, 1969.83, 2031.63, 2025.22, 1972.5, 2192.62, 2108.75, 1901.01, 1867.29, 2197.57, 2379.91, 2475.97, 2723.62, 2349.04, 2625.67, 2468.08, 2502.68, 2701.13, 2494.93, 2323.64, 2326.04, 2722.11, 2545.47, 2825.93, 2859.18, 2852.37, 3280.79, 3169.43, 3255.11, 3237.23, 2756.39, 2951.04, 2790.78, 3422.11, 3060.9, 3542.12, 3578.94, 4125.81, 4606.4, 3963.06, 4400.48, 4384.5, 3881.33, 4478.53, 4209.78, 4163.4, 4929.57, 5200.46, 5195.99, 6046.83, 5158.75, 5310.89, 5128.96, 4182.29, 3457.0, 2760.07, 2663.27, 2888.36, 2776.62, 2660.01, 3618.93, 3588.91, 3255.18, 3665.92, 3656.24, 3651.19, 3601.58, 3209.19, 3455.07, 4402.85, 4101.01, 4575.38, 5151.03, 5290.5, 5355.48, 5336.94, 4950.87, 5575.5, 5388.76, 4889.21, 4764.29, 5641.59, 5532.9, 6489.84, 6704.55, 6858.54, 7671.06, 6888.51, 6303.02, 6229.76, 5987.4, 5363.75, 4724.98, 5146.51, 4769.81, 5987.1, 6033.5, 6344.88, 6276.43, 5854.63, 6256.61, 5779.47, 5436.53, 5358.23, 5174.75, 5619.18, 6193.46, 7028.09, 6642.81, 6988.16, 7073.9, 6028.93, 6830.96, 6091.65, 5411.7, 5649.0, 5537.0, 5390.0, 5656.0, 5777.0, 5848.0, 6145.0, 5644.0, 5644.0, 5494.0, 4651.0, 4300.0, 4363.0, 4085.0, 5059.0, 4933.0, 5003.0, 5707.0, 5801.0, 5605.0, 5487.0, 5058.0, 4700.0, 4404.0, 4124.0, 4097.0, 4556.0, 4423.0, 4874.0, 5048.0, 4713.0, 5175.0, 4800.0, 4783.0, 4723.0, 4595.0, 4344.0, 4117.0, 5475.0, 4973.0, 6064.0, 5898.0, 6043.0, 6317.0, 5966.0, 6207.0, 6162.0, 5364.0, 5743.0, 5196.0, 5979.0, 6106.0, 6448.0, 5461.0, 6182.0, 6314.0, 4700.0, 5073.0, 4363.0, 3917.0, 4212.0, 3998.0, 3956.0, 4172.0, 4645.0, 4171.0, 4905.0, 4400.0, 4002.0, 4121.0, 3409.0, 3133.0, 3535.0, 3191.0, 3154.0, 2894.0, 3166.0, 3299.0, 3451.0, 3508.0, 4129.0, 4004.0, 4115.0, 3908.0, 3844.0, 3713.0, 5320.0, 4673.0, 5141.0, 5909.0, 5715.0, 5754.0, 5886.0, 5247.0, 5767.0, 6216.0, 5251.0, 5634.0, 7083.0, 6883.0, 7886.0, 8664.0, 8289.0, 7837.0, 7137.0, 6079.0, 5762.0, 5017.0, 5367.98, 5028.6, 6845.61, 6091.24, 7385.9, 7247.65, 6760.68, 6884.66, 6525.13, 5838.88, 5481.93, 4255.35, 4603.95, 4118.06, 4331.57, 4704.52, 5012.12, 4687.45, 5727.05, 4882.94, 5970.96, 6120.46, 5249.07, 5367.41, 5752.75, 5864.29, 6018.85, 6459.96, 6487.97, 6395.91, 6853.67, 6462.72, 7191.13, 7149.97, 5597.99, 5555.9, 5056.67, 5166.57, 6115.9, 6203.14, 6128.03, 6876.66, 6755.73, 6695.99], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00", "2026-06-01T00:00:00", "2026-07-01T00:00:00", "2026-08-01T00:00:00"], "min_date": "2004-01-01T00:00:00", "max_date": "2026-08-01T00:00:00", "eventos": null}, {"i": 2, "color": "#EF6C00", "unidad": "millones de USD", "kind": "line", "x": ["01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "y": [808.37, 1432.09, 2160.38, 1806.77, 2654.42, 1879.78, 1458.74, 1874.84, 981.92, 911.79, 1276.93, 1681.61, 162.1, 275.42, 623.5, 214.37, 607.21, 879.35, 906.88, 1440.29, 937.05, 812.66, 2534.74, 1926.5, 2188.63, 796.77, 2581.19, 2712.8, 3449.79, 2235.19, 2098.13, 2186.59], "full_x": ["01/01/04", "01/02/04", "01/03/04", "01/04/04", "01/05/04", "01/06/04", "01/07/04", "01/08/04", "01/09/04", "01/10/04", "01/11/04", "01/12/04", "01/01/05", "01/02/05", "01/03/05", "01/04/05", "01/05/05", "01/06/05", "01/07/05", "01/08/05", "01/09/05", "01/10/05", "01/11/05", "01/12/05", "01/01/06", "01/02/06", "01/03/06", "01/04/06", "01/05/06", "01/06/06", "01/07/06", "01/08/06", "01/09/06", "01/10/06", "01/11/06", "01/12/06", "01/01/07", "01/02/07", "01/03/07", "01/04/07", "01/05/07", "01/06/07", "01/07/07", "01/08/07", "01/09/07", "01/10/07", "01/11/07", "01/12/07", "01/01/08", "01/02/08", "01/03/08", "01/04/08", "01/05/08", "01/06/08", "01/07/08", "01/08/08", "01/09/08", "01/10/08", "01/11/08", "01/12/08", "01/01/09", "01/02/09", "01/03/09", "01/04/09", "01/05/09", "01/06/09", "01/07/09", "01/08/09", "01/09/09", "01/10/09", "01/11/09", "01/12/09", "01/01/10", "01/02/10", "01/03/10", "01/04/10", "01/05/10", "01/06/10", "01/07/10", "01/08/10", "01/09/10", "01/10/10", "01/11/10", "01/12/10", "01/01/11", "01/02/11", "01/03/11", "01/04/11", "01/05/11", "01/06/11", "01/07/11", "01/08/11", "01/09/11", "01/10/11", "01/11/11", "01/12/11", "01/01/12", "01/02/12", "01/03/12", "01/04/12", "01/05/12", "01/06/12", "01/07/12", "01/08/12", "01/09/12", "01/10/12", "01/11/12", "01/12/12", "01/01/13", "01/02/13", "01/03/13", "01/04/13", "01/05/13", "01/06/13", "01/07/13", "01/08/13", "01/09/13", "01/10/13", "01/11/13", "01/12/13", "01/01/14", "01/02/14", "01/03/14", "01/04/14", "01/05/14", "01/06/14", "01/07/14", "01/08/14", "01/09/14", "01/10/14", "01/11/14", "01/12/14", "01/01/15", "01/02/15", "01/03/15", "01/04/15", "01/05/15", "01/06/15", "01/07/15", "01/08/15", "01/09/15", "01/10/15", "01/11/15", "01/12/15", "01/01/16", "01/02/16", "01/03/16", "01/04/16", "01/05/16", "01/06/16", "01/07/16", "01/08/16", "01/09/16", "01/10/16", "01/11/16", "01/12/16", "01/01/17", "01/02/17", "01/03/17", "01/04/17", "01/05/17", "01/06/17", "01/07/17", "01/08/17", "01/09/17", "01/10/17", "01/11/17", "01/12/17", "01/01/18", "01/02/18", "01/03/18", "01/04/18", "01/05/18", "01/06/18", "01/07/18", "01/08/18", "01/09/18", "01/10/18", "01/11/18", "01/12/18", "01/01/19", "01/02/19", "01/03/19", "01/04/19", "01/05/19", "01/06/19", "01/07/19", "01/08/19", "01/09/19", "01/10/19", "01/11/19", "01/12/19", "01/01/20", "01/02/20", "01/03/20", "01/04/20", "01/05/20", "01/06/20", "01/07/20", "01/08/20", "01/09/20", "01/10/20", "01/11/20", "01/12/20", "01/01/21", "01/02/21", "01/03/21", "01/04/21", "01/05/21", "01/06/21", "01/07/21", "01/08/21", "01/09/21", "01/10/21", "01/11/21", "01/12/21", "01/01/22", "01/02/22", "01/03/22", "01/04/22", "01/05/22", "01/06/22", "01/07/22", "01/08/22", "01/09/22", "01/10/22", "01/11/22", "01/12/22", "01/01/23", "01/02/23", "01/03/23", "01/04/23", "01/05/23", "01/06/23", "01/07/23", "01/08/23", "01/09/23", "01/10/23", "01/11/23", "01/12/23", "01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "full_y": [713.88, 1031.3, 967.52, 1388.87, 1602.24, 911.36, 1064.46, 913.32, 976.72, 858.15, 849.24, 853.4, 880.09, 738.97, 856.87, 1180.94, 1219.32, 726.58, 1251.97, 1211.7, 1014.85, 896.18, 572.78, 1149.63, 863.89, 763.91, 925.89, 1379.87, 1355.36, 988.6, 964.5, 965.37, 878.68, 948.62, 872.85, 1484.98, 438.51, 796.56, 750.48, 1237.66, 1313.73, 942.15, 488.44, 315.24, 864.75, 1180.3, 1039.71, 1905.32, 1339.8, 1015.88, 827.45, 916.08, 1039.82, 211.04, 963.69, 2207.95, 1607.83, 932.23, 720.63, 773.97, 954.66, 1281.49, 1375.35, 2275.68, 2543.36, 1592.37, 1335.8, 1096.72, 864.81, 1151.49, 1221.2, 1192.9, 1198.97, 503.88, 284.64, 2107.02, 1927.44, 1218.24, 693.3, 1027.51, 1038.04, 947.73, 339.83, 95.28, 295.92, 633.73, 456.51, 1509.97, 1443.04, 1112.43, 367.06, 657.4, 829.68, 1132.4, 263.41, 318.86, 35.53, 1279.54, 1053.46, 1945.14, 1093.73, 788.67, 1310.24, 1174.67, 948.5, 632.6, 869.96, 876.14, 24.81, -268.88, 540.77, 701.93, 1365.16, 840.59, -57.5, 125.64, 515.88, -803.98, -1002.08, -461.15, -1374.0, -889.0, -477.0, 823.0, 1402.0, 1356.0, 272.0, 776.0, 41.0, 300.0, 238.0, 202.0, -567.0, -213.0, -678.0, 222.0, 203.0, 339.0, -232.0, -469.0, -325.0, -25.0, -701.0, -975.0, -249.0, 46.0, -130.0, 320.0, 503.0, 259.0, 278.0, 595.0, 242.0, -54.0, 125.0, 33.0, -53.0, -218.0, -911.0, -106.0, -571.0, -746.0, -745.0, -1052.0, -698.0, -927.0, -1494.0, -787.0, -933.0, -892.0, -562.0, -890.0, -1285.0, -328.0, -767.0, -1112.0, 337.0, 325.0, 987.0, 1419.0, 373.0, 450.0, 1181.0, 1165.0, 1399.0, 1068.0, 951.0, 1168.0, 1744.0, 1768.0, 2484.0, 2241.0, 1044.0, 1187.0, 1229.0, 1455.0, 1912.0, 1487.0, 1480.0, 1447.0, 598.0, 670.0, 385.0, -364.0, 1068.0, 1062.0, 400.0, 1470.0, 1672.0, 1101.0, 1537.0, 2345.0, 1684.0, 1616.0, 424.0, 371.0, 297.0, 818.0, 271.0, 1454.0, 368.0, -231.0, -484.0, -296.0, 381.0, 1883.0, 1360.0, 1102.0, -442.65, 210.6, -1111.03, -192.99, -1124.04, -1832.74, -700.34, -974.39, -774.44, -442.41, -558.7, 1018.04, 808.37, 1432.09, 2160.38, 1806.77, 2654.42, 1879.78, 1458.74, 1874.84, 981.92, 911.79, 1276.93, 1681.61, 162.1, 275.42, 623.5, 214.37, 607.21, 879.35, 906.88, 1440.29, 937.05, 812.66, 2534.74, 1926.5, 2188.63, 796.77, 2581.19, 2712.8, 3449.79, 2235.19, 2098.13, 2186.59], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00", "2026-06-01T00:00:00", "2026-07-01T00:00:00", "2026-08-01T00:00:00"], "min_date": "2004-01-01T00:00:00", "max_date": "2026-08-01T00:00:00", "eventos": null}, {"i": 3, "kind": "espejo", "unidad": "millones de USD", "x": ["01/24", "02/24", "03/24", "04/24", "05/24", "06/24", "07/24", "08/24", "09/24", "10/24", "11/24", "12/24", "01/25", "02/25", "03/25", "04/25", "05/25", "06/25", "07/25", "08/25", "09/25", "10/25", "11/25", "12/25", "01/26", "02/26", "03/26", "04/26", "05/26", "06/26", "07/26", "08/26"], "full_x": ["01/04", "02/04", "03/04", "04/04", "05/04", "06/04", "07/04", "08/04", "09/04", "10/04", "11/04", "12/04", "01/05", "02/05", "03/05", "04/05", "05/05", "06/05", "07/05", "08/05", "09/05", "10/05", "11/05", "12/05", "01/06", "02/06", "03/06", "04/06", "05/06", "06/06", "07/06", "08/06", "09/06", "10/06", "11/06", "12/06", "01/07", "02/07", "03/07", "04/07", "05/07", "06/07", "07/07", "08/07", "09/07", "10/07", "11/07", "12/07", "01/08", "02/08", "03/08", "04/08", "05/08", "06/08", "07/08", "08/08", "09/08", "10/08", "11/08", "12/08", "01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09", "11/09", "12/09", "01/10", "02/10", "03/10", "04/10", "05/10", "06/10", "07/10", "08/10", "09/10", "10/10", "11/10", "12/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11", "11/11", "12/11", "01/12", "02/12", "03/12", "04/12", "05/12", "06/12", "07/12", "08/12", "09/12", "10/12", "11/12", "12/12", "01/13", "02/13", "03/13", "04/13", "05/13", "06/13", "07/13", "08/13", "09/13", "10/13", "11/13", "12/13", "01/14", "02/14", "03/14", "04/14", "05/14", "06/14", "07/14", "08/14", "09/14", "10/14", "11/14", "12/14", "01/15", "02/15", "03/15", "04/15", "05/15", "06/15", "07/15", "08/15", "09/15", "10/15", "11/15", "12/15", "01/16", "02/16", "03/16", "04/16", "05/16", "06/16", "07/16", "08/16", "09/16", "10/16", "11/16", "12/16", "01/17", "02/17", "03/17", "04/17", "05/17", "06/17", "07/17", "08/17", "09/17", "10/17", "11/17", "12/17", "01/18", "02/18", "03/18", "04/18", "05/18", "06/18", "07/18", "08/18", "09/18", "10/18", "11/18", "12/18", "01/19", "02/19", "03/19", "04/19", "05/19", "06/19", "07/19", "08/19", "09/19", "10/19", "11/19", "12/19", "01/20", "02/20", "03/20", "04/20", "05/20", "06/20", "07/20", "08/20", "09/20", "10/20", "11/20", "12/20", "01/21", "02/21", "03/21", "04/21", "05/21", "06/21", "07/21", "08/21", "09/21", "10/21", "11/21", "12/21", "01/22", "02/22", "03/22", "04/22", "05/22", "06/22", "07/22", "08/22", "09/22", "10/22", "11/22", "12/22", "01/23", "02/23", "03/23", "04/23", "05/23", "06/23", "07/23", "08/23", "09/23", "10/23", "11/23", "12/23", "01/24", "02/24", "03/24", "04/24", "05/24", "06/24", "07/24", "08/24", "09/24", "10/24", "11/24", "12/24", "01/25", "02/25", "03/25", "04/25", "05/25", "06/25", "07/25", "08/25", "09/25", "10/25", "11/25", "12/25", "01/26", "02/26", "03/26", "04/26", "05/26", "06/26", "07/26", "08/26"], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00", "2026-06-01T00:00:00", "2026-07-01T00:00:00", "2026-08-01T00:00:00"], "expo": [5412.32, 5550.15, 6491.95, 6511.29, 7666.53, 6567.23, 7185.79, 6757.79, 6952.88, 7032.25, 6526.0, 7049.02, 5914.85, 6139.7, 6642.35, 6674.33, 7095.18, 7275.26, 7760.56, 7903.01, 8128.18, 7962.63, 8132.73, 7482.41, 7245.3, 5963.34, 8697.09, 8915.94, 9577.82, 9111.85, 8853.86, 8882.58], "impo": [-4603.95, -4118.06, -4331.57, -4704.52, -5012.12, -4687.45, -5727.05, -4882.94, -5970.96, -6120.46, -5249.07, -5367.41, -5752.75, -5864.29, -6018.85, -6459.96, -6487.97, -6395.91, -6853.67, -6462.72, -7191.13, -7149.97, -5597.99, -5555.9, -5056.67, -5166.57, -6115.9, -6203.14, -6128.03, -6876.66, -6755.73, -6695.99], "saldo": [808.37, 1432.09, 2160.38, 1806.77, 2654.42, 1879.78, 1458.74, 1874.84, 981.92, 911.79, 1276.93, 1681.61, 162.1, 275.42, 623.5, 214.37, 607.21, 879.35, 906.88, 1440.29, 937.05, 812.66, 2534.74, 1926.5, 2188.63, 796.77, 2581.19, 2712.8, 3449.79, 2235.19, 2098.13, 2186.59], "full_expo": [2322.45, 2395.04, 2657.57, 3039.75, 3394.4, 2950.7, 3034.29, 2944.95, 3001.94, 2830.65, 3041.86, 2962.14, 2781.11, 2606.26, 3054.43, 3560.86, 3695.29, 3450.19, 3601.0, 3837.37, 3482.93, 3398.86, 3273.91, 3644.57, 3187.53, 3089.95, 3647.99, 3925.34, 4181.29, 3847.78, 3816.86, 4246.16, 4048.11, 4203.73, 4110.08, 4241.37, 3389.55, 3587.34, 4172.59, 4298.56, 4855.84, 4521.09, 4614.25, 4921.64, 4827.81, 5580.78, 5424.21, 5786.65, 5818.33, 5225.66, 4990.84, 5845.66, 6240.29, 5407.03, 7010.52, 7366.7, 6918.73, 6061.19, 4902.92, 4230.97, 3714.72, 3944.76, 4263.71, 5052.3, 5203.36, 5211.3, 4924.72, 4351.91, 4530.72, 4807.73, 4872.38, 4794.48, 4408.16, 3958.95, 4687.5, 6208.02, 6502.82, 6369.26, 5983.8, 6382.99, 6374.98, 5898.6, 5915.33, 5484.03, 5185.12, 5398.02, 6098.11, 7042.87, 7932.88, 7816.98, 7225.6, 8328.46, 7718.2, 7435.42, 6493.17, 6306.26, 5399.28, 6004.53, 6199.97, 6714.96, 7080.83, 6822.17, 7655.11, 7451.1, 6803.13, 6889.21, 6649.43, 6312.67, 5383.03, 4905.87, 6159.95, 6895.39, 8393.25, 7483.39, 6930.66, 7199.54, 6544.81, 6026.98, 5089.56, 4950.55, 4275.0, 4648.0, 4913.0, 6479.0, 7179.0, 7204.0, 6417.0, 6420.0, 5685.0, 5794.0, 4889.0, 4502.0, 3796.0, 3872.0, 4381.0, 5155.0, 5206.0, 6046.0, 5569.0, 5136.0, 5162.0, 5033.0, 3999.0, 3429.0, 3875.0, 4143.0, 4426.0, 4743.0, 5377.0, 5307.0, 4991.0, 5770.0, 5042.0, 4729.0, 4848.0, 4628.0, 4291.0, 3899.0, 4564.0, 4867.0, 5493.0, 5152.0, 5298.0, 5265.0, 5268.0, 5280.0, 4668.0, 4577.0, 4810.0, 4304.0, 5417.0, 5216.0, 5163.0, 5133.0, 5415.0, 5202.0, 5037.0, 5398.0, 5350.0, 5336.0, 4585.0, 4448.0, 5137.0, 5337.0, 6044.0, 5239.0, 5856.0, 5568.0, 5746.0, 5889.0, 5893.0, 5374.0, 4579.0, 4378.0, 4383.0, 4349.0, 5078.0, 4786.0, 4931.0, 4955.0, 4727.0, 4674.0, 4500.0, 3544.0, 4912.0, 4775.0, 5720.0, 6143.0, 6813.0, 7010.0, 7252.0, 8099.0, 7570.0, 6863.0, 6191.0, 6587.0, 5548.0, 6452.0, 7354.0, 8337.0, 8254.0, 8433.0, 7805.0, 7541.0, 7518.0, 7962.0, 7122.0, 6119.0, 4925.33, 5239.19, 5734.57, 5898.25, 6261.86, 5414.91, 6060.34, 5910.27, 5750.69, 5396.47, 4923.23, 5273.39, 5412.32, 5550.15, 6491.95, 6511.29, 7666.53, 6567.23, 7185.79, 6757.79, 6952.88, 7032.25, 6526.0, 7049.02, 5914.85, 6139.7, 6642.35, 6674.33, 7095.18, 7275.26, 7760.56, 7903.01, 8128.18, 7962.63, 8132.73, 7482.41, 7245.3, 5963.34, 8697.09, 8915.94, 9577.82, 9111.85, 8853.86, 8882.58], "full_impo": [-1608.58, -1363.73, -1690.06, -1650.88, -1792.16, -2039.34, -1969.83, -2031.63, -2025.22, -1972.5, -2192.62, -2108.75, -1901.01, -1867.29, -2197.57, -2379.91, -2475.97, -2723.62, -2349.04, -2625.67, -2468.08, -2502.68, -2701.13, -2494.93, -2323.64, -2326.04, -2722.11, -2545.47, -2825.93, -2859.18, -2852.37, -3280.79, -3169.43, -3255.11, -3237.23, -2756.39, -2951.04, -2790.78, -3422.11, -3060.9, -3542.12, -3578.94, -4125.81, -4606.4, -3963.06, -4400.48, -4384.5, -3881.33, -4478.53, -4209.78, -4163.4, -4929.57, -5200.46, -5195.99, -6046.83, -5158.75, -5310.89, -5128.96, -4182.29, -3457.0, -2760.07, -2663.27, -2888.36, -2776.62, -2660.01, -3618.93, -3588.91, -3255.18, -3665.92, -3656.24, -3651.19, -3601.58, -3209.19, -3455.07, -4402.85, -4101.01, -4575.38, -5151.03, -5290.5, -5355.48, -5336.94, -4950.87, -5575.5, -5388.76, -4889.21, -4764.29, -5641.59, -5532.9, -6489.84, -6704.55, -6858.54, -7671.06, -6888.51, -6303.02, -6229.76, -5987.4, -5363.75, -4724.98, -5146.51, -4769.81, -5987.1, -6033.5, -6344.88, -6276.43, -5854.63, -6256.61, -5779.47, -5436.53, -5358.23, -5174.75, -5619.18, -6193.46, -7028.09, -6642.81, -6988.16, -7073.9, -6028.93, -6830.96, -6091.65, -5411.7, -5649.0, -5537.0, -5390.0, -5656.0, -5777.0, -5848.0, -6145.0, -5644.0, -5644.0, -5494.0, -4651.0, -4300.0, -4363.0, -4085.0, -5059.0, -4933.0, -5003.0, -5707.0, -5801.0, -5605.0, -5487.0, -5058.0, -4700.0, -4404.0, -4124.0, -4097.0, -4556.0, -4423.0, -4874.0, -5048.0, -4713.0, -5175.0, -4800.0, -4783.0, -4723.0, -4595.0, -4344.0, -4117.0, -5475.0, -4973.0, -6064.0, -5898.0, -6043.0, -6317.0, -5966.0, -6207.0, -6162.0, -5364.0, -5743.0, -5196.0, -5979.0, -6106.0, -6448.0, -5461.0, -6182.0, -6314.0, -4700.0, -5073.0, -4363.0, -3917.0, -4212.0, -3998.0, -3956.0, -4172.0, -4645.0, -4171.0, -4905.0, -4400.0, -4002.0, -4121.0, -3409.0, -3133.0, -3535.0, -3191.0, -3154.0, -2894.0, -3166.0, -3299.0, -3451.0, -3508.0, -4129.0, -4004.0, -4115.0, -3908.0, -3844.0, -3713.0, -5320.0, -4673.0, -5141.0, -5909.0, -5715.0, -5754.0, -5886.0, -5247.0, -5767.0, -6216.0, -5251.0, -5634.0, -7083.0, -6883.0, -7886.0, -8664.0, -8289.0, -7837.0, -7137.0, -6079.0, -5762.0, -5017.0, -5367.98, -5028.6, -6845.61, -6091.24, -7385.9, -7247.65, -6760.68, -6884.66, -6525.13, -5838.88, -5481.93, -4255.35, -4603.95, -4118.06, -4331.57, -4704.52, -5012.12, -4687.45, -5727.05, -4882.94, -5970.96, -6120.46, -5249.07, -5367.41, -5752.75, -5864.29, -6018.85, -6459.96, -6487.97, -6395.91, -6853.67, -6462.72, -7191.13, -7149.97, -5597.99, -5555.9, -5056.67, -5166.57, -6115.9, -6203.14, -6128.03, -6876.66, -6755.73, -6695.99], "full_saldo": [713.88, 1031.3, 967.52, 1388.87, 1602.24, 911.36, 1064.46, 913.32, 976.72, 858.15, 849.24, 853.4, 880.09, 738.97, 856.87, 1180.94, 1219.32, 726.58, 1251.97, 1211.7, 1014.85, 896.18, 572.78, 1149.63, 863.89, 763.91, 925.89, 1379.87, 1355.36, 988.6, 964.5, 965.37, 878.68, 948.62, 872.85, 1484.98, 438.51, 796.56, 750.48, 1237.66, 1313.73, 942.15, 488.44, 315.24, 864.75, 1180.3, 1039.71, 1905.32, 1339.8, 1015.88, 827.45, 916.08, 1039.82, 211.04, 963.69, 2207.95, 1607.83, 932.23, 720.63, 773.97, 954.66, 1281.49, 1375.35, 2275.68, 2543.36, 1592.37, 1335.8, 1096.72, 864.81, 1151.49, 1221.2, 1192.9, 1198.97, 503.88, 284.64, 2107.02, 1927.44, 1218.24, 693.3, 1027.51, 1038.04, 947.73, 339.83, 95.28, 295.92, 633.73, 456.51, 1509.97, 1443.04, 1112.43, 367.06, 657.4, 829.68, 1132.4, 263.41, 318.86, 35.53, 1279.54, 1053.46, 1945.14, 1093.73, 788.67, 1310.24, 1174.67, 948.5, 632.6, 869.96, 876.14, 24.81, -268.88, 540.77, 701.93, 1365.16, 840.59, -57.5, 125.64, 515.88, -803.98, -1002.08, -461.15, -1374.0, -889.0, -477.0, 823.0, 1402.0, 1356.0, 272.0, 776.0, 41.0, 300.0, 238.0, 202.0, -567.0, -213.0, -678.0, 222.0, 203.0, 339.0, -232.0, -469.0, -325.0, -25.0, -701.0, -975.0, -249.0, 46.0, -130.0, 320.0, 503.0, 259.0, 278.0, 595.0, 242.0, -54.0, 125.0, 33.0, -53.0, -218.0, -911.0, -106.0, -571.0, -746.0, -745.0, -1052.0, -698.0, -927.0, -1494.0, -787.0, -933.0, -892.0, -562.0, -890.0, -1285.0, -328.0, -767.0, -1112.0, 337.0, 325.0, 987.0, 1419.0, 373.0, 450.0, 1181.0, 1165.0, 1399.0, 1068.0, 951.0, 1168.0, 1744.0, 1768.0, 2484.0, 2241.0, 1044.0, 1187.0, 1229.0, 1455.0, 1912.0, 1487.0, 1480.0, 1447.0, 598.0, 670.0, 385.0, -364.0, 1068.0, 1062.0, 400.0, 1470.0, 1672.0, 1101.0, 1537.0, 2345.0, 1684.0, 1616.0, 424.0, 371.0, 297.0, 818.0, 271.0, 1454.0, 368.0, -231.0, -484.0, -296.0, 381.0, 1883.0, 1360.0, 1102.0, -442.65, 210.6, -1111.03, -192.99, -1124.04, -1832.74, -700.34, -974.39, -774.44, -442.41, -558.7, 1018.04, 808.37, 1432.09, 2160.38, 1806.77, 2654.42, 1879.78, 1458.74, 1874.84, 981.92, 911.79, 1276.93, 1681.61, 162.1, 275.42, 623.5, 214.37, 607.21, 879.35, 906.88, 1440.29, 937.05, 812.66, 2534.74, 1926.5, 2188.63, 796.77, 2581.19, 2712.8, 3449.79, 2235.19, 2098.13, 2186.59]}, {"i": 4, "color": "#EF6C00", "unidad": "millones de USD", "kind": "line", "x": ["01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "y": [424.88, 570.63, 739.2, 704.19, 476.13, -160.07, 114.83, 253.1, 589.09, 610.54, 527.32, 880.15, 703.4, 641.58, 766.78, 557.7, 351.65, 721.44, 99.14, 750.88, 766.55, 693.08, 869.53, 907.32, 782.81, 532.73, 1126.43, 1418.11, 1478.0, 623.1, 896.85, 976.45], "full_x": ["01/01/04", "01/02/04", "01/03/04", "01/04/04", "01/05/04", "01/06/04", "01/07/04", "01/08/04", "01/09/04", "01/10/04", "01/11/04", "01/12/04", "01/01/05", "01/02/05", "01/03/05", "01/04/05", "01/05/05", "01/06/05", "01/07/05", "01/08/05", "01/09/05", "01/10/05", "01/11/05", "01/12/05", "01/01/06", "01/02/06", "01/03/06", "01/04/06", "01/05/06", "01/06/06", "01/07/06", "01/08/06", "01/09/06", "01/10/06", "01/11/06", "01/12/06", "01/01/07", "01/02/07", "01/03/07", "01/04/07", "01/05/07", "01/06/07", "01/07/07", "01/08/07", "01/09/07", "01/10/07", "01/11/07", "01/12/07", "01/01/08", "01/02/08", "01/03/08", "01/04/08", "01/05/08", "01/06/08", "01/07/08", "01/08/08", "01/09/08", "01/10/08", "01/11/08", "01/12/08", "01/01/09", "01/02/09", "01/03/09", "01/04/09", "01/05/09", "01/06/09", "01/07/09", "01/08/09", "01/09/09", "01/10/09", "01/11/09", "01/12/09", "01/01/10", "01/02/10", "01/03/10", "01/04/10", "01/05/10", "01/06/10", "01/07/10", "01/08/10", "01/09/10", "01/10/10", "01/11/10", "01/12/10", "01/01/11", "01/02/11", "01/03/11", "01/04/11", "01/05/11", "01/06/11", "01/07/11", "01/08/11", "01/09/11", "01/10/11", "01/11/11", "01/12/11", "01/01/12", "01/02/12", "01/03/12", "01/04/12", "01/05/12", "01/06/12", "01/07/12", "01/08/12", "01/09/12", "01/10/12", "01/11/12", "01/12/12", "01/01/13", "01/02/13", "01/03/13", "01/04/13", "01/05/13", "01/06/13", "01/07/13", "01/08/13", "01/09/13", "01/10/13", "01/11/13", "01/12/13", "01/01/14", "01/02/14", "01/03/14", "01/04/14", "01/05/14", "01/06/14", "01/07/14", "01/08/14", "01/09/14", "01/10/14", "01/11/14", "01/12/14", "01/01/15", "01/02/15", "01/03/15", "01/04/15", "01/05/15", "01/06/15", "01/07/15", "01/08/15", "01/09/15", "01/10/15", "01/11/15", "01/12/15", "01/01/16", "01/02/16", "01/03/16", "01/04/16", "01/05/16", "01/06/16", "01/07/16", "01/08/16", "01/09/16", "01/10/16", "01/11/16", "01/12/16", "01/01/17", "01/02/17", "01/03/17", "01/04/17", "01/05/17", "01/06/17", "01/07/17", "01/08/17", "01/09/17", "01/10/17", "01/11/17", "01/12/17", "01/01/18", "01/02/18", "01/03/18", "01/04/18", "01/05/18", "01/06/18", "01/07/18", "01/08/18", "01/09/18", "01/10/18", "01/11/18", "01/12/18", "01/01/19", "01/02/19", "01/03/19", "01/04/19", "01/05/19", "01/06/19", "01/07/19", "01/08/19", "01/09/19", "01/10/19", "01/11/19", "01/12/19", "01/01/20", "01/02/20", "01/03/20", "01/04/20", "01/05/20", "01/06/20", "01/07/20", "01/08/20", "01/09/20", "01/10/20", "01/11/20", "01/12/20", "01/01/21", "01/02/21", "01/03/21", "01/04/21", "01/05/21", "01/06/21", "01/07/21", "01/08/21", "01/09/21", "01/10/21", "01/11/21", "01/12/21", "01/01/22", "01/02/22", "01/03/22", "01/04/22", "01/05/22", "01/06/22", "01/07/22", "01/08/22", "01/09/22", "01/10/22", "01/11/22", "01/12/22", "01/01/23", "01/02/23", "01/03/23", "01/04/23", "01/05/23", "01/06/23", "01/07/23", "01/08/23", "01/09/23", "01/10/23", "01/11/23", "01/12/23", "01/01/24", "01/02/24", "01/03/24", "01/04/24", "01/05/24", "01/06/24", "01/07/24", "01/08/24", "01/09/24", "01/10/24", "01/11/24", "01/12/24", "01/01/25", "01/02/25", "01/03/25", "01/04/25", "01/05/25", "01/06/25", "01/07/25", "01/08/25", "01/09/25", "01/10/25", "01/11/25", "01/12/25", "01/01/26", "01/02/26", "01/03/26", "01/04/26", "01/05/26", "01/06/26", "01/07/26", "01/08/26"], "full_y": [383.24, 365.94, 473.43, 390.31, 368.81, 283.86, 395.4, 440.25, 586.11, 531.21, 467.14, 492.01, 455.56, 349.92, 430.85, 389.73, 354.92, 398.02, 430.89, 575.12, 602.45, 555.84, 519.07, 542.3, 549.68, 487.61, 473.79, 577.4, 467.44, 498.81, 477.88, 423.75, 455.63, 576.49, 502.87, 589.49, 435.85, 474.21, 486.27, 478.32, 427.07, 159.57, -12.47, -42.12, 210.94, 476.39, 536.33, 473.94, 557.18, 664.76, 551.48, 492.99, -92.85, -223.0, -98.69, 439.57, 243.04, 383.22, 286.25, 310.57, 334.36, 337.03, 401.29, 515.69, 388.96, 168.73, 43.85, -20.84, 267.71, 518.77, 463.93, 410.94, 453.37, 422.21, 387.23, 276.78, -37.94, -395.43, -383.52, -88.1, 218.17, 287.63, 463.71, 155.85, 92.11, 226.17, 48.71, -69.61, -676.98, -954.64, -1008.1, -791.61, -132.47, 108.76, 25.96, 17.19, 256.96, 158.8, 67.1, -134.82, -748.37, -947.27, -798.25, -193.59, -48.4, 144.04, 70.3, 23.19, -154.67, -253.42, -480.89, -560.64, -516.4, -1390.62, -974.06, -1117.4, -166.73, -472.17, -397.01, -418.48, -260.87, -527.51, -525.58, -725.62, -720.33, -839.33, -1214.5, -651.49, -339.75, -283.01, -195.17, -194.43, -199.81, -128.29, -273.1, -421.5, -508.68, -789.68, -922.78, -584.64, -474.86, -171.42, -124.77, -106.39, -143.0, -152.0, -127.0, -69.0, -284.0, -593.0, -708.0, -424.0, -277.0, -92.0, -44.29, 34.0, -26.0, -70.0, -142.0, -239.0, -569.0, -682.0, -555.0, -334.0, -243.0, -160.0, -96.0, -129.0, -67.0, 22.0, -91.0, -154.0, -482.0, -508.0, -565.0, -633.0, -89.0, 37.0, 177.0, -2.0, 2.0, 111.0, 48.0, -58.0, -65.0, -174.0, -183.0, -174.0, -2.0, 208.0, 97.0, 164.0, 43.0, 144.0, 50.0, 63.0, 61.0, 2.0, 35.0, -36.0, -12.0, 85.0, 257.0, 261.0, 111.0, 131.0, -17.0, -67.0, -125.0, -384.0, -334.0, -180.0, 135.0, 197.0, 56.0, -81.0, 172.0, -184.0, -215.0, -141.0, -1054.0, -1284.0, -1862.0, -559.0, -83.0, 218.0, 282.0, 351.0, -82.16, 127.53, 127.63, 65.69, -428.19, -599.33, -369.64, 67.19, 63.79, 290.27, 319.58, 404.28, 424.88, 570.63, 739.2, 704.19, 476.13, -160.07, 114.83, 253.1, 589.09, 610.54, 527.32, 880.15, 703.4, 641.58, 766.78, 557.7, 351.65, 721.44, 99.14, 750.88, 766.55, 693.08, 869.53, 907.32, 782.81, 532.73, 1126.43, 1418.11, 1478.0, 623.1, 896.85, 976.45], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00", "2026-06-01T00:00:00", "2026-07-01T00:00:00", "2026-08-01T00:00:00"], "min_date": "2004-01-01T00:00:00", "max_date": "2026-08-01T00:00:00", "eventos": null}];
+const TEMA = {"azul_1": "#0B3C5D", "azul_2": "#3A7CA5", "azul_3": "#81B1D3", "azul_contexto": "#DCE8F1", "texto": "#111111", "texto_2": "#4A5A68", "texto_3": "#7A8C9A", "negativo": "#C9A66B", "atrasado": "#2E3A45", "franja_fondo": "#EEF1F4", "franja_borde": "#4A5A68", "fondo": "#FFFFFF", "fuente": "\"Helvetica Neue\", Helvetica, Arial, sans-serif"};
+const ETIQUETAS = {"IPC Núcleo (var. mensual)": "Núcleo", "IPC Regulados (var. mensual)": "Regulados", "IPC Estacionales (var. mensual)": "Estacionales"};
+const charts = {};
+// Lookup por s.i (el idx de la tarjeta), NO por posición en SERIES: las tarjetas "acumulando
+// historia" consumen un idx sin agregar serie.
+const SERIE_POR_I = {};
+SERIES.forEach(s => { SERIE_POR_I[s.i] = s; });
+
+/* ---------- C1: tema único. Todos los gráficos heredan de acá; ninguno se estiliza por separado ---------- */
+const FUENTE = TEMA.fuente;
+const GRILLA = '#EEEEEE';
+const NIVEL = [TEMA.azul_1, TEMA.azul_2, TEMA.azul_3, TEMA.azul_contexto];   // jerarquía: 0 = protagonista
+const ANCHO = [2.5, 1.75, 1.75, 1.25];
+const TRAZO = [[], [], [5, 3], [2, 2]];
+const alfa = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+const esPP = u => u === 'p.p.' || u === 'pp';
+const esPct = u => !!u && (u.includes('%') || esPP(u));
+// Decimales según la unidad (D4, mismo criterio que titulares.decimales en Python)
+function decDe(u, v) {
+  if (esPct(u)) return esPP(u) ? 2 : 1;
+  if (u && /millones|miles|puntos/.test(u)) return 0;
+  const a = Math.abs(v || 0); return a >= 1000 ? 0 : a >= 10 ? 1 : 2;
+}
+const sufijo = u => esPP(u) ? ' pp' : (esPct(u) ? '%' : '');
+const fmtN = (v, d) => v == null ? 's/d' : v.toLocaleString('es-AR', {minimumFractionDigits:d, maximumFractionDigits:d}).replace('-', '−');
+const fmtU = (v, u) => fmtN(v, decDe(u, v));
+const nivel = (i, n) => Math.min(n - 1 - i, 3);   // overlays: la ÚLTIMA serie es la protagonista (resume la card)
+function ultimoIdx(arr) { let k = (arr || []).length - 1; while (k >= 0 && arr[k] == null) k--; return k; }
+const colorSigno = (pos, neg) => c => (c.raw != null && c.raw < 0) ? neg : pos;
+const tieneNeg = arr => (arr || []).some(v => v != null && v < 0);
+
+Chart.defaults.font.family = FUENTE;
+Chart.defaults.font.size = 11;
+Chart.defaults.color = TEMA.texto_3;
+Chart.defaults.responsive = true;
+Chart.defaults.maintainAspectRatio = false;
+Chart.defaults.animation = false;
+Chart.defaults.plugins.legend.display = false;          // leyenda en prosa, sobre el gráfico (.cdesc)
+Chart.defaults.elements.point.radius = 0;
+Chart.defaults.elements.point.hoverRadius = 3;
+Chart.defaults.elements.point.hitRadius = 8;
+Chart.defaults.elements.line.borderWidth = 2;
+Chart.defaults.elements.line.tension = 0;
+Chart.defaults.elements.bar.borderWidth = 0;
+Chart.defaults.interaction = { mode:'index', intersect:false };
+Chart.defaults.scale.grid.color = GRILLA;
+Chart.defaults.scale.border.display = false;
+Chart.defaults.scale.ticks.color = TEMA.texto_3;
+Object.assign(Chart.defaults.plugins.tooltip, {
+  backgroundColor:'#FFFFFF', borderColor:TEMA.azul_contexto, borderWidth:1, titleColor:TEMA.texto,
+  bodyColor:TEMA.texto_2, footerColor:TEMA.texto_2, padding:8, cornerRadius:2, boxWidth:8, boxHeight:8,
+  titleFont:{ weight:'700' }, filter: it => it.raw != null,
+});
+const ejeX = (extra) => Object.assign({ grid:{ display:false }, ticks:{ maxTicksLimit:6, autoSkip:true, maxRotation:0 } }, extra || {});
+const ejeY = (extra) => Object.assign({ grid:{ color:GRILLA, drawTicks:false },
+  ticks:{ padding:6, maxTicksLimit:5, callback:(v) => Number(v).toLocaleString('es-AR') } }, extra || {});
+const tituloEje = (t) => ({ display:!!t, text:t, font:{ size:10 }, color:TEMA.texto_3 });
+
+// Etiquetas directas (C1): al final de cada línea (o arriba del último punto en gráficos de dos ejes) y
+// sobre la barra destacada, con anti-superposición vertical simple. Reemplazan a la leyenda.
+function textoEtiqueta(e, v) { return (e.texto ? e.texto + ' ' : '') + fmtU(v, e.u) + sufijo(e.u); }
+const etiquetasDirectas = {
+  id:'etiquetasDirectas',
+  beforeUpdate(chart) {
+    const x = chart.options.scales && chart.options.scales.x;
+    if (x && x.ticks && chart.width && chart.width < 500) x.ticks.maxTicksLimit = 4;   // pantallas angostas
+    const ctx = chart.ctx; let ancho = 0;
+    ctx.save(); ctx.font = `700 12px ${FUENTE}`;
+    chart.data.datasets.forEach(ds => {
+      const e = ds.etiqueta; if (!e || e.arriba !== undefined) return;
+      const k = (e.idx !== undefined && e.idx !== null) ? e.idx : ultimoIdx(ds.data); if (k < 0) return;
+      const w = ctx.measureText(textoEtiqueta(e, ds.data[k])).width;
+      // barra: la etiqueta va centrada sobre la barra, sólo necesita media etiqueta de margen
+      ancho = Math.max(ancho, e.barra ? w / 2 : w);
+    });
+    ctx.restore();
+    chart.options.layout.padding = { top:18, right: ancho ? ancho + 12 : 8, left:0, bottom:0 };
+  },
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart, items = [];
+    chart.data.datasets.forEach((ds, i) => {
+      const e = ds.etiqueta; if (!e || !chart.isDatasetVisible(i)) return;
+      const k = (e.idx !== undefined && e.idx !== null) ? e.idx : ultimoIdx(ds.data);
+      if (k < 0 || ds.data[k] == null) return;
+      const el = chart.getDatasetMeta(i).data[k]; if (!el) return;
+      const txt = textoEtiqueta(e, ds.data[k]);
+      if (e.barra) items.push({ x:el.x, y: ds.data[k] < 0 ? el.y + 11 : el.y - 8, txt, color:TEMA.texto, align:'center', bold:true });
+      else if (e.arriba !== undefined) items.push({ x:el.x - 2, y:el.y + e.arriba, txt, color:e.color || ds.borderColor, align:'right', bold:e.bold });
+      else items.push({ x:el.x + 6, y:el.y, txt, color:e.color || ds.borderColor, align:'left', bold:e.bold });
+    });
+    items.filter(o => o.align === 'left').sort((a, b) => a.y - b.y).forEach((o, j, arr) => {
+      if (j && o.y - arr[j - 1].y < 13) o.y = arr[j - 1].y + 13;
+    });
+    ctx.save(); ctx.textBaseline = 'middle';
+    items.forEach(o => {
+      ctx.font = `${o.bold ? '700' : '400'} 12px ${FUENTE}`;
+      ctx.textAlign = o.align;
+      const w = ctx.measureText(o.txt).width;
+      const x0 = o.align === 'left' ? o.x - 2 : o.align === 'right' ? o.x - w - 2 : o.x - w / 2 - 2;
+      ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(x0, o.y - 7, w + 4, 14);
+      ctx.fillStyle = o.color; ctx.fillText(o.txt, o.x, o.y);
+    });
+    ctx.restore();
+  },
+};
+// Serie frenada (franja ⏸ del B2, D9): el eje sigue hasta hoy y se sombrea el tramo sin datos.
+const tramoSinDatos = {
+  id:'tramoSinDatos',
+  beforeDatasetsDraw(chart, _a, opts) {
+    if (!opts || !opts.activo) return;
+    const d = chart.data.datasets[0].data, k = ultimoIdx(d);
+    if (k < 0 || k >= d.length - 1) return;
+    const a = chart.chartArea, x0 = chart.scales.x.getPixelForValue(k), { ctx } = chart;
+    ctx.save();
+    ctx.fillStyle = TEMA.franja_fondo; ctx.fillRect(x0, a.top, a.right - x0, a.bottom - a.top);
+    ctx.fillStyle = TEMA.texto_3; ctx.font = `11px ${FUENTE}`; ctx.textAlign = 'center';
+    ctx.fillText('sin datos', (x0 + a.right) / 2, a.top + 10);
+    ctx.restore();
+  },
+};
+// Línea del cero, fina y oscura, en todo gráfico con negativos.
+const lineaCero = {
+  id:'lineaCero',
+  beforeDatasetsDraw(chart) {
+    const y = chart.scales.y; if (!y || y.type === 'logarithmic' || !(y.min < 0 && y.max > 0)) return;
+    const p = y.getPixelForValue(0), a = chart.chartArea, { ctx } = chart;
+    ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(a.left, p); ctx.lineTo(a.right, p); ctx.stroke(); ctx.restore();
+  },
+};
+Chart.register(etiquetasDirectas, tramoSinDatos, lineaCero);
+
+// Leyenda en prosa (C1): muestras con el color real de cada serie, sobre el gráfico.
+function escribirLeyenda(i, items, extra) {
+  const el = document.querySelector(`.cdesc[data-idx='${i}']`); if (!el) return;
+  const partes = items.filter(it => it.label).map(it => {
+    const sw = it.linea
+      ? `<span class="sw sw-l" style="border-top:${it.ancho || 2}px ${it.dash ? 'dashed' : 'solid'} ${it.color}"></span>`
+      : `<span class="sw" style="background:${it.color}"></span>`;
+    return `<span class="ley">${sw}${it.label}</span>`;
+  });
+  if (extra) partes.push(`<span class="ley-x">${extra}</span>`);
+  el.innerHTML = partes.join('');
+}
+
+// 'eventos' (opcional): [{fecha:"dd/mm/yy", texto:"..."}, ...] -- anotaciones de eventos puntuales
+// dibujadas por eventosPlugin; el texto sale en el tooltip normal (afterBody).
+function eventoTooltip(eventos) {
+  return (items) => {
+    if (!eventos || !eventos.length || !items.length) return [];
+    const ev = eventos.find(e => e.fecha === items[0].label);
+    return ev ? [`▾ ${ev.texto}`] : [];
+  };
+}
+
+function eventosPlugin(eventos) {
+  return {
+    id:'eventosPolitica',
+    afterDatasetsDraw(chart) {
+      if (!eventos || !eventos.length) return;
+      const { ctx, chartArea, scales } = chart;
+      eventos.forEach(ev => {
+        const i = chart.data.labels.indexOf(ev.fecha);
+        if (i === -1) return;
+        const x = scales.x.getPixelForValue(i);
+        ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.setLineDash([4, 3]); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+        ctx.setLineDash([]); ctx.fillStyle = TEMA.texto_2; ctx.font = `10px ${FUENTE}`; ctx.textAlign = 'center';
+        ctx.fillText('▾', x, chartArea.top - 1); ctx.restore();
+      });
+    }
+  };
+}
+
+function calcFechaCorte(rango) {
+  const hoy = new Date();
+  const hace = (meses) => new Date(hoy.getFullYear(), hoy.getMonth() - meses, hoy.getDate()).toISOString().split('T')[0];
+  switch(rango) {
+    case '6m': return hace(6);
+    case '1a': return hace(12);
+    case '5a': return hace(60);
+    case 'todo': return '1900-01-01';
+    default: return null;
+  }
+}
+
+function filtrarDatos(s, rango) {
+  if (s.kind === 'overlay' || s.kind === 'incidencia') {
+    if (rango === 'default') {
+      return { x: s.x, datasets: s.datasets.map(d => ({ label: d.label, y: d.y })) };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, datasets: s.datasets.map(d => ({ label: d.label, y: d.y })) };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      datasets: s.datasets.map(d => ({ label: d.label, y: indices.map(i => d.full_y[i]) }))
+    };
+  }
+  if (s.kind === 'espejo') {
+    if (rango === 'default') {
+      return { x: s.x, expo: s.expo, impo: s.impo, saldo: s.saldo };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, expo: s.expo, impo: s.impo, saldo: s.saldo };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      expo: indices.map(i => s.full_expo[i]),
+      impo: indices.map(i => s.full_impo[i]),
+      saldo: indices.map(i => s.full_saldo[i]),
+    };
+  }
+  if (s.kind === 'combo_bl') {
+    if (rango === 'default') {
+      return { x: s.x, barras: s.barras.map(b => ({ label: b.label, y: b.y })), linea: s.linea };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, barras: s.barras.map(b => ({ label: b.label, y: b.y })), linea: s.linea };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barras: s.barras.map(b => ({ label: b.label, y: indices.map(i => b.full_y[i]) })),
+      linea: indices.map(i => s.full_linea[i]),
+    };
+  }
+  if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
+    if (rango === 'default') {
+      return { x: s.x, izq: s.izq, der: s.der };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, izq: s.izq, der: s.der };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      izq: indices.map(i => s.full_izq[i]),
+      der: indices.map(i => s.full_der[i]),
+    };
+  }
+  if (s.kind === 'combo_evento') {
+    if (rango === 'default') {
+      return { x: s.x, barra: s.barra, evento: s.evento };
+    }
+    const fechaCorte = calcFechaCorte(rango);
+    const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+    if (indices.length === 0) {
+      return { x: s.x, barra: s.barra, evento: s.evento };
+    }
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barra: indices.map(i => s.full_barra[i]),
+      evento: indices.map(i => s.full_evento[i]),
+    };
+  }
+  if (rango === 'default') {
+    return { x: s.x, y: s.y, flujo: s.flujo };
+  }
+  const fechaCorte = calcFechaCorte(rango);
+  const indices = s.full_dates.map((d, i) => d >= fechaCorte ? i : -1).filter(i => i >= 0);
+  if (indices.length === 0) {
+    return { x: s.x, y: s.y, flujo: s.flujo };
+  }
+  return {
+    x: indices.map(i => s.full_x[i]),
+    y: indices.map(i => s.full_y[i]),
+    flujo: s.full_flujo ? indices.map(i => s.full_flujo[i]) : undefined
+  };
+}
+
+// Percentil con interpolación lineal (mismo método que pandas .quantile() por defecto),
+// para que el eje calculado en el navegador para un rango "Personalizado" arbitrario sea
+// consistente con el que ya viene precalculado en Python para Default/1A/5A/2008/Todo.
+function percentil(arr, p) {
+  if (!arr.length) return null;
+  const orden = [...arr].sort((a, b) => a - b);
+  const idx = p * (orden.length - 1);
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  if (lo === hi) return orden[lo];
+  return orden[lo] + (orden[hi] - orden[lo]) * (idx - lo);
+}
+
+// Recalcula el eje (percentil 95 + atípicos) de incidencia_stack para un rango de fechas
+// arbitrario (ver Punto 6): mismo mecanismo que _serie_incidencia en Python, pero aplicado a
+// los índices que caen dentro del rango "Personalizado" que eligió el usuario, ya que ese rango
+// no es uno de los 5 precalculados server-side.
+function calcularEjeIncidencia(s, indices) {
+  const MARGEN = 1.15;
+  const totales = indices.map(i => {
+    let pos = 0, neg = 0;
+    s.datasets.forEach(d => { const v = d.full_y[i]; if (v > 0) pos += v; else if (v < 0) neg += v; });
+    return [pos, neg];
+  });
+  const positivos = totales.filter(([p]) => p > 0).map(([p]) => p);
+  const negativos = totales.filter(([, n]) => n < 0).map(([, n]) => Math.abs(n));
+  const yMax = positivos.length ? Math.round(percentil(positivos, 0.95) * MARGEN * 100) / 100 : undefined;
+  const yMin = negativos.length ? Math.round(-percentil(negativos, 0.95) * MARGEN * 100) / 100 : undefined;
+  const atipicos = {};
+  indices.forEach((i, k) => {
+    const [pos, neg] = totales[k];
+    if ((yMax !== undefined && pos > yMax) || (yMin !== undefined && neg < yMin)) {
+      atipicos[s.full_x[i]] = Math.round((pos + neg) * 100) / 100;
+    }
+  });
+  return { y_max: yMax, y_min: yMin, atipicos };
+}
+
+// Filtro de rango personalizado (Punto 6): reutiliza los mismos arrays full_* que ya alimentan
+// filtrarDatos(), sólo cambia el criterio de selección de índices (desde/hasta elegidos por el
+// usuario en vez de uno de los 5 rangos fijos).
+function filtrarDatosPersonalizado(s, desde, hasta) {
+  const hastaCmp = hasta + 'T23:59:59';
+  const indices = s.full_dates.map((d, i) => (d >= desde && d <= hastaCmp) ? i : -1).filter(i => i >= 0);
+  if (s.kind === 'overlay' || s.kind === 'incidencia') {
+    const resultado = { x: indices.map(i => s.full_x[i]), datasets: s.datasets.map(d => ({ label: d.label, y: indices.map(i => d.full_y[i]) })) };
+    if (s.kind === 'incidencia') resultado.eje = calcularEjeIncidencia(s, indices);
+    return resultado;
+  }
+  if (s.kind === 'espejo') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      expo: indices.map(i => s.full_expo[i]),
+      impo: indices.map(i => s.full_impo[i]),
+      saldo: indices.map(i => s.full_saldo[i]),
+    };
+  }
+  if (s.kind === 'combo_bl') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barras: s.barras.map(b => ({ label: b.label, y: indices.map(i => b.full_y[i]) })),
+      linea: indices.map(i => s.full_linea[i]),
+    };
+  }
+  if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      izq: indices.map(i => s.full_izq[i]),
+      der: indices.map(i => s.full_der[i]),
+    };
+  }
+  if (s.kind === 'combo_evento') {
+    return {
+      x: indices.map(i => s.full_x[i]),
+      barra: indices.map(i => s.full_barra[i]),
+      evento: indices.map(i => s.full_evento[i]),
+    };
+  }
+  return {
+    x: indices.map(i => s.full_x[i]),
+    y: indices.map(i => s.full_y[i]),
+    flujo: s.full_flujo ? indices.map(i => s.full_flujo[i]) : undefined
+  };
+}
+
+const tooltipU = (unidad) => (c) => ` ${c.dataset.label ? c.dataset.label + ': ' : ''}${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, unidad)} ${unidad || ''}`;
+
+const baseOpts = (s) => ({
+  plugins:{ tramoSinDatos:{ activo: !!s.frenada },
+    tooltip:{ callbacks:{ label: tooltipU(s.unidad), afterBody: eventoTooltip(s.eventos) } } },
+  scales:{ x: ejeX(s.x && s.x.length < 30 && !s.full_dates ? { ticks:{ maxRotation:0, autoSkip:true } } : undefined),
+           y: s.kind === 'bar' ? { display:false, grace:'8%' } : ejeY() },
+});
+
+const espejoOpts = (unidad) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => {
+      const v = c.dataset.type === 'line' ? c.parsed.y : Math.abs(c.parsed.y);
+      return ` ${c.dataset.label}: ${v == null ? 's/d' : fmtU(v, unidad)} ${unidad}`;
+    } } } },
+  scales:{ x: ejeX({ stacked:true }), y: ejeY({ stacked:true, ticks:{ padding:6, maxTicksLimit:5, callback:(v) => Math.abs(v).toLocaleString('es-AR') } }) },
+});
+
+const overlayOpts = (s) => ({
+  // spanGaps: series superpuestas de frecuencias distintas (ej. trimestral + diaria) dejan huecos (null)
+  // en el eje compartido; sin esto la de menor frecuencia no se dibuja como línea.
+  spanGaps: true,
+  plugins:{ tooltip:{ callbacks:{ label: tooltipU(s.unidad),
+      afterBody:(items) => (s.cruce && items.length && items[0].label === s.cruce.fecha) ? [`◆ ${s.cruce.texto}`] : [] } } },
+  scales:{ x: ejeX(), y: ejeY({ type: s.escala_log ? 'logarithmic' : 'linear' }) },
+  elements:{ point:{ radius: s.radio_punto || 0 } },
+});
+
+// Barras AGRUPADAS (no apiladas): cada bono amortiza en % de SU PROPIO valor nominal.
+const muroOpts = (unidad) => ({
+  plugins:{ tooltip:{ callbacks:{ label: tooltipU(unidad) } } },
+  scales:{ x:{ grid:{ display:false } }, y: ejeY() },
+});
+
+// Marca vertical de "cambio de liderazgo" en un overlay (ver 'cruce' en _serie_overlay).
+function cruceOverlayPlugin(cruce) {
+  return {
+    id:'cruceOverlay',
+    afterDatasetsDraw(chart) {
+      if (!cruce) return;
+      const i = chart.data.labels.indexOf(cruce.fecha);
+      if (i === -1) return;
+      const { ctx, chartArea, scales } = chart;
+      const x = scales.x.getPixelForValue(i);
+      ctx.save(); ctx.strokeStyle = TEMA.texto_2; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+      ctx.setLineDash([]); ctx.fillStyle = TEMA.texto_2; ctx.font = `bold 11px ${FUENTE}`; ctx.textAlign = 'center';
+      ctx.fillText('◆', x, chartArea.top - 2); ctx.restore();
+    }
+  };
+}
+
+const comboOpts = (unidad, unidadLinea, tituloBarras) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? (unidadLinea || unidad) : unidad;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(tituloBarras || 'Var. mensual') }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje('Stock') }) },
+});
+
+// Combo genérico de 1-2 barras + 1 línea (ver _serie_combo_barras_linea en Python).
+const comboBLOpts = (unidadBarras, unidadLinea) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? unidadLinea : unidadBarras;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(unidadBarras) }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje(unidadLinea) }) },
+});
+
+// Alinea el cero de los ejes 'y' e 'y1' del gráfico de eventos (decisión de Pedro): ver _planCero.
+const N_INTERVALOS_CERO = 6;
+function _pasoRedondo(x) {
+  const p = Math.pow(10, Math.floor(Math.log10(x)));
+  const m = x / p;
+  return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p;
+}
+function _planCero(chart) {
+  const rangos = { y: { min: 0, max: 0 }, y1: { min: 0, max: 0 } };  // el 0 siempre entra
+  chart.data.datasets.forEach(d => {
+    const r = rangos[d.yAxisID || 'y'];
+    if (!r || chart.getDatasetMeta(chart.data.datasets.indexOf(d)).hidden) return;
+    (d.data || []).forEach(v => { if (v != null && isFinite(v)) { r.min = Math.min(r.min, v); r.max = Math.max(r.max, v); } });
+  });
+  const N = N_INTERVALOS_CERO;
+  let mejor = null;
+  for (let k = 0; k <= N; k++) {  // k = cantidad de intervalos debajo del cero
+    let costo = 0, pasos = {}, posible = true;
+    for (const [id, r] of Object.entries(rangos)) {
+      if (r.max === r.min) { pasos[id] = null; continue; }  // eje sin rango: se resuelve abajo
+      const abajo = r.min < 0 ? (k ? -r.min / k : Infinity) : 0;
+      const arriba = r.max > 0 ? (k < N ? r.max / (N - k) : Infinity) : 0;
+      const necesario = Math.max(abajo, arriba);
+      if (!isFinite(necesario)) { posible = false; break; }
+      pasos[id] = _pasoRedondo(necesario);
+      costo += N * pasos[id] / (r.max - r.min);  // 1 = sin desperdicio
+    }
+    if (posible && (!mejor || costo < mejor.costo)) mejor = { k, pasos, costo };
+  }
+  if (!mejor) return null;
+  // Eje sin rango (todo en 0): toma el paso del otro eje en vez de una escala 0..N inventada
+  // (en este gráfico los dos ejes están en la misma unidad); 1 si ninguno tiene rango.
+  const otroPaso = Object.values(mejor.pasos).find(p => p !== null) || 1;
+  for (const id of Object.keys(mejor.pasos)) if (mejor.pasos[id] === null) mejor.pasos[id] = otroPaso;
+  return { k: mejor.k, N, pasos: mejor.pasos };
+}
+function alinearCeroLimites(scale) {
+  const plan = _planCero(scale.chart);
+  if (!plan) return;
+  const paso = plan.pasos[scale.id];
+  scale.min = -plan.k * paso || 0;  // "|| 0": evita un -0 en el eje
+  scale.max = (plan.N - plan.k) * paso;
+}
+function alinearCeroTicks(scale) {
+  const plan = _planCero(scale.chart);
+  if (!plan) return;
+  const paso = plan.pasos[scale.id];
+  scale.ticks = Array.from({ length: plan.N + 1 }, (_, i) => ({ value: (i - plan.k) * paso || 0 }));
+}
+
+const comboEventoOpts = (unidadBarra, unidadEvento) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => {
+      if (c.parsed.y == null) return null;
+      const u = c.dataset.yAxisID === 'y1' ? unidadEvento : unidadBarra;
+      return ` ${c.dataset.label}: ${fmtU(c.parsed.y, u)} ${u}`;
+    } } } },
+  scales:{ x: ejeX(),
+           y:{ position:'left', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, grid:{ color:GRILLA, drawTicks:false }, title: tituloEje(unidadBarra) },
+           y1:{ position:'right', afterDataLimits: alinearCeroLimites, afterBuildTicks: alinearCeroTicks, grid:{ display:false }, title: tituloEje(unidadEvento) } },
+});
+
+// Combo de DOS líneas en dos ejes (ver _serie_combo_2lineas en Python).
+const combo2LOpts = (unidadIzq, unidadDer) => ({
+  plugins:{ tooltip:{ callbacks:{ label:(c) => { const u = c.dataset.yAxisID === 'y1' ? unidadDer : unidadIzq;
+      return ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtU(c.parsed.y, u)} ${u}`; } } } },
+  scales:{ x: ejeX(), y: ejeY({ position:'left', title: tituloEje(unidadIzq) }),
+           y1: ejeY({ position:'right', grid:{ display:false }, title: tituloEje(unidadDer) }) },
+});
+
+const incidenciaOpts = (unidad, yMax, yMin) => ({
+  plugins:{ tooltip:{ callbacks:{
+      label:(c) => ` ${c.dataset.label}: ${c.parsed.y == null ? 's/d' : fmtN(c.parsed.y, 2)} pp`,
+      afterBody:(items) => {
+        if (!items.length) return [];
+        const lineas = [];
+        const atipicos = items[0].chart.$atipicos;
+        const total = atipicos ? atipicos[items[0].label] : undefined;
+        if (total !== undefined) {
+          lineas.push(`⚠ Valor atípico, fuera de escala del gráfico — total real: ${total > 0 ? '+' : ''}${fmtN(total, 2)} pp`);
+        }
+        // Detalle de "Resto": qué divisiones lo componen y cuánto aportó cada una ESE mes.
+        const restoDetalle = items[0].chart.$restoDetalle;
+        const detalle = restoDetalle ? restoDetalle[items[0].label] : null;
+        if (detalle && detalle.length) {
+          lineas.push('Detalle de "Resto":');
+          detalle.forEach(d => lineas.push(`  ${d.nombre}: ${d.valor > 0 ? '+' : ''}${fmtN(d.valor, 2)} pp`));
+        }
+        return lineas;
+      } } } },
+  scales:{ x: ejeX({ stacked:true }), y: ejeY({ stacked:true, max: yMax ?? undefined, min: yMin ?? undefined }) },
+});
+
+// Marca los meses "atípicos" (fuera del rango normal del eje) con un ⚠ arriba o abajo de la barra recortada.
+const atipicosIncidenciaPlugin = {
+  id:'atipicosIncidencia',
+  afterDatasetsDraw(chart) {
+    const atipicos = chart.$atipicos;
+    if (!atipicos || !Object.keys(atipicos).length) return;
+    const { ctx, chartArea, scales } = chart;
+    ctx.save(); ctx.font = `bold 12px ${FUENTE}`; ctx.fillStyle = TEMA.texto_2; ctx.textAlign = 'center';
+    chart.data.labels.forEach((label, i) => {
+      if (atipicos[label] === undefined) return;
+      const x = scales.x.getPixelForValue(i);
+      ctx.fillText('⚠', x, atipicos[label] >= 0 ? chartArea.top - 2 : chartArea.bottom + 16);
+    });
+    ctx.restore();
+  }
+};
+
+// "Actividad por sector": una columna por sector, ordenadas por la variación de actividad, con burbuja
+// de % del empleo en la punta (radio ~ raíz del %, para que el ÁREA sea proporcional al peso).
+const sectorBarOpts = (empleoPct) => ({
+  layout:{ padding:{ top:18 } },
+  plugins:{ tooltip:{ callbacks:{
+      label:(c) => [`Actividad (EMAE, i.a.): ${c.parsed.y > 0 ? '+' : ''}${fmtN(c.parsed.y, 1)}%`,
+                    `% del empleo total: ${fmtN(empleoPct[c.dataIndex], 1)}%`] } } },
+  scales:{ x:{ grid:{ display:false }, ticks:{ font:{ size:9 }, maxRotation:60, minRotation:60 } },
+           y: ejeY({ title: tituloEje('Variación % interanual de actividad (EMAE)') }) },
+});
+function burbujaSectorPlugin(empleoPct) {
+  return {
+    id:'burbujaSector',
+    afterDatasetsDraw(chart) {
+      const meta = chart.getDatasetMeta(0), { ctx } = chart;
+      ctx.save();
+      meta.data.forEach((bar, i) => {
+        const r = Math.max(3, Math.sqrt(empleoPct[i] || 0) * 6);
+        ctx.beginPath(); ctx.arc(bar.x, bar.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = alfa(TEMA.azul_1, .55); ctx.strokeStyle = TEMA.azul_1; ctx.lineWidth = 1;
+        ctx.fill(); ctx.stroke();
+      });
+      ctx.restore();
+    }
+  };
+}
+
+const NEG_TXT = 'Valores negativos en arena.';
+SERIES.forEach(s => {
+  const el = document.getElementById('ch' + s.i);
+  if (!el) return;
+  const ctx = el.getContext('2d');
+  let ley = [], extra = '';
+  if (s.kind === 'combo') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label: s.label_barras || 'Variación mensual', data:s.flujo, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:'Stock', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, yAxisID:'y1', order:0,
+          etiqueta:{ u:s.unidad_linea || s.unidad, arriba:-12, bold:true } }
+      ]}, options: comboOpts(s.unidad, s.unidad_linea, s.titulo_barras) });
+    ley = [{ label:'Stock (eje derecho)', color:TEMA.azul_1, linea:true },
+           { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.azul_3 }];
+    if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? 'Ventas netas (negativos) en arena.' : 'Caídas en arena.';
+  } else if (s.kind === 'overlay') {
+    const n = s.datasets.length;
+    const dss = s.datasets.map((d, i) => {
+      const r = nivel(i, n), col = NIVEL[r];
+      if (s.barras) {
+        const neg = r === 0 ? TEMA.negativo : alfa(TEMA.negativo, .5);
+        return { label:d.label, data:d.y, backgroundColor: colorSigno(col, neg), order:r };
+      }
+      return { label:d.label, data:d.y, borderColor:col, backgroundColor:col, borderWidth:ANCHO[r], borderDash:TRAZO[r], order:r,
+               etiqueta:{ texto: ETIQUETAS[d.label] || (d.label.length <= 16 ? d.label : ''), u:s.unidad, bold: r === 0,
+                          color: r === 3 ? TEMA.texto_3 : col } };
+    });
+    charts[s.i] = new Chart(ctx, { type: s.barras ? 'bar' : 'line', data:{ labels:s.x, datasets:dss },
+      options: overlayOpts(s), plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
+    ley = s.datasets.map((d, i) => { const r = nivel(i, n);
+      return { label:d.label, color:NIVEL[r], linea:!s.barras, ancho:ANCHO[r], dash:TRAZO[r].length > 0 }; }).reverse();
+    if (s.barras && s.datasets.some(d => tieneNeg(d.full_y || d.y))) extra = NEG_TXT;
+    if (s.cruce) extra = (extra ? extra + ' ' : '') + '◆ marca el cambio de liderazgo.';
+  } else if (s.kind === 'incidencia') {
+    const dss = s.datasets.map((d, i) => {
+      const r = d.label.startsWith('Resto') ? 3 : Math.min(i, 2);
+      return { label:d.label, data:d.y, backgroundColor: colorSigno(NIVEL[r], TEMA.negativo), stack:'incidencia' };
+    });
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets:dss },
+      options: incidenciaOpts(s.unidad, s.y_max, s.y_min), plugins:[atipicosIncidenciaPlugin] });
+    charts[s.i].$atipicos = s.atipicos;
+    charts[s.i].$restoDetalle = s.resto_detalle;
+    ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[d.label.startsWith('Resto') ? 3 : Math.min(i, 2)] }));
+    extra = 'Aportes negativos en arena.';
+  } else if (s.kind === 'espejo') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.azul_3, stack:'comercio', order:2 },
+        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:TEMA.azul_contexto, stack:'comercio', order:2 },
+        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.25, order:1,
+          segment:{ borderColor: g => (g.p0.parsed.y < 0 || g.p1.parsed.y < 0) ? TEMA.negativo : undefined },
+          etiqueta:{ texto:'Saldo', u:s.unidad, bold:true } },
+      ]}, options: espejoOpts(s.unidad) });
+    ley = [{ label:'Exportaciones (arriba)', color:TEMA.azul_3 }, { label:'importaciones (abajo)', color:TEMA.azul_contexto },
+           { label:'saldo', color:TEMA.azul_1, linea:true }];
+    if (tieneNeg(s.full_saldo || s.saldo)) extra = 'Saldo negativo en arena.';
+  } else if (s.kind === 'bar') {
+    const dest = s.destacar;
+    const bg = (c) => {
+      const k = (dest !== undefined && dest !== null) ? dest : ultimoIdx(c.chart.data.datasets[0].data);
+      const ult = c.dataIndex === k;
+      if (c.raw != null && c.raw < 0) return ult ? TEMA.negativo : alfa(TEMA.negativo, .45);
+      return ult ? TEMA.azul_1 : TEMA.azul_contexto;
+    };
+    charts[s.i] = new Chart(ctx, { type:'bar',
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor:bg, categoryPercentage:.85, barPercentage:.9,
+                                     etiqueta:{ barra:true, idx:dest, u:s.unidad } }] },
+      options: baseOpts(s) });
+    extra = (dest !== undefined && dest !== null) ? 'En azul oscuro, el contrato más cercano.' : 'En azul oscuro, el último dato.';
+    if (tieneNeg(s.full_y || s.y)) extra += ' ' + NEG_TXT;
+  } else if (s.kind === 'bar_sectores') {
+    charts[s.i] = new Chart(ctx, { type:'bar',
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo) }] },
+      options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
+    extra = 'Barras: variación interanual de la actividad (caídas en arena). Burbujas: peso de cada sector en el empleo.';
+  } else if (s.kind === 'combo_bl') {
+    const nb = s.barras.length;
+    const datasets = s.barras.map((b, i) => ({ type:'bar', label:b.label, data:b.y, yAxisID:'y', order:1,
+        backgroundColor: nb === 1 ? colorSigno(TEMA.azul_3, TEMA.negativo) : (i === 0 ? TEMA.azul_3 : TEMA.azul_contexto) }));
+    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1,
+        yAxisID:'y1', order:0, etiqueta:{ u:s.unidad_linea, arriba:-12, bold:true } });
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets }, options: comboBLOpts(s.unidad_barras, s.unidad_linea) });
+    ley = s.barras.map((b, i) => ({ label: b.label + (i === nb - 1 ? ' (eje izquierdo)' : ''), color: nb === 1 || i === 0 ? TEMA.azul_3 : TEMA.azul_contexto }))
+          .concat([{ label: s.linea_label + ' (eje derecho)', color:TEMA.azul_1, linea:true }]);
+    if (nb === 1 && tieneNeg(s.barras[0].full_y || s.barras[0].y)) extra = NEG_TXT;
+  } else if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
+    const v0 = s.kind === 'combo_rezago' ? s.variantes[String(s.rezago_default)] : s;
+    charts[s.i] = new Chart(ctx, { data:{ labels:v0.x, datasets:[
+        { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.5, yAxisID:'y',
+          etiqueta:{ u:s.unidad_izq, arriba:-12, bold:true } },
+        { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.azul_3, backgroundColor:TEMA.azul_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
+          etiqueta:{ u:s.unidad_der, arriba:13 } },
+      ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
+    ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.azul_1, linea:true, ancho:2.5 },
+           { label: s.label_der + ' (eje derecho)', color:TEMA.azul_3, linea:true, dash:true }];
+  } else if (s.kind === 'combo_evento') {
+    charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
+        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:s.label_evento, data:s.evento, showLine:false, pointRadius:6, pointHoverRadius:8,
+          pointBackgroundColor:TEMA.azul_1, pointBorderColor:'#fff', pointBorderWidth:1.5, yAxisID:'y1', order:0 },
+      ]}, options: comboEventoOpts(s.unidad_barra, s.unidad_evento) });
+    ley = [{ label: s.label_barra + ' (barras, eje izquierdo)', color:TEMA.azul_3 }, { label: s.label_evento + ' (puntos, eje derecho)', color:TEMA.azul_1 }];
+    if (tieneNeg(s.full_barra || s.barra)) extra = NEG_TXT;
+  } else if (s.kind === 'muro') {
+    charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map((d, i) => (
+        { label:d.label, data:d.y, backgroundColor: NIVEL[Math.min(i, 3)] }
+      )) }, options: muroOpts(s.unidad) });
+    ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[Math.min(i, 3)] }));
+  } else {
+    charts[s.i] = new Chart(ctx, { type:'line',
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, fill:false,
+                                     etiqueta:{ u:s.unidad, bold:true } }] },
+      options: baseOpts(s), plugins: s.eventos ? [eventosPlugin(s.eventos)] : [] });
+    if (s.eventos && s.eventos.length) extra = '▾ marca eventos (detalle en el tooltip).';
+  }
+  if (s.frenada) extra = (extra ? extra + ' ' : '') + 'El tramo sombreado no tiene datos de la fuente.';
+  escribirLeyenda(s.i, ley, extra);
+});
+
+// Redibuja un chart ya creado con los datos ya filtrados (por un botón de rango fijo o por
+// el rango "Personalizado"). Los colores son funciones del valor (tema), no hace falta recolorear.
+function aplicarFiltro(idx, serie, rango, datFiltrados) {
+  charts[idx].data.labels = datFiltrados.x;
+  if (serie.kind === 'combo') {
+    charts[idx].data.datasets[0].data = datFiltrados.flujo;
+    charts[idx].data.datasets[1].data = datFiltrados.y;
+  } else if (serie.kind === 'overlay' || serie.kind === 'incidencia') {
+    datFiltrados.datasets.forEach((d, i) => { charts[idx].data.datasets[i].data = d.y; });
+    if (serie.kind === 'incidencia') {
+      // Rangos fijos usan el eje precalculado en Python (serie.ejes); "Personalizado" trae el
+      // suyo ya calculado en JS (ver calcularEjeIncidencia) dentro de datFiltrados.eje.
+      const eje = (serie.ejes && serie.ejes[rango]) || datFiltrados.eje;
+      if (eje) {
+        charts[idx].options.scales.y.max = eje.y_max ?? undefined;
+        charts[idx].options.scales.y.min = eje.y_min ?? undefined;
+        charts[idx].$atipicos = eje.atipicos;
+      }
+    }
+  } else if (serie.kind === 'espejo') {
+    charts[idx].data.datasets[0].data = datFiltrados.expo;
+    charts[idx].data.datasets[1].data = datFiltrados.impo;
+    charts[idx].data.datasets[2].data = datFiltrados.saldo;
+  } else if (serie.kind === 'combo_bl') {
+    datFiltrados.barras.forEach((b, i) => { charts[idx].data.datasets[i].data = b.y; });
+    charts[idx].data.datasets[datFiltrados.barras.length].data = datFiltrados.linea;
+  } else if (serie.kind === 'combo_2lineas' || serie.kind === 'combo_rezago') {
+    charts[idx].data.datasets[0].data = datFiltrados.izq;
+    charts[idx].data.datasets[1].data = datFiltrados.der;
+  } else if (serie.kind === 'combo_evento') {
+    charts[idx].data.datasets[0].data = datFiltrados.barra;
+    charts[idx].data.datasets[1].data = datFiltrados.evento;
+  } else {
+    charts[idx].data.datasets[0].data = datFiltrados.y;
+  }
+  charts[idx].update('none');
+}
+
+// Event listeners para botones de filtro (rango de fecha). Selector acotado a
+// '.filtro[data-rango]' (no todo '.filtro') por si en el futuro se reusa la misma
+// clase visual con otro atributo data-* para un mecanismo distinto.
+document.querySelectorAll('.filtro[data-rango]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const filtrosContainer = this.closest('.filtros');
+    const idx = parseInt(filtrosContainer.dataset.idx);
+    const rango = this.dataset.rango;
+    const serie = SERIE_POR_I[idx];
+    if (!serie || !charts[idx]) return;
+
+    // Actualizar estado del botón
+    filtrosContainer.querySelectorAll('.filtro').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+
+    const customDiv = document.querySelector(`.rango-custom[data-idx='${idx}']`);
+    if (rango === 'personalizado') {
+      // Sólo despliega el selector de fechas; el filtrado real ocurre al tocar "Aplicar".
+      if (customDiv) customDiv.style.display = 'flex';
+      return;
+    }
+    if (customDiv) customDiv.style.display = 'none';
+
+    aplicarFiltro(idx, serie, rango, filtrarDatos(serie, rango));
+  });
+});
+
+// Selector de rezago (Punto 2.1 storytelling): swap de qué variante precalculada (0/3/6/12
+// meses de desplazamiento) se muestra -- todo el cálculo ya vino hecho de Python, acá sólo
+// se reemplazan labels/datasets del chart ya creado, mismo patrón liviano que aplicarFiltro.
+document.querySelectorAll('.rezago-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const container = this.closest('.rezago-btns');
+    const idx = parseInt(container.dataset.idx);
+    const serie = SERIE_POR_I[idx];
+    if (!serie || !charts[idx]) return;
+    const variante = serie.variantes[this.dataset.rezago];
+    if (!variante) return;
+    container.querySelectorAll('.rezago-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    // La variante elegida pasa a ser la "serie" que filtran los botones de fecha (mismos
+    // campos x/izq/der/full_* que combo_2lineas), y se reaplica el rango de fecha activo
+    // para que cambiar de rezago no resetee el período que el usuario estaba mirando.
+    Object.assign(serie, variante);
+    const rangoBtn = document.querySelector(`.filtros[data-idx='${idx}'] .filtro.active`);
+    const rango = rangoBtn ? rangoBtn.dataset.rango : 'default';
+    if (rango === 'personalizado') {
+      const custom = document.querySelector(`.rango-custom[data-idx='${idx}']`);
+      const desde = custom && custom.querySelector('.rango-desde').value;
+      const hasta = custom && custom.querySelector('.rango-hasta').value;
+      if (desde && hasta && desde <= hasta) {
+        aplicarFiltro(idx, serie, 'personalizado', filtrarDatosPersonalizado(serie, desde, hasta));
+        return;
+      }
+    }
+    aplicarFiltro(idx, serie, rango === 'personalizado' ? 'default' : rango,
+                  filtrarDatos(serie, rango === 'personalizado' ? 'default' : rango));
+  });
+});
+
+// "Aplicar" del rango personalizado (Punto 6)
+document.querySelectorAll('.rango-aplicar').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const container = this.closest('.rango-custom');
+    const idx = parseInt(container.dataset.idx);
+    const serie = SERIE_POR_I[idx];
+    if (!serie || !charts[idx]) return;
+    const desde = container.querySelector('.rango-desde').value;
+    const hasta = container.querySelector('.rango-hasta').value;
+    if (!desde || !hasta || desde > hasta) return;
+    aplicarFiltro(idx, serie, 'personalizado', filtrarDatosPersonalizado(serie, desde, hasta));
+  });
+});
+
+// Ícono de pantalla completa (Punto 11): implementado UNA sola vez acá para las ~38
+// tarjetas -- cada botón .fs-btn expande el .cell que lo contiene entero (no sólo el
+// <canvas>) para que título/valor/filtros también se vean grandes. Usa la Fullscreen API
+// nativa del navegador; si no existe (Safari iOS históricamente irregular), cae a un
+// fallback con position:fixed (.fs-fallback en el CSS) controlado a mano.
+function redimensionarChartDe(cell) {
+  const canvas = cell.querySelector('canvas');
+  if (!canvas) return;
+  const idx = parseInt(canvas.id.replace('ch', ''));
+  if (charts[idx]) charts[idx].resize();
+}
+
+const tieneFullscreenNativo = !!(document.documentElement.requestFullscreen);
+
+document.querySelectorAll('.fs-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const cell = this.closest('.cell');
+    if (!cell) return;
+    if (tieneFullscreenNativo) {
+      if (document.fullscreenElement === cell) {
+        document.exitFullscreen();
+      } else {
+        cell.requestFullscreen().catch(() => {});
+      }
+    } else {
+      // Fallback sin Fullscreen API: el mismo botón alterna la clase a mano.
+      cell.classList.toggle('fs-fallback');
+      redimensionarChartDe(cell);
+    }
+  });
+});
+
+if (tieneFullscreenNativo) {
+  let cellFullscreenAnterior = null;
+  document.addEventListener('fullscreenchange', () => {
+    // Chart.js no redimensiona solo si el contenedor cambia de tamaño por la Fullscreen
+    // API (no dispara resize del window) -- hay que llamarlo a mano, tanto al entrar como
+    // al salir (document.fullscreenElement es null al salir, por eso se guarda la anterior).
+    const actual = document.fullscreenElement;
+    if (actual && actual.classList.contains('cell')) {
+      redimensionarChartDe(actual);
+      cellFullscreenAnterior = actual;
+    } else if (cellFullscreenAnterior) {
+      redimensionarChartDe(cellFullscreenAnterior);
+      cellFullscreenAnterior = null;
+    }
+  });
+}
+
+// Barra de secciones: resalta la sección que se está leyendo.
+const navLinks = [...document.querySelectorAll('nav.secciones a[href^="#"]')];
+function marcarNav() {
+  let activo = navLinks[0];
+  navLinks.forEach(a => { const sec = document.querySelector(a.getAttribute('href')); if (sec && sec.getBoundingClientRect().top < 90) activo = a; });
+  navLinks.forEach(a => a.classList.toggle('activo', a === activo));
+}
+window.addEventListener('scroll', marcarNav, { passive:true });
+marcarNav();
+</script>
+</body></html>
