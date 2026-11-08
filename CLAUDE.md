@@ -129,7 +129,7 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   (estimado)" (próximo día hábil). Rezago grave (franja "⏸ … sin datos nuevos hace N meses"): días
   desde el CIERRE del período > 90 (trimestrales 90 + 92; piso `rezago_normal_dias`), N = meses
   completos desde ese cierre. Cards con varias series: si alguna está frenada y otra no, la franja
-  nombra la frenada. Colores: grises + azul "al día", NUNCA el arena (es el de los negativos del
+  nombra la frenada. Colores: grises + `principal_2` "al día", NUNCA el arena (es el de los negativos del
   Bloque C). Ojo: el chequeo de frescura de `run.py` (alertas) mide desde la fecha cruda del dato,
   no desde el cierre. Tests: `tests/test_frescura.py`.
 
@@ -158,7 +158,12 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     `PROMPT_mail_v3.md` debería leer de ahí). Tests: `tests/test_agenda.py`, `tests/test_mail_agenda.py`.
 
 - **Organización del sitio** (Bloque E, diseño aprobado por Pedro el 07/11/2026; etapas E1 calendario →
-  E2 home → E3 temas → E4 series → E5 identidad). Hecho hasta ahora:
+  E2 home → E3 temas → E4 series → E5 identidad). **Bloque E CERRADO el 08/11/2026** (las 5 etapas en
+  producción). Estructura final del sitio (GitHub Pages, `docs/`): `/` home, `/calendario/`, 8 temas
+  (`/<slug>/`, orden y contenido en el bloque `temas:` de indicadores.yaml), `/serie/<slug>/` (59 páginas),
+  `/acerca/`; `financiera.html` y las anclas viejas (`#precios`, …) redirigen. Lo pendiente de diseño y
+  contenido que salió del bloque está en `docs_internos/PENDIENTES.md` (sección "Contenido": C1
+  descripciones, C2 negativos en combos de dos barras; "Bloques futuros": F1 agenda ampliada). Etapas:
   - E1: `pagina_calendario.py` genera `docs/calendario/index.html` (run.py, `_generar_calendario`, después de
     `agenda.armar`; nunca corta el pipeline). Hoy / Esta semana (misma ventana que el mail,
     `agenda.fin_ventana`), estado de cada publicación de `calendario.yaml` (línea del B2 + próxima fecha,
@@ -203,21 +208,31 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     Agenda: cada publicación lleva `url` (`agenda.url_serie`: la card cuya serie resumen es esa; si no, la
     primera card que la dibuja; si no, su `pagina_serie`); el "Dato nuevo" del mail linkea ahí y cae al
     `#ancla` si no hay `url`. El link de "Datos demorados" del mail va a `calendario/#demorados`.
-  - Decisiones ya tomadas para las etapas siguientes: 9 datos clave en la home (los 8 propuestos + EMAE,
+  - Decisiones tomadas en el bloque (ya implementadas): 9 datos clave en la home (los 8 propuestos + EMAE,
     que tiene página de serie pero no card de tema; `titular_regla: direccion`, sujeto "El EMAE", en E4);
     tasas bancarias en "Dinero y crédito", cauciones y CER en "Mercados" (D8 opción A); riesgo país en
     Mercados, PBI nominal en Actividad; URLs `/serie/<slug>/`; mapeo de temas en un bloque `temas:` de
     indicadores.yaml; financiera.html pasa a redirigir a `/mercados/`; anclas viejas (`#precios`, ...)
-    redirigidas desde la home. Identidad E5: serif + ciruela + sello, renombrando `azul_*` → `principal_*`
-    en tema.py, las variables CSS y mail_agenda.py, y los colores fijos de enviar_mail.py (el verde/rojo de
-    la variación queda para el Bloque 2 del mail). Pie y Acerca: "Proyecto iniciado el 9 de julio de 2026"
+    redirigidas desde la home. Pie y Acerca: "Proyecto iniciado el 9 de julio de 2026"
     con link al primer commit (730dd39); contacto por mail (ofuscado, nunca completo en el HTML) y LinkedIn.
+  - E5 (identidad A+B+C, elegida por Pedro): A = cabecera, títulos de página y titulares en serif del sistema
+    (`fuente_titulares` de tema.py, Georgia/Times; kickers, valores y datos siguen en sans); B = rampa
+    protagonista ciruela (`principal_1..3`, `principal_contexto`; antes `azul_*`, renombrado en tema.py, las
+    variables CSS `--principal-*`, el JS y mail_agenda.py), banda ciruela en cabecera y pie; C = la frescura
+    como sello: estampilla en cada card del tema (`frescura.html_sello`, la misma línea del B2 partida en
+    período/estado/resto: borde lleno al día o publicado, punteado atrasado, gris con fondo rezago grave,
+    gris claro sin calendario o diaria; la línea completa sigue en la página de la serie y la franja ⏸ en la
+    card) y estampillas de fecha (`sitio.tile`) en la franja Hoy/Esta semana de la home y en el calendario.
+    Todo el CSS de identidad está en `sitio.CSS_IDENTIDAD`, al final del `<style>` de todas las páginas (sitio.pagina
+    y la plantilla de dashboard.py). Mail: botón "Ver el dashboard completo" = `principal_1`, "Leer nota" =
+    `principal_2`, texto = `texto`, gris de variación nula = `texto_3`, desde tema.py; el verde/rojo de la
+    variación de los indicadores queda para el Bloque 2 de PROMPT_mail_v3.md. Tests: `tests/test_identidad_e5.py`.
 - **Estética del dashboard** (Bloque C, diseño aprobado por Pedro el 07/11/2026; mismo estilo en las dos
   páginas):
-  - Colores y tipografía SÓLO de `tema.py` (`TEMA`): el CSS (variables `--azul-1`, …) y el JS (`TEMA`,
+  - Colores y tipografía SÓLO de `tema.py` (`TEMA`): el CSS (variables `--principal-1`, …) y el JS (`TEMA`,
     `Chart.defaults` + plugins globales `etiquetasDirectas`, `tramoSinDatos`, `lineaCero`) se generan desde
-    ahí. Ningún gráfico se estiliza por separado; la jerarquía la da el orden: protagonista `azul_1`,
-    luego `azul_2`, `azul_3` (punteado), contexto `azul_contexto`. En un overlay la protagonista es la
+    ahí. Ningún gráfico se estiliza por separado; la jerarquía la da el orden: protagonista `principal_1`,
+    luego `principal_2`, `principal_3` (punteado), contexto `principal_contexto` (ciruela desde E5). En un overlay la protagonista es la
     ÚLTIMA serie de `series:` (la que resume la card). `ACENTO`/`AZUL_ENLACE` quedan sólo por compatibilidad.
   - Arena (`negativo`) = SÓLO valores negativos (D2). La variación bajo el valor va en gris azulado, sin
     juicio (D3): `sube_es_bueno`/`neutral` ya no pintan la card del dashboard (el mail los sigue usando

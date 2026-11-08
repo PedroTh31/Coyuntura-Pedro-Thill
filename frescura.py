@@ -262,6 +262,33 @@ def html_linea(f: Frescura | None, series: str | None = None) -> str:
     return f'<div class="{clase}" title="{html.escape(f.tooltip)}">{" · ".join(_partes(f, series, True))}</div>'
 
 
+def html_sello(f: Frescura | None) -> str:
+    """Sello de la card del tema (Bloque E5, variante C): la misma línea del B2 partida en sus partes
+    (período / estado / resto), sin redactar nada nuevo. Clase por estado: al día o publicado = borde lleno,
+    atrasado = punteado, rezago grave = gris con fondo, sin calendario o diaria = gris claro."""
+    if f is None:
+        return ""
+    if f.grave:
+        clase, est = "sello-grave", "⏸ " + f.grave.split(" hace ")[0]   # "sin datos nuevos" (los meses, en la franja)
+    elif f.estado == "atrasado":
+        clase, est = "sello-atr", ESTADO_TEXTO["atrasado"]
+    elif f.estado in ("al_dia", "publicado"):
+        clase, est = "sello-ok", ESTADO_TEXTO.get(f.estado, "")
+    else:
+        clase, est = "sello-neutro", ""
+    det = "sin calendario oficial" if f.grave and f.estado in ("sin_calendario", "diaria") else f.detalle
+    partes = [f'<span class="se-per">{f.periodo}</span>']
+    partes += [f'<span class="se-est">{est}</span>'] if est else []
+    partes += [f'<span class="se-det">{det}</span>'] if det else []
+    return f'<span class="sello {clase}" title="{html.escape(f.tooltip)}">{"".join(partes)}</span>'
+
+
+def sello_card(estados: list[tuple[str, Frescura | None]], resumen: str) -> str:
+    """El sello de una card: el de su línea principal (la primera de lineas_card)."""
+    lineas = lineas_card(estados, resumen)
+    return html_sello(lineas[0][1]) if lineas else ""
+
+
 def texto_linea(f: Frescura, series: str | None = None) -> str:
     """La misma línea que html_linea, en texto plano (avisos del mail diario, Bloque B3)."""
     return " · ".join(_partes(f, series, False))

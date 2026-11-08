@@ -26,6 +26,7 @@ import pandas as pd
 import yaml
 
 import mail_agenda
+from tema import TEMA
 
 RAIZ = Path(__file__).resolve().parent
 CSV = RAIZ / "data" / "series_largo.csv"
@@ -483,7 +484,7 @@ def _render_noticias(lista):
             f'<div style="margin-bottom:14px">'
             f'<div style="font-weight:600;font-size:14px">{x["titulo"]}</div>'
             f'{bajada}'
-            f'<div>{fuente}<a href="{x["link"]}" style="color:#1D4E89;text-decoration:none;font-size:13px">Leer nota →</a></div>'
+            f'<div>{fuente}<a href="{x["link"]}" style="color:{TEMA["principal_2"]};text-decoration:none;font-size:13px">Leer nota →</a></div>'
             f'</div>')
     return "".join(bloques)
 
@@ -497,12 +498,12 @@ def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False, a
     filas_ind = ""
     for f in indicadores:
         if f["chg"] is None or abs(f["chg"]) <= 0.05:
-            flecha, color = "•", "#9A968C"
+            flecha, color = "•", TEMA["texto_3"]
         else:
             sube = f["chg"] > 0.05
             flecha = "▲" if sube else "▼"
             if f.get("neutral"):
-                color = "#9A968C"
+                color = TEMA["texto_3"]
             else:
                 bueno = sube if f.get("sube_es_bueno") else not sube
                 color = "#256D5B" if bueno else "#B4341F"
@@ -521,8 +522,8 @@ def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False, a
         apertura = mail_agenda.html_apertura(agenda, DASHBOARD_URL)
         calendario = mail_agenda.html_calendario(agenda)
         avisos = mail_agenda.html_avisos(agenda, DASHBOARD_URL)
-    return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:#1A1A1A">
-      <h2 style="border-bottom:2px solid #1A1A1A;padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>{aviso}{feriado}
+    return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:{TEMA['texto']}">
+      <h2 style="border-bottom:2px solid {TEMA['texto']};padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>{aviso}{feriado}
       {apertura}{calendario}
       <h3 style="margin-top:22px">Indicadores clave <span style="color:#999;font-weight:400;font-size:13px">(variación vs. 7 días atrás)</span></h3>
       <table style="width:100%;border-collapse:collapse;font-size:14px">{filas_ind}</table>
@@ -531,7 +532,7 @@ def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False, a
       {_render_noticias(argentinas)}
       <h3 style="margin-top:26px">🌎 Noticias internacionales</h3>
       {_render_noticias(internacionales)}
-      <p style="margin-top:26px"><a href="{DASHBOARD_URL}" style="background:#1D4E89;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none">Ver el dashboard completo →</a></p>
+      <p style="margin-top:26px"><a href="{DASHBOARD_URL}" style="background:{TEMA['principal_1']};color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none">Ver el dashboard completo →</a></p>
       <p style="color:#999;font-size:12px;margin-top:20px">Generado automáticamente. Fuentes: apis.datos.gob.ar · ArgentinaDatos · BCRA · medios citados en cada nota.</p>
     </div>"""
 

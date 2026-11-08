@@ -35,7 +35,10 @@ CSS = """
   .franja .wrap { display:flex; align-items:center; flex-wrap:wrap; gap:8px 26px; padding-top:10px; padding-bottom:10px; font-size:13px; }
   .f-lbl { font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--texto-3); margin-right:8px; }
   .f-sem { display:flex; flex-wrap:wrap; gap:6px 18px; align-items:center; }
-  .f-pub b { color:var(--azul-1); } .f-pub span { color:var(--texto-3); }
+  .f-pub b { color:var(--principal-1); } .f-pub span { color:var(--texto-3); }
+  .f-sem .f-pub { display:inline-flex; align-items:center; gap:8px; }
+  .f-tt { display:flex; flex-direction:column; line-height:1.25; } .f-tt b { color:var(--texto); font-weight:600; }
+  .f-tt span { font-size:11px; }
   .f-cal { margin-left:auto; font-weight:600; }
   .h-sec { margin-top:30px; }
   .h-tit { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 12px; border-top:1px solid var(--texto); padding-top:8px; }
@@ -43,20 +46,20 @@ CSS = """
   .h-sub { font-size:12px; color:var(--texto-3); }
   .dkgrid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); column-gap:40px; }
   a.dk { display:block; color:inherit; border-top:1px solid var(--linea); padding:14px 0 16px; min-width:0; }
-  a.dk:hover { text-decoration:none; } a.dk:hover .dk-n { color:var(--azul-2); }
+  a.dk:hover { text-decoration:none; } a.dk:hover .dk-n { color:var(--principal-2); }
   .dk-n { font-size:13px; font-weight:700; }
   .dk-v { display:flex; align-items:baseline; gap:6px; margin-top:4px; flex-wrap:wrap; }
-  .dk-v .cv { font-size:26px; font-weight:700; color:var(--azul-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .dk-v .cv { font-size:26px; font-weight:700; color:var(--principal-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
   .dk-v .uni { font-size:12px; color:var(--texto-2); }
   .chg { font-size:12px; color:var(--texto-2); font-variant-numeric:tabular-nums; } .chg .tri { font-size:10px; margin-right:3px; }
   .mbox { position:relative; height:64px; margin:8px 0 6px; }
   .tmgrid { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); column-gap:30px; }
   a.tm { display:block; color:inherit; border-top:1px solid var(--linea); padding:12px 0 18px; min-width:0; }
-  a.tm:hover { text-decoration:none; } a.tm:hover b { color:var(--azul-2); }
+  a.tm:hover { text-decoration:none; } a.tm:hover b { color:var(--principal-2); }
   .tm-h { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
   .tm-h b { font-size:18px; } .tm-h span { font-size:11px; color:var(--texto-3); white-space:nowrap; }
   a.tm p { font-size:13px; color:var(--texto-2); margin:6px 0 0; line-height:1.4; }
-  .ver { display:inline-block; font-size:13px; color:var(--azul-2); font-weight:600; margin-top:8px; }
+  .ver { display:inline-block; font-size:13px; color:var(--principal-2); font-weight:600; margin-top:8px; }
   .avisos { list-style:none; padding:0; margin:8px 0; font-size:13px; color:var(--atrasado); }
   .avisos li { border-top:1px solid var(--linea); padding:6px 0; }
   .h-nada { font-size:13px; color:var(--texto-2); margin:8px 0; }
@@ -84,15 +87,15 @@ document.querySelectorAll('canvas[data-mini]').forEach(cv => {
   const m = MINIS[cv.dataset.mini]; if (!m) return;
   const n = m.y.length;
   const ds = m.bar
-    ? { data:m.y, backgroundColor:m.y.map(v => v != null && v < 0 ? T.negativo : T.azul_1), borderRadius:1, barPercentage:.8, categoryPercentage:.9 }
-    : { data:m.y, borderColor:T.azul_1, borderWidth:1.75, tension:0, spanGaps:false,
-        pointRadius:m.y.map((v, k) => k === n - 1 ? 2.5 : 0), pointBackgroundColor:T.azul_1, pointHoverRadius:3 };
+    ? { data:m.y, backgroundColor:m.y.map(v => v != null && v < 0 ? T.negativo : T.principal_1), borderRadius:1, barPercentage:.8, categoryPercentage:.9 }
+    : { data:m.y, borderColor:T.principal_1, borderWidth:1.75, tension:0, spanGaps:false,
+        pointRadius:m.y.map((v, k) => k === n - 1 ? 2.5 : 0), pointBackgroundColor:T.principal_1, pointHoverRadius:3 };
   new Chart(cv, { type:m.bar ? 'bar' : 'line', data:{ labels:m.x, datasets:[ds] },
     options:{ responsive:true, maintainAspectRatio:false, animation:false,
       interaction:{ mode:'index', intersect:false },
       layout:{ padding:{ top:3, right:4, bottom:1, left:1 } },
       scales:{ x:{ display:false }, y:{ display:false, grace:'4%' } },
-      plugins:{ legend:{ display:false }, tooltip:{ displayColors:false, backgroundColor:'#FFFFFF', borderColor:T.azul_contexto,
+      plugins:{ legend:{ display:false }, tooltip:{ displayColors:false, backgroundColor:'#FFFFFF', borderColor:T.principal_contexto,
         borderWidth:1, titleColor:T.texto, bodyColor:T.texto_2, padding:6, cornerRadius:2,
         callbacks:{ label:c => fmt(c.raw, m.u) + ' ' + m.u } } } } });
 });
@@ -196,6 +199,16 @@ def _chg(c: dict | None) -> str:
     return f'<span class="chg"><span class="tri">{tri}</span>{escape(c["texto"])} vs. {escape(c["ref"])}</span>'
 
 
+def _tile_dia(dia: str) -> str:
+    """"jue 12/11" (agenda, sin tocar su formato) -> estampilla de fecha (E5, variante C)."""
+    try:
+        sem, ddmm = dia.split()
+        d, m = (int(x) for x in ddmm.split("/"))
+        return sitio.tile(sem, d, dashboard._MESES_ABREV_C[m])
+    except (ValueError, IndexError):
+        return f"<span>{escape(dia)}</span>"
+
+
 def _franja(agenda: dict | None) -> str:
     cal = (agenda or {}).get("calendario") or {}
     if not agenda or cal.get("estado") == "no_disponible":
@@ -208,8 +221,8 @@ def _franja(agenda: dict | None) -> str:
             hoy = f'feriado ({escape(cal["feriado_hoy"])})'
         else:
             hoy = "no se publica nada de lo que usa el monitor"
-        sem = "".join(f'<span class="f-pub"><span>{escape(d["dia"])}</span> <b>{escape(", ".join(d["titulos"]))}</b> '
-                      f'<span>{escape(d["hora"])}</span></span>' for d in cal.get("semana", []))
+        sem = "".join(f'<span class="f-pub">{_tile_dia(d["dia"])}<span class="f-tt"><b>{escape(", ".join(d["titulos"]))}</b>'
+                      f'<span>INDEC · {escape(d["hora"])}</span></span></span>' for d in cal.get("semana", []))
         cont = (f'<span><span class="f-lbl">Hoy</span>{hoy}</span>'
                 f'<span class="f-sem"><span class="f-lbl">Esta semana</span>{sem or "sin publicaciones del INDEC que use el monitor"}</span>')
     return f'<div class="franja"><div class="wrap">{cont}<a class="f-cal" href="calendario/">Calendario →</a></div></div>'
@@ -272,7 +285,7 @@ CSS_ACERCA = """
   ul.lee li { display:grid; grid-template-columns:minmax(0, 3fr) minmax(0, 2fr); gap:18px; border-top:1px solid var(--linea); padding:8px 0; font-size:14px; }
   ul.lee li > span:last-child { color:var(--texto-2); font-size:13px; }
   .sw-p, .sw-n { display:inline-block; width:10px; height:10px; margin-right:4px; vertical-align:-1px; }
-  .sw-p { background:var(--azul-1); } .sw-n { background:var(--negativo); }
+  .sw-p { background:var(--principal-1); } .sw-n { background:var(--negativo); }
   @media (max-width:760px) { ul.lee li { grid-template-columns:minmax(0, 1fr); gap:4px; } }
 """
 

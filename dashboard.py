@@ -28,7 +28,7 @@ MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diari
 UMBRAL_DISCONTINUADA_DIAS = frescura.UMBRAL_DISCONTINUADA_DIAS  # días sin datos para "sin datos nuevos" (una sola fuente de verdad)
 UMBRAL_HISTORIA_MINIMA = 30  # por debajo de esto, no se muestra gráfico de línea (ver "acumulando historia")
 
-# Colores: TODOS salen de tema.py (Bloque C, paleta de prensa económica en azules + arena para los
+# Colores: TODOS salen de tema.py (Bloque C, paleta de prensa económica, protagonista ciruela desde E5 + arena para los
 # negativos) y los aplica el tema único de Chart.js del template (ver _escribir_html): ningún gráfico se
 # estiliza por separado. ACENTO/AZUL_* quedan sólo por compatibilidad (run.py arma extra_charts con
 # ACENTO["mercados"]); el campo 'color' de cards/series ya no se usa para dibujar.
@@ -922,6 +922,14 @@ def _linea_frescura(ind, historico, ctx, indicadores_por_nombre):
     return frescura.html_card(estados, resumen), grave
 
 
+def _sello_de(ind, ctx):
+    """Sello de la card compacta (E5, variante C), de la línea que _linea_frescura ya calculó."""
+    if ctx is None or ind["nombre"] not in ctx.registro:
+        return ""
+    estados, resumen = ctx.registro[ind["nombre"]]
+    return frescura.sello_card(estados, resumen)
+
+
 _MESES_ABREV_C = ["", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 
 
@@ -1056,6 +1064,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             card["nota_num"] = _registrar_nota(nota, nombre, notas_dict)
             card["fuente_indec"] = bool(usos)
             card["frescura"], grave = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
+            card["sello"] = _sello_de(ind, frescura_ctx)
             card["slug"] = sitio.slug(nombre, ind)
             if tema is not None:
                 card["mini"] = _mini_card(ind, serie_js_compuesta, historico)
@@ -1118,7 +1127,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
             subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
             fuente_indec=bool(usos), frescura=linea_fr, slug=sitio.slug(nombre, ind), solo_serie=solo_serie,
-            nota_texto=nota if solo_serie else None))
+            nota_texto=nota if solo_serie else None, sello=_sello_de(ind, ctx_card)))
         _completar_card(charts[-1], ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio)
         if tema is not None:
             charts[-1]["mini"] = _mini_card(ind, None, historico)
@@ -1189,11 +1198,11 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
 
 
 def _color_semaforo(v):
-    """Celdas de tabla (Bloque C): +1% o más en azul de contexto, -1% o menos en un tinte del arena (el
+    """Celdas de tabla (Bloque C): +1% o más en principal_contexto (ciruela claro), -1% o menos en un tinte del arena (el
     color de los negativos), en el medio sin color. Todo de tema.py."""
     if v is None or pd.isna(v):
         return "transparent", TEMA["texto_3"]
-    if v > 1:  return TEMA["azul_contexto"], TEMA["azul_1"]
+    if v > 1:  return TEMA["principal_contexto"], TEMA["principal_1"]
     if v < -1: return _mezclar(TEMA["negativo"], 0.35), TEMA["texto"]
     return "transparent", TEMA["texto_2"]
 
@@ -1208,7 +1217,7 @@ def _tabla_semaforo(semaforo, fecha_sem, fuente_html=""):
     filas = "".join(f'<tr><td class="sec">{s["nombre"]}</td>{celda(s["ia"])}{celda(s["men"])}{celda(s["acum"])}</tr>' for s in orden)
     return (f'<h3 class="sub">EMAE por sector <span class="ref">({fecha_sem})</span></h3>'
             '<p class="nota">Interanual · mensual (serie original, con estacionalidad) · acumulado del año. '
-            'Azul: +1% o más · sin color: entre -1% y +1% · arena: -1% o menos.</p>'
+            'Ciruela: +1% o más · sin color: entre -1% y +1% · arena: -1% o menos.</p>'
             '<table class="tabla"><thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>'
             f'<tbody>{filas}</tbody></table>'
             + (f'<p class="fuente-pie fuente-tabla">{fuente_html}</p>' if fuente_html else ""))
@@ -1467,7 +1476,11 @@ def _card_compacta(c):
     marca += _aviso_html(c)
     pie = [x for x in ("Fuente: INDEC" if c.get("fuente_indec") else "",
                        f'*{c["nota_num"]}' if c.get("nota_num") else "") if x]
-    return (f'<a class="cc" id="{c.get("slug", "")}" href="../serie/{c.get("slug", "")}/">{cabeza}{fila}{grafico}'
+    sello = c.get("sello") or ""
+    clase = "cc con-sello" if sello else "cc"
+    if sello:
+        cabeza = f'<div class="cc-cab"><div class="cc-tx">{cabeza}</div>{sello}</div>'
+    return (f'<a class="{clase}" id="{c.get("slug", "")}" href="../serie/{c.get("slug", "")}/">{cabeza}{fila}{grafico}'
             f'{c.get("frescura", "")}{marca}<div class="cc-pie"><span>{" · ".join(pie)}</span>'
             f'<span class="cc-ver">Ver serie →</span></div></a>')
 
@@ -1656,7 +1669,7 @@ def _escribir_series(charts, series_js, notas_dict, tema, temas_nav, etiquetas, 
 
 _JS_MINIS = """(function(){
 const T = __TEMA_MINI__, MINIS = __MINIS__;
-const ROL = [T.azul_1, T.azul_2, T.azul_3, T.azul_contexto];
+const ROL = [T.principal_1, T.principal_2, T.principal_3, T.principal_contexto];
 const esPP = u => u === 'p.p.' || u === 'pp';
 const esPct = u => !!u && (u.includes('%') || esPP(u));
 function decDe(u, v) { if (esPct(u)) return esPP(u) ? 2 : 1; if (u && /millones|miles|puntos/.test(u)) return 0;
@@ -1681,7 +1694,7 @@ document.querySelectorAll('canvas[data-mini]').forEach(cv => {
       interaction:{ mode:'index', intersect:false }, layout:{ padding:{ top:3, right:4, bottom:1, left:1 } },
       scales:{ x:{ display:false, stacked:!!m.apilado }, y:{ display:false, stacked:!!m.apilado, grace:'4%' } },
       plugins:{ legend:{ display:false }, etiquetasDirectas:false, tramoSinDatos:false, lineaCero:false,
-        tooltip:{ displayColors:ds.length > 1, backgroundColor:'#FFFFFF', borderColor:T.azul_contexto, borderWidth:1,
+        tooltip:{ displayColors:ds.length > 1, backgroundColor:'#FFFFFF', borderColor:T.principal_contexto, borderWidth:1,
           titleColor:T.texto, bodyColor:T.texto_2, padding:6, cornerRadius:2, boxWidth:8, boxHeight:8,
           filter:it => it.raw != null,
           callbacks:{ label:c => (ds.length > 1 ? c.dataset.label + ': ' : '') + fmt(c.raw, m.u) + ' ' + m.u } } } } });
@@ -1810,18 +1823,18 @@ __VARS__
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body { margin:0; background:var(--fondo); color:var(--texto); font-family:__FUENTE__; line-height:1.45; -webkit-font-smoothing:antialiased; }
-  a { color:var(--azul-2); text-decoration:none; } a:hover { text-decoration:underline; }
+  a { color:var(--principal-2); text-decoration:none; } a:hover { text-decoration:underline; }
   .wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
   main.wrap { padding-bottom:60px; }
-  header.masthead { border-top:4px solid var(--azul-1); padding:26px 0 16px; }
+  header.masthead { border-top:4px solid var(--principal-1); padding:26px 0 16px; }
   header h1 { font-size:30px; line-height:1.15; margin:0; font-weight:700; letter-spacing:-.01em; }
   nav.secciones { position:sticky; top:0; z-index:20; background:var(--fondo); border-bottom:1px solid var(--linea); }
   nav.secciones .wrap { display:flex; align-items:center; gap:22px; overflow-x:auto; scrollbar-width:none; }
   nav.secciones .wrap::-webkit-scrollbar { display:none; }
   nav.secciones a { flex:none; font-size:14px; color:var(--texto-2); padding:12px 0 10px; border-bottom:3px solid transparent; }
-  nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--principal-1); }
   nav.secciones a:hover { color:var(--texto); text-decoration:none; }
-  nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
+  nav.secciones a.nav-pagina { margin-left:auto; color:var(--principal-2); font-weight:600; }
   nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }
   header h1 a.h1-link { color:inherit; } header h1 a.h1-link:hover { text-decoration:none; }
   /* Bloque E3: página de tema (cards compactas) y de serie (card completa a todo el ancho). */
@@ -1837,7 +1850,7 @@ __VARS__
   .s-desc { font-size:14px; color:var(--texto-2); margin:8px 0 0; }
   .s-val .cv { font-size:34px; }
   .s-der .chg { margin-top:2px; } .s-der .cf { margin-top:6px; font-size:12px; }
-  .s-prox { margin-top:10px; padding:8px 10px; border-left:3px solid var(--azul-1); background:var(--franja-fondo); font-size:13px; color:var(--texto-2); }
+  .s-prox { margin-top:10px; padding:8px 10px; border-left:3px solid var(--principal-1); background:var(--franja-fondo); font-size:13px; color:var(--texto-2); }
   .s-prox-l { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); margin-bottom:2px; }
   .s-prox b { color:var(--texto); }
   .grid.una .cell { border-top:0; padding-top:0; }
@@ -1848,7 +1861,7 @@ __VARS__
   .s-otras li { margin:3px 0; }
   .grid.una .cbox { height:420px; }
   a.cc { display:flex; flex-direction:column; color:inherit; border-top:1px solid var(--linea); padding:14px 0 18px; min-width:0; }
-  a.cc:hover { text-decoration:none; } a.cc:hover .ct { color:var(--azul-2); }
+  a.cc:hover { text-decoration:none; } a.cc:hover .ct { color:var(--principal-2); }
   a.cc .ct { font-size:16px; margin-top:4px; padding-right:0; }
   a.cc .cn { padding-right:0; }
   a.cc .cv { font-size:22px; }
@@ -1856,7 +1869,7 @@ __VARS__
   .mtexto { font-size:12px; color:var(--texto-3); background:var(--franja-fondo); padding:12px 10px; margin:10px 0 6px; }
   a.cc .cf { margin-top:2px; }
   .cc-pie { display:flex; justify-content:space-between; gap:10px; font-size:11px; color:var(--texto-3); margin-top:auto; padding-top:8px; }
-  .cc-ver { color:var(--azul-2); font-weight:600; white-space:nowrap; }   /* Calendario + Financiera/Macro, juntos a la derecha */
+  .cc-ver { color:var(--principal-2); font-weight:600; white-space:nowrap; }   /* Calendario + Financiera/Macro, juntos a la derecha */
   section.bloque { padding-top:34px; scroll-margin-top:44px; }
   section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
   h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }
@@ -1881,20 +1894,20 @@ __VARS__
   .ct { font-size:18px; line-height:1.28; font-weight:700; margin:5px 0 0; color:var(--texto); padding-right:30px; }
   .csub { font-size:13px; color:var(--texto-2); margin-top:3px; line-height:1.35; }
   .cm { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-top:8px; }
-  .cv { font-size:26px; font-weight:700; color:var(--azul-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .cv { font-size:26px; font-weight:700; color:var(--principal-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
   .uni { font-size:13px; color:var(--texto-2); }
   /* D3: variación en gris azulado, sin juicio (el arena queda reservado a los valores negativos). */
   .chg { font-size:13px; color:var(--texto-2); font-variant-numeric:tabular-nums; }
   .chg .tri { font-size:11px; margin-right:3px; }
-  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + azul para
+  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + principal_2 para
      "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
      El estado nunca va sólo en color: lleva ícono y texto. */
-  .cf { font-size:11px; color:#7A8C9A; margin-top:5px; line-height:1.35; }
-  .cf .per { color:#4A5A68; font-weight:600; }
-  .cf .ok { color:#3A7CA5; font-weight:600; }
-  .cf .atr { color:#2E3A45; font-weight:700; }
-  .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
-  .cf.grave .per { color:#2E3A45; }
+  .cf { font-size:11px; color:var(--texto-3); margin-top:5px; line-height:1.35; }
+  .cf .per { color:var(--texto-2); font-weight:600; }
+  .cf .ok { color:var(--principal-2); font-weight:600; }
+  .cf .atr { color:var(--atrasado); font-weight:700; }
+  .cf.grave { color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde); padding:4px 8px; border-radius:0 4px 4px 0; }
+  .cf.grave .per { color:var(--atrasado); }
   .aviso-card { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
     padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
   .marca-fecha { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
@@ -1913,10 +1926,10 @@ __VARS__
   .vista { margin-right:6px; }
   .filtro, .rezago-btn { font:inherit; background:none; border:0; padding:2px 5px; color:var(--texto-2); cursor:pointer; border-bottom:2px solid transparent; }
   .filtro:hover, .rezago-btn:hover { color:var(--texto); }
-  .filtro.active, .rezago-btn.active { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  .filtro.active, .rezago-btn.active { color:var(--texto); font-weight:700; border-bottom-color:var(--principal-1); }
   .rango-custom { display:none; align-items:center; gap:6px; margin-top:6px; font-size:12px; color:var(--texto-2); }
   .rango-custom input[type=date] { font:inherit; font-size:12px; padding:2px 4px; border:1px solid var(--linea); background:var(--fondo); color:var(--texto); }
-  .rango-aplicar { font:inherit; font-size:12px; background:var(--azul-1); color:#fff; border:0; padding:3px 10px; cursor:pointer; }
+  .rango-aplicar { font:inherit; font-size:12px; background:var(--principal-1); color:#fff; border:0; padding:3px 10px; cursor:pointer; }
   .fuente-pie { font-size:11px; color:var(--texto-3); line-height:1.45; margin-top:6px; }
   .fuente-pie a { color:var(--texto-3); text-decoration:underline; text-decoration-color:#C9D3DC; }
   .fuente-tabla { margin:4px 0 14px; }
@@ -1946,6 +1959,7 @@ __VARS__
     nav.secciones a { font-size:13px; }
     .tabla { font-size:12px; } .tabla td, .tabla th { padding:6px 5px; }
   }
+__IDENTIDAD__
 </style></head>
 <body>
 <header class="masthead"><div class="wrap">
@@ -1971,7 +1985,7 @@ SERIES.forEach(s => { SERIE_POR_I[s.i] = s; });
 /* ---------- C1: tema único. Todos los gráficos heredan de acá; ninguno se estiliza por separado ---------- */
 const FUENTE = TEMA.fuente;
 const GRILLA = '#EEEEEE';
-const NIVEL = [TEMA.azul_1, TEMA.azul_2, TEMA.azul_3, TEMA.azul_contexto];   // jerarquía: 0 = protagonista
+const NIVEL = [TEMA.principal_1, TEMA.principal_2, TEMA.principal_3, TEMA.principal_contexto];   // jerarquía: 0 = protagonista
 const ANCHO = [2.5, 1.75, 1.75, 1.25];
 const TRAZO = [[], [], [5, 3], [2, 2]];
 const alfa = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
@@ -2009,7 +2023,7 @@ Chart.defaults.scale.grid.color = GRILLA;
 Chart.defaults.scale.border.display = false;
 Chart.defaults.scale.ticks.color = TEMA.texto_3;
 Object.assign(Chart.defaults.plugins.tooltip, {
-  backgroundColor:'#FFFFFF', borderColor:TEMA.azul_contexto, borderWidth:1, titleColor:TEMA.texto,
+  backgroundColor:'#FFFFFF', borderColor:TEMA.principal_contexto, borderWidth:1, titleColor:TEMA.texto,
   bodyColor:TEMA.texto_2, footerColor:TEMA.texto_2, padding:8, cornerRadius:2, boxWidth:8, boxHeight:8,
   titleFont:{ weight:'700' }, filter: it => it.raw != null,
 });
@@ -2515,7 +2529,7 @@ function burbujaSectorPlugin(empleoPct) {
       meta.data.forEach((bar, i) => {
         const r = Math.max(3, Math.sqrt(empleoPct[i] || 0) * 6);
         ctx.beginPath(); ctx.arc(bar.x, bar.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = alfa(TEMA.azul_1, .55); ctx.strokeStyle = TEMA.azul_1; ctx.lineWidth = 1;
+        ctx.fillStyle = alfa(TEMA.principal_1, .55); ctx.strokeStyle = TEMA.principal_1; ctx.lineWidth = 1;
         ctx.fill(); ctx.stroke();
       });
       ctx.restore();
@@ -2531,12 +2545,12 @@ SERIES.forEach(s => {
   let ley = [], extra = '';
   if (s.kind === 'combo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label: s.label_barras || 'Variación mensual', data:s.flujo, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
-        { type:'line', label:'Stock', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, yAxisID:'y1', order:0,
+        { type:'bar', label: s.label_barras || 'Variación mensual', data:s.flujo, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:'Stock', data:s.y, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, yAxisID:'y1', order:0,
           etiqueta:{ u:s.unidad_linea || s.unidad, arriba:-12, bold:true } }
       ]}, options: comboOpts(s.unidad, s.unidad_linea, s.titulo_barras) });
-    ley = [{ label:'Stock (eje derecho)', color:TEMA.azul_1, linea:true },
-           { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.azul_3 }];
+    ley = [{ label:'Stock (eje derecho)', color:TEMA.principal_1, linea:true },
+           { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.principal_3 }];
     if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? 'Ventas netas (negativos) en arena.' : 'Caídas en arena.';
   } else if (s.kind === 'overlay') {
     const n = s.datasets.length;
@@ -2569,14 +2583,14 @@ SERIES.forEach(s => {
     extra = 'Aportes negativos en arena.';
   } else if (s.kind === 'espejo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.azul_3, stack:'comercio', order:2 },
-        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:TEMA.azul_contexto, stack:'comercio', order:2 },
-        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.25, order:1,
+        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.principal_3, stack:'comercio', order:2 },
+        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:TEMA.principal_contexto, stack:'comercio', order:2 },
+        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, borderWidth:2.25, order:1,
           segment:{ borderColor: g => (g.p0.parsed.y < 0 || g.p1.parsed.y < 0) ? TEMA.negativo : undefined },
           etiqueta:{ texto:'Saldo', u:s.unidad, bold:true } },
       ]}, options: espejoOpts(s.unidad) });
-    ley = [{ label:'Exportaciones (arriba)', color:TEMA.azul_3 }, { label:'importaciones (abajo)', color:TEMA.azul_contexto },
-           { label:'saldo', color:TEMA.azul_1, linea:true }];
+    ley = [{ label:'Exportaciones (arriba)', color:TEMA.principal_3 }, { label:'importaciones (abajo)', color:TEMA.principal_contexto },
+           { label:'saldo', color:TEMA.principal_1, linea:true }];
     if (tieneNeg(s.full_saldo || s.saldo)) extra = 'Saldo negativo en arena.';
   } else if (s.kind === 'bar') {
     const dest = s.destacar;
@@ -2584,46 +2598,46 @@ SERIES.forEach(s => {
       const k = (dest !== undefined && dest !== null) ? dest : ultimoIdx(c.chart.data.datasets[0].data);
       const ult = c.dataIndex === k;
       if (c.raw != null && c.raw < 0) return ult ? TEMA.negativo : alfa(TEMA.negativo, .45);
-      return ult ? TEMA.azul_1 : TEMA.azul_contexto;
+      return ult ? TEMA.principal_1 : TEMA.principal_contexto;
     };
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor:bg, categoryPercentage:.85, barPercentage:.9,
                                      etiqueta:{ barra:true, idx:dest, u:s.unidad } }] },
       options: baseOpts(s) });
-    extra = (dest !== undefined && dest !== null) ? 'En azul oscuro, el contrato más cercano.' : 'En azul oscuro, el último dato.';
+    extra = (dest !== undefined && dest !== null) ? 'En el color más oscuro, el contrato más cercano.' : 'En el color más oscuro, el último dato.';
     if (tieneNeg(s.full_y || s.y)) extra += ' ' + NEG_TXT;
   } else if (s.kind === 'bar_sectores') {
     charts[s.i] = new Chart(ctx, { type:'bar',
-      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo) }] },
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo) }] },
       options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
     extra = 'Barras: variación interanual de la actividad (caídas en arena). Burbujas: peso de cada sector en el empleo.';
   } else if (s.kind === 'combo_bl') {
     const nb = s.barras.length;
     const datasets = s.barras.map((b, i) => ({ type:'bar', label:b.label, data:b.y, yAxisID:'y', order:1,
-        backgroundColor: nb === 1 ? colorSigno(TEMA.azul_3, TEMA.negativo) : (i === 0 ? TEMA.azul_3 : TEMA.azul_contexto) }));
-    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1,
+        backgroundColor: nb === 1 ? colorSigno(TEMA.principal_3, TEMA.negativo) : (i === 0 ? TEMA.principal_3 : TEMA.principal_contexto) }));
+    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1,
         yAxisID:'y1', order:0, etiqueta:{ u:s.unidad_linea, arriba:-12, bold:true } });
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets }, options: comboBLOpts(s.unidad_barras, s.unidad_linea) });
-    ley = s.barras.map((b, i) => ({ label: b.label + (i === nb - 1 ? ' (eje izquierdo)' : ''), color: nb === 1 || i === 0 ? TEMA.azul_3 : TEMA.azul_contexto }))
-          .concat([{ label: s.linea_label + ' (eje derecho)', color:TEMA.azul_1, linea:true }]);
+    ley = s.barras.map((b, i) => ({ label: b.label + (i === nb - 1 ? ' (eje izquierdo)' : ''), color: nb === 1 || i === 0 ? TEMA.principal_3 : TEMA.principal_contexto }))
+          .concat([{ label: s.linea_label + ' (eje derecho)', color:TEMA.principal_1, linea:true }]);
     if (nb === 1 && tieneNeg(s.barras[0].full_y || s.barras[0].y)) extra = NEG_TXT;
   } else if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
     const v0 = s.kind === 'combo_rezago' ? s.variantes[String(s.rezago_default)] : s;
     charts[s.i] = new Chart(ctx, { data:{ labels:v0.x, datasets:[
-        { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.5, yAxisID:'y',
+        { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, borderWidth:2.5, yAxisID:'y',
           etiqueta:{ u:s.unidad_izq, arriba:-12, bold:true } },
-        { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.azul_3, backgroundColor:TEMA.azul_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
+        { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.principal_3, backgroundColor:TEMA.principal_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
           etiqueta:{ u:s.unidad_der, arriba:13 } },
       ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
-    ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.azul_1, linea:true, ancho:2.5 },
-           { label: s.label_der + ' (eje derecho)', color:TEMA.azul_3, linea:true, dash:true }];
+    ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.principal_1, linea:true, ancho:2.5 },
+           { label: s.label_der + ' (eje derecho)', color:TEMA.principal_3, linea:true, dash:true }];
   } else if (s.kind === 'combo_evento') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo), yAxisID:'y', order:1 },
         { type:'line', label:s.label_evento, data:s.evento, showLine:false, pointRadius:6, pointHoverRadius:8,
-          pointBackgroundColor:TEMA.azul_1, pointBorderColor:'#fff', pointBorderWidth:1.5, yAxisID:'y1', order:0 },
+          pointBackgroundColor:TEMA.principal_1, pointBorderColor:'#fff', pointBorderWidth:1.5, yAxisID:'y1', order:0 },
       ]}, options: comboEventoOpts(s.unidad_barra, s.unidad_evento) });
-    ley = [{ label: s.label_barra + ' (barras, eje izquierdo)', color:TEMA.azul_3 }, { label: s.label_evento + ' (puntos, eje derecho)', color:TEMA.azul_1 }];
+    ley = [{ label: s.label_barra + ' (barras, eje izquierdo)', color:TEMA.principal_3 }, { label: s.label_evento + ' (puntos, eje derecho)', color:TEMA.principal_1 }];
     if (tieneNeg(s.full_barra || s.barra)) extra = NEG_TXT;
   } else if (s.kind === 'muro') {
     charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map((d, i) => (
@@ -2632,7 +2646,7 @@ SERIES.forEach(s => {
     ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[Math.min(i, 3)] }));
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
-      data:{ labels:s.x, datasets:[{ label:'', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, fill:false,
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, fill:false,
                                      etiqueta:{ u:s.unidad, bold:true } }] },
       options: baseOpts(s), plugins: s.eventos ? [eventosPlugin(s.eventos)] : [] });
     if (s.eventos && s.eventos.length) extra = '▾ marca eventos (detalle en el tooltip).';
@@ -2815,7 +2829,7 @@ marcarNav();
 </body></html>"""
 
     html = (plantilla.replace("__VARS__", css_vars).replace("__FUENTE__", fuente_css)
-            .replace("__AHORA__", ahora).replace("__NAV__", nav)
+            .replace("__AHORA__", ahora).replace("__NAV__", nav).replace("__IDENTIDAD__", sitio.CSS_IDENTIDAD)
             .replace("__FUENTES__", fuentes_pagina or FUENTES_HEADER_DEFAULT)
             .replace("__H1__", f'<a href="{raiz or "./"}" class="h1-link">{titulo_pagina}</a>' if tema is not None
                      else titulo_pagina)

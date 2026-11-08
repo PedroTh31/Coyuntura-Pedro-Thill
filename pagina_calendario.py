@@ -36,30 +36,25 @@ CSS = """
     padding:6px 10px; margin-top:12px; }
   .c-top { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); column-gap:40px; }
   .c-vacio { font-size:14px; color:var(--texto-2); margin:8px 0; }
-  .c-hoy-pub { font-size:15px; margin:8px 0; } .c-hoy-pub b { color:var(--azul-1); }
+  .c-hoy-pub { font-size:15px; margin:8px 0; } .c-hoy-pub b { color:var(--principal-1); }
   .c-hoy-pub span { display:block; font-size:12px; color:var(--texto-3); }
   .c-dia { display:flex; gap:12px; border-top:1px solid var(--linea); padding:8px 0; }
   .c-dia:first-of-type { border-top:0; }
-  .tile { display:inline-flex; flex-direction:column; align-items:center; justify-content:center; width:40px; flex:none;
-    border:1px solid var(--azul-1); color:var(--azul-1); line-height:1; padding:3px 0 4px; }
-  .tile-d { font-size:9px; text-transform:uppercase; letter-spacing:.06em; }
-  .tile-n { font-size:16px; font-weight:700; margin:2px 0 1px; }
-  .tile-m { font-size:9px; text-transform:uppercase; color:var(--texto-3); }
   .c-dia-fer .tile { border-style:dashed; border-color:var(--texto-3); color:var(--texto-3); }
   .c-cont { flex:1; min-width:0; font-size:14px; }
   .c-fer { display:inline-block; font-size:12px; color:var(--texto-2); background:var(--franja-fondo); padding:3px 8px; }
   .c-nada { font-size:13px; color:var(--texto-3); padding-top:10px; }
-  .c-pub b { color:var(--azul-1); } .c-pub .cf { margin-top:2px; }
+  .c-pub b { color:var(--principal-1); } .c-pub .cf { margin-top:2px; }
   .c-pub + .c-pub { margin-top:6px; }
   .t-est td:first-child { font-weight:700; } .t-est .per { font-weight:600; color:var(--texto-2); white-space:nowrap; }
-  .t-est .ok { color:var(--azul-2); font-weight:600; } .t-est .atr { color:var(--atrasado); font-weight:700; }
+  .t-est .ok { color:var(--principal-2); font-weight:600; } .t-est .atr { color:var(--atrasado); font-weight:700; }
   .t-est .det { display:block; font-size:11px; color:var(--texto-3); }
   .mes-h { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px 16px;
     border-top:1px solid var(--texto); margin-top:30px; padding-top:8px; }
   .mes-h h3.grupo { border:0; margin:0; padding:0; }
   .tabs { display:flex; gap:2px; flex-wrap:wrap; font-size:13px; }
   .tab { font:inherit; background:none; border:0; border-bottom:2px solid transparent; padding:2px 6px; color:var(--texto-2); cursor:pointer; }
-  .tab.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  .tab.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--principal-1); }
   .ver-otras { font-size:12px; color:var(--texto-2); display:flex; align-items:center; gap:5px; cursor:pointer; }
   .mes { display:none; } .mes.activo { display:block; }
   .m-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); border-left:1px solid var(--linea); margin-top:8px; }
@@ -68,9 +63,9 @@ CSS = """
   .m-n { font-weight:700; color:var(--texto-2); font-size:12px; }
   .m-fin { background:#FAFBFC; } .m-fer { background:var(--franja-fondo); }
   .m-fer-l { font-size:10px; color:var(--texto-3); }
-  .m-hoy { outline:2px solid var(--azul-1); outline-offset:-2px; }
-  .m-hoy-l { font-size:9px; font-weight:700; text-transform:uppercase; background:var(--azul-1); color:#fff; padding:0 4px; margin-left:5px; }
-  .m-pub { color:var(--azul-1); margin-top:3px; padding-left:5px; border-left:3px solid var(--azul-1); overflow-wrap:anywhere; }
+  .m-hoy { outline:2px solid var(--principal-1); outline-offset:-2px; }
+  .m-hoy-l { font-size:9px; font-weight:700; text-transform:uppercase; background:var(--principal-1); color:#fff; padding:0 4px; margin-left:5px; }
+  .m-pub { color:var(--principal-1); margin-top:3px; padding-left:5px; border-left:3px solid var(--principal-1); overflow-wrap:anywhere; }
   .m-pub .mk { font-weight:700; margin-right:3px; }
   .m-pub.e-atrasado { border-left-color:var(--atrasado); color:var(--atrasado); }
   .m-pasado .m-n, .m-pasado .m-pub.e-incorporado { opacity:.6; }
@@ -109,8 +104,7 @@ if (otras) otras.addEventListener('change', () => document.body.classList.toggle
 
 
 def _tile(d: date) -> str:
-    return (f'<span class="tile"><span class="tile-d">{A.DIAS_SEMANA[d.weekday()]}</span>'
-            f'<span class="tile-n">{d.day}</span><span class="tile-m">{MESES_CORTOS[d.month - 1]}</span></span>')
+    return sitio.tile(A.DIAS_SEMANA[d.weekday()], d.day, MESES_CORTOS[d.month - 1])
 
 
 def _linea_html(linea: str, antes: str = "") -> str:

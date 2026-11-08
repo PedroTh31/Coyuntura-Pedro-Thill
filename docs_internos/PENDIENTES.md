@@ -203,6 +203,22 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       un snapshot sin historia: un día vacío es un día perdido. Ver también el #13 (valor 0,00 guardado
       como dato). Causa no verificada (¿hora de la corrida respecto de la operatoria, cambio del ticker?).
 
+## Bloques futuros (después del Bloque E; no implementar todavía)
+
+F1. **Agenda ampliada en el calendario (internacional + BCRA)** — anotado el 08/11/2026.
+    - Internacional: reuniones de política monetaria de la FED (FOMC), el BCE, el Banco de Japón y el Banco
+      de Inglaterra, y datos de EE. UU. del BLS (informe de empleo, CPI).
+    - BCRA: IPOM y fecha de publicación del REM (se relaciona con el #10). Verificar si el BCRA publica sus
+      fechas por adelantado en una página oficial; si no, "sin fecha oficial", nunca estimada (como mucho,
+      la fecha del último publicado).
+    - ⚠️ DECISIÓN PEDRO: cambia el alcance del B1 (hoy sólo publicaciones que alimentan el dashboard). Va
+      como sección o color aparte, sin mezclarse con las publicaciones del monitor.
+    - Reglas: cada fecha con su fuente oficial y link (regla dura #1); chequeo periódico de cambios, como
+      `verificar_calendario.py` (las fechas del BLS se movieron en 2025 por el cierre del gobierno de
+      EE. UU.); color secundario neutro, sin juicio.
+    - A definir en el diseño: si entra en el mail, si las fechas se cargan desde un archivo anual verificado
+      o se descargan, y cómo se avisa si una cambia.
+
 ## Contenido (textos del sitio, no datos)
 
 C1. **Descripciones de las páginas de serie (`descripcion:` del yaml)** — anotado el 08/11/2026 (E4,
@@ -214,3 +230,11 @@ C1. **Descripciones de las páginas de serie (`descripcion:` del yaml)** — ano
     - A hacer: redactar las descripciones (1-2 líneas por serie), indicando la fuente de cada texto
       (metadata oficial de datos.gob.ar/INDEC/BCRA o redacción propia). Las redactadas las revisa Pedro
       antes de publicar.
+
+C2. **Negativos en los combos de dos barras (diseño)** — anotado el 08/11/2026 (visto en E5, no tocado).
+    - En `vista: combo_barras_linea` con dos barras (hoy: Superávit gemelos, Resultado primario vs. intereses de
+      deuda) cada serie se pinta siempre con su tono de la rampa (`principal_3` y `principal_contexto`), también
+      cuando el valor es negativo: no se cumple "arena = sólo valores negativos" (D2 del Bloque C).
+    - Problema de fondo: si los negativos de las dos series van en arena, se pierde qué barra es de qué serie.
+      Necesita un diseño propio (por ejemplo, arena en dos tonos, borde o textura por serie); no se resuelve
+      cambiando el color.

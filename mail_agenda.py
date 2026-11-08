@@ -88,7 +88,7 @@ def _bloque_dato_nuevo(p: dict, dashboard_url: str) -> str:
     filas = (f'<tr><td colspan="3" style="padding:6px 12px 0;font-size:11px;color:{T["texto_3"]};'
              f'letter-spacing:.04em;text-transform:uppercase">{cab}</td></tr>'
              f'<tr><td colspan="3" style="padding:2px 12px 8px;font-size:20px;font-weight:700;'
-             f'color:{T["azul_1"]}">{escape(ap["titular"])}</td></tr>')
+             f'color:{T["principal_1"]}">{escape(ap["titular"])}</td></tr>')
     if ap.get("detalle"):
         filas += (f'<tr><td colspan="3" style="padding:0 12px 6px;font-size:13px;color:{T["texto_2"]}">'
                   f'{escape(ap["detalle"])}</td></tr>')
@@ -101,10 +101,10 @@ def _bloque_dato_nuevo(p: dict, dashboard_url: str) -> str:
     if p.get("url") or p.get("ancla"):   # E4: la página de la serie; si no hay, el #ancla de siempre
         url = f'{dashboard_url}{p["url"]}' if p.get("url") else f'{dashboard_url}#{p["ancla"]}'
         filas += (f'<tr><td colspan="3" style="padding:6px 12px 8px;font-size:12px"><a href="{escape(url)}" '
-                  f'style="color:{T["azul_2"]};text-decoration:none">ver gráfico →</a></td></tr>')
+                  f'style="color:{T["principal_2"]};text-decoration:none">ver gráfico →</a></td></tr>')
     else:
         filas += '<tr><td colspan="3" style="height:8px;line-height:8px;font-size:0">&nbsp;</td></tr>'
-    return _tabla(filas, f'margin-top:12px;border-left:4px solid {T["azul_1"]}')
+    return _tabla(filas, f'margin-top:12px;border-left:4px solid {T["principal_1"]}')
 
 
 def html_apertura(vista: dict, dashboard_url: str) -> str:
@@ -112,9 +112,9 @@ def html_apertura(vista: dict, dashboard_url: str) -> str:
     for p in vista["pendientes"]:
         titulo = p.get("titulo_publicado") or p["nombre_corto"]
         salida += _tabla(
-            f'<tr><td style="padding:8px 12px;font-size:13px;color:{T["texto"]};border-top:1px solid {T["azul_contexto"]};'
-            f'border-bottom:1px solid {T["azul_contexto"]}"><b style="color:{T["azul_1"]}">{escape(titulo)}</b> · '
-            f'{escape(p["linea"])}</td></tr>', f'margin-top:12px;border-left:4px solid {T["azul_3"]}')
+            f'<tr><td style="padding:8px 12px;font-size:13px;color:{T["texto"]};border-top:1px solid {T["principal_contexto"]};'
+            f'border-bottom:1px solid {T["principal_contexto"]}"><b style="color:{T["principal_1"]}">{escape(titulo)}</b> · '
+            f'{escape(p["linea"])}</td></tr>', f'margin-top:12px;border-left:4px solid {T["principal_3"]}')
     return salida
 
 
@@ -125,16 +125,16 @@ def html_calendario(vista: dict) -> str:
                 'Calendario del INDEC no disponible hoy: no se muestran fechas de publicación.</p>')
     salida = ""
     if cal["hoy"]:
-        filas = (f'<tr><td style="padding:8px 12px 2px;font-size:12px;font-weight:700;color:{T["azul_1"]};'
+        filas = (f'<tr><td style="padding:8px 12px 2px;font-size:12px;font-weight:700;color:{T["principal_1"]};'
                  'letter-spacing:.04em;text-transform:uppercase">Hoy se publica</td></tr>')
         for it in cal["hoy"]:
             filas += (f'<tr><td style="padding:2px 12px 9px;font-size:15px;color:{T["texto"]}">'
-                      f'<b style="color:{T["azul_1"]}">{escape(it["titulo"])}</b> · {escape(it["fuente"])} · '
+                      f'<b style="color:{T["principal_1"]}">{escape(it["titulo"])}</b> · {escape(it["fuente"])} · '
                       f'{escape(it["hora"])} <span style="font-size:12px;color:{T["texto_2"]}">· el dato llega en el '
                       'próximo mail</span></td></tr>')
-        salida += _tabla(filas, f'margin-top:12px;background:{T["azul_contexto"]}')
+        salida += _tabla(filas, f'margin-top:12px;background:{T["principal_contexto"]}')
     filas = _titulo_seccion("Esta semana", "publicaciones del INDEC que actualizan el dashboard")
-    borde = f'border-top:1px solid {T["azul_contexto"]}'
+    borde = f'border-top:1px solid {T["principal_contexto"]}'
     for it in cal["semana"]:
         filas += (f'<tr><td style="padding:4px 0;width:80px;font-size:13px;color:{T["texto_2"]};{borde};vertical-align:top">'
                   f'{escape(it["dia"])}</td><td style="padding:4px 0;width:44px;font-size:13px;color:{T["texto_2"]};'
@@ -158,7 +158,7 @@ def html_avisos(vista: dict, dashboard_url: str) -> str:
     filas = _titulo_seccion("Datos demorados")
     for a in vista["atrasados"]:
         filas += (f'<tr><td colspan="3" style="padding:5px 0;font-size:13px;color:{T["atrasado"]};'
-                  f'border-top:1px solid {T["azul_contexto"]}">{escape(a["texto"])}</td></tr>')
+                  f'border-top:1px solid {T["principal_contexto"]}">{escape(a["texto"])}</td></tr>')
     if vista["atrasados_mas"]:
         filas += (f'<tr><td colspan="3" style="padding:2px 0;font-size:12px;color:{T["texto_3"]}">'
                   f'y {vista["atrasados_mas"]} más</td></tr>')
@@ -173,5 +173,5 @@ def html_avisos(vista: dict, dashboard_url: str) -> str:
             mas = vista["graves_mas"]
             filas += (f'<tr><td colspan="3" style="padding:2px 0 0;font-size:12px;color:{T["texto_3"]}">'
                       f'y {len(mas)} más ({escape(", ".join(mas))}) · <a href="{escape(dashboard_url)}calendario/#demorados" '
-                      f'style="color:{T["azul_2"]};text-decoration:none">ver en el dashboard →</a></td></tr>')
+                      f'style="color:{T["principal_2"]};text-decoration:none">ver en el dashboard →</a></td></tr>')
     return _tabla(filas, "margin-top:22px")
