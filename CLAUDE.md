@@ -157,6 +157,26 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   - Colores de las secciones nuevas: `tema.py` (paleta del Bloque C; el Bloque 2 de
     `PROMPT_mail_v3.md` debería leer de ahí). Tests: `tests/test_agenda.py`, `tests/test_mail_agenda.py`.
 
+- **Organización del sitio** (Bloque E, diseño aprobado por Pedro el 07/11/2026; etapas E1 calendario →
+  E2 home → E3 temas → E4 series → E5 identidad). Hecho hasta ahora:
+  - E1: `pagina_calendario.py` genera `docs/calendario/index.html` (run.py, `_generar_calendario`, después de
+    `agenda.armar`; nunca corta el pipeline). Hoy / Esta semana (misma ventana que el mail,
+    `agenda.fin_ventana`), estado de cada publicación de `calendario.yaml` (línea del B2 + próxima fecha,
+    `agenda.proximas`), el mes con pestañas (anterior, actual y 2 siguientes, `agenda.armar_meses`: estados
+    `incorporado`/`publicado`/`atrasado`/`proximo`), datos demorados y series sin calendario
+    (`agenda.sin_calendario`). Las publicaciones del INDEC que el monitor no usa van ocultas detrás de un
+    checkbox (D6). Sin agenda: "Calendario del INDEC no disponible hoy". Nada estimado.
+  - `sitio.py`: armazón común de las páginas nuevas (cabecera, nav, pie, CSS base desde tema.py). En E2-E4
+    lo usan también la home, los temas y las series.
+  - Decisiones ya tomadas para las etapas siguientes: 9 datos clave en la home (los 8 propuestos + EMAE,
+    que tiene página de serie pero no card de tema; `titular_regla: direccion`, sujeto "El EMAE", en E4);
+    tasas bancarias en "Dinero y crédito", cauciones y CER en "Mercados" (D8 opción A); riesgo país en
+    Mercados, PBI nominal en Actividad; URLs `/serie/<slug>/`; mapeo de temas en un bloque `temas:` de
+    indicadores.yaml; financiera.html pasa a redirigir a `/mercados/`; anclas viejas (`#precios`, ...)
+    redirigidas desde la home. Identidad E5: serif + ciruela + sello, renombrando `azul_*` → `principal_*`
+    en tema.py, las variables CSS y mail_agenda.py, y los colores fijos de enviar_mail.py (el verde/rojo de
+    la variación queda para el Bloque 2 del mail). Pie y Acerca: "Proyecto iniciado el 9 de julio de 2026"
+    con link al primer commit (730dd39); contacto por mail (ofuscado, nunca completo en el HTML) y LinkedIn.
 - **Estética del dashboard** (Bloque C, diseño aprobado por Pedro el 07/11/2026; mismo estilo en las dos
   páginas):
   - Colores y tipografía SÓLO de `tema.py` (`TEMA`): el CSS (variables `--azul-1`, …) y el JS (`TEMA`,

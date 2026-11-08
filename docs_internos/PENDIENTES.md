@@ -151,3 +151,18 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
     - Desde el Bloque C las cards de depósitos en pesos con `factor: 0.001` se rotulan "miles de millones
       de $" (coherente con millones × 0,001). Pendiente: confirmar con el BCRA y, si corresponde, revisar
       el factor de la 209.
+
+19. **Compras netas de divisas por contraparte: escala del valor de la card (−2.372.091 millones de $)**
+    — anotado el 07/11/2026 (visto en la propuesta del Bloque E, no arreglado).
+    - La card resume con la última serie del overlay (Tesoro Nacional, 331.1_COMPRAS_NENAL__39): may-26 =
+      −2.372.091. La metadata oficial de datos.gob.ar (consultada el 07/11/2026) dice "En millones de
+      pesos", dataset "Factores de explicación de Base Monetaria. Datos mensuales" (efecto en pesos de las
+      compras, no dólares). Las tres series son coherentes entre sí: total = privado + Tesoro (ene-26:
+      1.676.371 − 4.030.000 = −2.353.629).
+    - Lo que hay que revisar: (a) el máximo histórico de la serie del Tesoro es 395.901 y en 2026 aparecen
+      −4.030.000 y −2.372.091 (10 veces más): ¿es la inflación y el tipo de cambio, o la fuente cambió de
+      escala? Comparar con la planilla de factores de explicación del BCRA; (b) dic-25 = 0 en las tres
+      series y abr-26 = 0 en el Tesoro: ¿cero real o dato faltante?; (c) cómo mostrarlo en la card: un
+      número de 7 cifras en millones de pesos no se lee (opciones: billones de $, o convertir a USD con el
+      tipo de cambio del mes, documentado en la nota).
+    - Nada se cambia hasta revisarlo (regla dura #4: no corregir a ojo).

@@ -14,6 +14,7 @@ Funciones puras (sin red ni disco), salvo `avisar_atrasados`, que manda el aviso
 from __future__ import annotations
 
 import json
+import re
 from datetime import date, datetime, time, timedelta
 from pathlib import Path
 
@@ -98,13 +99,20 @@ def primer_habil_de_la_semana(hoy: date, no_habiles: set) -> bool:
         C.es_habil(hoy - timedelta(days=k), no_habiles) for k in range(1, hoy.weekday() + 1))
 
 
+def fin_ventana(ctx: F.Contexto) -> date:
+    """Último día de "Esta semana": hoy + los 4 días hábiles siguientes (si hoy no es hábil, los 5
+    siguientes). La usan el mail y la página del calendario (Bloque E1)."""
+    habil = C.es_habil(ctx.hoy, ctx.no_habiles)
+    return C.sumar_dias_habiles(ctx.hoy, VENTANA_DIAS_HABILES - 1 if habil else VENTANA_DIAS_HABILES, ctx.no_habiles)
+
+
 def armar_calendario(ctx: F.Contexto, cfg: dict) -> dict:
     """Ventana = hoy + los 4 días hábiles siguientes (si hoy no es hábil, los 5 siguientes). Las
     publicaciones se muestran en la fecha del calendario del INDEC aunque caigan en un día que
     calendario.yaml marca como no hábil (los feriados sólo definen la ventana)."""
     hoy = ctx.hoy
     habil = C.es_habil(hoy, ctx.no_habiles)
-    fin = C.sumar_dias_habiles(hoy, VENTANA_DIAS_HABILES - 1 if habil else VENTANA_DIAS_HABILES, ctx.no_habiles)
+    fin = fin_ventana(ctx)
     out = {"fecha": hoy.isoformat(), "estado": "ok", "bajado": None,
            "feriado_hoy": None if habil else ctx.nombres_feriados.get(hoy),
            "primer_habil_semana": primer_habil_de_la_semana(hoy, ctx.no_habiles),
@@ -138,6 +146,94 @@ def armar_calendario(ctx: F.Contexto, cfg: dict) -> dict:
         if prox:
             out["proxima"] = {"titulo": prox[3], "dia": dia_corto(prox[0]), "hora": F._hora(prox[1])}
     return out
+
+
+# ---------------------------------------------------------------------------------------------
+# Página del calendario (Bloque E1): el mes completo, la próxima fecha de cada publicación y las
+# series sin calendario oficial. Funciones puras: leen la caché del calendario, calendario.yaml y lo
+# que ya calcularon estado_publicaciones / dashboard.generar (ctx.registro). Nada se estima.
+# ---------------------------------------------------------------------------------------------
+def _sin_periodo(titulo: str) -> str:
+    """'Índice de producción industrial pesquero (IPI pesquero). Septiembre de 2026' -> sin el período."""
+    return re.sub(r"\.\s*[^.]*\b\d{4}\.?\s*$", "", titulo).strip() or titulo
+
+
+def _estado_en_mes(per: pd.Period | None, momento: datetime, monitor: dict | None, ahora: datetime) -> str | None:
+    """'proximo' | 'incorporado' (el monitor ya muestra ese período o uno posterior) | el estado del B2
+    de la publicación ('publicado' / 'atrasado') si salió y el monitor todavía no lo tiene."""
+    if momento > ahora:
+        return "proximo"
+    if per is None or not monitor:
+        return None
+    en_monitor = pd.Period(monitor["periodo"])
+    if per.freqstr[0] != en_monitor.freqstr[0]:
+        per = per.asfreq(en_monitor.freqstr, how="end")
+    if per <= en_monitor:
+        return "incorporado"
+    return monitor.get("estado") if monitor.get("estado") in ("publicado", "atrasado") else "publicado"
+
+
+def armar_meses(cache: dict, cfg: dict, ctx: F.Contexto, publicaciones: dict, meses: list[str]) -> list[dict]:
+    """Un dict por mes ("AAAA-MM") con todos sus días: feriado, hábil, hoy, pasado y las publicaciones
+    del INDEC de la caché. Las que alimentan el monitor (matchean un `titulo_regex` de calendario.yaml)
+    llevan `pid`, el título corto ("IPC de octubre") y su estado; las demás, `pid` None y el título del
+    INDEC sin el período. Un mes que no está en la caché sale con `disponible` False."""
+    salida = []
+    for clave in meses:
+        anio, mes = map(int, clave.split("-"))
+        datos_mes = cache.get("meses", {}).get(clave)
+        por_dia: dict[date, list] = {}
+        for d in (datos_mes or {}).get("publicaciones", []):
+            f = date.fromisoformat(d["fecha"])
+            hits = [p for p in cfg["publicaciones"] if p["_re"].match(d["titulo"])]
+            item = {"hora": F._hora(d["hora"]), "titulo_indec": d["titulo"], "pid": None,
+                    "titulo": _sin_periodo(d["titulo"]), "estado": None}
+            if len(hits) == 1:   # dos patrones a la vez es un error de config (lo avisa verificar_calendario)
+                p = hits[0]
+                try:
+                    per = F.parsear_periodo_indec(p["_re"].match(d["titulo"]).group("periodo"))
+                except ValueError:
+                    per = None
+                momento = datetime.combine(f, time.fromisoformat(d["hora"]))
+                item.update(pid=p["id"], titulo=titulo_publicacion(p, per, ctx.hoy.year) if per else p["nombre_corto"],
+                            estado=_estado_en_mes(per, momento, publicaciones.get(p["id"]), ctx.ahora))
+            por_dia.setdefault(f, []).append(item)
+        dias, d = [], date(anio, mes, 1)
+        while d.month == mes:
+            pubs = sorted(por_dia.get(d, []), key=lambda x: (x["pid"] is None, x["hora"]))
+            dias.append({"fecha": d.isoformat(), "dia": DIAS_SEMANA[d.weekday()], "numero": d.day,
+                         "habil": C.es_habil(d, ctx.no_habiles), "feriado": ctx.nombres_feriados.get(d),
+                         "hoy": d == ctx.hoy, "pasado": d < ctx.hoy, "publicaciones": pubs})
+            d += timedelta(days=1)
+        salida.append({"clave": clave, "nombre": f"{F.MESES_LARGOS[mes - 1]} de {anio}",
+                       "disponible": datos_mes is not None, "bajado": (datos_mes or {}).get("bajado"), "dias": dias})
+    return salida
+
+
+def proximas(ctx: F.Contexto, cfg: dict) -> dict:
+    """Próxima fecha de cada publicación según la caché: {id: {titulo, fecha, dia, hora}}. Sin fecha
+    futura en la caché, la publicación no aparece (nunca se estima)."""
+    out = {}
+    for pub in cfg["publicaciones"]:
+        futuras = sorted((d for d in (ctx.fechas or {}).get(pub["id"], []) if _momento(d) > ctx.ahora), key=_momento)
+        if futuras:
+            d = futuras[0]
+            f = date.fromisoformat(d["fecha"])
+            out[pub["id"]] = {"titulo": titulo_publicacion(pub, d["periodo"], ctx.hoy.year), "fecha": d["fecha"],
+                              "dia": dia_corto(f), "hora": F._hora(d["hora"])}
+    return out
+
+
+def sin_calendario(ctx: F.Contexto) -> list[str]:
+    """Cards (de las que registró dashboard.generar) cuya serie principal no tiene calendario oficial y
+    no está en rezago grave (esas van en "Datos demorados"). Las diarias no entran: su "próximo
+    (estimado)" queda sólo en la card."""
+    nombres = []
+    for card, (estados, resumen) in ctx.registro.items():
+        lineas = F.lineas_card(estados, resumen)
+        if lineas and lineas[0][1].estado == "sin_calendario" and not lineas[0][1].grave:
+            nombres.append(card)
+    return nombres
 
 
 # ---------------------------------------------------------------------------------------------

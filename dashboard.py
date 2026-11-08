@@ -1394,6 +1394,7 @@ __VARS__
   nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
   nav.secciones a:hover { color:var(--texto); text-decoration:none; }
   nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
+  nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }   /* Calendario + Financiera/Macro, juntos a la derecha */
   section.bloque { padding-top:34px; scroll-margin-top:44px; }
   section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
   h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }

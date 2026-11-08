@@ -25,6 +25,7 @@ import dashboard
 import frescura
 import agenda
 import calendario_indec
+import pagina_calendario
 import fuentes_indec
 
 RAIZ = Path(__file__).resolve().parent
@@ -656,8 +657,10 @@ def main():
     chequear_frescura(historico, indicadores + financiera_propios)
     chequear_plausibilidad(historico, indicadores + financiera_propios)
 
-    nav_a_financiera = '<a href="financiera.html" class="nav-pagina">Financiera →</a>'
-    nav_a_macro = '<a href="index.html" class="nav-pagina">← Macro</a>'
+    # Bloque E1: link a la página del calendario (docs/calendario/) en las dos páginas actuales.
+    nav_calendario = '<a href="calendario/" class="nav-pagina">Calendario</a>'
+    nav_a_financiera = nav_calendario + '<a href="financiera.html" class="nav-pagina">Financiera →</a>'
+    nav_a_macro = nav_calendario + '<a href="index.html" class="nav-pagina">← Macro</a>'
     todos = indicadores + indicadores_financiera
     # Línea de frescura de cada card (Bloque B2, sólo pestaña macro). Usa la caché del calendario
     # que acaba de bajar verificar_calendario.py (corre antes en coyuntura.yml; en el fallback del
@@ -680,6 +683,12 @@ def main():
         except Exception as e:
             print(f"::warning title=Agenda del mail::no se pudo armar: {type(e).__name__}: {e}")
             agenda_mail = None
+    # Bloque E1: página del calendario (docs/calendario/index.html), con la agenda que se acaba de armar.
+    # Nunca corta el pipeline: si falla, queda la página de la corrida anterior y un warning.
+    try:
+        _generar_calendario(agenda_mail, frescura_ctx)
+    except Exception as e:
+        print(f"::warning title=Calendario::no se pudo generar la página: {type(e).__name__}: {e}")
 
     if indicadores_financiera:
         fecha_hoy = pd.Timestamp.today().strftime("%d/%m/%Y")
@@ -702,6 +711,19 @@ def main():
 
     escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador,
                             agenda_mail=agenda_mail)
+
+
+def _generar_calendario(agenda_mail, frescura_ctx):
+    """docs/calendario/index.html. Sin contexto de frescura o sin agenda, la página dice "no disponible"
+    (nunca muestra fechas viejas como si fueran de hoy)."""
+    cfg = calendario_indec.cargar_config()
+    ctx = frescura_ctx or frescura.Contexto(ahora=datetime.now(calendario_indec.ZONA_AR).replace(tzinfo=None))
+    if agenda_mail is None or frescura_ctx is None:
+        pagina_calendario.generar(None, [], {}, [], ctx, cfg)
+        return
+    meses = agenda.armar_meses(calendario_indec.cargar_cache(), cfg, ctx, agenda_mail["publicaciones"],
+                               pagina_calendario.meses_a_mostrar(ctx.hoy))
+    pagina_calendario.generar(agenda_mail, meses, agenda.proximas(ctx, cfg), agenda.sin_calendario(ctx), ctx, cfg)
 
 
 if __name__ == "__main__":
