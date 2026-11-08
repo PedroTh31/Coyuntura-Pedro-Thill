@@ -858,11 +858,12 @@ def _usos_indec(ind, fuentes_indec):
 # INDEC cae al fallback, el encabezado lo refleja.
 FUENTES_HEADER_DEFAULT = "API del INDEC · apis.datos.gob.ar · ArgentinaDatos · BCRA"
 ORDEN_FUENTES = ["API del INDEC", "apis.datos.gob.ar", "ArgentinaDatos", "BCRA",
-                 "Secretaría de Finanzas", "BYMA", "MAE", "FRED", "data912"]
+                 "Secretaría de Finanzas", "Secretaría de Trabajo", "BYMA", "MAE", "FRED", "data912"]
 ETIQUETA_FUENTE = {"datos_gob": "apis.datos.gob.ar", "argentinadatos": "ArgentinaDatos",
                    "dolar": "ArgentinaDatos", "bcra": "BCRA", "rem_bcra": "BCRA",
                    "bcra_morosidad_lineas": "BCRA", "deuda_bruta": "Secretaría de Finanzas",
-                   "byma": "BYMA", "mae_bono": "MAE", "mae_resumen": "MAE", "fred": "FRED"}
+                   "byma": "BYMA", "mae_bono": "MAE", "mae_resumen": "MAE", "fred": "FRED",
+                   "trabajo_ripte": "Secretaría de Trabajo"}
 ETIQUETA_USO_INDEC = {"indec_api": "API del INDEC", "datos_gob_ar": "apis.datos.gob.ar",
                       "argentinadatos": "ArgentinaDatos"}
 # Fuentes que un `calculo:` usa por fuera de sus ids de datos.gob (ver _calcular en run.py).
@@ -890,6 +891,9 @@ def _fuentes_de_indicador(ind, fuentes_indec):
     calculo = ind.get("calculo")
     if calculo:
         etiquetas.update(FUENTES_CALCULO.get(calculo, []))
+        for c in ("numerador", "denominador"):   # lado de un `ratio` con fuente propia (ej. el RIPTE)
+            if isinstance(ind.get(c), dict) and ind[c].get("fuente") in ETIQUETA_FUENTE:
+                etiquetas.add(ETIQUETA_FUENTE[ind[c]["fuente"]])
         ids = [ind[c] for c in CAMPOS_ID_DG if isinstance(ind.get(c), str)]
         ids += [c if isinstance(c, str) else c.get("id") for c in ind.get("componentes", [])]
         if any(i and i not in cubiertos for i in ids):

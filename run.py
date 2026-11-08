@@ -31,6 +31,7 @@ import pagina_home
 import temas
 import fuentes_indec
 import fuentes_datos_gob
+import fuentes_trabajo
 
 RAIZ = Path(__file__).resolve().parent
 CONFIG = RAIZ / "indicadores.yaml"
@@ -67,7 +68,7 @@ def _fuente_de(ind: dict) -> str:
 
 
 def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuentes_indec_usadas=None,
-                            agenda_mail=None, datos_gob_csv=None, datos_gob_descartados=None):
+                            agenda_mail=None, datos_gob_csv=None, datos_gob_descartados=None, trabajo_ripte=None):
     ahora = datetime.now(ZONA_AR)
     datos = {
         "fecha": ahora.date().isoformat(),
@@ -84,6 +85,9 @@ def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuen
         "datos_gob_csv": datos_gob_csv or {},
         # Períodos del CSV descartados porque repetían exactamente el valor anterior (guarda anti-RIPTE).
         "datos_gob_csv_descartados": datos_gob_descartados or {},
+        # RIPTE de la Secretaría de Trabajo (fuentes_trabajo.py): de dónde salió en ESTA corrida (pdf, pdf_cache,
+        # tabla o error), motivo y racha de corridas seguidas sin el PDF.
+        "trabajo_ripte": trabajo_ripte,
         # Bloque B3: calendario, estado de cada publicación y avisos de frescura para el mail diario
         # (agenda.py). El mail no recalcula nada: si falta (o la corrida no es de hoy), no muestra fechas.
         "agenda": agenda_mail,
@@ -118,10 +122,12 @@ def _calcular(ind, start):
         s["valor"] = s["a"] - s["b"]
         return s[["fecha", "valor"]]
     if tipo == "ratio":
-        # Cociente de dos series de datos_gob (ej. salario / costo de una canasta):
-        # numerador_id / denominador_id, sin rebase ni indexar -- el valor crudo del
-        # cociente es la unidad que importa (ej. "canastas que compra un salario").
-        num = _dg(ind["numerador_id"], start).rename(columns={"valor": "num"})
+        # Cociente de dos series (ej. salario / costo de una canasta): numerador / denominador, sin
+        # rebase ni indexar -- el valor crudo del cociente es la unidad que importa (ej. "canastas que
+        # compra un salario"). Cada lado es un id de datos_gob (`numerador_id`) o una fuente propia
+        # declarada como sub-indicador (`numerador: {fuente: ...}`, ej. el RIPTE de la Secretaría de Trabajo).
+        num = (traer(ind["numerador"], start) if isinstance(ind.get("numerador"), dict)
+               else _dg(ind["numerador_id"], start)).rename(columns={"valor": "num"})
         den = _dg(ind["denominador_id"], start).rename(columns={"valor": "den"})
         s = num.merge(den, on="fecha", how="inner").sort_values("fecha")
         s = s[s["den"] > 0]
@@ -672,11 +678,18 @@ def main():
     # Series de datos.gob.ar que salieron del CSV de distribución: estado, racha y alerta a Pedro.
     datos_gob_csv, datos_gob_descartados = fuentes_datos_gob.cerrar_corrida(_RESOLVER_DG)
     fuentes_csv = _RESOLVER_DG.por_indicador
+    # RIPTE de la Secretaría de Trabajo: estado, racha y alerta a Pedro si no salió del PDF.
+    try:
+        trabajo_ripte = fuentes_trabajo.cerrar_corrida()
+    except Exception as e:
+        print(f"::warning title=RIPTE (Secretaría de Trabajo)::no se pudo cerrar el estado: {type(e).__name__}: {e}")
+        trabajo_ripte = None
 
     if not filas:
         print("No se trajo ningun dato.")
         escribir_ultima_corrida(por_fuente, problemas, "sin_datos", _RESOLVER.por_indicador,
-                                datos_gob_csv=datos_gob_csv, datos_gob_descartados=datos_gob_descartados)
+                                datos_gob_csv=datos_gob_csv, datos_gob_descartados=datos_gob_descartados,
+                                trabajo_ripte=trabajo_ripte)
         return
 
     nuevos = pd.concat(filas, ignore_index=True)
@@ -749,7 +762,7 @@ def main():
 
     escribir_ultima_corrida(por_fuente, problemas, "parcial" if problemas else "ok", _RESOLVER.por_indicador,
                             agenda_mail=agenda_mail, datos_gob_csv=datos_gob_csv,
-                            datos_gob_descartados=datos_gob_descartados)
+                            datos_gob_descartados=datos_gob_descartados, trabajo_ripte=trabajo_ripte)
 
 
 def _ctx_solo(ctx, indicadores):

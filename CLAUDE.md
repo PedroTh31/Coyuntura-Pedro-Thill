@@ -293,7 +293,7 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   `datos_gob_csv` de `data/ultima_corrida.json`, racha en `data/datos_gob_estado.json`, alerta a Pedro el
   primer día y semanal (máx. 1 mail por corrida) y la nota de la serie agrega "Datos vía CSV de
   distribución de datos.gob.ar". `fallback_csv_excluir:` (top-level del yaml) = ids que nunca lo usan (hoy
-  el RIPTE: su CSV trae ago-2026 con el valor de jun-2026). Tests: `tests/test_fuentes_datos_gob.py`.
+  ninguno: el RIPTE, cuyo CSV traía ago-2026 con el valor de jun-2026, pasó a `fuente: trabajo_ripte`). Tests: `tests/test_fuentes_datos_gob.py`.
 - `equivalencias_indec:` (top-level del yaml) → mapa `id de datos.gob → {tabla, filtros,
   columna?, variaciones?}` de la API del INDEC, cada uno verificado contra el catálogo real
   (`fuentes/indec_equivalencias.md`; regla dura #1 vale igual: nada se agrega sin verificar).
@@ -372,8 +372,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   balance comercial energético = exportaciones de combustibles y energía menos importaciones
   de combustibles y lubricantes).
 - `calculo: ratio` + `numerador_id` + `denominador_id` → cociente de dos series de datos_gob,
-  sin rebase ni indexar (el valor crudo del cociente es la unidad que importa, ej. capacidad de
-  compra = salario en pesos ÷ costo de una canasta en pesos = "canastas que compra un salario").
+  sin rebase ni indexar (el valor crudo del cociente es la unidad que importa, ej. RIPTE medido en
+  canastas = salario en pesos ÷ costo de una canasta en pesos = "canastas que compra un salario").
+  Cualquiera de los dos lados puede ser una fuente propia en vez de un id: `numerador: {fuente: ...}`
+  (se trae con `fetchers.traer`; hoy `{fuente: trabajo_ripte}`).
 - `calculo: real` + `nominal_id` + `deflactor_id` → deflacta por IPC (ej. salario real). Por
   defecto rebasa a índice 100 al inicio de la serie. Con `base_fecha: "AAAA-MM-01"` devuelve
   en cambio PESOS CONSTANTES de ese mes (nominal × IPC(base) / IPC(t)), ej. Adelantos
@@ -428,6 +430,24 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   URL predecible): se scrapea la página de descarga para encontrar el link vigente. Los
   últimos 1-4 meses marcados como provisorios por la fuente ("(*)") se excluyen. Cacheado
   como el REM/organismos internacionales/morosidad por líneas (máximo 1 descarga por semana).
+- `fuente: trabajo_ripte` (sin parámetros) → RIPTE en pesos corrientes de la Secretaría de Trabajo
+  (`fuentes_trabajo.py`, decisión de Pedro del 08/11/2026; sin fallback a datos.gob.ar, cuyo
+  158.1_REPTE_0_0_5 dejó de devolver datos). Página
+  https://www.argentina.gob.ar/trabajo/seguridadsocial/ripte: encabezado "Publicación <Mes> <Año>", valor
+  destacado, PDF con la serie completa desde jul-1994 (nombre que cambia sin patrón en cada publicación: se
+  toma el link de la página, que hoy viene como `href="blank:#/sites/..."`) y tabla HTML de los últimos 20
+  meses. Controles que hacen fallar ruidosamente (nunca serie vacía): cada línea del PDF con un monto se
+  tiene que leer (pdfplumber deja mes y año en la línea; pdftotext no), meses consecutivos desde jul-1994
+  ($ 874,87), índice = monto / 874,87 × 100, variación % fila por fila, último mes = encabezado = título del
+  PDF, último monto = destacado y los 20 meses de la tabla iguales al PDF. Escalón: si el PDF falla y la
+  tabla pasa sus controles (meses consecutivos, variación fila por fila, último mes = encabezado), se usan
+  las filas de la tabla (el merge conserva lo anterior) + alerta; si fallan los dos, `RipteError` ->
+  `problemas` + alerta, histórico intacto. En cada corrida se baja la página; el PDF sólo si cambió su link
+  o el mes respecto de `data/_cache_ripte.csv`/`_cache_ripte_meta.json` (sólo un PDF validado pisa la
+  caché). Estado (racha sin PDF, avisos) en la clave `estado` del mismo meta; alerta a Pedro el primer día y
+  semanal; resumen en `trabajo_ripte` de `ultima_corrida.json`. Sin calendario oficial (la página dice
+  "hasta 45 días de finalizado el período": plazo, no fecha). Tests: `tests/test_trabajo_ripte.py`
+  (fixtures en `tests/fixtures/ripte_*`).
 - `vista: reservas_combo` → gráfico combinado (barras variación + línea stock).
 - `vista: balance_cambiario` + `series: [indicador_barras, indicador_linea]` → combo de UN
   indicador ya existente como barras (eje izquierdo) + UN indicador ya existente como línea

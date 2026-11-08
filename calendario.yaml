@@ -189,8 +189,9 @@ publicaciones:
 
 # Indicadores con componentes del INDEC que NO van en una publicación (quedan "sin calendario
 # oficial"), porque su período lo fija un componente sin calendario:
-#  - "Capacidad de compra del salario (RIPTE / CBT)": RIPTE (Secretaría de Trabajo); la CBT sí es
-#    del INDEC ("Valorización mensual de la canasta básica...", sale con el IPC).
+#  - "RIPTE medido en canastas básicas (CBT, GBA)": RIPTE (Secretaría de Trabajo, sin calendario: sólo dice
+#    "hasta 45 días de finalizado el período", que es un plazo, no una fecha); la CBT sí es del INDEC
+#    ("Valorización mensual de la canasta básica...", sale con el IPC).
 #  - "Préstamos al sector privado, variación % real mensual", "Adelantos transitorios / Transferencia
 #    de utilidades (pesos constantes)": BCRA + IPC. Decisión de Pedro (07/11/2026): no se asocian.
 #    La regla de "mayor rezago" no se cumple: en el historial del bot (jul-nov 2026) los préstamos

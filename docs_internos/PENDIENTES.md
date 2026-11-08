@@ -11,6 +11,14 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
      (`150.1_CSTA_BATAL_0_D_20`) sí trae datos.
    - A hacer: diagnosticar (¿serie discontinuada, id cambiado, fuente alternativa?) y, mientras
      tanto, que el gráfico avise al lector que el dato está frenado.
+   - **Resuelto el 08/11/2026:** el RIPTE sale de la Secretaría de
+     Trabajo (`fuente: trabajo_ripte`, `fuentes_trabajo.py`: PDF con la historia completa + tabla de la
+     página como control y como escalón de respaldo). La serie se renombró "RIPTE medido en canastas
+     básicas (CBT, GBA)" (la card combo "Salario real y capacidad de compra" no cambia, ni su slug) y llega
+     a ago-2026. La CBT estaba sana (API del INDEC, hasta sep-2026): la causa era sólo el RIPTE. Las 124
+     filas viejas con el nombre "Capacidad de compra del salario (RIPTE / CBT)" se borraron con
+     `reconstruir_series.py` (OK de Pedro; backup en el Escritorio, `backup_datos/`). Las otras huérfanas, en
+     el #25.
 
 2. **Series con fallback vacío en la alerta de autenticación del INDEC** — anotado el 07/11/2026.
    - Hoy: `11.3_TAC_2004_M_60`, `11.3_VMATC_2004_M_12`, `146.3_IRECREANAL_DICI_M_31`,
@@ -20,6 +28,7 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
      (`ResolverIndec.terminar(ok=False)` no las registra porque terminan vacías). El aviso
      semanal de "fallback vacío" sí las nombra, por separado.
    - A hacer: incluirlas en la alerta de autenticación.
+   - Ver también el #27 (unificar los mails de alerta).
 
 3. **Adelantos transitorios y Transferencia de utilidades congelados en may-2026** — anotado el
    07/11/2026.
@@ -96,6 +105,7 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       ese día (`graves_vistos`).
     - Mientras tanto: si el workflow del mail termina en rojo por ese error, revisar a mano antes de
       las 08:47 (o cancelar esa corrida de respaldo).
+    - Ver también el #27 (unificar los mails de alerta).
 
 12. **S&P MERVAL: corte de escala el 19/10/2026** — anotado el 07/11/2026 (visto en el Bloque C, no
     arreglado a pedido de Pedro).
@@ -223,7 +233,7 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       períodos con más de 1% de diferencia, CSV con períodos más nuevos), guarda anti-RIPTE (último período
       del CSV que repite exactamente el anterior: no se usa y alerta) y coherencia por card. M2 ya sale del
       BCRA (idVariable 109, promedio de días corridos: 0,001% de diferencia promedio con datos.gob.ar en 24
-      meses). Falta el RIPTE.
+      meses). El RIPTE pasó a la Secretaría de Trabajo el 08/11/2026 (ver el #1).
     - Visto en la corrida local del 08/11/2026 la guarda cortó 2T-2026 de la tasa de
       informalidad (`52.2_ASDJ_0_0_37`, 0,379 igual que el 1T), aunque la API también publica 2T-2026 con
       0,379. Como la API está cortada (91 de 93 filas) la serie igual sale del CSV, sin ese trimestre (el
@@ -281,6 +291,65 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       diarias del B2. Hoy: "sep-26 · próximo: sin calendario oficial". Causa no verificada (¿se clasifica
       la frecuencia por la cantidad de puntos, que es chica porque la serie es un snapshot?).
 
+25. **Series huérfanas en el histórico** — anotado el 08/11/2026 (limpieza aparte, no tocadas).
+    - Filas de `data/series_largo.csv` (y columnas de `series_ancho.csv`) con un nombre que ya no está en
+      indicadores.yaml (indicadores renombrados o sacados). No se muestran ni se actualizan; sólo ocupan lugar.
+      Las del RIPTE con el nombre viejo ("Capacidad de compra del salario (RIPTE / CBT)", 124 filas) se
+      borraron el 08/11/2026 con `reconstruir_series.py` (backup en el Escritorio, `backup_datos/`).
+    - Quedan 13 (nombre: filas, primer y último mes):
+
+      | Serie | Filas | Desde | Hasta |
+      |---|---|---|---|
+      | EMAE No urbano (agro, minería y pesca) | 265 | 2004-06 | 2026-06 |
+      | EMAE Urbano | 265 | 2004-06 | 2026-06 |
+      | Exportaciones a Brasil | 269 | 2004-01 | 2026-05 |
+      | Exportaciones a Chile | 269 | 2004-01 | 2026-05 |
+      | Exportaciones a China | 269 | 2004-01 | 2026-05 |
+      | Exportaciones a Estados Unidos | 269 | 2004-01 | 2026-05 |
+      | Exportaciones a India | 269 | 2004-01 | 2026-05 |
+      | IPC Nacional - Nivel general | 115 | 2016-12 | 2026-06 |
+      | IPI manufacturero (industria) | 126 | 2016-01 | 2026-06 |
+      | Inflación esperada (REM, próximo mes) | 121 | 2016-07 | 2026-07 |
+      | Tasa BADLAR (mayorista) | 8.205 | 2004-01 | 2026-06 |
+      | Tasa de política monetaria | 3.495 | 2015-12 | 2025-07 |
+      | Venta de vehículos 0km al mercado interno | 270 | 2004-01 | 2026-06 |
+
+    - A hacer: decidir serie por serie si se borra (con `reconstruir_series.py` y backup) o si se conserva
+      como archivo (ej. EMAE Urbano/No urbano o IPI, que salieron del dashboard a pedido de Pedro).
+
+26. **Notas de series `solo_componente` que no se publican** — anotado el 08/11/2026 (sólo diagnóstico, no
+    arreglado).
+    - El sitio publica sólo la `nota` de la card (`dashboard.generar` usa `ind.get("nota")` de la card que
+      dibuja); la `nota` propia de una serie `solo_componente` no aparece en ninguna página. Hoy tienen nota
+      propia que no se ve:
+      - "Compras netas de divisas del BCRA" (card: Balance cambiario).
+      - "Salario real (deflactado por IPC)" (card: Salario real y capacidad de compra).
+      - "RIPTE medido en canastas básicas (CBT, GBA)" (misma card; lo esencial se copió a la nota de la card el
+        08/11/2026).
+      - "Resultado primario acumulado 12 meses" (card: ¿El mercado premia la mejora fiscal?).
+      - "Depósitos: sector privado en dólares" y "Depósitos: sector público en dólares" (card: Depósitos en
+        moneda extranjera).
+      - "TIR AL30 (USD)", "TIR GD30 (USD)", "TIR GD35 (USD)" (card: Curva de rendimientos).
+      - "M1 (circulante + cta. cte.)" y "UST 10Y (Treasury)": sin card que las dibuje (el M1 salió del overlay,
+        #23; el UST 10Y sólo entra en el cálculo del spread soberano).
+    - La nota "Datos vía CSV de distribución de datos.gob.ar" sí llega: `_ids_csv` junta los ids de la card y
+      de los indicadores que referencia (en la corrida local del 08/11/2026 apareció en 17 páginas de serie,
+      entre ellas Actividad y empleo por sector, Préstamos por tipo de deudor y Agregados monetarios). Sólo se
+      pierde en series sin card: M1 (90.1_BMCMP_0_0_44, 90.1_DCCT_0_0_32) y Adelantos transitorios / Transferencia
+      de utilidades nominales (331.1_OTRAS_OPERIOS__58, 331.1_OTRAS_OPERDES__39), cuyos datos tampoco se ven; las
+      versiones en pesos constantes, que sí se dibujan, llevan la nota.
+    - A hacer: decidir si la nota de una componente se suma a la de su card (y cómo, sin repetir) o si se
+      revisan a mano las notas de esas cards.
+
+27. **Tres mecanismos de alerta con un mail de tope cada uno** — anotado el 08/11/2026 (ver también el #2 y
+    el #11).
+    - Hoy cada corrida puede mandar a Pedro hasta tres mails: INDEC (`fuentes_indec.cerrar_corrida`), fallback
+      al CSV de datos.gob.ar (`fuentes_datos_gob.cerrar_corrida`) y RIPTE de la Secretaría de Trabajo
+      (`fuentes_trabajo.cerrar_corrida`), más los del calendario (`verificar_calendario.py`) y los de frescura
+      (`agenda.avisar_atrasados`), cada uno con su propio estado y su tope de 1 mail por corrida.
+    - A evaluar: un solo mail por corrida con secciones, que junte los avisos que tocan ese día (cada
+      mecanismo conservaría su estado y su frecuencia; sólo cambiaría el envío).
+
 ## Bloques futuros (después del Bloque E; no implementar todavía)
 
 F1. **Agenda ampliada en el calendario (internacional + BCRA)** — anotado el 08/11/2026.
@@ -308,6 +377,10 @@ C1. **Descripciones de las páginas de serie (`descripcion:` del yaml)** — ano
     - A hacer: redactar las descripciones (1-2 líneas por serie), indicando la fuente de cada texto
       (metadata oficial de datos.gob.ar/INDEC/BCRA o redacción propia). Las redactadas las revisa Pedro
       antes de publicar.
+    - Revisar también los nombres de las cards. Caso anotado el 08/11/2026: "Salario real y capacidad de
+      compra" contradice el descargo de la Secretaría de Trabajo (el RIPTE de su eje derecho es un indicador
+      previsional, no una medida de la evolución de los salarios). Cambiarle el nombre cambia el slug de
+      `/serie/` (hay que redirigir el viejo, como financiera.html) y los bloques `temas:` y `home:` del yaml.
 
 C2. **Negativos en los combos de dos barras (diseño)** — anotado el 08/11/2026 (visto en E5, no tocado).
     - En `vista: combo_barras_linea` con dos barras (hoy: Superávit gemelos, Resultado primario vs. intereses de

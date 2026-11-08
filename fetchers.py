@@ -1166,4 +1166,7 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
         return fetch_mae_bono_campo(indicador["ticker"], indicador["campo"], indicador.get("letra", "H"))
     if fuente == "fred":
         return fetch_fred(indicador["id"], start_date)
+    if fuente == "trabajo_ripte":   # Secretaría de Trabajo: PDF + tabla de la página, con controles
+        import fuentes_trabajo
+        return fuentes_trabajo.serie(start_date)
     raise ValueError(f"Fuente desconocida: {fuente}")
