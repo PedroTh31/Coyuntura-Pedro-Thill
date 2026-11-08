@@ -5,10 +5,10 @@
 <style>
   /* Bloque C: colores y tipografía de tema.py (una sola fuente de verdad, la misma que el mail). */
   :root {
-    --azul-1: #0B3C5D;
-    --azul-2: #3A7CA5;
-    --azul-3: #81B1D3;
-    --azul-contexto: #DCE8F1;
+    --principal-1: #46245A;
+    --principal-2: #85559B;
+    --principal-3: #C2A3D1;
+    --principal-contexto: #E3D5EA;
     --texto: #111111;
     --texto-2: #4A5A68;
     --texto-3: #7A8C9A;
@@ -17,23 +17,24 @@
     --franja-fondo: #EEF1F4;
     --franja-borde: #4A5A68;
     --fondo: #FFFFFF;
+    --fuente-titulares: Georgia, "Times New Roman", Times, serif;
     --linea:#E3E8ED; --grilla:#EEEEEE;
   }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body { margin:0; background:var(--fondo); color:var(--texto); font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; line-height:1.45; -webkit-font-smoothing:antialiased; }
-  a { color:var(--azul-2); text-decoration:none; } a:hover { text-decoration:underline; }
+  a { color:var(--principal-2); text-decoration:none; } a:hover { text-decoration:underline; }
   .wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
   main.wrap { padding-bottom:60px; }
-  header.masthead { border-top:4px solid var(--azul-1); padding:26px 0 16px; }
+  header.masthead { border-top:4px solid var(--principal-1); padding:26px 0 16px; }
   header h1 { font-size:30px; line-height:1.15; margin:0; font-weight:700; letter-spacing:-.01em; }
   nav.secciones { position:sticky; top:0; z-index:20; background:var(--fondo); border-bottom:1px solid var(--linea); }
   nav.secciones .wrap { display:flex; align-items:center; gap:22px; overflow-x:auto; scrollbar-width:none; }
   nav.secciones .wrap::-webkit-scrollbar { display:none; }
   nav.secciones a { flex:none; font-size:14px; color:var(--texto-2); padding:12px 0 10px; border-bottom:3px solid transparent; }
-  nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  nav.secciones a.activo { color:var(--texto); font-weight:700; border-bottom-color:var(--principal-1); }
   nav.secciones a:hover { color:var(--texto); text-decoration:none; }
-  nav.secciones a.nav-pagina { margin-left:auto; color:var(--azul-2); font-weight:600; }
+  nav.secciones a.nav-pagina { margin-left:auto; color:var(--principal-2); font-weight:600; }
   nav.secciones a.nav-pagina + a.nav-pagina { margin-left:0; }
   header h1 a.h1-link { color:inherit; } header h1 a.h1-link:hover { text-decoration:none; }
   /* Bloque E3: página de tema (cards compactas) y de serie (card completa a todo el ancho). */
@@ -49,7 +50,7 @@
   .s-desc { font-size:14px; color:var(--texto-2); margin:8px 0 0; }
   .s-val .cv { font-size:34px; }
   .s-der .chg { margin-top:2px; } .s-der .cf { margin-top:6px; font-size:12px; }
-  .s-prox { margin-top:10px; padding:8px 10px; border-left:3px solid var(--azul-1); background:var(--franja-fondo); font-size:13px; color:var(--texto-2); }
+  .s-prox { margin-top:10px; padding:8px 10px; border-left:3px solid var(--principal-1); background:var(--franja-fondo); font-size:13px; color:var(--texto-2); }
   .s-prox-l { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); margin-bottom:2px; }
   .s-prox b { color:var(--texto); }
   .grid.una .cell { border-top:0; padding-top:0; }
@@ -60,7 +61,7 @@
   .s-otras li { margin:3px 0; }
   .grid.una .cbox { height:420px; }
   a.cc { display:flex; flex-direction:column; color:inherit; border-top:1px solid var(--linea); padding:14px 0 18px; min-width:0; }
-  a.cc:hover { text-decoration:none; } a.cc:hover .ct { color:var(--azul-2); }
+  a.cc:hover { text-decoration:none; } a.cc:hover .ct { color:var(--principal-2); }
   a.cc .ct { font-size:16px; margin-top:4px; padding-right:0; }
   a.cc .cn { padding-right:0; }
   a.cc .cv { font-size:22px; }
@@ -68,7 +69,7 @@
   .mtexto { font-size:12px; color:var(--texto-3); background:var(--franja-fondo); padding:12px 10px; margin:10px 0 6px; }
   a.cc .cf { margin-top:2px; }
   .cc-pie { display:flex; justify-content:space-between; gap:10px; font-size:11px; color:var(--texto-3); margin-top:auto; padding-top:8px; }
-  .cc-ver { color:var(--azul-2); font-weight:600; white-space:nowrap; }   /* Calendario + Financiera/Macro, juntos a la derecha */
+  .cc-ver { color:var(--principal-2); font-weight:600; white-space:nowrap; }   /* Calendario + Financiera/Macro, juntos a la derecha */
   section.bloque { padding-top:34px; scroll-margin-top:44px; }
   section.bloque > h2 { font-size:24px; margin:0; padding-top:10px; border-top:1px solid var(--texto); font-weight:700; }
   h3.grupo { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); font-weight:600; margin:26px 0 0; }
@@ -93,20 +94,20 @@
   .ct { font-size:18px; line-height:1.28; font-weight:700; margin:5px 0 0; color:var(--texto); padding-right:30px; }
   .csub { font-size:13px; color:var(--texto-2); margin-top:3px; line-height:1.35; }
   .cm { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-top:8px; }
-  .cv { font-size:26px; font-weight:700; color:var(--azul-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .cv { font-size:26px; font-weight:700; color:var(--principal-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
   .uni { font-size:13px; color:var(--texto-2); }
   /* D3: variación en gris azulado, sin juicio (el arena queda reservado a los valores negativos). */
   .chg { font-size:13px; color:var(--texto-2); font-variant-numeric:tabular-nums; }
   .chg .tri { font-size:11px; margin-right:3px; }
-  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + azul para
+  /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + principal_2 para
      "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
      El estado nunca va sólo en color: lleva ícono y texto. */
-  .cf { font-size:11px; color:#7A8C9A; margin-top:5px; line-height:1.35; }
-  .cf .per { color:#4A5A68; font-weight:600; }
-  .cf .ok { color:#3A7CA5; font-weight:600; }
-  .cf .atr { color:#2E3A45; font-weight:700; }
-  .cf.grave { color:#2E3A45; background:#EEF1F4; border-left:3px solid #4A5A68; padding:4px 8px; border-radius:0 4px 4px 0; }
-  .cf.grave .per { color:#2E3A45; }
+  .cf { font-size:11px; color:var(--texto-3); margin-top:5px; line-height:1.35; }
+  .cf .per { color:var(--texto-2); font-weight:600; }
+  .cf .ok { color:var(--principal-2); font-weight:600; }
+  .cf .atr { color:var(--atrasado); font-weight:700; }
+  .cf.grave { color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde); padding:4px 8px; border-radius:0 4px 4px 0; }
+  .cf.grave .per { color:var(--atrasado); }
   .aviso-card { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
     padding:4px 8px; border-radius:0 4px 4px 0; margin-top:6px; }
   .marca-fecha { font-size:11px; color:var(--atrasado); background:var(--franja-fondo); border-left:3px solid var(--franja-borde);
@@ -125,10 +126,10 @@
   .vista { margin-right:6px; }
   .filtro, .rezago-btn { font:inherit; background:none; border:0; padding:2px 5px; color:var(--texto-2); cursor:pointer; border-bottom:2px solid transparent; }
   .filtro:hover, .rezago-btn:hover { color:var(--texto); }
-  .filtro.active, .rezago-btn.active { color:var(--texto); font-weight:700; border-bottom-color:var(--azul-1); }
+  .filtro.active, .rezago-btn.active { color:var(--texto); font-weight:700; border-bottom-color:var(--principal-1); }
   .rango-custom { display:none; align-items:center; gap:6px; margin-top:6px; font-size:12px; color:var(--texto-2); }
   .rango-custom input[type=date] { font:inherit; font-size:12px; padding:2px 4px; border:1px solid var(--linea); background:var(--fondo); color:var(--texto); }
-  .rango-aplicar { font:inherit; font-size:12px; background:var(--azul-1); color:#fff; border:0; padding:3px 10px; cursor:pointer; }
+  .rango-aplicar { font:inherit; font-size:12px; background:var(--principal-1); color:#fff; border:0; padding:3px 10px; cursor:pointer; }
   .fuente-pie { font-size:11px; color:var(--texto-3); line-height:1.45; margin-top:6px; }
   .fuente-pie a { color:var(--texto-3); text-decoration:underline; text-decoration-color:#C9D3DC; }
   .fuente-tabla { margin:4px 0 14px; }
@@ -158,11 +159,55 @@
     nav.secciones a { font-size:13px; }
     .tabla { font-size:12px; } .tabla td, .tabla th { padding:6px 5px; }
   }
+
+  /* --- E5 · A+B: cabecera ciruela con título en serif y filete doble --- */
+  header.masthead { background:var(--principal-1); color:#fff; border-top:0; padding:22px 0 14px; text-align:center; }
+  header.masthead .wrap { padding-bottom:12px; border-bottom:3px double rgba(255,255,255,.65); }
+  header.masthead h1 { font-family:var(--fuente-titulares); font-size:38px; letter-spacing:-.005em; color:#fff; }
+  header.masthead h1 a { color:#fff; } header.masthead h1 a:hover { text-decoration:none; }
+  header.masthead .sub { color:rgba(255,255,255,.82); }
+  header.masthead .sub a { color:#fff; }
+  @media (min-width:1100px) { nav.secciones .wrap { justify-content:center; } }
+  /* --- E5 · A: titulares y títulos de página en serif; kickers, valores y datos siguen en sans --- */
+  .ct, .s-tit, section.bloque > h2, .h-tit h2, .tm-h b, .cal-h2, .acerca h2, .acerca h3 {
+    font-family:var(--fuente-titulares); letter-spacing:0; }
+  .ct { font-weight:700; }
+  /* --- E5 · B: pie ciruela a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
+  main.wrap { padding-bottom:0; }
+  footer, footer.pie { background:var(--principal-1); color:rgba(255,255,255,.85); border-top:0; margin-top:48px;
+    padding:18px 0 22px; box-shadow:0 0 0 100vmax var(--principal-1); clip-path:inset(0 -100vmax); font-size:12px; }
+  footer a, footer.pie a { color:#fff; text-decoration:underline; text-decoration-color:rgba(255,255,255,.45); }
+  /* --- E5 · C: estampillas de fecha (franja Hoy/Esta semana de la home y calendario) --- */
+  .tile { display:inline-flex; flex-direction:column; align-items:center; justify-content:center; width:40px; flex:none;
+    border:1px solid var(--principal-1); background:var(--fondo); color:var(--principal-1); line-height:1; padding:3px 0 4px; }
+  .tile-d { font-size:9px; text-transform:uppercase; letter-spacing:.06em; }
+  .tile-n { font-size:16px; font-weight:700; margin:2px 0 1px; }
+  .tile-m { font-size:9px; text-transform:uppercase; color:var(--texto-3); }
+  /* --- E5 · C: sello de frescura en la card del tema (mismo código que la línea del B2: borde lleno = al
+     día, punteado = atrasado, gris con fondo = sin datos nuevos, gris claro = sin calendario) --- */
+  .cc-cab { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .cc-tx { min-width:0; }
+  a.cc.con-sello > .cf:not(.grave) { display:none; }   /* la línea completa sigue en la página de la serie */
+  .sello { flex:none; display:flex; flex-direction:column; align-items:flex-end; width:max-content; max-width:118px;
+    border:1px solid var(--principal-1); background:var(--fondo); padding:3px 6px 4px; font-size:10px; line-height:1.25; text-align:right; }
+  .sello .se-per { font-size:13px; font-weight:700; color:var(--principal-1); letter-spacing:.02em; }
+  .sello .se-est { color:var(--principal-2); font-weight:700; text-transform:uppercase; letter-spacing:.05em; font-size:9px; }
+  .sello .se-det { color:var(--texto-3); }
+  .sello-atr { border-style:dashed; border-color:var(--atrasado); } .sello-atr .se-est { color:var(--atrasado); }
+  .sello-grave { border-color:var(--franja-borde); background:var(--franja-fondo); }
+  .sello-grave .se-per, .sello-grave .se-est { color:var(--atrasado); }
+  .sello-neutro { border-color:var(--linea); } .sello-neutro .se-per { color:var(--texto-2); }
+  .s-prox { background:var(--fondo); border:1px solid var(--principal-1); }
+  @media (max-width:760px) {
+    header.masthead { padding:16px 0 10px; }
+    header.masthead h1 { font-size:27px; }
+  }
+
 </style></head>
 <body>
 <header class="masthead"><div class="wrap">
   <h1><a href="../../" class="h1-link">Monitor de coyuntura · Argentina</a></h1>
-  <div class="sub">Actualizado 08/11/2026 09:45 · fuentes: apis.datos.gob.ar</div>
+  <div class="sub">Actualizado 08/11/2026 10:24 · fuentes: apis.datos.gob.ar</div>
 </div></header>
 <nav class="secciones"><div class="wrap"><a href="../../">Inicio</a><a href="../../calendario/">Calendario</a><a href="../../precios/">Precios</a><a href="../../actividad/">Actividad</a><a href="../../empleo-y-salarios/">Empleo y salarios</a><a href="../../dolar-y-reservas/">Dólar y reservas</a><a href="../../dinero-y-credito/" class="activo">Dinero y crédito</a><a href="../../sector-externo/">Sector externo</a><a href="../../fiscal-y-deuda/">Fiscal y deuda</a><a href="../../mercados/">Mercados</a></div></nav>
 <main class="wrap">
@@ -172,7 +217,7 @@
 </main>
 <script>
 const SERIES = [{"i": 0, "kind": "overlay", "unidad": "millones de $", "x": ["01/24", "02/24", "03/24", "04/24", "05/24", "06/24", "07/24", "08/24", "09/24", "10/24", "11/24", "12/24", "01/25", "02/25", "03/25", "04/25", "05/25", "06/25", "07/25", "08/25", "09/25", "10/25", "11/25", "12/25", "01/26", "02/26", "03/26", "04/26", "05/26", "06/26", "07/26", "08/26"], "full_x": ["01/04", "02/04", "03/04", "04/04", "05/04", "06/04", "07/04", "08/04", "09/04", "10/04", "11/04", "12/04", "01/05", "02/05", "03/05", "04/05", "05/05", "06/05", "07/05", "08/05", "09/05", "10/05", "11/05", "12/05", "01/06", "02/06", "03/06", "04/06", "05/06", "06/06", "07/06", "08/06", "09/06", "10/06", "11/06", "12/06", "01/07", "02/07", "03/07", "04/07", "05/07", "06/07", "07/07", "08/07", "09/07", "10/07", "11/07", "12/07", "01/08", "02/08", "03/08", "04/08", "05/08", "06/08", "07/08", "08/08", "09/08", "10/08", "11/08", "12/08", "01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09", "11/09", "12/09", "01/10", "02/10", "03/10", "04/10", "05/10", "06/10", "07/10", "08/10", "09/10", "10/10", "11/10", "12/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11", "11/11", "12/11", "01/12", "02/12", "03/12", "04/12", "05/12", "06/12", "07/12", "08/12", "09/12", "10/12", "11/12", "12/12", "01/13", "02/13", "03/13", "04/13", "05/13", "06/13", "07/13", "08/13", "09/13", "10/13", "11/13", "12/13", "01/14", "02/14", "03/14", "04/14", "05/14", "06/14", "07/14", "08/14", "09/14", "10/14", "11/14", "12/14", "01/15", "02/15", "03/15", "04/15", "05/15", "06/15", "07/15", "08/15", "09/15", "10/15", "11/15", "12/15", "01/16", "02/16", "03/16", "04/16", "05/16", "06/16", "07/16", "08/16", "09/16", "10/16", "11/16", "12/16", "01/17", "02/17", "03/17", "04/17", "05/17", "06/17", "07/17", "08/17", "09/17", "10/17", "11/17", "12/17", "01/18", "02/18", "03/18", "04/18", "05/18", "06/18", "07/18", "08/18", "09/18", "10/18", "11/18", "12/18", "01/19", "02/19", "03/19", "04/19", "05/19", "06/19", "07/19", "08/19", "09/19", "10/19", "11/19", "12/19", "01/20", "02/20", "03/20", "04/20", "05/20", "06/20", "07/20", "08/20", "09/20", "10/20", "11/20", "12/20", "01/21", "02/21", "03/21", "04/21", "05/21", "06/21", "07/21", "08/21", "09/21", "10/21", "11/21", "12/21", "01/22", "02/22", "03/22", "04/22", "05/22", "06/22", "07/22", "08/22", "09/22", "10/22", "11/22", "12/22", "01/23", "02/23", "03/23", "04/23", "05/23", "06/23", "07/23", "08/23", "09/23", "10/23", "11/23", "12/23", "01/24", "02/24", "03/24", "04/24", "05/24", "06/24", "07/24", "08/24", "09/24", "10/24", "11/24", "12/24", "01/25", "02/25", "03/25", "04/25", "05/25", "06/25", "07/25", "08/25", "09/25", "10/25", "11/25", "12/25", "01/26", "02/26", "03/26", "04/26", "05/26", "06/26", "07/26", "08/26"], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00", "2026-06-01T00:00:00", "2026-07-01T00:00:00", "2026-08-01T00:00:00"], "datasets": [{"label": "Préstamos a Familias (Consumo + Garantía real)", "y": [9250500.02, 9992450.18, 10613368.91, 11391047.12, 12720295.89, 14190824.77, 16127210.04, 19017240.79, 21345294.72, 24121159.29, 27240987.58, 29932490.48, 32622644.43, 35007896.41, 37260123.34, 40072513.12, 43014611.32, 44859289.49, 46629397.11, 49890414.12, 51446667.11, 53572879.13, 54201519.87, 56338336.35, 57117909.93, 57560027.46, 58323270.46, 60780640.72, 61192592.44, 62940262.92, 64634033.58, 64095020.07], "full_y": [15452.42, 15354.95, 15329.82, 15516.05, 15673.45, 15939.21, 16147.49, 16362.83, 16633.69, 17095.07, 17407.6, 17841.01, 18372.23, 18684.1, 18998.71, 19317.1, 19768.16, 19927.85, 20279.36, 20652.3, 21212.04, 21807.16, 22642.97, 23537.9, 24557.83, 25112.24, 25720.27, 26438.43, 27232.83, 28248.68, 28653.16, 29569.72, 30656.49, 31859.19, 33160.69, 34303.08, 35650.99, 36906.73, 37901.16, 38964.21, 39951.32, 41514.9, 42610.05, 44604.3, 46819.0, 48741.61, 50824.03, 52451.78, 54272.41, 55967.87, 57251.8, 58799.86, 60896.6, 62320.01, 63066.4, 64362.19, 65272.86, 66982.4, 68215.59, 69205.17, 69734.11, 69471.21, 69167.82, 69514.19, 69708.74, 69578.51, 69423.83, 69653.34, 70306.89, 71824.28, 72844.67, 74061.64, 75513.56, 76090.84, 77059.59, 78805.03, 80384.53, 81848.11, 82984.63, 84504.39, 86810.61, 90226.89, 92867.41, 96629.9, 99993.34, 102348.28, 104951.15, 107409.97, 110500.68, 114256.92, 117668.49, 121578.32, 127458.41, 132824.58, 138183.5, 143186.0, 146942.61, 149201.84, 152547.96, 155235.57, 157931.33, 162246.91, 163598.63, 168411.51, 173201.99, 177140.33, 184268.1, 190160.75, 195695.91, 201056.69, 204334.98, 207985.22, 213473.54, 218763.88, 220939.19, 227640.89, 232853.44, 240249.0, 249797.04, 256789.3, 264585.08, 270098.6, 270144.39, 270036.65, 273238.21, 275450.74, 272575.5, 278200.62, 283360.27, 295325.3, 303849.03, 311788.62, 320942.19, 325168.37, 330803.41, 338685.98, 347079.94, 353726.34, 359695.3, 369006.47, 381948.54, 401260.94, 417953.16, 435912.52, 446563.84, 448524.1, 454771.9, 458415.36, 465422.83, 473138.58, 478810.8, 486384.88, 502532.56, 518030.34, 538112.56, 563735.34, 585450.18, 600081.69, 614863.76, 628625.37, 643874.87, 667947.05, 679664.43, 703043.81, 737837.52, 770813.56, 810347.93, 853286.77, 890260.82, 925797.25, 954354.73, 983967.1, 1017821.22, 1050867.19, 1058708.99, 1078628.54, 1107151.99, 1114062.6, 1131814.95, 1127647.12, 1131252.95, 1141264.01, 1143702.61, 1137963.83, 1152272.73, 1150632.06, 1150710.64, 1177760.29, 1195424.85, 1220766.04, 1277465.35, 1297343.49, 1310714.27, 1322457.28, 1327099.08, 1317811.44, 1296357.72, 1337031.93, 1380936.55, 1441038.54, 1475148.51, 1533632.49, 1605783.0, 1672133.9, 1729165.02, 1752072.0, 1810414.23, 1850495.81, 1884061.34, 1914707.46, 1957857.69, 1986240.63, 2062562.46, 2181647.24, 2306767.86, 2437852.17, 2492912.61, 2552008.06, 2657192.55, 2762306.35, 2872491.44, 3036642.85, 3185755.31, 3316632.8, 3474748.28, 3596668.9, 3765399.99, 3971699.41, 4128214.15, 4258239.75, 4475022.22, 4726051.85, 5081397.17, 5395506.84, 5636119.11, 6087352.91, 6593649.85, 7263188.35, 7980584.65, 8727285.45, 9250500.02, 9992450.18, 10613368.91, 11391047.12, 12720295.89, 14190824.77, 16127210.04, 19017240.79, 21345294.72, 24121159.29, 27240987.58, 29932490.48, 32622644.43, 35007896.41, 37260123.34, 40072513.12, 43014611.32, 44859289.49, 46629397.11, 49890414.12, 51446667.11, 53572879.13, 54201519.87, 56338336.35, 57117909.93, 57560027.46, 58323270.46, 60780640.72, 61192592.44, 62940262.92, 64634033.58, 64095020.07]}, {"label": "Préstamos a Empresas (Comerciales)", "y": [9301353.16, 10648765.11, 11790885.79, 13248401.93, 14951292.82, 17312122.07, 20022697.92, 21942239.37, 24262190.61, 26426107.76, 28480336.17, 31247540.3, 33779282.54, 36001054.62, 38535570.37, 41303658.2, 43291794.4, 46142003.12, 50231042.1, 51896063.94, 53924130.87, 55003844.06, 55889308.66, 56877903.46, 60628240.48, 61395863.88, 62532919.66, 63830716.33, 67235297.02, 68860603.07, 72790763.01, 77120432.65], "full_y": [14926.45, 15129.85, 15486.57, 15649.85, 16228.91, 17149.27, 17814.4, 18532.09, 18981.92, 19590.65, 20105.6, 20791.64, 20675.41, 20899.43, 21307.32, 22076.03, 22832.45, 24008.63, 25149.34, 25892.43, 26478.26, 26933.84, 27837.03, 28948.54, 29363.1, 29723.43, 30297.04, 30966.43, 32093.28, 33423.89, 34940.09, 35786.89, 36834.22, 38105.73, 38990.0, 39911.29, 40010.45, 40144.25, 41034.56, 41995.02, 43046.45, 43800.5, 45965.48, 46944.62, 48023.17, 49185.74, 50253.04, 52149.07, 53596.97, 53353.5, 53510.99, 55184.07, 56979.88, 56351.54, 56696.07, 57045.02, 58666.12, 60453.52, 59780.72, 59337.0, 58690.17, 59420.97, 61558.32, 61750.16, 62969.66, 64498.09, 65079.81, 64189.08, 63585.43, 62926.49, 63206.27, 64987.73, 65182.05, 65093.34, 66330.93, 69273.39, 72593.18, 74611.59, 77288.14, 79974.51, 82306.88, 86077.97, 89457.5, 93947.61, 96725.33, 99071.47, 101084.33, 104655.37, 109171.08, 113546.82, 121853.95, 125744.87, 131287.05, 135605.96, 138108.3, 138924.93, 140068.26, 141815.71, 143048.26, 144421.96, 146820.67, 150151.78, 156348.81, 158705.79, 161809.38, 164080.15, 167987.99, 176014.16, 179855.31, 180395.53, 182119.23, 185717.48, 190289.18, 194129.87, 202347.09, 205299.45, 211893.83, 215392.1, 216285.6, 223680.8, 230193.32, 233749.45, 233514.15, 234201.93, 237384.33, 241464.52, 249700.08, 254163.44, 256689.55, 259436.26, 259474.69, 266408.99, 271162.46, 271108.26, 278093.6, 284614.51, 290567.62, 301715.72, 315705.83, 320561.73, 325497.02, 331954.65, 343390.27, 352543.51, 356115.79, 357867.8, 364273.48, 369463.77, 383205.92, 391823.97, 408356.68, 414048.5, 425312.56, 437684.78, 446512.92, 467698.56, 474995.21, 480914.01, 485393.66, 495838.72, 515776.62, 539693.95, 590552.39, 614574.6, 630427.66, 656045.26, 675284.18, 702190.05, 735999.89, 755258.14, 772065.77, 790776.76, 855776.94, 898652.36, 923867.6, 958408.74, 1082463.16, 1020338.79, 981510.7, 1000005.67, 973507.7, 979067.93, 1021432.7, 1049312.71, 1077622.07, 1050442.13, 1056440.73, 1214045.48, 1221461.65, 1195577.41, 1162611.1, 1151702.82, 1118214.94, 1112365.7, 1154177.18, 1275188.91, 1372864.26, 1392448.34, 1385366.48, 1397369.55, 1418106.84, 1440445.1, 1455732.63, 1474704.68, 1495087.29, 1518481.51, 1517846.52, 1532801.4, 1569622.68, 1594506.04, 1656216.5, 1705336.22, 1741658.31, 1793427.94, 1901347.69, 1986056.11, 2022554.25, 2042481.42, 2132029.92, 2249797.28, 2369643.67, 2542545.53, 2718456.72, 2850708.01, 2863340.04, 2971837.12, 3160499.73, 3324392.56, 3406309.76, 3580185.6, 3853131.68, 4380204.13, 4819369.88, 5077900.01, 5515343.88, 6094872.39, 6493916.13, 7397401.03, 7736202.89, 8868580.66, 9301353.16, 10648765.11, 11790885.79, 13248401.93, 14951292.82, 17312122.07, 20022697.92, 21942239.37, 24262190.61, 26426107.76, 28480336.17, 31247540.3, 33779282.54, 36001054.62, 38535570.37, 41303658.2, 43291794.4, 46142003.12, 50231042.1, 51896063.94, 53924130.87, 55003844.06, 55889308.66, 56877903.46, 60628240.48, 61395863.88, 62532919.66, 63830716.33, 67235297.02, 68860603.07, 72790763.01, 77120432.65]}], "radio_punto": 0, "cruce": null, "escala_log": false, "barras": false}];
-const TEMA = {"azul_1": "#0B3C5D", "azul_2": "#3A7CA5", "azul_3": "#81B1D3", "azul_contexto": "#DCE8F1", "texto": "#111111", "texto_2": "#4A5A68", "texto_3": "#7A8C9A", "negativo": "#C9A66B", "atrasado": "#2E3A45", "franja_fondo": "#EEF1F4", "franja_borde": "#4A5A68", "fondo": "#FFFFFF", "fuente": "\"Helvetica Neue\", Helvetica, Arial, sans-serif"};
+const TEMA = {"principal_1": "#46245A", "principal_2": "#85559B", "principal_3": "#C2A3D1", "principal_contexto": "#E3D5EA", "texto": "#111111", "texto_2": "#4A5A68", "texto_3": "#7A8C9A", "negativo": "#C9A66B", "atrasado": "#2E3A45", "franja_fondo": "#EEF1F4", "franja_borde": "#4A5A68", "fondo": "#FFFFFF", "fuente": "\"Helvetica Neue\", Helvetica, Arial, sans-serif", "fuente_titulares": "Georgia, \"Times New Roman\", Times, serif"};
 const ETIQUETAS = {"IPC Núcleo (var. mensual)": "Núcleo", "IPC Regulados (var. mensual)": "Regulados", "IPC Estacionales (var. mensual)": "Estacionales"};
 const charts = {};
 // Lookup por s.i (el idx de la tarjeta), NO por posición en SERIES: las tarjetas "acumulando
@@ -183,7 +228,7 @@ SERIES.forEach(s => { SERIE_POR_I[s.i] = s; });
 /* ---------- C1: tema único. Todos los gráficos heredan de acá; ninguno se estiliza por separado ---------- */
 const FUENTE = TEMA.fuente;
 const GRILLA = '#EEEEEE';
-const NIVEL = [TEMA.azul_1, TEMA.azul_2, TEMA.azul_3, TEMA.azul_contexto];   // jerarquía: 0 = protagonista
+const NIVEL = [TEMA.principal_1, TEMA.principal_2, TEMA.principal_3, TEMA.principal_contexto];   // jerarquía: 0 = protagonista
 const ANCHO = [2.5, 1.75, 1.75, 1.25];
 const TRAZO = [[], [], [5, 3], [2, 2]];
 const alfa = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
@@ -221,7 +266,7 @@ Chart.defaults.scale.grid.color = GRILLA;
 Chart.defaults.scale.border.display = false;
 Chart.defaults.scale.ticks.color = TEMA.texto_3;
 Object.assign(Chart.defaults.plugins.tooltip, {
-  backgroundColor:'#FFFFFF', borderColor:TEMA.azul_contexto, borderWidth:1, titleColor:TEMA.texto,
+  backgroundColor:'#FFFFFF', borderColor:TEMA.principal_contexto, borderWidth:1, titleColor:TEMA.texto,
   bodyColor:TEMA.texto_2, footerColor:TEMA.texto_2, padding:8, cornerRadius:2, boxWidth:8, boxHeight:8,
   titleFont:{ weight:'700' }, filter: it => it.raw != null,
 });
@@ -727,7 +772,7 @@ function burbujaSectorPlugin(empleoPct) {
       meta.data.forEach((bar, i) => {
         const r = Math.max(3, Math.sqrt(empleoPct[i] || 0) * 6);
         ctx.beginPath(); ctx.arc(bar.x, bar.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = alfa(TEMA.azul_1, .55); ctx.strokeStyle = TEMA.azul_1; ctx.lineWidth = 1;
+        ctx.fillStyle = alfa(TEMA.principal_1, .55); ctx.strokeStyle = TEMA.principal_1; ctx.lineWidth = 1;
         ctx.fill(); ctx.stroke();
       });
       ctx.restore();
@@ -743,12 +788,12 @@ SERIES.forEach(s => {
   let ley = [], extra = '';
   if (s.kind === 'combo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label: s.label_barras || 'Variación mensual', data:s.flujo, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
-        { type:'line', label:'Stock', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, yAxisID:'y1', order:0,
+        { type:'bar', label: s.label_barras || 'Variación mensual', data:s.flujo, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'line', label:'Stock', data:s.y, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, yAxisID:'y1', order:0,
           etiqueta:{ u:s.unidad_linea || s.unidad, arriba:-12, bold:true } }
       ]}, options: comboOpts(s.unidad, s.unidad_linea, s.titulo_barras) });
-    ley = [{ label:'Stock (eje derecho)', color:TEMA.azul_1, linea:true },
-           { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.azul_3 }];
+    ley = [{ label:'Stock (eje derecho)', color:TEMA.principal_1, linea:true },
+           { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.principal_3 }];
     if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? 'Ventas netas (negativos) en arena.' : 'Caídas en arena.';
   } else if (s.kind === 'overlay') {
     const n = s.datasets.length;
@@ -781,14 +826,14 @@ SERIES.forEach(s => {
     extra = 'Aportes negativos en arena.';
   } else if (s.kind === 'espejo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.azul_3, stack:'comercio', order:2 },
-        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:TEMA.azul_contexto, stack:'comercio', order:2 },
-        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.25, order:1,
+        { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.principal_3, stack:'comercio', order:2 },
+        { type:'bar', label:'Importaciones', data:s.impo, backgroundColor:TEMA.principal_contexto, stack:'comercio', order:2 },
+        { type:'line', label:'Saldo comercial', data:s.saldo, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, borderWidth:2.25, order:1,
           segment:{ borderColor: g => (g.p0.parsed.y < 0 || g.p1.parsed.y < 0) ? TEMA.negativo : undefined },
           etiqueta:{ texto:'Saldo', u:s.unidad, bold:true } },
       ]}, options: espejoOpts(s.unidad) });
-    ley = [{ label:'Exportaciones (arriba)', color:TEMA.azul_3 }, { label:'importaciones (abajo)', color:TEMA.azul_contexto },
-           { label:'saldo', color:TEMA.azul_1, linea:true }];
+    ley = [{ label:'Exportaciones (arriba)', color:TEMA.principal_3 }, { label:'importaciones (abajo)', color:TEMA.principal_contexto },
+           { label:'saldo', color:TEMA.principal_1, linea:true }];
     if (tieneNeg(s.full_saldo || s.saldo)) extra = 'Saldo negativo en arena.';
   } else if (s.kind === 'bar') {
     const dest = s.destacar;
@@ -796,46 +841,46 @@ SERIES.forEach(s => {
       const k = (dest !== undefined && dest !== null) ? dest : ultimoIdx(c.chart.data.datasets[0].data);
       const ult = c.dataIndex === k;
       if (c.raw != null && c.raw < 0) return ult ? TEMA.negativo : alfa(TEMA.negativo, .45);
-      return ult ? TEMA.azul_1 : TEMA.azul_contexto;
+      return ult ? TEMA.principal_1 : TEMA.principal_contexto;
     };
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor:bg, categoryPercentage:.85, barPercentage:.9,
                                      etiqueta:{ barra:true, idx:dest, u:s.unidad } }] },
       options: baseOpts(s) });
-    extra = (dest !== undefined && dest !== null) ? 'En azul oscuro, el contrato más cercano.' : 'En azul oscuro, el último dato.';
+    extra = (dest !== undefined && dest !== null) ? 'En el color más oscuro, el contrato más cercano.' : 'En el color más oscuro, el último dato.';
     if (tieneNeg(s.full_y || s.y)) extra += ' ' + NEG_TXT;
   } else if (s.kind === 'bar_sectores') {
     charts[s.i] = new Chart(ctx, { type:'bar',
-      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo) }] },
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo) }] },
       options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
     extra = 'Barras: variación interanual de la actividad (caídas en arena). Burbujas: peso de cada sector en el empleo.';
   } else if (s.kind === 'combo_bl') {
     const nb = s.barras.length;
     const datasets = s.barras.map((b, i) => ({ type:'bar', label:b.label, data:b.y, yAxisID:'y', order:1,
-        backgroundColor: nb === 1 ? colorSigno(TEMA.azul_3, TEMA.negativo) : (i === 0 ? TEMA.azul_3 : TEMA.azul_contexto) }));
-    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1,
+        backgroundColor: nb === 1 ? colorSigno(TEMA.principal_3, TEMA.negativo) : (i === 0 ? TEMA.principal_3 : TEMA.principal_contexto) }));
+    datasets.push({ type:'line', label:s.linea_label, data:s.linea, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1,
         yAxisID:'y1', order:0, etiqueta:{ u:s.unidad_linea, arriba:-12, bold:true } });
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets }, options: comboBLOpts(s.unidad_barras, s.unidad_linea) });
-    ley = s.barras.map((b, i) => ({ label: b.label + (i === nb - 1 ? ' (eje izquierdo)' : ''), color: nb === 1 || i === 0 ? TEMA.azul_3 : TEMA.azul_contexto }))
-          .concat([{ label: s.linea_label + ' (eje derecho)', color:TEMA.azul_1, linea:true }]);
+    ley = s.barras.map((b, i) => ({ label: b.label + (i === nb - 1 ? ' (eje izquierdo)' : ''), color: nb === 1 || i === 0 ? TEMA.principal_3 : TEMA.principal_contexto }))
+          .concat([{ label: s.linea_label + ' (eje derecho)', color:TEMA.principal_1, linea:true }]);
     if (nb === 1 && tieneNeg(s.barras[0].full_y || s.barras[0].y)) extra = NEG_TXT;
   } else if (s.kind === 'combo_2lineas' || s.kind === 'combo_rezago') {
     const v0 = s.kind === 'combo_rezago' ? s.variantes[String(s.rezago_default)] : s;
     charts[s.i] = new Chart(ctx, { data:{ labels:v0.x, datasets:[
-        { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, borderWidth:2.5, yAxisID:'y',
+        { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, borderWidth:2.5, yAxisID:'y',
           etiqueta:{ u:s.unidad_izq, arriba:-12, bold:true } },
-        { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.azul_3, backgroundColor:TEMA.azul_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
+        { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.principal_3, backgroundColor:TEMA.principal_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
           etiqueta:{ u:s.unidad_der, arriba:13 } },
       ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
-    ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.azul_1, linea:true, ancho:2.5 },
-           { label: s.label_der + ' (eje derecho)', color:TEMA.azul_3, linea:true, dash:true }];
+    ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.principal_1, linea:true, ancho:2.5 },
+           { label: s.label_der + ' (eje derecho)', color:TEMA.principal_3, linea:true, dash:true }];
   } else if (s.kind === 'combo_evento') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
-        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor: colorSigno(TEMA.azul_3, TEMA.negativo), yAxisID:'y', order:1 },
+        { type:'bar', label:s.label_barra, data:s.barra, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo), yAxisID:'y', order:1 },
         { type:'line', label:s.label_evento, data:s.evento, showLine:false, pointRadius:6, pointHoverRadius:8,
-          pointBackgroundColor:TEMA.azul_1, pointBorderColor:'#fff', pointBorderWidth:1.5, yAxisID:'y1', order:0 },
+          pointBackgroundColor:TEMA.principal_1, pointBorderColor:'#fff', pointBorderWidth:1.5, yAxisID:'y1', order:0 },
       ]}, options: comboEventoOpts(s.unidad_barra, s.unidad_evento) });
-    ley = [{ label: s.label_barra + ' (barras, eje izquierdo)', color:TEMA.azul_3 }, { label: s.label_evento + ' (puntos, eje derecho)', color:TEMA.azul_1 }];
+    ley = [{ label: s.label_barra + ' (barras, eje izquierdo)', color:TEMA.principal_3 }, { label: s.label_evento + ' (puntos, eje derecho)', color:TEMA.principal_1 }];
     if (tieneNeg(s.full_barra || s.barra)) extra = NEG_TXT;
   } else if (s.kind === 'muro') {
     charts[s.i] = new Chart(ctx, { type:'bar', data:{ labels:s.x, datasets: s.datasets.map((d, i) => (
@@ -844,7 +889,7 @@ SERIES.forEach(s => {
     ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[Math.min(i, 3)] }));
   } else {
     charts[s.i] = new Chart(ctx, { type:'line',
-      data:{ labels:s.x, datasets:[{ label:'', data:s.y, borderColor:TEMA.azul_1, backgroundColor:TEMA.azul_1, fill:false,
+      data:{ labels:s.x, datasets:[{ label:'', data:s.y, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, fill:false,
                                      etiqueta:{ u:s.unidad, bold:true } }] },
       options: baseOpts(s), plugins: s.eventos ? [eventosPlugin(s.eventos)] : [] });
     if (s.eventos && s.eventos.length) extra = '▾ marca eventos (detalle en el tooltip).';
