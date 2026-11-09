@@ -1,6 +1,21 @@
 {
-  "fecha": "2026-11-06",
-  "hora_envio": "07:10:28",
+  "periodos_anunciados": {
+    "ipc": "2026-09",
+    "salarios": "2026-08",
+    "emae": "2026-08",
+    "ica": "2026-09",
+    "mercado_trabajo": "2026Q2",
+    "informe_avance": "2026Q2"
+  },
+  "graves_vistos": [
+    "Tipo de cambio real multilateral|28/01/26",
+    "Compras netas de divisas por contraparte|may-26",
+    "Compras netas de divisas del BCRA|may-26",
+    "Asistencia monetaria del BCRA al Tesoro|may-26",
+    "Reservas ajustadas (swap China + organismos internacionales)|jun-26"
+  ],
+  "fecha": "2026-11-09",
+  "hora_envio": "07:10:32",
   "zona": "America/Argentina/Buenos_Aires",
   "disparo": "workflow_dispatch",
   "datos_al_momento_del_envio": false
