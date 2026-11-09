@@ -13,7 +13,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 class TestTema(unittest.TestCase):
     def test_rampa_principal(self):
         self.assertEqual([TEMA[f"principal_{i}"] for i in (1, 2, 3)] + [TEMA["principal_contexto"]],
-                         ["#46245A", "#85559B", "#C2A3D1", "#E3D5EA"])
+                         ["#1F3A5F", "#4A6FA5", "#7696C2", "#DCE5F0"])
         self.assertFalse([k for k in TEMA if k.startswith("azul")])
         self.assertIn("serif", TEMA["fuente_titulares"])
 
@@ -23,9 +23,30 @@ class TestTema(unittest.TestCase):
             for viejo in ("azul_1", "azul_2", "azul_3", "azul_contexto", "--azul-", "#1D4E89", "#3A7CA5", "#0B3C5D"):
                 self.assertNotIn(viejo, s, f"{viejo} en {f}")
 
+    def test_sin_hex_de_la_paleta_fuera_de_tema(self):
+        # Bloque de identidad visual: ningún hex de la paleta (vieja ciruela ni actual) escrito a mano fuera de tema.py.
+        hexes = {v.upper() for k, v in TEMA.items() if isinstance(v, str) and v.startswith("#")} - {"#FFFFFF", "#111111"}
+        hexes |= {"#46245A", "#85559B", "#C2A3D1", "#E3D5EA", "#9DB4D3", "#7A8C9A"}
+        for f in ("dashboard.py", "pagina_home.py", "pagina_calendario.py", "sitio.py", "mail_agenda.py", "enviar_mail.py",
+                  "frescura.py", "run.py", "temas.py", "agenda.py"):
+            s = (RAIZ / f).read_text(encoding="utf-8").upper()
+            for h in hexes:
+                self.assertNotIn(h, s, f"{h} en {f}")
+
+    def test_nombres_de_color_desde_tema(self):
+        from tema import NOMBRE_COLOR
+        self.assertEqual(set(NOMBRE_COLOR), {"principal", "negativo"})
+        for f in ("dashboard.py", "pagina_home.py"):
+            s = (RAIZ / f).read_text(encoding="utf-8")
+            self.assertNotIn("en arena", s, f)
+            self.assertNotIn("Ciruela:", s, f)
+
+    def test_anclas_no_quedan_bajo_la_barra(self):
+        self.assertIn("[id] { scroll-margin-top:", sitio.CSS_IDENTIDAD)
+
     def test_variables_css(self):
         css = sitio.css_variables()
-        self.assertIn("--principal-1: #46245A;", css)
+        self.assertIn("--principal-1: #1F3A5F;", css)
         self.assertIn("--fuente-titulares:", css)
 
 

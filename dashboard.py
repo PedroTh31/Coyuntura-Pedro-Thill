@@ -20,7 +20,7 @@ import frescura
 import dataclasses
 import titulares
 import sitio
-from tema import TEMA
+from tema import NOMBRE_COLOR, TEMA
 
 DESDE_GENERAL = "2024-01-01"
 OUT = Path(__file__).resolve().parent / "docs"
@@ -28,16 +28,10 @@ MAX_PUNTOS_VIEJOS = 600  # tope de puntos para el tramo >2 años en series diari
 UMBRAL_DISCONTINUADA_DIAS = frescura.UMBRAL_DISCONTINUADA_DIAS  # días sin datos para "sin datos nuevos" (una sola fuente de verdad)
 UMBRAL_HISTORIA_MINIMA = 30  # por debajo de esto, no se muestra gráfico de línea (ver "acumulando historia")
 
-# Colores: TODOS salen de tema.py (Bloque C, paleta de prensa económica, protagonista ciruela desde E5 + arena para los
-# negativos) y los aplica el tema único de Chart.js del template (ver _escribir_html): ningún gráfico se
-# estiliza por separado. ACENTO/AZUL_* quedan sólo por compatibilidad (run.py arma extra_charts con
-# ACENTO["mercados"]); el campo 'color' de cards/series ya no se usa para dibujar.
-ACENTO = {"precios": "#C62828", "monetario_financiero": "#0767A7",
-          "externo": "#EF6C00", "real": "#50B7B2", "social": "#6A1B99", "fiscal": "#8D2D04",
-          "mercados": "#0767A7"}
-AZUL_MARCA = "#232D4F"     # --arg-azul: navy institucional (header, footer, texto fuerte)
-AZUL_ENLACE = "#0767A7"    # --arg-enlace: azul de interacción (links, botón activo)
-TINTA = "#141414"; PAPEL = "#FFFFFF"; GRIS = "#555555"
+# Colores: TODOS salen de tema.py (Bloque C, paleta de prensa económica; protagonista azul marino desde el bloque
+# de identidad visual, `negativo` para los negativos y los nombres de color de las leyendas de NOMBRE_COLOR) y
+# los aplica el tema único de Chart.js del template (ver _escribir_html): ningún gráfico se estiliza por separado. Las cards y series ya no llevan un campo 'color' (el de cada bloque se borró en el
+# bloque de identidad visual: no lo leía nada).
 # NOTA: "mercados" alimenta docs/financiera.html (ver dashboard_financiera vía run.py,
 # generar() con archivo_salida="financiera.html"). Convive en las mismas listas que los
 # bloques macro porque generar()/_escribir_html() son genéricos: un bloque sin tarjetas
@@ -101,7 +95,7 @@ def _variacion(serie):
     return ult, (((ult - prev) / prev * 100) if prev else None)
 
 
-def _serie_reservas_combo(idx, color, unidad, serie, desde):
+def _serie_reservas_combo(idx, unidad, serie, desde):
     """
     Arma los datos para el gráfico combo de reservas: barras = variación
     mensual del stock, línea = stock. Ambas series comparten el mismo eje
@@ -118,7 +112,7 @@ def _serie_reservas_combo(idx, color, unidad, serie, desde):
     def _vals(serie_valores):
         return [round(float(v), 2) if pd.notna(v) else None for v in serie_valores]
 
-    return dict(i=idx, color=color, unidad=unidad, kind="combo",
+    return dict(i=idx, unidad=unidad, kind="combo",
         x=[d.strftime("%m/%y") for d in sm_s.index], y=_vals(sm_s), flujo=_vals(flujo_s),
         full_x=[d.strftime("%m/%y") for d in sm_full.index], full_y=_vals(sm_full),
         full_flujo=_vals(flujo_full), full_dates=[d.isoformat() for d in sm_full.index],
@@ -161,13 +155,13 @@ def _serie_balance_cambiario(idx, ind, historico):
     # USD vs. compras netas en pesos), `unidad_linea` del yaml rotula el valor y el tooltip de la línea.
     unidad_linea = ind.get("unidad_linea", ind.get("unidad", ""))
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_linea,
+        unidad=unidad_linea,
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None,
         subtitulo=ind.get("subtitulo"),
         sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False))
 
-    serie_js = dict(i=idx, color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+    serie_js = dict(i=idx, unidad=ind.get("unidad", ""),
         unidad_linea=unidad_linea, kind="combo",
         # Rótulo de las barras: acá son las compras netas del BCRA, no la variación del stock (que es lo
         # que dibuja el combo de 'Reservas internacionales', mismo kind "combo").
@@ -209,7 +203,7 @@ def _serie_comercio_espejo(idx, ind, historico):
 
     ult, pct = _variacion(g_saldo if not g_saldo.empty else g_expo)
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_expo["valor"].max()), minv=_fmt_num(-g_impo["valor"].max()), nota_num=None,
         subtitulo=ind.get("subtitulo"),
@@ -259,7 +253,7 @@ def _serie_combo_2lineas(idx, ind, historico):
     unidad_izq, unidad_der = ind.get("unidad_izq", ""), ind.get("unidad_der", "")
     ult, pct = _variacion(g_izq)
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_izq,
+        unidad=unidad_izq,
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_izq["valor"].max()), minv=_fmt_num(g_izq["valor"].min()), nota_num=None,
         subtitulo=ind.get("subtitulo"), grande=ind.get("grande", False),
@@ -332,7 +326,7 @@ def _serie_combo_barras_linea(idx, ind, historico):
     unidad_linea = ind.get("unidad_linea", ind.get("unidad", ""))
     ult, pct = _variacion(g_linea)
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_linea,
+        unidad=unidad_linea,
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_linea["valor"].max()), minv=_fmt_num(g_linea["valor"].min()), nota_num=None,
         subtitulo=ind.get("subtitulo"), grande=ind.get("grande", False),
@@ -395,7 +389,7 @@ def _serie_combo_rezago(idx, ind, historico):
     unidad_izq, unidad_der = ind.get("unidad_izq", ""), ind.get("unidad_der", "")
     ult, pct = _variacion(g_der)  # la card resume con la serie de "resultado" (der)
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=unidad_der,
+        unidad=unidad_der,
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_der["valor"].max()), minv=_fmt_num(g_der["valor"].min()), nota_num=None,
         subtitulo=ind.get("subtitulo"), grande=True, rezagos=rezagos,
@@ -445,7 +439,7 @@ def _serie_combo_barras_evento(idx, ind, historico):
     unidad_evento = ind.get("unidad_evento", ind.get("unidad", ""))
     ult, pct = _variacion(g_barra)
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_barra["valor"].max()), minv=_fmt_num(g_barra["valor"].min()), nota_num=None,
         subtitulo=ind.get("subtitulo"), grande=ind.get("grande", False),
@@ -521,7 +515,7 @@ def _serie_overlay(idx, ind, historico):
     nombre_resumen, g_resumen = partes[-1]
     ult, pct = _variacion(g_resumen)
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        unidad=ind.get("unidad", ""),
         valor=_fmt_num(ult), pct=pct, marca_fecha=None,
         maxv=_fmt_num(g_resumen["valor"].max()), minv=_fmt_num(g_resumen["valor"].min()), nota_num=None,
         grande=ind.get("grande", False), subtitulo=ind.get("subtitulo"),
@@ -616,7 +610,7 @@ def _serie_incidencia(idx, ind, historico, indicadores_por_nombre):
     total_ultimo = sum(d["y"][-1] or 0 for d in datasets if fechas_default and fechas_default[-1] == ultima_fecha)
     valores_totales = [sum(v or 0 for v in vals) for vals in zip(*[d["y"] for d in datasets])] if datasets else []
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad=ind.get("unidad", ""),
+        unidad=ind.get("unidad", ""),
         valor=_fmt_num(total_ultimo), pct=None, marca_fecha=None,
         maxv=_fmt_num(max(valores_totales)) if valores_totales else "s/d",
         minv=_fmt_num(min(valores_totales)) if valores_totales else "s/d", nota_num=None,
@@ -730,7 +724,7 @@ def _serie_sectores_bar(idx, ind, historico):
 
     trimestre = f"T{(fecha_comun.month - 1) // 3 + 1} {fecha_comun.year}"
     card = dict(i=idx, nombre=ind["nombre"], bloque=ind["bloque"], grupo=ind.get("grupo", "Otros"),
-        color=ACENTO.get(ind["bloque"], AZUL_ENLACE), unidad="",
+        unidad="",
         valor=trimestre, pct=None, marca_fecha=None, maxv="s/d", minv="s/d", nota_num=None,
         sin_filtros=True, subtitulo=ind.get("subtitulo"), grande=True)
 
@@ -1100,7 +1094,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
     idx = 0
     for ind in config_indicadores:
         nombre = ind["nombre"]; bloque = ind["bloque"]; grupo = ind.get("grupo", "Otros")
-        unidad = ind.get("unidad", ""); color = ACENTO.get(bloque, AZUL_ENLACE)
+        unidad = ind.get("unidad", "")
         usos = _usos_indec(ind, fuentes_indec)
         nota = _nota_con_fuente(ind.get("nota"), usos, _ids_csv(ind, fuentes_csv))
         solo_serie = bool(tema is not None and ind.get("solo_componente") and ind.get("pagina_serie") == tema["slug"])
@@ -1188,7 +1182,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         acumulando = (f"Acumulando historia — disponible en unas semanas "
                       f"({len(serie)}/{UMBRAL_HISTORIA_MINIMA} observaciones)"
                       if len(serie) < UMBRAL_HISTORIA_MINIMA else None)
-        charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo, color=color,
+        charts.append(dict(i=idx, nombre=nombre, bloque=bloque, grupo=grupo,
             unidad=unidad, valor=titulares.fmt_valor(ult, unidad), pct=pct, marca_fecha=marca_fecha,
             maxv=titulares.fmt_valor(s["valor"].max(), unidad), minv=titulares.fmt_valor(s["valor"].min(), unidad),
             nota_num=nota_num,
@@ -1204,7 +1198,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             idx += 1
             continue
         if ind.get("vista") == "reservas_combo":
-            series_js.append(_serie_reservas_combo(idx, color, unidad, serie, desde))
+            series_js.append(_serie_reservas_combo(idx, unidad, serie, desde))
         else:
             # Embeber los datos históricos para permitir filtrado client-side.
             # El tramo reciente (últimos 2 años) queda a resolución diaria completa
@@ -1225,7 +1219,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             s_gap = _con_huecos_explicitos(s)
             s_x = [d.strftime("%d/%m/%y") for d in s_gap["fecha"]]
             s_y = [round(float(v), 2) if pd.notna(v) else None for v in s_gap["valor"]]
-            series_js.append(dict(i=idx, color=color, unidad=unidad,
+            series_js.append(dict(i=idx, unidad=unidad,
                 kind="bar" if ind.get("barras") else "line",
                 x=s_x, y=s_y,  # Datos filtrados (default)
                 full_x=full_x, full_y=full_y, full_dates=full_dates,  # Todos los datos
@@ -1250,6 +1244,13 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
         charts.append(card)
         series_js.append(serie_js_extra)
         idx += 1
+    por_i = {sj["i"]: sj for sj in series_js if "i" in sj}
+    for c in charts:   # escala de 5A/Máx (ver escala_larga)
+        ind_c, sj = indicadores_por_nombre.get(c["nombre"]), por_i.get(c.get("i"))
+        if ind_c is not None and sj is not None:
+            esc = escala_larga(ind_c, sj)
+            if esc:
+                c["escala_larga"] = sj["escala_larga"] = esc
     from fuentes_indec import describir_fuente
     etiquetas = {i["nombre"]: i["etiqueta"] for i in config_indicadores if i.get("etiqueta")}
     if tema is not None:
@@ -1267,8 +1268,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
 
 
 def _color_semaforo(v):
-    """Celdas de tabla (Bloque C): +1% o más en principal_contexto (ciruela claro), -1% o menos en un tinte del arena (el
-    color de los negativos), en el medio sin color. Todo de tema.py."""
+    """Celdas de tabla (Bloque C): +1% o más en principal_contexto (tono claro de la rampa), -1% o menos en un tinte de
+    `negativo`, en el medio sin color. Todo de tema.py."""
     if v is None or pd.isna(v):
         return "transparent", TEMA["texto_3"]
     if v > 1:  return TEMA["principal_contexto"], TEMA["principal_1"]
@@ -1286,7 +1287,8 @@ def _tabla_semaforo(semaforo, fecha_sem, fuente_html=""):
     filas = "".join(f'<tr><td class="sec">{s["nombre"]}</td>{celda(s["ia"])}{celda(s["men"])}{celda(s["acum"])}</tr>' for s in orden)
     return (f'<h3 class="sub">EMAE por sector <span class="ref">({fecha_sem})</span></h3>'
             '<p class="nota">Interanual · mensual (serie original, con estacionalidad) · acumulado del año. '
-            'Ciruela: +1% o más · sin color: entre -1% y +1% · arena: -1% o menos.</p>'
+            f'{NOMBRE_COLOR["principal"].capitalize()}: +1% o más · sin color: entre -1% y +1% · '
+            f'{NOMBRE_COLOR["negativo"]}: -1% o menos.</p>'
             '<table class="tabla"><thead><tr><th>Sector</th><th>Interanual</th><th>Mensual</th><th>Acum. año</th></tr></thead>'
             f'<tbody>{filas}</tbody></table>'
             + (f'<p class="fuente-pie fuente-tabla">{fuente_html}</p>' if fuente_html else ""))
@@ -1352,6 +1354,45 @@ def tabla_acciones(titulo, filas, fecha_str):
             f'<tbody>{cuerpo}</tbody></table>')
 
 
+# Escala de los rangos largos (D del bloque de identidad visual, decisión de Pedro del 09/11/2026): en 5A y Máx
+# una serie nominal en pesos queda aplastada contra el eje por la inflación acumulada. Si la serie está en niveles
+# positivos, esos dos rangos pasan a escala logarítmica (con rótulo visible); si tiene negativos o ceros (no hay log
+# posible, ej. resultado fiscal), la card no ofrece Máx. Qué series: `nominal_pesos: true` (la misma marca de los
+# titulares) o `escala_log_largo: true` en el yaml (overlays y series en pesos sin titular, ej. dólar, depósitos).
+# La vista inicial (`desde`) no cambia.
+RANGOS_LOG = ("5a", "todo")
+_KINDS_LOG = ("line", "overlay")
+
+
+def _valores_full(sj):
+    """Todos los valores numéricos de la historia completa de una serie_js (full_*, datasets/barras[].full_y)."""
+    out = []
+    def add(v):
+        if isinstance(v, list):
+            out.extend(x for x in v if isinstance(x, (int, float)) and not isinstance(x, bool))
+    for k, v in sj.items():
+        if k.startswith("full_") and k not in ("full_x", "full_dates"):
+            add(v)
+    for clave in ("datasets", "barras"):   # ojo: en un overlay `barras` es un bool; en combo_bl, la lista de barras
+        lista = sj.get(clave)
+        for d in (lista if isinstance(lista, list) else []):
+            if isinstance(d, dict):
+                add(d.get("full_y"))
+    return out
+
+
+def escala_larga(ind, sj):
+    """"log" (5A y Máx en escala logarítmica), "sin_max" (la card no ofrece Máx) o None (sin cambios)."""
+    if not (ind.get("escala_log_largo") or ind.get("nominal_pesos")) or ind.get("escala_log"):
+        return None
+    vals = _valores_full(sj)
+    if not vals:
+        return None
+    if min(vals) <= 0:
+        return "sin_max"
+    return "log" if sj.get("kind") in _KINDS_LOG and sj.get("barras") is not True else None
+
+
 def _card_cell(c, solo_grafico=False):
     """Card del Bloque C: (kicker con el nombre +) titular o nombre, valor con su variación contra lo mismo
     que el titular (D13, triángulo gris sin juicio, D3), línea de frescura del B2 tal cual, leyenda en
@@ -1392,6 +1433,8 @@ def _card_cell(c, solo_grafico=False):
     if not c.get("sin_filtros"):
         opciones = [("default", c.get("desde_txt") or "Inicial"), ("6m", "6M"), ("1a", "1A"), ("5a", "5A"),
                     ("todo", "Máx"), ("personalizado", "Rango…")]
+        if c.get("escala_larga") == "sin_max":   # negativos en niveles: sin log posible, sin Máx
+            opciones = [o for o in opciones if o[0] != "todo"]
         botones = "".join(f'<button class="filtro{" active" if k == "default" else ""}" data-rango="{k}">{t}</button>'
                           for k, t in opciones)
         filtros = (f'<div class="filtros" data-idx="{i}"><span class="vista">Vista:</span>{botones}</div>'
@@ -1420,9 +1463,11 @@ def _card_cell(c, solo_grafico=False):
                 f'<div class="acumulando">⏳ {c["acumulando"]}</div>{pie_html}</div>')
     # Ícono de pantalla completa (Punto 11): el JS compartido expande el .cell entero.
     fs_btn = '<button class="fs-btn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>'
+    rotulo_log = (f'<span class="escala-log" data-idx="{i}" hidden>escala logarítmica</span>'
+                  if c.get("escala_larga") == "log" else "")
     return (f'<div class="{cell_cls}"{ancla}>{fs_btn}{cabeza}{subtitulo_html}{fila}{frescura_html}{marca_html}'
             f'<div class="cdesc" data-idx="{i}"></div>'
-            f'<div class="{cbox_cls}"><canvas id="ch{i}"></canvas></div>{filtros}{rezago_btns}{pie_html}</div>')
+            f'<div class="{cbox_cls}">{rotulo_log}<canvas id="ch{i}"></canvas></div>{filtros}{rezago_btns}{pie_html}</div>')
 
 
 # ------------------------------------------------------------------------------------------------
@@ -1975,11 +2020,11 @@ __VARS__
   .cm { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-top:8px; }
   .cv { font-size:26px; font-weight:700; color:var(--principal-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
   .uni { font-size:13px; color:var(--texto-2); }
-  /* D3: variación en gris azulado, sin juicio (el arena queda reservado a los valores negativos). */
+  /* D3: variación en gris azulado, sin juicio (el color `negativo` queda reservado a los valores negativos). */
   .chg { font-size:13px; color:var(--texto-2); font-variant-numeric:tabular-nums; }
   .chg .tri { font-size:11px; margin-right:3px; }
   /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + principal_2 para
-     "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
+     "al día". NUNCA el color `negativo` de tema.py (en el Bloque C es el de los valores negativos) ni rojo.
      El estado nunca va sólo en color: lleva ícono y texto. */
   .cf { font-size:11px; color:var(--texto-3); margin-top:5px; line-height:1.35; }
   .cf .per { color:var(--texto-2); font-weight:600; }
@@ -1999,6 +2044,9 @@ __VARS__
   .ley-x { display:inline-block; }
   .acumulando { color:var(--texto-2); font-size:12px; text-align:center; padding:20px 14px; background:var(--franja-fondo); margin-top:10px; }
   .cbox { position:relative; height:250px; margin-top:4px; }
+  .escala-log { position:absolute; top:0; left:0; z-index:1; font-size:11px; line-height:1; color:var(--texto-2);
+    background:var(--franja-fondo); padding:2px 6px; letter-spacing:.02em; }
+  .escala-log[hidden] { display:none; }
   /* Pedro quiere TODAS las tarjetas del mismo tamaño por ahora (flags grande/sin_filtros siguen en el yaml):
      .cbox-grande { height:400px; } .cell-ancha { grid-column: span 2; } */
   .filtros, .rezago-btns { display:flex; align-items:baseline; flex-wrap:wrap; gap:2px; font-size:12px; color:var(--texto-3); margin-top:6px; }
@@ -2043,6 +2091,7 @@ __IDENTIDAD__
 <body>
 <header class="masthead"><div class="wrap">
   <h1>__H1__</h1>
+  __FIRMA__
   <div class="sub">Actualizado __AHORA__ · fuentes: __FUENTES__</div>
 </div></header>
 <nav class="secciones"><div class="wrap">__NAV__</div></nav>
@@ -2054,6 +2103,7 @@ __IDENTIDAD__
 <script>
 const SERIES = __DATA__;
 const TEMA = __TEMA__;
+const COLOR_NEG = __COLOR_NEG__;   // nombre del color de los negativos en las leyendas (tema.NOMBRE_COLOR)
 const ETIQUETAS = __ETIQUETAS__;
 const charts = {};
 // Lookup por s.i (el idx de la tarjeta), NO por posición en SERIES: las tarjetas "acumulando
@@ -2616,7 +2666,7 @@ function burbujaSectorPlugin(empleoPct) {
   };
 }
 
-const NEG_TXT = 'Valores negativos en arena.';
+const NEG_TXT = `Valores negativos en ${COLOR_NEG}.`;
 SERIES.forEach(s => {
   const el = document.getElementById('ch' + s.i);
   if (!el) return;
@@ -2630,7 +2680,7 @@ SERIES.forEach(s => {
       ]}, options: comboOpts(s.unidad, s.unidad_linea, s.titulo_barras) });
     ley = [{ label:'Stock (eje derecho)', color:TEMA.principal_1, linea:true },
            { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.principal_3 }];
-    if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? 'Ventas netas (negativos) en arena.' : 'Caídas en arena.';
+    if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? `Ventas netas (negativos) en ${COLOR_NEG}.` : `Caídas en ${COLOR_NEG}.`;
   } else if (s.kind === 'overlay') {
     const n = s.datasets.length;
     const dss = s.datasets.map((d, i) => {
@@ -2641,7 +2691,7 @@ SERIES.forEach(s => {
       }
       return { label:d.label, data:d.y, borderColor:col, backgroundColor:col, borderWidth:ANCHO[r], borderDash:TRAZO[r], order:r,
                etiqueta:{ texto: ETIQUETAS[d.label] || (d.label.length <= 16 ? d.label : ''), u:s.unidad, bold: r === 0,
-                          color: r === 3 ? TEMA.texto_3 : col } };
+                          color: r === 3 ? TEMA.texto_3 : r === 2 ? TEMA.principal_2 : col } };   // principal_3 no llega a 4,5:1 como texto
     });
     charts[s.i] = new Chart(ctx, { type: s.barras ? 'bar' : 'line', data:{ labels:s.x, datasets:dss },
       options: overlayOpts(s), plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
@@ -2659,7 +2709,7 @@ SERIES.forEach(s => {
     charts[s.i].$atipicos = s.atipicos;
     charts[s.i].$restoDetalle = s.resto_detalle;
     ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[d.label.startsWith('Resto') ? 3 : Math.min(i, 2)] }));
-    extra = 'Aportes negativos en arena.';
+    extra = `Aportes negativos en ${COLOR_NEG}.`;
   } else if (s.kind === 'espejo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
         { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.principal_3, stack:'comercio', order:2 },
@@ -2670,7 +2720,7 @@ SERIES.forEach(s => {
       ]}, options: espejoOpts(s.unidad) });
     ley = [{ label:'Exportaciones (arriba)', color:TEMA.principal_3 }, { label:'importaciones (abajo)', color:TEMA.principal_contexto },
            { label:'saldo', color:TEMA.principal_1, linea:true }];
-    if (tieneNeg(s.full_saldo || s.saldo)) extra = 'Saldo negativo en arena.';
+    if (tieneNeg(s.full_saldo || s.saldo)) extra = `Saldo negativo en ${COLOR_NEG}.`;
   } else if (s.kind === 'bar') {
     const dest = s.destacar;
     const bg = (c) => {
@@ -2689,7 +2739,7 @@ SERIES.forEach(s => {
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo) }] },
       options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
-    extra = 'Barras: variación interanual de la actividad (caídas en arena). Burbujas: peso de cada sector en el empleo.';
+    extra = `Barras: variación interanual de la actividad (caídas en ${COLOR_NEG}). Burbujas: peso de cada sector en el empleo.`;
   } else if (s.kind === 'combo_bl') {
     const nb = s.barras.length;
     const datasets = s.barras.map((b, i) => ({ type:'bar', label:b.label, data:b.y, yAxisID:'y', order:1,
@@ -2706,7 +2756,7 @@ SERIES.forEach(s => {
         { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, borderWidth:2.5, yAxisID:'y',
           etiqueta:{ u:s.unidad_izq, arriba:-12, bold:true } },
         { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.principal_3, backgroundColor:TEMA.principal_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
-          etiqueta:{ u:s.unidad_der, arriba:13 } },
+          etiqueta:{ u:s.unidad_der, arriba:13, color:TEMA.principal_2 } },   // texto: principal_3 no llega a 4,5:1
       ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
     ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.principal_1, linea:true, ancho:2.5 },
            { label: s.label_der + ' (eje derecho)', color:TEMA.principal_3, linea:true, dash:true }];
@@ -2768,6 +2818,12 @@ function aplicarFiltro(idx, serie, rango, datFiltrados) {
     charts[idx].data.datasets[1].data = datFiltrados.evento;
   } else {
     charts[idx].data.datasets[0].data = datFiltrados.y;
+  }
+  // 5A y Máx en escala logarítmica para las nominales en pesos (escala_larga en Python), con rótulo visible.
+  if (serie.escala_larga === 'log') {
+    const log = rango === '5a' || rango === 'todo';
+    charts[idx].options.scales.y.type = log ? 'logarithmic' : 'linear';
+    const rot = document.querySelector(`.escala-log[data-idx='${idx}']`); if (rot) rot.hidden = !log;
   }
   charts[idx].update('none');
 }
@@ -2908,7 +2964,7 @@ marcarNav();
 </body></html>"""
 
     html = (plantilla.replace("__VARS__", css_vars).replace("__FUENTE__", fuente_css)
-            .replace("__AHORA__", ahora).replace("__NAV__", nav).replace("__IDENTIDAD__", sitio.CSS_IDENTIDAD)
+            .replace("__AHORA__", ahora).replace("__FIRMA__", sitio.firma(raiz or "./")).replace("__NAV__", nav).replace("__IDENTIDAD__", sitio.CSS_IDENTIDAD)
             .replace("__FUENTES__", fuentes_pagina or FUENTES_HEADER_DEFAULT)
             .replace("__H1__", f'<a href="{raiz or "./"}" class="h1-link">{titulo_pagina}</a>' if tema is not None
                      else titulo_pagina)
@@ -2918,6 +2974,7 @@ marcarNav();
             .replace("__SECCIONES__", secciones)
             .replace("__NOTAS__", notas_html)
             .replace("__TEMA__", json.dumps(tema_js, ensure_ascii=False))
+            .replace("__COLOR_NEG__", json.dumps(NOMBRE_COLOR["negativo"], ensure_ascii=False))
             .replace("__ETIQUETAS__", json.dumps(etiquetas or {}, ensure_ascii=False))
             .replace("__DATA__", json.dumps(series_js, ensure_ascii=False)))
     (OUT / archivo_salida).parent.mkdir(parents=True, exist_ok=True)

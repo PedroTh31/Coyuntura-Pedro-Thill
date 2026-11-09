@@ -2,7 +2,7 @@
 y estilos base, todo con los colores y la tipografía de tema.py.
 
 Lo usan el calendario (E1), la home y la página "Acerca" (E2); las páginas de tema (dashboard.py) toman de
-acá la navegación y el pie. La identidad (E5: serif + ciruela + sello) está
+acá la navegación y el pie. La identidad (E5: serif + banda de color + sello; azul marino desde el bloque de identidad visual) está
 en CSS_IDENTIDAD, con las variables de tema.py: acá no hay colores fijos.
 """
 from __future__ import annotations
@@ -62,24 +62,36 @@ CSS_BASE = """
 
 
 # Identidad del sitio (Bloque E5, variante A+B+C aprobada por Pedro): A = cabecera, títulos y titulares en
-# serif (`fuente_titulares` de tema.py); B = banda ciruela (`principal_1`) en la cabecera y el pie; C = la
+# serif (`fuente_titulares` de tema.py); B = banda de color (`principal_1`) en la cabecera y el pie; C = la
 # frescura y el calendario como sello (estampilla de la card, frescura.html_sello, y estampillas de fecha,
 # tile()). Va al final del <style> de TODAS las páginas (sitio.pagina y la plantilla de dashboard.py), así
 # que pisa lo anterior. Los colores salen de las variables de tema.py: acá no hay ningún hex de la paleta.
 CSS_IDENTIDAD = """
-  /* --- E5 · A+B: cabecera ciruela con título en serif y filete doble --- */
+  /* --- E5 · A+B: cabecera en principal-1 con título en serif y filete doble --- */
   header.masthead { background:var(--principal-1); color:#fff; border-top:0; padding:22px 0 14px; text-align:center; }
   header.masthead .wrap { padding-bottom:12px; border-bottom:3px double rgba(255,255,255,.65); }
   header.masthead h1 { font-family:var(--fuente-titulares); font-size:38px; letter-spacing:-.005em; color:#fff; }
   header.masthead h1 a { color:#fff; } header.masthead h1 a:hover { text-decoration:none; }
   header.masthead .sub { color:rgba(255,255,255,.82); }
   header.masthead .sub a { color:#fff; }
+  /* C1 (bloque de identidad visual): firma bajo el título, serif itálica; el nombre en redonda y negrita. */
+  header.masthead .firma { font-family:var(--fuente-titulares); font-style:italic; font-size:19px; color:#fff; margin-top:4px; }
+  header.masthead .firma a { color:#fff; font-style:normal; font-weight:700; }
+  header.masthead .firma a:hover { text-decoration:underline; text-decoration-color:rgba(255,255,255,.45); }
+  /* C3: el nombre como encabezado de Acerca. */
+  .autor { border-top:3px double var(--principal-1); border-bottom:1px solid var(--linea); padding:18px 0 16px; margin:8px 0 22px; }
+  .autor-k { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--texto-3); }
+  .autor-n { font-family:var(--fuente-titulares); font-size:40px; font-weight:700; color:var(--principal-1); line-height:1.1; margin:4px 0; }
+  .autor-d { font-size:15px; color:var(--texto-2); }
   @media (min-width:1100px) { nav.secciones .wrap { justify-content:center; } }
+  /* Anclas: la barra de navegación es fija (sticky), así que todo destino de un #ancla (cards, secciones,
+     notas) se detiene debajo de ella y no queda tapado. Alto de la barra ~45px + aire. */
+  [id] { scroll-margin-top:60px; }
   /* --- E5 · A: titulares y títulos de página en serif; kickers, valores y datos siguen en sans --- */
   .ct, .s-tit, section.bloque > h2, .h-tit h2, .tm-h b, .cal-h2, .acerca h2, .acerca h3 {
     font-family:var(--fuente-titulares); letter-spacing:0; }
   .ct { font-weight:700; }
-  /* --- E5 · B: pie ciruela a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
+  /* --- E5 · B: pie en principal-1 a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
   main.wrap { padding-bottom:0; }
   footer, footer.pie { background:var(--principal-1); color:rgba(255,255,255,.85); border-top:0; margin-top:48px;
     padding:18px 0 22px; box-shadow:0 0 0 100vmax var(--principal-1); clip-path:inset(0 -100vmax); font-size:12px; }
@@ -108,6 +120,8 @@ CSS_IDENTIDAD = """
   @media (max-width:760px) {
     header.masthead { padding:16px 0 10px; }
     header.masthead h1 { font-size:27px; }
+    header.masthead .firma { font-size:16px; }
+    .autor-n { font-size:30px; }
   }
 """
 
@@ -119,6 +133,7 @@ def tile(dia: str, numero: int | str, mes: str) -> str:
 
 
 URL_REPO = "https://github.com/PedroTh31/Coyuntura-Pedro-Thill"
+AUTOR = "Pedro Thill"
 PRIMER_COMMIT = "730dd39"           # 9 de julio de 2026 (git log --reverse)
 LINKEDIN = "https://www.linkedin.com/in/pedro-thill-286076218/"
 # Mail de contacto OFUSCADO (pedido de Pedro: nunca completo en el HTML). Va en dos partes invertidas;
@@ -180,6 +195,12 @@ def pie_sitio(raiz: str, extra: str = "") -> str:
             f'<script>{JS_MAIL}</script>')
 
 
+def firma(inicio: str) -> str:
+    """Firma de la cabecera (C1 del bloque de identidad visual, decisión de Pedro): "por Pedro Thill", en serif,
+    bajo el título de todas las páginas, con link a Acerca. `inicio`: ruta a la home desde la página ("./", "../")."""
+    return f'<div class="firma">por <a href="{escape(inicio)}acerca/">{escape(AUTOR)}</a></div>'
+
+
 def nav(items: list[tuple[str, str]], activo: str) -> str:
     """items: [(texto, href)]."""
     activa = ' class="activo"'
@@ -204,6 +225,7 @@ def pagina(titulo: str, titulo_sitio: str, sub: str, nav_html: str, cuerpo: str,
 <body>
 <header class="masthead"><div class="wrap">
   <h1><a href="{inicio}">{escape(titulo_sitio)}</a></h1>
+  {firma(inicio)}
   <div class="sub">{sub}</div>
 </div></header>
 <nav class="secciones"><div class="wrap">{nav_html}</div></nav>

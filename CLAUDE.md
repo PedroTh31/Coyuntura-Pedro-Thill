@@ -261,6 +261,14 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   - Serie con franja ⏸ (rezago grave del B2): el eje sigue hasta hoy con nulls y el tramo sin datos va
     sombreado (D9, `_extender_hasta_hoy`). máx/mín van en el pie, junto a la fuente y el asterisco (D11).
   - La línea de frescura del B2 (`.cf`) NO se toca.
+- **Identidad visual** (09/11/2026, decisiones de Pedro): paleta azul marino (`principal_1..3`, `principal_contexto` en
+  tema.py; principal_3 = #7696C2 llega a 3:1 y su etiqueta directa va en principal_2; texto_3 = #677987, 4,5:1). Los
+  textos que nombran un color salen de `tema.NOMBRE_COLOR` (nunca "arena"/"azul" escritos a mano). Firma "por Pedro
+  Thill" en la cabecera de todas las páginas (`sitio.firma`) y bloque de autor en /acerca/. Anclas: `[id] {
+  scroll-margin-top }` en `sitio.CSS_IDENTIDAD` (la barra de navegación es sticky). **Escala de 5A/Máx**
+  (`dashboard.escala_larga`): las series con `nominal_pesos: true` o `escala_log_largo: true` (dólares, depósitos,
+  M2/M3) en niveles positivos pasan a escala logarítmica en 5A y Máx, con rótulo "escala logarítmica"; con negativos
+  o ceros (resultado fiscal) la card no ofrece Máx. La vista inicial no cambia. Tests: `tests/test_identidad_visual.py`.
 - `titulares.py` (funciones puras, tests en `tests/test_titulares.py`) — titular por reglas de cada card
   de la pestaña macro (sólo macro, D1; `generar(con_titulares=True)` desde run.py) y la variación bajo el
   valor, que compara contra lo mismo que el titular (D13). Campos del yaml: `titular_regla:

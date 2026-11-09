@@ -374,7 +374,6 @@ def _variacion_publicada(base_id, calculo, start):
 
 
 _TICKERS_MURO = ["AL30", "GD30", "GD35"]
-_COLORES_MURO = {"AL30": "#0767A7", "GD30": "#EF6C00", "GD35": "#6A1B99"}
 
 
 def _muro_vencimientos(anios_adelante=10):
@@ -413,12 +412,12 @@ def _muro_vencimientos(anios_adelante=10):
     for ticker in _TICKERS_MURO:
         if not any(ticker in por_anio[a] for a in anios):
             continue
-        datasets.append(dict(label=ticker, color=_COLORES_MURO[ticker],
+        datasets.append(dict(label=ticker,
             y=[round(por_anio[a].get(ticker, 0), 1) for a in anios]))
     if not datasets:
         return None
     card = dict(nombre="Muro de vencimientos (AL30/GD30/GD35)", bloque="mercados", grupo="Renta fija",
-        color=dashboard.ACENTO["mercados"], unidad="% VN", valor="—", sin_valor=True, pct=None, marca_fecha=None,
+        unidad="% VN", valor="—", sin_valor=True, pct=None, marca_fecha=None,
         maxv="—", minv="—", sube_es_bueno=False, neutral=True, sin_filtros=True,
         subtitulo="Pagos de capital por año, en % del valor nominal original de cada bono")
     serie_js = dict(kind="muro", x=[str(a) for a in anios], datasets=datasets, unidad="% VN")
@@ -462,13 +461,13 @@ def _ddf_chart():
         return None
     labels, valores = dashboard.ordenar_ddf(ddf)
     card = dict(nombre="Dólar futuro (DDF)", bloque="mercados", grupo="Dólar futuro",
-        color=dashboard.ACENTO["mercados"], unidad="$", valor=_fmt_ultimo(valores[0] if valores else None),
+        unidad="$", valor=_fmt_ultimo(valores[0] if valores else None),
         pct=None, marca_fecha=None, maxv=_fmt_ultimo(max(valores)) if valores else "—",
         minv=_fmt_ultimo(min(valores)) if valores else "—", sube_es_bueno=False, neutral=True,
         sin_filtros=True, subtitulo="Curva de contratos por vencimiento mensual")
     # destacar=0: la barra resaltada (azul oscuro + etiqueta) es el contrato más cercano, el mismo que
     # muestra el valor de la card (no el último de la curva, que es el más lejano).
-    serie_js = dict(kind="bar", x=labels, y=valores, color=dashboard.ACENTO["mercados"], unidad="$", destacar=0)
+    serie_js = dict(kind="bar", x=labels, y=valores, unidad="$", destacar=0)
     nota = ('Curva de contratos de dólar futuro (DDF) por vencimiento mensual, Mercado Abierto '
             'Electrónico (MAE, endpoint emisiones/resumen/DDF, no documentado oficialmente por el '
             'MAE, datos delayed 5-15 min intradía). Snapshot del día -- no es una serie histórica '

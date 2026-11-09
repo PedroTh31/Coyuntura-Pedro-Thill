@@ -24,7 +24,7 @@ import dashboard
 import frescura as F
 import sitio
 import titulares
-from tema import TEMA
+from tema import NOMBRE_COLOR, TEMA
 
 DOCS = Path(__file__).resolve().parent / "docs"
 CHART_JS = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
@@ -290,6 +290,8 @@ CSS_ACERCA = """
 
 def html_acerca(ahora_txt: str, temas_nav=None) -> str:
     cuerpo = f"""<article class="acerca">
+<div class="autor"><div class="autor-k">Monitor de coyuntura · hecho por</div><div class="autor-n">{escape(sitio.AUTOR)}</div>
+<div class="autor-d">Proyecto personal, gratuito y automatizado</div></div>
 <h2 style="border:0;font-size:26px">Acerca del monitor</h2>
 <p>Un monitor de la coyuntura económica argentina hecho con datos públicos. Se actualiza solo cada día hábil.
 Proyecto iniciado el <a href="{sitio.URL_REPO}/commit/{sitio.PRIMER_COMMIT}">9 de julio de 2026</a>.</p>
@@ -299,7 +301,8 @@ reservas, dinero y crédito, sector externo, fiscal y deuda, y mercados. Cada gr
 <h2>De dónde salen los datos</h2>
 <p>De fuentes oficiales y públicas, consultadas directamente: la API del INDEC (con datos.gob.ar o ArgentinaDatos como
 respaldo), apis.datos.gob.ar, la API del BCRA y sus planillas, el Ministerio de Economía (deuda pública), BYMA, el Mercado
-Abierto Electrónico y FRED (Reserva Federal). Cuando un dato se calcula o se aproxima (por ejemplo, el spread soberano o las
+Abierto Electrónico y, para el rendimiento de los bonos del Tesoro de EE.UU., el propio Tesoro de EE.UU. (con la serie H.15
+de la Reserva Federal como respaldo). Cuando un dato se calcula o se aproxima (por ejemplo, el spread soberano o las
 reservas ajustadas), el gráfico lo dice en el rótulo y en su nota con asterisco.</p>
 <h2 id="leer">Cómo leer cada dato</h2>
 <ul class="lee">
@@ -310,7 +313,7 @@ reservas ajustadas), el gráfico lo dice en el rótulo y en su nota con asterisc
  <li><span><b>Atrasado</b>: pasó más de un día hábil desde la publicación y el monitor todavía no lo muestra.</span><span><span class="cf"><span class="per">ago-26</span> · <span class="atr">⚠ atrasado</span> · sep-26 se publicó el 19/10</span></span></li>
  <li><span><b>Sin datos nuevos</b>: la fuente no publica hace más de tres meses.</span><span><span class="cf grave">⏸ may-26 · sin datos nuevos hace 5 meses</span></span></li>
  <li><span><b>Sin calendario oficial</b>: la fuente no anuncia fechas, y el monitor no las inventa. En las series diarias, “estimado” es el próximo día hábil.</span><span><span class="cf"><span class="per">ago-26</span> · próximo: sin calendario oficial</span></span></li>
- <li><span><b>Colores</b>: no juzgan si un dato es bueno o malo. El color fuerte es la serie principal. El arena marca sólo los valores negativos.</span><span><span class="sw-p"></span>serie principal &nbsp; <span class="sw-n"></span>valor negativo</span></li>
+ <li><span><b>Colores</b>: no juzgan si un dato es bueno o malo. El color fuerte es la serie principal. El {NOMBRE_COLOR['negativo']} marca sólo los valores negativos.</span><span><span class="sw-p"></span>serie principal &nbsp; <span class="sw-n"></span>valor negativo</span></li>
 </ul>
 <h2>Notas metodológicas</h2>
 <p>Cada gráfico lleva un asterisco numerado que remite a su nota, al pie de su página: cómo se calcula, qué fuente usa,
