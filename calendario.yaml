@@ -39,7 +39,9 @@ fuente:
 #               variacion: pp|pct|dif}]; una fila sin dato para el período se omite;
 #      serie_periodo: la serie que fija el período de la publicación (default: la de la primera fila);
 #      detalle: línea fija opcional bajo el titular (para publicaciones sin filas);
-#    Sin fila del REM (decisión de Pedro: fuera del B3, ver docs_internos/PENDIENTES.md).
+#    Sin fila del REM (decisión de Pedro: fuera del B3, ver docs_internos/PENDIENTES.md). Aclaración (F1,
+#    09/11/2026): la FECHA de publicación del REM sí figura en el calendario, como evento del BCRA (bloque
+#    `externos:` más abajo), sin frescura ni "Dato nuevo"; esta decisión del B3 no cambia.
 publicaciones:
   - id: ipc
     nombre: "IPC (cobertura nacional)"
@@ -197,6 +199,80 @@ publicaciones:
 #    La regla de "mayor rezago" no se cumple: en el historial del bot (jul-nov 2026) los préstamos
 #    salieron DESPUÉS que el IPC en jun-2026 y sep-2026, y adelantos/transferencias están frenados
 #    en may-2026.
+
+# Calendario ampliado (Bloque F1, decisiones de Pedro del 09/11/2026). Eventos de otros organismos que NO
+# alimentan series del dashboard: no tienen período ni frescura ("al día"/"atrasado"), sólo fecha. Los baja
+# verificar_calendario.py (calendario_externo.py + un parser por organismo: cal_fed.py, cal_bce.py, cal_boj.py,
+# cal_boe.py, cal_bcra.py) a data/calendario_externo.json; una descarga fallida nunca pisa la caché.
+#  - Primera versión: decisiones de tasa de la FED (FOMC), el BCE, el BoJ y el BoE, más el IPOM y el REM del
+#    BCRA (anunciados, a futuro). Fuera: Beige Book, MPR, General Council, reuniones no monetarias del BCE y el
+#    resto de las publicaciones del BCRA. BLS y FMI: fuera del F1 (bloqueo anti-bot, PENDIENTES).
+#  - Publicados (hacia atrás, sólo en /calendario/, no en el mail): FED, statement y minutas del FOMC, del RSS
+#    oficial. Un statement se une con la decisión anunciada del mismo día (hora del Este de EE.UU.). Un
+#    anunciado pasado sin publicación se muestra con el rótulo "anunciado", sin link y sin afirmar que pasó.
+#  - Horas, decisión de Pedro (09/11/2026): la FED en hora del Este de EE.UU. (America/New_York) y el BoJ en
+#    JST (Asia/Tokyo), aunque sus páginas no escriban la zona. Se muestra "16:00 AR (14:00 ET)" (zoneinfo,
+#    con horario de verano). Si la fuente no da hora, va sin hora: nunca estimada.
+#  - Van al mail ("Hoy se publica", "Esta semana") y a /calendario/, siempre visibles con el rótulo del
+#    organismo, sin checkbox.
+#  - El REM entra sólo como evento de calendario, sin frescura (ver la nota "Sin fila del REM" arriba: la
+#    decisión del B3 sobre el "Dato nuevo" no cambia).
+#  - meses_alerta: si no hay ningún evento futuro anunciado entre hoy y esos meses, aviso semanal a Pedro.
+externos:
+  - id: fed
+    organismo: "FED"
+    zona: "America/New_York"
+    zona_abrev: "ET"
+    meses_alerta: 3
+    # Fechas de las reuniones: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (sin hora).
+    # Hora de la decisión: la página del mes (índice en https://www.federalreserve.gov/newsevents/calendar.htm,
+    # fila "FOMC Meeting"); sólo existe para el mes actual y el siguiente.
+    url: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    url_indice_mes: "https://www.federalreserve.gov/newsevents/calendar.htm"
+    eventos:
+      - {tipo: decision, titulo: "Decisión de tasa (FOMC)"}
+    # RSS oficial de comunicados de política monetaria (https://www.federalreserve.gov/feeds/feeds.htm).
+    publicados:
+      url: "https://www.federalreserve.gov/feeds/press_monetary.xml"
+      tipos:
+        - {tipo: decision, titulo: "Decisión de tasa (FOMC)", regex: "^Federal Reserve issues FOMC statement"}
+        - {tipo: minutas, titulo: "Minutas del FOMC", regex: "^Minutes of the Federal Open Market Committee"}
+  - id: bce
+    organismo: "BCE"
+    zona: "Europe/Berlin"
+    meses_alerta: 3
+    url: "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+    eventos:
+      - {tipo: decision, titulo: "Decisión de tasa (BCE)",
+         regex: "^Governing Council of the ECB: monetary policy meeting\\b.*\\(Day 2\\)"}
+  - id: boj
+    organismo: "BoJ"
+    zona: "Asia/Tokyo"
+    zona_abrev: "JST"
+    meses_alerta: 3
+    # Columna "Date of MPM": la decisión es el último día de la reunión ("immediately after", sin hora).
+    url: "https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm"
+    eventos:
+      - {tipo: decision, titulo: "Decisión de tasa (BoJ)"}
+  - id: boe
+    organismo: "BoE"
+    zona: "Europe/London"
+    meses_alerta: 3
+    # "MPC announcements on Bank Rate": un anuncio por fila de "<año> confirmed dates" (sin hora).
+    url: "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates"
+    eventos:
+      - {tipo: decision, titulo: "Decisión de tasa (BoE)"}
+  - id: bcra
+    organismo: "BCRA"
+    zona: "America/Argentina/Buenos_Aires"
+    meses_alerta: 2
+    # Calendario de informes del BCRA (tabla "Publicaciones | Fecha", sin hora). El IPOM figura con dos
+    # nombres ("Informe de Política Monetaria (IPOM)" e "Informe de Política Monetaria").
+    url: "https://www.bcra.gob.ar/calendario-de-informes/"
+    eventos:
+      - {tipo: rem, titulo: "Relevamiento de Expectativas de Mercado (REM)",
+         regex: "^Relevamiento de Expectativas de Mercado\\b"}
+      - {tipo: ipom, titulo: "Informe de Política Monetaria (IPOM)", regex: "^Informe de Política Monetaria\\b"}
 
 # Feriados: días no hábiles para "próximo día hábil" (series diarias) y para "fecha + 1 día hábil"
 # (criterio de atrasado). Criterio de Pedro: cuenta un día si en él NO operan el INDEC, el BCRA y

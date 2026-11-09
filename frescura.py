@@ -144,6 +144,9 @@ class Contexto:
     # Bloque B3: dashboard.generar registra acá las series de cada card (nombre de la card ->
     # (estados, serie resumen)) para que el mail use exactamente las mismas líneas que el dashboard.
     registro: dict = field(default_factory=dict)
+    # Bloque F1: eventos de otros organismos (calendario_externo.eventos), ya unidos y en hora AR. Sin
+    # período ni frescura: sólo los usan el calendario y el mail.
+    externos: list = field(default_factory=list)
 
     @property
     def hoy(self) -> date:
@@ -174,6 +177,11 @@ def cargar_contexto(ahora: datetime | None = None) -> Contexto:
         ctx.fechas = fechas
     except Exception as e:   # caché ilegible: se muestra sólo el período
         print(f"::warning title=Frescura::no se pudo leer el calendario: {type(e).__name__}: {e}")
+    try:   # Bloque F1: otros organismos (su caché es aparte: si falla, el INDEC sigue igual)
+        import calendario_externo
+        ctx.externos = calendario_externo.eventos(calendario_externo.cargar_cache(), cfg, ctx.hoy)
+    except Exception as e:
+        print(f"::warning title=Calendario externo::no se pudo leer: {type(e).__name__}: {e}")
     return ctx
 
 

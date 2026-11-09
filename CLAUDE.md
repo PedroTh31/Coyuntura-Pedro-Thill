@@ -131,6 +131,24 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     no está publicado; un año sin publicar va como `verificado: false`, desde ArgentinaDatos).
   - Tests sin red: `tests/test_calendario_indec.py`, `tests/test_verificar_calendario.py`.
 
+- **Calendario ampliado** (Bloque F1, decisiones de Pedro del 09/11/2026): eventos de otros organismos que NO
+  alimentan series (sin período ni frescura), en el bloque `externos:` de `calendario.yaml`. Anunciados (a futuro):
+  decisiones de tasa de la FED (FOMC), el BCE, el BoJ y el BoE, más IPOM y REM del BCRA. Publicados (hacia atrás,
+  SÓLO en /calendario/, no en el mail): statement y minutas del FOMC, del RSS oficial de la FED. Fuera: Beige Book,
+  MPR, General Council, reuniones no monetarias del BCE, el resto del BCRA, el BLS y el FMI (bloqueo anti-bot,
+  PENDIENTES). `calendario_externo.py` (modelo, caché `data/calendario_externo.json`, unión, hora AR) + un parser
+  por organismo (`cal_fed.py`, `cal_bce.py`, `cal_boj.py`, `cal_boe.py`, `cal_bcra.py`) que falla ruidosamente
+  (`ExternoFormatoError`). Los baja `verificar_calendario.py` (mismo mail de alertas: diario si falla una descarga,
+  semanal si un organismo no tiene fechas en sus `meses_alerta`); `frescura.cargar_contexto` los deja en
+  `ctx.externos`; `agenda.armar_calendario` los suma a "Hoy"/"Esta semana" (mail y página, con `externo: True`) y
+  `agenda.armar_meses` a la vista de meses (`estado_ext`: `publicado` con link, `proximo`, o `anunciado` = pasó
+  sin publicación encontrada, sin link y sin afirmar que pasó). **Horas (decisión de Pedro):** la FED en hora del
+  Este de EE.UU. (America/New_York) y el BoJ en JST (Asia/Tokyo), aunque la página no escriba la zona; se muestra
+  "16:00 AR (14:00 ET)" con zoneinfo (horario de verano incluido); sin hora en la fuente, sin hora, nunca
+  estimada. Un publicado se une con el anunciado del mismo organismo, tipo y fecha LOCAL. La caché conserva los
+  anunciados pasados que la fuente ya no lista y acumula los publicados (el RSS es una ventana de 15). Siempre
+  visibles con rótulo del organismo, sin checkbox. El REM va sólo como evento (la decisión del B3 de no darle
+  "Dato nuevo" no cambia). Tests: `tests/test_calendario_externo.py` (fixtures reales `tests/fixtures/cal_*`).
 - `frescura.py` — línea de frescura bajo el valor de cada card (Bloque B2, sólo `index.html`;
   `run.py` le pasa `frescura_ctx` a `dashboard.generar`): período del último dato, estado y próximo
   dato. Con calendario (indicador en `calendario.yaml`): "✓ al día · próximo DD/MM, 16 h", "X

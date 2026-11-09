@@ -13,6 +13,9 @@ de datos (coyuntura.yml), después de run.py.
      un feriado "especial" que todavía no se evaluó, o ya salieron los oficiales de un año que el
      yaml tiene como provisorio;
    - estamos en diciembre y el yaml no tiene los feriados del año siguiente.
+3. Bloque F1: baja los calendarios de otros organismos (bloque `externos:` de calendario.yaml) a
+   data/calendario_externo.json (calendario_externo.actualizar) y avisa, en el mismo mail: diario, si una
+   descarga o un formato fallan; semanal, si un organismo no tiene fechas anunciadas en sus `meses_alerta`.
 Nunca corta la corrida: cualquier error inesperado también se avisa y sale con 0.
 """
 from __future__ import annotations
@@ -24,6 +27,7 @@ from pathlib import Path
 
 import requests
 
+import calendario_externo as CE
 import calendario_indec as C
 from fetchers import HEADERS
 from fuentes_indec import enviar_alerta, _toca_aviso
@@ -127,6 +131,15 @@ def main() -> int:
         C.guardar_cache(cache)
     except Exception as e:   # bug o yaml roto: se avisa igual, nunca se corta la corrida
         diarios, semanales, asignadas, estado_meses = [("crash", f"verificar_calendario.py falló: {type(e).__name__}: {e}")], [], {}, {}
+    estado_ext = {}
+    try:   # Bloque F1: otros organismos (independiente del INDEC: si uno falla, el otro sigue)
+        cache_ext = CE.cargar_cache()
+        d_ext, s_ext, estado_ext = CE.actualizar(cache_ext, C.cargar_config(), hoy)
+        CE.guardar_cache(cache_ext)
+        diarios += d_ext
+        semanales += s_ext
+    except Exception as e:
+        diarios.append(("crash:externos", f"calendario de otros organismos falló: {type(e).__name__}: {e}"))
 
     hoy_s = hoy.isoformat()
     items = [(k, t) for k, t in diarios if _toca_aviso(avisos, k, hoy_s, None)]
@@ -139,7 +152,7 @@ def main() -> int:
             for k, _ in items:
                 avisos[k] = hoy_s
     estado.update({"ultima_verificacion": datetime.now(C.ZONA_AR).isoformat(timespec="seconds"),
-                   "meses": estado_meses, "alertas_hoy": [t for _, t in diarios + semanales]})
+                   "meses": estado_meses, "externos": estado_ext, "alertas_hoy": [t for _, t in diarios + semanales]})
     ESTADO.parent.mkdir(exist_ok=True)
     ESTADO.write_text(json.dumps(estado, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
@@ -149,6 +162,8 @@ def main() -> int:
     for pid, fechas in asignadas.items():
         prox = next((f for f in fechas if f["fecha"] >= hoy_s), None)
         print(f"  {pid:16} próxima: " + (f"{prox['fecha']} {prox['hora']} ({prox['periodo']})" if prox else "-"))
+    for oid, est in estado_ext.items():
+        print(f"  {oid:16} anunciados: {est.get('anunciados')} · publicados: {est.get('publicados', '-')}")
     return 0
 
 

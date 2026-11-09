@@ -481,9 +481,32 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
     - Arreglo posible: que `aplicarFiltro` recalcule máx/mín de los datos filtrados en el JS, o que el pie
       diga a qué período corresponde.
 
+31. **BLS fuera del calendario ampliado: bloqueo anti-bot** — anotado el 09/11/2026 (Bloque F1).
+    - `https://www.bls.gov/schedule/news_release/bls.ics` y `/schedule/2026/home.htm` devuelven 403 "Access
+      Denied ... bot activity that doesn't conform to BLS usage policy is prohibited" a un request automático.
+      No se intentó esquivarlo.
+    - A hacer más adelante: leer la usage policy del BLS (qué exige a un cliente automatizado identificado) y
+      decidir. ⚠️ DECISIÓN PEDRO (probablemente implique poner un contacto en el User-Agent).
+
+32. **FMI fuera del calendario ampliado: bloqueo anti-bot** — anotado el 09/11/2026 (Bloque F1, decisión B2 de Pedro).
+    - www.imf.org devuelve 403 (Akamai) con User-Agent de navegador y 404 `{"error":"Blob not found"}` sin él, en
+      `/en/News/RSS`, `/en/Countries/ARG`, `/en/News/Board-Calendar` y la home; `/en/News/SearchNews` dio 429. El
+      calendario del Directorio (`/external/NP/SEC/bc/eng/index.aspx`) devolvió 200 con cuerpo vacío.
+      `/en/countries/arg/index.json` responde, pero es un snapshot del 30/09/2026 cuyo ítem más nuevo es de 2024:
+      no sirve como fuente. `mediacenter.imf.org` son briefings en video, no comunicados.
+    - Muestra de Argentina en los últimos 6 meses, SÓLO vía buscador (sin verificar con request, no usable por la
+      regla 1): 21/05/2026 PR 26/165 (Directorio completa la 2.ª revisión del EFF + Artículo IV, desembolso de
+      ~USD 1.000 M); 22/05/2026 Country Report 26/105. Antes: 15/04/2026 PR 26/120 (acuerdo técnico).
+    - Intención de Pedro cuando haya fuente: lo de Argentina entra siempre; del resto, sólo lo que pase un filtro a
+      definir con un listado real (propuesta: informes insignia WEO/GFSR/Fiscal Monitor y declaraciones del IMFC).
+    - Fecha anunciada de reuniones del Directorio sobre Argentina: no verificada; sin fuente, va sólo como publicado
+      (regla 4).
+
 ## Bloques futuros (después del Bloque E; no implementar todavía)
 
-F1. **Agenda ampliada en el calendario (internacional + BCRA)** — anotado el 08/11/2026.
+F1. **Agenda ampliada en el calendario (internacional + BCRA)** — anotado el 08/11/2026. **IMPLEMENTADO el
+    09/11/2026** (ver CLAUDE.md, "Calendario ampliado"): FED, BCE, BoJ, BoE, IPOM y REM; BLS y FMI quedaron en el
+    #31 y el #32.
     - Internacional: reuniones de política monetaria de la FED (FOMC), el BCE, el Banco de Japón y el Banco
       de Inglaterra, y datos de EE. UU. del BLS (informe de empleo, CPI).
     - BCRA: IPOM y fecha de publicación del REM (se relaciona con el #10). Verificar si el BCRA publica sus

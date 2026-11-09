@@ -128,6 +128,12 @@ def html_calendario(vista: dict) -> str:
         filas = (f'<tr><td style="padding:8px 12px 2px;font-size:12px;font-weight:700;color:{T["principal_1"]};'
                  'letter-spacing:.04em;text-transform:uppercase">Hoy se publica</td></tr>')
         for it in cal["hoy"]:
+            if it.get("externo"):   # Bloque F1: mismo formato, sin "el dato llega" (no actualiza el dashboard)
+                hora = f' · {escape(it["hora"])}' if it["hora"] else ""
+                filas += (f'<tr><td style="padding:2px 12px 9px;font-size:15px;color:{T["texto"]}">'
+                          f'<b style="color:{T["principal_1"]}">{escape(it["titulo"])}</b> · {escape(it["fuente"])}{hora}'
+                          '</td></tr>')
+                continue
             filas += (f'<tr><td style="padding:2px 12px 9px;font-size:15px;color:{T["texto"]}">'
                       f'<b style="color:{T["principal_1"]}">{escape(it["titulo"])}</b> · {escape(it["fuente"])} · '
                       f'{escape(it["hora"])} <span style="font-size:12px;color:{T["texto_2"]}">· el dato llega en el '
@@ -137,7 +143,7 @@ def html_calendario(vista: dict) -> str:
     borde = f'border-top:1px solid {T["principal_contexto"]}'
     for it in cal["semana"]:
         filas += (f'<tr><td style="padding:4px 0;width:80px;font-size:13px;color:{T["texto_2"]};{borde};vertical-align:top">'
-                  f'{escape(it["dia"])}</td><td style="padding:4px 0;width:44px;font-size:13px;color:{T["texto_2"]};'
+                  f'{escape(it["dia"])}</td><td style="padding:4px 8px 4px 0;width:44px;white-space:nowrap;font-size:13px;color:{T["texto_2"]};'
                   f'{borde};vertical-align:top">{escape(it["hora"])}</td><td style="padding:4px 0;font-size:13px;'
                   f'color:{T["texto"]};{borde}">{"<br>".join(escape(t) for t in it["titulos"])}</td></tr>')
     if not cal["semana"]:

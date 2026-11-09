@@ -26,6 +26,7 @@ import sitio
 
 SALIDA = Path(__file__).resolve().parent / "docs" / "calendario" / "index.html"
 URL_CALENDARIO_INDEC = "https://www.indec.gob.ar/indec/web/Calendario-Fecha-0"
+URL_RSS_FED = "https://www.federalreserve.gov/feeds/press_monetary.xml"
 MESES_CORTOS = F.MESES_CORTOS
 MARCA = {"incorporado": ("✓", "ya está en el monitor"), "atrasado": ("⚠", "atrasado: salió y el monitor no lo muestra"),
          "publicado": ("•", "publicado, entra en la próxima actualización"), "proximo": ("", "")}
@@ -77,6 +78,13 @@ CSS = """
   .l-t .m-pub, .l-t .m-otra { margin-top:0; font-size:13px; } .l-t .m-otra { font-size:12px; }
   .l-solo-otras { display:none; } body.otras .l-solo-otras { display:flex; }
   .leyenda { font-size:11px; color:var(--texto-3); margin-top:6px; }
+  .org { display:inline-block; font-size:9px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--texto-2); border:1px solid var(--linea); padding:0 3px; margin-right:4px; vertical-align:1px; }
+  .m-ext { color:var(--texto); margin-top:3px; padding-left:5px; border-left:3px solid var(--texto-3); overflow-wrap:anywhere; }
+  .m-ext a { color:var(--principal-2); } .m-ext .hx { color:var(--texto-3); } .m-ext .an { color:var(--texto-3); font-style:italic; }
+  .m-pasado .m-ext { opacity:.75; }
+  .c-ext + .c-ext, .c-pub + .c-ext, .c-ext + .c-pub { margin-top:6px; }
+  .l-t .m-ext { margin-top:0; font-size:13px; }
   .avisos { list-style:none; padding:0; margin:8px 0; font-size:13px; color:var(--atrasado); }
   .avisos li { border-top:1px solid var(--linea); padding:5px 0; }
   .graves { list-style:none; padding:0; margin:6px 0 0; } .graves li { margin:4px 0; }
@@ -116,12 +124,19 @@ def _linea_html(linea: str, antes: str = "") -> str:
     return f'<div class="cf">{escape(antes)}' + " · ".join(partes) + "</div>"
 
 
+def _hoy_item(i: dict) -> str:
+    if i.get("externo"):   # Bloque F1: otro organismo, no actualiza el monitor
+        hora = f' · {escape(i["hora"])}' if i["hora"] else ""
+        return f'<p class="c-hoy-pub"><span class="org">{escape(i["fuente"])}</span><b>{escape(i["titulo"])}</b>{hora}</p>'
+    return (f'<p class="c-hoy-pub"><b>{escape(i["titulo"])}</b> · {escape(i["fuente"])} · {escape(i["hora"])}'
+            '<span>el dato entra en la próxima actualización del monitor</span></p>')
+
+
 def _hoy(cal: dict, ctx: F.Contexto) -> str:
     if cal.get("estado") == "no_disponible":
         return '<p class="c-vacio">Calendario del INDEC no disponible hoy.</p>'
     if cal.get("hoy"):
-        return "".join(f'<p class="c-hoy-pub"><b>{escape(i["titulo"])}</b> · {escape(i["fuente"])} · {escape(i["hora"])}'
-                       '<span>el dato entra en la próxima actualización del monitor</span></p>' for i in cal["hoy"])
+        return "".join(_hoy_item(i) for i in cal["hoy"])
     if cal.get("feriado_hoy"):
         return (f'<p class="c-vacio">Hoy es feriado ({escape(cal["feriado_hoy"])}): no publica el INDEC ni operan '
                 'el BCRA y BYMA.</p>')
@@ -137,8 +152,9 @@ def _semana(cal: dict, ctx: F.Contexto, dias: dict, publicaciones: dict) -> str:
     while d <= fin:
         dia = dias.get(d.isoformat(), {})
         seguidas = [p for p in dia.get("publicaciones", []) if p["pid"]]
+        externos = [p for p in dia.get("publicaciones", []) if p.get("externo")]
         feriado = dia.get("feriado")
-        if d.weekday() >= 5 and not seguidas and not feriado:
+        if d.weekday() >= 5 and not seguidas and not externos and not feriado:
             d += timedelta(days=1)
             continue
         cont = f'<span class="c-fer">Feriado · {escape(feriado)}</span>' if feriado else ""
@@ -148,6 +164,9 @@ def _semana(cal: dict, ctx: F.Contexto, dias: dict, publicaciones: dict) -> str:
                 linea = " · ".join(x for x in linea.split(" · ") if not x.startswith("próximo"))
             cont += (f'<div class="c-pub"><b>{escape(p["titulo"])}</b> · INDEC · {escape(p["hora"])}'
                      + (_linea_html(linea, "hoy el monitor muestra ") if linea else "") + "</div>")
+        for p in externos:
+            hora = f' · {escape(p["hora"])}' if p["hora"] else ""
+            cont += f'<div class="c-ext"><span class="org">{escape(p["organismo"])}</span><b>{escape(p["titulo"])}</b>{hora}</div>'
         if not cont:
             cont = '<div class="c-nada">sin publicaciones de las que usa el monitor</div>'
         salida += f'<div class="c-dia{" c-dia-fer" if feriado else ""}">{_tile(d)}<div class="c-cont">{cont}</div></div>'
@@ -182,6 +201,13 @@ def _estado(cfg: dict, publicaciones: dict, prox: dict) -> str:
 
 
 def _item_mes(p: dict) -> str:
+    if p.get("externo"):   # Bloque F1
+        tit = escape(p["titulo"])
+        if p["estado_ext"] == "publicado" and p.get("url"):
+            tit = f'<a href="{escape(p["url"])}">{tit}</a>'
+        hora = f' <span class="hx">· {escape(p["hora"])}</span>' if p["hora"] else ""
+        an = ' <span class="an">· anunciado</span>' if p["estado_ext"] == "anunciado" else ""
+        return f'<div class="m-ext e-{p["estado_ext"]}"><span class="org">{escape(p["organismo"])}</span>{tit}{hora}{an}</div>'
     if not p["pid"]:
         return f'<div class="m-otra">{escape(p["titulo"])}</div>'
     mk, tit = MARCA.get(p["estado"] or "proximo", ("", ""))
@@ -204,7 +230,7 @@ def _mes(m: dict) -> str:
         hoy = '<span class="m-hoy-l">hoy</span>' if d["hoy"] else ""
         celdas += f'<div class="{cls}"><div class="m-n">{d["numero"]}{hoy}</div>{fer}{items}</div>'
         if d["publicaciones"] or d["feriado"]:
-            solo_otras = not d["feriado"] and all(not p["pid"] for p in d["publicaciones"])
+            solo_otras = not d["feriado"] and all(not p["pid"] and not p.get("externo") for p in d["publicaciones"])
             fer_l = f'<div class="m-fer-l">Feriado · {escape(d["feriado"])}</div>' if d["feriado"] else ""
             lista += (f'<div class="l-fila{" l-solo-otras" if solo_otras else ""}{" m-pasado" if d["pasado"] else ""}">'
                       f'<span class="l-d">{d["dia"]} {d["numero"]:02d}/{d["fecha"][5:7]}</span>'
@@ -236,7 +262,7 @@ def html(agenda: dict | None, meses: list[dict], prox: dict, sin_cal: list[str],
     meses_html = "".join(f'<div class="mes{" activo" if m["clave"] == actual else ""}" id="mes-{m["clave"]}">{_mes(m)}</div>'
                          for m in disponibles)
     leyenda = " · ".join(f"{mk} {t}" for mk, t in (MARCA["incorporado"], MARCA["publicado"], MARCA["atrasado"])) + \
-        " · sin marca: todavía no se publicó"
+        " · sin marca: todavía no se publicó. Otros organismos: con link, publicado; «anunciado», fecha anunciada " +         "sin publicación encontrada"
     atr = "".join(f'<li>{escape(a["texto"])}</li>' for a in agenda.get("atrasados", []))
     graves = "".join(f'<li><div class="cf grave">{escape(g["texto"])}</div></li>' for g in agenda.get("graves", []))
     demorados = (f'<ul class="avisos">{atr}</ul>' if atr else "") + (f'<ul class="graves">{graves}</ul>' if graves else "")
@@ -246,8 +272,9 @@ def html(agenda: dict | None, meses: list[dict], prox: dict, sin_cal: list[str],
                     f'{escape(", ".join(sin_cal))}.</p>') if sin_cal else ""
     cuerpo = f"""
 <h2 class="cal-h2">Calendario de publicaciones</h2>
-<p class="bajada">Publicaciones del INDEC que alimentan el monitor, con las fechas de su calendario oficial{f" (bajado el {bajado_txt})" if bajado_txt else ""}.
-Las series del BCRA, del Ministerio de Economía y de los mercados no tienen calendario oficial: no se les estima fecha.</p>
+<p class="bajada">Publicaciones del INDEC que alimentan el monitor, con las fechas de su calendario oficial{f" (bajado el {bajado_txt})" if bajado_txt else ""},
+y las decisiones de tasa de la FED, el BCE, el BoJ y el BoE, con las fechas que anuncia cada uno.
+Las series diarias del BCRA, de MinEco y de mercados no tienen calendario oficial: no se les estima fecha. Las publicaciones del BCRA con fecha anunciada (IPOM, REM) figuran en el calendario.</p>
 {aviso}
 <div class="c-top">
   <section><h3 class="grupo">Hoy · {A.dia_corto(ctx.hoy)}</h3>{_hoy(cal, ctx)}</section>
@@ -263,8 +290,13 @@ Las series del BCRA, del Ministerio de Economía y de los mercados no tienen cal
 <section id="demorados"><h3 class="grupo">Datos demorados</h3>{demorados}</section>
 {f'<section><h3 class="grupo">Sin calendario oficial ({len(sin_cal)} series)</h3>{sin_cal_html}</section>' if sin_cal else ""}
 """
-    pie = (f'Fechas: <a href="{URL_CALENDARIO_INDEC}">calendario oficial del INDEC</a>. Días no hábiles: los días en '
-           'que no operan el INDEC, el BCRA y BYMA (feriados nacionales y los especiales que alcanzan a esos organismos).')
+    externos = " · ".join(f'<a href="{escape(o["url"])}">{escape(o["organismo"])}</a>' for o in cfg.get("externos") or [])
+    pie = (f'Fechas: <a href="{URL_CALENDARIO_INDEC}">calendario oficial del INDEC</a>'
+           + (f'; otros organismos, de sus calendarios oficiales: {externos}; publicaciones de la FED, de su '
+              f'<a href="{URL_RSS_FED}">RSS oficial</a>. Horas en hora argentina, con la local entre paréntesis (FED: hora '
+              'del Este de EE.UU.); sin hora cuando la fuente no la da' if externos else "")
+           + '. Días no hábiles: los días en que no operan el INDEC, el BCRA y BYMA (feriados nacionales y los '
+           'especiales que alcanzan a esos organismos).')
     return sitio.pagina("Calendario · Monitor de coyuntura", "Monitor de coyuntura · Argentina", sub,
                         sitio.nav_sitio("../", "Calendario"), cuerpo, css=CSS, js=JS, pie=sitio.pie_sitio("../", pie))
 
