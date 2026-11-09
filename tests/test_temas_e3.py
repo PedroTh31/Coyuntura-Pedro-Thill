@@ -37,7 +37,7 @@ class TestMinis(unittest.TestCase):
         m = D._mini_card({"nombre": "c", "vista": "combo_rezago"}, None, _hist("c"))
         self.assertEqual(m, {"texto": D.TEXTO_MINI_COMPLETO})
 
-    def test_espejo_impo_negativa_sin_arena(self):
+    def test_espejo_impo_negativa_sin_color_negativo(self):
         h = pd.concat([_hist("e"), _hist("i"), _hist("s")])
         m = D._mini_card({"nombre": "x", "vista": "comercio_espejo", "series": ["e", "i", "s"]}, None, h)
         self.assertLessEqual(max(v for v in m["ds"][1]["y"] if v is not None), 0)

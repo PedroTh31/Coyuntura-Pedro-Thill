@@ -144,7 +144,7 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   diaria|mensual|trimestral` del yaml > fuente (`FUENTES_DIARIAS`/`CALCULOS_DIARIOS`: mae_*, tesoro_ust,
   byma, byma_bono, dolar, spread_bono_ust, brecha) > separación de las fechas, SÓLO con 2 puntos o más (con uno se
   muestra la fecha, nunca se adivina el período; #24). Una fuente diaria nueva -> sumarla a esos sets. Cards con varias series: si alguna está frenada y otra no, la franja
-  nombra la frenada. Colores: grises + `principal_2` "al día", NUNCA el arena (es el de los negativos del
+  nombra la frenada. Colores: grises + `principal_2` "al día", NUNCA el `negativo` (bordó, es el de los negativos del
   Bloque C). Ojo: el chequeo de frescura de `run.py` (alertas) mide desde la fecha cruda del dato,
   no desde el cierre. Tests: `tests/test_frescura.py`.
 
@@ -249,7 +249,8 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     ahí. Ningún gráfico se estiliza por separado; la jerarquía la da el orden: protagonista `principal_1`,
     luego `principal_2`, `principal_3` (punteado), contexto `principal_contexto` (ciruela desde E5). En un overlay la protagonista es la
     ÚLTIMA serie de `series:` (la que resume la card). `ACENTO`/`AZUL_ENLACE` quedan sólo por compatibilidad.
-  - Arena (`negativo`) = SÓLO valores negativos (D2). La variación bajo el valor va en gris azulado, sin
+  - `negativo` = SÓLO valores negativos (D2): bordó medio #A3505C desde el 09/11/2026 (decisión B de Pedro en el
+    bloque de identidad visual; antes arena #C9A66B). Los textos dicen "bordó" vía `tema.NOMBRE_COLOR`. La variación bajo el valor va en gris azulado, sin
     juicio (D3): `sube_es_bueno`/`neutral` ya no pintan la card del dashboard (el mail los sigue usando
     hasta su Bloque 2).
   - Sin leyendas de Chart.js: etiquetas directas al final de cada serie + leyenda en prosa sobre el
@@ -263,7 +264,7 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   - La línea de frescura del B2 (`.cf`) NO se toca.
 - **Identidad visual** (09/11/2026, decisiones de Pedro): paleta azul marino (`principal_1..3`, `principal_contexto` en
   tema.py; principal_3 = #7696C2 llega a 3:1 y su etiqueta directa va en principal_2; texto_3 = #677987, 4,5:1). Los
-  textos que nombran un color salen de `tema.NOMBRE_COLOR` (nunca "arena"/"azul" escritos a mano). Firma "por Pedro
+  textos que nombran un color salen de `tema.NOMBRE_COLOR` (nunca "bordó"/"azul" escritos a mano). Firma "por Pedro
   Thill" en la cabecera de todas las páginas (`sitio.firma`) y bloque de autor en /acerca/. Anclas: `[id] {
   scroll-margin-top }` en `sitio.CSS_IDENTIDAD` (la barra de navegación es sticky). **Escala de 5A/Máx**
   (`dashboard.escala_larga`): las series con `nominal_pesos: true` o `escala_log_largo: true` (dólares, depósitos,

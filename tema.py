@@ -7,11 +7,12 @@ de duplicar los valores a mano.
 E5 (identidad A+B+C, aprobada por Pedro): la rampa protagonista pasó del azul a ciruela (`principal_*`, antes
 `azul_*`). Bloque de identidad visual (09/11/2026, decisión A de Pedro): la rampa pasa de ciruela a azul marino
 (sólo modo claro), con dos ajustes de contraste WCAG AA: principal_3 llega a 3:1 (gráficos; la etiqueta directa
-de esa serie va en principal_2, ver dashboard.py) y texto_3 a 4,5:1 (texto chico). El arena (negativos) y los grises del B2 (texto_2/3, atrasado, franja) no cambian. Los
+de esa serie va en principal_2, ver dashboard.py) y texto_3 a 4,5:1 (texto chico). Negativos (decisión B de Pedro, 09/11/2026): bordó medio #A3505C, antes
+arena #C9A66B (más claro que principal_1 y más oscuro que principal_3, para distinguirse de los dos). Los grises del B2 (texto_2/3, atrasado, franja) no cambian. Los
 titulares, títulos de página y la cabecera van en serif del sistema (`fuente_titulares`, sin Google Fonts: D6 del C).
 
 Ningún otro archivo escribe un hex de la paleta: el CSS (variables `--principal-1`, ...), el JS de los gráficos
-(`TEMA`) y el mail se generan desde acá. Los textos que nombran un color ("Valores negativos en arena") salen de
+(`TEMA`) y el mail se generan desde acá. Los textos que nombran un color ("Valores negativos en bordó") salen de
 NOMBRE_COLOR, así un cambio de color es un cambio de este archivo y nada más.
 """
 
@@ -23,7 +24,7 @@ TEMA = {
     "texto": "#111111",
     "texto_2": "#4A5A68",         # subtítulos, fechas
     "texto_3": "#677987",         # etiquetas secundarias, fuente (4,5:1 sobre blanco; antes #7A8C9A, 3,5:1)
-    "negativo": "#C9A66B",        # negativos / escalas divergentes
+    "negativo": "#A3505C",        # bordó medio: SÓLO valores negativos / escalas divergentes (5,4:1 sobre blanco)
     "atrasado": "#2E3A45",        # "⚠ atrasado" (línea de frescura, Bloque B2)
     "franja_fondo": "#EEF1F4",    # franja de rezago grave (Bloque B2)
     "franja_borde": "#4A5A68",
@@ -36,5 +37,5 @@ TEMA = {
 # hex, para que cambiar un color no deje un texto que nombra el anterior.
 NOMBRE_COLOR = {
     "principal": "azul",
-    "negativo": "arena",
+    "negativo": "bordó",
 }

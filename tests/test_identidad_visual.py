@@ -43,6 +43,25 @@ def _sj_linea(vals, kind="line"):
     return {"i": 0, "kind": kind, "full_y": vals, "full_x": ["a"] * len(vals), "full_dates": ["2020-01-01"] * len(vals)}
 
 
+class TestNegativos(unittest.TestCase):
+    """Decisión B de Pedro (09/11/2026): negativos en bordó medio, nombrado así en todos los textos visibles."""
+    def test_bordo_medio(self):
+        from tema import NOMBRE_COLOR
+        self.assertEqual(TEMA["negativo"], "#A3505C")
+        self.assertEqual(NOMBRE_COLOR["negativo"], "bordó")
+        self.assertGreaterEqual(contraste(TEMA["negativo"], TEMA["fondo"]), 4.5)
+
+    def test_textos_visibles_dicen_bordo(self):
+        self.assertIn("El bordó marca sólo los valores negativos", pagina_home.html_acerca("09/11/2026 10:00"))
+        tabla = D._tabla_semaforo([{"nombre": "S", "ia": -2.0, "men": 0.5, "acum": 3.0}], "sep-26")
+        self.assertIn("bordó: -1% o menos", tabla)
+        self.assertIn("Azul: +1% o más", tabla)
+        self.assertNotIn("arena", tabla)
+        s = (RAIZ / "dashboard.py").read_text(encoding="utf-8")
+        self.assertIn('.replace("__COLOR_NEG__", json.dumps(NOMBRE_COLOR["negativo"]', s)
+        self.assertNotIn("en arena", s)
+
+
 class TestEscalaLarga(unittest.TestCase):
     def test_nominal_en_pesos_positiva_va_en_log(self):
         self.assertEqual(D.escala_larga({"nominal_pesos": True}, _sj_linea([1.0, 10.0, None, 100.0])), "log")

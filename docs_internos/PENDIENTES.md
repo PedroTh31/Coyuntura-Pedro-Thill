@@ -473,6 +473,14 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       internacional). Arreglo posible: pasar `published_parsed` a hora argentina antes de comparar, con un
       test en tests/test_noticias.py.
 
+30. **Máx/mín del pie calculado sobre la ventana inicial, no sobre el rango elegido** — anotado el 09/11/2026
+    (visto en el bloque de identidad visual, no tocado).
+    - Ej.: Dólar oficial en Máx dibuja desde 2011 (≈ $4) pero el pie dice "mín. 828,3" (el mínimo desde el
+      `desde` de la card, ene-2024). El pie se arma en Python (`maxv`/`minv` de cada card en dashboard.py) y
+      el selector de rango (5A, Máx, Rango…) no lo recalcula.
+    - Arreglo posible: que `aplicarFiltro` recalcule máx/mín de los datos filtrados en el JS, o que el pie
+      diga a qué período corresponde.
+
 ## Bloques futuros (después del Bloque E; no implementar todavía)
 
 F1. **Agenda ampliada en el calendario (internacional + BCRA)** — anotado el 08/11/2026.
@@ -508,7 +516,7 @@ C1. **Descripciones de las páginas de serie (`descripcion:` del yaml)** — ano
 C2. **Negativos en los combos de dos barras (diseño)** — anotado el 08/11/2026 (visto en E5, no tocado).
     - En `vista: combo_barras_linea` con dos barras (hoy: Superávit gemelos, Resultado primario vs. intereses de
       deuda) cada serie se pinta siempre con su tono de la rampa (`principal_3` y `principal_contexto`), también
-      cuando el valor es negativo: no se cumple "arena = sólo valores negativos" (D2 del Bloque C).
-    - Problema de fondo: si los negativos de las dos series van en arena, se pierde qué barra es de qué serie.
-      Necesita un diseño propio (por ejemplo, arena en dos tonos, borde o textura por serie); no se resuelve
+      cuando el valor es negativo: no se cumple "`negativo` (bordó desde el 09/11/2026) = sólo valores negativos" (D2 del Bloque C).
+    - Problema de fondo: si los negativos de las dos series van en bordó, se pierde qué barra es de qué serie.
+      Necesita un diseño propio (por ejemplo, bordó en dos tonos, borde o textura por serie); no se resuelve
       cambiando el color.
