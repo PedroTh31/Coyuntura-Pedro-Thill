@@ -3,14 +3,14 @@
 <title>Acerca · Monitor de coyuntura · Argentina</title>
 <style>
   :root {
-    --principal-1: #46245A;
-    --principal-2: #85559B;
-    --principal-3: #C2A3D1;
-    --principal-contexto: #E3D5EA;
+    --principal-1: #1F3A5F;
+    --principal-2: #4A6FA5;
+    --principal-3: #7696C2;
+    --principal-contexto: #DCE5F0;
     --texto: #111111;
     --texto-2: #4A5A68;
-    --texto-3: #7A8C9A;
-    --negativo: #C9A66B;
+    --texto-3: #677987;
+    --negativo: #A3505C;
     --atrasado: #2E3A45;
     --franja-fondo: #EEF1F4;
     --franja-borde: #4A5A68;
@@ -70,19 +70,31 @@
   @media (max-width:760px) { ul.lee li { grid-template-columns:minmax(0, 1fr); gap:4px; } }
 
 
-  /* --- E5 · A+B: cabecera ciruela con título en serif y filete doble --- */
+  /* --- E5 · A+B: cabecera en principal-1 con título en serif y filete doble --- */
   header.masthead { background:var(--principal-1); color:#fff; border-top:0; padding:22px 0 14px; text-align:center; }
   header.masthead .wrap { padding-bottom:12px; border-bottom:3px double rgba(255,255,255,.65); }
   header.masthead h1 { font-family:var(--fuente-titulares); font-size:38px; letter-spacing:-.005em; color:#fff; }
   header.masthead h1 a { color:#fff; } header.masthead h1 a:hover { text-decoration:none; }
   header.masthead .sub { color:rgba(255,255,255,.82); }
   header.masthead .sub a { color:#fff; }
+  /* C1 (bloque de identidad visual): firma bajo el título, serif itálica; el nombre en redonda y negrita. */
+  header.masthead .firma { font-family:var(--fuente-titulares); font-style:italic; font-size:19px; color:#fff; margin-top:4px; }
+  header.masthead .firma a { color:#fff; font-style:normal; font-weight:700; }
+  header.masthead .firma a:hover { text-decoration:underline; text-decoration-color:rgba(255,255,255,.45); }
+  /* C3: el nombre como encabezado de Acerca. */
+  .autor { border-top:3px double var(--principal-1); border-bottom:1px solid var(--linea); padding:18px 0 16px; margin:8px 0 22px; }
+  .autor-k { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--texto-3); }
+  .autor-n { font-family:var(--fuente-titulares); font-size:40px; font-weight:700; color:var(--principal-1); line-height:1.1; margin:4px 0; }
+  .autor-d { font-size:15px; color:var(--texto-2); }
   @media (min-width:1100px) { nav.secciones .wrap { justify-content:center; } }
+  /* Anclas: la barra de navegación es fija (sticky), así que todo destino de un #ancla (cards, secciones,
+     notas) se detiene debajo de ella y no queda tapado. Alto de la barra ~45px + aire. */
+  [id] { scroll-margin-top:60px; }
   /* --- E5 · A: titulares y títulos de página en serif; kickers, valores y datos siguen en sans --- */
   .ct, .s-tit, section.bloque > h2, .h-tit h2, .tm-h b, .cal-h2, .acerca h2, .acerca h3 {
     font-family:var(--fuente-titulares); letter-spacing:0; }
   .ct { font-weight:700; }
-  /* --- E5 · B: pie ciruela a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
+  /* --- E5 · B: pie en principal-1 a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
   main.wrap { padding-bottom:0; }
   footer, footer.pie { background:var(--principal-1); color:rgba(255,255,255,.85); border-top:0; margin-top:48px;
     padding:18px 0 22px; box-shadow:0 0 0 100vmax var(--principal-1); clip-path:inset(0 -100vmax); font-size:12px; }
@@ -111,17 +123,22 @@
   @media (max-width:760px) {
     header.masthead { padding:16px 0 10px; }
     header.masthead h1 { font-size:27px; }
+    header.masthead .firma { font-size:16px; }
+    .autor-n { font-size:30px; }
   }
 
 </style></head>
 <body>
 <header class="masthead"><div class="wrap">
   <h1><a href="../">Monitor de coyuntura · Argentina</a></h1>
-  <div class="sub">Actualizado 09/11/2026 10:48</div>
+  <div class="firma">por <a href="../acerca/">Pedro Thill</a></div>
+  <div class="sub">Actualizado 09/11/2026 15:20</div>
 </div></header>
 <nav class="secciones"><div class="wrap"><a href="../">Inicio</a><a href="../calendario/">Calendario</a><a href="../precios/">Precios</a><a href="../actividad/">Actividad</a><a href="../empleo-y-salarios/">Empleo y salarios</a><a href="../dolar-y-reservas/">Dólar y reservas</a><a href="../dinero-y-credito/">Dinero y crédito</a><a href="../sector-externo/">Sector externo</a><a href="../fiscal-y-deuda/">Fiscal y deuda</a><a href="../mercados/">Mercados</a></div></nav>
 <main class="wrap">
 <article class="acerca">
+<div class="autor"><div class="autor-k">Monitor de coyuntura · hecho por</div><div class="autor-n">Pedro Thill</div>
+<div class="autor-d">Proyecto personal, gratuito y automatizado</div></div>
 <h2 style="border:0;font-size:26px">Acerca del monitor</h2>
 <p>Un monitor de la coyuntura económica argentina hecho con datos públicos. Se actualiza solo cada día hábil.
 Proyecto iniciado el <a href="https://github.com/PedroTh31/Coyuntura-Pedro-Thill/commit/730dd39">9 de julio de 2026</a>.</p>
@@ -131,7 +148,8 @@ reservas, dinero y crédito, sector externo, fiscal y deuda, y mercados. Cada gr
 <h2>De dónde salen los datos</h2>
 <p>De fuentes oficiales y públicas, consultadas directamente: la API del INDEC (con datos.gob.ar o ArgentinaDatos como
 respaldo), apis.datos.gob.ar, la API del BCRA y sus planillas, el Ministerio de Economía (deuda pública), BYMA, el Mercado
-Abierto Electrónico y FRED (Reserva Federal). Cuando un dato se calcula o se aproxima (por ejemplo, el spread soberano o las
+Abierto Electrónico y, para el rendimiento de los bonos del Tesoro de EE.UU., el propio Tesoro de EE.UU. (con la serie H.15
+de la Reserva Federal como respaldo). Cuando un dato se calcula o se aproxima (por ejemplo, el spread soberano o las
 reservas ajustadas), el gráfico lo dice en el rótulo y en su nota con asterisco.</p>
 <h2 id="leer">Cómo leer cada dato</h2>
 <ul class="lee">
@@ -142,7 +160,7 @@ reservas ajustadas), el gráfico lo dice en el rótulo y en su nota con asterisc
  <li><span><b>Atrasado</b>: pasó más de un día hábil desde la publicación y el monitor todavía no lo muestra.</span><span><span class="cf"><span class="per">ago-26</span> · <span class="atr">⚠ atrasado</span> · sep-26 se publicó el 19/10</span></span></li>
  <li><span><b>Sin datos nuevos</b>: la fuente no publica hace más de tres meses.</span><span><span class="cf grave">⏸ may-26 · sin datos nuevos hace 5 meses</span></span></li>
  <li><span><b>Sin calendario oficial</b>: la fuente no anuncia fechas, y el monitor no las inventa. En las series diarias, “estimado” es el próximo día hábil.</span><span><span class="cf"><span class="per">ago-26</span> · próximo: sin calendario oficial</span></span></li>
- <li><span><b>Colores</b>: no juzgan si un dato es bueno o malo. El color fuerte es la serie principal. El arena marca sólo los valores negativos.</span><span><span class="sw-p"></span>serie principal &nbsp; <span class="sw-n"></span>valor negativo</span></li>
+ <li><span><b>Colores</b>: no juzgan si un dato es bueno o malo. El color fuerte es la serie principal. El bordó marca sólo los valores negativos.</span><span><span class="sw-p"></span>serie principal &nbsp; <span class="sw-n"></span>valor negativo</span></li>
 </ul>
 <h2>Notas metodológicas</h2>
 <p>Cada gráfico lleva un asterisco numerado que remite a su nota, al pie de su página: cómo se calcula, qué fuente usa,

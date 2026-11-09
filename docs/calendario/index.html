@@ -3,14 +3,14 @@
 <title>Calendario · Monitor de coyuntura</title>
 <style>
   :root {
-    --principal-1: #46245A;
-    --principal-2: #85559B;
-    --principal-3: #C2A3D1;
-    --principal-contexto: #E3D5EA;
+    --principal-1: #1F3A5F;
+    --principal-2: #4A6FA5;
+    --principal-3: #7696C2;
+    --principal-contexto: #DCE5F0;
     --texto: #111111;
     --texto-2: #4A5A68;
-    --texto-3: #7A8C9A;
-    --negativo: #C9A66B;
+    --texto-3: #677987;
+    --negativo: #A3505C;
     --atrasado: #2E3A45;
     --franja-fondo: #EEF1F4;
     --franja-borde: #4A5A68;
@@ -121,19 +121,31 @@
   }
 
 
-  /* --- E5 · A+B: cabecera ciruela con título en serif y filete doble --- */
+  /* --- E5 · A+B: cabecera en principal-1 con título en serif y filete doble --- */
   header.masthead { background:var(--principal-1); color:#fff; border-top:0; padding:22px 0 14px; text-align:center; }
   header.masthead .wrap { padding-bottom:12px; border-bottom:3px double rgba(255,255,255,.65); }
   header.masthead h1 { font-family:var(--fuente-titulares); font-size:38px; letter-spacing:-.005em; color:#fff; }
   header.masthead h1 a { color:#fff; } header.masthead h1 a:hover { text-decoration:none; }
   header.masthead .sub { color:rgba(255,255,255,.82); }
   header.masthead .sub a { color:#fff; }
+  /* C1 (bloque de identidad visual): firma bajo el título, serif itálica; el nombre en redonda y negrita. */
+  header.masthead .firma { font-family:var(--fuente-titulares); font-style:italic; font-size:19px; color:#fff; margin-top:4px; }
+  header.masthead .firma a { color:#fff; font-style:normal; font-weight:700; }
+  header.masthead .firma a:hover { text-decoration:underline; text-decoration-color:rgba(255,255,255,.45); }
+  /* C3: el nombre como encabezado de Acerca. */
+  .autor { border-top:3px double var(--principal-1); border-bottom:1px solid var(--linea); padding:18px 0 16px; margin:8px 0 22px; }
+  .autor-k { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--texto-3); }
+  .autor-n { font-family:var(--fuente-titulares); font-size:40px; font-weight:700; color:var(--principal-1); line-height:1.1; margin:4px 0; }
+  .autor-d { font-size:15px; color:var(--texto-2); }
   @media (min-width:1100px) { nav.secciones .wrap { justify-content:center; } }
+  /* Anclas: la barra de navegación es fija (sticky), así que todo destino de un #ancla (cards, secciones,
+     notas) se detiene debajo de ella y no queda tapado. Alto de la barra ~45px + aire. */
+  [id] { scroll-margin-top:60px; }
   /* --- E5 · A: titulares y títulos de página en serif; kickers, valores y datos siguen en sans --- */
   .ct, .s-tit, section.bloque > h2, .h-tit h2, .tm-h b, .cal-h2, .acerca h2, .acerca h3 {
     font-family:var(--fuente-titulares); letter-spacing:0; }
   .ct { font-weight:700; }
-  /* --- E5 · B: pie ciruela a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
+  /* --- E5 · B: pie en principal-1 a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
   main.wrap { padding-bottom:0; }
   footer, footer.pie { background:var(--principal-1); color:rgba(255,255,255,.85); border-top:0; margin-top:48px;
     padding:18px 0 22px; box-shadow:0 0 0 100vmax var(--principal-1); clip-path:inset(0 -100vmax); font-size:12px; }
@@ -162,19 +174,22 @@
   @media (max-width:760px) {
     header.masthead { padding:16px 0 10px; }
     header.masthead h1 { font-size:27px; }
+    header.masthead .firma { font-size:16px; }
+    .autor-n { font-size:30px; }
   }
 
 </style></head>
 <body>
 <header class="masthead"><div class="wrap">
   <h1><a href="../">Monitor de coyuntura · Argentina</a></h1>
-  <div class="sub">Calendario de publicaciones · actualizado 09/11/2026 10:48</div>
+  <div class="firma">por <a href="../acerca/">Pedro Thill</a></div>
+  <div class="sub">Calendario de publicaciones · actualizado 09/11/2026 15:19</div>
 </div></header>
 <nav class="secciones"><div class="wrap"><a href="../">Inicio</a><a href="../calendario/" class="activo">Calendario</a><a href="../precios/">Precios</a><a href="../actividad/">Actividad</a><a href="../empleo-y-salarios/">Empleo y salarios</a><a href="../dolar-y-reservas/">Dólar y reservas</a><a href="../dinero-y-credito/">Dinero y crédito</a><a href="../sector-externo/">Sector externo</a><a href="../fiscal-y-deuda/">Fiscal y deuda</a><a href="../mercados/">Mercados</a></div></nav>
 <main class="wrap">
 
 <h2 class="cal-h2">Calendario de publicaciones</h2>
-<p class="bajada">Publicaciones del INDEC que alimentan el monitor, con las fechas de su calendario oficial (bajado el 09/11 a las 10:44).
+<p class="bajada">Publicaciones del INDEC que alimentan el monitor, con las fechas de su calendario oficial (bajado el 09/11 a las 15:16).
 Las series del BCRA, del Ministerio de Economía y de los mercados no tienen calendario oficial: no se les estima fecha.</p>
 
 <div class="c-top">

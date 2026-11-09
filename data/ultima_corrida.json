@@ -1,6 +1,6 @@
 {
   "fecha": "2026-11-09",
-  "hora": "10:48:41",
+  "hora": "15:20:13",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "ok",
   "disparo": "workflow_dispatch",
@@ -483,105 +483,105 @@
       "indicadores": [
         "Empleo registrado: Agricultura, ganadería y silvicultura"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_B_PESCA_PUADO__45": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Pesca"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_C_EXPLOTACREG__59": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Explotación de minas y canteras"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_D_INDUSTRIREG__56": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Industria manufacturera"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_E_ELECT_GAADO__54": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Electricidad, gas y agua"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_F_CONSTRUCADO__52": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Construcción"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_G_COMERCIOADO__48": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Comercio mayorista y minorista"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_H_HOTELES_ADO__60": {
       "motivo": "la API devolvió 0 filas",
       "indicadores": [
         "Empleo registrado: Hoteles y restaurantes"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_I_TRANSPORREG__58": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Transporte y comunicaciones"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_J_INTERMEDADO__65": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Intermediación financiera"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_K_ACT_INMOADO__57": {
       "motivo": "la API devolvió 0 filas",
       "indicadores": [
         "Empleo registrado: Inmobiliarias y empresariales"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_L_ADM_PUB_REG__59": {
       "motivo": "la API devolvió 26 de 41 filas (historia cortada)",
       "indicadores": [
         "Empleo registrado: Administración pública y defensa"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_M_ENSENIANZADO__49": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Enseñanza"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_N_SERVICIOREG__57": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Servicios sociales y de salud"
       ],
-      "racha": 5
+      "racha": 6
     },
     "324.1_O_OTRAS_ACREG__51": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
       "indicadores": [
         "Empleo registrado: Otros servicios comunitarios"
       ],
-      "racha": 5
+      "racha": 6
     },
     "331.1_OTRAS_OPERDES__39": {
       "motivo": "la API devolvió 160 de 281 filas (historia cortada)",
@@ -589,7 +589,7 @@
         "Transferencia de utilidades del BCRA",
         "Transferencia de utilidades del BCRA (pesos constantes)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "331.1_OTRAS_OPERIOS__58": {
       "motivo": "coherencia: 331.1_OTRAS_OPERDES__39, de la misma distribución, sale del CSV en la card 'Asistencia monetaria del BCRA al Tesoro'",
@@ -597,21 +597,21 @@
         "Adelantos transitorios al Tesoro",
         "Adelantos transitorios al Tesoro (pesos constantes)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "379.9_GTOS_CORR_017__40_84": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Intereses netos de deuda pública"
       ],
-      "racha": 5
+      "racha": 6
     },
     "379.9_RESULTADO_017__18_38": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Resultado financiero (Sector Público Nacional)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "379.9_RESULTADO_017__31_73": {
       "motivo": "la API devolvió 0 filas",
@@ -619,14 +619,14 @@
         "Resultado primario (Sector Público Nacional)",
         "Resultado primario acumulado 12 meses"
       ],
-      "racha": 5
+      "racha": 6
     },
     "52.2_ASDJ_0_0_37": {
       "motivo": "la API devolvió 91 de 93 filas (historia cortada)",
       "indicadores": [
         "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IECE_0_M_35": {
       "motivo": "la API devolvió 0 filas",
@@ -634,56 +634,56 @@
         "Balance comercial energético",
         "Combustibles y energía"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IEMOA_0_M_48": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Manufacturas de origen agropecuario (MOA)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IEMOI_0_M_46": {
       "motivo": "la API devolvió 0 filas",
       "indicadores": [
         "Manufacturas de origen industrial (MOI)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IEPP_0_M_35": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Productos primarios"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IET_0_M_16": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Exportaciones totales"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IIBCA_0_M_32": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Bienes de capital"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IIBCO_0_M_32": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Bienes de consumo"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IIBI_0_M_36": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Bienes intermedios"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IICL_0_M_42": {
       "motivo": "la API devolvió 138 de 416 filas (historia cortada)",
@@ -691,70 +691,70 @@
         "Balance comercial energético",
         "Combustibles y lubricantes"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IIPABC_0_M_50": {
       "motivo": "la API devolvió 0 filas",
       "indicadores": [
         "Piezas y accesorios para bienes de capital"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IIR_0_M_23": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Resto (importaciones por uso)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IIT_0_M_25": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Importaciones totales"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_IIVAP_0_M_49": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Vehículos automotores de pasajeros"
       ],
-      "racha": 5
+      "racha": 6
     },
     "74.3_ISC_0_M_19": {
       "motivo": "los últimos 12 períodos difieren del CSV un 1.3% (tolerancia 1%)",
       "indicadores": [
         "Saldo comercial"
       ],
-      "racha": 5
+      "racha": 6
     },
     "90.1_AMTM3_0_0_31": {
       "motivo": "la API devolvió 149 de 284 filas (historia cortada)",
       "indicadores": [
         "M3 (agregado amplio)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "90.1_BMCMP_0_0_44": {
       "motivo": "los últimos 12 períodos difieren del CSV un 61.9% (tolerancia 1%)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "90.1_DCCT_0_0_32": {
       "motivo": "la API devolvió 110 de 284 filas (historia cortada)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "91.1_DETALLE_PRDOC_0_0_47": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "91.1_PEFPC_0_0_35": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
@@ -762,21 +762,21 @@
         "Préstamos al sector privado",
         "Préstamos al sector privado, variación % real mensual"
       ],
-      "racha": 5
+      "racha": 6
     },
     "91.1_PEFPC_0_0_41": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 5
+      "racha": 6
     },
     "91.1_PEFPD_0_0_45": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
       "indicadores": [
         "Préstamos a Empresas (Comerciales)"
       ],
-      "racha": 5
+      "racha": 6
     }
   },
   "datos_gob_csv_descartados": {},

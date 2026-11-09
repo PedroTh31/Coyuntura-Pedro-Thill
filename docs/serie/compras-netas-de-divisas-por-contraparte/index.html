@@ -5,14 +5,14 @@
 <style>
   /* Bloque C: colores y tipografía de tema.py (una sola fuente de verdad, la misma que el mail). */
   :root {
-    --principal-1: #46245A;
-    --principal-2: #85559B;
-    --principal-3: #C2A3D1;
-    --principal-contexto: #E3D5EA;
+    --principal-1: #1F3A5F;
+    --principal-2: #4A6FA5;
+    --principal-3: #7696C2;
+    --principal-contexto: #DCE5F0;
     --texto: #111111;
     --texto-2: #4A5A68;
-    --texto-3: #7A8C9A;
-    --negativo: #C9A66B;
+    --texto-3: #677987;
+    --negativo: #A3505C;
     --atrasado: #2E3A45;
     --franja-fondo: #EEF1F4;
     --franja-borde: #4A5A68;
@@ -96,11 +96,11 @@
   .cm { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-top:8px; }
   .cv { font-size:26px; font-weight:700; color:var(--principal-1); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
   .uni { font-size:13px; color:var(--texto-2); }
-  /* D3: variación en gris azulado, sin juicio (el arena queda reservado a los valores negativos). */
+  /* D3: variación en gris azulado, sin juicio (el color `negativo` queda reservado a los valores negativos). */
   .chg { font-size:13px; color:var(--texto-2); font-variant-numeric:tabular-nums; }
   .chg .tri { font-size:11px; margin-right:3px; }
   /* Línea de frescura (Bloque B2, frescura.py). Grises de la paleta del Bloque C + principal_2 para
-     "al día". NUNCA el arena #C9A66B (en el Bloque C es el color de los valores negativos) ni rojo.
+     "al día". NUNCA el color `negativo` de tema.py (en el Bloque C es el de los valores negativos) ni rojo.
      El estado nunca va sólo en color: lleva ícono y texto. */
   .cf { font-size:11px; color:var(--texto-3); margin-top:5px; line-height:1.35; }
   .cf .per { color:var(--texto-2); font-weight:600; }
@@ -120,6 +120,9 @@
   .ley-x { display:inline-block; }
   .acumulando { color:var(--texto-2); font-size:12px; text-align:center; padding:20px 14px; background:var(--franja-fondo); margin-top:10px; }
   .cbox { position:relative; height:250px; margin-top:4px; }
+  .escala-log { position:absolute; top:0; left:0; z-index:1; font-size:11px; line-height:1; color:var(--texto-2);
+    background:var(--franja-fondo); padding:2px 6px; letter-spacing:.02em; }
+  .escala-log[hidden] { display:none; }
   /* Pedro quiere TODAS las tarjetas del mismo tamaño por ahora (flags grande/sin_filtros siguen en el yaml):
      .cbox-grande { height:400px; } .cell-ancha { grid-column: span 2; } */
   .filtros, .rezago-btns { display:flex; align-items:baseline; flex-wrap:wrap; gap:2px; font-size:12px; color:var(--texto-3); margin-top:6px; }
@@ -160,19 +163,31 @@
     .tabla { font-size:12px; } .tabla td, .tabla th { padding:6px 5px; }
   }
 
-  /* --- E5 · A+B: cabecera ciruela con título en serif y filete doble --- */
+  /* --- E5 · A+B: cabecera en principal-1 con título en serif y filete doble --- */
   header.masthead { background:var(--principal-1); color:#fff; border-top:0; padding:22px 0 14px; text-align:center; }
   header.masthead .wrap { padding-bottom:12px; border-bottom:3px double rgba(255,255,255,.65); }
   header.masthead h1 { font-family:var(--fuente-titulares); font-size:38px; letter-spacing:-.005em; color:#fff; }
   header.masthead h1 a { color:#fff; } header.masthead h1 a:hover { text-decoration:none; }
   header.masthead .sub { color:rgba(255,255,255,.82); }
   header.masthead .sub a { color:#fff; }
+  /* C1 (bloque de identidad visual): firma bajo el título, serif itálica; el nombre en redonda y negrita. */
+  header.masthead .firma { font-family:var(--fuente-titulares); font-style:italic; font-size:19px; color:#fff; margin-top:4px; }
+  header.masthead .firma a { color:#fff; font-style:normal; font-weight:700; }
+  header.masthead .firma a:hover { text-decoration:underline; text-decoration-color:rgba(255,255,255,.45); }
+  /* C3: el nombre como encabezado de Acerca. */
+  .autor { border-top:3px double var(--principal-1); border-bottom:1px solid var(--linea); padding:18px 0 16px; margin:8px 0 22px; }
+  .autor-k { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--texto-3); }
+  .autor-n { font-family:var(--fuente-titulares); font-size:40px; font-weight:700; color:var(--principal-1); line-height:1.1; margin:4px 0; }
+  .autor-d { font-size:15px; color:var(--texto-2); }
   @media (min-width:1100px) { nav.secciones .wrap { justify-content:center; } }
+  /* Anclas: la barra de navegación es fija (sticky), así que todo destino de un #ancla (cards, secciones,
+     notas) se detiene debajo de ella y no queda tapado. Alto de la barra ~45px + aire. */
+  [id] { scroll-margin-top:60px; }
   /* --- E5 · A: titulares y títulos de página en serif; kickers, valores y datos siguen en sans --- */
   .ct, .s-tit, section.bloque > h2, .h-tit h2, .tm-h b, .cal-h2, .acerca h2, .acerca h3 {
     font-family:var(--fuente-titulares); letter-spacing:0; }
   .ct { font-weight:700; }
-  /* --- E5 · B: pie ciruela a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
+  /* --- E5 · B: pie en principal-1 a todo el ancho (sin scroll horizontal: box-shadow + clip-path) --- */
   main.wrap { padding-bottom:0; }
   footer, footer.pie { background:var(--principal-1); color:rgba(255,255,255,.85); border-top:0; margin-top:48px;
     padding:18px 0 22px; box-shadow:0 0 0 100vmax var(--principal-1); clip-path:inset(0 -100vmax); font-size:12px; }
@@ -201,13 +216,16 @@
   @media (max-width:760px) {
     header.masthead { padding:16px 0 10px; }
     header.masthead h1 { font-size:27px; }
+    header.masthead .firma { font-size:16px; }
+    .autor-n { font-size:30px; }
   }
 
 </style></head>
 <body>
 <header class="masthead"><div class="wrap">
   <h1><a href="../../" class="h1-link">Monitor de coyuntura · Argentina</a></h1>
-  <div class="sub">Actualizado 09/11/2026 10:48 · fuentes: apis.datos.gob.ar</div>
+  <div class="firma">por <a href="../../acerca/">Pedro Thill</a></div>
+  <div class="sub">Actualizado 09/11/2026 15:20 · fuentes: apis.datos.gob.ar</div>
 </div></header>
 <nav class="secciones"><div class="wrap"><a href="../../">Inicio</a><a href="../../calendario/">Calendario</a><a href="../../precios/">Precios</a><a href="../../actividad/">Actividad</a><a href="../../empleo-y-salarios/">Empleo y salarios</a><a href="../../dolar-y-reservas/" class="activo">Dólar y reservas</a><a href="../../dinero-y-credito/">Dinero y crédito</a><a href="../../sector-externo/">Sector externo</a><a href="../../fiscal-y-deuda/">Fiscal y deuda</a><a href="../../mercados/">Mercados</a></div></nav>
 <main class="wrap">
@@ -217,7 +235,8 @@
 </main>
 <script>
 const SERIES = [{"i": 0, "kind": "overlay", "unidad": "millones de $", "x": ["01/24", "02/24", "03/24", "04/24", "05/24", "06/24", "07/24", "08/24", "09/24", "10/24", "11/24", "12/24", "01/25", "02/25", "03/25", "04/25", "05/25", "06/25", "07/25", "08/25", "09/25", "10/25", "11/25", "12/25", "01/26", "02/26", "03/26", "04/26", "05/26"], "full_x": ["01/04", "02/04", "03/04", "04/04", "05/04", "06/04", "07/04", "08/04", "09/04", "10/04", "11/04", "12/04", "01/05", "02/05", "03/05", "04/05", "05/05", "06/05", "07/05", "08/05", "09/05", "10/05", "11/05", "12/05", "01/06", "02/06", "03/06", "04/06", "05/06", "06/06", "07/06", "08/06", "09/06", "10/06", "11/06", "12/06", "01/07", "02/07", "03/07", "04/07", "05/07", "06/07", "07/07", "08/07", "09/07", "10/07", "11/07", "12/07", "01/08", "02/08", "03/08", "04/08", "05/08", "06/08", "07/08", "08/08", "09/08", "10/08", "11/08", "12/08", "01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09", "11/09", "12/09", "01/10", "02/10", "03/10", "04/10", "05/10", "06/10", "07/10", "08/10", "09/10", "10/10", "11/10", "12/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11", "11/11", "12/11", "01/12", "02/12", "03/12", "04/12", "05/12", "06/12", "07/12", "08/12", "09/12", "10/12", "11/12", "12/12", "01/13", "02/13", "03/13", "04/13", "05/13", "06/13", "07/13", "08/13", "09/13", "10/13", "11/13", "12/13", "01/14", "02/14", "03/14", "04/14", "05/14", "06/14", "07/14", "08/14", "09/14", "10/14", "11/14", "12/14", "01/15", "02/15", "03/15", "04/15", "05/15", "06/15", "07/15", "08/15", "09/15", "10/15", "11/15", "12/15", "01/16", "02/16", "03/16", "04/16", "05/16", "06/16", "07/16", "08/16", "09/16", "10/16", "11/16", "12/16", "01/17", "02/17", "03/17", "04/17", "05/17", "06/17", "07/17", "08/17", "09/17", "10/17", "11/17", "12/17", "01/18", "02/18", "03/18", "04/18", "05/18", "06/18", "07/18", "08/18", "09/18", "10/18", "11/18", "12/18", "01/19", "02/19", "03/19", "04/19", "05/19", "06/19", "07/19", "08/19", "09/19", "10/19", "11/19", "12/19", "01/20", "02/20", "03/20", "04/20", "05/20", "06/20", "07/20", "08/20", "09/20", "10/20", "11/20", "12/20", "01/21", "02/21", "03/21", "04/21", "05/21", "06/21", "07/21", "08/21", "09/21", "10/21", "11/21", "12/21", "01/22", "02/22", "03/22", "04/22", "05/22", "06/22", "07/22", "08/22", "09/22", "10/22", "11/22", "12/22", "01/23", "02/23", "03/23", "04/23", "05/23", "06/23", "07/23", "08/23", "09/23", "10/23", "11/23", "12/23", "01/24", "02/24", "03/24", "04/24", "05/24", "06/24", "07/24", "08/24", "09/24", "10/24", "11/24", "12/24", "01/25", "02/25", "03/25", "04/25", "05/25", "06/25", "07/25", "08/25", "09/25", "10/25", "11/25", "12/25", "01/26", "02/26", "03/26", "04/26", "05/26"], "full_dates": ["2004-01-01T00:00:00", "2004-02-01T00:00:00", "2004-03-01T00:00:00", "2004-04-01T00:00:00", "2004-05-01T00:00:00", "2004-06-01T00:00:00", "2004-07-01T00:00:00", "2004-08-01T00:00:00", "2004-09-01T00:00:00", "2004-10-01T00:00:00", "2004-11-01T00:00:00", "2004-12-01T00:00:00", "2005-01-01T00:00:00", "2005-02-01T00:00:00", "2005-03-01T00:00:00", "2005-04-01T00:00:00", "2005-05-01T00:00:00", "2005-06-01T00:00:00", "2005-07-01T00:00:00", "2005-08-01T00:00:00", "2005-09-01T00:00:00", "2005-10-01T00:00:00", "2005-11-01T00:00:00", "2005-12-01T00:00:00", "2006-01-01T00:00:00", "2006-02-01T00:00:00", "2006-03-01T00:00:00", "2006-04-01T00:00:00", "2006-05-01T00:00:00", "2006-06-01T00:00:00", "2006-07-01T00:00:00", "2006-08-01T00:00:00", "2006-09-01T00:00:00", "2006-10-01T00:00:00", "2006-11-01T00:00:00", "2006-12-01T00:00:00", "2007-01-01T00:00:00", "2007-02-01T00:00:00", "2007-03-01T00:00:00", "2007-04-01T00:00:00", "2007-05-01T00:00:00", "2007-06-01T00:00:00", "2007-07-01T00:00:00", "2007-08-01T00:00:00", "2007-09-01T00:00:00", "2007-10-01T00:00:00", "2007-11-01T00:00:00", "2007-12-01T00:00:00", "2008-01-01T00:00:00", "2008-02-01T00:00:00", "2008-03-01T00:00:00", "2008-04-01T00:00:00", "2008-05-01T00:00:00", "2008-06-01T00:00:00", "2008-07-01T00:00:00", "2008-08-01T00:00:00", "2008-09-01T00:00:00", "2008-10-01T00:00:00", "2008-11-01T00:00:00", "2008-12-01T00:00:00", "2009-01-01T00:00:00", "2009-02-01T00:00:00", "2009-03-01T00:00:00", "2009-04-01T00:00:00", "2009-05-01T00:00:00", "2009-06-01T00:00:00", "2009-07-01T00:00:00", "2009-08-01T00:00:00", "2009-09-01T00:00:00", "2009-10-01T00:00:00", "2009-11-01T00:00:00", "2009-12-01T00:00:00", "2010-01-01T00:00:00", "2010-02-01T00:00:00", "2010-03-01T00:00:00", "2010-04-01T00:00:00", "2010-05-01T00:00:00", "2010-06-01T00:00:00", "2010-07-01T00:00:00", "2010-08-01T00:00:00", "2010-09-01T00:00:00", "2010-10-01T00:00:00", "2010-11-01T00:00:00", "2010-12-01T00:00:00", "2011-01-01T00:00:00", "2011-02-01T00:00:00", "2011-03-01T00:00:00", "2011-04-01T00:00:00", "2011-05-01T00:00:00", "2011-06-01T00:00:00", "2011-07-01T00:00:00", "2011-08-01T00:00:00", "2011-09-01T00:00:00", "2011-10-01T00:00:00", "2011-11-01T00:00:00", "2011-12-01T00:00:00", "2012-01-01T00:00:00", "2012-02-01T00:00:00", "2012-03-01T00:00:00", "2012-04-01T00:00:00", "2012-05-01T00:00:00", "2012-06-01T00:00:00", "2012-07-01T00:00:00", "2012-08-01T00:00:00", "2012-09-01T00:00:00", "2012-10-01T00:00:00", "2012-11-01T00:00:00", "2012-12-01T00:00:00", "2013-01-01T00:00:00", "2013-02-01T00:00:00", "2013-03-01T00:00:00", "2013-04-01T00:00:00", "2013-05-01T00:00:00", "2013-06-01T00:00:00", "2013-07-01T00:00:00", "2013-08-01T00:00:00", "2013-09-01T00:00:00", "2013-10-01T00:00:00", "2013-11-01T00:00:00", "2013-12-01T00:00:00", "2014-01-01T00:00:00", "2014-02-01T00:00:00", "2014-03-01T00:00:00", "2014-04-01T00:00:00", "2014-05-01T00:00:00", "2014-06-01T00:00:00", "2014-07-01T00:00:00", "2014-08-01T00:00:00", "2014-09-01T00:00:00", "2014-10-01T00:00:00", "2014-11-01T00:00:00", "2014-12-01T00:00:00", "2015-01-01T00:00:00", "2015-02-01T00:00:00", "2015-03-01T00:00:00", "2015-04-01T00:00:00", "2015-05-01T00:00:00", "2015-06-01T00:00:00", "2015-07-01T00:00:00", "2015-08-01T00:00:00", "2015-09-01T00:00:00", "2015-10-01T00:00:00", "2015-11-01T00:00:00", "2015-12-01T00:00:00", "2016-01-01T00:00:00", "2016-02-01T00:00:00", "2016-03-01T00:00:00", "2016-04-01T00:00:00", "2016-05-01T00:00:00", "2016-06-01T00:00:00", "2016-07-01T00:00:00", "2016-08-01T00:00:00", "2016-09-01T00:00:00", "2016-10-01T00:00:00", "2016-11-01T00:00:00", "2016-12-01T00:00:00", "2017-01-01T00:00:00", "2017-02-01T00:00:00", "2017-03-01T00:00:00", "2017-04-01T00:00:00", "2017-05-01T00:00:00", "2017-06-01T00:00:00", "2017-07-01T00:00:00", "2017-08-01T00:00:00", "2017-09-01T00:00:00", "2017-10-01T00:00:00", "2017-11-01T00:00:00", "2017-12-01T00:00:00", "2018-01-01T00:00:00", "2018-02-01T00:00:00", "2018-03-01T00:00:00", "2018-04-01T00:00:00", "2018-05-01T00:00:00", "2018-06-01T00:00:00", "2018-07-01T00:00:00", "2018-08-01T00:00:00", "2018-09-01T00:00:00", "2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00", "2025-07-01T00:00:00", "2025-08-01T00:00:00", "2025-09-01T00:00:00", "2025-10-01T00:00:00", "2025-11-01T00:00:00", "2025-12-01T00:00:00", "2026-01-01T00:00:00", "2026-02-01T00:00:00", "2026-03-01T00:00:00", "2026-04-01T00:00:00", "2026-05-01T00:00:00"], "datasets": [{"label": "Compras netas de divisas: Sector privado", "y": [2675682.33, 1967576.99, 2446775.66, 2898445.88, 2239185.69, -45132.49, -130894.96, 504472.84, 19608.97, 1594638.26, 1627998.47, 705026.51, 1679800.98, 2060551.66, -1457238.83, -917365.17, 0.0, 0.0, 0.0, 0.0, -1637260.8, -67840.5, 0.0, 0.0, 1676370.9, 2188736.1, 2329529.5, 3816910.0, 3639876.41], "full_y": [1628.27, 541.98, 1316.63, 2350.37, 2473.79, 2249.48, 1905.31, 1222.79, 1255.65, 1618.03, 2417.35, 4188.11, 932.44, 1174.85, 404.28, 1374.45, 4344.76, 4763.42, 4417.77, 4189.87, 2986.54, 2015.49, 1300.78, 2258.33, 2622.68, 2863.62, 2921.31, 3735.22, 4058.42, 3585.19, 3603.02, 4957.95, 1986.12, 3226.03, 4302.81, 5632.55, 3887.23, 2625.63, 5046.59, 4933.99, 5442.03, 6190.73, 1638.81, -2409.39, 91.02, -2349.45, 3303.85, 3919.79, 5346.66, 1523.76, 1727.04, -1127.83, -5203.86, -2066.82, 2425.64, 1979.65, -398.74, -11388.19, 1978.0, 2534.43, 1190.52, -490.56, -6822.42, 212.02, 2708.3, -2889.77, -1270.74, 2062.11, 2487.43, 5644.35, 3994.75, 5201.84, 3501.94, -895.7, 2100.61, 4510.8, 5977.36, 4124.77, 6671.83, 3418.91, 4003.95, 4110.63, 3664.03, 5096.24, 3262.95, 3763.76, 5601.82, 3769.22, 3516.06, 2530.59, 41.57, -4905.03, -6313.38, -8907.97, 263.64, 10691.99, 4618.67, 4090.59, 6816.31, 7280.12, 6213.73, 3303.26, 1586.21, 486.48, 549.4, 122.33, 665.96, 5352.99, 491.64, -851.74, -957.95, 3083.25, 2049.61, 2898.82, -719.39, -1936.49, -6672.54, -12108.91, -12098.85, -5814.61, -12716.74, 12924.07, 3884.18, 19562.66, 7216.72, 5937.61, 6219.17, -939.77, -1849.03, -2926.9, 1063.66, 8025.46, -1646.54, -3510.98, -3923.96, 11592.81, 7792.74, 6345.14, -2040.46, -13916.95, -17591.23, -25239.81, -20454.35, -14349.32, 2310.48, -6117.62, 1494.78, 4260.12, 21141.76, 3815.61, 10453.08, 71.3, 0.0, 163.28, 66.54, 11173.74, 0.0, 0.0, 9346.5, 0.0, 17016.46, 795.4, -5419.83, -27190.81, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -41283.66, -96579.23, -79048.89, -33985.58, 0.0, -82036.87, -77818.73, 0.0, 0.0, 0.0, 20875.87, 15671.59, 0.0, 0.0, 0.0, 0.0, 0.0, -116834.56, -75004.8, -242733.37, 131387.74, 67034.85, 46814.4, -15646.67, 8606.29, -36631.39, -46076.04, 46402.26, -40535.29, -93656.5, -121338.7, -84521.38, -26272.7, 50680.87, 12975.12, 56044.71, 133953.81, 127221.25, 196398.45, 69258.25, 68366.26, -84.14, -94170.48, 20383.31, -90266.63, -48324.47, -14523.35, -20107.78, 29306.61, 18276.38, 91254.86, 119532.5, -164094.59, -67934.22, 1135338.1, -68199.37, -68559.2, 488983.58, -32334.82, -169577.8, -391843.56, 143552.75, 413496.33, -206715.73, -40858.97, 514078.32, 183009.16, -90379.92, 126012.38, 2017873.09, 2675682.33, 1967576.99, 2446775.66, 2898445.88, 2239185.69, -45132.49, -130894.96, 504472.84, 19608.97, 1594638.26, 1627998.47, 705026.51, 1679800.98, 2060551.66, -1457238.83, -917365.17, 0.0, 0.0, 0.0, 0.0, -1637260.8, -67840.5, 0.0, 0.0, 1676370.9, 2188736.1, 2329529.5, 3816910.0, 3639876.41]}, {"label": "Compras netas de divisas: Tesoro Nacional", "y": [-364500.0, -849000.0, -401224.77, -2019000.0, -330000.0, -190000.0, -3500000.0, 0.0, -1465964.0, -1120000.0, -2832931.0, -1532749.0, -1041250.0, -531000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -167500.0, -1591116.0, 0.0, -4030000.0, -1137913.55, -160000.0, 0.0, -2372091.0], "full_y": [-199.93, -399.99, -3981.91, -150.13, -1125.94, -1478.67, -90.0, -1030.03, -1786.5, -1712.0, -857.0, -1821.33, 0.0, 0.0, 0.0, -600.0, 469.0, 0.0, -1611.43, -524.02, -1499.83, -1090.0, 175.0, -340.02, -399.96, -1815.12, -246.41, 0.0, 0.0, 0.0, 0.0, -2149.99, 0.0, -500.0, 0.0, -1141.17, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -2850.0, -1510.0, -891.0, -480.0, 0.0, -280.0, -20.0, -933.21, -2220.37, -585.68, -1374.56, -3563.84, -1178.62, 0.0, 0.0, -664.77, -3994.21, -605.01, -2459.94, -656.91, -3824.32, -2910.19, -3690.18, 0.0, 0.0, -768.32, 0.0, -124.0, 0.0, 0.0, 0.0, -1200.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -350.0, -450.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -2945.96, 0.0, -1850.0, -3700.0, -2300.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -6000.08, 0.0, -659.78, -3000.0, -4800.0, -1410.0, -3300.0, -950.0, -700.0, 12400.0, 7730.4, 9440.5, 1500.0, 0.0, -2000.0, -7100.71, -7000.0, 0.0, -6200.0, -2422.0, -2446.0, -5776.0, 22278.36, 22087.22, 24038.45, 0.0, -2000.0, -5400.0, -7300.0, 0.0, 8713.0, -3713.8, -1000.0, 23549.0, 0.0, -5368.0, 0.0, 0.0, -4400.0, -8000.0, 5198.7, 37891.27, 17931.6, 28539.1, 10124.5, -12900.0, 30359.4, 49332.84, 6209.0, 23836.2, 23572.5, 0.0, 30697.42, 0.0, -800.0, 17156.3, 36656.48, 62151.52, 46660.91, 14835.12, 16941.54, 57626.25, 98913.9, 0.0, 0.0, -55211.0, -44477.91, 0.0, -45564.32, -38253.76, -37436.9, 0.0, 43698.67, 0.0, 0.0, 0.0, 0.0, 0.0, -55939.1, 42451.64, -127000.0, 90391.55, 0.0, 0.0, -32278.2, -1790.7, 0.0, 0.0, 0.0, 0.0, -12100.0, 0.0, -41000.0, -25500.0, -15000.0, -45000.0, -20620.0, 0.0, -40000.0, -33200.0, -14000.0, -46500.0, -20000.0, -81000.0, -52000.0, 395900.66, -21000.0, 0.0, 0.0, -143500.0, 0.0, -27000.0, -15000.0, 293448.97, -31000.0, -128600.0, -30500.0, -139200.0, -214000.0, 0.0, 200229.18, -175000.0, -50000.0, -67000.0, 0.0, -172200.0, -751357.22, -312000.0, -77610.06, 0.0, 0.0, -260774.26, -119000.0, -364500.0, -849000.0, -401224.77, -2019000.0, -330000.0, -190000.0, -3500000.0, 0.0, -1465964.0, -1120000.0, -2832931.0, -1532749.0, -1041250.0, -531000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -167500.0, -1591116.0, 0.0, -4030000.0, -1137913.55, -160000.0, 0.0, -2372091.0]}], "radio_punto": 0, "cruce": null, "escala_log": false, "barras": false}];
-const TEMA = {"principal_1": "#46245A", "principal_2": "#85559B", "principal_3": "#C2A3D1", "principal_contexto": "#E3D5EA", "texto": "#111111", "texto_2": "#4A5A68", "texto_3": "#7A8C9A", "negativo": "#C9A66B", "atrasado": "#2E3A45", "franja_fondo": "#EEF1F4", "franja_borde": "#4A5A68", "fondo": "#FFFFFF", "fuente": "\"Helvetica Neue\", Helvetica, Arial, sans-serif", "fuente_titulares": "Georgia, \"Times New Roman\", Times, serif"};
+const TEMA = {"principal_1": "#1F3A5F", "principal_2": "#4A6FA5", "principal_3": "#7696C2", "principal_contexto": "#DCE5F0", "texto": "#111111", "texto_2": "#4A5A68", "texto_3": "#677987", "negativo": "#A3505C", "atrasado": "#2E3A45", "franja_fondo": "#EEF1F4", "franja_borde": "#4A5A68", "fondo": "#FFFFFF", "fuente": "\"Helvetica Neue\", Helvetica, Arial, sans-serif", "fuente_titulares": "Georgia, \"Times New Roman\", Times, serif"};
+const COLOR_NEG = "bordó";   // nombre del color de los negativos en las leyendas (tema.NOMBRE_COLOR)
 const ETIQUETAS = {"IPC Núcleo (var. mensual)": "Núcleo", "IPC Regulados (var. mensual)": "Regulados", "IPC Estacionales (var. mensual)": "Estacionales", "RIPTE medido en canastas básicas (CBT, GBA)": "RIPTE en CBT"};
 const charts = {};
 // Lookup por s.i (el idx de la tarjeta), NO por posición en SERIES: las tarjetas "acumulando
@@ -780,7 +799,7 @@ function burbujaSectorPlugin(empleoPct) {
   };
 }
 
-const NEG_TXT = 'Valores negativos en arena.';
+const NEG_TXT = `Valores negativos en ${COLOR_NEG}.`;
 SERIES.forEach(s => {
   const el = document.getElementById('ch' + s.i);
   if (!el) return;
@@ -794,7 +813,7 @@ SERIES.forEach(s => {
       ]}, options: comboOpts(s.unidad, s.unidad_linea, s.titulo_barras) });
     ley = [{ label:'Stock (eje derecho)', color:TEMA.principal_1, linea:true },
            { label: (s.label_barras ? s.label_barras.toLowerCase() + ', ' + s.unidad : 'variación mensual') + ' (eje izquierdo)', color:TEMA.principal_3 }];
-    if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? 'Ventas netas (negativos) en arena.' : 'Caídas en arena.';
+    if (tieneNeg(s.full_flujo || s.flujo)) extra = s.label_barras ? `Ventas netas (negativos) en ${COLOR_NEG}.` : `Caídas en ${COLOR_NEG}.`;
   } else if (s.kind === 'overlay') {
     const n = s.datasets.length;
     const dss = s.datasets.map((d, i) => {
@@ -805,7 +824,7 @@ SERIES.forEach(s => {
       }
       return { label:d.label, data:d.y, borderColor:col, backgroundColor:col, borderWidth:ANCHO[r], borderDash:TRAZO[r], order:r,
                etiqueta:{ texto: ETIQUETAS[d.label] || (d.label.length <= 16 ? d.label : ''), u:s.unidad, bold: r === 0,
-                          color: r === 3 ? TEMA.texto_3 : col } };
+                          color: r === 3 ? TEMA.texto_3 : r === 2 ? TEMA.principal_2 : col } };   // principal_3 no llega a 4,5:1 como texto
     });
     charts[s.i] = new Chart(ctx, { type: s.barras ? 'bar' : 'line', data:{ labels:s.x, datasets:dss },
       options: overlayOpts(s), plugins: s.cruce ? [cruceOverlayPlugin(s.cruce)] : [] });
@@ -823,7 +842,7 @@ SERIES.forEach(s => {
     charts[s.i].$atipicos = s.atipicos;
     charts[s.i].$restoDetalle = s.resto_detalle;
     ley = s.datasets.map((d, i) => ({ label:d.label, color: NIVEL[d.label.startsWith('Resto') ? 3 : Math.min(i, 2)] }));
-    extra = 'Aportes negativos en arena.';
+    extra = `Aportes negativos en ${COLOR_NEG}.`;
   } else if (s.kind === 'espejo') {
     charts[s.i] = new Chart(ctx, { data:{ labels:s.x, datasets:[
         { type:'bar', label:'Exportaciones', data:s.expo, backgroundColor:TEMA.principal_3, stack:'comercio', order:2 },
@@ -834,7 +853,7 @@ SERIES.forEach(s => {
       ]}, options: espejoOpts(s.unidad) });
     ley = [{ label:'Exportaciones (arriba)', color:TEMA.principal_3 }, { label:'importaciones (abajo)', color:TEMA.principal_contexto },
            { label:'saldo', color:TEMA.principal_1, linea:true }];
-    if (tieneNeg(s.full_saldo || s.saldo)) extra = 'Saldo negativo en arena.';
+    if (tieneNeg(s.full_saldo || s.saldo)) extra = `Saldo negativo en ${COLOR_NEG}.`;
   } else if (s.kind === 'bar') {
     const dest = s.destacar;
     const bg = (c) => {
@@ -853,7 +872,7 @@ SERIES.forEach(s => {
     charts[s.i] = new Chart(ctx, { type:'bar',
       data:{ labels:s.x, datasets:[{ label:'', data:s.y, backgroundColor: colorSigno(TEMA.principal_3, TEMA.negativo) }] },
       options: sectorBarOpts(s.empleo_pct), plugins:[burbujaSectorPlugin(s.empleo_pct)] });
-    extra = 'Barras: variación interanual de la actividad (caídas en arena). Burbujas: peso de cada sector en el empleo.';
+    extra = `Barras: variación interanual de la actividad (caídas en ${COLOR_NEG}). Burbujas: peso de cada sector en el empleo.`;
   } else if (s.kind === 'combo_bl') {
     const nb = s.barras.length;
     const datasets = s.barras.map((b, i) => ({ type:'bar', label:b.label, data:b.y, yAxisID:'y', order:1,
@@ -870,7 +889,7 @@ SERIES.forEach(s => {
         { type:'line', label:s.label_izq, data:v0.izq, borderColor:TEMA.principal_1, backgroundColor:TEMA.principal_1, borderWidth:2.5, yAxisID:'y',
           etiqueta:{ u:s.unidad_izq, arriba:-12, bold:true } },
         { type:'line', label:s.label_der, data:v0.der, borderColor:TEMA.principal_3, backgroundColor:TEMA.principal_3, borderWidth:1.75, borderDash:[5, 3], yAxisID:'y1',
-          etiqueta:{ u:s.unidad_der, arriba:13 } },
+          etiqueta:{ u:s.unidad_der, arriba:13, color:TEMA.principal_2 } },   // texto: principal_3 no llega a 4,5:1
       ]}, options: combo2LOpts(s.unidad_izq, s.unidad_der) });
     ley = [{ label: s.label_izq + ' (eje izquierdo)', color:TEMA.principal_1, linea:true, ancho:2.5 },
            { label: s.label_der + ' (eje derecho)', color:TEMA.principal_3, linea:true, dash:true }];
@@ -932,6 +951,12 @@ function aplicarFiltro(idx, serie, rango, datFiltrados) {
     charts[idx].data.datasets[1].data = datFiltrados.evento;
   } else {
     charts[idx].data.datasets[0].data = datFiltrados.y;
+  }
+  // 5A y Máx en escala logarítmica para las nominales en pesos (escala_larga en Python), con rótulo visible.
+  if (serie.escala_larga === 'log') {
+    const log = rango === '5a' || rango === 'todo';
+    charts[idx].options.scales.y.type = log ? 'logarithmic' : 'linear';
+    const rot = document.querySelector(`.escala-log[data-idx='${idx}']`); if (rot) rot.hidden = !log;
   }
   charts[idx].update('none');
 }
