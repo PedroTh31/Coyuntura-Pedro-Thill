@@ -28,6 +28,7 @@ import agenda
 import calendario_indec
 import pagina_calendario
 import pagina_home
+import sitio
 import temas
 import fuentes_indec
 import fuentes_datos_gob
@@ -106,7 +107,7 @@ def escribir_ultima_corrida(por_fuente: dict, problemas: list, estado: str, fuen
 # (bloque MAE, decisión de Pedro del 08/11/2026). Las cauciones salen del histórico de cierre del MAE, que sólo
 # trae días operados, pero pasan igual por la guarda.
 FUENTES_SNAPSHOT = {"mae_bono", "mae_resumen", "mae_caucion"}
-CALCULOS_SNAPSHOT = {"spread_bono_ust"}
+CALCULOS_SNAPSHOT: set[str] = set()   # el spread dejó de ser snapshot: la TIR sale de cierres de BYMA con fecha (#28)
 
 
 def es_snapshot_diario(ind: dict) -> bool:
@@ -308,31 +309,21 @@ def _calcular(ind, start):
         s = s.reset_index().rename(columns={"index": "fecha"})
         return s[["fecha", "valor"]].dropna().sort_values("fecha").reset_index(drop=True)
     if tipo == "spread_bono_ust":
-        # Spread soberano PROXY (Punto 4, Ronda 2 financiera): TIR de un bono hard-dollar
-        # argentino (MAE, snapshot del día, sin historia propia) menos el rendimiento del
-        # Treasury americano comparable (Tesoro de EE.UU., respaldo H.15; antes FRED, #8), en puntos básicos. NO es el
-        # EMBI+ oficial (ver 'Riesgo país (EMBI)' en la pestaña macro) -- metodología
-        # simplificada, compara TIR puntual contra un Treasury de plazo fijo (ej. 10 años),
-        # sin ajustar por la duración exacta del bono argentino. Como la TIR del bono sólo
-        # tiene UN dato por día (hoy) y sin backfill posible, el merge con la serie completa
-        # del Treasury sólo produce un punto por corrida -- la serie se acumula día a día desde
-        # que el pipeline empieza a trackearla, igual que el resto de los datos del MAE.
-        bono = fetch_mae_bono_campo(ind["ticker_bono"], "tir").rename(columns={"valor": "tir"})
-        ust = fuentes_mercados.serie_ust(ind.get("ust_plazo", "10 Yr"), start).rename(columns={"valor": "ust"})
-        if bono.empty or ust.empty:
+        # Spread del bono contra el Treasury de igual duración (#8/#28, decisión de Pedro del 08/11/2026): TIR
+        # del bono (cierres de BYMA + flujo del MAE, `byma_bono`) menos el rendimiento del Tesoro de EE.UU.
+        # interpolado lineal en plazo a la duración modificada del bono, con los plazos `ust_plazos` del CSV del
+        # Tesoro (respaldo H.15), en puntos básicos. NO es el EMBI+ (ver 'Riesgo país (EMBI)').
+        ticker = ind["ticker_bono"]
+        desde_bono = ind.get("desde_historia")
+        tir = fuentes_mercados.serie_bono(ticker, "tir", desde_bono)
+        md = fuentes_mercados.serie_bono(ticker, "md", desde_bono)
+        if tir.empty:
             return pd.DataFrame(columns=["fecha", "valor"])
-        # merge_asof (no merge exacto): la TIR del bono es de HOY, pero el Treasury suele publicar
-        # el cierre de UST10Y con 1 día hábil de rezago (fines de semana/feriados EEUU) -- un
-        # merge por fecha exacta casi nunca matchea. Se toma el último UST10Y disponible a
-        # esa fecha o antes (tolerancia 5 días, cubre un fin de semana largo sin arrastrar un
-        # dato demasiado viejo).
-        s = pd.merge_asof(bono.sort_values("fecha"), ust.sort_values("fecha"), on="fecha",
-                           direction="backward", tolerance=pd.Timedelta(days=5))
-        s = s.dropna(subset=["ust"])
-        if s.empty:
+        inicio_ust = (tir["fecha"].min() - pd.Timedelta(days=15)).date().isoformat()
+        ust = {p: fuentes_mercados.serie_ust(p, inicio_ust) for p in ind.get("ust_plazos", ["6 Mo", "1 Yr", "2 Yr", "3 Yr"])}
+        if any(u.empty for u in ust.values()):
             return pd.DataFrame(columns=["fecha", "valor"])
-        s["valor"] = (s["tir"] - s["ust"]) * 100
-        return s[["fecha", "valor"]]
+        return fuentes_mercados.spread_duracion(tir, md, ust)
     if tipo == "tasa_real_expost":
         # Tasa de interés real EX-POST (Punto 2.3, opción A, PROMPT_ronda_canje_y_macro.md):
         # tasa nominal (ej. TAMAR, BCRA, diaria) menos inflación interanual (IPC, datos_gob,
@@ -427,7 +418,7 @@ def _muro_vencimientos(anios_adelante=10):
     if not datasets:
         return None
     card = dict(nombre="Muro de vencimientos (AL30/GD30/GD35)", bloque="mercados", grupo="Renta fija",
-        color=dashboard.ACENTO["mercados"], unidad="% VN", valor="—", pct=None, marca_fecha=None,
+        color=dashboard.ACENTO["mercados"], unidad="% VN", valor="—", sin_valor=True, pct=None, marca_fecha=None,
         maxv="—", minv="—", sube_es_bueno=False, neutral=True, sin_filtros=True,
         subtitulo="Pagos de capital por año, en % del valor nominal original de cada bono")
     serie_js = dict(kind="muro", x=[str(a) for a in anios], datasets=datasets, unidad="% VN")
@@ -455,6 +446,8 @@ def _extras_con_respaldo(ctx):
         ec, fecha = fuentes_mercados.extra_con_respaldo(nombre, ec, hoy)
         if ec is None:
             continue
+        if nombre.startswith("Muro de vencimientos"):   # opción A de Pedro: sin valor (también en el respaldo)
+            ec["card"] = dict(ec["card"], sin_valor=True)
         if ctx is not None:
             f = frescura.calcular({"nombre": nombre, "frecuencia": "diaria"}, nombre, pd.Series([fecha]), ctx)
             ec["card"] = dict(ec["card"], frescura=frescura.html_linea(f), sello=frescura.html_sello(f))
@@ -546,6 +539,8 @@ def chequear_frescura(historico: pd.DataFrame, indicadores: list[dict]):
     con 'marca_fecha') generaría una alerta de rezago todos los días para siempre,
     ya que nadie vuelve a actualizar esos datos ni hay forma de "resolverla".
 
+    'sin_alerta_rezago: true' también lo excluye, sin badge (ej. una serie en revisión).
+
     Un indicador puede declarar 'rezago_normal_dias: N' si tiene un rezago de
     publicación estructural conocido y documentado en su 'nota' (ej. el TCR
     multilateral depende del IPC de varios países y llega ~5-6 meses tarde
@@ -554,7 +549,10 @@ def chequear_frescura(historico: pd.DataFrame, indicadores: list[dict]):
     """
     hoy = hoy_ar()
     nombres_activos = {ind["nombre"] for ind in indicadores}
-    nombres_excluidos = {ind["nombre"] for ind in indicadores if ind.get("marca_fecha")}
+    # `sin_alerta_rezago: true` (decisión de Pedro del 08/11/2026): series cuyo rezago no se quiere alertar
+    # mientras se revisan (hoy, el spread GD30); a diferencia de `marca_fecha`, no muestra badge.
+    nombres_excluidos = {ind["nombre"] for ind in indicadores
+                         if ind.get("marca_fecha") or ind.get("sin_alerta_rezago")}
     rezago_normal = {ind["nombre"]: ind["rezago_normal_dias"] for ind in indicadores if ind.get("rezago_normal_dias")}
     rezagados = []
 
@@ -814,6 +812,11 @@ def main():
     # Bloque E3: financiera.html pasa a ser una redirección a /mercados/ (su contenido está repartido por
     # tema); se mantiene el archivo para los links viejos.
     pagina_home.generar_redireccion("financiera.html", "mercados/")
+    # Cards renombradas (`slug_anterior:` en el yaml): la página de serie vieja redirige a la nueva.
+    for ind in indicadores + financiera_propios:
+        if ind.get("slug_anterior"):
+            pagina_home.generar_redireccion(f"serie/{ind['slug_anterior']}/index.html",
+                                            f"../{sitio.slug(ind['nombre'], ind)}/")
     print("Listo -> data/series_largo.csv, data/series_ancho.csv, docs/ (home, temas, series, calendario)")
 
     # Mercados: UST (Tesoro / H.15) y extras vacíos -> como mucho un mail a Pedro.

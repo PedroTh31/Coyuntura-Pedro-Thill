@@ -90,6 +90,13 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
      Treasury **interpolado a la duration del GD30** con los plazos de 1, 2 y 3 años del mismo CSV del Tesoro
      (columnas "1 Yr", "2 Yr", "3 Yr"; `fuentes_mercados.H15_SERIE` ya tiene sus ids del H.15), no contra el de
      10 años (decisión de Pedro del 08/11/2026).
+   - **Bloque TIR (08/11/2026):** implementado. "Spread GD30 vs. Treasury de igual duración": TIR del GD30
+     (cierres de BYMA + flujo del MAE, #28) menos el Treasury interpolado lineal en plazo a la MD del GD30 con 6 Mo,
+     1 Yr, 2 Yr y 3 Yr del CSV del Tesoro (respaldo H.15, id de 6 Mo verificado: RIFLGFCM06_N.B). Historia desde
+     el 10/07/2026 (83 días al 06/11; 811 pb el 06/11, contra 768 pb del 10 años). El slug viejo redirige
+     (`slug_anterior`). `sin_alerta_rezago: true` mientras sigue en revisión. **Sigue EN REVISIÓN** con la TIR
+     (#28). El chequeo del Tesoro desde Actions quedó verificado en la corrida del bot del 08/11 (UST 10Y al
+     06/11, sin H.15).
 
 9. **La pestaña financiera no tiene línea de frescura** — anotado el 07/11/2026. **CERRADO el 08/11/2026:**
    lo resolvió el Bloque E2 (D4: frescura en todas las cards de todos los temas). Verificado en `docs/`
@@ -133,6 +140,15 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
     - Se ve en la card de la pestaña financiera (antes y después del rediseño): la línea cae a casi 0.
     - Pendiente: confirmar en BYMA si cambió la base/divisor del índice o la unidad del endpoint, y
       decidir con Pedro cómo empalmar (no reescalar a mano sin una fuente que lo documente).
+    - **Diagnóstico del bloque TIR (08/11/2026), sin arreglar nada:** NO es un ajuste hacia atrás de BYMA (el que
+      sí hace en los cierres de bonos, #28). En los commits del bot del 14/09, 01/10, 13/10, 17/10, 21/10, 25/10
+      y 08/11 los valores viejos del MERVAL son idénticos (0 cambios en 492-521 fechas comparadas por par; 02/09/2024
+      = 1.754.832,93 en todos), y la respuesta actual de BYMA coincide con lo guardado en las 483 fechas en común.
+      El corte está en la respuesta ACTUAL de BYMA: 16/10 2.848.945,27 -> 19/10 98.214,66 (×0,0345, único salto
+      de más de 50%). Además, BYMA devolvió primero 0 para el 19/10 y el 20/10 (guardados así en los commits del
+      21/10 y del 25/10) y después los rellenó en la escala nueva. Acciones y CEDEARs no pueden tener este
+      problema: son un ranking de data912 sin historia, recalculado en cada corrida. La causa del corte (¿cambio
+      de base o de divisor del índice?) sigue sin fuente que la documente.
 
 13. **Cauciones: valor 0,00 en un día con dato** — anotado el 07/11/2026 (visto en el Bloque C, no
     arreglado).
@@ -344,7 +360,7 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       indicadores.yaml (indicadores renombrados o sacados). No se muestran ni se actualizan; sólo ocupan lugar.
       Las del RIPTE con el nombre viejo ("Capacidad de compra del salario (RIPTE / CBT)", 124 filas) se
       borraron el 08/11/2026 con `reconstruir_series.py` (backup en el Escritorio, `backup_datos/`).
-    - Quedan 13 (nombre: filas, primer y último mes):
+    - Quedan 14 (nombre: filas, primer y último mes):
 
       | Serie | Filas | Desde | Hasta |
       |---|---|---|---|
@@ -360,8 +376,11 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       | Inflación esperada (REM, próximo mes) | 121 | 2016-07 | 2026-07 |
       | Tasa BADLAR (mayorista) | 8.205 | 2004-01 | 2026-06 |
       | Tasa de política monetaria | 3.495 | 2015-12 | 2025-07 |
+      | UST 10Y (Treasury) | 5.717 | 2004-01 | 2026-11 |
       | Venta de vehículos 0km al mercado interno | 270 | 2004-01 | 2026-06 |
 
+    - "UST 10Y (Treasury)" se sacó del yaml el 09/11/2026 (bloque TIR): el spread GD30 pasó a compararse contra el
+      Treasury de igual duración y el 10 años no tenía card. Filas guardadas hasta el 06/11/2026, no borradas.
     - A hacer: decidir serie por serie si se borra (con `reconstruir_series.py` y backup) o si se conserva
       como archivo (ej. EMAE Urbano/No urbano o IPI, que salieron del dashboard a pedido de Pedro).
 
@@ -378,8 +397,8 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       - "Depósitos: sector privado en dólares" y "Depósitos: sector público en dólares" (card: Depósitos en
         moneda extranjera).
       - "TIR AL30 (USD)", "TIR GD30 (USD)", "TIR GD35 (USD)" (card: Curva de rendimientos).
-      - "M1 (circulante + cta. cte.)" y "UST 10Y (Treasury)": sin card que las dibuje (el M1 salió del overlay,
-        #23; el UST 10Y sólo entra en el cálculo del spread soberano).
+      - "M1 (circulante + cta. cte.)": sin card que la dibuje (salió del overlay, #23). El "UST 10Y (Treasury)"
+        se sacó del yaml el 09/11/2026 (#25).
     - La nota "Datos vía CSV de distribución de datos.gob.ar" sí llega: `_ids_csv` junta los ids de la card y
       de los indicadores que referencia (en la corrida local del 08/11/2026 apareció en 17 páginas de serie,
       entre ellas Actividad y empleo por sector, Préstamos por tipo de deudor y Agregados monetarios). Sólo se
@@ -421,6 +440,30 @@ Cola priorizada por Pedro. El orden es el suyo: no se reordena ni se arranca un 
       04/11 (valor del 04/11).
     - A decidir: pasar las TIR a precio de cierre de BYMA + flujo de fondos (con `nota`), y después el spread
       contra el Treasury interpolado a la duration (#8).
+    - **Bloque TIR (08/11/2026), decisiones de Pedro, implementado:** `fuente: byma_bono`
+      (`fuentes_mercados.serie_bono`): TIR efectiva anual, ACT/365, liquidación T+1 hábil, cierre (`c`) de BYMA de
+      "<ticker>D 24HS" tal cual (sin corrido), flujos del MAE (`emisiones/flujofondos/{ticker}`) por 100 de VN
+      original; MD = Macaulay / (1 + TIR). Historia desde el 10/07/2026 (primer hábil: 13/07; 83 días al 06/11).
+      BYMA ajusta hacia atrás sus cierres en cada pago (GD30: 73 en el MAE contra 49,3 en BYMA el 03/12/2024; 63
+      contra 55,2 el 04/03/2026; desde el 10/07/2026 coinciden): cada corrida calcula sólo los días posteriores al
+      último pago; test obligatorio del reajuste en tests/test_tir_bonos.py. Borradas las TIR del MAE (AL30 47,
+      GD30 28, GD35 32, incluido el GD30 mal fechado del 05/11) y el único punto del spread viejo, backup en
+      Desktop\backup_datos\tir_mae_2026-11-08.csv.
+    - **Abierto: verificar la convención el miércoles 11/11/2026** (primer hábil; el 9 y el 10 son feriado),
+      después de las 17 h: `python tests/manual_verificar_tir_mae.py`. Baja el snapshot del MAE
+      (`flujofondoscotiz/H`: precio + TIR + MD juntos) y recalcula con el precio DEL MAE, sin ruido de precio.
+      Criterio: |TIR monitor − TIR MAE| <= 0,01 pp y |MD| <= 0,01 años en los bonos con precio -> sacar `titular`
+      fijo, `ocultar_variacion` y `aviso` de las tres TIR, la curva y el spread (y `sin_alerta_rezago` del spread).
+      Si no coincide, muestra qué variante sí (T+0/T+2, base 360, semestral, precio + corrido). Ojo: la liquidación
+      se distingue poco (T+0/T+1/T+2 difieren ~0,02 pp en AL30/GD30 y ~0,007 en GD35); base, capitalización y
+      corrido se distinguen bien (0,2-0,5 pp).
+    - Visto al implementar: el cierre de BYMA es la última operación del día y a veces es un extremo (GD30 del
+      06/08/2026: cierre 56,00 = mínimo del día, operó entre 56 y 58,85; TIR 8,01% entre 5,86% y 6,23%). BYMA no
+      publica precio promedio en este endpoint. No se corrige.
+    - Visto al implementar (no tocado, regla dura #5): `storage.actualizar` relee el CSV con `read_csv` sin
+      `float_precision="round_trip"`, así que al reescribir puede cambiar el último dígito de un float
+      (11.9557516656454 -> 11.955751665645401): mismo valor a 1e-15, distinto texto. Puede explicar cambios de
+      decimales en el diff de data/ sin cambio real de dato.
 
 29. **Filtro de noticias del mail diario** — anotado el 08/11/2026 (los ejemplos marcados por Pedro para la
     próxima ronda están en CLAUDE.md, "Filtro de noticias — ejemplos marcados por Pedro").

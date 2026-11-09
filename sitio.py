@@ -7,6 +7,7 @@ en CSS_IDENTIDAD, con las variables de tema.py: acá no hay colores fijos.
 """
 from __future__ import annotations
 
+import json
 import re
 from html import escape
 
@@ -134,6 +135,15 @@ TEMAS_NAV = [("Precios", "precios"), ("Actividad", "actividad"), ("Empleo y sala
 REDIRECCION_ANCLAS = {"precios": "precios/", "monetario_financiero": "dolar-y-reservas/", "externo": "sector-externo/",
                       "real": "actividad/", "social": "empleo-y-salarios/", "fiscal": "fiscal-y-deuda/",
                       "mercados": "mercados/"}
+
+
+def js_anclas(mapa: dict[str, str]) -> str:
+    """Script que manda un ancla vieja (`#<clave>`) a su destino (`location.replace`): las anclas del dashboard
+    viejo en la home y las de una card renombrada (`slug_anterior:`) en su página de tema."""
+    if not mapa:
+        return ""
+    return (f"<script>(function(){{var m={json.dumps(mapa)},h=location.hash.slice(1);"
+            "if(m[h])location.replace(m[h]);})();</script>")
 
 
 def slug(nombre: str, ind: dict | None = None) -> str:

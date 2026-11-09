@@ -17,7 +17,10 @@ Fuentes de la pestaña Mercados que necesitan más que un fetch suelto (bloque M
    queda como está, con alerta.
 3. Extras de run.py (muro de vencimientos, dólar futuro): último dato válido en data/extras_ultimo.json.
    Si la fuente viene vacía, la card se arma con ese último dato + aviso (#20).
-4. Alertas a Pedro de todo lo anterior: como mucho 1 mail por corrida (enviar_alerta de fuentes_indec), el
+4. TIR y duración modificada de AL30/GD30/GD35 (`fuente: byma_bono`): cierres de BYMA + flujo de fondos del
+   MAE, sólo días posteriores al último pago (BYMA ajusta hacia atrás sus cierres en cada pago); spread contra
+   el Treasury interpolado a la duración modificada (`spread_duracion`). Sección 5 (#28).
+5. Alertas a Pedro de todo lo anterior: como mucho 1 mail por corrida (enviar_alerta de fuentes_indec), el
    primer día de cada motivo y después una vez por semana mientras siga. Estado: data/mercados_estado.json.
 """
 from __future__ import annotations
@@ -146,7 +149,8 @@ URL_TESORO = ("https://home.treasury.gov/resource-center/data-chart-center/inter
               "daily-treasury-rates.csv/{anio}/all")
 URL_H15 = "https://www.federalreserve.gov/datadownload/Output.aspx"
 H15_PAQUETE = "bf17364827e38702b42a58cf8eaa3f78"   # paquete H.15 de rendimientos del Tesoro (constant maturity)
-H15_SERIE = {"10 Yr": "RIFLGFCY10_N.B", "1 Yr": "RIFLGFCY01_N.B", "2 Yr": "RIFLGFCY02_N.B", "3 Yr": "RIFLGFCY03_N.B"}
+H15_SERIE = {"10 Yr": "RIFLGFCY10_N.B", "6 Mo": "RIFLGFCM06_N.B", "1 Yr": "RIFLGFCY01_N.B", "2 Yr": "RIFLGFCY02_N.B",
+             "3 Yr": "RIFLGFCY03_N.B"}   # ids verificados en la fila "Time Period" del CSV del H.15 (08/11/2026)
 TESORO_INICIO = 1990   # primer año de la curva par diaria del Tesoro
 _CACHE_UST: dict = {}
 
@@ -296,3 +300,172 @@ def cerrar_corrida() -> dict:
     estado["ultima"] = {"fecha": hoy, "resumen": RESUMEN}
     _escribir_json(ESTADO, estado)
     return dict(RESUMEN, alertas=[t for _, t in ALERTAS])
+
+
+# ---------------------------------------------------------------------------------------------
+# 5) TIR de bonos hard-dollar: cierres de BYMA + flujo de fondos del MAE (#28)
+# ---------------------------------------------------------------------------------------------
+# Decisión de Pedro del 08/11/2026. Convención: TIR efectiva anual, base ACT/365, liquidación T+1 hábil,
+# precio = cierre (`c`) de BYMA de "<ticker>D 24HS" tal cual (sin sumar cupón corrido), flujos del MAE por 100
+# de VN original (`emisiones/flujofondos/{ticker}`, campo cashFlow). EN REVISIÓN hasta verificarla contra el
+# snapshot del MAE (precio + TIR + MD juntos): tests/manual_verificar_tir_mae.py, PENDIENTES #28.
+#
+# BYMA ajusta hacia atrás su serie de cierres en cada pago de renta/amortización (verificado el 08/11/2026:
+# sin caída de precio en los pagos de jul-2025, ene-2026 y jul-2026; GD30 a 49,3 en BYMA y 73 en el MAE el
+# 03/12/2024). Por eso sólo se calculan los días POSTERIORES al último pago: los anteriores, ya guardados,
+# no se recalculan nunca (el merge de storage los conserva tal cual).
+BYMA_HISTORIA = f"{fetchers._BYMA_BASE}/chart/historical-series/history"
+BONO_DESDE = "2026-07-10"   # día hábil siguiente al último pago de AL30/GD30/GD35 (09/07/2026)
+PLAZO_ANIOS = {"1 Mo": 1 / 12, "3 Mo": 0.25, "6 Mo": 0.5, "1 Yr": 1.0, "2 Yr": 2.0, "3 Yr": 3.0,
+               "5 Yr": 5.0, "7 Yr": 7.0, "10 Yr": 10.0}
+_CACHE_BONOS: dict = {}
+
+
+def flujos_bono(ff: dict) -> list[tuple[pd.Timestamp, float]]:
+    """(fecha de pago, cashFlow por 100 de VN original) del flujo de fondos del MAE, ordenado."""
+    return sorted((pd.Timestamp(x["fechaPago"][:10]), float(x["cashFlow"])) for x in ff["detalle"])
+
+
+def ultimo_pago(flujos: list[tuple[pd.Timestamp, float]], hoy: pd.Timestamp) -> pd.Timestamp:
+    """Fecha del último pago ya hecho. Si el MAE todavía lista un pago con fecha <= hoy, ése; si ya lo sacó,
+    el primer pago futuro menos el período entre los dos primeros (semestral en AL30/GD30/GD35)."""
+    pasados = [f for f, _ in flujos if f <= hoy]
+    if pasados:
+        return max(pasados)
+    fechas = [f for f, _ in flujos]
+    if len(fechas) < 2:
+        raise ValueError("flujo de fondos con menos de 2 pagos: no se puede deducir el último pago")
+    meses = round((fechas[1] - fechas[0]).days / 30.44)
+    return fechas[0] - pd.DateOffset(months=meses)
+
+
+def _futuros(flujos, liq):
+    fl = [(f, cf) for f, cf in flujos if f > liq]
+    if not fl:
+        raise ValueError(f"sin pagos posteriores a la liquidación {liq:%d/%m/%Y}")
+    return [(f - liq).days / 365 for f, _ in fl], [cf for _, cf in fl]
+
+
+def tir_efectiva(precio: float, liq: pd.Timestamp, flujos: list[tuple[pd.Timestamp, float]]) -> float:
+    """TIR efectiva anual (%), ACT/365: precio = Σ CF_i / (1 + TIR)^(días_i / 365), días desde la liquidación,
+    sólo pagos posteriores a la liquidación. Bisección (el valor presente decrece con la tasa)."""
+    t, cf = _futuros(flujos, liq)
+
+    def exceso(y):
+        return sum(c / (1 + y) ** ti for c, ti in zip(cf, t)) - precio
+
+    a, b = -0.99, 10.0
+    if exceso(a) < 0 or exceso(b) > 0:
+        raise ValueError(f"precio {precio} fuera de rango para el flujo")
+    for _ in range(200):
+        m = (a + b) / 2
+        if exceso(m) > 0:
+            a = m
+        else:
+            b = m
+        if b - a < 1e-12:
+            break
+    return (a + b) / 2 * 100
+
+
+def duracion_modificada(tir_pct: float, liq: pd.Timestamp, flujos: list[tuple[pd.Timestamp, float]]) -> float:
+    """MD (años) = duración de Macaulay / (1 + TIR), con la misma convención que tir_efectiva."""
+    y = tir_pct / 100
+    t, cf = _futuros(flujos, liq)
+    vp = [c / (1 + y) ** ti for c, ti in zip(cf, t)]
+    return sum(ti * v for ti, v in zip(t, vp)) / sum(vp) / (1 + y)
+
+
+def fetch_byma_cierres(ticker: str, desde: pd.Timestamp) -> pd.DataFrame:
+    """Cierres diarios de "<ticker>D 24HS" en BYMA (fecha, precio). Mismo endpoint gratuito y mismo criterio de
+    certificado que fetch_byma_indice (verify=False). Sólo responde el plazo 24HS (CI/48HS: no_data)."""
+    import time
+
+    import requests
+    params = {"symbol": f"{ticker}D 24HS", "resolution": "D", "from": int(pd.Timestamp(desde).timestamp()),
+              "to": int(time.time())}
+    ultimo = None
+    for intento in range(3):
+        try:
+            r = requests.get(BYMA_HISTORIA, params=params, headers=fetchers.HEADERS, timeout=fetchers.TIMEOUT,
+                             verify=False)
+            r.raise_for_status()
+            data = r.json()
+            break
+        except (requests.RequestException, ValueError) as e:
+            ultimo = e
+            time.sleep(2 * (intento + 1))
+    else:
+        raise RuntimeError(f"BYMA {ticker}D 24HS: {ultimo}")
+    if data.get("s") not in ("ok", "no_data"):
+        raise RuntimeError(f"BYMA {ticker}D 24HS: respuesta {data.get('s')!r}")
+    fechas = (pd.to_datetime(pd.Series(data.get("t") or [], dtype="int64"), unit="s", utc=True)
+              .dt.tz_convert("America/Argentina/Buenos_Aires").dt.tz_localize(None).dt.normalize())
+    df = pd.DataFrame({"fecha": fechas, "precio": pd.to_numeric(pd.Series(data.get("c") or [], dtype=float))})
+    return df[df["precio"] > 0].sort_values("fecha").reset_index(drop=True)
+
+
+def calcular_bono(cierres: pd.DataFrame, flujos, desde: pd.Timestamp, hoy: pd.Timestamp,
+                  no_habiles: set) -> pd.DataFrame:
+    """TIR y MD por día hábil (función pura). Sólo días posteriores al último pago y >= `desde`: antes de un
+    pago, BYMA reescribe los cierres ajustados, y esos días ya guardados no se tocan."""
+    import calendario_indec
+    corte = max(pd.Timestamp(desde), ultimo_pago(flujos, hoy) + pd.Timedelta(days=1))
+    filas = []
+    for f, p in zip(cierres["fecha"], cierres["precio"]):
+        if f < corte or f > hoy or not calendario_indec.es_habil(f.date(), no_habiles):
+            continue
+        liq = pd.Timestamp(calendario_indec.sumar_dias_habiles(f.date(), 1, no_habiles))
+        tir = tir_efectiva(float(p), liq, flujos)
+        filas.append({"fecha": f, "tir": tir, "md": duracion_modificada(tir, liq, flujos)})
+    return pd.DataFrame(filas, columns=["fecha", "tir", "md"])
+
+
+def serie_bono(ticker: str, campo: str = "tir", desde: str | None = None) -> pd.DataFrame:
+    """`fuente: byma_bono` -> fecha | valor (campo "tir" en % anual o "md" en años). Vacía (con aviso en el
+    log) si falla BYMA o el flujo del MAE: el histórico guardado queda como está."""
+    if campo not in ("tir", "md"):
+        raise ValueError(f"byma_bono: campo {campo!r} (tir|md)")
+    if ticker not in _CACHE_BONOS:
+        import calendario_indec
+        try:
+            ff = fetchers.fetch_mae_flujofondos_ticker(ticker)
+            if ff is None:
+                raise RuntimeError("el MAE no devolvió el flujo de fondos")
+            flujos = flujos_bono(ff)
+            hoy = fetchers.hoy_ar()
+            no_habiles = calendario_indec.feriados(calendario_indec.cargar_config())
+            corte = max(pd.Timestamp(desde or BONO_DESDE), ultimo_pago(flujos, hoy) + pd.Timedelta(days=1))
+            df = calcular_bono(fetch_byma_cierres(ticker, corte), flujos, corte, hoy, no_habiles)
+            RESUMEN[f"bono:{ticker}"] = {"filas": len(df), "desde": corte.date().isoformat(),
+                                         "ultimo": df["fecha"].max().date().isoformat() if len(df) else None}
+        except Exception as e:
+            print(f"  [ADVERTENCIA] byma_bono {ticker}: {type(e).__name__}: {e}")
+            RESUMEN[f"bono:{ticker}"] = {"error": f"{type(e).__name__}: {e}"}
+            df = pd.DataFrame(columns=["fecha", "tir", "md"])
+        _CACHE_BONOS[ticker] = df
+    df = _CACHE_BONOS[ticker]
+    return df[["fecha", campo]].rename(columns={campo: "valor"}).reset_index(drop=True)
+
+
+def spread_duracion(tir: pd.DataFrame, md: pd.DataFrame, ust: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Spread (pb) de la TIR de un bono contra el Treasury interpolado lineal en plazo a su duración
+    modificada (función pura). `ust` = {plazo del CSV del Tesoro ("6 Mo", "1 Yr", ...): fecha | valor}.
+    Para cada fecha del bono se toma el último dato de cada plazo a esa fecha o antes (merge_asof, tolerancia
+    5 días: el Tesoro publica con el calendario de EE.UU.); con una MD fuera del rango de los plazos se usa el
+    plazo extremo (sin extrapolar)."""
+    import numpy as np
+    s = tir.rename(columns={"valor": "tir"}).merge(md.rename(columns={"valor": "md"}), on="fecha")
+    s["fecha"] = pd.to_datetime(s["fecha"])
+    s = s.sort_values("fecha")
+    plazos = sorted(ust, key=lambda p: PLAZO_ANIOS[p])
+    for p in plazos:
+        u = ust[p].rename(columns={"valor": p}).assign(fecha=lambda d: pd.to_datetime(d["fecha"])).sort_values("fecha")
+        s = pd.merge_asof(s, u[["fecha", p]], on="fecha", direction="backward", tolerance=pd.Timedelta(days=5))
+    s = s.dropna(subset=["tir", "md"] + plazos)
+    if s.empty:
+        return pd.DataFrame(columns=["fecha", "valor"])
+    xs = [PLAZO_ANIOS[p] for p in plazos]
+    s["ust"] = [float(np.interp(m, xs, fila)) for m, fila in zip(s["md"], s[plazos].to_numpy(dtype=float))]
+    s["valor"] = (s["tir"] - s["ust"]) * 100
+    return s[["fecha", "valor"]].reset_index(drop=True)

@@ -104,9 +104,7 @@ document.querySelectorAll('canvas[data-mini]').forEach(cv => {
 
 def js_redireccion() -> str:
     """Anclas del dashboard viejo -> página de tema (mails ya enviados); #nota-N queda en la home."""
-    mapa = json.dumps(sitio.REDIRECCION_ANCLAS)
-    return (f"<script>(function(){{var m={mapa},h=location.hash.slice(1);"
-            "if(m[h])location.replace(m[h]);})();</script>")
+    return sitio.js_anclas(sitio.REDIRECCION_ANCLAS)
 
 
 # ------------------------------------------------------------------------------------------------
@@ -340,6 +338,7 @@ def html_redireccion(destino: str) -> str:
 
 def generar_redireccion(archivo: str, destino: str) -> Path:
     ruta = DOCS / archivo
+    ruta.parent.mkdir(parents=True, exist_ok=True)
     ruta.write_text(html_redireccion(destino), encoding="utf-8")
     return ruta
 

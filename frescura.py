@@ -41,7 +41,7 @@ import calendario_indec as C
 UMBRAL_DISCONTINUADA_DIAS = 90
 UMBRAL_DIARIAS_HABILES = 10
 FRECUENCIAS = ("diaria", "mensual", "trimestral")
-FUENTES_DIARIAS = {"mae_bono", "mae_resumen", "mae_caucion", "tesoro_ust", "byma", "dolar"}
+FUENTES_DIARIAS = {"mae_bono", "mae_resumen", "mae_caucion", "tesoro_ust", "byma", "byma_bono", "dolar"}
 CALCULOS_DIARIOS = {"spread_bono_ust", "brecha"}
 TOLERANCIA_TRIMESTRAL_DIAS = 92
 MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]

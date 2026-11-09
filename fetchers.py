@@ -15,7 +15,8 @@ Fuentes soportadas:
   - bcra           -> api.bcra.gob.ar/estadisticas (reservas diarias, etc.)
   - rem_bcra       -> Excel histórico único del REM (bcra.gob.ar), expectativas de mercado
   - indec_api      -> api.indec.gob.ar/v1 (beta, PostgREST, token JWT en INDEC_API_TOKEN)
-  - mae_caucion, tesoro_ust -> fuentes_mercados.py (cauciones históricas del MAE; UST del Tesoro / H.15)
+  - mae_caucion, tesoro_ust, byma_bono -> fuentes_mercados.py (cauciones históricas del MAE; UST del Tesoro /
+                    H.15; TIR/MD de bonos con cierres de BYMA + flujo de fondos del MAE)
 """
 from __future__ import annotations
 import datetime
@@ -1195,6 +1196,10 @@ def traer(indicador: dict, start_date: str | None = None) -> pd.DataFrame:
     if fuente == "tesoro_ust":   # Tesoro de EE.UU., respaldo H.15 de la Fed (fuentes_mercados.py)
         import fuentes_mercados
         return fuentes_mercados.serie_ust(indicador.get("plazo", "10 Yr"), start_date)
+    if fuente == "byma_bono":   # TIR/MD con cierres de BYMA + flujo de fondos del MAE (fuentes_mercados.py, #28)
+        import fuentes_mercados
+        return fuentes_mercados.serie_bono(indicador["ticker"], indicador.get("campo", "tir"),
+                                           indicador.get("desde_historia"))
     if fuente == "trabajo_ripte":   # Secretaría de Trabajo: PDF + tabla de la página, con controles
         import fuentes_trabajo
         return fuentes_trabajo.serie(start_date)

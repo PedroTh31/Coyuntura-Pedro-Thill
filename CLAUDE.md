@@ -70,7 +70,10 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   en `data/mercados_estado.json`; resumen en la clave `mercados` de `ultima_corrida.json`). **Extras vacíos**
   (`run._extras_con_respaldo`): la card se arma con el último dato válido, el sello marca su antigüedad
   (frecuencia diaria), aviso "La fuente no devolvió datos en esta corrida" y alerta; un extra nuevo de run.py
-  -> pasarlo por ahí. Tests: `tests/test_fuentes_mercados.py`.
+  -> pasarlo por ahí. Tests: `tests/test_fuentes_mercados.py`. Bloque TIR (08/11/2026, #28): TIR/MD de bonos
+  (`byma_bono`, `serie_bono`, cierres de BYMA + flujo del MAE, sólo días posteriores al último pago) y spread
+  contra el Treasury interpolado a la duración (`spread_duracion`); tests en `tests/test_tir_bonos.py`; verificación
+  manual de la convención contra el MAE en `tests/manual_verificar_tir_mae.py` (con red, fuera de la suite).
 
 - `fuentes_indec.py` — API del INDEC (api.indec.gob.ar/v1, beta, PostgREST, token JWT en
   `INDEC_API_TOKEN`, local en `.env` gitignoreado; **el token nunca se imprime ni va a
@@ -139,7 +142,7 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   completos desde ese cierre. **Diarias: a los 10 días hábiles sin datos** (`UMBRAL_DIARIAS_HABILES`,
   mismo piso; bloque MAE, 08/11/2026). **Frecuencia** (`frecuencia_de`): campo opcional `frecuencia:
   diaria|mensual|trimestral` del yaml > fuente (`FUENTES_DIARIAS`/`CALCULOS_DIARIOS`: mae_*, tesoro_ust,
-  byma, dolar, spread_bono_ust, brecha) > separación de las fechas, SÓLO con 2 puntos o más (con uno se
+  byma, byma_bono, dolar, spread_bono_ust, brecha) > separación de las fechas, SÓLO con 2 puntos o más (con uno se
   muestra la fecha, nunca se adivina el período; #24). Una fuente diaria nueva -> sumarla a esos sets. Cards con varias series: si alguna está frenada y otra no, la franja
   nombra la frenada. Colores: grises + `principal_2` "al día", NUNCA el arena (es el de los negativos del
   Bloque C). Ojo: el chequeo de frescura de `run.py` (alertas) mide desde la fecha cruda del dato,
@@ -351,9 +354,22 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   `emisiones/flujofondoscotiz/{letra}`, no documentado oficialmente por el MAE, `letra: "H"` =
   bonos hard-dollar step-up tipo AL30/GD30/GD35, `"B"` = BOPREAL). Snapshot del día, SIN
   endpoint histórico ni fecha propia: la serie sólo acumula un punto por corrida, sin backfill posible. Viene
-  vacío fines de semana y feriados, y también días hábiles si el bono no operó en el MAE. **Las tres TIR, la
-  curva y el spread están EN REVISIÓN** (PENDIENTES #28: la TIR del MAE es ruidosa contra la que sale de los
-  cierres de BYMA + flujo de fondos).
+  vacío fines de semana y feriados, y también días hábiles si el bono no operó en el MAE. **Ya no lo usa ningún
+  indicador** (desde el 08/11/2026 las TIR salen de `byma_bono`); sirve como referencia y para la verificación
+  de la convención (`tests/manual_verificar_tir_mae.py`).
+- `fuente: byma_bono` + `ticker: "..."` + `campo: tir|md` + `desde_historia` → TIR (% anual) o duración
+  modificada (años) calculadas por el monitor (`fuentes_mercados.serie_bono`, #28, decisión de Pedro del
+  08/11/2026): TIR efectiva anual, ACT/365, liquidación T+1 hábil, precio = cierre (`c`) de BYMA de
+  "<ticker>D 24HS" tal cual (sin cupón corrido; sólo responde 24HS), flujos del MAE por 100 de VN original
+  (`emisiones/flujofondos/{ticker}`, `cashFlow`); MD = Macaulay / (1 + TIR). **BYMA ajusta hacia atrás sus
+  cierres en cada pago** (verificado: sin caída de precio en los pagos de jul-2025/ene-2026/jul-2026; GD30 a 49,3
+  en BYMA y 73 en el MAE el 03/12/2024): sólo se calculan los días POSTERIORES al último pago
+  (`ultimo_pago`: el pago listado con fecha <= hoy o, si el MAE ya lo sacó, el primero futuro menos el período),
+  así que las filas anteriores a un pago, ya guardadas, no se recalculan nunca (test del reajuste en
+  `tests/test_tir_bonos.py`). Historia desde el 10/07/2026 (primer hábil después del pago del 09/07: el 13/07).
+  BYMA gratis sólo da 2 años móviles. **Las tres TIR, la curva y el spread siguen EN REVISIÓN** hasta verificar la
+  convención contra el snapshot del MAE (precio + TIR + MD juntos) con `python tests/manual_verificar_tir_mae.py`
+  un día hábil (PENDIENTES #28).
 - **Muro de vencimientos:** `fetch_mae_flujofondos_ticker(ticker)` (endpoint `emisiones/flujofondos/{ticker}`,
   el de la ficha del título): `detalle[]` con fechaPago, amortizacion (% del VN ORIGINAL), renta, cashFlow y
   valor residual. No depende de que el bono cotice (responde fines de semana).
@@ -377,14 +393,15 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   `from` y `to` juntos con las barras sin codificar) con alerta a Pedro; si fallan los dos, queda el histórico,
   con alerta. Mismos números que el DGS10 de FRED (verificado en 5.673 fechas). **FRED se sacó**: Akamai retiene
   la conexión desde GitHub Actions (nunca funcionó ahí, #8).
-- `calculo: spread_bono_ust` + `ticker_bono: "..."` + `ust_plazo: "10 Yr"` → (TIR del bono vía
-  `mae_bono` − rendimiento del Treasury de `tesoro_ust`) × 100, en puntos básicos. Usa `pd.merge_asof` con
-  `direction="backward"` (NO merge exacto por fecha): la TIR del bono es de hoy pero el Treasury
-  suele publicar el cierre con 1 día hábil de rezago, un merge exacto casi nunca
-  matchea. EN REVISIÓN (#28); al resolverlo, comparar contra el Treasury interpolado a la duration del bono
-  (plazos 1/2/3 años del Tesoro), no contra el de 10 años (decisión de Pedro, #8). Pensado para un "spread soberano (proxy)" -- etiquetar SIEMPRE así, nunca como
-  "riesgo país" a secas: no es el EMBI+ oficial, compara TIR puntual contra un Treasury de
-  plazo fijo sin ajustar por duración exacta.
+- `calculo: spread_bono_ust` + `ticker_bono: "..."` + `ust_plazos: ["6 Mo", "1 Yr", "2 Yr", "3 Yr"]` +
+  `desde_historia` → (TIR del bono vía `byma_bono` − Treasury interpolado lineal en plazo a la MD del bono) × 100,
+  en puntos básicos (`fuentes_mercados.spread_duracion`, decisión de Pedro del 08/11/2026, #8/#28). Cada plazo
+  sale de `tesoro_ust` (CSV del Tesoro, respaldo H.15: `H15_SERIE` tiene los ids verificados de 6 Mo/1/2/3/10 Yr; el "UST 10Y
+  (Treasury)" del yaml se sacó el 09/11/2026 y sus filas quedan huérfanas, #25);
+  `pd.merge_asof` hacia atrás con tolerancia de 5 días (el Tesoro publica con el calendario de EE.UU.); una MD
+  fuera del rango de los plazos usa el extremo, sin extrapolar. Card "Spread GD30 vs. Treasury de igual
+  duración" (antes "Spread soberano GD30 vs. UST10Y (proxy)", contra el 10 años; `slug_anterior` redirige la
+  URL vieja). Nunca llamarlo "riesgo país" a secas: no es el EMBI+. EN REVISIÓN junto con la TIR (#28).
 - `solo_referencia: true` → el indicador NO se fetchea (run.py lo saltea en el loop): reusa el
   dato que otro indicador de la MISMA corrida ya trajo con el mismo `nombre` (mismo `historico`
   compartido), sólo le agrega una tarjeta propia bajo su propio `bloque`/`grupo`. Pensado para
@@ -590,6 +607,15 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   nuevos, el dashboard muestra un badge dinámico "Sin datos nuevos desde MM/AAAA" (se
   recalcula cada corrida; desaparece solo si la fuente retoma la publicación). También
   excluye al indicador del chequeo de frescura de `run.py` (ya avisa por otra vía).
+- `sin_alerta_rezago: true` → excluye la serie del chequeo de frescura de `run.py` (alertas de rezago), SIN
+  badge (a diferencia de `marca_fecha`). Para una serie en revisión cuyo atraso ya se conoce. NO se ata al
+  `aviso` (decisión de Pedro: apagaría también la alerta del S&P MERVAL). Hoy: sólo el spread GD30.
+- `slug_anterior: "..."` → al renombrar una card, run.py escribe `docs/serie/<slug viejo>/index.html` como
+  redirección a la página nueva (`pagina_home.generar_redireccion`, igual que `financiera.html`), y la página de
+  su tema manda `#<slug viejo>` a `#<slug nuevo>` (`sitio.js_anclas`, el mismo script de las anclas viejas de la
+  home).
+- `sin_valor` (en la card que arma run.py, no en el yaml) → la card no muestra valor ni unidad (muro de
+  vencimientos: un gráfico por año no tiene valor único; opción A de Pedro, 08/11/2026).
 - `rezago_normal_dias: N` → para series con un rezago de publicación estructural conocido
   (ej. el TCR multilateral depende del IPC de varios países); pone un piso al umbral del
   chequeo de frescura para no repetir la misma alerta todos los días.
@@ -672,10 +698,10 @@ referenciados desde la pestaña macro (`solo_referencia`, mismo dato, sin refetc
 idVariable 30); S&P MERVAL (BYMA, serie histórica diaria); TAMAR bancos privados (idVariable
 44, variante que referencian los bonos duales) y BADLAR (idVariable 7), plazo fijo a 30 días,
 cauciones pesos/USD (MAE, histórico de cierre, plazo más corto del día); curva de rendimientos
-AL30/GD30/GD35 (EN REVISIÓN, #28; TIR en el tiempo vía MAE, no
+AL30/GD30/GD35 (EN REVISIÓN, #28; TIR en el tiempo calculada con cierres de BYMA + flujo del MAE, no
 snapshot puntual -- el pedido original de un gráfico X=duración/Y=TIR se cambió por una serie
-temporal de las 3 TIR, ver la nota del indicador); spread soberano GD30 vs. UST10Y (proxy, NO
-es el EMBI+ oficial); muro de vencimientos de AL30/GD30/GD35 (barras agrupadas por año, % del
+temporal de las 3 TIR, ver la nota del indicador); spread GD30 vs. Treasury de igual duración (EN REVISIÓN,
+NO es el EMBI+ oficial); muro de vencimientos de AL30/GD30/GD35 (barras agrupadas por año, % del
 valor nominal de cada bono, vía el flujo de fondos del MAE); depósitos y morosidad
 RECLASIFICADOS desde la macro (ver la nota sobre mover vs. retaguear en Arquitectura), con
 nuevo corte de depósitos por moneda (pesos/USD, privado/público); acciones y CEDEARs más

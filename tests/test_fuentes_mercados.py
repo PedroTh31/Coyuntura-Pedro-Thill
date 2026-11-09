@@ -104,7 +104,7 @@ class TestFechasSnapshot(unittest.TestCase):
         self.assertEqual(list(quedan["valor"]), [1, 5])
         self.assertEqual(fuera, [date(2026, 10, 31), date(2026, 11, 1), date(2026, 11, 9)])
         self.assertTrue(run.es_snapshot_diario({"fuente": "mae_bono"}))
-        self.assertTrue(run.es_snapshot_diario({"calculo": "spread_bono_ust"}))
+        self.assertFalse(run.es_snapshot_diario({"calculo": "spread_bono_ust"}))   # TIR de BYMA con fecha (#28)
         self.assertFalse(run.es_snapshot_diario({"fuente": "tesoro_ust"}))   # serie histórica con calendario de EE.UU.
 
     def test_reconstruir_solo_no_habiles(self):

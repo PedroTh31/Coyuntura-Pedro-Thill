@@ -863,13 +863,15 @@ ETIQUETA_FUENTE = {"datos_gob": "apis.datos.gob.ar", "argentinadatos": "Argentin
                    "dolar": "ArgentinaDatos", "bcra": "BCRA", "rem_bcra": "BCRA",
                    "bcra_morosidad_lineas": "BCRA", "deuda_bruta": "Secretaría de Finanzas",
                    "byma": "BYMA", "mae_bono": "MAE", "mae_resumen": "MAE", "mae_caucion": "MAE",
-                   "tesoro_ust": "Tesoro de EE.UU.",
+                   "tesoro_ust": "Tesoro de EE.UU.", "byma_bono": "BYMA",
                    "trabajo_ripte": "Secretaría de Trabajo"}
+# Fuentes que una `fuente:` usa además de la de ETIQUETA_FUENTE (byma_bono: cierres de BYMA + flujo del MAE).
+FUENTES_ADICIONALES = {"byma_bono": ["MAE"]}
 ETIQUETA_USO_INDEC = {"indec_api": "API del INDEC", "datos_gob_ar": "apis.datos.gob.ar",
                       "argentinadatos": "ArgentinaDatos"}
 # Fuentes que un `calculo:` usa por fuera de sus ids de datos.gob (ver _calcular en run.py).
 FUENTES_CALCULO = {"brecha": ["ArgentinaDatos"], "reservas_ajustadas": ["BCRA"],
-                   "tasa_real_expost": ["BCRA"], "spread_bono_ust": ["MAE", "Tesoro de EE.UU."],
+                   "tasa_real_expost": ["BCRA"], "spread_bono_ust": ["BYMA", "MAE", "Tesoro de EE.UU."],
                    "deuda_pbi": ["Secretaría de Finanzas", "ArgentinaDatos"]}
 CAMPOS_ID_DG = ("id", "base_id", "nominal_id", "deflactor_id", "numerador_id", "denominador_id",
                 "minuendo_id", "sustraendo_id", "pbi_id", "ipc_base_id")
@@ -889,6 +891,7 @@ def _fuentes_de_indicador(ind, fuentes_indec):
     if ind.get("fuente") in ETIQUETA_FUENTE:
         if ind["fuente"] != "datos_gob" or ind.get("id") not in cubiertos:
             etiquetas.add(ETIQUETA_FUENTE[ind["fuente"]])
+    etiquetas.update(FUENTES_ADICIONALES.get(ind.get("fuente"), []))
     calculo = ind.get("calculo")
     if calculo:
         etiquetas.update(FUENTES_CALCULO.get(calculo, []))
@@ -1130,6 +1133,7 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             card["frescura"], grave = _linea_frescura(ind, historico, frescura_ctx, indicadores_por_nombre)
             card["sello"] = _sello_de(ind, frescura_ctx)
             card["slug"] = sitio.slug(nombre, ind)
+            card["slug_anterior"] = ind.get("slug_anterior")
             if tema is not None:
                 card["mini"] = _mini_card(ind, serie_js_compuesta, historico)
             _completar_card(card, ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio,
@@ -1190,7 +1194,8 @@ def generar(historico, config_indicadores, archivo_salida="index.html", extra_ht
             nota_num=nota_num,
             sube_es_bueno=ind.get("sube_es_bueno", False), neutral=ind.get("neutral", False),
             subtitulo=ind.get("subtitulo"), acumulando=acumulando, sin_filtros=bool(acumulando),
-            fuente_indec=bool(usos), frescura=linea_fr, slug=sitio.slug(nombre, ind), solo_serie=solo_serie,
+            fuente_indec=bool(usos), frescura=linea_fr, slug=sitio.slug(nombre, ind), slug_anterior=ind.get("slug_anterior"),
+            solo_serie=solo_serie,
             nota_texto=nota if solo_serie else None, sello=_sello_de(ind, ctx_card)))
         _completar_card(charts[-1], ind, historico, indicadores_por_nombre, grave, _con_tit(nombre), anio)
         if tema is not None:
@@ -1364,7 +1369,8 @@ def _card_cell(c, solo_grafico=False):
         ch = c["cambio"]
         tri = {1: "▲", -1: "▼"}.get(ch["signo"], "•")
         chg = f'<span class="chg"><span class="tri">{tri}</span>{ch["texto"]} vs. {ch["ref"]}</span>'
-    fila = (f'<div class="cm"><span class="cv">{c["valor"]}</span>'
+    fila = ("" if c.get("sin_valor") else   # sin valor único (muro de vencimientos, opción A de Pedro)
+            f'<div class="cm"><span class="cv">{c["valor"]}</span>'
             f'<span class="uni">{c.get("unidad", "")}</span>{chg}</div>')
     # Pie (D11): atribución del INDEC exigida para los datos de su API (Bloque A6) · máx/mín de la vista
     # inicial · asterisco numerado y clickeable que salta a su nota en el pie de página.
@@ -1528,7 +1534,8 @@ def _card_compacta(c):
         ch = c["cambio"]
         tri = {1: "▲", -1: "▼"}.get(ch["signo"], "•")
         chg = f'<span class="chg"><span class="tri">{tri}</span>{ch["texto"]} vs. {ch["ref"]}</span>'
-    fila = f'<div class="cm"><span class="cv">{c["valor"]}</span><span class="uni">{c.get("unidad", "")}</span>{chg}</div>'
+    fila = ("" if c.get("sin_valor") else
+            f'<div class="cm"><span class="cv">{c["valor"]}</span><span class="uni">{c.get("unidad", "")}</span>{chg}</div>')
     m = c.get("mini") or {}
     if c.get("acumulando"):
         grafico = f'<div class="mtexto">⏳ {c["acumulando"]}</div>'
@@ -1618,7 +1625,9 @@ def _cabeza_serie(c, ind, f, resumen, ctx, proximas):
     izq = ((f'<div class="cn">{c["nombre"]}</div><h2 class="s-tit">{tit}</h2>' if tit else f'<h2 class="s-tit">{c["nombre"]}</h2>')
            + (f'<p class="s-desc">{desc}</p>' if desc else ""))
     marca = f'<div class="marca-fecha">⏸ {c["marca_fecha"]}</div>' if c.get("marca_fecha") else ""
-    der = (f'<div class="s-val"><span class="cv">{c["valor"]}</span> <span class="uni">{c.get("unidad", "")}</span></div>{chg}'
+    valor_html = ("" if c.get("sin_valor") else
+                  f'<div class="s-val"><span class="cv">{c["valor"]}</span> <span class="uni">{c.get("unidad", "")}</span></div>')
+    der = (f'{valor_html}{chg}'
            f'{c.get("frescura", "")}{marca}{_aviso_html(c)}{_proximo_dato(f, resumen, ctx, proximas)}')
     if c.get("acumulando"):
         der += f'<div class="acumulando">⏳ {c["acumulando"]}</div>'
@@ -1806,8 +1815,12 @@ def _seccion_tema(tema, charts, grupo_tabla, semaforo, fecha_sem, semaforo_fuent
     minis = {str(c["i"]): c["mini"] for c in charts if c.get("mini")}
     bajada = f'<p class="tema-bajada">{tema["bajada"]}</p>' if tema.get("bajada") else ""
     charts = [c for c in charts if not c.get("solo_serie")]
+    # Anclas de cards renombradas (`slug_anterior:`): mercados/#<slug viejo> -> la card nueva, mismo criterio que
+    # las anclas viejas de la home (sitio.js_anclas).
+    anclas = {c["slug_anterior"]: "#" + c["slug"] for c in charts if c.get("slug_anterior") and c.get("slug")}
     return (f'<section class="bloque" id="{tema["slug"]}">{miga}<h2>{tema["titulo"]}</h2>{bajada}{cuerpo}</section>'
-            f'<script>{_JS_MINIS.replace("__MINIS__", json.dumps(minis, ensure_ascii=False))}</script>')
+            f'<script>{_JS_MINIS.replace("__MINIS__", json.dumps(minis, ensure_ascii=False))}</script>'
+            + sitio.js_anclas(anclas))
 
 
 def _mezclar(hex_color, a):
