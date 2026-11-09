@@ -1,43 +1,89 @@
 {
-  "alertas_hoy": [],
-  "avisos": {},
+  "alertas_hoy": [
+    "El calendario de BCRA no tiene fechas anunciadas entre hoy y fin de 12/2026 (https://www.bcra.gob.ar/calendario-de-informes/): ¿no las publicó todavía o cambió el formato?"
+  ],
+  "avisos": {
+    "externo:bcra:sin_futuros": "2026-11-09"
+  },
+  "externos": {
+    "bce": {
+      "anunciados": {
+        "bajado": "2026-11-09T16:25:47-03:00",
+        "eventos": 17,
+        "fuente": "pagina"
+      }
+    },
+    "bcra": {
+      "anunciados": {
+        "bajado": "2026-11-09T16:25:47-03:00",
+        "eventos": 14,
+        "fuente": "pagina"
+      }
+    },
+    "boe": {
+      "anunciados": {
+        "bajado": "2026-11-09T16:25:47-03:00",
+        "eventos": 16,
+        "fuente": "pagina"
+      }
+    },
+    "boj": {
+      "anunciados": {
+        "bajado": "2026-11-09T16:25:47-03:00",
+        "eventos": 16,
+        "fuente": "pagina"
+      }
+    },
+    "fed": {
+      "anunciados": {
+        "bajado": "2026-11-09T16:25:47-03:00",
+        "eventos": 24,
+        "fuente": "pagina"
+      },
+      "publicados": {
+        "bajado": "2026-11-09T16:25:47-03:00",
+        "fuente": "feed",
+        "items": 8
+      }
+    }
+  },
   "meses": {
     "2026-07": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2026-08": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2026-09": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2026-10": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2026-11": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2026-12": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2027-01": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2027-02": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     },
     "2027-03": {
-      "bajado": "2026-11-09T15:16:23-03:00",
+      "bajado": "2026-11-09T16:25:28-03:00",
       "fuente": "endpoint"
     }
   },
-  "ultima_verificacion": "2026-11-09T15:16:34-03:00"
+  "ultima_verificacion": "2026-11-09T16:25:50-03:00"
 }
