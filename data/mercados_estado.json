@@ -4,13 +4,40 @@
   "ultima": {
     "fecha": "2026-11-09",
     "resumen": {
+      "bono:AL30": {
+        "desde": "2026-07-10",
+        "filas": 83,
+        "ultimo": "2026-11-06"
+      },
+      "bono:GD30": {
+        "desde": "2026-07-10",
+        "filas": 83,
+        "ultimo": "2026-11-06"
+      },
+      "bono:GD35": {
+        "desde": "2026-07-10",
+        "filas": 83,
+        "ultimo": "2026-11-06"
+      },
       "extra:Dólar futuro (DDF)": {
         "estado": "ok"
       },
       "extra:Muro de vencimientos (AL30/GD30/GD35)": {
         "estado": "ok"
       },
-      "ust:10 Yr": {
+      "ust:1 Yr": {
+        "fuente": "tesoro",
+        "ultimo": "2026-11-06"
+      },
+      "ust:2 Yr": {
+        "fuente": "tesoro",
+        "ultimo": "2026-11-06"
+      },
+      "ust:3 Yr": {
+        "fuente": "tesoro",
+        "ultimo": "2026-11-06"
+      },
+      "ust:6 Mo": {
         "fuente": "tesoro",
         "ultimo": "2026-11-06"
       }

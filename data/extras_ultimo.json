@@ -64,6 +64,7 @@
         "nombre": "Muro de vencimientos (AL30/GD30/GD35)",
         "pct": null,
         "sin_filtros": true,
+        "sin_valor": true,
         "sube_es_bueno": false,
         "subtitulo": "Pagos de capital por año, en % del valor nominal original de cada bono",
         "unidad": "% VN",
