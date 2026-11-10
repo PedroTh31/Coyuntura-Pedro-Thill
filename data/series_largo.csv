@@ -6808,6 +6808,7 @@
 2026-11-07,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.044585987261142
 2026-11-08,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.044585987261142
 2026-11-09,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.044585987261142
+2026-11-10,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.044585987261142
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7608,6 +7609,7 @@
 2026-11-07,CER (Coeficiente de Estabilización de Referencia),mercados,índice,866.47442841467
 2026-11-08,CER (Coeficiente de Estabilización de Referencia),mercados,índice,867.0006710163
 2026-11-09,CER (Coeficiente de Estabilización de Referencia),mercados,índice,867.52723322492
+2026-11-10,CER (Coeficiente de Estabilización de Referencia),mercados,índice,868.05411523462
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10542,6 +10544,7 @@
 2026-11-07,Canje MEP/CCL,mercados,%,4.849171862207946
 2026-11-08,Canje MEP/CCL,mercados,%,4.849171862207946
 2026-11-09,Canje MEP/CCL,mercados,%,4.849171862207946
+2026-11-10,Canje MEP/CCL,mercados,%,4.849171862207946
 2025-07-02,Caución en dólares (1 día),mercados,% TNA,2.0
 2025-08-04,Caución en dólares (1 día),mercados,% TNA,0.9208
 2025-08-05,Caución en dólares (1 día),mercados,% TNA,1.5
@@ -19195,6 +19198,7 @@
 2026-11-07,Dólar CCL,monetario_financiero,$/USD (venta),1664.9
 2026-11-08,Dólar CCL,monetario_financiero,$/USD (venta),1664.9
 2026-11-09,Dólar CCL,monetario_financiero,$/USD (venta),1664.9
+2026-11-10,Dólar CCL,monetario_financiero,$/USD (venta),1664.9
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -22129,6 +22133,7 @@
 2026-11-07,Dólar MEP,monetario_financiero,$/USD (venta),1587.9
 2026-11-08,Dólar MEP,monetario_financiero,$/USD (venta),1587.9
 2026-11-09,Dólar MEP,monetario_financiero,$/USD (venta),1587.9
+2026-11-10,Dólar MEP,monetario_financiero,$/USD (venta),1587.9
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -27919,6 +27924,7 @@
 2026-11-07,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2026-11-08,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2026-11-09,Dólar blue,monetario_financiero,$/USD (venta),1555.0
+2026-11-10,Dólar blue,monetario_financiero,$/USD (venta),1555.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -33709,6 +33715,7 @@
 2026-11-07,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2026-11-08,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2026-11-09,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
+2026-11-10,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.18617931655959
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238073
@@ -56086,6 +56093,7 @@
 2026-11-04,Riesgo país (EMBI),monetario_financiero,puntos básicos,852.0
 2026-11-05,Riesgo país (EMBI),monetario_financiero,puntos básicos,925.0
 2026-11-06,Riesgo país (EMBI),monetario_financiero,puntos básicos,939.0
+2026-11-09,Riesgo país (EMBI),monetario_financiero,puntos básicos,873.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07

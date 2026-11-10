@@ -2,7 +2,7 @@
   "activas": [],
   "avisos": {},
   "ultima": {
-    "fecha": "2026-11-09",
+    "fecha": "2026-11-10",
     "resumen": {
       "bono:AL30": {
         "desde": "2026-07-10",
@@ -27,19 +27,19 @@
       },
       "ust:1 Yr": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-06"
+        "ultimo": "2026-11-09"
       },
       "ust:2 Yr": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-06"
+        "ultimo": "2026-11-09"
       },
       "ust:3 Yr": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-06"
+        "ultimo": "2026-11-09"
       },
       "ust:6 Mo": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-06"
+        "ultimo": "2026-11-09"
       }
     }
   }
