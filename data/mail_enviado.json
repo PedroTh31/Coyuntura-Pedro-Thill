@@ -14,8 +14,8 @@
     "Asistencia monetaria del BCRA al Tesoro|may-26",
     "Reservas ajustadas (swap China + organismos internacionales)|jun-26"
   ],
-  "fecha": "2026-11-09",
-  "hora_envio": "07:10:32",
+  "fecha": "2026-11-10",
+  "hora_envio": "07:10:38",
   "zona": "America/Argentina/Buenos_Aires",
   "disparo": "workflow_dispatch",
   "datos_al_momento_del_envio": false
