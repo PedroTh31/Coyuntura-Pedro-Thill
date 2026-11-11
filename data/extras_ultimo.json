@@ -5,8 +5,8 @@
         "bloque": "mercados",
         "grupo": "Dólar futuro",
         "marca_fecha": null,
-        "maxv": "1.855",
-        "minv": "3",
+        "maxv": "1.900",
+        "minv": "1.564",
         "neutral": true,
         "nombre": "Dólar futuro (DDF)",
         "pct": null,
@@ -14,7 +14,7 @@
         "sube_es_bueno": false,
         "subtitulo": "Curva de contratos por vencimiento mensual",
         "unidad": "$",
-        "valor": "1.570"
+        "valor": "1.564"
       },
       "nota": "Curva de contratos de dólar futuro (DDF) por vencimiento mensual, Mercado Abierto Electrónico (MAE, endpoint emisiones/resumen/DDF, no documentado oficialmente por el MAE, datos delayed 5-15 min intradía). Snapshot del día -- no es una serie histórica (los contratos cambian de nombre mes a mes).",
       "serie_js": {
@@ -23,31 +23,33 @@
         "unidad": "$",
         "x": [
           "nov/2026",
-          "nov/2026",
           "dic/2026",
           "ene/2027",
           "feb/2027",
           "mar/2027",
           "abr/2027",
           "may/2027",
+          "jun/2027",
           "jul/2027",
-          "ago/2027"
+          "ago/2027",
+          "sep/2027"
         ],
         "y": [
-          1569.5,
-          3.0,
-          1598.0,
-          1628.0,
-          1656.5,
-          1689.5,
-          1722.0,
-          1756.0,
+          1564.0,
+          1592.5,
+          1622.0,
+          1651.0,
+          1687.0,
+          1719.0,
+          1755.0,
+          1788.0,
           1822.0,
-          1855.0
+          1860.5,
+          1900.0
         ]
       }
     },
-    "fecha": "2026-11-10"
+    "fecha": "2026-11-11"
   },
   "Muro de vencimientos (AL30/GD30/GD35)": {
     "extra": {
@@ -128,6 +130,6 @@
         ]
       }
     },
-    "fecha": "2026-11-10"
+    "fecha": "2026-11-11"
   }
 }
