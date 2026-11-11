@@ -273,6 +273,27 @@ externos:
       - {tipo: rem, titulo: "Relevamiento de Expectativas de Mercado (REM)",
          regex: "^Relevamiento de Expectativas de Mercado\\b"}
       - {tipo: ipom, titulo: "Informe de Política Monetaria (IPOM)", regex: "^Informe de Política Monetaria\\b"}
+  - id: tesoro
+    organismo: "Finanzas"
+    zona: "America/Argentina/Buenos_Aires"
+    meses_alerta: 2
+    # Licitaciones del Tesoro (pedido de Pedro del 11/11/2026). Anunciados: el "Cronograma de Licitaciones
+    # <año>" (PDF pintado por colores) que linkea esta página vía "cronograma-<año>" (ver cal_tesoro.py). Sin
+    # hora: la fuente no la da. "{ciclo}" = DD/MM de la licitación del ciclo.
+    url: "https://www.argentina.gob.ar/economia/licitaciones"
+    # link de un evento sin página propia ni de su ciclo publicada todavía
+    url_general: "https://www.argentina.gob.ar/economia/licitaciones"
+    eventos:
+      - {tipo: llamado, titulo: "Llamado a licitación del Tesoro — {ciclo}"}
+      - {tipo: licitacion, titulo: "Licitación del Tesoro — {ciclo} (resultados el mismo día por la tarde)"}
+      - {tipo: liquidacion, titulo: "Liquidación de la licitación del Tesoro — {ciclo}"}
+    # Llamados y resultados publicados (últimos ~5 ciclos). Las conversiones y demás notas no entran.
+    publicados:
+      url: "https://www.argentina.gob.ar/economia/finanzas/noticias"
+      tipos:
+        - {tipo: llamado, titulo: "Llamado a licitación del Tesoro — {ciclo}", regex: "^Llamado a licitación de instrumentos del Tesoro"}
+        - {tipo: licitacion, titulo: "Licitación del Tesoro — {ciclo} (resultados el mismo día por la tarde)",
+           regex: "^Resultado de la licitación por efectivo"}
 
 # Feriados: días no hábiles para "próximo día hábil" (series diarias) y para "fecha + 1 día hábil"
 # (criterio de atrasado). Criterio de Pedro: cuenta un día si en él NO operan el INDEC, el BCRA y

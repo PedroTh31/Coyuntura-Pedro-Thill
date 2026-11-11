@@ -76,26 +76,12 @@ class TestSeleccion(unittest.TestCase):
         vista, est = MA.seleccionar({}, "2026-11-11", {})
         self.assertEqual((vista["calendario"]["estado"], est), ("no_disponible", {}))
 
-    def test_atrasados_tope_3(self):
-        atr = [{"clave": f"a{i}", "publicacion": "x", "texto": f"t{i}"} for i in range(5)]
-        vista, _ = MA.seleccionar(uc(atrasados=atr), "2026-11-11", {})
-        self.assertEqual((len(vista["atrasados"]), vista["atrasados_mas"]), (3, 2))
-
-    def test_graves_resumen_semanal_con_tope(self):
-        graves = [_grave(f"S{i}", 100 - i) for i in range(5)]
-        vista, est = MA.seleccionar(uc(graves=graves, primer_habil_semana=True), "2026-11-11", {})
-        self.assertEqual([g["nombre"] for g in vista["graves"]], ["S0", "S1", "S2"])
-        self.assertEqual(vista["graves_mas"], ["S3", "S4"])
-        self.assertEqual(est["graves_vistos"], [g["clave"] for g in graves])
-
-    def test_graves_otro_dia_solo_los_que_entraron(self):
-        graves = [_grave("Viejo", 200), _grave("Nuevo", 95)]
-        vista, _ = MA.seleccionar(uc(graves=graves), "2026-11-11", {"graves_vistos": ["Viejo|may-26"]})
-        self.assertEqual([g["nombre"] for g in vista["graves"]], ["Nuevo"])
-
-    def test_graves_sin_estado_previo_no_se_muestran_fuera_del_resumen(self):
-        vista, _ = MA.seleccionar(uc(graves=[_grave("X", 100)]), "2026-11-11", {})
-        self.assertEqual(vista["graves"], [])
+    def test_la_seleccion_no_arma_datos_demorados(self):
+        graves = [_grave(f"S{i}", 400) for i in range(5)]
+        atr = [{"clave": "a", "publicacion": "x", "texto": "t"}]
+        vista, est = MA.seleccionar(uc(graves=graves, atrasados=atr, primer_habil_semana=True), "2026-11-11", {})
+        self.assertFalse({"atrasados", "graves"} & set(vista))
+        self.assertEqual(set(est), {"periodos_anunciados"})
 
 
 class TestHtml(unittest.TestCase):
@@ -121,12 +107,23 @@ class TestHtml(unittest.TestCase):
                "fuente": "INDEC", "hora": "16 h"}], atrasados=[{"clave": "a", "publicacion": "ica", "texto": "Comercio exterior (ICA) · ago-26 · ⚠ atrasado · sep-26 se publicó el 19/10"}])
         h = self.html(u, "2026-11-13", {"periodos_anunciados": {"ipc": "2026-09"}})
         pos = [h.index(x) for x in ("Dato nuevo", "Hoy se publica", "Esta semana", "Indicadores clave",
-                                     "Datos demorados", "Noticias argentinas")]
+                                     "Noticias argentinas")]
         self.assertEqual(pos, sorted(pos))
         self.assertIn("Inflación de septiembre: 1,9% mensual", h)
         self.assertIn("publicado el 13/10, 16 h", h)
         self.assertIn(f'{M.DASHBOARD_URL}#precios', h)
         self.assertNotIn("REM", h)
+
+    def test_datos_demorados_nunca_va_en_el_mail(self):
+        # Decisión de Pedro del 11/11/2026: ni con atrasados ni con series sin datos hace más de un año.
+        graves = [_grave(f"S{i}", 400 + i) for i in range(6)]
+        atr = [{"clave": f"a{i}", "publicacion": "x", "texto": f"Serie {i} · ⚠ atrasado"} for i in range(5)]
+        for primer_habil in (True, False):
+            h = self.html(uc(graves=graves, atrasados=atr, primer_habil_semana=primer_habil),
+                          est={"graves_vistos": []})
+            for txt in ("Datos demorados", "Sin datos nuevos de la fuente", "⚠ atrasado", "sin datos nuevos hace",
+                        "calendario/#demorados"):
+                self.assertNotIn(txt, h)
 
     def test_dato_nuevo_sin_card_no_tiene_link(self):
         u = uc(pubs={"emae": _pub("2026-09", ancla=None)})
@@ -159,11 +156,6 @@ class TestHtml(unittest.TestCase):
         h = self.html(u, est={"periodos_anunciados": {"ipc": "2026-09"}})
         self.assertIn("IPC de octubre</b> · sep-26 · oct-26 publicado el 12/11, entra en la próxima actualización", h)
 
-    def test_graves_y_mas(self):
-        h = self.html(uc(graves=[_grave(f"S{i}", 100 - i) for i in range(5)], primer_habil_semana=True))
-        self.assertIn("⏸ S0: may-26 · sin datos nuevos hace 5 meses", h)
-        self.assertIn("y 2 más (S3, S4)", h)
-
     def test_sin_agenda_el_mail_queda_como_antes(self):
         h = M.armar_html([], [], [])
         self.assertNotIn("Esta semana", h)
@@ -181,9 +173,10 @@ class TestRegistro(unittest.TestCase):
                 M.registrar_envio(False, {})   # agenda no disponible: se conserva lo anterior
                 datos = json.loads(ruta.read_text(encoding="utf-8"))
                 self.assertEqual(datos["periodos_anunciados"], {"ipc": "2026-09"})
-                M.registrar_envio(False, {"periodos_anunciados": {"ipc": "2026-10"}, "graves_vistos": []})
+                M.registrar_envio(False, {"periodos_anunciados": {"ipc": "2026-10"}})
                 datos = json.loads(ruta.read_text(encoding="utf-8"))
-                self.assertEqual((datos["periodos_anunciados"], datos["graves_vistos"]), ({"ipc": "2026-10"}, []))
+                self.assertEqual(datos["periodos_anunciados"], {"ipc": "2026-10"})
+                self.assertNotIn("graves_vistos", datos)   # era de "Datos demorados", que ya no va en el mail
 
 
 if __name__ == "__main__":

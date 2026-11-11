@@ -106,6 +106,12 @@ def fin_ventana(ctx: F.Contexto) -> date:
     return C.sumar_dias_habiles(ctx.hoy, VENTANA_DIAS_HABILES - 1 if habil else VENTANA_DIAS_HABILES, ctx.no_habiles)
 
 
+def _link(e: dict) -> str | None:
+    """Link de un evento externo (calendario_externo.eventos): `link` (la propia página, la de su ciclo o la
+    general del organismo); si el evento no lo trae, el `url` de un publicado, como antes."""
+    return e.get("link") or e.get("url")
+
+
 def armar_calendario(ctx: F.Contexto, cfg: dict) -> dict:
     """Ventana = hoy + los 4 días hábiles siguientes (si hoy no es hábil, los 5 siguientes). Las
     publicaciones se muestran en la fecha del calendario del INDEC aunque caigan en un día que
@@ -141,7 +147,8 @@ def armar_calendario(ctx: F.Contexto, cfg: dict) -> dict:
     externos = [e for e in ctx.externos if hoy.isoformat() <= e["fecha_ar"] <= fin.isoformat()]
     del_dia = [((h, 0), {"titulo": t, "fuente": fu, "hora": F._hora(h)}) for f, h, _, t, fu in items if f == hoy]
     del_dia += [((e["hora_ar"] or "99:99", 1), {"titulo": e["titulo"], "fuente": e["organismo"], "hora": e["hora_txt"],
-                                                 "externo": True}) for e in externos if e["fecha_ar"] == hoy.isoformat()]
+                                                 "externo": True, **({"url": _link(e)} if _link(e) else {})})
+                for e in externos if e["fecha_ar"] == hoy.isoformat()]
     out["hoy"] = [x for _, x in sorted(del_dia, key=lambda z: z[0])]
     filas: dict[tuple, list] = {}
     for f, h, _, t, _fu in items:
@@ -151,7 +158,8 @@ def armar_calendario(ctx: F.Contexto, cfg: dict) -> dict:
     for e in externos:   # mismo formato que las del INDEC: hora AR (hora local) + nombre del evento
         f = date.fromisoformat(e["fecha_ar"])
         if f > hoy:
-            semana.append(((f, e["hora_ar"] or "99:99", 1), {"dia": dia_corto(f), "hora": e["hora_txt"], "titulos": [e["titulo"]]}))
+            semana.append(((f, e["hora_ar"] or "99:99", 1), {"dia": dia_corto(f), "hora": e["hora_txt"], "titulos": [e["titulo"]],
+                                                             "urls": [_link(e)], "fuente": e["organismo"]}))
     out["semana"] = [x for _, x in sorted(semana, key=lambda z: z[0])]
     if not out["semana"]:
         prox = next((x for x in items if x[0] > fin), None)
@@ -211,8 +219,9 @@ def armar_meses(cache: dict, cfg: dict, ctx: F.Contexto, publicaciones: dict, me
                             estado=_estado_en_mes(per, momento, publicaciones.get(p["id"]), ctx.ahora))
             por_dia.setdefault(f, []).append(item)
         # Bloque F1: otros organismos, por fecha AR. Estado: 'publicado' (con link), 'proximo' (todavía no
-        # llegó su momento) o 'anunciado' (pasó sin publicación encontrada: decisión B4 de Pedro, sin link y
-        # sin afirmar que pasó).
+        # llegó su momento) o 'anunciado' (pasó sin publicación encontrada: decisión B4 de Pedro, sin afirmar
+        # que pasó). Link: el `link` del evento (calendario_externo.eventos): sólo los publicados, salvo un
+        # organismo con `ciclo`/`url_general` (Tesoro), cuyos eventos linkean siempre.
         for e in ctx.externos:
             f = date.fromisoformat(e["fecha_ar"])
             if (f.year, f.month) != (anio, mes):
@@ -221,7 +230,7 @@ def armar_meses(cache: dict, cfg: dict, ctx: F.Contexto, publicaciones: dict, me
             est = "publicado" if e["estado"] == "publicado" else ("proximo" if momento > ctx.ahora else "anunciado")
             por_dia.setdefault(f, []).append({"externo": True, "pid": None, "estado": None, "organismo": e["organismo"],
                                               "titulo": e["titulo"], "hora": e["hora_txt"], "orden": e["hora_ar"] or "99:99",
-                                              "estado_ext": est, "url": e["url"] if est == "publicado" else None})
+                                              "estado_ext": est, "url": _link(e)})
         dias, d = [], date(anio, mes, 1)
         while d.month == mes:
             pubs = sorted(por_dia.get(d, []), key=lambda x: (0 if x["pid"] else 1 if x.get("externo") else 2,

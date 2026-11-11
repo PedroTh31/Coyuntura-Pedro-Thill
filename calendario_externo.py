@@ -12,6 +12,11 @@ Modelo:
   - un publicado se une con el anunciado del mismo organismo, tipo y fecha local (ej. el statement del FOMC
     con la decisión de ese día) y queda un solo evento `publicado` con link. Un anunciado pasado sin
     publicación queda `anunciado` (decisión B4 de Pedro: sin link y sin afirmar que pasó).
+  - `ciclo` (opcional, hoy sólo el Tesoro): si los eventos lo traen, el publicado se une con el anunciado del
+    mismo tipo y CICLO (no de la misma fecha) y queda la fecha real de publicación (decisión A de Pedro,
+    11/11/2026: el llamado del 11/11 salió el 05/11 y el cronograma decía 09/11). El título puede llevar
+    "{ciclo}" (DD/MM del ciclo) y cada evento tiene `link`: su propia página si se publicó; si no, la página
+    publicada más reciente de su ciclo; si no, `url_general` del yaml (None si el organismo no la declara).
   - la hora se muestra en AR con la local entre paréntesis, "16:00 AR (14:00 ET)" (zoneinfo, con horario de
     verano). Sin hora en la fuente, sin hora: nunca estimada.
 
@@ -92,7 +97,8 @@ def _modulos() -> dict:
     import cal_boe
     import cal_boj
     import cal_fed
-    return {"fed": cal_fed, "bce": cal_bce, "boj": cal_boj, "boe": cal_boe, "bcra": cal_bcra}
+    import cal_tesoro
+    return {"fed": cal_fed, "bce": cal_bce, "boj": cal_boj, "boe": cal_boe, "bcra": cal_bcra, "tesoro": cal_tesoro}
 
 
 # ---------------------------------------------------------------------------------------------
@@ -173,6 +179,15 @@ def actualizar(cache: dict, cfg: dict, hoy: date, modulos: dict | None = None) -
                 est["publicados"] = {"fuente": "cache" if cache["publicados"].get(oid) else "sin_datos"}
                 diarios.append((f"externo:{oid}:publicados",
                                 f"Publicaciones de {nombre}: {type(e).__name__}: {e} ({org['publicados']['url']})."))
+        # Un publicado con `ciclo` que no está en el cronograma (ej. una licitación movida de día): se muestra
+        # igual, pero se avisa para revisar (semanal, por ciclo).
+        ciclos = {e.get("ciclo") for e in cache["anunciados"].get(oid, {}).get("eventos", [])} - {None}
+        if ciclos:
+            for p in cache["publicados"].get(oid, {}).get("items", []):
+                if p.get("ciclo") and p["ciclo"] not in ciclos and p["ciclo"] >= min(ciclos):
+                    semanales.append((f"externo:{oid}:ciclo:{p['ciclo']}",
+                                      f"{nombre}: '{p.get('titulo_fuente') or p['tipo']}' ({p['url']}) es del "
+                                      f"{p['ciclo']}, que no figura en el cronograma ({org['url']})."))
         # Ventana: el mes actual y los `meses_alerta` - 1 siguientes, completos.
         ult_a, ult_m = _sumar_meses(hoy, org.get("meses_alerta", 3) - 1)
         lim_a, lim_m = _sumar_meses(hoy, org.get("meses_alerta", 3))
@@ -218,14 +233,36 @@ def eventos(cache: dict, cfg: dict, hoy: date) -> list[dict]:
         anunciados = {(e["tipo"], e["fecha"]): dict(e) for e in cache.get("anunciados", {}).get(oid, {}).get("eventos", [])
                       if e["tipo"] in titulos}
         publicados = [p for p in cache.get("publicados", {}).get(oid, {}).get("items", []) if p["tipo"] in tipos_pub]
+        # con `ciclo`, un solo publicado por tipo y ciclo: el más reciente
+        con_ciclo = {}
+        for p in sorted((p for p in publicados if p.get("ciclo")), key=_orden):
+            con_ciclo[(p["tipo"], p["ciclo"])] = p
+        publicados = [p for p in publicados if not p.get("ciclo")] + list(con_ciclo.values())
+        # clave de unión: (tipo, ciclo) si el evento lo trae, si no (tipo, fecha)
+        anunciados = {(e["tipo"], e.get("ciclo") or e["fecha"]): e for e in anunciados.values()}
         unidos = []
         for p in publicados:
-            a = anunciados.pop((p["tipo"], p["fecha"]), None)
+            a = anunciados.pop((p["tipo"], p.get("ciclo") or p["fecha"]), None)
             unidos.append({"tipo": p["tipo"], "fecha": p["fecha"], "hora": p.get("hora") or (a or {}).get("hora"),
                            "titulo": titulos.get(p["tipo"]) or tipos_pub[p["tipo"]], "estado": "publicado",
-                           "url": p["url"]})
+                           "url": p["url"], "ciclo": p.get("ciclo")})
         unidos += [{"tipo": a["tipo"], "fecha": a["fecha"], "hora": a.get("hora"), "titulo": titulos[a["tipo"]],
-                    "estado": "anunciado", "url": None} for a in anunciados.values()]
+                    "estado": "anunciado", "url": None, "ciclo": a.get("ciclo")} for a in anunciados.values()]
+        # link: la propia página; si no, la publicada más reciente del mismo ciclo; si no, la general del yaml
+        # y un publicado con `fechas_ciclo` (el llamado del Tesoro dice la licitación y la liquidación reales)
+        # corrige la fecha de los eventos todavía anunciados de su ciclo (decisión A)
+        por_ciclo, fechas_ciclo = {}, {}
+        for p in sorted(publicados, key=_orden):
+            if p.get("ciclo"):
+                por_ciclo[p["ciclo"]] = p["url"]
+                fechas_ciclo.setdefault(p["ciclo"], {}).update(p.get("fechas_ciclo") or {})
+        for e in unidos:
+            if e["estado"] == "anunciado" and e["ciclo"]:
+                e["fecha"] = fechas_ciclo.get(e["ciclo"], {}).get(e["tipo"], e["fecha"])
+            e["link"] = e["url"] or por_ciclo.get(e["ciclo"]) or org.get("url_general")
+            if e["ciclo"]:
+                c = date.fromisoformat(e["ciclo"])
+                e["titulo"] = e["titulo"].replace("{ciclo}", f"{c:%d/%m}")
         for e in unidos:
             fecha_ar, hora_ar = a_ar(e["fecha"], e["hora"], org["zona"])
             salida.append(dict(e, org=oid, organismo=org["organismo"], zona=org["zona"], fecha_ar=fecha_ar,

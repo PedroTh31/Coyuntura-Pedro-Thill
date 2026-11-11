@@ -1,5 +1,7 @@
 """Secciones del mail diario del Bloque B3 (PROMPT_ronda_macro_indec.md, diseño aprobado por Pedro el
-07/11/2026): "Dato nuevo", "Hoy se publica", "Esta semana" y "Datos demorados".
+07/11/2026): "Dato nuevo", "Hoy se publica" y "Esta semana". La sección "Datos demorados" se sacó del mail
+el 11/11/2026 (decisión de Pedro: no va nunca, ni con datos muy viejos); sigue en la página del calendario
+(/calendario/#demorados) y en el aviso semanal de atrasados a Pedro (agenda.avisar_atrasados).
 
 No recalcula nada: lee la clave "agenda" que run.py dejó en data/ultima_corrida.json (ver agenda.py)
 y el estado del último envío (data/mail_enviado.json, que commitea email_diario.yml):
@@ -7,8 +9,6 @@ y el estado del último envío (data/mail_enviado.json, que commitea email_diari
     el PRIMER envío en que el período del dashboard supera al anunciado (aunque el pipeline lo haya
     levantado tarde). Si la clave no existe (primer envío con este código, o una publicación nueva en
     calendario.yaml), se inicializa sin anunciar nada.
-  - graves_vistos: series en rezago grave al último envío. El resumen de rezago grave va el primer día
-    hábil de la semana; los otros días, sólo las que entraron desde el último envío.
 Funciones puras: `seleccionar` (qué se muestra + estado a registrar) y `html_*` (HTML con tablas y CSS
 inline, 640 px como el resto del mail hasta el Bloque 2 de PROMPT_mail_v3.md).
 """
@@ -18,7 +18,6 @@ from html import escape
 
 from tema import TEMA as T
 
-MAX_AVISOS = 3
 F = T["fuente"]
 
 
@@ -28,8 +27,7 @@ F = T["fuente"]
 def seleccionar(uc: dict, hoy_iso: str, estado_mail: dict) -> tuple[dict, dict]:
     """(vista, estado a registrar en mail_enviado.json si el envío sale bien)."""
     ag = uc.get("agenda") if uc.get("fecha") == hoy_iso else None
-    vista = {"calendario": None, "feriado": None, "nuevos": [], "pendientes": [],
-             "atrasados": [], "atrasados_mas": 0, "graves": [], "graves_mas": []}
+    vista = {"calendario": None, "feriado": None, "nuevos": [], "pendientes": []}
     if not ag:
         # La agenda no es de hoy (o falta): nunca mostrar la de otro día como si fuera la de hoy.
         vista["calendario"] = {"estado": "no_disponible"}
@@ -47,18 +45,7 @@ def seleccionar(uc: dict, hoy_iso: str, estado_mail: dict) -> tuple[dict, dict]:
             vista["pendientes"].append(p)
         if prev is None or p["periodo"] > prev:
             anunciados[pid] = p["periodo"]
-
-    atr = ag.get("atrasados") or []
-    vista["atrasados"], vista["atrasados_mas"] = atr[:MAX_AVISOS], max(0, len(atr) - MAX_AVISOS)
-
-    graves = ag.get("graves") or []
-    vistos = estado_mail.get("graves_vistos")
-    if cal.get("primer_habil_semana"):
-        mostrar = graves
-    else:
-        mostrar = [g for g in graves if vistos is not None and g["clave"] not in vistos]
-    vista["graves"], vista["graves_mas"] = mostrar[:MAX_AVISOS], [g["nombre"] for g in mostrar[MAX_AVISOS:]]
-    return vista, {"periodos_anunciados": anunciados, "graves_vistos": [g["clave"] for g in graves]}
+    return vista, {"periodos_anunciados": anunciados}
 
 
 # ---------------------------------------------------------------------------------------------
@@ -73,6 +60,13 @@ def _titulo_seccion(texto: str, sub: str = "") -> str:
     sub = f' <span style="font-weight:400;color:{T["texto_3"]};font-size:12px">· {escape(sub)}</span>' if sub else ""
     return (f'<tr><td colspan="3" style="padding:0 0 4px;font-size:15px;font-weight:700;'
             f'color:{T["texto"]}">{escape(texto)}{sub}</td></tr>')
+
+
+def _link(titulo: str, url: str | None) -> str:
+    """Título (escapado), con link si el evento lo tiene (hoy: licitaciones del Tesoro y publicados de la FED)."""
+    if not url:
+        return escape(titulo)
+    return f'<a href="{escape(url)}" style="color:inherit;text-decoration:underline">{escape(titulo)}</a>'
 
 
 def html_feriado(vista: dict) -> str:
@@ -131,21 +125,21 @@ def html_calendario(vista: dict) -> str:
             if it.get("externo"):   # Bloque F1: mismo formato, sin "el dato llega" (no actualiza el dashboard)
                 hora = f' · {escape(it["hora"])}' if it["hora"] else ""
                 filas += (f'<tr><td style="padding:2px 12px 9px;font-size:15px;color:{T["texto"]}">'
-                          f'<b style="color:{T["principal_1"]}">{escape(it["titulo"])}</b> · {escape(it["fuente"])}{hora}'
-                          '</td></tr>')
+                          f'<b style="color:{T["principal_1"]}">{_link(it["titulo"], it.get("url"))}</b> · '
+                          f'{escape(it["fuente"])}{hora}</td></tr>')
                 continue
             filas += (f'<tr><td style="padding:2px 12px 9px;font-size:15px;color:{T["texto"]}">'
                       f'<b style="color:{T["principal_1"]}">{escape(it["titulo"])}</b> · {escape(it["fuente"])} · '
                       f'{escape(it["hora"])} <span style="font-size:12px;color:{T["texto_2"]}">· el dato llega en el '
                       'próximo mail</span></td></tr>')
         salida += _tabla(filas, f'margin-top:12px;background:{T["principal_contexto"]}')
-    filas = _titulo_seccion("Esta semana", "publicaciones del INDEC que actualizan el dashboard")
+    filas = _titulo_seccion("Esta semana", "publicaciones del INDEC y de otros organismos")
     borde = f'border-top:1px solid {T["principal_contexto"]}'
     for it in cal["semana"]:
         filas += (f'<tr><td style="padding:4px 0;width:80px;font-size:13px;color:{T["texto_2"]};{borde};vertical-align:top">'
                   f'{escape(it["dia"])}</td><td style="padding:4px 8px 4px 0;width:44px;white-space:nowrap;font-size:13px;color:{T["texto_2"]};'
                   f'{borde};vertical-align:top">{escape(it["hora"])}</td><td style="padding:4px 0;font-size:13px;'
-                  f'color:{T["texto"]};{borde}">{"<br>".join(escape(t) for t in it["titulos"])}</td></tr>')
+                  f'color:{T["texto"]};{borde}">{"<br>".join(_link(t, u) for t, u in zip(it["titulos"], it.get("urls") or [None] * len(it["titulos"])))}</td></tr>')
     if not cal["semana"]:
         texto = f'Sin publicaciones hasta el {cal["hasta"]}.'
         if cal.get("proxima"):
@@ -157,27 +151,3 @@ def html_calendario(vista: dict) -> str:
                   f'calendario del INDEC bajado el {escape(cal["bajado"])} (no se pudo actualizar desde entonces).</td></tr>')
     return salida + _tabla(filas, "margin-top:14px")
 
-
-def html_avisos(vista: dict, dashboard_url: str) -> str:
-    if not vista["atrasados"] and not vista["graves"]:
-        return ""
-    filas = _titulo_seccion("Datos demorados")
-    for a in vista["atrasados"]:
-        filas += (f'<tr><td colspan="3" style="padding:5px 0;font-size:13px;color:{T["atrasado"]};'
-                  f'border-top:1px solid {T["principal_contexto"]}">{escape(a["texto"])}</td></tr>')
-    if vista["atrasados_mas"]:
-        filas += (f'<tr><td colspan="3" style="padding:2px 0;font-size:12px;color:{T["texto_3"]}">'
-                  f'y {vista["atrasados_mas"]} más</td></tr>')
-    if vista["graves"]:
-        filas += (f'<tr><td colspan="3" style="padding:6px 0 2px;font-size:12px;color:{T["texto_3"]}">'
-                  'Sin datos nuevos de la fuente:</td></tr>')
-        for g in vista["graves"]:
-            filas += (f'<tr><td colspan="3" style="padding:4px 8px;font-size:12px;color:{T["atrasado"]};'
-                      f'background:{T["franja_fondo"]};border-left:3px solid {T["franja_borde"]}">{escape(g["texto"])}'
-                      '</td></tr><tr><td colspan="3" style="height:3px;line-height:3px;font-size:0">&nbsp;</td></tr>')
-        if vista["graves_mas"]:
-            mas = vista["graves_mas"]
-            filas += (f'<tr><td colspan="3" style="padding:2px 0 0;font-size:12px;color:{T["texto_3"]}">'
-                      f'y {len(mas)} más ({escape(", ".join(mas))}) · <a href="{escape(dashboard_url)}calendario/#demorados" '
-                      f'style="color:{T["principal_2"]};text-decoration:none">ver en el dashboard →</a></td></tr>')
-    return _tabla(filas, "margin-top:22px")

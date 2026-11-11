@@ -124,10 +124,15 @@ def _linea_html(linea: str, antes: str = "") -> str:
     return f'<div class="cf">{escape(antes)}' + " · ".join(partes) + "</div>"
 
 
+def _link(titulo: str, url: str | None) -> str:
+    """Título (escapado), con link si el evento lo tiene."""
+    return f'<a href="{escape(url)}">{escape(titulo)}</a>' if url else escape(titulo)
+
+
 def _hoy_item(i: dict) -> str:
     if i.get("externo"):   # Bloque F1: otro organismo, no actualiza el monitor
         hora = f' · {escape(i["hora"])}' if i["hora"] else ""
-        return f'<p class="c-hoy-pub"><span class="org">{escape(i["fuente"])}</span><b>{escape(i["titulo"])}</b>{hora}</p>'
+        return f'<p class="c-hoy-pub"><span class="org">{escape(i["fuente"])}</span><b>{_link(i["titulo"], i.get("url"))}</b>{hora}</p>'
     return (f'<p class="c-hoy-pub"><b>{escape(i["titulo"])}</b> · {escape(i["fuente"])} · {escape(i["hora"])}'
             '<span>el dato entra en la próxima actualización del monitor</span></p>')
 
@@ -166,7 +171,7 @@ def _semana(cal: dict, ctx: F.Contexto, dias: dict, publicaciones: dict) -> str:
                      + (_linea_html(linea, "hoy el monitor muestra ") if linea else "") + "</div>")
         for p in externos:
             hora = f' · {escape(p["hora"])}' if p["hora"] else ""
-            cont += f'<div class="c-ext"><span class="org">{escape(p["organismo"])}</span><b>{escape(p["titulo"])}</b>{hora}</div>'
+            cont += f'<div class="c-ext"><span class="org">{escape(p["organismo"])}</span><b>{_link(p["titulo"], p.get("url"))}</b>{hora}</div>'
         if not cont:
             cont = '<div class="c-nada">sin publicaciones de las que usa el monitor</div>'
         salida += f'<div class="c-dia{" c-dia-fer" if feriado else ""}">{_tile(d)}<div class="c-cont">{cont}</div></div>'
@@ -202,9 +207,7 @@ def _estado(cfg: dict, publicaciones: dict, prox: dict) -> str:
 
 def _item_mes(p: dict) -> str:
     if p.get("externo"):   # Bloque F1
-        tit = escape(p["titulo"])
-        if p["estado_ext"] == "publicado" and p.get("url"):
-            tit = f'<a href="{escape(p["url"])}">{tit}</a>'
+        tit = _link(p["titulo"], p.get("url"))
         hora = f' <span class="hx">· {escape(p["hora"])}</span>' if p["hora"] else ""
         an = ' <span class="an">· anunciado</span>' if p["estado_ext"] == "anunciado" else ""
         return f'<div class="m-ext e-{p["estado_ext"]}"><span class="org">{escape(p["organismo"])}</span>{tit}{hora}{an}</div>'
@@ -274,7 +277,7 @@ def html(agenda: dict | None, meses: list[dict], prox: dict, sin_cal: list[str],
 <h2 class="cal-h2">Calendario de publicaciones</h2>
 <p class="bajada">Publicaciones del INDEC que alimentan el monitor, con las fechas de su calendario oficial{f" (bajado el {bajado_txt})" if bajado_txt else ""},
 y las decisiones de tasa de la FED, el BCE, el BoJ y el BoE, con las fechas que anuncia cada uno.
-Las series diarias del BCRA, de MinEco y de mercados no tienen calendario oficial: no se les estima fecha. Las publicaciones del BCRA con fecha anunciada (IPOM, REM) figuran en el calendario.</p>
+Las series diarias del BCRA, de MinEco y de mercados no tienen calendario oficial: no se les estima fecha. Las publicaciones del BCRA con fecha anunciada (IPOM, REM) figuran en el calendario, igual que las licitaciones del Tesoro (llamado, licitación y liquidación), del cronograma de la Secretaría de Finanzas.</p>
 {aviso}
 <div class="c-top">
   <section><h3 class="grupo">Hoy · {A.dia_corto(ctx.hoy)}</h3>{_hoy(cal, ctx)}</section>

@@ -207,20 +207,26 @@ def _tile_dia(dia: str) -> str:
         return f"<span>{escape(dia)}</span>"
 
 
+def _link(titulo: str, url: str | None) -> str:
+    return f'<a href="{escape(url)}">{escape(titulo)}</a>' if url else escape(titulo)
+
+
 def _franja(agenda: dict | None) -> str:
     cal = (agenda or {}).get("calendario") or {}
     if not agenda or cal.get("estado") == "no_disponible":
         cont = '<span>Calendario del INDEC no disponible hoy.</span>'
     else:
         if cal.get("hoy"):
-            hoy = " · ".join(f'<span class="f-pub"><b>{escape(i["titulo"])}</b> <span>{escape(i["hora"])}</span></span>'
+            hoy = " · ".join(f'<span class="f-pub"><b>{_link(i["titulo"], i.get("url"))}</b> <span>{escape(i["hora"])}</span></span>'
                              for i in cal["hoy"])
         elif cal.get("feriado_hoy"):
             hoy = f'feriado ({escape(cal["feriado_hoy"])})'
         else:
             hoy = "no se publica nada de lo que usa el monitor"
-        sem = "".join(f'<span class="f-pub">{_tile_dia(d["dia"])}<span class="f-tt"><b>{escape(", ".join(d["titulos"]))}</b>'
-                      f'<span>INDEC · {escape(d["hora"])}</span></span></span>' for d in cal.get("semana", []))
+        sem = "".join(f'<span class="f-pub">{_tile_dia(d["dia"])}<span class="f-tt"><b>'
+                      f'{", ".join(_link(t, u) for t, u in zip(d["titulos"], d.get("urls") or [None] * len(d["titulos"])))}</b>'
+                      f'<span>{escape(" · ".join(x for x in (d.get("fuente", "INDEC"), d["hora"]) if x))}</span></span></span>'
+                      for d in cal.get("semana", []))
         cont = (f'<span><span class="f-lbl">Hoy</span>{hoy}</span>'
                 f'<span class="f-sem"><span class="f-lbl">Esta semana</span>{sem or "sin publicaciones del INDEC que use el monitor"}</span>')
     return f'<div class="franja"><div class="wrap">{cont}<a class="f-cal" href="calendario/">Calendario →</a></div></div>'

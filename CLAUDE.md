@@ -147,7 +147,19 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
   "16:00 AR (14:00 ET)" con zoneinfo (horario de verano incluido); sin hora en la fuente, sin hora, nunca
   estimada. Un publicado se une con el anunciado del mismo organismo, tipo y fecha LOCAL. La caché conserva los
   anunciados pasados que la fuente ya no lista y acumula los publicados (el RSS es una ventana de 15). Siempre
-  visibles con rótulo del organismo, sin checkbox. El REM va sólo como evento (la decisión del B3 de no darle
+  visibles con rótulo del organismo, sin checkbox.
+  **Licitaciones del Tesoro** (`cal_tesoro.py`, organismo "Finanzas", pedido de Pedro del 11/11/2026): llamado,
+  licitación y liquidación. Anunciados: el "Cronograma de Licitaciones <año>" de la Secretaría de Finanzas
+  (argentina.gob.ar/economia/licitaciones -> `cronograma-<año>` -> "Descargar cronograma"), un PDF PINTADO: el tipo
+  sale del color de cada celda según la leyenda del propio PDF (falla ruidosamente si no cierra). Publicados: los
+  llamados y resultados de argentina.gob.ar/economia/finanzas/noticias. Los eventos llevan `ciclo` (fecha de la
+  licitación): el publicado se une con el anunciado del mismo ciclo y **manda lo publicado (decisión A de Pedro)**:
+  el llamado del 11/11/2026 salió el 05/11 aunque el PDF decía 09/11, y lo que dice el llamado ("(T)" y "(T+2)")
+  corrige la licitación y la liquidación de su ciclo. Título con `{ciclo}` y `link` por evento: su página; si no,
+  la publicada más reciente de su ciclo; si no, `url_general` (la página de licitaciones). Ese link va en el mail
+  (Hoy / Esta semana), la página del calendario y la franja de la home. Publicado de un ciclo que no está en el
+  cronograma: alerta semanal. El MAE (`mercado/licitaciones`) no tiene datos del Tesoro. Tests:
+  `tests/test_cal_tesoro.py` (fixtures reales `tests/fixtures/cal_tesoro_*`). El REM va sólo como evento (la decisión del B3 de no darle
   "Dato nuevo" no cambia). Tests: `tests/test_calendario_externo.py` (fixtures reales `tests/fixtures/cal_*`).
 - `frescura.py` — línea de frescura bajo el valor de cada card (Bloque B2, sólo `index.html`;
   `run.py` le pasa `frescura_ctx` a `dashboard.generar`): período del último dato, estado y próximo
@@ -176,16 +188,16 @@ interactivo** (GitHub Pages) y manda un **mail** con indicadores + noticias.
     por serie). Las líneas salen de `ctx.registro`, que llena `dashboard._linea_frescura`, con la
     misma redacción del dashboard (`frescura.texto_linea`). El mail (`mail_agenda.py`) NO recalcula
     nada; si la agenda no es de hoy, muestra "Calendario del INDEC no disponible hoy".
-  - Orden del mail: Dato nuevo → Hoy se publica → Esta semana → Indicadores → Datos demorados →
-    noticias. Sólo publicaciones del INDEC; sólo la pestaña macro; sin fila del REM (pendiente #10).
+  - Orden del mail: Dato nuevo → Hoy se publica → Esta semana → Indicadores → noticias. **"Datos
+    demorados" NO va nunca en el mail** (decisión de Pedro del 11/11/2026, ni con datos muy viejos): sigue en
+    `/calendario/#demorados` y en el aviso semanal de atrasados a Pedro (`agenda.avisar_atrasados`), que no cambia. Sólo publicaciones del INDEC; sólo la pestaña macro; sin fila del REM (pendiente #10).
   - "Dato nuevo": abre el PRIMER mail en que el período del dashboard supera a
     `periodos_anunciados` de `data/mail_enviado.json` (lo commitea `email_diario.yml`; se escribe sólo
     tras un envío exitoso, nunca en `--dry-run`). Sin esa clave se inicializa sin anunciar.
     `apertura` en `calendario.yaml`: sólo series que el dashboard ya calcula.
-  - Frecuencias (D1): atrasado en el mail todos los días (máx. 3 + "y N más") y aviso a Pedro semanal
-    por publicación (`agenda.avisar_atrasados`, estado en `data/frescura_estado.json`); rezago grave en
-    el mail el primer día hábil de la semana y el día en que una serie entra (`graves_vistos`), sin
-    aviso aparte.
+  - Frecuencias (D1): aviso a Pedro semanal por publicación atrasada (`agenda.avisar_atrasados`, estado en
+    `data/frescura_estado.json`). Atrasados y rezago grave ya no van en el mail diario (11/11/2026); la agenda
+    los sigue armando (`atrasados`, `graves`) para la página del calendario y ese aviso.
   - `verificar_calendario.py` corre ANTES de `run.py` en `coyuntura.yml` (`continue-on-error`).
   - Colores de las secciones nuevas: `tema.py` (paleta del Bloque C; el Bloque 2 de
     `PROMPT_mail_v3.md` debería leer de ahí). Tests: `tests/test_agenda.py`, `tests/test_mail_agenda.py`.

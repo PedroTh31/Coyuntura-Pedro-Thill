@@ -224,7 +224,7 @@ class TestActualizar(unittest.TestCase):
         futuro = [{"tipo": "decision", "fecha": "2026-12-17", "hora": None}]
         cache = {"anunciados": {"bce": {"bajado": "2026-11-01T06:00:00-03:00", "eventos": futuro}}, "publicados": {}}
         modulos = {"fed": FalsoOk(futuro, pubs=[]), "bce": FalsoMal(), "boj": FalsoOk(futuro),
-                   "boe": FalsoOk(futuro), "bcra": FalsoOk([])}
+                   "boe": FalsoOk(futuro), "bcra": FalsoOk([]), "tesoro": FalsoOk(futuro, pubs=[])}
         diarios, semanales, estado = X.actualizar(cache, CFG, date(2026, 11, 9), modulos)
         self.assertEqual(cache["anunciados"]["bce"]["eventos"], futuro)
         self.assertEqual(estado["bce"]["anunciados"]["fuente"], "cache")
@@ -234,10 +234,11 @@ class TestActualizar(unittest.TestCase):
     def test_publicados_fallidos_avisan(self):
         ev = [{"tipo": "decision", "fecha": "2026-12-09", "hora": None}]
         modulos = {k: FalsoOk(ev) for k in ("fed", "bce", "boj", "boe", "bcra")}
+        modulos["tesoro"] = FalsoOk(ev, pubs=[])
         cache = {"anunciados": {}, "publicados": {}}
         diarios, _, _ = X.actualizar(cache, CFG, date(2026, 11, 9), modulos)
         self.assertEqual([k for k, _ in diarios], ["externo:fed:publicados"])
-        self.assertEqual(cache["publicados"], {})
+        self.assertNotIn("fed", cache["publicados"])   # la descarga fallida de la FED no pisa nada
 
 
 # ---------------------------------------------------------------------------------------------
@@ -268,7 +269,7 @@ class TestAgenda(unittest.TestCase):
         self.assertEqual(cal["hoy"], [{"titulo": "Relevamiento de Expectativas de Mercado (REM)", "fuente": "BCRA",
                                        "hora": "", "externo": True}])
         self.assertEqual(cal["semana"], [{"dia": "jue 12/11", "hora": "16:00 AR (14:00 ET)",
-                                          "titulos": ["Decisión de tasa (FOMC)"]}])
+                                          "titulos": ["Decisión de tasa (FOMC)"], "urls": [None], "fuente": "FED"}])
         self.assertIsNone(cal["proxima"])   # la semana tiene ítems: sin "próxima" (igual que antes del F1)
 
     def test_sin_externos_no_cambia(self):
@@ -295,7 +296,8 @@ class TestRender(unittest.TestCase):
         self.assertIn('<a href="https://fed/m">Minutas del FOMC</a>', h)
         self.assertIn('<span class="org">BoE</span>Decisión de tasa (BoE) <span class="an">· anunciado</span>', h)
         self.assertIn("Las series diarias del BCRA, de MinEco y de mercados no tienen calendario oficial: no se les "
-                      "estima fecha. Las publicaciones del BCRA con fecha anunciada (IPOM, REM) figuran en el calendario.", h)
+                      "estima fecha. Las publicaciones del BCRA con fecha anunciada (IPOM, REM) figuran en el calendario, "
+                      "igual que las licitaciones del Tesoro", h)
         self.assertIn('<span class="org">FED</span><b>Decisión de tasa (FOMC)</b> · 16:00 AR (14:00 ET)', h)   # esta semana
         self.assertIn("https://www.federalreserve.gov/feeds/press_monetary.xml", h)
         self.assertNotIn('id="ver-otras-ext"', h)   # sin checkbox para los externos
@@ -308,7 +310,7 @@ class TestRender(unittest.TestCase):
         self.assertIn(">16:00 AR (14:00 ET)</td>", h)
         self.assertIn(">Decisión de tasa (FOMC)</td>", h)
         self.assertNotIn("Del INDEC", h)
-        self.assertIn("publicaciones del INDEC que actualizan el dashboard</span>", h)
+        self.assertIn("publicaciones del INDEC y de otros organismos</span>", h)
 
 
 if __name__ == "__main__":

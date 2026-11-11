@@ -516,21 +516,19 @@ def armar_html(indicadores, argentinas, internacionales, datos_al_envio=False, a
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:monospace;text-align:right"><b>{f["valor"]}</b> <span style="color:#999;font-size:11px">{f["unidad"]}</span></td>'
                       f'<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right;color:{color};font-family:monospace">{chg}</td></tr>')
 
-    # Bloque B3 (mail_agenda.py): Dato nuevo, Hoy se publica y Esta semana arriba; Datos demorados
-    # después de los indicadores. Sin agenda (None) el mail queda como antes.
+    # Bloque B3 (mail_agenda.py): Dato nuevo, Hoy se publica y Esta semana arriba. Sin agenda (None) el mail
+    # queda como antes. "Datos demorados" NO va en el mail (decisión de Pedro del 11/11/2026).
     if agenda is None:
-        feriado = apertura = calendario = avisos = ""
+        feriado = apertura = calendario = ""
     else:
         feriado = mail_agenda.html_feriado(agenda)
         apertura = mail_agenda.html_apertura(agenda, DASHBOARD_URL)
         calendario = mail_agenda.html_calendario(agenda)
-        avisos = mail_agenda.html_avisos(agenda, DASHBOARD_URL)
     return f"""<div style="font-family:system-ui,Arial,sans-serif;max-width:640px;margin:0 auto;color:{TEMA['texto']}">
       <h2 style="border-bottom:2px solid {TEMA['texto']};padding-bottom:8px">Coyuntura Argentina · {hoy}</h2>{aviso}{feriado}
       {apertura}{calendario}
       <h3 style="margin-top:22px">Indicadores clave <span style="color:#999;font-weight:400;font-size:13px">(variación vs. 7 días atrás)</span></h3>
       <table style="width:100%;border-collapse:collapse;font-size:14px">{filas_ind}</table>
-      {avisos}
       <h3 style="margin-top:26px">🇦🇷 Noticias argentinas</h3>
       {_render_noticias(argentinas)}
       <h3 style="margin-top:26px">🌎 Noticias internacionales</h3>
@@ -602,11 +600,11 @@ def datos_frescos():
 
 def registrar_envio(datos_al_envio, estado_agenda=None):
     """Se llama sólo después de un envío exitoso. `estado_agenda` (Bloque B3, mail_agenda.seleccionar):
-    periodos_anunciados / graves_vistos. Se mergea con lo anterior para no perderlo los días en que la
+    periodos_anunciados. Se mergea con lo anterior para no perderlo los días en que la
     agenda no está disponible."""
     ahora = datetime.now(ZONA_AR)
     previo = _leer_json(MAIL_ENVIADO)
-    datos = {k: previo[k] for k in ("periodos_anunciados", "graves_vistos") if k in previo}
+    datos = {k: previo[k] for k in ("periodos_anunciados",) if k in previo}
     datos.update(estado_agenda or {})
     datos.update({
         "fecha": ahora.date().isoformat(),
