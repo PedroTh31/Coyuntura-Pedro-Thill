@@ -21,6 +21,9 @@ concurrency:
   group: mail-diario
   cancel-in-progress: false
 
+env:
+  PYTHONUNBUFFERED: "1"   # log en vivo: si un paso se corta por timeout, se ve en qué fuente estaba
+
 jobs:
   enviar:
     runs-on: ubuntu-latest

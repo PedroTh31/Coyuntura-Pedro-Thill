@@ -1001,6 +1001,12 @@ class IndecAuthError(RuntimeError):
     """401/403 de la API del INDEC (token faltante, inválido o vencido). No se reintenta."""
 
 
+class IndecRedError(RuntimeError):
+    """La API del INDEC no respondió (timeouts, 429/5xx o error de red) tras todos los reintentos. El
+    resolver deja de pedirle a la API por el resto de la corrida (11/11/2026: con la API colgada, cada
+    serie gastaba ~2,75 min en reintentos y la corrida pasaba los 30 min del workflow)."""
+
+
 class IndecIncompletoError(RuntimeError):
     """La API devolvió menos (o más) filas que el total informado por count=exact."""
 
@@ -1084,7 +1090,7 @@ def _indec_get(tabla: str, params: dict, token: str) -> requests.Response:
                 return r
         if intento < INDEC_REINTENTOS - 1:
             time.sleep(2 ** intento)
-    raise RuntimeError(f"API INDEC tabla={tabla}: falló tras {INDEC_REINTENTOS} intentos ({ultimo})")
+    raise IndecRedError(f"API INDEC tabla={tabla}: falló tras {INDEC_REINTENTOS} intentos ({ultimo})")
 
 
 def fetch_indec_tabla(tabla: str, filtros: dict | None = None, select: list[str] | None = None) -> list[dict]:

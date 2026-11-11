@@ -27,7 +27,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 from fetchers import (fetch_indec_api, fetch_datos_gob, fetch_argentinadatos, datos_gob_filas,
-                      indec_token_exp, IndecAuthError)
+                      indec_token_exp, IndecAuthError, IndecRedError)
 
 RAIZ = Path(__file__).resolve().parent
 ESTADO = RAIZ / "data" / "indec_estado.json"
@@ -61,6 +61,7 @@ class ResolverIndec:
         self.start = start
         self._memo: dict[str, tuple[pd.DataFrame, dict]] = {}
         self.auth_error: str | None = None        # 1er 401/403: el resto de la corrida va directo al fallback
+        self.red_error: str | None = None         # 1ra API caída tras reintentos: ídem (no reintentar serie por serie)
         self.por_indicador: dict[str, list[dict]] = {}
         self.por_clave: dict[str, dict] = {}       # clave (id o nombre) -> uso de esta corrida
         self._actual: list[dict] | None = None
@@ -95,6 +96,8 @@ class ResolverIndec:
         motivo = None
         if self.auth_error:
             motivo = f"autenticación ({self.auth_error})"
+        elif self.red_error:
+            motivo = f"API sin respuesta en esta corrida, no se reintenta ({self.red_error})"
         else:
             try:
                 df = fetch_indec_api(spec["tabla"], spec["filtros"], columna_valor=spec.get("columna", "valor"),
@@ -109,6 +112,9 @@ class ResolverIndec:
             except IndecAuthError as e:
                 self.auth_error = str(e)
                 motivo = f"autenticación ({e})"
+            except IndecRedError as e:
+                self.red_error = str(e)
+                motivo = f"{type(e).__name__}: {e}"
             except Exception as e:  # error de red tras reintentos, filas != total, mapeo ambiguo...
                 motivo = f"{type(e).__name__}: {e}"
         print(f"  [indec_api] {clave}: la API falló ({motivo}); se usa el fallback ({etiqueta_fallback})")
@@ -207,7 +213,7 @@ def enviar_alerta(asunto: str, cuerpo: str, titulo: str = "Alerta INDEC") -> boo
     msg = MIMEText(cuerpo, "plain", "utf-8")
     msg["Subject"], msg["From"], msg["To"] = asunto, user, destino
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ssl.create_default_context()) as srv:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ssl.create_default_context(), timeout=60) as srv:
             srv.login(user, pw)
             srv.sendmail(user, [destino], msg.as_string())
         print(f"  Alerta enviada a {destino}: {asunto}")

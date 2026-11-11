@@ -11,6 +11,8 @@ Flujo:
 import dataclasses
 import json
 import os
+import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -642,6 +644,9 @@ def chequear_cambio_escala(previo: pd.DataFrame, nuevos: pd.DataFrame):
 
 def main():
     global _RESOLVER, _RESOLVER_DG
+    # En Actions la salida va a un pipe: sin esto, el log queda en el buffer y una corrida cortada por
+    # timeout no muestra en qué fuente se colgó (11/11/2026).
+    sys.stdout.reconfigure(line_buffering=True)
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     start = cfg.get("start_date")
     _RESOLVER_DG = fuentes_datos_gob.ResolverDatosGob(cfg.get("fallback_csv_excluir"))
@@ -671,6 +676,8 @@ def main():
         conteo["falla"] += 1  # se revierte abajo si la serie llega bien
         _RESOLVER.empezar(nombre)
         _RESOLVER_DG.empezar(nombre)
+        print(f"  [..]     {nombre}  <- {_fuente_de(ind)}")
+        t0 = time.time()
         try:
             if "calculo" in ind:
                 serie = _calcular(ind, start)
@@ -711,11 +718,11 @@ def main():
             _RESOLVER_DG.terminar(ok=True)
             conteo["falla"] -= 1
             conteo["ok"] += 1
-            print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()})")
+            print(f"  [ok]     {nombre}  ({len(serie)} obs, ult. {serie['fecha'].max().date()}, {time.time() - t0:.1f}s)")
         except Exception as e:
             _RESOLVER.terminar(ok=False)
             _RESOLVER_DG.terminar(ok=False)
-            _avisar(nombre, f"error al traer/calcular la serie: {e}")
+            _avisar(nombre, f"error al traer/calcular la serie ({time.time() - t0:.1f}s): {e}")
             problemas.append((nombre, f"error: {e}"))
 
     if problemas:

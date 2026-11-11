@@ -15,7 +15,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import fuentes_indec as FI  # noqa: E402
-from fetchers import IndecAuthError  # noqa: E402
+from fetchers import IndecAuthError, IndecRedError  # noqa: E402
 
 SPEC = {"tabla": "ipc_nacional", "filtros": {"region": "Nacional", "codigo": "0", "tipo_de_indicador": "Indice"},
         "variaciones": {"mensual": "v_m"}}
@@ -58,6 +58,28 @@ class TestResolver(unittest.TestCase):
             r.serie_dg("45.2_D")
         self.assertEqual(api.call_count, 1)
         self.assertIn("401", r.auth_error)
+
+    def test_api_caida_corta_la_api_para_el_resto_de_la_corrida(self):
+        # 11/11/2026: la API daba ReadTimeout y cada serie volvía a gastar 5 reintentos (~2,75 min c/u)
+        r = FI.ResolverIndec(EQ, None)
+        caida = IndecRedError("API INDEC tabla=ipc_nacional: falló tras 5 intentos (error de red (ReadTimeout))")
+        with mock.patch.object(FI, "fetch_indec_api", side_effect=caida) as api, \
+                mock.patch.object(FI, "fetch_datos_gob", return_value=df(0.07)):
+            r.empezar("A"); r.serie_dg("148.3_X"); r.terminar(True)
+            r.empezar("B"); r.serie_dg("45.2_D"); r.terminar(True)
+        self.assertEqual(api.call_count, 1)
+        self.assertIn("ReadTimeout", r.red_error)
+        self.assertEqual(r.por_indicador["B"][0]["fuente"], FI.FALLBACK_DG)
+        self.assertIn("no se reintenta", r.por_indicador["B"][0]["motivo"])
+
+    def test_error_no_de_red_no_corta_la_api(self):
+        r = FI.ResolverIndec(EQ, None)
+        with mock.patch.object(FI, "fetch_indec_api", side_effect=RuntimeError("HTTP 400")) as api, \
+                mock.patch.object(FI, "fetch_datos_gob", return_value=df(0.07)):
+            r.serie_dg("148.3_X")
+            r.serie_dg("45.2_D")
+        self.assertEqual(api.call_count, 2)
+        self.assertIsNone(r.red_error)
 
     def test_id_sin_equivalencia_va_directo_a_datos_gob(self):
         r = FI.ResolverIndec(EQ, None)

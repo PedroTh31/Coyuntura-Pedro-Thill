@@ -23,6 +23,7 @@ from zoneinfo import ZoneInfo
 from pathlib import Path
 from urllib.parse import urlparse
 import pandas as pd
+import requests
 import yaml
 
 import mail_agenda
@@ -331,7 +332,9 @@ def _recolectar(feeds, es_argentina):
 
     for rank, url in enumerate(feeds):
         try:
-            procesar(feedparser.parse(url), rank)
+            # feedparser.parse(url) no tiene timeout: se baja con requests y se parsea el contenido
+            r = requests.get(url, headers={"User-Agent": "coyuntura-tracker/1.0 (uso academico)"}, timeout=20)
+            procesar(feedparser.parse(r.content), rank)
         except Exception:
             continue
 
@@ -554,7 +557,7 @@ def enviar(html):
     msg["To"] = to
     msg.attach(MIMEText(html, "html", "utf-8"))
     ctx = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ctx) as srv:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ctx, timeout=60) as srv:
         srv.login(user, pw)
         srv.sendmail(user, destinatarios, msg.as_string())
     print(f"Mail enviado a {to}")
