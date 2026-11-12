@@ -208,6 +208,13 @@
       "fallbacks": [],
       "fecha": "2026-11-12",
       "hora": "06:35:13"
+    },
+    {
+      "disparo": "schedule",
+      "error_autenticacion": false,
+      "fallbacks": [],
+      "fecha": "2026-11-12",
+      "hora": "14:52:39"
     }
   ],
   "fallback_dg_vacios": [
