@@ -1,7 +1,7 @@
 {
  "anunciados": {
   "bce": {
-   "bajado": "2026-11-11T15:15:21-03:00",
+   "bajado": "2026-11-12T06:30:38-03:00",
    "eventos": [
     {
      "fecha": "2026-12-17",
@@ -91,7 +91,7 @@
    ]
   },
   "bcra": {
-   "bajado": "2026-11-11T15:15:21-03:00",
+   "bajado": "2026-11-12T06:30:38-03:00",
    "eventos": [
     {
      "fecha": "2026-01-07",
@@ -166,7 +166,7 @@
    ]
   },
   "boe": {
-   "bajado": "2026-11-11T15:15:21-03:00",
+   "bajado": "2026-11-12T06:30:38-03:00",
    "eventos": [
     {
      "fecha": "2026-02-05",
@@ -251,7 +251,7 @@
    ]
   },
   "boj": {
-   "bajado": "2026-11-11T15:15:21-03:00",
+   "bajado": "2026-11-12T06:30:38-03:00",
    "eventos": [
     {
      "fecha": "2026-01-23",
@@ -336,7 +336,7 @@
    ]
   },
   "fed": {
-   "bajado": "2026-11-11T15:15:21-03:00",
+   "bajado": "2026-11-12T06:30:38-03:00",
    "eventos": [
     {
      "fecha": "2025-01-29",
@@ -459,11 +459,430 @@
      "tipo": "decision"
     }
    ]
+  },
+  "tesoro": {
+   "bajado": "2026-11-12T06:30:38-03:00",
+   "eventos": [
+    {
+     "ciclo": "2026-01-14",
+     "fecha": "2026-01-12",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-01-14",
+     "fecha": "2026-01-14",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-01-14",
+     "fecha": "2026-01-16",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-01-28",
+     "fecha": "2026-01-26",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-01-28",
+     "fecha": "2026-01-28",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-01-28",
+     "fecha": "2026-01-30",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-02-11",
+     "fecha": "2026-02-09",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-02-11",
+     "fecha": "2026-02-11",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-02-11",
+     "fecha": "2026-02-13",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-02-25",
+     "fecha": "2026-02-23",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-02-25",
+     "fecha": "2026-02-25",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-02-25",
+     "fecha": "2026-02-27",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-03-12",
+     "fecha": "2026-03-10",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-03-12",
+     "fecha": "2026-03-12",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-03-12",
+     "fecha": "2026-03-16",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-03-27",
+     "fecha": "2026-03-25",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-03-27",
+     "fecha": "2026-03-27",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-03-27",
+     "fecha": "2026-03-31",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-04-15",
+     "fecha": "2026-04-13",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-04-15",
+     "fecha": "2026-04-15",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-04-15",
+     "fecha": "2026-04-17",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-04-28",
+     "fecha": "2026-04-24",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-04-28",
+     "fecha": "2026-04-28",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-04-28",
+     "fecha": "2026-04-30",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-05-13",
+     "fecha": "2026-05-11",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-05-13",
+     "fecha": "2026-05-13",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-05-13",
+     "fecha": "2026-05-15",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-05-27",
+     "fecha": "2026-05-22",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-05-27",
+     "fecha": "2026-05-27",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-05-27",
+     "fecha": "2026-05-29",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-06-10",
+     "fecha": "2026-06-08",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-06-10",
+     "fecha": "2026-06-10",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-06-10",
+     "fecha": "2026-06-12",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-06-26",
+     "fecha": "2026-06-24",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-06-26",
+     "fecha": "2026-06-26",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-06-26",
+     "fecha": "2026-06-30",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-07-15",
+     "fecha": "2026-07-13",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-07-15",
+     "fecha": "2026-07-15",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-07-15",
+     "fecha": "2026-07-17",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-07-29",
+     "fecha": "2026-07-27",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-07-29",
+     "fecha": "2026-07-29",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-07-29",
+     "fecha": "2026-07-31",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-08-12",
+     "fecha": "2026-08-10",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-08-12",
+     "fecha": "2026-08-12",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-08-12",
+     "fecha": "2026-08-14",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-08-27",
+     "fecha": "2026-08-25",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-08-27",
+     "fecha": "2026-08-27",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-08-27",
+     "fecha": "2026-08-31",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-09-11",
+     "fecha": "2026-09-09",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-09-11",
+     "fecha": "2026-09-11",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-09-11",
+     "fecha": "2026-09-15",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-09-28",
+     "fecha": "2026-09-24",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-09-28",
+     "fecha": "2026-09-28",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-09-28",
+     "fecha": "2026-09-30",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-10-14",
+     "fecha": "2026-10-09",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-10-14",
+     "fecha": "2026-10-14",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-10-14",
+     "fecha": "2026-10-16",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-10-28",
+     "fecha": "2026-10-26",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-10-28",
+     "fecha": "2026-10-28",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-10-28",
+     "fecha": "2026-10-30",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-11-11",
+     "fecha": "2026-11-09",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-11-11",
+     "fecha": "2026-11-11",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-11-11",
+     "fecha": "2026-11-13",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-11-26",
+     "fecha": "2026-11-24",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-11-26",
+     "fecha": "2026-11-26",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-11-26",
+     "fecha": "2026-11-30",
+     "hora": null,
+     "tipo": "liquidacion"
+    },
+    {
+     "ciclo": "2026-12-11",
+     "fecha": "2026-12-09",
+     "hora": null,
+     "tipo": "llamado"
+    },
+    {
+     "ciclo": "2026-12-11",
+     "fecha": "2026-12-11",
+     "hora": null,
+     "tipo": "licitacion"
+    },
+    {
+     "ciclo": "2026-12-11",
+     "fecha": "2026-12-15",
+     "hora": null,
+     "tipo": "liquidacion"
+    }
+   ]
   }
  },
  "publicados": {
   "fed": {
-   "bajado": "2026-11-11T15:15:21-03:00",
+   "bajado": "2026-11-12T06:30:38-03:00",
    "items": [
     {
      "fecha": "2026-05-20",
@@ -520,6 +939,99 @@
      "tipo": "decision",
      "titulo_fuente": "Federal Reserve issues FOMC statement",
      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
+    }
+   ]
+  },
+  "tesoro": {
+   "bajado": "2026-11-12T06:30:38-03:00",
+   "items": [
+    {
+     "ciclo": "2026-09-11",
+     "fecha": "2026-09-11",
+     "hora": null,
+     "tipo": "licitacion",
+     "titulo_fuente": "Resultado de la licitación por efectivo de instrumentos del Tesoro Nacional denominados en pesos y dólar linked",
+     "url": "https://www.argentina.gob.ar/noticias/resultado-de-la-licitacion-por-efectivo-de-instrumentos-del-tesoro-nacional-denominados-12"
+    },
+    {
+     "ciclo": "2026-09-28",
+     "fecha": "2026-09-24",
+     "fechas_ciclo": {
+      "licitacion": "2026-09-28",
+      "liquidacion": "2026-09-30"
+     },
+     "hora": null,
+     "tipo": "llamado",
+     "titulo_fuente": "Llamado a licitación de instrumentos del Tesoro Nacional denominados en pesos y en dólares estadounidenses",
+     "url": "https://www.argentina.gob.ar/noticias/llamado-licitacion-de-instrumentos-del-tesoro-nacional-denominados-en-pesos-y-en-dolares-13"
+    },
+    {
+     "ciclo": "2026-09-28",
+     "fecha": "2026-09-28",
+     "hora": null,
+     "tipo": "licitacion",
+     "titulo_fuente": "Resultado de la licitación por efectivo de instrumentos del Tesoro Nacional denominados en pesos y dólar linked",
+     "url": "https://www.argentina.gob.ar/noticias/resultado-de-la-licitacion-por-efectivo-de-instrumentos-del-tesoro-nacional-denominados-13"
+    },
+    {
+     "ciclo": "2026-10-14",
+     "fecha": "2026-10-09",
+     "fechas_ciclo": {
+      "licitacion": "2026-10-14",
+      "liquidacion": "2026-10-16"
+     },
+     "hora": null,
+     "tipo": "llamado",
+     "titulo_fuente": "Llamado a licitación de instrumentos del Tesoro Nacional denominados en pesos y en dólares estadounidenses",
+     "url": "https://www.argentina.gob.ar/noticias/llamado-licitacion-de-instrumentos-del-tesoro-nacional-denominados-en-pesos-y-en-dolares-14"
+    },
+    {
+     "ciclo": "2026-10-14",
+     "fecha": "2026-10-14",
+     "hora": null,
+     "tipo": "licitacion",
+     "titulo_fuente": "Resultado de la licitación por efectivo de instrumentos del Tesoro Nacional denominados en pesos y dólares estadounidenses",
+     "url": "https://www.argentina.gob.ar/noticias/resultado-de-la-licitacion-por-efectivo-de-instrumentos-del-tesoro-nacional-denominados-15"
+    },
+    {
+     "ciclo": "2026-10-28",
+     "fecha": "2026-10-26",
+     "fechas_ciclo": {
+      "licitacion": "2026-10-28",
+      "liquidacion": "2026-10-30"
+     },
+     "hora": null,
+     "tipo": "llamado",
+     "titulo_fuente": "Llamado a licitación de instrumentos del Tesoro Nacional denominados en pesos y en dólares estadounidenses",
+     "url": "https://www.argentina.gob.ar/noticias/llamado-licitacion-de-instrumentos-del-tesoro-nacional-denominados-en-pesos-y-en-dolares-15"
+    },
+    {
+     "ciclo": "2026-10-28",
+     "fecha": "2026-10-28",
+     "hora": null,
+     "tipo": "licitacion",
+     "titulo_fuente": "Resultado de la licitación por efectivo de instrumentos del Tesoro Nacional denominados en pesos y dólares estadounidenses",
+     "url": "https://www.argentina.gob.ar/noticias/resultado-de-la-licitacion-por-efectivo-de-instrumentos-del-tesoro-nacional-denominados-16"
+    },
+    {
+     "ciclo": "2026-11-11",
+     "fecha": "2026-11-05",
+     "fechas_ciclo": {
+      "licitacion": "2026-11-11",
+      "liquidacion": "2026-11-13"
+     },
+     "hora": null,
+     "tipo": "llamado",
+     "titulo_fuente": "Llamado a licitación de instrumentos del Tesoro Nacional denominados en pesos y en dólares estadounidenses",
+     "url": "https://www.argentina.gob.ar/noticias/llamado-licitacion-de-instrumentos-del-tesoro-nacional-denominados-en-pesos-y-en-dolares-16"
+    },
+    {
+     "ciclo": "2026-11-11",
+     "fecha": "2026-11-11",
+     "hora": null,
+     "tipo": "licitacion",
+     "titulo_fuente": "Resultado de la licitación por efectivo de instrumentos del Tesoro Nacional denominados en pesos y dólares estadounidenses",
+     "url": "https://www.argentina.gob.ar/noticias/resultado-de-la-licitacion-por-efectivo-de-instrumentos-del-tesoro-nacional-denominados-17"
     }
    ]
   }
