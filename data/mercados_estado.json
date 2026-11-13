@@ -2,22 +2,22 @@
   "activas": [],
   "avisos": {},
   "ultima": {
-    "fecha": "2026-11-12",
+    "fecha": "2026-11-13",
     "resumen": {
       "bono:AL30": {
         "desde": "2026-07-10",
-        "filas": 84,
-        "ultimo": "2026-11-11"
+        "filas": 85,
+        "ultimo": "2026-11-12"
       },
       "bono:GD30": {
         "desde": "2026-07-10",
-        "filas": 84,
-        "ultimo": "2026-11-11"
+        "filas": 85,
+        "ultimo": "2026-11-12"
       },
       "bono:GD35": {
         "desde": "2026-07-10",
-        "filas": 84,
-        "ultimo": "2026-11-11"
+        "filas": 85,
+        "ultimo": "2026-11-12"
       },
       "extra:Dólar futuro (DDF)": {
         "estado": "ok"
@@ -27,19 +27,19 @@
       },
       "ust:1 Yr": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-10"
+        "ultimo": "2026-11-12"
       },
       "ust:2 Yr": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-10"
+        "ultimo": "2026-11-12"
       },
       "ust:3 Yr": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-10"
+        "ultimo": "2026-11-12"
       },
       "ust:6 Mo": {
         "fuente": "tesoro",
-        "ultimo": "2026-11-10"
+        "ultimo": "2026-11-12"
       }
     }
   }

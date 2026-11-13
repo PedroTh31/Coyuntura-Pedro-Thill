@@ -5,14 +5,14 @@
     "pdf_url": "https://www.argentina.gob.ar/sites/default/files/ripte_agosto_2026-mdch.pdf"
   },
   "estado": {
-    "avisos": {},
-    "racha": 0,
+    "avisos": {
+      "ripte:error": "2026-11-13"
+    },
+    "racha": 1,
     "ultima": {
-      "fecha": "2026-11-12",
-      "fuente": "pdf_cache",
-      "mes": "2026-08",
-      "motivo": null,
-      "pdf_url": "https://www.argentina.gob.ar/sites/default/files/ripte_agosto_2026-mdch.pdf"
+      "fecha": "2026-11-13",
+      "fuente": "error",
+      "motivo": "RIPTE (Secretaría de Trabajo): fallaron el PDF (PDF: no hay tabla válida en la página para el control cruzado) y la tabla (tabla: la variación publicada de 2026-08 (2.0) no coincide con la calculada desde los montos (3.92))"
     }
   }
 }

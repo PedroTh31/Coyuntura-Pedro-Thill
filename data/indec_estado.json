@@ -1,18 +1,11 @@
 {
   "avisos": {
-    "vacio:11.3_TAC_2004_M_60": "2026-11-06",
-    "vacio:11.3_VMATC_2004_M_12": "2026-11-06",
-    "vacio:146.3_IRECREANAL_DICI_M_31": "2026-11-06",
-    "vacio:146.3_IRESTAUNAL_DICI_M_33": "2026-11-06"
+    "vacio:11.3_TAC_2004_M_60": "2026-11-13",
+    "vacio:11.3_VMATC_2004_M_12": "2026-11-13",
+    "vacio:146.3_IRECREANAL_DICI_M_31": "2026-11-13",
+    "vacio:146.3_IRESTAUNAL_DICI_M_33": "2026-11-13"
   },
   "corridas": [
-    {
-      "disparo": "workflow_dispatch",
-      "error_autenticacion": false,
-      "fallbacks": [],
-      "fecha": "2026-11-06",
-      "hora": "08:36:38"
-    },
     {
       "disparo": "schedule",
       "error_autenticacion": false,
@@ -215,6 +208,13 @@
       "fallbacks": [],
       "fecha": "2026-11-12",
       "hora": "14:52:39"
+    },
+    {
+      "disparo": "workflow_dispatch",
+      "error_autenticacion": false,
+      "fallbacks": [],
+      "fecha": "2026-11-13",
+      "hora": "06:35:07"
     }
   ],
   "fallback_dg_vacios": [
