@@ -1,14 +1,14 @@
 {
   "periodos_anunciados": {
-    "ipc": "2026-09",
+    "ipc": "2026-10",
     "salarios": "2026-08",
     "emae": "2026-08",
     "ica": "2026-09",
     "mercado_trabajo": "2026Q2",
     "informe_avance": "2026Q2"
   },
-  "fecha": "2026-11-12",
-  "hora_envio": "07:10:33",
+  "fecha": "2026-11-13",
+  "hora_envio": "07:10:34",
   "zona": "America/Argentina/Buenos_Aires",
   "disparo": "workflow_dispatch",
   "datos_al_momento_del_envio": false
