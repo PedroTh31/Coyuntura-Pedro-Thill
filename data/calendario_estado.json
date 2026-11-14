@@ -8,94 +8,94 @@
   "externos": {
     "bce": {
       "anunciados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "eventos": 17,
         "fuente": "pagina"
       }
     },
     "bcra": {
       "anunciados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "eventos": 14,
         "fuente": "pagina"
       }
     },
     "boe": {
       "anunciados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "eventos": 16,
         "fuente": "pagina"
       }
     },
     "boj": {
       "anunciados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "eventos": 16,
         "fuente": "pagina"
       }
     },
     "fed": {
       "anunciados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "eventos": 24,
         "fuente": "pagina"
       },
       "publicados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "fuente": "feed",
         "items": 7
       }
     },
     "tesoro": {
       "anunciados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "eventos": 69,
         "fuente": "pagina"
       },
       "publicados": {
-        "bajado": "2026-11-13T14:25:48-03:00",
+        "bajado": "2026-11-14T06:30:38-03:00",
         "fuente": "feed",
-        "items": 9
+        "items": 8
       }
     }
   },
   "meses": {
     "2026-07": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2026-08": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2026-09": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2026-10": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2026-11": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2026-12": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2027-01": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2027-02": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     },
     "2027-03": {
-      "bajado": "2026-11-13T14:25:37-03:00",
+      "bajado": "2026-11-14T06:30:25-03:00",
       "fuente": "endpoint"
     }
   },
-  "ultima_verificacion": "2026-11-13T14:25:51-03:00"
+  "ultima_verificacion": "2026-11-14T06:30:41-03:00"
 }

@@ -11,13 +11,6 @@
       "error_autenticacion": false,
       "fallbacks": [],
       "fecha": "2026-11-07",
-      "hora": "06:36:34"
-    },
-    {
-      "disparo": "workflow_dispatch",
-      "error_autenticacion": false,
-      "fallbacks": [],
-      "fecha": "2026-11-07",
       "hora": "12:18:01"
     },
     {
@@ -215,14 +208,16 @@
       "fallbacks": [],
       "fecha": "2026-11-13",
       "hora": "14:29:56"
+    },
+    {
+      "disparo": "workflow_dispatch",
+      "error_autenticacion": false,
+      "fallbacks": [],
+      "fecha": "2026-11-14",
+      "hora": "06:34:54"
     }
   ],
-  "fallback_dg_vacios": [
-    "11.3_TAC_2004_M_60",
-    "11.3_VMATC_2004_M_12",
-    "146.3_IRECREANAL_DICI_M_31",
-    "146.3_IRESTAUNAL_DICI_M_33"
-  ],
+  "fallback_dg_vacios": [],
   "rachas_fallback": {
     "11.3_AGCS_2004_M_41": 0,
     "11.3_CMMR_2004_M_10": 0,

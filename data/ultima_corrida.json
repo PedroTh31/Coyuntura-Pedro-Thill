@@ -1,9 +1,9 @@
 {
-  "fecha": "2026-11-13",
-  "hora": "14:30:41",
+  "fecha": "2026-11-14",
+  "hora": "06:35:36",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "ok",
-  "disparo": "schedule",
+  "disparo": "workflow_dispatch",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
@@ -478,118 +478,13 @@
     ]
   },
   "datos_gob_csv": {
-    "324.1_A_AGRICULTREG__58": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Agricultura, ganadería y silvicultura"
-      ],
-      "racha": 16
-    },
-    "324.1_B_PESCA_PUADO__45": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Pesca"
-      ],
-      "racha": 16
-    },
-    "324.1_C_EXPLOTACREG__59": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Explotación de minas y canteras"
-      ],
-      "racha": 16
-    },
-    "324.1_D_INDUSTRIREG__56": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Industria manufacturera"
-      ],
-      "racha": 16
-    },
-    "324.1_E_ELECT_GAADO__54": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Electricidad, gas y agua"
-      ],
-      "racha": 16
-    },
-    "324.1_F_CONSTRUCADO__52": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Construcción"
-      ],
-      "racha": 16
-    },
-    "324.1_G_COMERCIOADO__48": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Comercio mayorista y minorista"
-      ],
-      "racha": 16
-    },
-    "324.1_H_HOTELES_ADO__60": {
-      "motivo": "la API devolvió 0 filas",
-      "indicadores": [
-        "Empleo registrado: Hoteles y restaurantes"
-      ],
-      "racha": 16
-    },
-    "324.1_I_TRANSPORREG__58": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Transporte y comunicaciones"
-      ],
-      "racha": 16
-    },
-    "324.1_J_INTERMEDADO__65": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Intermediación financiera"
-      ],
-      "racha": 16
-    },
-    "324.1_K_ACT_INMOADO__57": {
-      "motivo": "la API devolvió 0 filas",
-      "indicadores": [
-        "Empleo registrado: Inmobiliarias y empresariales"
-      ],
-      "racha": 16
-    },
-    "324.1_L_ADM_PUB_REG__59": {
-      "motivo": "la API devolvió 26 de 41 filas (historia cortada)",
-      "indicadores": [
-        "Empleo registrado: Administración pública y defensa"
-      ],
-      "racha": 16
-    },
-    "324.1_M_ENSENIANZADO__49": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Enseñanza"
-      ],
-      "racha": 16
-    },
-    "324.1_N_SERVICIOREG__57": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Servicios sociales y de salud"
-      ],
-      "racha": 16
-    },
-    "324.1_O_OTRAS_ACREG__51": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-04, API hasta 2026-01)",
-      "indicadores": [
-        "Empleo registrado: Otros servicios comunitarios"
-      ],
-      "racha": 16
-    },
     "331.1_OTRAS_OPERDES__39": {
       "motivo": "la API devolvió 160 de 281 filas (historia cortada)",
       "indicadores": [
         "Transferencia de utilidades del BCRA",
         "Transferencia de utilidades del BCRA (pesos constantes)"
       ],
-      "racha": 16
+      "racha": 17
     },
     "331.1_OTRAS_OPERIOS__58": {
       "motivo": "coherencia: 331.1_OTRAS_OPERDES__39, de la misma distribución, sale del CSV en la card 'Asistencia monetaria del BCRA al Tesoro'",
@@ -597,191 +492,19 @@
         "Adelantos transitorios al Tesoro",
         "Adelantos transitorios al Tesoro (pesos constantes)"
       ],
-      "racha": 16
-    },
-    "379.9_GTOS_CORR_017__40_84": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Intereses netos de deuda pública"
-      ],
-      "racha": 16
-    },
-    "379.9_RESULTADO_017__18_38": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Resultado financiero (Sector Público Nacional)"
-      ],
-      "racha": 16
-    },
-    "379.9_RESULTADO_017__31_73": {
-      "motivo": "la API devolvió 0 filas",
-      "indicadores": [
-        "Resultado primario (Sector Público Nacional)",
-        "Resultado primario acumulado 12 meses"
-      ],
-      "racha": 16
+      "racha": 17
     },
     "52.2_ASDJ_0_0_37": {
       "motivo": "la API devolvió 91 de 93 filas (historia cortada)",
       "indicadores": [
         "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"
       ],
-      "racha": 16
-    },
-    "74.3_IECE_0_M_35": {
-      "motivo": "la API devolvió 0 filas",
-      "indicadores": [
-        "Balance comercial energético",
-        "Combustibles y energía"
-      ],
-      "racha": 16
-    },
-    "74.3_IEMOA_0_M_48": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Manufacturas de origen agropecuario (MOA)"
-      ],
-      "racha": 16
-    },
-    "74.3_IEMOI_0_M_46": {
-      "motivo": "la API devolvió 0 filas",
-      "indicadores": [
-        "Manufacturas de origen industrial (MOI)"
-      ],
-      "racha": 16
-    },
-    "74.3_IEPP_0_M_35": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Productos primarios"
-      ],
-      "racha": 16
-    },
-    "74.3_IET_0_M_16": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Exportaciones totales"
-      ],
-      "racha": 16
-    },
-    "74.3_IIBCA_0_M_32": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Bienes de capital"
-      ],
-      "racha": 16
-    },
-    "74.3_IIBCO_0_M_32": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Bienes de consumo"
-      ],
-      "racha": 16
-    },
-    "74.3_IIBI_0_M_36": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Bienes intermedios"
-      ],
-      "racha": 16
-    },
-    "74.3_IICL_0_M_42": {
-      "motivo": "la API devolvió 138 de 416 filas (historia cortada)",
-      "indicadores": [
-        "Balance comercial energético",
-        "Combustibles y lubricantes"
-      ],
-      "racha": 16
-    },
-    "74.3_IIPABC_0_M_50": {
-      "motivo": "la API devolvió 0 filas",
-      "indicadores": [
-        "Piezas y accesorios para bienes de capital"
-      ],
-      "racha": 16
-    },
-    "74.3_IIR_0_M_23": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Resto (importaciones por uso)"
-      ],
-      "racha": 16
-    },
-    "74.3_IIT_0_M_25": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Importaciones totales"
-      ],
-      "racha": 16
-    },
-    "74.3_IIVAP_0_M_49": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Vehículos automotores de pasajeros"
-      ],
-      "racha": 16
-    },
-    "74.3_ISC_0_M_19": {
-      "motivo": "los últimos 12 períodos difieren del CSV un 1.3% (tolerancia 1%)",
-      "indicadores": [
-        "Saldo comercial"
-      ],
-      "racha": 16
-    },
-    "90.1_AMTM3_0_0_31": {
-      "motivo": "la API devolvió 149 de 284 filas (historia cortada)",
-      "indicadores": [
-        "M3 (agregado amplio)"
-      ],
-      "racha": 16
-    },
-    "90.1_BMCMP_0_0_44": {
-      "motivo": "los últimos 12 períodos difieren del CSV un 61.9% (tolerancia 1%)",
-      "indicadores": [
-        "M1 (circulante + cta. cte.)"
-      ],
-      "racha": 16
-    },
-    "90.1_DCCT_0_0_32": {
-      "motivo": "la API devolvió 110 de 284 filas (historia cortada)",
-      "indicadores": [
-        "M1 (circulante + cta. cte.)"
-      ],
-      "racha": 16
-    },
-    "91.1_DETALLE_PRDOC_0_0_47": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Préstamos a Familias (Consumo + Garantía real)"
-      ],
-      "racha": 16
-    },
-    "91.1_PEFPC_0_0_35": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Préstamos al sector privado",
-        "Préstamos al sector privado, variación % real mensual"
-      ],
-      "racha": 16
-    },
-    "91.1_PEFPC_0_0_41": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Préstamos a Familias (Consumo + Garantía real)"
-      ],
-      "racha": 16
-    },
-    "91.1_PEFPD_0_0_45": {
-      "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-09, API hasta 2026-08)",
-      "indicadores": [
-        "Préstamos a Empresas (Comerciales)"
-      ],
-      "racha": 16
+      "racha": 17
     }
   },
   "datos_gob_csv_descartados": {},
   "trabajo_ripte": {
-    "fuente": "pdf",
+    "fuente": "pdf_cache",
     "motivo": null,
     "mes": "2026-09",
     "pdf_url": "https://www.argentina.gob.ar/sites/default/files/ripte_septiembre_2026-mdch.pdf",
@@ -789,35 +512,35 @@
   },
   "mercados": {
     "bono:AL30": {
-      "filas": 85,
+      "filas": 86,
       "desde": "2026-07-10",
-      "ultimo": "2026-11-12"
+      "ultimo": "2026-11-13"
     },
     "bono:GD30": {
-      "filas": 85,
+      "filas": 86,
       "desde": "2026-07-10",
-      "ultimo": "2026-11-12"
+      "ultimo": "2026-11-13"
     },
     "bono:GD35": {
-      "filas": 85,
+      "filas": 86,
       "desde": "2026-07-10",
-      "ultimo": "2026-11-12"
+      "ultimo": "2026-11-13"
     },
     "ust:6 Mo": {
       "fuente": "tesoro",
-      "ultimo": "2026-11-12"
+      "ultimo": "2026-11-13"
     },
     "ust:1 Yr": {
       "fuente": "tesoro",
-      "ultimo": "2026-11-12"
+      "ultimo": "2026-11-13"
     },
     "ust:2 Yr": {
       "fuente": "tesoro",
-      "ultimo": "2026-11-12"
+      "ultimo": "2026-11-13"
     },
     "ust:3 Yr": {
       "fuente": "tesoro",
-      "ultimo": "2026-11-12"
+      "ultimo": "2026-11-13"
     },
     "extra:Dólar futuro (DDF)": {
       "estado": "ok"
@@ -829,25 +552,12 @@
   },
   "agenda": {
     "calendario": {
-      "fecha": "2026-11-13",
+      "fecha": "2026-11-14",
       "estado": "ok",
       "bajado": null,
       "feriado_hoy": null,
       "primer_habil_semana": false,
-      "hoy": [
-        {
-          "titulo": "Índice de salarios de septiembre",
-          "fuente": "INDEC",
-          "hora": "16 h"
-        },
-        {
-          "titulo": "Liquidación de la licitación del Tesoro — 11/11",
-          "fuente": "Finanzas",
-          "hora": "",
-          "externo": true,
-          "url": "https://www.argentina.gob.ar/noticias/resultado-de-la-licitacion-por-efectivo-de-instrumentos-del-tesoro-nacional-denominados-17"
-        }
-      ],
+      "hoy": [],
       "semana": [
         {
           "dia": "jue 19/11",
@@ -857,7 +567,7 @@
           ]
         }
       ],
-      "hasta": "jue 19/11",
+      "hasta": "vie 20/11",
       "proxima": null
     },
     "publicaciones": {
@@ -899,24 +609,24 @@
       },
       "salarios": {
         "nombre_corto": "Índice de salarios",
-        "periodo": "2026-08",
-        "titulo": "Índice de salarios de agosto",
+        "periodo": "2026-09",
+        "titulo": "Índice de salarios de septiembre",
         "estado": "al_dia",
-        "linea": "ago-26 · ✓ al día · próximo hoy, 16 h",
-        "titulo_publicado": "Índice de salarios de agosto",
-        "publicado": "21/10, 16 h",
+        "linea": "sep-26 · ✓ al día · próximo 16/12, 16 h",
+        "titulo_publicado": "Índice de salarios de septiembre",
+        "publicado": "13/11, 16 h",
         "fuente": "INDEC",
         "ancla": "social",
         "url": "serie/salario-real-y-capacidad-de-compra/",
         "apertura": {
-          "titular": "Salario real de agosto: +1,1% contra julio",
+          "titular": "Salario real de septiembre: −0,7% contra agosto",
           "detalle": null,
           "filas": [
             {
               "etiqueta": "Salario real (índice)",
-              "valor": "79,0",
-              "ref": "julio 78,2",
-              "var": "▲ 1,1%"
+              "valor": "78,5",
+              "ref": "agosto 79,0",
+              "var": "▼ 0,7%"
             }
           ]
         }
@@ -1035,31 +745,31 @@
         "clave": "Tipo de cambio real multilateral|28/01/26",
         "nombre": "Tipo de cambio real multilateral",
         "texto": "⏸ Tipo de cambio real multilateral: 28/01/26 · sin datos nuevos hace 9 meses · sin calendario oficial",
-        "dias": 289
+        "dias": 290
       },
       {
         "clave": "Compras netas de divisas por contraparte|may-26",
         "nombre": "Compras netas de divisas por contraparte",
         "texto": "⏸ Compras netas de divisas por contraparte: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 166
+        "dias": 167
       },
       {
         "clave": "Compras netas de divisas del BCRA|may-26",
         "nombre": "Compras netas de divisas del BCRA",
         "texto": "⏸ Compras netas de divisas del BCRA: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 166
+        "dias": 167
       },
       {
         "clave": "Asistencia monetaria del BCRA al Tesoro|may-26",
         "nombre": "Asistencia monetaria del BCRA al Tesoro",
         "texto": "⏸ Asistencia monetaria del BCRA al Tesoro: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 166
+        "dias": 167
       },
       {
         "clave": "Reservas ajustadas (swap China + organismos internacionales)|jun-26",
         "nombre": "Reservas ajustadas (swap China + organismos internacionales)",
         "texto": "⏸ Reservas ajustadas (swap China + organismos internacionales): jun-26 · sin datos nuevos hace 4 meses · sin calendario oficial",
-        "dias": 136
+        "dias": 137
       }
     ]
   }
