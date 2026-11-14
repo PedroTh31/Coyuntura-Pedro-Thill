@@ -7,13 +7,6 @@
   },
   "corridas": [
     {
-      "disparo": "workflow_dispatch",
-      "error_autenticacion": false,
-      "fallbacks": [],
-      "fecha": "2026-11-07",
-      "hora": "12:18:01"
-    },
-    {
       "disparo": "schedule",
       "error_autenticacion": false,
       "fallbacks": [],
@@ -215,6 +208,13 @@
       "fallbacks": [],
       "fecha": "2026-11-14",
       "hora": "06:34:54"
+    },
+    {
+      "disparo": "schedule",
+      "error_autenticacion": false,
+      "fallbacks": [],
+      "fecha": "2026-11-14",
+      "hora": "13:17:59"
     }
   ],
   "fallback_dg_vacios": [],
