@@ -1,9 +1,9 @@
 {
-  "fecha": "2026-11-14",
-  "hora": "13:18:48",
+  "fecha": "2026-11-15",
+  "hora": "06:42:48",
   "zona": "America/Argentina/Buenos_Aires",
-  "estado": "ok",
-  "disparo": "schedule",
+  "estado": "parcial",
+  "disparo": "workflow_dispatch",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
@@ -18,12 +18,12 @@
       "falla": 0
     },
     "byma": {
-      "ok": 1,
-      "falla": 0
+      "ok": 0,
+      "falla": 1
     },
     "byma_bono": {
-      "ok": 3,
-      "falla": 0
+      "ok": 0,
+      "falla": 3
     },
     "calculo:acumulado_12m": {
       "ok": 1,
@@ -62,8 +62,8 @@
       "falla": 0
     },
     "calculo:spread_bono_ust": {
-      "ok": 1,
-      "falla": 0
+      "ok": 0,
+      "falla": 1
     },
     "calculo:suma": {
       "ok": 2,
@@ -98,7 +98,28 @@
       "falla": 0
     }
   },
-  "problemas": [],
+  "problemas": [
+    {
+      "indicador": "S&P MERVAL",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "TIR AL30 (USD)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "TIR GD30 (USD)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "TIR GD35 (USD)",
+      "motivo": "vacío"
+    },
+    {
+      "indicador": "Spread GD30 vs. Treasury de igual duración",
+      "motivo": "vacío"
+    }
+  ],
   "fuentes_indec": {
     "Inflación mensual (IPC)": [
       {
@@ -484,7 +505,7 @@
         "Transferencia de utilidades del BCRA",
         "Transferencia de utilidades del BCRA (pesos constantes)"
       ],
-      "racha": 18
+      "racha": 19
     },
     "331.1_OTRAS_OPERIOS__58": {
       "motivo": "coherencia: 331.1_OTRAS_OPERDES__39, de la misma distribución, sale del CSV en la card 'Asistencia monetaria del BCRA al Tesoro'",
@@ -492,14 +513,14 @@
         "Adelantos transitorios al Tesoro",
         "Adelantos transitorios al Tesoro (pesos constantes)"
       ],
-      "racha": 18
+      "racha": 19
     },
     "52.2_ASDJ_0_0_37": {
       "motivo": "la API devolvió 91 de 93 filas (historia cortada)",
       "indicadores": [
         "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"
       ],
-      "racha": 18
+      "racha": 19
     }
   },
   "datos_gob_csv_descartados": {},
@@ -512,35 +533,13 @@
   },
   "mercados": {
     "bono:AL30": {
-      "filas": 86,
-      "desde": "2026-07-10",
-      "ultimo": "2026-11-13"
+      "error": "RuntimeError: BYMA AL30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=AL30D+24HS&resolution=D&from=1783641600&to=1794735413 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x72744b142f90>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
     },
     "bono:GD30": {
-      "filas": 86,
-      "desde": "2026-07-10",
-      "ultimo": "2026-11-13"
+      "error": "RuntimeError: BYMA GD30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD30D+24HS&resolution=D&from=1783641600&to=1794735516 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x72744b1827e0>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
     },
     "bono:GD35": {
-      "filas": 86,
-      "desde": "2026-07-10",
-      "ultimo": "2026-11-13"
-    },
-    "ust:6 Mo": {
-      "fuente": "tesoro",
-      "ultimo": "2026-11-13"
-    },
-    "ust:1 Yr": {
-      "fuente": "tesoro",
-      "ultimo": "2026-11-13"
-    },
-    "ust:2 Yr": {
-      "fuente": "tesoro",
-      "ultimo": "2026-11-13"
-    },
-    "ust:3 Yr": {
-      "fuente": "tesoro",
-      "ultimo": "2026-11-13"
+      "error": "RuntimeError: BYMA GD35D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD35D+24HS&resolution=D&from=1783641600&to=1794735619 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x72744b1385c0>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
     },
     "extra:Dólar futuro (DDF)": {
       "estado": "ok"
@@ -552,7 +551,7 @@
   },
   "agenda": {
     "calendario": {
-      "fecha": "2026-11-14",
+      "fecha": "2026-11-15",
       "estado": "ok",
       "bajado": null,
       "feriado_hoy": null,
@@ -745,31 +744,31 @@
         "clave": "Tipo de cambio real multilateral|28/01/26",
         "nombre": "Tipo de cambio real multilateral",
         "texto": "⏸ Tipo de cambio real multilateral: 28/01/26 · sin datos nuevos hace 9 meses · sin calendario oficial",
-        "dias": 290
+        "dias": 291
       },
       {
         "clave": "Compras netas de divisas por contraparte|may-26",
         "nombre": "Compras netas de divisas por contraparte",
         "texto": "⏸ Compras netas de divisas por contraparte: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 167
+        "dias": 168
       },
       {
         "clave": "Compras netas de divisas del BCRA|may-26",
         "nombre": "Compras netas de divisas del BCRA",
         "texto": "⏸ Compras netas de divisas del BCRA: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 167
+        "dias": 168
       },
       {
         "clave": "Asistencia monetaria del BCRA al Tesoro|may-26",
         "nombre": "Asistencia monetaria del BCRA al Tesoro",
         "texto": "⏸ Asistencia monetaria del BCRA al Tesoro: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 167
+        "dias": 168
       },
       {
         "clave": "Reservas ajustadas (swap China + organismos internacionales)|jun-26",
         "nombre": "Reservas ajustadas (swap China + organismos internacionales)",
         "texto": "⏸ Reservas ajustadas (swap China + organismos internacionales): jun-26 · sin datos nuevos hace 4 meses · sin calendario oficial",
-        "dias": 137
+        "dias": 138
       }
     ]
   }
