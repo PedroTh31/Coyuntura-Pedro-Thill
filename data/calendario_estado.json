@@ -3,57 +3,57 @@
     "El calendario de BCRA no tiene fechas anunciadas entre hoy y fin de 12/2026 (https://www.bcra.gob.ar/calendario-de-informes/): ¿no las publicó todavía o cambió el formato?"
   ],
   "avisos": {
-    "externo:bcra:sin_futuros": "2026-11-09"
+    "externo:bcra:sin_futuros": "2026-11-16"
   },
   "externos": {
     "bce": {
       "anunciados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "eventos": 17,
         "fuente": "pagina"
       }
     },
     "bcra": {
       "anunciados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "eventos": 14,
         "fuente": "pagina"
       }
     },
     "boe": {
       "anunciados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "eventos": 16,
         "fuente": "pagina"
       }
     },
     "boj": {
       "anunciados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "eventos": 16,
         "fuente": "pagina"
       }
     },
     "fed": {
       "anunciados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "eventos": 24,
         "fuente": "pagina"
       },
       "publicados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "fuente": "feed",
         "items": 7
       }
     },
     "tesoro": {
       "anunciados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "eventos": 69,
         "fuente": "pagina"
       },
       "publicados": {
-        "bajado": "2026-11-15T13:41:31-03:00",
+        "bajado": "2026-11-16T06:30:41-03:00",
         "fuente": "feed",
         "items": 8
       }
@@ -61,41 +61,41 @@
   },
   "meses": {
     "2026-07": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2026-08": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2026-09": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2026-10": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2026-11": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2026-12": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2027-01": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2027-02": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     },
     "2027-03": {
-      "bajado": "2026-11-15T13:41:19-03:00",
+      "bajado": "2026-11-16T06:30:27-03:00",
       "fuente": "endpoint"
     }
   },
-  "ultima_verificacion": "2026-11-15T13:41:42-03:00"
+  "ultima_verificacion": "2026-11-16T06:30:55-03:00"
 }
