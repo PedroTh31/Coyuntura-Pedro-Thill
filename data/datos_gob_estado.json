@@ -849,6 +849,16 @@
       "disparo": "workflow_dispatch",
       "fecha": "2026-11-16",
       "hora": "06:42:33"
+    },
+    {
+      "csv": [
+        "331.1_OTRAS_OPERDES__39",
+        "331.1_OTRAS_OPERIOS__58",
+        "52.2_ASDJ_0_0_37"
+      ],
+      "disparo": "schedule",
+      "fecha": "2026-11-16",
+      "hora": "17:08:11"
     }
   ],
   "rachas": {
@@ -867,12 +877,12 @@
     "324.1_M_ENSENIANZADO__49": 0,
     "324.1_N_SERVICIOREG__57": 0,
     "324.1_O_OTRAS_ACREG__51": 0,
-    "331.1_OTRAS_OPERDES__39": 21,
-    "331.1_OTRAS_OPERIOS__58": 21,
+    "331.1_OTRAS_OPERDES__39": 22,
+    "331.1_OTRAS_OPERIOS__58": 22,
     "379.9_GTOS_CORR_017__40_84": 0,
     "379.9_RESULTADO_017__18_38": 0,
     "379.9_RESULTADO_017__31_73": 0,
-    "52.2_ASDJ_0_0_37": 21,
+    "52.2_ASDJ_0_0_37": 22,
     "74.3_IECE_0_M_35": 0,
     "74.3_IEMOA_0_M_48": 0,
     "74.3_IEMOI_0_M_46": 0,

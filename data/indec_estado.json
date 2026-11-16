@@ -11,13 +11,6 @@
       "error_autenticacion": false,
       "fallbacks": [],
       "fecha": "2026-11-07",
-      "hora": "18:46:53"
-    },
-    {
-      "disparo": "workflow_dispatch",
-      "error_autenticacion": false,
-      "fallbacks": [],
-      "fecha": "2026-11-07",
       "hora": "22:32:11"
     },
     {
@@ -215,6 +208,13 @@
       "fallbacks": [],
       "fecha": "2026-11-16",
       "hora": "06:41:59"
+    },
+    {
+      "disparo": "schedule",
+      "error_autenticacion": false,
+      "fallbacks": [],
+      "fecha": "2026-11-16",
+      "hora": "17:07:39"
     }
   ],
   "fallback_dg_vacios": [],
