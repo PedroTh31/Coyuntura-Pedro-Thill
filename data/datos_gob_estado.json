@@ -881,6 +881,26 @@
       "disparo": "workflow_dispatch",
       "fecha": "2026-11-17",
       "hora": "06:41:31"
+    },
+    {
+      "csv": [
+        "331.1_OTRAS_OPERDES__39",
+        "331.1_OTRAS_OPERIOS__58",
+        "332.2_BANCOS_PRIADA__51",
+        "332.2_BANCOS_PUBADA__55",
+        "332.2_SISTEMA_FIADA__53",
+        "52.2_ASDJ_0_0_37",
+        "90.1_AMTM3_0_0_31",
+        "90.1_BMCMP_0_0_44",
+        "90.1_DCCT_0_0_32",
+        "91.1_DETALLE_PRDOC_0_0_47",
+        "91.1_PEFPC_0_0_35",
+        "91.1_PEFPC_0_0_41",
+        "91.1_PEFPD_0_0_45"
+      ],
+      "disparo": "schedule",
+      "fecha": "2026-11-17",
+      "hora": "16:05:23"
     }
   ],
   "rachas": {
@@ -899,15 +919,15 @@
     "324.1_M_ENSENIANZADO__49": 0,
     "324.1_N_SERVICIOREG__57": 0,
     "324.1_O_OTRAS_ACREG__51": 0,
-    "331.1_OTRAS_OPERDES__39": 23,
-    "331.1_OTRAS_OPERIOS__58": 23,
-    "332.2_BANCOS_PRIADA__51": 1,
-    "332.2_BANCOS_PUBADA__55": 1,
-    "332.2_SISTEMA_FIADA__53": 1,
+    "331.1_OTRAS_OPERDES__39": 24,
+    "331.1_OTRAS_OPERIOS__58": 24,
+    "332.2_BANCOS_PRIADA__51": 2,
+    "332.2_BANCOS_PUBADA__55": 2,
+    "332.2_SISTEMA_FIADA__53": 2,
     "379.9_GTOS_CORR_017__40_84": 0,
     "379.9_RESULTADO_017__18_38": 0,
     "379.9_RESULTADO_017__31_73": 0,
-    "52.2_ASDJ_0_0_37": 23,
+    "52.2_ASDJ_0_0_37": 24,
     "74.3_IECE_0_M_35": 0,
     "74.3_IEMOA_0_M_48": 0,
     "74.3_IEMOI_0_M_46": 0,
@@ -922,12 +942,12 @@
     "74.3_IIT_0_M_25": 0,
     "74.3_IIVAP_0_M_49": 0,
     "74.3_ISC_0_M_19": 0,
-    "90.1_AMTM3_0_0_31": 1,
-    "90.1_BMCMP_0_0_44": 1,
-    "90.1_DCCT_0_0_32": 1,
-    "91.1_DETALLE_PRDOC_0_0_47": 1,
-    "91.1_PEFPC_0_0_35": 1,
-    "91.1_PEFPC_0_0_41": 1,
-    "91.1_PEFPD_0_0_45": 1
+    "90.1_AMTM3_0_0_31": 2,
+    "90.1_BMCMP_0_0_44": 2,
+    "90.1_DCCT_0_0_32": 2,
+    "91.1_DETALLE_PRDOC_0_0_47": 2,
+    "91.1_PEFPC_0_0_35": 2,
+    "91.1_PEFPC_0_0_41": 2,
+    "91.1_PEFPD_0_0_45": 2
   }
 }
