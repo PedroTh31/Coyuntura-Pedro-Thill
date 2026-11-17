@@ -6815,6 +6815,7 @@
 2026-11-14,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.490445859872618
 2026-11-15,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.490445859872618
 2026-11-16,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.490445859872618
+2026-11-17,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.850793650793663
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7622,6 +7623,7 @@
 2026-11-14,CER (Coeficiente de Estabilización de Referencia),mercados,índice,870.16484517066
 2026-11-15,CER (Coeficiente de Estabilización de Referencia),mercados,índice,870.69332910158
 2026-11-16,CER (Coeficiente de Estabilización de Referencia),mercados,índice,871.32514441879
+2026-11-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,871.9574182104
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10563,6 +10565,7 @@
 2026-11-14,Canje MEP/CCL,mercados,%,5.75621481434625
 2026-11-15,Canje MEP/CCL,mercados,%,5.75621481434625
 2026-11-16,Canje MEP/CCL,mercados,%,5.75621481434625
+2026-11-17,Canje MEP/CCL,mercados,%,5.91604254515703
 2025-07-02,Caución en dólares (1 día),mercados,% TNA,2.0
 2025-08-04,Caución en dólares (1 día),mercados,% TNA,0.9208
 2025-08-05,Caución en dólares (1 día),mercados,% TNA,1.5
@@ -10873,6 +10876,7 @@
 2026-11-11,Caución en dólares (1 día),mercados,% TNA,1.2697
 2026-11-12,Caución en dólares (1 día),mercados,% TNA,1.3867
 2026-11-13,Caución en dólares (1 día),mercados,% TNA,1.8115
+2026-11-16,Caución en dólares (1 día),mercados,% TNA,1.9799
 2024-01-02,Caución en pesos (1 día),mercados,% TNA,87.1355
 2024-01-03,Caución en pesos (1 día),mercados,% TNA,87.1638
 2024-01-04,Caución en pesos (1 día),mercados,% TNA,87.0258
@@ -11565,6 +11569,7 @@
 2026-11-11,Caución en pesos (1 día),mercados,% TNA,24.1359
 2026-11-12,Caución en pesos (1 día),mercados,% TNA,21.6358
 2026-11-13,Caución en pesos (1 día),mercados,% TNA,21.142
+2026-11-16,Caución en pesos (1 día),mercados,% TNA,20.3269
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -13440,12 +13445,13 @@
 2026-10-26,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),65767503.4443
 2026-10-27,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),65855037.318
 2026-10-28,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),65806682.5986
-2026-10-29,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),65903817.958
+2026-10-29,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),65905357.551
 2026-10-30,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),65926124.3021
 2026-11-02,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66226898.7625
 2026-11-03,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66513956.648
 2026-11-04,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66616216.182
-2026-11-05,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66229550.9744
+2026-11-05,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66232641.7692
+2026-11-11,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66464279.8064
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -13968,12 +13974,13 @@
 2026-10-26,Depósitos: sector privado en pesos,mercados,miles de millones de $,122427.77100000001
 2026-10-27,Depósitos: sector privado en pesos,mercados,miles de millones de $,123306.29000000001
 2026-10-28,Depósitos: sector privado en pesos,mercados,miles de millones de $,124531.32
-2026-10-29,Depósitos: sector privado en pesos,mercados,miles de millones de $,126799.802
+2026-10-29,Depósitos: sector privado en pesos,mercados,miles de millones de $,126796.054
 2026-10-30,Depósitos: sector privado en pesos,mercados,miles de millones de $,129926.66900000001
-2026-11-02,Depósitos: sector privado en pesos,mercados,miles de millones de $,128811.095
-2026-11-03,Depósitos: sector privado en pesos,mercados,miles de millones de $,128857.573
-2026-11-04,Depósitos: sector privado en pesos,mercados,miles de millones de $,129551.962
-2026-11-05,Depósitos: sector privado en pesos,mercados,miles de millones de $,131538.14800000002
+2026-11-02,Depósitos: sector privado en pesos,mercados,miles de millones de $,128998.603
+2026-11-03,Depósitos: sector privado en pesos,mercados,miles de millones de $,129025.77500000001
+2026-11-04,Depósitos: sector privado en pesos,mercados,miles de millones de $,129737.772
+2026-11-05,Depósitos: sector privado en pesos,mercados,miles de millones de $,131687.278
+2026-11-11,Depósitos: sector privado en pesos,mercados,miles de millones de $,128825.999
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -19238,6 +19245,7 @@
 2026-11-14,Dólar CCL,monetario_financiero,$/USD (venta),1671.9
 2026-11-15,Dólar CCL,monetario_financiero,$/USD (venta),1671.9
 2026-11-16,Dólar CCL,monetario_financiero,$/USD (venta),1671.9
+2026-11-17,Dólar CCL,monetario_financiero,$/USD (venta),1682.9
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -22179,6 +22187,7 @@
 2026-11-14,Dólar MEP,monetario_financiero,$/USD (venta),1580.9
 2026-11-15,Dólar MEP,monetario_financiero,$/USD (venta),1580.9
 2026-11-16,Dólar MEP,monetario_financiero,$/USD (venta),1580.9
+2026-11-17,Dólar MEP,monetario_financiero,$/USD (venta),1588.9
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -27976,6 +27985,7 @@
 2026-11-14,Dólar blue,monetario_financiero,$/USD (venta),1575.0
 2026-11-15,Dólar blue,monetario_financiero,$/USD (venta),1575.0
 2026-11-16,Dólar blue,monetario_financiero,$/USD (venta),1575.0
+2026-11-17,Dólar blue,monetario_financiero,$/USD (venta),1600.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -33773,6 +33783,7 @@
 2026-11-14,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2026-11-15,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
 2026-11-16,Dólar oficial,monetario_financiero,$/USD (venta),1570.0
+2026-11-17,Dólar oficial,monetario_financiero,$/USD (venta),1575.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.18617931655959
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238073
@@ -44144,7 +44155,7 @@
 2006-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,54776.974189846005
 2006-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,56256.67430487095
 2006-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,58848.41254770869
-2006-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,60789.237648225804
+2006-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,60789.23764822581
 2006-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,60429.25811070966
 2006-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,60952.040463066674
 2006-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,62321.94333577421
@@ -44187,14 +44198,14 @@
 2009-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,99281.15014766602
 2009-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,109125.42508953935
 2010-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,114117.60893584933
-2010-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,113650.96028303502
+2010-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,113650.960283035
 2010-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,107547.63417116065
 2010-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,107679.74022917531
 2010-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,107628.0350365026
 2010-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,109190.12707891865
-2010-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,116387.00739638516
+2010-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,116387.00739638513
 2010-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,115611.79530256742
-2010-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,117612.45470370702
+2010-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,117612.45470370703
 2010-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,122487.21499762485
 2010-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,124106.77737051102
 2010-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,135401.32419017973
@@ -44220,7 +44231,7 @@
 2012-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,224802.41515587486
 2012-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,218145.16812454507
 2012-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,221002.65543264928
-2012-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,229967.22349265133
+2012-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,229967.22349265136
 2012-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,250332.09072505002
 2013-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,267082.3837332955
 2013-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,249123.9396414229
@@ -44295,8 +44306,8 @@
 2018-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,838751.2653333332
 2018-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,916923.3917419353
 2019-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,929278.5479677421
-2019-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,906688.8821428571
-2019-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,883828.6967741937
+2019-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,906688.8821428572
+2019-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,883828.6967741936
 2019-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,884781.0666666665
 2019-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,919536.5483870967
 2019-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,937619.9333333335
@@ -44347,7 +44358,7 @@
 2023-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,4650565.225806452
 2023-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,4711954.566666666
 2023-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,5054938.0
-2023-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,5351451.966666666
+2023-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,5351451.966666667
 2023-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,5861855.193548388
 2023-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,6235943.322580645
 2023-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,6514768.1
@@ -44366,27 +44377,27 @@
 2024-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,21504441.032258064
 2024-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,22834870.50000001
 2024-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,25237150.838709682
-2025-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,26336673.516129028
-2025-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,25770871.285714284
-2025-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,26711602.58064516
-2025-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,27334090.7
+2025-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,26336673.51612903
+2025-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,25770871.28571429
+2025-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,26711602.580645163
+2025-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,27334090.69999999
 2025-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,28450961.90322581
 2025-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,29331920.9
 2025-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,30689776.516129028
 2025-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32132454.935483873
 2025-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,31713325.3
-2025-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,31876780.70967743
-2025-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32894403.833333343
+2025-10-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,31876780.70967742
+2025-11-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32894403.83333333
 2025-12-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33466231.38709677
-2026-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34164849.48387097
-2026-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33174293.249999996
-2026-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33817035.77419354
-2026-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33740839.46666667
-2026-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34356261.29032259
-2026-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,35430106.2
-2026-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,35541297.806451604
-2026-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,38433252.25806451
-2026-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,39019376.46666667
+2026-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34164849.48387096
+2026-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33174293.25000001
+2026-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33817035.774193555
+2026-04-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33740839.46666666
+2026-05-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,34356261.29032258
+2026-06-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,35430106.199999996
+2026-07-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,35541297.80645161
+2026-08-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,38433868.38709677
+2026-09-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,39620108.20967741
 2004-01-01,M2 (agregado total),monetario_financiero,millones de $,64076.126466666676
 2004-02-01,M2 (agregado total),monetario_financiero,millones de $,66188.61354137931
 2004-03-01,M2 (agregado total),monetario_financiero,millones de $,65812.61051290322
@@ -44660,16 +44671,16 @@
 2026-07-01,M2 (agregado total),monetario_financiero,millones de $,90486028.38709678
 2026-08-01,M2 (agregado total),monetario_financiero,millones de $,91466741.77419356
 2026-09-01,M2 (agregado total),monetario_financiero,millones de $,91805025.6
-2026-10-01,M2 (agregado total),monetario_financiero,millones de $,92540032.58064516
-2004-01-01,M3 (agregado amplio),monetario_financiero,millones de $,111552.85260988696
+2026-10-01,M2 (agregado total),monetario_financiero,millones de $,92539987.48387097
+2004-01-01,M3 (agregado amplio),monetario_financiero,millones de $,111552.85260988695
 2004-02-01,M3 (agregado amplio),monetario_financiero,millones de $,113522.60910809808
-2004-03-01,M3 (agregado amplio),monetario_financiero,millones de $,111814.67715273977
+2004-03-01,M3 (agregado amplio),monetario_financiero,millones de $,111814.67715273975
 2004-04-01,M3 (agregado amplio),monetario_financiero,millones de $,114224.93295675537
 2004-05-01,M3 (agregado amplio),monetario_financiero,millones de $,116674.16983332451
 2004-06-01,M3 (agregado amplio),monetario_financiero,millones de $,120375.81164385792
 2004-07-01,M3 (agregado amplio),monetario_financiero,millones de $,123567.22975614524
 2004-08-01,M3 (agregado amplio),monetario_financiero,millones de $,125299.88813136946
-2004-09-01,M3 (agregado amplio),monetario_financiero,millones de $,126707.09112592904
+2004-09-01,M3 (agregado amplio),monetario_financiero,millones de $,126707.09112592903
 2004-10-01,M3 (agregado amplio),monetario_financiero,millones de $,127819.12698271147
 2004-11-01,M3 (agregado amplio),monetario_financiero,millones de $,130102.43951277286
 2004-12-01,M3 (agregado amplio),monetario_financiero,millones de $,133823.28738438158
@@ -44694,33 +44705,33 @@
 2006-07-01,M3 (agregado amplio),monetario_financiero,millones de $,180951.5442146082
 2006-08-01,M3 (agregado amplio),monetario_financiero,millones de $,183442.78328778004
 2006-09-01,M3 (agregado amplio),monetario_financiero,millones de $,186124.64905472868
-2006-10-01,M3 (agregado amplio),monetario_financiero,millones de $,189355.156741166
+2006-10-01,M3 (agregado amplio),monetario_financiero,millones de $,189355.15674116602
 2006-11-01,M3 (agregado amplio),monetario_financiero,millones de $,193756.1652340387
 2006-12-01,M3 (agregado amplio),monetario_financiero,millones de $,199772.44173130128
-2007-01-01,M3 (agregado amplio),monetario_financiero,millones de $,204639.24552574303
-2007-02-01,M3 (agregado amplio),monetario_financiero,millones de $,207376.86767649575
-2007-03-01,M3 (agregado amplio),monetario_financiero,millones de $,209931.6344489984
+2007-01-01,M3 (agregado amplio),monetario_financiero,millones de $,204639.24552574306
+2007-02-01,M3 (agregado amplio),monetario_financiero,millones de $,207376.86767649578
+2007-03-01,M3 (agregado amplio),monetario_financiero,millones de $,209931.63444899837
 2007-04-01,M3 (agregado amplio),monetario_financiero,millones de $,213167.86600587584
 2007-05-01,M3 (agregado amplio),monetario_financiero,millones de $,218158.1402651174
 2007-06-01,M3 (agregado amplio),monetario_financiero,millones de $,221199.50400975964
 2007-07-01,M3 (agregado amplio),monetario_financiero,millones de $,227134.5296034884
 2007-08-01,M3 (agregado amplio),monetario_financiero,millones de $,230075.8117337616
-2007-09-01,M3 (agregado amplio),monetario_financiero,millones de $,231470.5570925576
-2007-10-01,M3 (agregado amplio),monetario_financiero,millones de $,231790.99510276288
+2007-09-01,M3 (agregado amplio),monetario_financiero,millones de $,231470.55709255757
+2007-10-01,M3 (agregado amplio),monetario_financiero,millones de $,231790.99510276286
 2007-11-01,M3 (agregado amplio),monetario_financiero,millones de $,233571.32985757504
 2007-12-01,M3 (agregado amplio),monetario_financiero,millones de $,240945.3816169604
 2008-01-01,M3 (agregado amplio),monetario_financiero,millones de $,249129.48944160645
 2008-02-01,M3 (agregado amplio),monetario_financiero,millones de $,252604.1432754624
 2008-03-01,M3 (agregado amplio),monetario_financiero,millones de $,257225.10570764515
-2008-04-01,M3 (agregado amplio),monetario_financiero,millones de $,257507.9463562
+2008-04-01,M3 (agregado amplio),monetario_financiero,millones de $,257507.94635619997
 2008-05-01,M3 (agregado amplio),monetario_financiero,millones de $,258427.27424800288
-2008-06-01,M3 (agregado amplio),monetario_financiero,millones de $,258033.1541455
+2008-06-01,M3 (agregado amplio),monetario_financiero,millones de $,258033.15414549998
 2008-07-01,M3 (agregado amplio),monetario_financiero,millones de $,264355.2881998797
-2008-08-01,M3 (agregado amplio),monetario_financiero,millones de $,267305.2024818388
+2008-08-01,M3 (agregado amplio),monetario_financiero,millones de $,267305.20248183876
 2008-09-01,M3 (agregado amplio),monetario_financiero,millones de $,271447.6639231973
-2008-10-01,M3 (agregado amplio),monetario_financiero,millones de $,271347.8568746452
+2008-10-01,M3 (agregado amplio),monetario_financiero,millones de $,271347.85687464516
 2008-11-01,M3 (agregado amplio),monetario_financiero,millones de $,267885.82754259004
-2008-12-01,M3 (agregado amplio),monetario_financiero,millones de $,268170.8224305636
+2008-12-01,M3 (agregado amplio),monetario_financiero,millones de $,268170.82243056357
 2009-01-01,M3 (agregado amplio),monetario_financiero,millones de $,271706.97069949354
 2009-02-01,M3 (agregado amplio),monetario_financiero,millones de $,269967.3484367793
 2009-03-01,M3 (agregado amplio),monetario_financiero,millones de $,266718.6286083629
@@ -44742,20 +44753,20 @@
 2010-07-01,M3 (agregado amplio),monetario_financiero,millones de $,350587.9106221916
 2010-08-01,M3 (agregado amplio),monetario_financiero,millones de $,358358.8275606319
 2010-09-01,M3 (agregado amplio),monetario_financiero,millones de $,368415.02137037367
-2010-10-01,M3 (agregado amplio),monetario_financiero,millones de $,380477.8601589152
-2010-11-01,M3 (agregado amplio),monetario_financiero,millones de $,388376.1773705111
+2010-10-01,M3 (agregado amplio),monetario_financiero,millones de $,380477.86015891517
+2010-11-01,M3 (agregado amplio),monetario_financiero,millones de $,388376.17737051105
 2010-12-01,M3 (agregado amplio),monetario_financiero,millones de $,404427.32419017976
 2011-01-01,M3 (agregado amplio),monetario_financiero,millones de $,422201.8739050752
 2011-02-01,M3 (agregado amplio),monetario_financiero,millones de $,428235.94117357
 2011-03-01,M3 (agregado amplio),monetario_financiero,millones de $,437012.40289632
 2011-04-01,M3 (agregado amplio),monetario_financiero,millones de $,446194.34482589376
-2011-05-01,M3 (agregado amplio),monetario_financiero,millones de $,458510.5046405487
+2011-05-01,M3 (agregado amplio),monetario_financiero,millones de $,458510.50464054866
 2011-06-01,M3 (agregado amplio),monetario_financiero,millones de $,469002.00092717377
 2011-07-01,M3 (agregado amplio),monetario_financiero,millones de $,486563.8504044922
 2011-08-01,M3 (agregado amplio),monetario_financiero,millones de $,495660.0109904629
-2011-09-01,M3 (agregado amplio),monetario_financiero,millones de $,501665.1753938184
+2011-09-01,M3 (agregado amplio),monetario_financiero,millones de $,501665.17539381835
 2011-10-01,M3 (agregado amplio),monetario_financiero,millones de $,505622.8327568774
-2011-11-01,M3 (agregado amplio),monetario_financiero,millones de $,512727.5316763207
+2011-11-01,M3 (agregado amplio),monetario_financiero,millones de $,512727.53167632065
 2011-12-01,M3 (agregado amplio),monetario_financiero,millones de $,527175.68750311
 2012-01-01,M3 (agregado amplio),monetario_financiero,millones de $,548903.0644502188
 2012-02-01,M3 (agregado amplio),monetario_financiero,millones de $,555616.78150334
@@ -44786,8 +44797,8 @@
 2014-03-01,M3 (agregado amplio),monetario_financiero,millones de $,927018.7067695828
 2014-04-01,M3 (agregado amplio),monetario_financiero,millones de $,942002.1638484532
 2014-05-01,M3 (agregado amplio),monetario_financiero,millones de $,953832.1685570718
-2014-06-01,M3 (agregado amplio),monetario_financiero,millones de $,977242.8213856092
-2014-07-01,M3 (agregado amplio),monetario_financiero,millones de $,1003408.691872892
+2014-06-01,M3 (agregado amplio),monetario_financiero,millones de $,977242.8213856093
+2014-07-01,M3 (agregado amplio),monetario_financiero,millones de $,1003408.6918728921
 2014-08-01,M3 (agregado amplio),monetario_financiero,millones de $,1022325.3697413362
 2014-09-01,M3 (agregado amplio),monetario_financiero,millones de $,1038125.270338146
 2014-10-01,M3 (agregado amplio),monetario_financiero,millones de $,1059040.7669355846
@@ -44796,9 +44807,9 @@
 2015-01-01,M3 (agregado amplio),monetario_financiero,millones de $,1195162.4848375914
 2015-02-01,M3 (agregado amplio),monetario_financiero,millones de $,1201654.9726137812
 2015-03-01,M3 (agregado amplio),monetario_financiero,millones de $,1207756.1598842838
-2015-04-01,M3 (agregado amplio),monetario_financiero,millones de $,1221264.651641409
+2015-04-01,M3 (agregado amplio),monetario_financiero,millones de $,1221264.6516414087
 2015-05-01,M3 (agregado amplio),monetario_financiero,millones de $,1251741.4471572747
-2015-06-01,M3 (agregado amplio),monetario_financiero,millones de $,1295496.021318718
+2015-06-01,M3 (agregado amplio),monetario_financiero,millones de $,1295496.0213187179
 2015-07-01,M3 (agregado amplio),monetario_financiero,millones de $,1353963.0619690611
 2015-08-01,M3 (agregado amplio),monetario_financiero,millones de $,1380930.287753446
 2015-09-01,M3 (agregado amplio),monetario_financiero,millones de $,1406323.0259523669
@@ -44808,32 +44819,32 @@
 2016-01-01,M3 (agregado amplio),monetario_financiero,millones de $,1591360.0901853775
 2016-02-01,M3 (agregado amplio),monetario_financiero,millones de $,1572680.2667007076
 2016-03-01,M3 (agregado amplio),monetario_financiero,millones de $,1559030.323450404
-2016-04-01,M3 (agregado amplio),monetario_financiero,millones de $,1536587.540365989
-2016-05-01,M3 (agregado amplio),monetario_financiero,millones de $,1559904.834668039
+2016-04-01,M3 (agregado amplio),monetario_financiero,millones de $,1536587.5403659893
+2016-05-01,M3 (agregado amplio),monetario_financiero,millones de $,1559904.8346680393
 2016-06-01,M3 (agregado amplio),monetario_financiero,millones de $,1601125.0710363565
 2016-07-01,M3 (agregado amplio),monetario_financiero,millones de $,1665426.4207390533
-2016-08-01,M3 (agregado amplio),monetario_financiero,millones de $,1667183.224545848
+2016-08-01,M3 (agregado amplio),monetario_financiero,millones de $,1667183.2245458479
 2016-09-01,M3 (agregado amplio),monetario_financiero,millones de $,1689752.0902993188
 2016-10-01,M3 (agregado amplio),monetario_financiero,millones de $,1725241.379272032
 2016-11-01,M3 (agregado amplio),monetario_financiero,millones de $,1787580.303020156
 2016-12-01,M3 (agregado amplio),monetario_financiero,millones de $,1892342.9598459727
-2017-01-01,M3 (agregado amplio),monetario_financiero,millones de $,1961208.1587498807
-2017-02-01,M3 (agregado amplio),monetario_financiero,millones de $,2008622.5794285715
-2017-03-01,M3 (agregado amplio),monetario_financiero,millones de $,2013644.7945806447
+2017-01-01,M3 (agregado amplio),monetario_financiero,millones de $,1961208.1587498812
+2017-02-01,M3 (agregado amplio),monetario_financiero,millones de $,2008622.5794285713
+2017-03-01,M3 (agregado amplio),monetario_financiero,millones de $,2013644.7945806452
 2017-04-01,M3 (agregado amplio),monetario_financiero,millones de $,2006759.0546666668
-2017-05-01,M3 (agregado amplio),monetario_financiero,millones de $,2020995.131193548
-2017-06-01,M3 (agregado amplio),monetario_financiero,millones de $,2077844.9553333332
+2017-05-01,M3 (agregado amplio),monetario_financiero,millones de $,2020995.1311935482
+2017-06-01,M3 (agregado amplio),monetario_financiero,millones de $,2077844.9553333335
 2017-07-01,M3 (agregado amplio),monetario_financiero,millones de $,2143069.235
 2017-08-01,M3 (agregado amplio),monetario_financiero,millones de $,2158586.0772580644
 2017-09-01,M3 (agregado amplio),monetario_financiero,millones de $,2180158.6866666665
-2017-10-01,M3 (agregado amplio),monetario_financiero,millones de $,2201351.742354838
+2017-10-01,M3 (agregado amplio),monetario_financiero,millones de $,2201351.7423548386
 2017-11-01,M3 (agregado amplio),monetario_financiero,millones de $,2253468.549666667
 2017-12-01,M3 (agregado amplio),monetario_financiero,millones de $,2404976.93616129
 2018-01-01,M3 (agregado amplio),monetario_financiero,millones de $,2532104.0636129035
 2018-02-01,M3 (agregado amplio),monetario_financiero,millones de $,2649032.75
 2018-03-01,M3 (agregado amplio),monetario_financiero,millones de $,2700645.164516129
 2018-04-01,M3 (agregado amplio),monetario_financiero,millones de $,2701112.756666667
-2018-05-01,M3 (agregado amplio),monetario_financiero,millones de $,2763447.554838709
+2018-05-01,M3 (agregado amplio),monetario_financiero,millones de $,2763447.5548387095
 2018-06-01,M3 (agregado amplio),monetario_financiero,millones de $,2797957.4666666663
 2018-07-01,M3 (agregado amplio),monetario_financiero,millones de $,2921698.587096775
 2018-08-01,M3 (agregado amplio),monetario_financiero,millones de $,3029304.603225806
@@ -44841,7 +44852,7 @@
 2018-10-01,M3 (agregado amplio),monetario_financiero,millones de $,3117941.5903225807
 2018-11-01,M3 (agregado amplio),monetario_financiero,millones de $,3244114.706666667
 2018-12-01,M3 (agregado amplio),monetario_financiero,millones de $,3365504.196774194
-2019-01-01,M3 (agregado amplio),monetario_financiero,millones de $,3442474.483870968
+2019-01-01,M3 (agregado amplio),monetario_financiero,millones de $,3442474.4838709678
 2019-02-01,M3 (agregado amplio),monetario_financiero,millones de $,3454528.8821428567
 2019-03-01,M3 (agregado amplio),monetario_financiero,millones de $,3449256.4387096786
 2019-04-01,M3 (agregado amplio),monetario_financiero,millones de $,3442614.0333333337
@@ -44850,9 +44861,9 @@
 2019-07-01,M3 (agregado amplio),monetario_financiero,millones de $,3739033.806451613
 2019-08-01,M3 (agregado amplio),monetario_financiero,millones de $,3821834.870967741
 2019-09-01,M3 (agregado amplio),monetario_financiero,millones de $,3814569.4333333327
-2019-10-01,M3 (agregado amplio),monetario_financiero,millones de $,3827464.64516129
-2019-11-01,M3 (agregado amplio),monetario_financiero,millones de $,3839467.133333333
-2019-12-01,M3 (agregado amplio),monetario_financiero,millones de $,4149439.903225807
+2019-10-01,M3 (agregado amplio),monetario_financiero,millones de $,3827464.6451612907
+2019-11-01,M3 (agregado amplio),monetario_financiero,millones de $,3839467.1333333333
+2019-12-01,M3 (agregado amplio),monetario_financiero,millones de $,4149439.9032258065
 2020-01-01,M3 (agregado amplio),monetario_financiero,millones de $,4504016.806451612
 2020-02-01,M3 (agregado amplio),monetario_financiero,millones de $,4717763.551724138
 2020-03-01,M3 (agregado amplio),monetario_financiero,millones de $,4970579.032258064
@@ -44879,23 +44890,23 @@
 2021-12-01,M3 (agregado amplio),monetario_financiero,millones de $,11816626.12903226
 2022-01-01,M3 (agregado amplio),monetario_financiero,millones de $,12469012.822580649
 2022-02-01,M3 (agregado amplio),monetario_financiero,millones de $,12601523.67857143
-2022-03-01,M3 (agregado amplio),monetario_financiero,millones de $,12933796.935483873
+2022-03-01,M3 (agregado amplio),monetario_financiero,millones de $,12933796.935483871
 2022-04-01,M3 (agregado amplio),monetario_financiero,millones de $,13370607.9
 2022-05-01,M3 (agregado amplio),monetario_financiero,millones de $,14122059.12903226
 2022-06-01,M3 (agregado amplio),monetario_financiero,millones de $,15105830.533333331
 2022-07-01,M3 (agregado amplio),monetario_financiero,millones de $,16435399.58064516
 2022-08-01,M3 (agregado amplio),monetario_financiero,millones de $,16962347.354838707
 2022-09-01,M3 (agregado amplio),monetario_financiero,millones de $,17933843.56666667
-2022-10-01,M3 (agregado amplio),monetario_financiero,millones de $,19135467.34193549
+2022-10-01,M3 (agregado amplio),monetario_financiero,millones de $,19135467.341935486
 2022-11-01,M3 (agregado amplio),monetario_financiero,millones de $,19981763.37333333
-2022-12-01,M3 (agregado amplio),monetario_financiero,millones de $,21609753.935483877
-2023-01-01,M3 (agregado amplio),monetario_financiero,millones de $,22999150.25806452
+2022-12-01,M3 (agregado amplio),monetario_financiero,millones de $,21609753.935483873
+2023-01-01,M3 (agregado amplio),monetario_financiero,millones de $,22999150.258064516
 2023-02-01,M3 (agregado amplio),monetario_financiero,millones de $,23706366.3
-2023-03-01,M3 (agregado amplio),monetario_financiero,millones de $,24726425.25806452
-2023-04-01,M3 (agregado amplio),monetario_financiero,millones de $,26207514.23333333
+2023-03-01,M3 (agregado amplio),monetario_financiero,millones de $,24726425.258064516
+2023-04-01,M3 (agregado amplio),monetario_financiero,millones de $,26207514.233333334
 2023-05-01,M3 (agregado amplio),monetario_financiero,millones de $,28351093.58064516
 2023-06-01,M3 (agregado amplio),monetario_financiero,millones de $,30490963.100000005
-2023-07-01,M3 (agregado amplio),monetario_financiero,millones de $,32765239.29032257
+2023-07-01,M3 (agregado amplio),monetario_financiero,millones de $,32765239.290322572
 2023-08-01,M3 (agregado amplio),monetario_financiero,millones de $,35637908.9032258
 2023-09-01,M3 (agregado amplio),monetario_financiero,millones de $,38098639.96666666
 2023-10-01,M3 (agregado amplio),monetario_financiero,millones de $,40769177.612903215
@@ -44909,31 +44920,31 @@
 2024-06-01,M3 (agregado amplio),monetario_financiero,millones de $,81137799.39999999
 2024-07-01,M3 (agregado amplio),monetario_financiero,millones de $,86363854.80645162
 2024-08-01,M3 (agregado amplio),monetario_financiero,millones de $,89923701.4516129
-2024-09-01,M3 (agregado amplio),monetario_financiero,millones de $,93860806.53333332
+2024-09-01,M3 (agregado amplio),monetario_financiero,millones de $,93860806.53333333
 2024-10-01,M3 (agregado amplio),monetario_financiero,millones de $,99497990.6451613
 2024-11-01,M3 (agregado amplio),monetario_financiero,millones de $,105325464.0
-2024-12-01,M3 (agregado amplio),monetario_financiero,millones de $,112839092.16129036
-2025-01-01,M3 (agregado amplio),monetario_financiero,millones de $,116679495.61290322
-2025-02-01,M3 (agregado amplio),monetario_financiero,millones de $,119792600.8214286
-2025-03-01,M3 (agregado amplio),monetario_financiero,millones de $,122328411.29032256
-2025-04-01,M3 (agregado amplio),monetario_financiero,millones de $,125862859.3
+2024-12-01,M3 (agregado amplio),monetario_financiero,millones de $,112839092.16129035
+2025-01-01,M3 (agregado amplio),monetario_financiero,millones de $,116677687.64516129
+2025-02-01,M3 (agregado amplio),monetario_financiero,millones de $,119791403.7857143
+2025-03-01,M3 (agregado amplio),monetario_financiero,millones de $,122328095.87096775
+2025-04-01,M3 (agregado amplio),monetario_financiero,millones de $,125862878.39999999
 2025-05-01,M3 (agregado amplio),monetario_financiero,millones de $,131082283.7419355
 2025-06-01,M3 (agregado amplio),monetario_financiero,millones de $,136394476.46666667
 2025-07-01,M3 (agregado amplio),monetario_financiero,millones de $,141983991.93548387
-2025-08-01,M3 (agregado amplio),monetario_financiero,millones de $,141572649.32258064
-2025-09-01,M3 (agregado amplio),monetario_financiero,millones de $,145152910.96666667
-2025-10-01,M3 (agregado amplio),monetario_financiero,millones de $,146647362.1935484
-2025-11-01,M3 (agregado amplio),monetario_financiero,millones de $,149016565.13333336
-2025-12-01,M3 (agregado amplio),monetario_financiero,millones de $,156765945.16129035
-2026-01-01,M3 (agregado amplio),monetario_financiero,millones de $,155924560.0322581
-2026-02-01,M3 (agregado amplio),monetario_financiero,millones de $,156762485.10714287
-2026-03-01,M3 (agregado amplio),monetario_financiero,millones de $,159814835.9032258
-2026-04-01,M3 (agregado amplio),monetario_financiero,millones de $,164741105.4666667
-2026-05-01,M3 (agregado amplio),monetario_financiero,millones de $,170211312.09677422
-2026-06-01,M3 (agregado amplio),monetario_financiero,millones de $,174588158.79999995
-2026-07-01,M3 (agregado amplio),monetario_financiero,millones de $,179041399.77419358
-2026-08-01,M3 (agregado amplio),monetario_financiero,millones de $,184468356.6451613
-2026-09-01,M3 (agregado amplio),monetario_financiero,millones de $,188027610.3
+2025-08-01,M3 (agregado amplio),monetario_financiero,millones de $,141572648.93548387
+2025-09-01,M3 (agregado amplio),monetario_financiero,millones de $,145152906.66666666
+2025-10-01,M3 (agregado amplio),monetario_financiero,millones de $,146647049.0322581
+2025-11-01,M3 (agregado amplio),monetario_financiero,millones de $,149016558.36666667
+2025-12-01,M3 (agregado amplio),monetario_financiero,millones de $,156765569.6451613
+2026-01-01,M3 (agregado amplio),monetario_financiero,millones de $,155916567.9032258
+2026-02-01,M3 (agregado amplio),monetario_financiero,millones de $,156762519.25
+2026-03-01,M3 (agregado amplio),monetario_financiero,millones de $,159814589.3870968
+2026-04-01,M3 (agregado amplio),monetario_financiero,millones de $,164741462.0
+2026-05-01,M3 (agregado amplio),monetario_financiero,millones de $,170210782.77419358
+2026-06-01,M3 (agregado amplio),monetario_financiero,millones de $,174585975.5333333
+2026-07-01,M3 (agregado amplio),monetario_financiero,millones de $,179040707.51612908
+2026-08-01,M3 (agregado amplio),monetario_financiero,millones de $,184468830.61290324
+2026-09-01,M3 (agregado amplio),monetario_financiero,millones de $,192692072.7419355
 2004-01-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,858.538257
 2004-02-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,940.540346
 2004-03-01,Manufacturas de origen agropecuario (MOA),externo,millones de USD,883.874646
@@ -46071,73 +46082,73 @@
 2026-03-01,Morosidad: Familias — Tarjetas de crédito,mercados,%,11.810015387756259
 2026-04-01,Morosidad: Familias — Tarjetas de crédito,mercados,%,12.473438839639405
 2026-05-01,Morosidad: Familias — Tarjetas de crédito,mercados,%,13.113157706294864
-2010-01-01,Morosidad: bancos privados,mercados,%,3.339014638467628
+2010-01-01,Morosidad: bancos privados,mercados,%,3.3390146384676274
 2010-02-01,Morosidad: bancos privados,mercados,%,3.2608203687402524
 2010-03-01,Morosidad: bancos privados,mercados,%,3.0998448600548096
 2010-04-01,Morosidad: bancos privados,mercados,%,2.9511730668324474
 2010-05-01,Morosidad: bancos privados,mercados,%,2.8432447601918835
 2010-06-01,Morosidad: bancos privados,mercados,%,2.745357278208699
 2010-07-01,Morosidad: bancos privados,mercados,%,2.7052528924849266
-2010-08-01,Morosidad: bancos privados,mercados,%,2.6166198283749518
+2010-08-01,Morosidad: bancos privados,mercados,%,2.6166198283749513
 2010-09-01,Morosidad: bancos privados,mercados,%,2.3798413908916114
 2010-10-01,Morosidad: bancos privados,mercados,%,2.2993840645932475
 2010-11-01,Morosidad: bancos privados,mercados,%,2.1760137443819385
 2010-12-01,Morosidad: bancos privados,mercados,%,1.991105308397524
 2011-01-01,Morosidad: bancos privados,mercados,%,1.886776177850187
-2011-02-01,Morosidad: bancos privados,mercados,%,1.8254368862992931
-2011-03-01,Morosidad: bancos privados,mercados,%,1.7349915390359425
+2011-02-01,Morosidad: bancos privados,mercados,%,1.8254368862992933
+2011-03-01,Morosidad: bancos privados,mercados,%,1.7349915390359423
 2011-04-01,Morosidad: bancos privados,mercados,%,1.6860503746378652
 2011-05-01,Morosidad: bancos privados,mercados,%,1.646355170771791
 2011-06-01,Morosidad: bancos privados,mercados,%,1.5815256836433838
 2011-07-01,Morosidad: bancos privados,mercados,%,1.5119731849857514
 2011-08-01,Morosidad: bancos privados,mercados,%,1.474646636215367
 2011-09-01,Morosidad: bancos privados,mercados,%,1.3810244070785946
-2011-10-01,Morosidad: bancos privados,mercados,%,1.3856784637500503
+2011-10-01,Morosidad: bancos privados,mercados,%,1.3856784637500505
 2011-11-01,Morosidad: bancos privados,mercados,%,1.3705568069372691
 2011-12-01,Morosidad: bancos privados,mercados,%,1.396649017141271
-2012-01-01,Morosidad: bancos privados,mercados,%,1.4868738165987485
+2012-01-01,Morosidad: bancos privados,mercados,%,1.4868738165987483
 2012-02-01,Morosidad: bancos privados,mercados,%,1.5552319183254324
 2012-03-01,Morosidad: bancos privados,mercados,%,1.5824392052932672
-2012-04-01,Morosidad: bancos privados,mercados,%,1.6992706991226325
+2012-04-01,Morosidad: bancos privados,mercados,%,1.6992706991226323
 2012-05-01,Morosidad: bancos privados,mercados,%,1.7976165704286866
-2012-06-01,Morosidad: bancos privados,mercados,%,1.7037224682466765
+2012-06-01,Morosidad: bancos privados,mercados,%,1.7037224682466763
 2012-07-01,Morosidad: bancos privados,mercados,%,1.7670010332936292
 2012-08-01,Morosidad: bancos privados,mercados,%,1.8073221748391697
 2012-09-01,Morosidad: bancos privados,mercados,%,1.7443480838546073
-2012-10-01,Morosidad: bancos privados,mercados,%,1.8319962245782917
+2012-10-01,Morosidad: bancos privados,mercados,%,1.8319962245782913
 2012-11-01,Morosidad: bancos privados,mercados,%,1.7957808284475476
 2012-12-01,Morosidad: bancos privados,mercados,%,1.778909707688237
 2013-01-01,Morosidad: bancos privados,mercados,%,1.8622800320815445
-2013-02-01,Morosidad: bancos privados,mercados,%,1.9491884813412763
-2013-03-01,Morosidad: bancos privados,mercados,%,1.882302044861208
+2013-02-01,Morosidad: bancos privados,mercados,%,1.9491884813412765
+2013-03-01,Morosidad: bancos privados,mercados,%,1.8823020448612078
 2013-04-01,Morosidad: bancos privados,mercados,%,1.9319048388888809
 2013-05-01,Morosidad: bancos privados,mercados,%,1.9775868098683085
-2013-06-01,Morosidad: bancos privados,mercados,%,1.969335961167045
+2013-06-01,Morosidad: bancos privados,mercados,%,1.9693359611670447
 2013-07-01,Morosidad: bancos privados,mercados,%,1.970563227705915
-2013-08-01,Morosidad: bancos privados,mercados,%,1.9620757741672563
+2013-08-01,Morosidad: bancos privados,mercados,%,1.9620757741672565
 2013-09-01,Morosidad: bancos privados,mercados,%,1.8934208176706209
-2013-10-01,Morosidad: bancos privados,mercados,%,1.8708554561941424
-2013-11-01,Morosidad: bancos privados,mercados,%,1.8104228274397811
-2013-12-01,Morosidad: bancos privados,mercados,%,1.7056826775978151
+2013-10-01,Morosidad: bancos privados,mercados,%,1.8708554561941422
+2013-11-01,Morosidad: bancos privados,mercados,%,1.8104228274397813
+2013-12-01,Morosidad: bancos privados,mercados,%,1.7056826775978153
 2014-01-01,Morosidad: bancos privados,mercados,%,1.7482757444860126
 2014-02-01,Morosidad: bancos privados,mercados,%,1.827317623565749
-2014-03-01,Morosidad: bancos privados,mercados,%,1.861419898779684
-2014-04-01,Morosidad: bancos privados,mercados,%,1.947638395840924
+2014-03-01,Morosidad: bancos privados,mercados,%,1.8614198987796842
+2014-04-01,Morosidad: bancos privados,mercados,%,1.9476383958409238
 2014-05-01,Morosidad: bancos privados,mercados,%,2.070282966825522
 2014-06-01,Morosidad: bancos privados,mercados,%,2.0302245445632514
 2014-07-01,Morosidad: bancos privados,mercados,%,2.0125167866232987
 2014-08-01,Morosidad: bancos privados,mercados,%,2.075206007962056
 2014-09-01,Morosidad: bancos privados,mercados,%,2.0031408039733822
-2014-10-01,Morosidad: bancos privados,mercados,%,2.021963345537697
+2014-10-01,Morosidad: bancos privados,mercados,%,2.0219633455376975
 2014-11-01,Morosidad: bancos privados,mercados,%,2.029572963573508
 2014-12-01,Morosidad: bancos privados,mercados,%,1.908467224250759
-2015-01-01,Morosidad: bancos privados,mercados,%,1.9376092761163692
+2015-01-01,Morosidad: bancos privados,mercados,%,1.9376092761163695
 2015-02-01,Morosidad: bancos privados,mercados,%,1.9116763327995432
 2015-03-01,Morosidad: bancos privados,mercados,%,1.900434936243614
 2015-04-01,Morosidad: bancos privados,mercados,%,1.9779743535176948
-2015-05-01,Morosidad: bancos privados,mercados,%,1.9421437376033972
-2015-06-01,Morosidad: bancos privados,mercados,%,1.8155180426007973
-2015-07-01,Morosidad: bancos privados,mercados,%,1.7793529176772125
+2015-05-01,Morosidad: bancos privados,mercados,%,1.9421437376033974
+2015-06-01,Morosidad: bancos privados,mercados,%,1.8155180426007975
+2015-07-01,Morosidad: bancos privados,mercados,%,1.7793529176772123
 2015-08-01,Morosidad: bancos privados,mercados,%,1.7165307991520582
 2015-09-01,Morosidad: bancos privados,mercados,%,1.6775595364441374
 2015-10-01,Morosidad: bancos privados,mercados,%,1.6079289515381976
@@ -46156,21 +46167,21 @@
 2016-11-01,Morosidad: bancos privados,mercados,%,1.6122336916206934
 2016-12-01,Morosidad: bancos privados,mercados,%,1.563151248031603
 2017-01-01,Morosidad: bancos privados,mercados,%,1.6549113256253176
-2017-02-01,Morosidad: bancos privados,mercados,%,1.713709565681773
-2017-03-01,Morosidad: bancos privados,mercados,%,1.7572048492950425
+2017-02-01,Morosidad: bancos privados,mercados,%,1.7137095656817727
+2017-03-01,Morosidad: bancos privados,mercados,%,1.7572048492950423
 2017-04-01,Morosidad: bancos privados,mercados,%,1.8394261630896809
-2017-05-01,Morosidad: bancos privados,mercados,%,1.859655245461504
+2017-05-01,Morosidad: bancos privados,mercados,%,1.8596552454615036
 2017-06-01,Morosidad: bancos privados,mercados,%,1.8813269351424693
-2017-07-01,Morosidad: bancos privados,mercados,%,1.812289362612856
+2017-07-01,Morosidad: bancos privados,mercados,%,1.8122893626128562
 2017-08-01,Morosidad: bancos privados,mercados,%,1.7788608418234
 2017-09-01,Morosidad: bancos privados,mercados,%,1.7337055023117074
 2017-10-01,Morosidad: bancos privados,mercados,%,1.767255866752269
-2017-11-01,Morosidad: bancos privados,mercados,%,1.8264108837560824
-2017-12-01,Morosidad: bancos privados,mercados,%,1.782567561387996
+2017-11-01,Morosidad: bancos privados,mercados,%,1.8264108837560826
+2017-12-01,Morosidad: bancos privados,mercados,%,1.7825675613879959
 2018-01-01,Morosidad: bancos privados,mercados,%,1.867474418423571
-2018-02-01,Morosidad: bancos privados,mercados,%,1.9039003215604635
-2018-03-01,Morosidad: bancos privados,mercados,%,1.9941736251788056
-2018-04-01,Morosidad: bancos privados,mercados,%,2.0183672188781
+2018-02-01,Morosidad: bancos privados,mercados,%,1.9039003215604633
+2018-03-01,Morosidad: bancos privados,mercados,%,1.9941736251788058
+2018-04-01,Morosidad: bancos privados,mercados,%,2.0183672188780997
 2018-05-01,Morosidad: bancos privados,mercados,%,2.1594112057957195
 2018-06-01,Morosidad: bancos privados,mercados,%,2.132304353174803
 2018-07-01,Morosidad: bancos privados,mercados,%,2.3162677569114223
@@ -46180,7 +46191,7 @@
 2018-11-01,Morosidad: bancos privados,mercados,%,3.059571265036403
 2018-12-01,Morosidad: bancos privados,mercados,%,3.131041528884751
 2019-01-01,Morosidad: bancos privados,mercados,%,3.4921519004954464
-2019-02-01,Morosidad: bancos privados,mercados,%,3.812413856193567
+2019-02-01,Morosidad: bancos privados,mercados,%,3.8124138561935665
 2019-03-01,Morosidad: bancos privados,mercados,%,3.9488312285203575
 2019-04-01,Morosidad: bancos privados,mercados,%,4.0732250749133
 2019-05-01,Morosidad: bancos privados,mercados,%,4.282468531595318
@@ -46198,11 +46209,11 @@
 2020-05-01,Morosidad: bancos privados,mercados,%,3.678677999682282
 2020-06-01,Morosidad: bancos privados,mercados,%,3.348255598942471
 2020-07-01,Morosidad: bancos privados,mercados,%,3.2597017332741807
-2020-08-01,Morosidad: bancos privados,mercados,%,3.015253619956616
+2020-08-01,Morosidad: bancos privados,mercados,%,3.0152536199566162
 2020-09-01,Morosidad: bancos privados,mercados,%,2.7806943157512616
 2020-10-01,Morosidad: bancos privados,mercados,%,2.513235043316309
-2020-11-01,Morosidad: bancos privados,mercados,%,2.415957279523941
-2020-12-01,Morosidad: bancos privados,mercados,%,2.246833628262712
+2020-11-01,Morosidad: bancos privados,mercados,%,2.4159572795239415
+2020-12-01,Morosidad: bancos privados,mercados,%,2.2468336282627117
 2021-01-01,Morosidad: bancos privados,mercados,%,2.177866414694541
 2021-02-01,Morosidad: bancos privados,mercados,%,2.089994844512657
 2021-03-01,Morosidad: bancos privados,mercados,%,2.2839285502881546
@@ -46224,13 +46235,13 @@
 2022-07-01,Morosidad: bancos privados,mercados,%,1.785652744742626
 2022-08-01,Morosidad: bancos privados,mercados,%,1.7730505772838407
 2022-09-01,Morosidad: bancos privados,mercados,%,1.7411593509267915
-2022-10-01,Morosidad: bancos privados,mercados,%,1.7519415864898935
+2022-10-01,Morosidad: bancos privados,mercados,%,1.7519415864898937
 2022-11-01,Morosidad: bancos privados,mercados,%,1.7215686130472938
 2022-12-01,Morosidad: bancos privados,mercados,%,1.8013934041013857
-2023-01-01,Morosidad: bancos privados,mercados,%,1.8793176394738595
+2023-01-01,Morosidad: bancos privados,mercados,%,1.8793176394738593
 2023-02-01,Morosidad: bancos privados,mercados,%,1.862073286778755
-2023-03-01,Morosidad: bancos privados,mercados,%,1.9050527175067176
-2023-04-01,Morosidad: bancos privados,mercados,%,1.847834482798152
+2023-03-01,Morosidad: bancos privados,mercados,%,1.9050527175067178
+2023-04-01,Morosidad: bancos privados,mercados,%,1.8478344827981517
 2023-05-01,Morosidad: bancos privados,mercados,%,1.817530201796424
 2023-06-01,Morosidad: bancos privados,mercados,%,1.7875751934753166
 2023-07-01,Morosidad: bancos privados,mercados,%,1.8265014077097952
@@ -46239,10 +46250,10 @@
 2023-10-01,Morosidad: bancos privados,mercados,%,1.6537354639387003
 2023-11-01,Morosidad: bancos privados,mercados,%,1.5540922404921345
 2023-12-01,Morosidad: bancos privados,mercados,%,1.581929752235975
-2024-01-01,Morosidad: bancos privados,mercados,%,1.5386948547656425
+2024-01-01,Morosidad: bancos privados,mercados,%,1.5386948547656423
 2024-02-01,Morosidad: bancos privados,mercados,%,1.4595531979107876
 2024-03-01,Morosidad: bancos privados,mercados,%,1.424647281217445
-2024-04-01,Morosidad: bancos privados,mercados,%,1.438179323881995
+2024-04-01,Morosidad: bancos privados,mercados,%,1.4381793238819953
 2024-05-01,Morosidad: bancos privados,mercados,%,1.5097585134499545
 2024-06-01,Morosidad: bancos privados,mercados,%,1.450040676513401
 2024-07-01,Morosidad: bancos privados,mercados,%,1.4670675974549636
@@ -46256,7 +46267,7 @@
 2025-03-01,Morosidad: bancos privados,mercados,%,2.005886409306867
 2025-04-01,Morosidad: bancos privados,mercados,%,2.25207199995794
 2025-05-01,Morosidad: bancos privados,mercados,%,2.6431499870429707
-2025-06-01,Morosidad: bancos privados,mercados,%,3.019896046550909
+2025-06-01,Morosidad: bancos privados,mercados,%,3.0198960465509095
 2025-07-01,Morosidad: bancos privados,mercados,%,3.30143311568324
 2025-08-01,Morosidad: bancos privados,mercados,%,3.926065517519089
 2025-09-01,Morosidad: bancos privados,mercados,%,4.29487450359782
@@ -46264,28 +46275,29 @@
 2025-11-01,Morosidad: bancos privados,mercados,%,5.344012168321805
 2025-12-01,Morosidad: bancos privados,mercados,%,5.541511543777922
 2026-01-01,Morosidad: bancos privados,mercados,%,6.386060385008295
-2026-02-01,Morosidad: bancos privados,mercados,%,6.847754006143775
+2026-02-01,Morosidad: bancos privados,mercados,%,6.8477540061437745
 2026-03-01,Morosidad: bancos privados,mercados,%,7.105681535120813
 2026-04-01,Morosidad: bancos privados,mercados,%,7.351191194679128
-2010-01-01,Morosidad: bancos públicos,mercados,%,2.99306890557526
+2026-05-01,Morosidad: bancos privados,mercados,%,7.814498366475155
+2010-01-01,Morosidad: bancos públicos,mercados,%,2.9930689055752597
 2010-02-01,Morosidad: bancos públicos,mercados,%,2.881260113070614
 2010-03-01,Morosidad: bancos públicos,mercados,%,2.822001034108962
 2010-04-01,Morosidad: bancos públicos,mercados,%,2.7632620909784045
 2010-05-01,Morosidad: bancos públicos,mercados,%,2.8594178953189555
-2010-06-01,Morosidad: bancos públicos,mercados,%,2.77742355722542
+2010-06-01,Morosidad: bancos públicos,mercados,%,2.7774235572254202
 2010-07-01,Morosidad: bancos públicos,mercados,%,2.717131194069368
 2010-08-01,Morosidad: bancos públicos,mercados,%,2.6610035580367426
-2010-09-01,Morosidad: bancos públicos,mercados,%,2.5332187943062
+2010-09-01,Morosidad: bancos públicos,mercados,%,2.5332187943061997
 2010-10-01,Morosidad: bancos públicos,mercados,%,2.3738284800568863
 2010-11-01,Morosidad: bancos públicos,mercados,%,2.2400837254143653
-2010-12-01,Morosidad: bancos públicos,mercados,%,2.142224507323645
+2010-12-01,Morosidad: bancos públicos,mercados,%,2.1422245073236446
 2011-01-01,Morosidad: bancos públicos,mercados,%,2.1342104508548334
 2011-02-01,Morosidad: bancos públicos,mercados,%,2.004964616686358
 2011-03-01,Morosidad: bancos públicos,mercados,%,1.9197092923397656
 2011-04-01,Morosidad: bancos públicos,mercados,%,1.8410132624468925
-2011-05-01,Morosidad: bancos públicos,mercados,%,1.7803367115921005
+2011-05-01,Morosidad: bancos públicos,mercados,%,1.7803367115921003
 2011-06-01,Morosidad: bancos públicos,mercados,%,1.717585254862718
-2011-07-01,Morosidad: bancos públicos,mercados,%,1.6635750289108615
+2011-07-01,Morosidad: bancos públicos,mercados,%,1.6635750289108617
 2011-08-01,Morosidad: bancos públicos,mercados,%,1.5836332837400342
 2011-09-01,Morosidad: bancos públicos,mercados,%,1.3709299380666815
 2011-10-01,Morosidad: bancos públicos,mercados,%,1.3364968991895407
@@ -46294,7 +46306,7 @@
 2012-01-01,Morosidad: bancos públicos,mercados,%,1.2756812251708796
 2012-02-01,Morosidad: bancos públicos,mercados,%,1.2527074157276183
 2012-03-01,Morosidad: bancos públicos,mercados,%,1.280881339192407
-2012-04-01,Morosidad: bancos públicos,mercados,%,1.2980706965957165
+2012-04-01,Morosidad: bancos públicos,mercados,%,1.2980706965957163
 2012-05-01,Morosidad: bancos públicos,mercados,%,1.3493018639764165
 2012-06-01,Morosidad: bancos públicos,mercados,%,1.361259177224237
 2012-07-01,Morosidad: bancos públicos,mercados,%,1.394813604545428
@@ -46318,28 +46330,28 @@
 2014-01-01,Morosidad: bancos públicos,mercados,%,1.5685734364715198
 2014-02-01,Morosidad: bancos públicos,mercados,%,1.5326504355742798
 2014-03-01,Morosidad: bancos públicos,mercados,%,1.6019214811765752
-2014-04-01,Morosidad: bancos públicos,mercados,%,1.5977927012102089
+2014-04-01,Morosidad: bancos públicos,mercados,%,1.5977927012102087
 2014-05-01,Morosidad: bancos públicos,mercados,%,1.6758666879240265
 2014-06-01,Morosidad: bancos públicos,mercados,%,1.6739427914854352
-2014-07-01,Morosidad: bancos públicos,mercados,%,1.7529126916245523
-2014-08-01,Morosidad: bancos públicos,mercados,%,1.7870997351314597
+2014-07-01,Morosidad: bancos públicos,mercados,%,1.7529126916245525
+2014-08-01,Morosidad: bancos públicos,mercados,%,1.7870997351314595
 2014-09-01,Morosidad: bancos públicos,mercados,%,1.7544746747097002
 2014-10-01,Morosidad: bancos públicos,mercados,%,1.7403479548595655
-2014-11-01,Morosidad: bancos públicos,mercados,%,1.704166869632023
-2014-12-01,Morosidad: bancos públicos,mercados,%,1.873807047844976
+2014-11-01,Morosidad: bancos públicos,mercados,%,1.7041668696320227
+2014-12-01,Morosidad: bancos públicos,mercados,%,1.8738070478449758
 2015-01-01,Morosidad: bancos públicos,mercados,%,1.8776196158558824
-2015-02-01,Morosidad: bancos públicos,mercados,%,1.896266672236984
-2015-03-01,Morosidad: bancos públicos,mercados,%,1.885998050085261
-2015-04-01,Morosidad: bancos públicos,mercados,%,1.9200600388629476
+2015-02-01,Morosidad: bancos públicos,mercados,%,1.8962666722369836
+2015-03-01,Morosidad: bancos públicos,mercados,%,1.8859980500852611
+2015-04-01,Morosidad: bancos públicos,mercados,%,1.9200600388629474
 2015-05-01,Morosidad: bancos públicos,mercados,%,1.916331249322728
-2015-06-01,Morosidad: bancos públicos,mercados,%,1.9179121386727576
-2015-07-01,Morosidad: bancos públicos,mercados,%,1.8175124597270895
+2015-06-01,Morosidad: bancos públicos,mercados,%,1.9179121386727578
+2015-07-01,Morosidad: bancos públicos,mercados,%,1.8175124597270897
 2015-08-01,Morosidad: bancos públicos,mercados,%,1.7869088611292736
 2015-09-01,Morosidad: bancos públicos,mercados,%,1.6680555214263717
 2015-10-01,Morosidad: bancos públicos,mercados,%,1.5786324433367798
-2015-11-01,Morosidad: bancos públicos,mercados,%,1.7948798497838705
+2015-11-01,Morosidad: bancos públicos,mercados,%,1.7948798497838703
 2015-12-01,Morosidad: bancos públicos,mercados,%,1.9560435853476343
-2016-01-01,Morosidad: bancos públicos,mercados,%,1.9933435588710475
+2016-01-01,Morosidad: bancos públicos,mercados,%,1.9933435588710473
 2016-02-01,Morosidad: bancos públicos,mercados,%,2.057867488363389
 2016-03-01,Morosidad: bancos públicos,mercados,%,2.127044463293456
 2016-04-01,Morosidad: bancos públicos,mercados,%,2.1148075403481275
@@ -46349,10 +46361,10 @@
 2016-08-01,Morosidad: bancos públicos,mercados,%,2.135540581405617
 2016-09-01,Morosidad: bancos públicos,mercados,%,2.0921703809911407
 2016-10-01,Morosidad: bancos públicos,mercados,%,2.0717859479773564
-2016-11-01,Morosidad: bancos públicos,mercados,%,1.9820561256437932
+2016-11-01,Morosidad: bancos públicos,mercados,%,1.9820561256437934
 2016-12-01,Morosidad: bancos públicos,mercados,%,2.235689602664558
-2017-01-01,Morosidad: bancos públicos,mercados,%,2.2795403328351918
-2017-02-01,Morosidad: bancos públicos,mercados,%,2.1471564488943318
+2017-01-01,Morosidad: bancos públicos,mercados,%,2.2795403328351913
+2017-02-01,Morosidad: bancos públicos,mercados,%,2.1471564488943313
 2017-03-01,Morosidad: bancos públicos,mercados,%,2.132676607808227
 2017-04-01,Morosidad: bancos públicos,mercados,%,2.003649559376779
 2017-05-01,Morosidad: bancos públicos,mercados,%,2.0696737508163805
@@ -46371,14 +46383,14 @@
 2018-06-01,Morosidad: bancos públicos,mercados,%,1.832750811663753
 2018-07-01,Morosidad: bancos públicos,mercados,%,1.888458047265771
 2018-08-01,Morosidad: bancos públicos,mercados,%,1.9254644007435668
-2018-09-01,Morosidad: bancos públicos,mercados,%,1.9815556185433825
-2018-10-01,Morosidad: bancos públicos,mercados,%,1.9713139818263132
+2018-09-01,Morosidad: bancos públicos,mercados,%,1.9815556185433822
+2018-10-01,Morosidad: bancos públicos,mercados,%,1.9713139818263135
 2018-11-01,Morosidad: bancos públicos,mercados,%,2.191098371708829
 2018-12-01,Morosidad: bancos públicos,mercados,%,2.736788036935025
 2019-01-01,Morosidad: bancos públicos,mercados,%,3.3319197131450475
-2019-02-01,Morosidad: bancos públicos,mercados,%,3.562144155366741
+2019-02-01,Morosidad: bancos públicos,mercados,%,3.5621441553667412
 2019-03-01,Morosidad: bancos públicos,mercados,%,3.8303460852987534
-2019-04-01,Morosidad: bancos públicos,mercados,%,3.97590804767848
+2019-04-01,Morosidad: bancos públicos,mercados,%,3.9759080476784803
 2019-05-01,Morosidad: bancos públicos,mercados,%,4.427842743256458
 2019-06-01,Morosidad: bancos públicos,mercados,%,4.613631646872749
 2019-07-01,Morosidad: bancos públicos,mercados,%,4.844850587215752
@@ -46404,7 +46416,7 @@
 2021-03-01,Morosidad: bancos públicos,mercados,%,6.620833563630615
 2021-04-01,Morosidad: bancos públicos,mercados,%,6.676353068852918
 2021-05-01,Morosidad: bancos públicos,mercados,%,6.726248171504983
-2021-06-01,Morosidad: bancos públicos,mercados,%,7.689817221377376
+2021-06-01,Morosidad: bancos públicos,mercados,%,7.6898172213773766
 2021-07-01,Morosidad: bancos públicos,mercados,%,8.146763746407428
 2021-08-01,Morosidad: bancos públicos,mercados,%,7.936605479515723
 2021-09-01,Morosidad: bancos públicos,mercados,%,7.51857425957694
@@ -46422,7 +46434,7 @@
 2022-09-01,Morosidad: bancos públicos,mercados,%,5.1414221106728615
 2022-10-01,Morosidad: bancos públicos,mercados,%,5.145234225060929
 2022-11-01,Morosidad: bancos públicos,mercados,%,5.106520031051987
-2022-12-01,Morosidad: bancos públicos,mercados,%,5.275635641204016
+2022-12-01,Morosidad: bancos públicos,mercados,%,5.2756356412040155
 2023-01-01,Morosidad: bancos públicos,mercados,%,5.3617633751730125
 2023-02-01,Morosidad: bancos públicos,mercados,%,5.369613959110176
 2023-03-01,Morosidad: bancos públicos,mercados,%,5.269269817849328
@@ -46433,29 +46445,29 @@
 2023-08-01,Morosidad: bancos públicos,mercados,%,5.534388606457671
 2023-09-01,Morosidad: bancos públicos,mercados,%,5.175200656857122
 2023-10-01,Morosidad: bancos públicos,mercados,%,4.761953031284326
-2023-11-01,Morosidad: bancos públicos,mercados,%,4.470296738896868
+2023-11-01,Morosidad: bancos públicos,mercados,%,4.4702967388968675
 2023-12-01,Morosidad: bancos públicos,mercados,%,7.238320542948694
-2024-01-01,Morosidad: bancos públicos,mercados,%,7.083094170604976
+2024-01-01,Morosidad: bancos públicos,mercados,%,7.0830941706049755
 2024-02-01,Morosidad: bancos públicos,mercados,%,2.695090741386852
 2024-03-01,Morosidad: bancos públicos,mercados,%,2.589888214822078
 2024-04-01,Morosidad: bancos públicos,mercados,%,2.4319152462923337
 2024-05-01,Morosidad: bancos públicos,mercados,%,2.284839862184456
 2024-06-01,Morosidad: bancos públicos,mercados,%,2.201244380428021
-2024-07-01,Morosidad: bancos públicos,mercados,%,1.8651862039379652
-2024-08-01,Morosidad: bancos públicos,mercados,%,1.6562181216340297
+2024-07-01,Morosidad: bancos públicos,mercados,%,1.8651862039379654
+2024-08-01,Morosidad: bancos públicos,mercados,%,1.6562181216340295
 2024-09-01,Morosidad: bancos públicos,mercados,%,1.5520636937897454
 2024-10-01,Morosidad: bancos públicos,mercados,%,1.4164469761907208
 2024-11-01,Morosidad: bancos públicos,mercados,%,1.428899563879511
 2024-12-01,Morosidad: bancos públicos,mercados,%,1.407254322713549
-2025-01-01,Morosidad: bancos públicos,mercados,%,1.452347172668074
+2025-01-01,Morosidad: bancos públicos,mercados,%,1.4523471726680741
 2025-02-01,Morosidad: bancos públicos,mercados,%,1.5441194046294986
 2025-03-01,Morosidad: bancos públicos,mercados,%,1.7437044461578584
-2025-04-01,Morosidad: bancos públicos,mercados,%,1.9307771205346087
-2025-05-01,Morosidad: bancos públicos,mercados,%,2.318068812700204
+2025-04-01,Morosidad: bancos públicos,mercados,%,1.9307771205346091
+2025-05-01,Morosidad: bancos públicos,mercados,%,2.3180688127002034
 2025-06-01,Morosidad: bancos públicos,mercados,%,2.5751448883273262
 2025-07-01,Morosidad: bancos públicos,mercados,%,2.851771100377371
 2025-08-01,Morosidad: bancos públicos,mercados,%,3.267272479515858
-2025-09-01,Morosidad: bancos públicos,mercados,%,3.8219231286286734
+2025-09-01,Morosidad: bancos públicos,mercados,%,3.8219231286286743
 2025-10-01,Morosidad: bancos públicos,mercados,%,4.286304633093306
 2025-11-01,Morosidad: bancos públicos,mercados,%,5.011916601761042
 2025-12-01,Morosidad: bancos públicos,mercados,%,5.544863072683322
@@ -46463,6 +46475,7 @@
 2026-02-01,Morosidad: bancos públicos,mercados,%,6.494944829733923
 2026-03-01,Morosidad: bancos públicos,mercados,%,6.837368461788845
 2026-04-01,Morosidad: bancos públicos,mercados,%,7.162647278617307
+2026-05-01,Morosidad: bancos públicos,mercados,%,7.441654377289166
 2010-01-01,Morosidad: sistema financiero,mercados,%,3.509483031211498
 2010-02-01,Morosidad: sistema financiero,mercados,%,3.4146482152564586
 2010-03-01,Morosidad: sistema financiero,mercados,%,3.28358990497584
@@ -46472,12 +46485,12 @@
 2010-07-01,Morosidad: sistema financiero,mercados,%,2.83078339829023
 2010-08-01,Morosidad: sistema financiero,mercados,%,2.7431276664656825
 2010-09-01,Morosidad: sistema financiero,mercados,%,2.527720423133502
-2010-10-01,Morosidad: sistema financiero,mercados,%,2.412615702975509
+2010-10-01,Morosidad: sistema financiero,mercados,%,2.4126157029755095
 2010-11-01,Morosidad: sistema financiero,mercados,%,2.282339384140977
-2010-12-01,Morosidad: sistema financiero,mercados,%,2.11702287385862
+2010-12-01,Morosidad: sistema financiero,mercados,%,2.1170228738586196
 2011-01-01,Morosidad: sistema financiero,mercados,%,2.037111297799356
-2011-02-01,Morosidad: sistema financiero,mercados,%,1.9558797153405736
-2011-03-01,Morosidad: sistema financiero,mercados,%,1.8639642837433936
+2011-02-01,Morosidad: sistema financiero,mercados,%,1.9558797153405738
+2011-03-01,Morosidad: sistema financiero,mercados,%,1.8639642837433938
 2011-04-01,Morosidad: sistema financiero,mercados,%,1.8002322928841674
 2011-05-01,Morosidad: sistema financiero,mercados,%,1.7508362318814628
 2011-06-01,Morosidad: sistema financiero,mercados,%,1.6780151769490943
@@ -46500,26 +46513,26 @@
 2012-11-01,Morosidad: sistema financiero,mercados,%,1.7470837745451642
 2012-12-01,Morosidad: sistema financiero,mercados,%,1.7345487210843031
 2013-01-01,Morosidad: sistema financiero,mercados,%,1.78530265191923
-2013-02-01,Morosidad: sistema financiero,mercados,%,1.851641199862028
+2013-02-01,Morosidad: sistema financiero,mercados,%,1.8516411998620277
 2013-03-01,Morosidad: sistema financiero,mercados,%,1.819205205959625
 2013-04-01,Morosidad: sistema financiero,mercados,%,1.8842359047753072
 2013-05-01,Morosidad: sistema financiero,mercados,%,1.9182132466232409
 2013-06-01,Morosidad: sistema financiero,mercados,%,1.9107199202509484
-2013-07-01,Morosidad: sistema financiero,mercados,%,1.8835376595340287
-2013-08-01,Morosidad: sistema financiero,mercados,%,1.8641777499165155
+2013-07-01,Morosidad: sistema financiero,mercados,%,1.8835376595340292
+2013-08-01,Morosidad: sistema financiero,mercados,%,1.8641777499165153
 2013-09-01,Morosidad: sistema financiero,mercados,%,1.8235727570075275
 2013-10-01,Morosidad: sistema financiero,mercados,%,1.797515450543354
-2013-11-01,Morosidad: sistema financiero,mercados,%,1.7582740791267897
+2013-11-01,Morosidad: sistema financiero,mercados,%,1.7582740791267895
 2013-12-01,Morosidad: sistema financiero,mercados,%,1.7325824313673652
 2014-01-01,Morosidad: sistema financiero,mercados,%,1.76015365953942
-2014-02-01,Morosidad: sistema financiero,mercados,%,1.80203885450046
-2014-03-01,Morosidad: sistema financiero,mercados,%,1.8536536048848955
-2014-04-01,Morosidad: sistema financiero,mercados,%,1.9181711491638715
+2014-02-01,Morosidad: sistema financiero,mercados,%,1.8020388545004602
+2014-03-01,Morosidad: sistema financiero,mercados,%,1.8536536048848953
+2014-04-01,Morosidad: sistema financiero,mercados,%,1.9181711491638713
 2014-05-01,Morosidad: sistema financiero,mercados,%,2.037439537576835
-2014-06-01,Morosidad: sistema financiero,mercados,%,2.0157531269052718
+2014-06-01,Morosidad: sistema financiero,mercados,%,2.0157531269052713
 2014-07-01,Morosidad: sistema financiero,mercados,%,2.0338288345473456
 2014-08-01,Morosidad: sistema financiero,mercados,%,2.0878134262606456
-2014-09-01,Morosidad: sistema financiero,mercados,%,2.026998007663088
+2014-09-01,Morosidad: sistema financiero,mercados,%,2.0269980076630882
 2014-10-01,Morosidad: sistema financiero,mercados,%,2.034360325214428
 2014-11-01,Morosidad: sistema financiero,mercados,%,2.0286347657868395
 2014-12-01,Morosidad: sistema financiero,mercados,%,1.9900643833510003
@@ -46528,49 +46541,49 @@
 2015-03-01,Morosidad: sistema financiero,mercados,%,1.9920656957845604
 2015-04-01,Morosidad: sistema financiero,mercados,%,2.05781677799761
 2015-05-01,Morosidad: sistema financiero,mercados,%,2.033392274704483
-2015-06-01,Morosidad: sistema financiero,mercados,%,1.9466594385695972
+2015-06-01,Morosidad: sistema financiero,mercados,%,1.9466594385695974
 2015-07-01,Morosidad: sistema financiero,mercados,%,1.888249891504042
-2015-08-01,Morosidad: sistema financiero,mercados,%,1.8347256863989465
+2015-08-01,Morosidad: sistema financiero,mercados,%,1.8347256863989463
 2015-09-01,Morosidad: sistema financiero,mercados,%,1.765361692215433
 2015-10-01,Morosidad: sistema financiero,mercados,%,1.6863372210722938
 2015-11-01,Morosidad: sistema financiero,mercados,%,1.7289316831035122
 2015-12-01,Morosidad: sistema financiero,mercados,%,1.7368418183417136
 2016-01-01,Morosidad: sistema financiero,mercados,%,1.7824549773553164
-2016-02-01,Morosidad: sistema financiero,mercados,%,1.8127539596752515
+2016-02-01,Morosidad: sistema financiero,mercados,%,1.8127539596752513
 2016-03-01,Morosidad: sistema financiero,mercados,%,1.8338872950653409
-2016-04-01,Morosidad: sistema financiero,mercados,%,1.859555203228844
-2016-05-01,Morosidad: sistema financiero,mercados,%,1.8822241593851168
+2016-04-01,Morosidad: sistema financiero,mercados,%,1.8595552032288438
+2016-05-01,Morosidad: sistema financiero,mercados,%,1.8822241593851166
 2016-06-01,Morosidad: sistema financiero,mercados,%,1.910753123994466
-2016-07-01,Morosidad: sistema financiero,mercados,%,1.9391266254490245
-2016-08-01,Morosidad: sistema financiero,mercados,%,1.9130597006710823
-2016-09-01,Morosidad: sistema financiero,mercados,%,1.862392783697812
+2016-07-01,Morosidad: sistema financiero,mercados,%,1.9391266254490243
+2016-08-01,Morosidad: sistema financiero,mercados,%,1.9130597006710826
+2016-09-01,Morosidad: sistema financiero,mercados,%,1.8623927836978118
 2016-10-01,Morosidad: sistema financiero,mercados,%,1.8666758333058229
 2016-11-01,Morosidad: sistema financiero,mercados,%,1.8067304996764684
 2016-12-01,Morosidad: sistema financiero,mercados,%,1.836605543762837
-2017-01-01,Morosidad: sistema financiero,mercados,%,1.912059818616592
-2017-02-01,Morosidad: sistema financiero,mercados,%,1.9180291957070572
+2017-01-01,Morosidad: sistema financiero,mercados,%,1.9120598186165918
+2017-02-01,Morosidad: sistema financiero,mercados,%,1.9180291957070574
 2017-03-01,Morosidad: sistema financiero,mercados,%,1.948788406106068
-2017-04-01,Morosidad: sistema financiero,mercados,%,1.9755795130440448
+2017-04-01,Morosidad: sistema financiero,mercados,%,1.9755795130440446
 2017-05-01,Morosidad: sistema financiero,mercados,%,2.0140822426575924
 2017-06-01,Morosidad: sistema financiero,mercados,%,2.0240679451963226
 2017-07-01,Morosidad: sistema financiero,mercados,%,1.959506401484664
-2017-08-01,Morosidad: sistema financiero,mercados,%,1.9087357756430767
+2017-08-01,Morosidad: sistema financiero,mercados,%,1.9087357756430772
 2017-09-01,Morosidad: sistema financiero,mercados,%,1.84824103017503
-2017-10-01,Morosidad: sistema financiero,mercados,%,1.8475357087755695
+2017-10-01,Morosidad: sistema financiero,mercados,%,1.8475357087755697
 2017-11-01,Morosidad: sistema financiero,mercados,%,1.8849938836305788
-2017-12-01,Morosidad: sistema financiero,mercados,%,1.8303637119808651
-2018-01-01,Morosidad: sistema financiero,mercados,%,1.8963375824251465
+2017-12-01,Morosidad: sistema financiero,mercados,%,1.8303637119808653
+2018-01-01,Morosidad: sistema financiero,mercados,%,1.8963375824251463
 2018-02-01,Morosidad: sistema financiero,mercados,%,1.9189478210446795
 2018-03-01,Morosidad: sistema financiero,mercados,%,1.967704115218851
 2018-04-01,Morosidad: sistema financiero,mercados,%,2.0100926846944662
 2018-05-01,Morosidad: sistema financiero,mercados,%,2.1568379469816934
 2018-06-01,Morosidad: sistema financiero,mercados,%,2.137090044167379
 2018-07-01,Morosidad: sistema financiero,mercados,%,2.2701760675514304
-2018-08-01,Morosidad: sistema financiero,mercados,%,2.234942711364892
+2018-08-01,Morosidad: sistema financiero,mercados,%,2.2349427113648916
 2018-09-01,Morosidad: sistema financiero,mercados,%,2.310962512089694
 2018-10-01,Morosidad: sistema financiero,mercados,%,2.6022474698090514
 2018-11-01,Morosidad: sistema financiero,mercados,%,2.851817944046525
-2018-12-01,Morosidad: sistema financiero,mercados,%,3.1085722494152037
+2018-12-01,Morosidad: sistema financiero,mercados,%,3.1085722494152033
 2019-01-01,Morosidad: sistema financiero,mercados,%,3.535070360768265
 2019-02-01,Morosidad: sistema financiero,mercados,%,3.84102796743363
 2019-03-01,Morosidad: sistema financiero,mercados,%,4.0341718238441056
@@ -46594,10 +46607,10 @@
 2020-09-01,Morosidad: sistema financiero,mercados,%,4.520680052681874
 2020-10-01,Morosidad: sistema financiero,mercados,%,4.2436141318301726
 2020-11-01,Morosidad: sistema financiero,mercados,%,4.125311308898675
-2020-12-01,Morosidad: sistema financiero,mercados,%,3.861257798125248
-2021-01-01,Morosidad: sistema financiero,mercados,%,3.847239052905965
+2020-12-01,Morosidad: sistema financiero,mercados,%,3.8612577981252483
+2021-01-01,Morosidad: sistema financiero,mercados,%,3.8472390529059646
 2021-02-01,Morosidad: sistema financiero,mercados,%,3.7620253601814526
-2021-03-01,Morosidad: sistema financiero,mercados,%,3.870405295523768
+2021-03-01,Morosidad: sistema financiero,mercados,%,3.8704052955237684
 2021-04-01,Morosidad: sistema financiero,mercados,%,4.163258631309383
 2021-05-01,Morosidad: sistema financiero,mercados,%,4.265936004694906
 2021-06-01,Morosidad: sistema financiero,mercados,%,4.862639882298859
@@ -46632,9 +46645,9 @@
 2023-11-01,Morosidad: sistema financiero,mercados,%,2.6547148777991856
 2023-12-01,Morosidad: sistema financiero,mercados,%,3.654432123886734
 2024-01-01,Morosidad: sistema financiero,mercados,%,3.5133411791253297
-2024-02-01,Morosidad: sistema financiero,mercados,%,1.9141090266310623
+2024-02-01,Morosidad: sistema financiero,mercados,%,1.9141090266310625
 2024-03-01,Morosidad: sistema financiero,mercados,%,1.863744830923196
-2024-04-01,Morosidad: sistema financiero,mercados,%,1.8393846357237815
+2024-04-01,Morosidad: sistema financiero,mercados,%,1.8393846357237817
 2024-05-01,Morosidad: sistema financiero,mercados,%,1.8406614535192871
 2024-06-01,Morosidad: sistema financiero,mercados,%,1.7714305992024184
 2024-07-01,Morosidad: sistema financiero,mercados,%,1.6781995927682314
@@ -46643,14 +46656,14 @@
 2024-10-01,Morosidad: sistema financiero,mercados,%,1.4942636413571475
 2024-11-01,Morosidad: sistema financiero,mercados,%,1.5053275805893664
 2024-12-01,Morosidad: sistema financiero,mercados,%,1.5429641150334403
-2025-01-01,Morosidad: sistema financiero,mercados,%,1.630324156079613
-2025-02-01,Morosidad: sistema financiero,mercados,%,1.7733252030798423
+2025-01-01,Morosidad: sistema financiero,mercados,%,1.6303241560796127
+2025-02-01,Morosidad: sistema financiero,mercados,%,1.7733252030798425
 2025-03-01,Morosidad: sistema financiero,mercados,%,1.9658225377720555
 2025-04-01,Morosidad: sistema financiero,mercados,%,2.1881766221765626
-2025-05-01,Morosidad: sistema financiero,mercados,%,2.580609533758353
+2025-05-01,Morosidad: sistema financiero,mercados,%,2.5806095337583526
 2025-06-01,Morosidad: sistema financiero,mercados,%,2.909454536695638
 2025-07-01,Morosidad: sistema financiero,mercados,%,3.1871426296424485
-2025-08-01,Morosidad: sistema financiero,mercados,%,3.721817895764556
+2025-08-01,Morosidad: sistema financiero,mercados,%,3.7218178957645556
 2025-09-01,Morosidad: sistema financiero,mercados,%,4.15609162999023
 2025-10-01,Morosidad: sistema financiero,mercados,%,4.547663297387359
 2025-11-01,Morosidad: sistema financiero,mercados,%,5.225654231579735
@@ -46659,6 +46672,7 @@
 2026-02-01,Morosidad: sistema financiero,mercados,%,6.706449928481558
 2026-03-01,Morosidad: sistema financiero,mercados,%,7.009230716463962
 2026-04-01,Morosidad: sistema financiero,mercados,%,7.297328454421397
+2026-05-01,Morosidad: sistema financiero,mercados,%,7.700652707133907
 2004-01-01,PBI nominal (precios corrientes),fiscal,millones de $,439195.8650001726
 2004-04-01,PBI nominal (precios corrientes),fiscal,millones de $,509498.6632468832
 2004-07-01,PBI nominal (precios corrientes),fiscal,millones de $,488462.3825911835
@@ -47295,33 +47309,33 @@
 2026-07-01,Productos primarios,externo,millones de USD,2109.61946105
 2026-08-01,Productos primarios,externo,millones de USD,1722.1210796
 2026-09-01,Productos primarios,externo,millones de USD,2225.00747294
-2004-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,14926.454371677812
+2004-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,14926.454371677813
 2004-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15129.84627104369
-2004-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15486.568336425267
+2004-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15486.568336425269
 2004-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,15649.85013159417
 2004-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,16228.910700847033
 2004-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,17149.266589451287
 2004-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,17814.401850966842
 2004-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,18532.09431053835
-2004-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,18981.92168699241
-2004-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,19590.64757990789
+2004-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,18981.921686992406
+2004-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,19590.647579907894
 2004-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,20105.59558152709
 2004-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,20791.6402253313
 2005-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,20675.407920454705
 2005-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,20899.42738309997
 2005-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,21307.31636093661
 2005-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,22076.02601214754
-2005-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,22832.44615599853
-2005-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,24008.63275950717
+2005-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,22832.446155998532
+2005-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,24008.632759507174
 2005-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,25149.338911744788
-2005-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,25892.432917135917
-2005-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,26478.257103395157
+2005-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,25892.432917135913
+2005-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,26478.257103395154
 2005-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,26933.839200932984
 2005-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,27837.0342730458
 2005-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,28948.540454274927
 2006-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,29363.099034981624
 2006-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,29723.43387618915
-2006-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,30297.04405634248
+2006-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,30297.044056342478
 2006-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,30966.42675460682
 2006-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,32093.282125511083
 2006-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,33423.89010171365
@@ -47329,9 +47343,9 @@
 2006-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,35786.8888060562
 2006-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,36834.21539990752
 2006-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,38105.73297774422
-2006-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,38989.99884183236
-2006-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,39911.28554187946
-2007-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,40010.44607901389
+2006-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,38989.998841832356
+2006-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,39911.285541879464
+2007-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,40010.446079013884
 2007-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,40144.24554361956
 2007-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,41034.56239162704
 2007-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,41995.02155232745
@@ -47340,12 +47354,12 @@
 2007-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,45965.484768486174
 2007-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,46944.621925095846
 2007-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,48023.16951527279
-2007-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,49185.74496172751
+2007-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,49185.744961727505
 2007-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,50253.038817607885
-2007-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,52149.06681651279
+2007-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,52149.066816512786
 2008-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,53596.970045630296
 2008-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,53353.50059358082
-2008-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,53510.99002390455
+2008-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,53510.990023904546
 2008-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,55184.06943510745
 2008-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,56979.88440449574
 2008-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,56351.54343358692
@@ -47358,7 +47372,7 @@
 2009-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,58690.17293243937
 2009-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,59420.965731230885
 2009-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,61558.31665230222
-2009-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,61750.15824370973
+2009-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,61750.158243709724
 2009-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,62969.658843446094
 2009-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,64498.090216427176
 2009-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,65079.814702454896
@@ -47366,7 +47380,7 @@
 2009-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,63585.43455498516
 2009-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,62926.490767708245
 2009-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,63206.27488733212
-2009-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,64987.73140934199
+2009-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,64987.731409341985
 2010-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,65182.0469591141
 2010-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,65093.33525782377
 2010-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,66330.92739559457
@@ -47378,15 +47392,15 @@
 2010-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,82306.88180095697
 2010-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,86077.97035849869
 2010-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,89457.50462893755
-2010-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,93947.60567667893
+2010-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,93947.60567667891
 2011-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,96725.33034277054
 2011-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,99071.46699656038
-2011-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,101084.33467077072
+2011-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,101084.33467077071
 2011-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,104655.3660093504
 2011-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,109171.07814379074
-2011-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,113546.81782802827
+2011-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,113546.81782802829
 2011-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,121853.94636481575
-2011-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,125744.87120772208
+2011-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,125744.87120772207
 2011-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,131287.05266604308
 2011-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,135605.95953349987
 2011-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,138108.3019559947
@@ -47407,8 +47421,8 @@
 2013-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,180395.5295811829
 2013-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,182119.22718526568
 2013-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,185717.4849265448
-2013-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,190289.1841022076
-2013-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,194129.8739236621
+2013-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,190289.18410220757
+2013-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,194129.87392366206
 2013-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,202347.0939754849
 2013-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,205299.44743660936
 2013-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,211893.8256427351
@@ -47416,23 +47430,23 @@
 2013-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,216285.60301468347
 2013-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,223680.79838914005
 2014-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,230193.3196613837
-2014-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,233749.4475495897
+2014-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,233749.44754958973
 2014-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,233514.1549782382
 2014-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,234201.9305789081
-2014-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,237384.3299108873
+2014-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,237384.32991088732
 2014-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,241464.5215942734
 2014-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,249700.0799562589
 2014-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,254163.44443697043
 2014-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,256689.54530783783
-2014-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,259436.2614425521
+2014-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,259436.26144255206
 2014-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,259474.68889307807
-2014-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,266408.9880456988
+2014-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,266408.98804569873
 2015-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,271162.4606508386
 2015-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,271108.2570967397
 2015-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,278093.6027786721
 2015-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,284614.50764366525
 2015-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,290567.62139446585
-2015-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,301715.7214589321
+2015-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,301715.72145893215
 2015-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,315705.8327640319
 2015-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,320561.7267843361
 2015-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,325497.024909607
@@ -47440,22 +47454,22 @@
 2015-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,343390.27232684445
 2015-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,352543.5124346057
 2016-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,356115.787329398
-2016-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,357867.795940714
+2016-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,357867.79594071396
 2016-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,364273.47811099526
 2016-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,369463.7741760976
-2016-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,383205.919978964
+2016-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,383205.91997896397
 2016-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,391823.97421367513
 2016-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,408356.68244327547
-2016-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,414048.4957579165
+2016-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,414048.49575791653
 2016-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,425312.5591554923
 2016-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,437684.7776050452
-2016-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,446512.9180735304
-2016-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,467698.5599643528
+2016-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,446512.91807353037
+2016-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,467698.55996435275
 2017-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,474995.2104970615
-2017-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,480914.0106894746
+2017-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,480914.01068947464
 2017-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,485393.6607992109
 2017-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,495838.7150561249
-2017-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,515776.6188921112
+2017-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,515776.61889211123
 2017-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,539693.9483748132
 2017-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,590552.3892444763
 2017-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,614574.6011320828
@@ -47474,24 +47488,24 @@
 2018-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1082463.1613135429
 2018-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1020338.794663891
 2018-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,981510.7030337591
-2018-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1000005.6664135684
-2019-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,973507.7024969688
-2019-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,979067.932008034
-2019-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1021432.7024793456
-2019-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1049312.713748227
+2018-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1000005.6664135683
+2019-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,973507.7024969689
+2019-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,979067.9320080341
+2019-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1021432.7024793455
+2019-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1049312.7137482273
 2019-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1077622.0714906394
 2019-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1050442.1310153578
-2019-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1056440.730501884
+2019-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1056440.7305018841
 2019-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1214045.48456844
 2019-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1221461.6515498364
 2019-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1195577.414038063
-2019-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1162611.0987186015
+2019-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1162611.0987186017
 2019-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1151702.8193300965
 2020-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1118214.9407800026
-2020-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1112365.7001509217
+2020-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1112365.7001509215
 2020-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1154177.179580622
-2020-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1275188.913283907
-2020-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1372864.2579006243
+2020-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1275188.9132839073
+2020-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1372864.2579006245
 2020-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1392448.3402189834
 2020-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1385366.4801761634
 2020-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1397369.547578785
@@ -47499,21 +47513,21 @@
 2020-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1440445.1047589218
 2020-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1455732.633803244
 2020-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1474704.6756368703
-2021-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1495087.2892320745
+2021-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1495087.2892320743
 2021-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1518481.505443918
-2021-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1517846.515370933
+2021-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1517846.5153709333
 2021-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1532801.3988064872
 2021-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1569622.676064545
 2021-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1594506.0443323215
 2021-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1656216.5045425007
 2021-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1705336.2160752458
 2021-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1741658.3096395857
-2021-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1793427.94223014
+2021-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1793427.9422301399
 2021-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1901347.692802005
 2021-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,1986056.1080113696
 2022-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,2022554.2498538988
 2022-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,2042481.421307935
-2022-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,2132029.917242492
+2022-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,2132029.9172424916
 2022-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,2249797.2833390976
 2022-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,2369643.673774584
 2022-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,2542545.527825897
@@ -47525,7 +47539,7 @@
 2022-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,3324392.557686139
 2023-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,3406309.7556760013
 2023-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,3580185.604163266
-2023-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,3853131.6845461703
+2023-03-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,3853131.6845461708
 2023-04-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,4380204.125011513
 2023-05-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,4819369.878875784
 2023-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,5077900.013847975
@@ -47543,7 +47557,7 @@
 2024-06-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,17312122.067827683
 2024-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,20022697.92392399
 2024-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,21942239.37345434
-2024-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,24262190.61259409
+2024-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,24262190.612594094
 2024-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,26426107.75507737
 2024-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,28480336.16660501
 2024-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,31247540.29735827
@@ -47557,7 +47571,7 @@
 2025-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,51896063.935396805
 2025-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,53924130.866987936
 2025-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,55003844.05861097
-2025-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,55889308.66355968
+2025-11-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,55889308.663559675
 2025-12-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,56877903.4648
 2026-01-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,60628240.47788322
 2026-02-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,61395863.884962976
@@ -47568,12 +47582,13 @@
 2026-07-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,72790763.009
 2026-08-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,77120432.65024602
 2026-09-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,77813733.01359999
+2026-10-01,Préstamos a Empresas (Comerciales),monetario_financiero,millones de $,79822535.4768
 2004-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15452.421818644767
 2004-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15354.950232404586
-2004-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15329.824821639242
+2004-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15329.824821639244
 2004-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15516.054795072494
 2004-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15673.451124959418
-2004-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15939.212913882046
+2004-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,15939.21291388205
 2004-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,16147.491616775093
 2004-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,16362.829183010037
 2004-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,16633.69008967426
@@ -47582,41 +47597,41 @@
 2004-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,17841.012648862248
 2005-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,18372.22574083562
 2005-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,18684.104963328602
-2005-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,18998.714468095644
+2005-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,18998.71446809564
 2005-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,19317.09534451913
 2005-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,19768.160792388564
 2005-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,19927.85425715949
-2005-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,20279.358204384243
+2005-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,20279.358204384247
 2005-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,20652.30427963828
 2005-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,21212.042713271516
-2005-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,21807.15834745412
+2005-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,21807.158347454115
 2005-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,22642.973273620868
 2005-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,23537.89570378959
 2006-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,24557.833306953864
 2006-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,25112.236130953705
 2006-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,25720.274779141393
-2006-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,26438.432728726515
+2006-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,26438.43272872651
 2006-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,27232.826377714722
 2006-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,28248.677874953013
 2006-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,28653.15798792377
 2006-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,29569.716926201854
-2006-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,30656.48699342581
+2006-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,30656.486993425806
 2006-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,31859.186302900933
 2006-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,33160.692078167645
 2006-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,34303.07577747537
 2007-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,35650.99049840547
 2007-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,36906.72815280901
-2007-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,37901.1642793407
+2007-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,37901.16427934071
 2007-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,38964.21053433921
 2007-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,39951.31868959354
 2007-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,41514.89763509174
 2007-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,42610.0518669977
-2007-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,44604.302832968664
+2007-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,44604.30283296867
 2007-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,46819.00149806055
 2007-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,48741.60568665959
-2007-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,50824.02861572544
-2007-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,52451.78183510011
-2008-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,54272.41436082132
+2007-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,50824.028615725445
+2007-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,52451.78183510012
+2008-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,54272.41436082131
 2008-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,55967.8718029709
 2008-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,57251.801918030935
 2008-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,58799.86111489254
@@ -47631,7 +47646,7 @@
 2009-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69734.11260627031
 2009-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69471.21288662625
 2009-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69167.81922189132
-2009-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69514.18507962361
+2009-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69514.1850796236
 2009-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69708.73954687649
 2009-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69578.5134202395
 2009-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,69423.82814915803
@@ -47642,18 +47657,18 @@
 2009-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,74061.64110678705
 2010-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,75513.5563344343
 2010-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,76090.84085646195
-2010-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,77059.5900495667
+2010-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,77059.59004956672
 2010-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,78805.0260167311
 2010-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,80384.5255510712
 2010-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,81848.10826777226
 2010-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,82984.6259857224
 2010-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,84504.38805712361
-2010-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,86810.61344570969
+2010-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,86810.6134457097
 2010-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,90226.88638988842
 2010-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,92867.41073772912
 2010-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,96629.90283299852
 2011-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,99993.34453787463
-2011-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,102348.28004629676
+2011-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,102348.28004629677
 2011-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,104951.1540292293
 2011-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,107409.96834731629
 2011-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,110500.67537556413
@@ -47661,14 +47676,14 @@
 2011-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,117668.48568679715
 2011-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,121578.3176729231
 2011-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,127458.41099729025
-2011-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,132824.58421811298
+2011-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,132824.584218113
 2011-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,138183.49973733863
 2011-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,143186.00039725786
 2012-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,146942.6129106962
 2012-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,149201.8429101327
 2012-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,152547.95713006676
 2012-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,155235.56668132785
-2012-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,157931.33490406716
+2012-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,157931.3349040672
 2012-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,162246.907335717
 2012-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,163598.6304440683
 2012-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,168411.5136551049
@@ -47683,11 +47698,11 @@
 2013-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,213473.54458166342
 2013-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,218763.88437300466
 2013-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,220939.19415354735
-2013-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,227640.89287951973
+2013-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,227640.8928795197
 2013-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,232853.44461059826
 2013-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,240248.9998366811
 2013-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,249797.0394186499
-2013-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,256789.3035882794
+2013-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,256789.30358827935
 2014-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,264585.0820321648
 2014-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,270098.60347541026
 2014-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,270144.3917798263
@@ -47698,15 +47713,15 @@
 2014-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,278200.6176275457
 2014-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,283360.2669621622
 2014-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,295325.2990413189
-2014-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,303849.02693358867
-2014-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,311788.6231994626
+2014-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,303849.0269335886
+2014-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,311788.62319946254
 2015-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,320942.1863620646
 2015-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,325168.3695746889
 2015-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,330803.408585844
 2015-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,338685.97551300144
 2015-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,347079.94122488896
 2015-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,353726.3428510679
-2015-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,359695.2982940327
+2015-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,359695.29829403263
 2015-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,369006.46856727684
 2015-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,381948.54334705963
 2015-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,401260.9365131142
@@ -47722,7 +47737,7 @@
 2016-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,486384.8781743415
 2016-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,502532.55841784104
 2016-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,518030.34155301936
-2016-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,538112.556729803
+2016-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,538112.5567298029
 2016-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,563735.3398259698
 2017-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,585450.178961003
 2017-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,600081.6853105254
@@ -47738,7 +47753,7 @@
 2017-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,853286.7681963998
 2018-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,890260.8213070501
 2018-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,925797.2500633029
-2018-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,954354.7253882934
+2018-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,954354.7253882933
 2018-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,983967.0985320385
 2018-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1017821.2176306357
 2018-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1050867.1872566608
@@ -47758,9 +47773,9 @@
 2019-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1177760.2941025281
 2019-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1195424.8475334968
 2019-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1220766.0371393561
-2019-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1277465.3451280645
-2019-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1297343.487124742
-2020-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1310714.2726877397
+2019-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1277465.3451280647
+2019-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1297343.4871247422
+2020-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1310714.2726877395
 2020-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1322457.277055975
 2020-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1327099.0845516361
 2020-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1317811.4391560927
@@ -47769,38 +47784,38 @@
 2020-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1380936.5450399653
 2020-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1441038.5382276664
 2020-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1475148.5141298603
-2020-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1533632.4896152718
-2020-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1605782.9963134227
+2020-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1533632.4896152716
+2020-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1605782.996313423
 2020-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1672133.895795388
-2021-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1729165.0167517965
+2021-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1729165.0167517967
 2021-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1752072.0014632249
 2021-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1810414.228287131
 2021-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1850495.8075168463
 2021-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1884061.3381451322
 2021-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1914707.4580076789
-2021-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1957857.6891800761
+2021-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1957857.6891800764
 2021-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,1986240.625715077
 2021-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2062562.464697081
-2021-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2181647.241689215
-2021-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2306767.8601013273
+2021-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2181647.2416892145
+2021-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2306767.8601013278
 2021-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2437852.170898308
 2022-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2492912.6071267463
-2022-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2552008.0581063507
+2022-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2552008.058106351
 2022-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2657192.548796218
 2022-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2762306.3511142354
 2022-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,2872491.442293158
 2022-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3036642.850277436
 2022-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3185755.3078575586
-2022-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3316632.8039893927
+2022-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3316632.8039893922
 2022-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3474748.2833934743
 2022-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3596668.8957347297
 2022-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3765399.989237762
 2022-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,3971699.413081604
-2023-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,4128214.145272384
+2023-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,4128214.1452723844
 2023-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,4258239.750536735
-2023-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,4475022.222221569
+2023-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,4475022.22222157
 2023-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,4726051.845631819
-2023-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,5081397.165098408
+2023-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,5081397.165098409
 2023-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,5395506.844572025
 2023-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,5636119.10748704
 2023-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,6087352.90770038
@@ -47809,10 +47824,10 @@
 2023-11-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,7980584.653609065
 2023-12-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,8727285.451674184
 2024-01-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,9250500.016676074
-2024-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,9992450.18445993
+2024-02-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,9992450.184459932
 2024-03-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,10613368.905811392
 2024-04-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,11391047.12324234
-2024-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,12720295.888431305
+2024-05-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,12720295.888431303
 2024-06-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,14190824.774675649
 2024-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,16127210.039424395
 2024-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,19017240.78588114
@@ -47841,6 +47856,7 @@
 2026-07-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,64634033.58
 2026-08-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,64095020.065408796
 2026-09-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,66150265.468
+2026-10-01,Préstamos a Familias (Consumo + Garantía real),monetario_financiero,millones de $,68344405.19080001
 2004-01-01,Préstamos al sector privado,monetario_financiero,millones de $,30378.876190322582
 2004-02-01,Préstamos al sector privado,monetario_financiero,millones de $,30484.79650344827
 2004-03-01,Préstamos al sector privado,monetario_financiero,millones de $,30816.393158064515
@@ -47851,7 +47867,7 @@
 2004-08-01,Préstamos al sector privado,monetario_financiero,millones de $,34894.923493548384
 2004-09-01,Préstamos al sector privado,monetario_financiero,millones de $,35615.611776666665
 2004-10-01,Préstamos al sector privado,monetario_financiero,millones de $,36685.72130645161
-2004-11-01,Préstamos al sector privado,monetario_financiero,millones de $,37513.19073666666
+2004-11-01,Préstamos al sector privado,monetario_financiero,millones de $,37513.190736666664
 2004-12-01,Préstamos al sector privado,monetario_financiero,millones de $,38632.65287419355
 2005-01-01,Préstamos al sector privado,monetario_financiero,millones de $,39047.63366129032
 2005-02-01,Préstamos al sector privado,monetario_financiero,millones de $,39583.532346428576
@@ -47859,11 +47875,11 @@
 2005-04-01,Préstamos al sector privado,monetario_financiero,millones de $,41393.12135666666
 2005-05-01,Préstamos al sector privado,monetario_financiero,millones de $,42600.606948387096
 2005-06-01,Préstamos al sector privado,monetario_financiero,millones de $,43936.48701666666
-2005-07-01,Préstamos al sector privado,monetario_financiero,millones de $,45428.69711612904
+2005-07-01,Préstamos al sector privado,monetario_financiero,millones de $,45428.697116129035
 2005-08-01,Préstamos al sector privado,monetario_financiero,millones de $,46544.73719677419
 2005-09-01,Préstamos al sector privado,monetario_financiero,millones de $,47690.29981666667
 2005-10-01,Préstamos al sector privado,monetario_financiero,millones de $,48740.997548387095
-2005-11-01,Préstamos al sector privado,monetario_financiero,millones de $,50480.00754666668
+2005-11-01,Préstamos al sector privado,monetario_financiero,millones de $,50480.007546666675
 2005-12-01,Préstamos al sector privado,monetario_financiero,millones de $,52486.43615806452
 2006-01-01,Préstamos al sector privado,monetario_financiero,millones de $,53920.93234193548
 2006-02-01,Préstamos al sector privado,monetario_financiero,millones de $,54835.67000714286
@@ -47887,22 +47903,22 @@
 2007-08-01,Préstamos al sector privado,monetario_financiero,millones de $,91548.9247580645
 2007-09-01,Préstamos al sector privado,monetario_financiero,millones de $,94842.17101333335
 2007-10-01,Préstamos al sector privado,monetario_financiero,millones de $,97927.3506483871
-2007-11-01,Préstamos al sector privado,monetario_financiero,millones de $,101077.06743333332
-2007-12-01,Préstamos al sector privado,monetario_financiero,millones de $,104600.84865161288
+2007-11-01,Préstamos al sector privado,monetario_financiero,millones de $,101077.06743333333
+2007-12-01,Préstamos al sector privado,monetario_financiero,millones de $,104600.84865161289
 2008-01-01,Préstamos al sector privado,monetario_financiero,millones de $,107869.3844064516
 2008-02-01,Préstamos al sector privado,monetario_financiero,millones de $,109321.37239655174
-2008-03-01,Préstamos al sector privado,monetario_financiero,millones de $,110762.79194193547
-2008-04-01,Préstamos al sector privado,monetario_financiero,millones de $,113983.93055
+2008-03-01,Préstamos al sector privado,monetario_financiero,millones de $,110762.79194193549
+2008-04-01,Préstamos al sector privado,monetario_financiero,millones de $,113983.93054999999
 2008-05-01,Préstamos al sector privado,monetario_financiero,millones de $,117876.48507096773
 2008-06-01,Préstamos al sector privado,monetario_financiero,millones de $,118671.55796666666
-2008-07-01,Préstamos al sector privado,monetario_financiero,millones de $,119762.47023548388
+2008-07-01,Préstamos al sector privado,monetario_financiero,millones de $,119762.47023548387
 2008-08-01,Préstamos al sector privado,monetario_financiero,millones de $,121407.2166451613
 2008-09-01,Préstamos al sector privado,monetario_financiero,millones de $,123939.28760666668
 2008-10-01,Préstamos al sector privado,monetario_financiero,millones de $,127436.02486129032
 2008-11-01,Préstamos al sector privado,monetario_financiero,millones de $,127996.53531
 2008-12-01,Préstamos al sector privado,monetario_financiero,millones de $,128542.171
 2009-01-01,Préstamos al sector privado,monetario_financiero,millones de $,128424.28553870966
-2009-02-01,Préstamos al sector privado,monetario_financiero,millones de $,128892.17861785712
+2009-02-01,Préstamos al sector privado,monetario_financiero,millones de $,128892.17861785713
 2009-03-01,Préstamos al sector privado,monetario_financiero,millones de $,130726.13587419354
 2009-04-01,Préstamos al sector privado,monetario_financiero,millones de $,131264.34332333333
 2009-05-01,Préstamos al sector privado,monetario_financiero,millones de $,132678.39839032257
@@ -47925,8 +47941,8 @@
 2010-10-01,Préstamos al sector privado,monetario_financiero,millones de $,176304.85674838707
 2010-11-01,Préstamos al sector privado,monetario_financiero,millones de $,182324.91536666668
 2010-12-01,Préstamos al sector privado,monetario_financiero,millones de $,190577.5085096774
-2011-01-01,Préstamos al sector privado,monetario_financiero,millones de $,196718.6748806452
-2011-02-01,Préstamos al sector privado,monetario_financiero,millones de $,201419.8909892857
+2011-01-01,Préstamos al sector privado,monetario_financiero,millones de $,196718.67488064518
+2011-02-01,Préstamos al sector privado,monetario_financiero,millones de $,201419.89098928572
 2011-03-01,Préstamos al sector privado,monetario_financiero,millones de $,206035.61940967743
 2011-04-01,Préstamos al sector privado,monetario_financiero,millones de $,212065.60639000003
 2011-05-01,Préstamos al sector privado,monetario_financiero,millones de $,219672.01704193547
@@ -47951,12 +47967,12 @@
 2012-12-01,Préstamos al sector privado,monetario_financiero,millones de $,366174.9100903226
 2013-01-01,Préstamos al sector privado,monetario_financiero,millones de $,375551.2243709677
 2013-02-01,Préstamos al sector privado,monetario_financiero,millones de $,381452.2179571429
-2013-03-01,Préstamos al sector privado,monetario_financiero,millones de $,386454.2067193549
-2013-04-01,Préstamos al sector privado,monetario_financiero,millones de $,393702.7062733333
+2013-03-01,Préstamos al sector privado,monetario_financiero,millones de $,386454.20671935484
+2013-04-01,Préstamos al sector privado,monetario_financiero,millones de $,393702.70627333334
 2013-05-01,Préstamos al sector privado,monetario_financiero,millones de $,403762.72868387104
 2013-06-01,Préstamos al sector privado,monetario_financiero,millones de $,412893.7582966667
 2013-07-01,Préstamos al sector privado,monetario_financiero,millones de $,423286.2881290323
-2013-08-01,Préstamos al sector privado,monetario_financiero,millones de $,432940.340316129
+2013-08-01,Préstamos al sector privado,monetario_financiero,millones de $,432940.34031612903
 2013-09-01,Préstamos al sector privado,monetario_financiero,millones de $,444747.27025333326
 2013-10-01,Préstamos al sector privado,monetario_financiero,millones de $,455641.1046193549
 2013-11-01,Préstamos al sector privado,monetario_financiero,millones de $,466082.6424333333
@@ -47965,7 +47981,7 @@
 2014-02-01,Préstamos al sector privado,monetario_financiero,millones de $,503848.05102500005
 2014-03-01,Préstamos al sector privado,monetario_financiero,millones de $,503658.5467580645
 2014-04-01,Préstamos al sector privado,monetario_financiero,millones de $,504238.57721
-2014-05-01,Préstamos al sector privado,monetario_financiero,millones de $,510622.5435096775
+2014-05-01,Préstamos al sector privado,monetario_financiero,millones de $,510622.54350967746
 2014-06-01,Préstamos al sector privado,monetario_financiero,millones de $,516915.2622033333
 2014-07-01,Préstamos al sector privado,monetario_financiero,millones de $,522275.580167742
 2014-08-01,Préstamos al sector privado,monetario_financiero,millones de $,532364.0620645161
@@ -47994,7 +48010,7 @@
 2016-07-01,Préstamos al sector privado,monetario_financiero,millones de $,887167.4830806451
 2016-08-01,Préstamos al sector privado,monetario_financiero,millones de $,900433.373932258
 2016-09-01,Préstamos al sector privado,monetario_financiero,millones de $,927845.1175733332
-2016-10-01,Préstamos al sector privado,monetario_financiero,millones de $,955715.1191580644
+2016-10-01,Préstamos al sector privado,monetario_financiero,millones de $,955715.1191580645
 2016-11-01,Préstamos al sector privado,monetario_financiero,millones de $,984625.4748033332
 2016-12-01,Préstamos al sector privado,monetario_financiero,millones de $,1031433.899790323
 2017-01-01,Préstamos al sector privado,monetario_financiero,millones de $,1060445.389458064
@@ -48099,7 +48115,7 @@
 2025-04-01,Préstamos al sector privado,monetario_financiero,millones de $,81421845.76011999
 2025-05-01,Préstamos al sector privado,monetario_financiero,millones de $,86363997.01037742
 2025-06-01,Préstamos al sector privado,monetario_financiero,millones de $,91058637.26469332
-2025-07-01,Préstamos al sector privado,monetario_financiero,millones de $,96911110.1892742
+2025-07-01,Préstamos al sector privado,monetario_financiero,millones de $,96911110.18927419
 2025-08-01,Préstamos al sector privado,monetario_financiero,millones de $,102065207.4288
 2025-09-01,Préstamos al sector privado,monetario_financiero,millones de $,104583486.7695
 2025-10-01,Préstamos al sector privado,monetario_financiero,millones de $,108951872.2099
@@ -48114,6 +48130,7 @@
 2026-07-01,Préstamos al sector privado,monetario_financiero,millones de $,137583079.589
 2026-08-01,Préstamos al sector privado,monetario_financiero,millones de $,141215452.7156549
 2026-09-01,Préstamos al sector privado,monetario_financiero,millones de $,143963998.4816
+2026-10-01,Préstamos al sector privado,monetario_financiero,millones de $,148166940.6676
 2017-03-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.167458584937182
 2017-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.38308452491302064
 2017-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.21599693344011017
@@ -48214,10 +48231,10 @@
 2025-04-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.959971798230155
 2025-05-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.967259375015608
 2025-06-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.243538658393309
-2025-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.232762218911645
+2025-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),4.232762218911637
 2025-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),3.8587826936310097
 2025-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),2.7345366278408
-2025-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.8518673475953706
+2025-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.851867347595378
 2025-11-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.3407318089967711
 2025-12-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.16885388751457878
 2026-01-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),-0.04619483535036606
@@ -48229,6 +48246,7 @@
 2026-07-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.2870003260794756
 2026-08-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.283852049363084
 2026-09-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),1.0689122545529672
+2026-10-01,"Préstamos al sector privado, variación % real mensual",monetario_financiero,% mensual (real),0.5697224654708751
 2016-04-01,"RIPTE medido en canastas básicas (CBT, GBA)",social,canastas,4.828856935414313
 2016-05-01,"RIPTE medido en canastas básicas (CBT, GBA)",social,canastas,4.7099434317382665
 2016-06-01,"RIPTE medido en canastas básicas (CBT, GBA)",social,canastas,4.635835613936749
@@ -49016,6 +49034,7 @@
 2026-11-04,Reservas internacionales (BCRA),monetario_financiero,millones de USD,50437.0
 2026-11-05,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49586.0
 2026-11-11,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49336.0
+2026-11-12,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49073.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -56176,6 +56195,7 @@
 2026-11-11,Riesgo país (EMBI),monetario_financiero,puntos básicos,852.0
 2026-11-12,Riesgo país (EMBI),monetario_financiero,puntos básicos,829.0
 2026-11-13,Riesgo país (EMBI),monetario_financiero,puntos básicos,830.0
+2026-11-16,Riesgo país (EMBI),monetario_financiero,puntos básicos,855.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -58329,6 +58349,7 @@
 2026-11-05,Tasa BADLAR (bancos privados),mercados,% TNA,22.5
 2026-11-11,Tasa BADLAR (bancos privados),mercados,% TNA,22.375
 2026-11-12,Tasa BADLAR (bancos privados),mercados,% TNA,22.125
+2026-11-13,Tasa BADLAR (bancos privados),mercados,% TNA,22.4375
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -67043,6 +67064,7 @@
 2026-11-05,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.625
 2026-11-11,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.4375
 2026-11-12,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.125
+2026-11-13,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.5625
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -67552,6 +67574,7 @@
 2026-11-05,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.125
 2026-11-11,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.4375
 2026-11-12,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.3125
+2026-11-13,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.125
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
@@ -68283,6 +68306,7 @@
 2026-11-05,Tasa de plazo fijo a 30 días,mercados,% TNA,21.62
 2026-11-11,Tasa de plazo fijo a 30 días,mercados,% TNA,21.64
 2026-11-12,Tasa de plazo fijo a 30 días,mercados,% TNA,21.22
+2026-11-13,Tasa de plazo fijo a 30 días,mercados,% TNA,21.51
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
