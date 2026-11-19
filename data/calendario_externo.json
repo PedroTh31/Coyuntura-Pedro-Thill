@@ -1,7 +1,7 @@
 {
  "anunciados": {
   "bce": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "eventos": [
     {
      "fecha": "2026-12-17",
@@ -91,7 +91,7 @@
    ]
   },
   "bcra": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "eventos": [
     {
      "fecha": "2026-01-07",
@@ -162,11 +162,16 @@
      "fecha": "2026-11-05",
      "hora": null,
      "tipo": "rem"
+    },
+    {
+     "fecha": "2026-12-04",
+     "hora": null,
+     "tipo": "rem"
     }
    ]
   },
   "boe": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "eventos": [
     {
      "fecha": "2026-02-05",
@@ -251,7 +256,7 @@
    ]
   },
   "boj": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "eventos": [
     {
      "fecha": "2026-01-23",
@@ -336,7 +341,7 @@
    ]
   },
   "fed": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "eventos": [
     {
      "fecha": "2025-01-29",
@@ -461,7 +466,7 @@
    ]
   },
   "tesoro": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "eventos": [
     {
      "ciclo": "2026-01-14",
@@ -882,7 +887,7 @@
  },
  "publicados": {
   "fed": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "items": [
     {
      "fecha": "2026-05-20",
@@ -939,11 +944,18 @@
      "tipo": "decision",
      "titulo_fuente": "Federal Reserve issues FOMC statement",
      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
+    },
+    {
+     "fecha": "2026-11-18",
+     "hora": "14:00",
+     "tipo": "minutas",
+     "titulo_fuente": "Minutes of the Federal Open Market Committee, October 27-28, 2026",
+     "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm"
     }
    ]
   },
   "tesoro": {
-   "bajado": "2026-11-18T06:30:42-03:00",
+   "bajado": "2026-11-19T06:30:40-03:00",
    "items": [
     {
      "ciclo": "2026-09-11",
