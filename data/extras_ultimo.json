@@ -5,8 +5,8 @@
         "bloque": "mercados",
         "grupo": "Dólar futuro",
         "marca_fecha": null,
-        "maxv": "2.055",
-        "minv": "1",
+        "maxv": "2.065",
+        "minv": "1.572",
         "neutral": true,
         "nombre": "Dólar futuro (DDF)",
         "pct": null,
@@ -14,7 +14,7 @@
         "sube_es_bueno": false,
         "subtitulo": "Curva de contratos por vencimiento mensual",
         "unidad": "$",
-        "valor": "1.571"
+        "valor": "1.572"
       },
       "nota": "Curva de contratos de dólar futuro (DDF) por vencimiento mensual, Mercado Abierto Electrónico (MAE, endpoint emisiones/resumen/DDF, no documentado oficialmente por el MAE, datos delayed 5-15 min intradía). Snapshot del día -- no es una serie histórica (los contratos cambian de nombre mes a mes).",
       "serie_js": {
@@ -22,7 +22,6 @@
         "kind": "bar",
         "unidad": "$",
         "x": [
-          "nov/2026",
           "nov/2026",
           "dic/2026",
           "ene/2027",
@@ -38,20 +37,19 @@
           "nov/2027"
         ],
         "y": [
-          1571.0,
-          1.0,
-          1604.0,
-          1634.5,
-          1664.0,
-          1698.5,
-          1732.0,
-          1764.0,
-          1803.0,
-          1830.5,
-          1870.0,
-          1918.0,
-          1985.0,
-          2055.0
+          1572.5,
+          1608.5,
+          1641.0,
+          1670.0,
+          1709.0,
+          1740.0,
+          1773.0,
+          1805.5,
+          1840.5,
+          1876.5,
+          1925.0,
+          1990.0,
+          2065.0
         ]
       }
     },

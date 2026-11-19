@@ -1,9 +1,9 @@
 {
   "fecha": "2026-11-19",
-  "hora": "06:42:56",
+  "hora": "15:55:51",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "parcial",
-  "disparo": "workflow_dispatch",
+  "disparo": "schedule",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
@@ -505,7 +505,7 @@
         "Transferencia de utilidades del BCRA",
         "Transferencia de utilidades del BCRA (pesos constantes)"
       ],
-      "racha": 26
+      "racha": 27
     },
     "331.1_OTRAS_OPERIOS__58": {
       "motivo": "coherencia: 331.1_OTRAS_OPERDES__39, de la misma distribución, sale del CSV en la card 'Asistencia monetaria del BCRA al Tesoro'",
@@ -513,63 +513,63 @@
         "Adelantos transitorios al Tesoro",
         "Adelantos transitorios al Tesoro (pesos constantes)"
       ],
-      "racha": 26
+      "racha": 27
     },
     "332.2_BANCOS_PRIADA__51": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: bancos privados"
       ],
-      "racha": 4
+      "racha": 5
     },
     "332.2_BANCOS_PUBADA__55": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: bancos públicos"
       ],
-      "racha": 4
+      "racha": 5
     },
     "332.2_SISTEMA_FIADA__53": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: sistema financiero"
       ],
-      "racha": 4
+      "racha": 5
     },
     "52.2_ASDJ_0_0_37": {
       "motivo": "la API devolvió 91 de 93 filas (historia cortada)",
       "indicadores": [
         "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"
       ],
-      "racha": 26
+      "racha": 27
     },
     "90.1_AMTM3_0_0_31": {
       "motivo": "los últimos 12 períodos difieren del CSV un 2.8% (tolerancia 1%)",
       "indicadores": [
         "M3 (agregado amplio)"
       ],
-      "racha": 4
+      "racha": 5
     },
     "90.1_BMCMP_0_0_44": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 4
+      "racha": 5
     },
     "90.1_DCCT_0_0_32": {
       "motivo": "los últimos 12 períodos difieren del CSV un 5.6% (tolerancia 1%)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 4
+      "racha": 5
     },
     "91.1_DETALLE_PRDOC_0_0_47": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 4
+      "racha": 5
     },
     "91.1_PEFPC_0_0_35": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
@@ -577,21 +577,21 @@
         "Préstamos al sector privado",
         "Préstamos al sector privado, variación % real mensual"
       ],
-      "racha": 4
+      "racha": 5
     },
     "91.1_PEFPC_0_0_41": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 4
+      "racha": 5
     },
     "91.1_PEFPD_0_0_45": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Empresas (Comerciales)"
       ],
-      "racha": 4
+      "racha": 5
     }
   },
   "datos_gob_csv_descartados": {
@@ -617,13 +617,13 @@
   },
   "mercados": {
     "bono:AL30": {
-      "error": "RuntimeError: BYMA AL30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=AL30D+24HS&resolution=D&from=1783641600&to=1795081021 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x753955e50980>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
+      "error": "RuntimeError: BYMA AL30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=AL30D+24HS&resolution=D&from=1783641600&to=1795114201 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x7ded5af43200>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
     },
     "bono:GD30": {
-      "error": "RuntimeError: BYMA GD30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD30D+24HS&resolution=D&from=1783641600&to=1795081125 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x75395562c410>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
+      "error": "RuntimeError: BYMA GD30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD30D+24HS&resolution=D&from=1783641600&to=1795114303 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x7ded5b1d34d0>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
     },
     "bono:GD35": {
-      "error": "RuntimeError: BYMA GD35D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD35D+24HS&resolution=D&from=1783641600&to=1795081228 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x753956e24a10>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
+      "error": "RuntimeError: BYMA GD35D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD35D+24HS&resolution=D&from=1783641600&to=1795114406 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x7ded5af900e0>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
     },
     "extra:Dólar futuro (DDF)": {
       "estado": "ok"
