@@ -7,8 +7,8 @@
     "mercado_trabajo": "2026Q2",
     "informe_avance": "2026Q2"
   },
-  "fecha": "2026-11-18",
-  "hora_envio": "07:10:38",
+  "fecha": "2026-11-19",
+  "hora_envio": "07:10:30",
   "zona": "America/Argentina/Buenos_Aires",
   "disparo": "workflow_dispatch",
   "datos_al_momento_del_envio": false
