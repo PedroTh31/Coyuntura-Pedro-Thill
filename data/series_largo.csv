@@ -6818,6 +6818,7 @@
 2026-11-17,Brecha cambiaria (CCL/oficial),monetario_financiero,%,6.850793650793663
 2026-11-18,Brecha cambiaria (CCL/oficial),monetario_financiero,%,7.758730158730165
 2026-11-19,Brecha cambiaria (CCL/oficial),monetario_financiero,%,9.120253164556956
+2026-11-20,Brecha cambiaria (CCL/oficial),monetario_financiero,%,10.296529968454271
 2024-09-01,CER (Coeficiente de Estabilización de Referencia),mercados,índice,451.70529028732
 2024-09-02,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.27714239956
 2024-09-03,CER (Coeficiente de Estabilización de Referencia),mercados,índice,452.84971846798
@@ -7628,6 +7629,7 @@
 2026-11-17,CER (Coeficiente de Estabilización de Referencia),mercados,índice,871.9574182104
 2026-11-18,CER (Coeficiente de Estabilización de Referencia),mercados,índice,872.59015080908
 2026-11-19,CER (Coeficiente de Estabilización de Referencia),mercados,índice,873.22334254778
+2026-11-20,CER (Coeficiente de Estabilización de Referencia),mercados,índice,873.85699375966
 2018-10-29,Canje MEP/CCL,mercados,%,-0.43278333784148026
 2018-10-30,Canje MEP/CCL,mercados,%,1.228501228501222
 2018-10-31,Canje MEP/CCL,mercados,%,2.0873921514055205
@@ -10572,6 +10574,7 @@
 2026-11-17,Canje MEP/CCL,mercados,%,5.91604254515703
 2026-11-18,Canje MEP/CCL,mercados,%,5.856670616852755
 2026-11-19,Canje MEP/CCL,mercados,%,5.850933202357567
+2026-11-20,Canje MEP/CCL,mercados,%,5.964359316280765
 2025-07-02,Caución en dólares (1 día),mercados,% TNA,2.0
 2025-08-04,Caución en dólares (1 día),mercados,% TNA,0.9208
 2025-08-05,Caución en dólares (1 día),mercados,% TNA,1.5
@@ -13398,7 +13401,7 @@
 2026-08-04,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60333907.3862
 2026-08-05,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60461527.4724
 2026-08-06,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60438631.3126
-2026-08-07,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60493339.5705
+2026-08-07,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60494838.006
 2026-08-10,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60416628.8931
 2026-08-11,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60243742.767
 2026-08-12,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),60339225.8679
@@ -13464,6 +13467,7 @@
 2026-11-11,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66468923.5448
 2026-11-12,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66194355.52
 2026-11-13,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66463657.5232
+2026-11-16,Depósitos: sector privado en dólares,mercados,millones de $ (dólares valuados en pesos),66542967.208
 2024-09-02,Depósitos: sector privado en pesos,mercados,millones de $,62225.998
 2024-09-03,Depósitos: sector privado en pesos,mercados,millones de $,62295.011
 2024-09-04,Depósitos: sector privado en pesos,mercados,millones de $,62799.001
@@ -13925,25 +13929,25 @@
 2026-07-29,Depósitos: sector privado en pesos,mercados,miles de millones de $,119872.95300000001
 2026-07-30,Depósitos: sector privado en pesos,mercados,miles de millones de $,121692.095
 2026-07-31,Depósitos: sector privado en pesos,mercados,miles de millones de $,124959.543
-2026-08-03,Depósitos: sector privado en pesos,mercados,miles de millones de $,123140.307
-2026-08-04,Depósitos: sector privado en pesos,mercados,miles de millones de $,123022.532
-2026-08-05,Depósitos: sector privado en pesos,mercados,miles de millones de $,123270.21
-2026-08-06,Depósitos: sector privado en pesos,mercados,miles de millones de $,123770.409
-2026-08-07,Depósitos: sector privado en pesos,mercados,miles de millones de $,122573.787
-2026-08-10,Depósitos: sector privado en pesos,mercados,miles de millones de $,120109.709
-2026-08-11,Depósitos: sector privado en pesos,mercados,miles de millones de $,120008.74
-2026-08-12,Depósitos: sector privado en pesos,mercados,miles de millones de $,119249.64600000001
-2026-08-13,Depósitos: sector privado en pesos,mercados,miles de millones de $,119689.041
+2026-08-03,Depósitos: sector privado en pesos,mercados,miles de millones de $,123140.359
+2026-08-04,Depósitos: sector privado en pesos,mercados,miles de millones de $,123021.624
+2026-08-05,Depósitos: sector privado en pesos,mercados,miles de millones de $,123270.273
+2026-08-06,Depósitos: sector privado en pesos,mercados,miles de millones de $,123770.46
+2026-08-07,Depósitos: sector privado en pesos,mercados,miles de millones de $,122573.785
+2026-08-10,Depósitos: sector privado en pesos,mercados,miles de millones de $,120110.3
+2026-08-11,Depósitos: sector privado en pesos,mercados,miles de millones de $,120014.584
+2026-08-12,Depósitos: sector privado en pesos,mercados,miles de millones de $,119250.186
+2026-08-13,Depósitos: sector privado en pesos,mercados,miles de millones de $,119689.58200000001
 2026-08-14,Depósitos: sector privado en pesos,mercados,miles de millones de $,120500.609
 2026-08-18,Depósitos: sector privado en pesos,mercados,miles de millones de $,118302.774
 2026-08-19,Depósitos: sector privado en pesos,mercados,miles de millones de $,117735.243
 2026-08-20,Depósitos: sector privado en pesos,mercados,miles de millones de $,118362.804
 2026-08-21,Depósitos: sector privado en pesos,mercados,miles de millones de $,118658.504
-2026-08-24,Depósitos: sector privado en pesos,mercados,miles de millones de $,118248.87700000001
-2026-08-25,Depósitos: sector privado en pesos,mercados,miles de millones de $,118904.3
-2026-08-26,Depósitos: sector privado en pesos,mercados,miles de millones de $,119757.426
-2026-08-27,Depósitos: sector privado en pesos,mercados,miles de millones de $,121009.195
-2026-08-28,Depósitos: sector privado en pesos,mercados,miles de millones de $,123459.916
+2026-08-24,Depósitos: sector privado en pesos,mercados,miles de millones de $,118250.577
+2026-08-25,Depósitos: sector privado en pesos,mercados,miles de millones de $,118905.417
+2026-08-26,Depósitos: sector privado en pesos,mercados,miles de millones de $,119758.36200000001
+2026-08-27,Depósitos: sector privado en pesos,mercados,miles de millones de $,121010.02100000001
+2026-08-28,Depósitos: sector privado en pesos,mercados,miles de millones de $,123459.913
 2026-08-31,Depósitos: sector privado en pesos,mercados,miles de millones de $,126016.82800000001
 2026-09-01,Depósitos: sector privado en pesos,mercados,miles de millones de $,125489.91100000001
 2026-09-02,Depósitos: sector privado en pesos,mercados,miles de millones de $,125041.329
@@ -13991,10 +13995,11 @@
 2026-11-02,Depósitos: sector privado en pesos,mercados,miles de millones de $,129017.719
 2026-11-03,Depósitos: sector privado en pesos,mercados,miles de millones de $,129030.08200000001
 2026-11-04,Depósitos: sector privado en pesos,mercados,miles de millones de $,129730.52900000001
-2026-11-05,Depósitos: sector privado en pesos,mercados,miles de millones de $,131581.997
-2026-11-11,Depósitos: sector privado en pesos,mercados,miles de millones de $,128820.967
+2026-11-05,Depósitos: sector privado en pesos,mercados,miles de millones de $,131582.88
+2026-11-11,Depósitos: sector privado en pesos,mercados,miles de millones de $,128808.299
 2026-11-12,Depósitos: sector privado en pesos,mercados,miles de millones de $,129058.77900000001
-2026-11-13,Depósitos: sector privado en pesos,mercados,miles de millones de $,128921.20300000001
+2026-11-13,Depósitos: sector privado en pesos,mercados,miles de millones de $,128921.183
+2026-11-16,Depósitos: sector privado en pesos,mercados,miles de millones de $,126431.024
 2024-08-31,Depósitos: sector privado no financiero,monetario_financiero,millones de $,80770.784
 2024-09-30,Depósitos: sector privado no financiero,mercados,millones de $,95737.364
 2024-10-31,Depósitos: sector privado no financiero,mercados,millones de $,103708.705
@@ -19262,6 +19267,7 @@
 2026-11-17,Dólar CCL,monetario_financiero,$/USD (venta),1682.9
 2026-11-18,Dólar CCL,monetario_financiero,$/USD (venta),1697.2
 2026-11-19,Dólar CCL,monetario_financiero,$/USD (venta),1724.1
+2026-11-20,Dólar CCL,monetario_financiero,$/USD (venta),1748.2
 2018-10-29,Dólar MEP,monetario_financiero,$/USD (venta),36.97
 2018-10-30,Dólar MEP,monetario_financiero,$/USD (venta),36.63
 2018-10-31,Dólar MEP,monetario_financiero,$/USD (venta),35.93
@@ -22206,6 +22212,7 @@
 2026-11-17,Dólar MEP,monetario_financiero,$/USD (venta),1588.9
 2026-11-18,Dólar MEP,monetario_financiero,$/USD (venta),1603.3
 2026-11-19,Dólar MEP,monetario_financiero,$/USD (venta),1628.8
+2026-11-20,Dólar MEP,monetario_financiero,$/USD (venta),1649.8
 2011-01-03,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar blue,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar blue,monetario_financiero,$/USD (venta),4.0
@@ -28006,6 +28013,7 @@
 2026-11-17,Dólar blue,monetario_financiero,$/USD (venta),1600.0
 2026-11-18,Dólar blue,monetario_financiero,$/USD (venta),1605.0
 2026-11-19,Dólar blue,monetario_financiero,$/USD (venta),1630.0
+2026-11-20,Dólar blue,monetario_financiero,$/USD (venta),1640.0
 2011-01-03,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-04,Dólar oficial,monetario_financiero,$/USD (venta),4.0
 2011-01-05,Dólar oficial,monetario_financiero,$/USD (venta),4.0
@@ -33806,6 +33814,7 @@
 2026-11-17,Dólar oficial,monetario_financiero,$/USD (venta),1575.0
 2026-11-18,Dólar oficial,monetario_financiero,$/USD (venta),1575.0
 2026-11-19,Dólar oficial,monetario_financiero,$/USD (venta),1580.0
+2026-11-20,Dólar oficial,monetario_financiero,$/USD (venta),1585.0
 2004-01-01,EMAE (actividad económica),real,índice 2004=100,92.62750602691052
 2004-02-01,EMAE (actividad económica),real,índice 2004=100,90.18617931655959
 2004-03-01,EMAE (actividad económica),real,índice 2004=100,101.88329804238073
@@ -44007,19 +44016,19 @@
 2026-09-30,Inflación mensual (IPC),precios,% mensual,1.9
 2026-10-31,Inflación mensual (IPC),precios,% mensual,2.2
 2015-01-01,Intereses netos de deuda pública,fiscal,millones de $,8648.299999999997
-2015-02-01,Intereses netos de deuda pública,fiscal,millones de $,1261.7000000000005
+2015-02-01,Intereses netos de deuda pública,fiscal,millones de $,1261.7000000000003
 2015-03-01,Intereses netos de deuda pública,fiscal,millones de $,5710.999999999999
 2015-04-01,Intereses netos de deuda pública,fiscal,millones de $,5511.6
 2015-05-01,Intereses netos de deuda pública,fiscal,millones de $,9120.500000000002
 2015-06-01,Intereses netos de deuda pública,fiscal,millones de $,11208.7
-2015-07-01,Intereses netos de deuda pública,fiscal,millones de $,905.1
+2015-07-01,Intereses netos de deuda pública,fiscal,millones de $,905.0999999999999
 2015-08-01,Intereses netos de deuda pública,fiscal,millones de $,2359.6
 2015-09-01,Intereses netos de deuda pública,fiscal,millones de $,8159.5
 2015-10-01,Intereses netos de deuda pública,fiscal,millones de $,5253.8
 2015-11-01,Intereses netos de deuda pública,fiscal,millones de $,4895.2
-2015-12-01,Intereses netos de deuda pública,fiscal,millones de $,16131.2
+2015-12-01,Intereses netos de deuda pública,fiscal,millones de $,16131.199999999999
 2016-01-01,Intereses netos de deuda pública,fiscal,millones de $,2937.8
-2016-02-01,Intereses netos de deuda pública,fiscal,millones de $,3894.3
+2016-02-01,Intereses netos de deuda pública,fiscal,millones de $,3894.2999999999997
 2016-03-01,Intereses netos de deuda pública,fiscal,millones de $,11820.100000000002
 2016-04-01,Intereses netos de deuda pública,fiscal,millones de $,6181.4
 2016-05-01,Intereses netos de deuda pública,fiscal,millones de $,12019.399999999998
@@ -44036,22 +44045,22 @@
 2017-04-01,Intereses netos de deuda pública,fiscal,millones de $,30348.3
 2017-05-01,Intereses netos de deuda pública,fiscal,millones de $,16805.800000000003
 2017-06-01,Intereses netos de deuda pública,fiscal,millones de $,34813.399999999994
-2017-07-01,Intereses netos de deuda pública,fiscal,millones de $,10631.299999999996
+2017-07-01,Intereses netos de deuda pública,fiscal,millones de $,10631.299999999997
 2017-08-01,Intereses netos de deuda pública,fiscal,millones de $,6894.6
 2017-09-01,Intereses netos de deuda pública,fiscal,millones de $,19823.5
 2017-10-01,Intereses netos de deuda pública,fiscal,millones de $,29436.8
 2017-11-01,Intereses netos de deuda pública,fiscal,millones de $,16359.499999999996
-2017-12-01,Intereses netos de deuda pública,fiscal,millones de $,30500.6
+2017-12-01,Intereses netos de deuda pública,fiscal,millones de $,30500.600000000002
 2018-01-01,Intereses netos de deuda pública,fiscal,millones de $,29818.000000000004
 2018-02-01,Intereses netos de deuda pública,fiscal,millones de $,7510.0999999999985
 2018-03-01,Intereses netos de deuda pública,fiscal,millones de $,23194.0
 2018-04-01,Intereses netos de deuda pública,fiscal,millones de $,33116.7
-2018-05-01,Intereses netos de deuda pública,fiscal,millones de $,19521.4
-2018-06-01,Intereses netos de deuda pública,fiscal,millones de $,32202.1
+2018-05-01,Intereses netos de deuda pública,fiscal,millones de $,19521.399999999998
+2018-06-01,Intereses netos de deuda pública,fiscal,millones de $,32202.100000000002
 2018-07-01,Intereses netos de deuda pública,fiscal,millones de $,48100.2
 2018-08-01,Intereses netos de deuda pública,fiscal,millones de $,4160.9
 2018-09-01,Intereses netos de deuda pública,fiscal,millones de $,33003.90000000001
-2018-10-01,Intereses netos de deuda pública,fiscal,millones de $,61740.7
+2018-10-01,Intereses netos de deuda pública,fiscal,millones de $,61740.700000000004
 2018-11-01,Intereses netos de deuda pública,fiscal,millones de $,39114.00000000001
 2018-12-01,Intereses netos de deuda pública,fiscal,millones de $,57457.99999999999
 2019-01-01,Intereses netos de deuda pública,fiscal,millones de $,76695.5
@@ -44061,11 +44070,11 @@
 2019-05-01,Intereses netos de deuda pública,fiscal,millones de $,64607.99999999999
 2019-06-01,Intereses netos de deuda pública,fiscal,millones de $,61114.09999999999
 2019-07-01,Intereses netos de deuda pública,fiscal,millones de $,82159.8
-2019-08-01,Intereses netos de deuda pública,fiscal,millones de $,28544.1
+2019-08-01,Intereses netos de deuda pública,fiscal,millones de $,28544.100000000002
 2019-09-01,Intereses netos de deuda pública,fiscal,millones de $,50855.8
 2019-10-01,Intereses netos de deuda pública,fiscal,millones de $,72774.09999999999
 2019-11-01,Intereses netos de deuda pública,fiscal,millones de $,67269.19999999998
-2019-12-01,Intereses netos de deuda pública,fiscal,millones de $,105259.6
+2019-12-01,Intereses netos de deuda pública,fiscal,millones de $,105259.59999999999
 2020-01-01,Intereses netos de deuda pública,fiscal,millones de $,87052.09999999999
 2020-02-01,Intereses netos de deuda pública,fiscal,millones de $,40080.59999999999
 2020-03-01,Intereses netos de deuda pública,fiscal,millones de $,41577.3
@@ -44078,10 +44087,10 @@
 2020-10-01,Intereses netos de deuda pública,fiscal,millones de $,31069.300000000003
 2020-11-01,Intereses netos de deuda pública,fiscal,millones de $,68336.50000000001
 2020-12-01,Intereses netos de deuda pública,fiscal,millones de $,11281.499999999998
-2021-01-01,Intereses netos de deuda pública,fiscal,millones de $,27103.9
+2021-01-01,Intereses netos de deuda pública,fiscal,millones de $,27103.899999999998
 2021-02-01,Intereses netos de deuda pública,fiscal,millones de $,45559.30000000001
 2021-03-01,Intereses netos de deuda pública,fiscal,millones de $,42594.99999999999
-2021-04-01,Intereses netos de deuda pública,fiscal,millones de $,45587.3
+2021-04-01,Intereses netos de deuda pública,fiscal,millones de $,45587.299999999996
 2021-05-01,Intereses netos de deuda pública,fiscal,millones de $,90331.9
 2021-06-01,Intereses netos de deuda pública,fiscal,millones de $,54730.00000000001
 2021-07-01,Intereses netos de deuda pública,fiscal,millones de $,64585.4
@@ -44102,51 +44111,52 @@
 2022-10-01,Intereses netos de deuda pública,fiscal,millones de $,82202.3
 2022-11-01,Intereses netos de deuda pública,fiscal,millones de $,303438.80000000005
 2022-12-01,Intereses netos de deuda pública,fiscal,millones de $,243588.9
-2023-01-01,Intereses netos de deuda pública,fiscal,millones de $,334031.4
+2023-01-01,Intereses netos de deuda pública,fiscal,millones de $,334031.39999999997
 2023-02-01,Intereses netos de deuda pública,fiscal,millones de $,257456.9
 2023-03-01,Intereses netos de deuda pública,fiscal,millones de $,130150.3
 2023-04-01,Intereses netos de deuda pública,fiscal,millones de $,76015.2
 2023-05-01,Intereses netos de deuda pública,fiscal,millones de $,383420.9
 2023-06-01,Intereses netos de deuda pública,fiscal,millones de $,96860.89999999997
-2023-07-01,Intereses netos de deuda pública,fiscal,millones de $,419877.2
+2023-07-01,Intereses netos de deuda pública,fiscal,millones de $,419877.19999999995
 2023-08-01,Intereses netos de deuda pública,fiscal,millones de $,347540.1
-2023-09-01,Intereses netos de deuda pública,fiscal,millones de $,131059.30000000005
+2023-09-01,Intereses netos de deuda pública,fiscal,millones de $,131059.30000000003
 2023-10-01,Intereses netos de deuda pública,fiscal,millones de $,123910.7
 2023-11-01,Intereses netos de deuda pública,fiscal,millones de $,544472.0
 2023-12-01,Intereses netos de deuda pública,fiscal,millones de $,409036.7999999999
 2024-01-01,Intereses netos de deuda pública,fiscal,millones de $,1492337.9
 2024-02-01,Intereses netos de deuda pública,fiscal,millones de $,894412.1
-2024-03-01,Intereses netos de deuda pública,fiscal,millones de $,348395.9
+2024-03-01,Intereses netos de deuda pública,fiscal,millones de $,348395.89999999997
 2024-04-01,Intereses netos de deuda pública,fiscal,millones de $,247542.8
 2024-05-01,Intereses netos de deuda pública,fiscal,millones de $,1148634.4
-2024-06-01,Intereses netos de deuda pública,fiscal,millones de $,250380.0
+2024-06-01,Intereses netos de deuda pública,fiscal,millones de $,250379.99999999997
 2024-07-01,Intereses netos de deuda pública,fiscal,millones de $,1509209.7999999998
 2024-08-01,Intereses netos de deuda pública,fiscal,millones de $,896129.4999999999
 2024-09-01,Intereses netos de deuda pública,fiscal,millones de $,349816.4
 2024-10-01,Intereses netos de deuda pública,fiscal,millones de $,223522.5
-2024-11-01,Intereses netos de deuda pública,fiscal,millones de $,1024383.2
+2024-11-01,Intereses netos de deuda pública,fiscal,millones de $,1024383.2000000001
 2024-12-01,Intereses netos de deuda pública,fiscal,millones de $,256259.5
 2025-01-01,Intereses netos de deuda pública,fiscal,millones de $,1835112.1
 2025-02-01,Intereses netos de deuda pública,fiscal,millones de $,866189.1
 2025-03-01,Intereses netos de deuda pública,fiscal,millones de $,346430.2
 2025-04-01,Intereses netos de deuda pública,fiscal,millones de $,273608.1
-2025-05-01,Intereses netos de deuda pública,fiscal,millones de $,1034794.5
+2025-05-01,Intereses netos de deuda pública,fiscal,millones de $,1034794.4999999999
 2025-06-01,Intereses netos de deuda pública,fiscal,millones de $,239298.69999999995
-2025-07-01,Intereses netos de deuda pública,fiscal,millones de $,1917900.7
+2025-07-01,Intereses netos de deuda pública,fiscal,millones de $,1917900.7000000002
 2025-08-01,Intereses netos de deuda pública,fiscal,millones de $,1166563.5000000002
-2025-09-01,Intereses netos de deuda pública,fiscal,millones de $,387341.7
+2025-09-01,Intereses netos de deuda pública,fiscal,millones de $,387341.69999999995
 2025-10-01,Intereses netos de deuda pública,fiscal,millones de $,306253.10000000003
 2025-11-01,Intereses netos de deuda pública,fiscal,millones de $,1528055.6
-2025-12-01,Intereses netos de deuda pública,fiscal,millones de $,413852.3000000001
+2025-12-01,Intereses netos de deuda pública,fiscal,millones de $,413852.30000000005
 2026-01-01,Intereses netos de deuda pública,fiscal,millones de $,2020578.3
 2026-02-01,Intereses netos de deuda pública,fiscal,millones de $,1266218.4
 2026-03-01,Intereses netos de deuda pública,fiscal,millones de $,445495.0
 2026-04-01,Intereses netos de deuda pública,fiscal,millones de $,364741.20000000007
 2026-05-01,Intereses netos de deuda pública,fiscal,millones de $,1445753.7000000002
 2026-06-01,Intereses netos de deuda pública,fiscal,millones de $,328048.49999999994
-2026-07-01,Intereses netos de deuda pública,fiscal,millones de $,2715435.6
+2026-07-01,Intereses netos de deuda pública,fiscal,millones de $,2715435.5999999996
 2026-08-01,Intereses netos de deuda pública,fiscal,millones de $,1354793.2
 2026-09-01,Intereses netos de deuda pública,fiscal,millones de $,450466.6
+2026-10-01,Intereses netos de deuda pública,fiscal,millones de $,352529.49999999994
 2004-01-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33405.13591167097
 2004-02-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,33915.87767978622
 2004-03-01,M1 (circulante + cta. cte.),monetario_financiero,millones de $,32706.647277332588
@@ -44691,8 +44701,8 @@
 2026-05-01,M2 (agregado total),monetario_financiero,millones de $,83372948.06451613
 2026-06-01,M2 (agregado total),monetario_financiero,millones de $,86789627.1
 2026-07-01,M2 (agregado total),monetario_financiero,millones de $,90486028.38709678
-2026-08-01,M2 (agregado total),monetario_financiero,millones de $,91466810.0
-2026-09-01,M2 (agregado total),monetario_financiero,millones de $,91805025.6
+2026-08-01,M2 (agregado total),monetario_financiero,millones de $,91467883.35483871
+2026-09-01,M2 (agregado total),monetario_financiero,millones de $,91805054.8
 2026-10-01,M2 (agregado total),monetario_financiero,millones de $,92539903.09677419
 2004-01-01,M3 (agregado amplio),monetario_financiero,millones de $,111552.85260988695
 2004-02-01,M3 (agregado amplio),monetario_financiero,millones de $,113522.60910809808
@@ -49059,6 +49069,7 @@
 2026-11-12,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49073.0
 2026-11-13,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49600.0
 2026-11-16,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49474.0
+2026-11-17,Reservas internacionales (BCRA),monetario_financiero,millones de USD,49741.0
 2004-01-01,Resto (importaciones por uso),externo,millones de USD,7.012686
 2004-02-01,Resto (importaciones por uso),externo,millones de USD,8.426854
 2004-03-01,Resto (importaciones por uso),externo,millones de USD,11.993789
@@ -49332,14 +49343,14 @@
 2026-07-01,Resto (importaciones por uso),externo,millones de USD,112.15592796
 2026-08-01,Resto (importaciones por uso),externo,millones de USD,109.15636567
 2026-09-01,Resto (importaciones por uso),externo,millones de USD,109.59803007
-2015-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-13462.999999999984
+2015-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-13462.999999999985
 2015-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-16392.699999999997
 2015-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-27894.699999999983
 2015-04-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-24103.40000000001
 2015-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-17300.5
 2015-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-32981.5
 2015-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-9736.400000000023
-2015-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-20202.10000000001
+2015-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-20202.100000000006
 2015-09-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-28976.800000000017
 2015-10-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-26762.0
 2015-11-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-26838.79999999999
@@ -49354,7 +49365,7 @@
 2016-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-38775.40000000002
 2016-09-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-48995.79999999999
 2016-10-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-77500.40000000002
-2016-11-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-19858.10000000001
+2016-11-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-19858.100000000006
 2016-12-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-83849.80000000016
 2017-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-5555.899999999994
 2017-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-29999.79999999996
@@ -49371,7 +49382,7 @@
 2018-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-25889.400000000023
 2018-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-27737.70000000001
 2018-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-37895.90000000002
-2018-04-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-43459.10000000004
+2018-04-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-43459.100000000035
 2018-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-27339.20000000001
 2018-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-88865.70000000001
 2018-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-62379.79999999993
@@ -49398,21 +49409,21 @@
 2020-04-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-266049.5000000001
 2020-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-308219.1200000001
 2020-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-288565.20000000007
-2020-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-189089.4
+2020-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-189089.40000000002
 2020-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-145551.99999999988
 2020-09-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-212020.20000000007
 2020-10-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-112695.99999999988
-2020-11-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-127029.29999999992
+2020-11-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-127029.29999999993
 2020-12-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-318909.0
 2021-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-3030.2999999998137
-2021-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-64316.49999999999
+2021-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-64316.499999999985
 2021-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-117060.70000000006
 2021-04-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-57032.20000000004
 2021-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-64618.30000000012
-2021-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-207947.29999999996
+2021-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-207947.29999999993
 2021-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-163155.69999999995
 2021-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-193393.1999999999
-2021-09-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,237250.5000000001
+2021-09-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,237250.50000000006
 2021-10-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-277094.19999999995
 2021-11-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-242089.1999999998
 2021-12-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-511994.5
@@ -49420,7 +49431,7 @@
 2022-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-136898.79999999996
 2022-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-172029.30000000005
 2022-04-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-146314.6000000002
-2022-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-242432.5000000001
+2022-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-242432.50000000006
 2022-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-396577.4
 2022-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-131662.80000000008
 2022-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-370104.3999999996
@@ -49459,31 +49470,32 @@
 2025-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,662122.9000000004
 2025-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,551234.2000000018
 2025-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-168515.2
-2025-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,390300.4999999992
+2025-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,390300.49999999924
 2025-09-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,309623.3999999984
 2025-10-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,517671.6999999986
 2025-11-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,599953.7999999999
 2025-12-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-3290301.8999999985
 2026-01-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,1105159.0000000007
 2026-02-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,144421.299999999
-2026-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,484789.0999999991
+2026-03-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,484789.09999999905
 2026-04-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,268102.90000000026
-2026-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,478613.1999999996
+2026-05-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,478613.19999999955
 2026-06-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,-1024891.399999999
-2026-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,244897.10000000036
+2026-07-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,244897.10000000033
 2026-08-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,635528.5999999981
 2026-09-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,977173.4
+2026-10-01,Resultado financiero (Sector Público Nacional),fiscal,millones de $,1578626.8000000021
 2015-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-6228.5
 2015-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-15966.600000000006
 2015-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23478.300000000003
-2015-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-20776.2
+2015-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-20776.199999999997
 2015-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-8477.400000000009
-2015-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23432.399999999998
-2015-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-13040.300000000005
+2015-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23432.399999999994
+2015-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-13040.300000000003
 2015-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-19792.0
-2015-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-24302.2
-2015-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23128.7
-2015-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-24020.10000000001
+2015-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-24302.199999999997
+2015-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23128.699999999997
+2015-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-24020.100000000006
 2015-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-44170.30000000003
 2016-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-864.9999999999709
 2016-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-17668.29999999999
@@ -49492,7 +49504,7 @@
 2016-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-14795.00000000003
 2016-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-45690.09999999996
 2016-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-26966.50000000003
-2016-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-39001.60000000004
+2016-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-39001.600000000035
 2016-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-40344.20000000001
 2016-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-63668.80000000003
 2016-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-14640.0
@@ -49514,7 +49526,7 @@
 2018-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-40028.50000000003
 2018-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-26275.20000000004
 2018-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-18141.300000000017
-2018-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-65407.30000000008
+2018-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-65407.300000000076
 2018-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-28884.699999999924
 2018-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-28832.899999999965
 2018-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-37239.5
@@ -49530,7 +49542,7 @@
 2019-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-22948.599999999977
 2019-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-1451.2000000000698
 2019-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-40855.60000000009
-2019-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-9056.699999999952
+2019-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-9056.699999999953
 2019-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-31737.800000000047
 2019-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-141505.60000000003
 2020-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-33544.0
@@ -49541,27 +49553,27 @@
 2020-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-260152.6000000001
 2020-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-169766.1000000001
 2020-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-100561.19999999984
-2020-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-181115.5000000001
-2020-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-98991.3
+2020-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-181115.50000000012
+2020-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-98991.29999999999
 2020-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-81242.5
-2020-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-323376.8
+2020-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-323376.79999999993
 2021-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-12314.599999999744
 2021-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-35548.19999999984
 2021-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-88283.80000000016
 2021-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-23253.800000000047
-2021-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-14026.600000000091
+2021-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-14026.600000000093
 2021-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-182664.2999999998
 2021-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-129564.49999999988
 2021-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-156416.90000000026
 2021-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,268649.6000000001
 2021-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-251615.19999999984
-2021-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-191544.79999999996
+2021-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-191544.79999999993
 2021-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-539399.8999999997
 2022-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-57058.39999999991
 2022-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-107190.0
 2022-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-257585.19999999995
 2022-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-213983.69999999995
-2022-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-247000.59999999983
+2022-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-247000.59999999986
 2022-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-379183.2000000004
 2022-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-121779.8999999999
 2022-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-281741.1999999997
@@ -49579,32 +49591,32 @@
 2023-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-193843.8999999999
 2023-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-594167.5
 2023-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-579933.7000000002
-2023-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-462755.8000000008
+2023-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-462755.80000000075
 2023-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-2312303.0000000014
 2024-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1770124.8000000007
 2024-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,918713.0977520002
 2024-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,238125.2000000002
 2024-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-219556.79999999888
-2024-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1853866.1999999995
+2024-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1853866.1999999993
 2024-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,170886.00000000186
 2024-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,583411.1000000015
 2024-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,642065.5
 2024-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,526304.1999999993
-2024-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,465351.9999999981
-2024-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,983665.3000000016
+2024-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,465351.99999999814
+2024-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,983665.3000000017
 2024-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-2013028.099999996
 2025-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,2251608.9000000022
 2025-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,934944.8999999966
 2025-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,494026.4000000004
 2025-04-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,601519.6999999993
 2025-05-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1302771.8000000007
-2025-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,467742.900000006
+2025-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,467742.90000000596
 2025-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1346653.1000000015
 2025-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,990322.3000000007
 2025-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,69987.39999999665
 2025-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,291641.09999999776
 2025-11-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1634330.4000000004
-2025-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-3346192.1999999997
+2025-12-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-3346192.1999999993
 2026-01-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,2867743.3000000026
 2026-02-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1067216.2999999989
 2026-03-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,629465.9999999981
@@ -49613,55 +49625,56 @@
 2026-06-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,-1068458.1999999974
 2026-07-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,2489241.9000000004
 2026-08-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1539500.3999999966
-2026-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,911825.2000000012
+2026-09-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,911825.2000000011
+2026-10-01,Resultado primario (Sector Público Nacional),fiscal,millones de $,1507319.9000000004
 2015-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-246813.00000000006
-2016-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-241449.50000000003
+2016-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-241449.5
 2016-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-243151.2
 2016-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-251891.69999999995
-2016-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-244415.89999999994
+2016-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-244415.8999999999
 2016-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-250733.49999999994
-2016-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-272991.1999999999
-2016-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-286917.39999999997
+2016-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-272991.19999999995
+2016-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-286917.3999999999
 2016-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-306127.0
 2016-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-322169.0
 2016-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-362709.10000000003
-2016-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-353329.00000000006
+2016-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-353329.0
 2016-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-371085.70000000007
-2017-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-370753.70000000007
-2017-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-388146.2000000001
+2017-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-370753.7000000001
+2017-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-388146.20000000007
 2017-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-380068.10000000015
-2017-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-388852.5000000002
+2017-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-388852.5000000001
 2017-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-405328.1000000001
-2017-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-420131.30000000016
-2017-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-420332.2000000001
+2017-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-420131.3000000001
+2017-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-420332.20000000007
 2017-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-412688.20000000007
 2017-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-407367.80000000005
-2017-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-381547.5
-2017-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-403126.9
+2017-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-381547.50000000006
+2017-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-403126.9000000001
 2017-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-475252.29999999993
-2018-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-478176.9
-2018-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-471803.1
+2018-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-478176.89999999997
+2018-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-471803.10000000003
 2018-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-487690.9
-2018-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-491881.30000000005
+2018-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-491881.3000000001
 2018-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-478752.0000000001
 2018-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-483666.00000000023
-2018-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-485383.3000000001
+2018-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-485383.30000000016
 2018-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-482858.6000000001
-2018-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-485074.3000000001
-2018-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-481136.4000000001
-2018-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-495067.30000000005
-2018-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-514279.19999999995
-2019-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-507753.1
-2019-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-494528.1999999999
+2018-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-485074.30000000005
+2018-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-481136.4
+2018-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-495067.3
+2018-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-514279.2
+2019-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-507753.0999999999
+2019-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-494528.19999999984
 2019-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-492268.49999999977
-2019-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-483872.3999999996
+2019-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-483872.3999999997
 2019-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-453890.7999999997
 2019-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-403195.29999999946
-2019-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-397259.19999999955
+2019-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-397259.1999999995
 2019-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-369877.49999999965
 2019-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-373493.59999999974
 2019-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-348639.6999999997
-2019-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-330227.1999999998
+2019-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-330227.19999999984
 2019-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-318468.4999999999
 2020-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-355080.9999999999
 2020-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-382044.9
@@ -49715,24 +49728,24 @@
 2024-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3857632.8022480006
 2024-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3267727.702248
 2024-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-3067635.902248
-2024-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-808411.6022480002
-2024-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,108662.59775200149
-2024-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,1172565.697752003
-2024-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,2008475.097752003
-2024-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,3128946.7977520023
-2024-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,4174232.4977520006
-2024-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,5620653.597752003
-2024-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,5919928.497752009
-2025-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6401412.59775201
+2024-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,-808411.6022480004
+2024-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,108662.59775200125
+2024-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,1172565.6977520026
+2024-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,2008475.0977520025
+2024-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,3128946.797752002
+2024-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,4174232.497752
+2024-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,5620653.597752002
+2024-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,5919928.497752008
+2025-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6401412.5977520095
 2025-02-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6417644.400000006
-2025-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6673545.600000007
-2025-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7494622.100000005
-2025-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6943527.700000007
-2025-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7240384.600000011
-2025-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,8003626.600000011
-2025-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,8351883.400000012
-2025-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7895566.600000009
-2025-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7721855.700000009
+2025-03-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6673545.600000006
+2025-04-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7494622.100000004
+2025-05-01,Resultado primario acumulado 12 meses,fiscal,millones de $,6943527.700000006
+2025-06-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7240384.60000001
+2025-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,8003626.60000001
+2025-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,8351883.400000011
+2025-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7895566.600000008
+2025-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7721855.700000008
 2025-11-01,Resultado primario acumulado 12 meses,fiscal,millones de $,8372520.800000006
 2025-12-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7039356.700000003
 2026-01-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7655491.100000003
@@ -49744,6 +49757,7 @@
 2026-07-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7292591.6
 2026-08-01,Resultado primario acumulado 12 meses,fiscal,millones de $,7841769.6999999955
 2026-09-01,Resultado primario acumulado 12 meses,fiscal,millones de $,8683607.5
+2026-10-01,Resultado primario acumulado 12 meses,fiscal,millones de $,9899286.300000003
 2004-01-02,Riesgo país (EMBI),monetario_financiero,puntos básicos,5580.0
 2004-01-05,Riesgo país (EMBI),monetario_financiero,puntos básicos,5459.0
 2004-01-06,Riesgo país (EMBI),monetario_financiero,puntos básicos,5260.0
@@ -56222,6 +56236,7 @@
 2026-11-16,Riesgo país (EMBI),monetario_financiero,puntos básicos,855.0
 2026-11-17,Riesgo país (EMBI),monetario_financiero,puntos básicos,854.0
 2026-11-18,Riesgo país (EMBI),monetario_financiero,puntos básicos,848.0
+2026-11-19,Riesgo país (EMBI),monetario_financiero,puntos básicos,931.0
 2024-09-02,S&P MERVAL,mercados,puntos,1754832.93
 2024-09-03,S&P MERVAL,mercados,puntos,1735252.96
 2024-09-04,S&P MERVAL,mercados,puntos,1796920.07
@@ -58378,6 +58393,7 @@
 2026-11-13,Tasa BADLAR (bancos privados),mercados,% TNA,22.4375
 2026-11-16,Tasa BADLAR (bancos privados),mercados,% TNA,22.6875
 2026-11-17,Tasa BADLAR (bancos privados),mercados,% TNA,23.25
+2026-11-18,Tasa BADLAR (bancos privados),mercados,% TNA,22.125
 2004-01-01,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.8125
 2004-01-02,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
 2004-01-03,Tasa BADLAR (mayorista),monetario_financiero,% TNA,2.75
@@ -67095,6 +67111,7 @@
 2026-11-13,Tasa TAMAR (total bancos),monetario_financiero,% TNA,23.5625
 2026-11-16,Tasa TAMAR (total bancos),monetario_financiero,% TNA,24.0
 2026-11-17,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.5
+2026-11-18,Tasa TAMAR (total bancos),monetario_financiero,% TNA,22.625
 2024-10-01,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,44.1875
 2024-10-02,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
 2024-10-03,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,43.6875
@@ -67607,6 +67624,7 @@
 2026-11-13,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.125
 2026-11-16,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.125
 2026-11-17,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,24.0
+2026-11-18,Tasa TAMAR bancos privados (bonos duales),mercados,% TNA,23.4375
 2004-01-01,Tasa de desempleo,social,% de la PEA,14.276928695265859
 2004-04-01,Tasa de desempleo,social,% de la PEA,14.65347815131445
 2004-07-01,Tasa de desempleo,social,% de la PEA,13.131339344451609
@@ -68341,6 +68359,7 @@
 2026-11-13,Tasa de plazo fijo a 30 días,mercados,% TNA,21.51
 2026-11-16,Tasa de plazo fijo a 30 días,mercados,% TNA,21.94
 2026-11-17,Tasa de plazo fijo a 30 días,mercados,% TNA,21.18
+2026-11-18,Tasa de plazo fijo a 30 días,mercados,% TNA,21.03
 2015-12-16,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-17,Tasa de política monetaria,monetario_financiero,% TNA,38.0
 2015-12-18,Tasa de política monetaria,monetario_financiero,% TNA,38.0
