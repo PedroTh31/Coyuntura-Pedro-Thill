@@ -1,7 +1,10 @@
 {
-  "atrasados_hoy": [],
+  "atrasados_hoy": [
+    "Comercio exterior (ICA) · sep-26 · ⚠ atrasado · oct-26 se publicó el 19/11"
+  ],
   "avisos": {
-    "atrasado:ica:ago-26": "2026-11-07"
+    "atrasado:ica:ago-26": "2026-11-07",
+    "atrasado:ica:sep-26": "2026-11-21"
   },
-  "ultima_verificacion": "2026-11-20"
+  "ultima_verificacion": "2026-11-21"
 }
