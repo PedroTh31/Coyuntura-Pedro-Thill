@@ -5,13 +5,13 @@
     "fecha": "2026-11-21",
     "resumen": {
       "bono:AL30": {
-        "error": "RuntimeError: BYMA AL30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=AL30D+24HS&resolution=D&from=1783641600&to=1795253785 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x71be6fa6ee70>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
+        "error": "RuntimeError: BYMA AL30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=AL30D+24HS&resolution=D&from=1783641600&to=1795280759 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x783a2b06a120>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
       },
       "bono:GD30": {
-        "error": "RuntimeError: BYMA GD30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD30D+24HS&resolution=D&from=1783641600&to=1795253889 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x71be6fa77680>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
+        "error": "RuntimeError: BYMA GD30D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD30D+24HS&resolution=D&from=1783641600&to=1795280862 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x783a2b067380>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
       },
       "bono:GD35": {
-        "error": "RuntimeError: BYMA GD35D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD35D+24HS&resolution=D&from=1783641600&to=1795253993 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x71be6f978bc0>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
+        "error": "RuntimeError: BYMA GD35D 24HS: HTTPSConnectionPool(host='open.bymadata.com.ar', port=443): Max retries exceeded with url: /vanoms-be-core/rest/api/bymadata/free/chart/historical-series/history?symbol=GD35D+24HS&resolution=D&from=1783641600&to=1795280965 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.bymadata.com.ar', port=443) at 0x783a2bdc7110>, 'Connection to open.bymadata.com.ar timed out. (connect timeout=30)'))"
       },
       "extra:Dólar futuro (DDF)": {
         "estado": "ok"
