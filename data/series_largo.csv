@@ -10900,6 +10900,8 @@
 2026-11-16,Caución en dólares (1 día),mercados,% TNA,1.9799
 2026-11-17,Caución en dólares (1 día),mercados,% TNA,1.7326
 2026-11-18,Caución en dólares (1 día),mercados,% TNA,1.1711
+2026-11-19,Caución en dólares (1 día),mercados,% TNA,1.1864
+2026-11-20,Caución en dólares (1 día),mercados,% TNA,1.2727
 2024-01-02,Caución en pesos (1 día),mercados,% TNA,87.1355
 2024-01-03,Caución en pesos (1 día),mercados,% TNA,87.1638
 2024-01-04,Caución en pesos (1 día),mercados,% TNA,87.0258
@@ -11595,6 +11597,8 @@
 2026-11-16,Caución en pesos (1 día),mercados,% TNA,20.3269
 2026-11-17,Caución en pesos (1 día),mercados,% TNA,20.1503
 2026-11-18,Caución en pesos (1 día),mercados,% TNA,20.0224
+2026-11-19,Caución en pesos (1 día),mercados,% TNA,20.0598
+2026-11-20,Caución en pesos (1 día),mercados,% TNA,20.5903
 2004-01-01,Combustibles y energía,externo,millones de USD,441.656186
 2004-02-01,Combustibles y energía,externo,millones de USD,410.790303
 2004-03-01,Combustibles y energía,externo,millones de USD,513.388286
@@ -34004,122 +34008,123 @@
 2016-10-01,EMAE (actividad económica),real,índice 2004=100,141.1368632980814
 2016-11-01,EMAE (actividad económica),real,índice 2004=100,144.93832064073018
 2016-12-01,EMAE (actividad económica),real,índice 2004=100,142.59014516031914
-2017-01-01,EMAE (actividad económica),real,índice 2004=100,136.63265948316212
-2017-02-01,EMAE (actividad económica),real,índice 2004=100,132.15851633982274
-2017-03-01,EMAE (actividad económica),real,índice 2004=100,152.6209585590573
-2017-04-01,EMAE (actividad económica),real,índice 2004=100,151.94634480448738
-2017-05-01,EMAE (actividad económica),real,índice 2004=100,168.3892094693678
-2017-06-01,EMAE (actividad económica),real,índice 2004=100,161.03568546945232
-2017-07-01,EMAE (actividad económica),real,índice 2004=100,150.30605012392
-2017-08-01,EMAE (actividad económica),real,índice 2004=100,149.2553427738411
-2017-09-01,EMAE (actividad económica),real,índice 2004=100,146.38655965775385
-2017-10-01,EMAE (actividad económica),real,índice 2004=100,149.38594966601454
-2017-11-01,EMAE (actividad económica),real,índice 2004=100,151.92604285202697
-2017-12-01,EMAE (actividad económica),real,índice 2004=100,146.7833849092245
-2018-01-01,EMAE (actividad económica),real,índice 2004=100,142.74091260617223
-2018-02-01,EMAE (actividad económica),real,índice 2004=100,138.81804035165743
-2018-03-01,EMAE (actividad económica),real,índice 2004=100,155.85731953576973
-2018-04-01,EMAE (actividad económica),real,índice 2004=100,151.52454398394343
-2018-05-01,EMAE (actividad económica),real,índice 2004=100,159.5666923779167
-2018-06-01,EMAE (actividad económica),real,índice 2004=100,151.12576323345522
-2018-07-01,EMAE (actividad económica),real,índice 2004=100,145.9635244300046
-2018-08-01,EMAE (actividad económica),real,índice 2004=100,146.76596003413968
-2018-09-01,EMAE (actividad económica),real,índice 2004=100,137.746569718648
-2018-10-01,EMAE (actividad económica),real,índice 2004=100,142.8432759845676
-2018-11-01,EMAE (actividad económica),real,índice 2004=100,140.59240732533567
-2018-12-01,EMAE (actividad económica),real,índice 2004=100,136.25161596905636
-2019-01-01,EMAE (actividad económica),real,índice 2004=100,134.5362398566958
-2019-02-01,EMAE (actividad económica),real,índice 2004=100,132.2678886127366
-2019-03-01,EMAE (actividad económica),real,índice 2004=100,144.96325495574916
-2019-04-01,EMAE (actividad económica),real,índice 2004=100,149.9162214035227
-2019-05-01,EMAE (actividad económica),real,índice 2004=100,164.1356990759204
-2019-06-01,EMAE (actividad económica),real,índice 2004=100,150.85897174113128
-2019-07-01,EMAE (actividad económica),real,índice 2004=100,146.77702964007034
-2019-08-01,EMAE (actividad económica),real,índice 2004=100,141.27693468084036
-2019-09-01,EMAE (actividad económica),real,índice 2004=100,134.87706647993653
-2019-10-01,EMAE (actividad económica),real,índice 2004=100,141.6393366170138
-2019-11-01,EMAE (actividad económica),real,índice 2004=100,137.77182966933145
-2019-12-01,EMAE (actividad económica),real,índice 2004=100,135.76515452763502
-2020-01-01,EMAE (actividad económica),real,índice 2004=100,133.8910860895724
-2020-02-01,EMAE (actividad económica),real,índice 2004=100,128.97363874659823
-2020-03-01,EMAE (actividad económica),real,índice 2004=100,128.21106074025667
-2020-04-01,EMAE (actividad económica),real,índice 2004=100,113.29503444580156
-2020-05-01,EMAE (actividad económica),real,índice 2004=100,131.02956919734916
-2020-06-01,EMAE (actividad económica),real,índice 2004=100,132.52196526648777
-2020-07-01,EMAE (actividad económica),real,índice 2004=100,127.46368946979405
-2020-08-01,EMAE (actividad económica),real,índice 2004=100,125.18389375984655
-2020-09-01,EMAE (actividad económica),real,índice 2004=100,127.17507609335286
-2020-10-01,EMAE (actividad económica),real,índice 2004=100,131.34550189452798
-2020-11-01,EMAE (actividad económica),real,índice 2004=100,132.06865525299673
-2020-12-01,EMAE (actividad económica),real,índice 2004=100,133.85436559460618
-2021-01-01,EMAE (actividad económica),real,índice 2004=100,131.52153739731895
-2021-02-01,EMAE (actividad económica),real,índice 2004=100,126.23926696836419
-2021-03-01,EMAE (actividad económica),real,índice 2004=100,145.9569001036472
-2021-04-01,EMAE (actividad económica),real,índice 2004=100,147.2808440187596
-2021-05-01,EMAE (actividad económica),real,índice 2004=100,151.16932233874826
-2021-06-01,EMAE (actividad económica),real,índice 2004=100,148.97961710841247
-2021-07-01,EMAE (actividad económica),real,índice 2004=100,142.42591306035814
-2021-08-01,EMAE (actividad económica),real,índice 2004=100,140.97494072777735
-2021-09-01,EMAE (actividad económica),real,índice 2004=100,141.29608909028414
-2021-10-01,EMAE (actividad económica),real,índice 2004=100,139.5147586996789
-2021-11-01,EMAE (actividad económica),real,índice 2004=100,143.75187761888859
-2021-12-01,EMAE (actividad económica),real,índice 2004=100,147.2298783181341
-2022-01-01,EMAE (actividad económica),real,índice 2004=100,139.63796161228177
-2022-02-01,EMAE (actividad económica),real,índice 2004=100,137.84951352507593
+2017-01-01,EMAE (actividad económica),real,índice 2004=100,136.63265948316223
+2017-02-01,EMAE (actividad económica),real,índice 2004=100,132.15851633982285
+2017-03-01,EMAE (actividad económica),real,índice 2004=100,152.62095855905744
+2017-04-01,EMAE (actividad económica),real,índice 2004=100,151.94634480448747
+2017-05-01,EMAE (actividad económica),real,índice 2004=100,168.38920946936793
+2017-06-01,EMAE (actividad económica),real,índice 2004=100,161.03568546945246
+2017-07-01,EMAE (actividad económica),real,índice 2004=100,150.30605012392013
+2017-08-01,EMAE (actividad económica),real,índice 2004=100,149.25534277384122
+2017-09-01,EMAE (actividad económica),real,índice 2004=100,146.386559657754
+2017-10-01,EMAE (actividad económica),real,índice 2004=100,149.38594966601468
+2017-11-01,EMAE (actividad económica),real,índice 2004=100,151.92604285202705
+2017-12-01,EMAE (actividad económica),real,índice 2004=100,146.7833849092246
+2018-01-01,EMAE (actividad económica),real,índice 2004=100,142.74091260617234
+2018-02-01,EMAE (actividad económica),real,índice 2004=100,138.81804035165754
+2018-03-01,EMAE (actividad económica),real,índice 2004=100,155.85731953576985
+2018-04-01,EMAE (actividad económica),real,índice 2004=100,151.52454398394352
+2018-05-01,EMAE (actividad económica),real,índice 2004=100,159.56669237791678
+2018-06-01,EMAE (actividad económica),real,índice 2004=100,151.12576323345533
+2018-07-01,EMAE (actividad económica),real,índice 2004=100,145.96352443000472
+2018-08-01,EMAE (actividad económica),real,índice 2004=100,146.7659600341398
+2018-09-01,EMAE (actividad económica),real,índice 2004=100,137.74656971864815
+2018-10-01,EMAE (actividad económica),real,índice 2004=100,142.84327598456775
+2018-11-01,EMAE (actividad económica),real,índice 2004=100,140.59240732533578
+2018-12-01,EMAE (actividad económica),real,índice 2004=100,136.25161596905647
+2019-01-01,EMAE (actividad económica),real,índice 2004=100,134.53623985669591
+2019-02-01,EMAE (actividad económica),real,índice 2004=100,132.26788861273673
+2019-03-01,EMAE (actividad económica),real,índice 2004=100,144.96325495574928
+2019-04-01,EMAE (actividad económica),real,índice 2004=100,149.91622140352283
+2019-05-01,EMAE (actividad económica),real,índice 2004=100,164.13569907592046
+2019-06-01,EMAE (actividad económica),real,índice 2004=100,150.85897174113137
+2019-07-01,EMAE (actividad económica),real,índice 2004=100,146.77702964007045
+2019-08-01,EMAE (actividad económica),real,índice 2004=100,141.27693468084047
+2019-09-01,EMAE (actividad económica),real,índice 2004=100,134.87706647993667
+2019-10-01,EMAE (actividad económica),real,índice 2004=100,141.63933661701392
+2019-11-01,EMAE (actividad económica),real,índice 2004=100,137.7718296693316
+2019-12-01,EMAE (actividad económica),real,índice 2004=100,135.76515452763513
+2020-01-01,EMAE (actividad económica),real,índice 2004=100,133.89108608957252
+2020-02-01,EMAE (actividad económica),real,índice 2004=100,128.97363874659834
+2020-03-01,EMAE (actividad económica),real,índice 2004=100,128.21106074025678
+2020-04-01,EMAE (actividad económica),real,índice 2004=100,113.29503444580166
+2020-05-01,EMAE (actividad económica),real,índice 2004=100,131.02956919734925
+2020-06-01,EMAE (actividad económica),real,índice 2004=100,132.52196526648785
+2020-07-01,EMAE (actividad económica),real,índice 2004=100,127.46368946979416
+2020-08-01,EMAE (actividad económica),real,índice 2004=100,125.18389375984667
+2020-09-01,EMAE (actividad económica),real,índice 2004=100,127.17507609335296
+2020-10-01,EMAE (actividad económica),real,índice 2004=100,131.34550189452807
+2020-11-01,EMAE (actividad económica),real,índice 2004=100,132.06865525299685
+2020-12-01,EMAE (actividad económica),real,índice 2004=100,133.8543655946063
+2021-01-01,EMAE (actividad económica),real,índice 2004=100,131.52153739731907
+2021-02-01,EMAE (actividad económica),real,índice 2004=100,126.23926696836429
+2021-03-01,EMAE (actividad económica),real,índice 2004=100,145.95690010364729
+2021-04-01,EMAE (actividad económica),real,índice 2004=100,147.28084401875967
+2021-05-01,EMAE (actividad económica),real,índice 2004=100,151.16932233874837
+2021-06-01,EMAE (actividad económica),real,índice 2004=100,148.97961710841253
+2021-07-01,EMAE (actividad económica),real,índice 2004=100,142.42591306035825
+2021-08-01,EMAE (actividad económica),real,índice 2004=100,140.97494072777744
+2021-09-01,EMAE (actividad económica),real,índice 2004=100,141.29608909028423
+2021-10-01,EMAE (actividad económica),real,índice 2004=100,139.514758699679
+2021-11-01,EMAE (actividad económica),real,índice 2004=100,143.7518776188887
+2021-12-01,EMAE (actividad económica),real,índice 2004=100,147.22987831813418
+2022-01-01,EMAE (actividad económica),real,índice 2004=100,139.63796161228197
+2022-02-01,EMAE (actividad económica),real,índice 2004=100,137.84951352507608
 2022-03-01,EMAE (actividad económica),real,índice 2004=100,153.93085079425236
-2022-04-01,EMAE (actividad económica),real,índice 2004=100,157.66169217344412
-2022-05-01,EMAE (actividad económica),real,índice 2004=100,164.68936311408294
-2022-06-01,EMAE (actividad económica),real,índice 2004=100,161.45483428121688
-2022-07-01,EMAE (actividad económica),real,índice 2004=100,152.4453874358736
-2022-08-01,EMAE (actividad económica),real,índice 2004=100,151.4657389160671
-2022-09-01,EMAE (actividad económica),real,índice 2004=100,149.1743497052638
-2022-10-01,EMAE (actividad económica),real,índice 2004=100,146.55439616164583
-2022-11-01,EMAE (actividad económica),real,índice 2004=100,148.03049492950063
-2022-12-01,EMAE (actividad económica),real,índice 2004=100,146.1808063380422
-2023-01-01,EMAE (actividad económica),real,índice 2004=100,143.03462349513615
-2023-02-01,EMAE (actividad económica),real,índice 2004=100,137.26646276487486
-2023-03-01,EMAE (actividad económica),real,índice 2004=100,155.06501366861548
-2023-04-01,EMAE (actividad económica),real,índice 2004=100,150.05952685006818
-2023-05-01,EMAE (actividad económica),real,índice 2004=100,153.81085419210677
-2023-06-01,EMAE (actividad económica),real,índice 2004=100,152.59547604977197
-2023-07-01,EMAE (actividad económica),real,índice 2004=100,150.20312548725906
-2023-08-01,EMAE (actividad económica),real,índice 2004=100,151.92217936030693
-2023-09-01,EMAE (actividad económica),real,índice 2004=100,148.41237963226118
-2023-10-01,EMAE (actividad económica),real,índice 2004=100,147.5138130298927
-2023-11-01,EMAE (actividad económica),real,índice 2004=100,146.36635231698688
-2023-12-01,EMAE (actividad económica),real,índice 2004=100,139.34262727225266
-2024-01-01,EMAE (actividad económica),real,índice 2004=100,137.3733513104446
-2024-02-01,EMAE (actividad económica),real,índice 2004=100,133.4645058563633
-2024-03-01,EMAE (actividad económica),real,índice 2004=100,142.39572370020173
-2024-04-01,EMAE (actividad económica),real,índice 2004=100,147.25689959009534
-2024-05-01,EMAE (actividad económica),real,índice 2004=100,156.76909868641758
-2024-06-01,EMAE (actividad económica),real,índice 2004=100,147.35712222707485
-2024-07-01,EMAE (actividad económica),real,índice 2004=100,149.65170273202926
-2024-08-01,EMAE (actividad económica),real,índice 2004=100,147.28124857343758
-2024-09-01,EMAE (actividad económica),real,índice 2004=100,144.79669869183633
-2024-10-01,EMAE (actividad económica),real,índice 2004=100,148.10394119484172
-2024-11-01,EMAE (actividad económica),real,índice 2004=100,148.1787292147409
-2024-12-01,EMAE (actividad económica),real,índice 2004=100,148.67761603839233
-2025-01-01,EMAE (actividad económica),real,índice 2004=100,146.49668268147974
-2025-02-01,EMAE (actividad económica),real,índice 2004=100,141.40461912850864
-2025-03-01,EMAE (actividad económica),real,índice 2004=100,150.61008581723874
-2025-04-01,EMAE (actividad económica),real,índice 2004=100,158.93908938324
-2025-05-01,EMAE (actividad económica),real,índice 2004=100,165.07455518205356
-2025-06-01,EMAE (actividad económica),real,índice 2004=100,156.7892018243336
-2025-07-01,EMAE (actividad económica),real,índice 2004=100,153.77116990425543
-2025-08-01,EMAE (actividad económica),real,índice 2004=100,150.37619425875818
-2025-09-01,EMAE (actividad económica),real,índice 2004=100,151.70419952434997
-2025-10-01,EMAE (actividad económica),real,índice 2004=100,152.83405327528675
-2025-11-01,EMAE (actividad económica),real,índice 2004=100,147.96987570063345
-2025-12-01,EMAE (actividad económica),real,índice 2004=100,153.85227192618612
-2026-01-01,EMAE (actividad económica),real,índice 2004=100,149.42576798860208
-2026-02-01,EMAE (actividad económica),real,índice 2004=100,139.30865766112606
-2026-03-01,EMAE (actividad económica),real,índice 2004=100,160.33207758089017
-2026-04-01,EMAE (actividad económica),real,índice 2004=100,162.36642188609457
-2026-05-01,EMAE (actividad económica),real,índice 2004=100,166.25094955665773
-2026-06-01,EMAE (actividad económica),real,índice 2004=100,161.65814413314962
-2026-07-01,EMAE (actividad económica),real,índice 2004=100,151.51213833845293
-2026-08-01,EMAE (actividad económica),real,índice 2004=100,147.75319588401308
+2022-04-01,EMAE (actividad económica),real,índice 2004=100,157.66169217344384
+2022-05-01,EMAE (actividad económica),real,índice 2004=100,164.68936311408288
+2022-06-01,EMAE (actividad económica),real,índice 2004=100,161.45483428121747
+2022-07-01,EMAE (actividad económica),real,índice 2004=100,152.44538743587526
+2022-08-01,EMAE (actividad económica),real,índice 2004=100,151.46573891606783
+2022-09-01,EMAE (actividad económica),real,índice 2004=100,149.1743497052616
+2022-10-01,EMAE (actividad económica),real,índice 2004=100,146.55439616163858
+2022-11-01,EMAE (actividad económica),real,índice 2004=100,148.0304949294976
+2022-12-01,EMAE (actividad económica),real,índice 2004=100,146.18080633805263
+2023-01-01,EMAE (actividad económica),real,índice 2004=100,143.03462349516926
+2023-02-01,EMAE (actividad económica),real,índice 2004=100,137.26646276488887
+2023-03-01,EMAE (actividad económica),real,índice 2004=100,155.0650136685686
+2023-04-01,EMAE (actividad económica),real,índice 2004=100,150.05952684991865
+2023-05-01,EMAE (actividad económica),real,índice 2004=100,153.81085419204382
+2023-06-01,EMAE (actividad económica),real,índice 2004=100,152.5954760499847
+2023-07-01,EMAE (actividad económica),real,índice 2004=100,150.20312548793677
+2023-08-01,EMAE (actividad económica),real,índice 2004=100,151.92217936059262
+2023-09-01,EMAE (actividad económica),real,índice 2004=100,148.412379631298
+2023-10-01,EMAE (actividad económica),real,índice 2004=100,147.5138130268237
+2023-11-01,EMAE (actividad económica),real,índice 2004=100,146.36635231569323
+2023-12-01,EMAE (actividad económica),real,índice 2004=100,139.34262727661553
+2024-01-01,EMAE (actividad económica),real,índice 2004=100,137.37335132434518
+2024-02-01,EMAE (actividad económica),real,índice 2004=100,133.46450586222292
+2024-03-01,EMAE (actividad económica),real,índice 2004=100,142.3957236804418
+2024-04-01,EMAE (actividad económica),real,índice 2004=100,147.25689952713714
+2024-05-01,EMAE (actividad económica),real,índice 2004=100,156.76909865987852
+2024-06-01,EMAE (actividad económica),real,índice 2004=100,147.35712231657232
+2024-07-01,EMAE (actividad económica),real,índice 2004=100,149.65170301718058
+2024-08-01,EMAE (actividad económica),real,índice 2004=100,147.281248693639
+2024-09-01,EMAE (actividad económica),real,índice 2004=100,144.79669828648386
+2024-10-01,EMAE (actividad económica),real,índice 2004=100,148.1039399033316
+2024-11-01,EMAE (actividad económica),real,índice 2004=100,148.178728670324
+2024-12-01,EMAE (actividad económica),real,índice 2004=100,148.67761787431962
+2025-01-01,EMAE (actividad económica),real,índice 2004=100,146.49668853100212
+2025-02-01,EMAE (actividad económica),real,índice 2004=100,141.40462159428805
+2025-03-01,EMAE (actividad económica),real,índice 2004=100,150.61007750193713
+2025-04-01,EMAE (actividad económica),real,índice 2004=100,158.9390628895192
+2025-05-01,EMAE (actividad económica),real,índice 2004=100,165.07454401401864
+2025-06-01,EMAE (actividad económica),real,índice 2004=100,156.78923948608949
+2025-07-01,EMAE (actividad económica),real,índice 2004=100,153.77128989990712
+2025-08-01,EMAE (actividad económica),real,índice 2004=100,150.37624484114514
+2025-09-01,EMAE (actividad económica),real,índice 2004=100,151.7040289463116
+2025-10-01,EMAE (actividad económica),real,índice 2004=100,152.83350978966243
+2025-11-01,EMAE (actividad económica),real,índice 2004=100,147.96964660233098
+2025-12-01,EMAE (actividad económica),real,índice 2004=100,153.8530445101132
+2026-01-01,EMAE (actividad económica),real,índice 2004=100,149.44158432767702
+2026-02-01,EMAE (actividad económica),real,índice 2004=100,139.35175494063904
+2026-03-01,EMAE (actividad económica),real,índice 2004=100,160.27316396230214
+2026-04-01,EMAE (actividad económica),real,índice 2004=100,162.32237990181423
+2026-05-01,EMAE (actividad económica),real,índice 2004=100,166.244111973105
+2026-06-01,EMAE (actividad económica),real,índice 2004=100,161.70902370098256
+2026-07-01,EMAE (actividad económica),real,índice 2004=100,151.42931682816555
+2026-08-01,EMAE (actividad económica),real,índice 2004=100,147.92133253600298
+2026-09-01,EMAE (actividad económica),real,índice 2004=100,149.8836064015637
 2004-06-01,"EMAE No urbano (agro, minería y pesca)",real,índice nov-2023=100,119.9043512758124
 2004-07-01,"EMAE No urbano (agro, minería y pesca)",real,índice nov-2023=100,123.0585860066519
 2004-08-01,"EMAE No urbano (agro, minería y pesca)",real,índice nov-2023=100,123.74932860874668
@@ -34920,8 +34925,9 @@
 2026-04-01,EMAE · Administración pública y defensa,real,,158.5272174316402
 2026-05-01,EMAE · Administración pública y defensa,real,,158.52779446930302
 2026-06-01,EMAE · Administración pública y defensa,real,,159.39518296415554
-2026-07-01,EMAE · Administración pública y defensa,real,,158.726811443252
-2026-08-01,EMAE · Administración pública y defensa,real,,158.04644114498802
+2026-07-01,EMAE · Administración pública y defensa,real,,158.80292020013644
+2026-08-01,EMAE · Administración pública y defensa,real,,157.9774170312319
+2026-09-01,EMAE · Administración pública y defensa,real,,158.4497633677956
 2004-01-01,"EMAE · Agricultura, ganadería y silvicultura",real,,65.99535021807492
 2004-02-01,"EMAE · Agricultura, ganadería y silvicultura",real,,64.92659776537022
 2004-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,110.66655949085373
@@ -35186,14 +35192,15 @@
 2025-10-01,"EMAE · Agricultura, ganadería y silvicultura",real,,71.70486887513898
 2025-11-01,"EMAE · Agricultura, ganadería y silvicultura",real,,90.34238812270414
 2025-12-01,"EMAE · Agricultura, ganadería y silvicultura",real,,145.86989364700167
-2026-01-01,"EMAE · Agricultura, ganadería y silvicultura",real,,113.85964677296876
-2026-02-01,"EMAE · Agricultura, ganadería y silvicultura",real,,81.58174170315169
-2026-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,181.39506404363271
-2026-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,238.80855280154614
-2026-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,298.12615142023
-2026-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,207.90411518465683
-2026-07-01,"EMAE · Agricultura, ganadería y silvicultura",real,,120.0849467064038
-2026-08-01,"EMAE · Agricultura, ganadería y silvicultura",real,,77.52854618557996
+2026-01-01,"EMAE · Agricultura, ganadería y silvicultura",real,,114.28825364299769
+2026-02-01,"EMAE · Agricultura, ganadería y silvicultura",real,,81.75538902545343
+2026-03-01,"EMAE · Agricultura, ganadería y silvicultura",real,,180.7928098513021
+2026-04-01,"EMAE · Agricultura, ganadería y silvicultura",real,,238.29459143639124
+2026-05-01,"EMAE · Agricultura, ganadería y silvicultura",real,,298.1808489357636
+2026-06-01,"EMAE · Agricultura, ganadería y silvicultura",real,,208.36337903427932
+2026-07-01,"EMAE · Agricultura, ganadería y silvicultura",real,,120.07132227272943
+2026-08-01,"EMAE · Agricultura, ganadería y silvicultura",real,,77.92057820838824
+2026-09-01,"EMAE · Agricultura, ganadería y silvicultura",real,,73.94314394111707
 2004-01-01,EMAE · Comercio mayorista y minorista,real,,92.06533783698931
 2004-02-01,EMAE · Comercio mayorista y minorista,real,,91.4647184549155
 2004-03-01,EMAE · Comercio mayorista y minorista,real,,109.12777978859177
@@ -35458,14 +35465,15 @@
 2025-10-01,EMAE · Comercio mayorista y minorista,real,,159.9102778399418
 2025-11-01,EMAE · Comercio mayorista y minorista,real,,149.76239119956492
 2025-12-01,EMAE · Comercio mayorista y minorista,real,,148.5788719598116
-2026-01-01,EMAE · Comercio mayorista y minorista,real,,146.4123362741914
-2026-02-01,EMAE · Comercio mayorista y minorista,real,,143.7759594227877
-2026-03-01,EMAE · Comercio mayorista y minorista,real,,160.86017170763034
-2026-04-01,EMAE · Comercio mayorista y minorista,real,,157.69590284804661
-2026-05-01,EMAE · Comercio mayorista y minorista,real,,157.70471397286977
-2026-06-01,EMAE · Comercio mayorista y minorista,real,,160.47664948152953
-2026-07-01,EMAE · Comercio mayorista y minorista,real,,146.59890978263533
-2026-08-01,EMAE · Comercio mayorista y minorista,real,,146.81200572533288
+2026-01-01,EMAE · Comercio mayorista y minorista,real,,146.42264804955005
+2026-02-01,EMAE · Comercio mayorista y minorista,real,,143.80952915776592
+2026-03-01,EMAE · Comercio mayorista y minorista,real,,160.81629019729348
+2026-04-01,EMAE · Comercio mayorista y minorista,real,,157.75441369801217
+2026-05-01,EMAE · Comercio mayorista y minorista,real,,157.67343275222208
+2026-06-01,EMAE · Comercio mayorista y minorista,real,,160.4494198522115
+2026-07-01,EMAE · Comercio mayorista y minorista,real,,146.92933754801714
+2026-08-01,EMAE · Comercio mayorista y minorista,real,,147.50589563705773
+2026-09-01,EMAE · Comercio mayorista y minorista,real,,150.9502217077338
 2004-01-01,EMAE · Construcción,real,,95.9380474530423
 2004-02-01,EMAE · Construcción,real,,98.85338769931154
 2004-03-01,EMAE · Construcción,real,,103.12452920231961
@@ -35730,14 +35738,15 @@
 2025-10-01,EMAE · Construcción,real,,132.89503429662142
 2025-11-01,EMAE · Construcción,real,,124.54509082765442
 2025-12-01,EMAE · Construcción,real,,121.94485919456754
-2026-01-01,EMAE · Construcción,real,,133.20080055416753
-2026-02-01,EMAE · Construcción,real,,130.2929605339996
-2026-03-01,EMAE · Construcción,real,,142.9626234354567
-2026-04-01,EMAE · Construcción,real,,130.26180650790755
-2026-05-01,EMAE · Construcción,real,,124.10195476845247
-2026-06-01,EMAE · Construcción,real,,128.0267280208125
-2026-07-01,EMAE · Construcción,real,,128.20021323383244
-2026-08-01,EMAE · Construcción,real,,133.3939896401508
+2026-01-01,EMAE · Construcción,real,,133.20032718815335
+2026-02-01,EMAE · Construcción,real,,130.29230294084417
+2026-03-01,EMAE · Construcción,real,,142.9637543946263
+2026-04-01,EMAE · Construcción,real,,130.3250234237149
+2026-05-01,EMAE · Construcción,real,,124.06883570328218
+2026-06-01,EMAE · Construcción,real,,127.99663017017475
+2026-07-01,EMAE · Construcción,real,,127.87129289062673
+2026-08-01,EMAE · Construcción,real,,133.0384478598928
+2026-09-01,EMAE · Construcción,real,,143.62717309207486
 2004-01-01,"EMAE · Electricidad, gas y agua",real,,99.91798255351931
 2004-02-01,"EMAE · Electricidad, gas y agua",real,,92.89344027217716
 2004-03-01,"EMAE · Electricidad, gas y agua",real,,103.77021006661795
@@ -35956,7 +35965,7 @@
 2021-12-01,"EMAE · Electricidad, gas y agua",real,,154.85842301784933
 2022-01-01,"EMAE · Electricidad, gas y agua",real,,164.04625809745033
 2022-02-01,"EMAE · Electricidad, gas y agua",real,,136.4414492308093
-2022-03-01,"EMAE · Electricidad, gas y agua",real,,146.01600062773906
+2022-03-01,"EMAE · Electricidad, gas y agua",real,,146.0160006277402
 2022-04-01,"EMAE · Electricidad, gas y agua",real,,138.64010864800056
 2022-05-01,"EMAE · Electricidad, gas y agua",real,,155.968328440601
 2022-06-01,"EMAE · Electricidad, gas y agua",real,,166.6415230807075
@@ -36002,14 +36011,15 @@
 2025-10-01,"EMAE · Electricidad, gas y agua",real,,138.56912599010457
 2025-11-01,"EMAE · Electricidad, gas y agua",real,,138.38026356150982
 2025-12-01,"EMAE · Electricidad, gas y agua",real,,159.91055723946968
-2026-01-01,"EMAE · Electricidad, gas y agua",real,,162.3117175841722
-2026-02-01,"EMAE · Electricidad, gas y agua",real,,147.22395084627166
-2026-03-01,"EMAE · Electricidad, gas y agua",real,,154.74072730079945
-2026-04-01,"EMAE · Electricidad, gas y agua",real,,138.77505431926775
-2026-05-01,"EMAE · Electricidad, gas y agua",real,,160.2413068719029
-2026-06-01,"EMAE · Electricidad, gas y agua",real,,161.4119256338224
-2026-07-01,"EMAE · Electricidad, gas y agua",real,,165.69619181792274
-2026-08-01,"EMAE · Electricidad, gas y agua",real,,159.082051493254
+2026-01-01,"EMAE · Electricidad, gas y agua",real,,162.31195623842723
+2026-02-01,"EMAE · Electricidad, gas y agua",real,,147.22450341926745
+2026-03-01,"EMAE · Electricidad, gas y agua",real,,154.73993607354862
+2026-04-01,"EMAE · Electricidad, gas y agua",real,,138.66758962772045
+2026-05-01,"EMAE · Electricidad, gas y agua",real,,160.30364067768602
+2026-06-01,"EMAE · Electricidad, gas y agua",real,,161.4570565195866
+2026-07-01,"EMAE · Electricidad, gas y agua",real,,165.69825150024496
+2026-08-01,"EMAE · Electricidad, gas y agua",real,,159.4497748391203
+2026-09-01,"EMAE · Electricidad, gas y agua",real,,144.49222795178633
 2004-01-01,EMAE · Enseñanza,real,,95.62769506542772
 2004-02-01,EMAE · Enseñanza,real,,96.08424638742525
 2004-03-01,EMAE · Enseñanza,real,,96.38030439218049
@@ -36274,14 +36284,15 @@
 2025-10-01,EMAE · Enseñanza,real,,173.6277516535362
 2025-11-01,EMAE · Enseñanza,real,,173.64548872485398
 2025-12-01,EMAE · Enseñanza,real,,174.54233881230664
-2026-01-01,EMAE · Enseñanza,real,,167.40428224239858
-2026-02-01,EMAE · Enseñanza,real,,169.07962271638263
-2026-03-01,EMAE · Enseñanza,real,,172.37567946560054
-2026-04-01,EMAE · Enseñanza,real,,171.59289907474454
-2026-05-01,EMAE · Enseñanza,real,,172.16962362564047
-2026-06-01,EMAE · Enseñanza,real,,173.20811147232746
-2026-07-01,EMAE · Enseñanza,real,,173.29650069985846
-2026-08-01,EMAE · Enseñanza,real,,172.8928910951253
+2026-01-01,EMAE · Enseñanza,real,,167.40299174424965
+2026-02-01,EMAE · Enseñanza,real,,169.079206954116
+2026-03-01,EMAE · Enseñanza,real,,172.3773857260161
+2026-04-01,EMAE · Enseñanza,real,,171.61366442499119
+2026-05-01,EMAE · Enseñanza,real,,172.14910886651575
+2026-06-01,EMAE · Enseñanza,real,,173.20786088120613
+2026-07-01,EMAE · Enseñanza,real,,173.29338594555344
+2026-08-01,EMAE · Enseñanza,real,,173.0701839669295
+2026-09-01,EMAE · Enseñanza,real,,173.50245238262815
 2004-01-01,EMAE · Explotación de minas y canteras,real,,100.7044990358751
 2004-02-01,EMAE · Explotación de minas y canteras,real,,95.41418582146751
 2004-03-01,EMAE · Explotación de minas y canteras,real,,100.25103841449805
@@ -36546,14 +36557,15 @@
 2025-10-01,EMAE · Explotación de minas y canteras,real,,128.19368696345484
 2025-11-01,EMAE · Explotación de minas y canteras,real,,122.00005527215063
 2025-12-01,EMAE · Explotación de minas y canteras,real,,130.30262662011546
-2026-01-01,EMAE · Explotación de minas y canteras,real,,135.2729380350471
-2026-02-01,EMAE · Explotación de minas y canteras,real,,121.56297297573096
-2026-03-01,EMAE · Explotación de minas y canteras,real,,136.22203337979028
-2026-04-01,EMAE · Explotación de minas y canteras,real,,135.99488026436546
-2026-05-01,EMAE · Explotación de minas y canteras,real,,145.27254466356447
-2026-06-01,EMAE · Explotación de minas y canteras,real,,140.82297474155777
-2026-07-01,EMAE · Explotación de minas y canteras,real,,139.9838720660817
-2026-08-01,EMAE · Explotación de minas y canteras,real,,141.44173993393196
+2026-01-01,EMAE · Explotación de minas y canteras,real,,135.27311660267165
+2026-02-01,EMAE · Explotación de minas y canteras,real,,121.56348654624595
+2026-03-01,EMAE · Explotación de minas y canteras,real,,136.22134124165032
+2026-04-01,EMAE · Explotación de minas y canteras,real,,135.99434931747953
+2026-05-01,EMAE · Explotación de minas y canteras,real,,145.27250323774942
+2026-06-01,EMAE · Explotación de minas y canteras,real,,140.8235471142588
+2026-07-01,EMAE · Explotación de minas y canteras,real,,139.9944149128146
+2026-08-01,EMAE · Explotación de minas y canteras,real,,141.42564091675692
+2026-09-01,EMAE · Explotación de minas y canteras,real,,139.06341521131145
 2004-01-01,EMAE · Hoteles y restaurantes,real,,108.41168235047203
 2004-02-01,EMAE · Hoteles y restaurantes,real,,103.44825644014013
 2004-03-01,EMAE · Hoteles y restaurantes,real,,101.0618421535548
@@ -36818,14 +36830,15 @@
 2025-10-01,EMAE · Hoteles y restaurantes,real,,186.79590312165908
 2025-11-01,EMAE · Hoteles y restaurantes,real,,192.70714135379498
 2025-12-01,EMAE · Hoteles y restaurantes,real,,199.1789416375233
-2026-01-01,EMAE · Hoteles y restaurantes,real,,199.33197566965134
-2026-02-01,EMAE · Hoteles y restaurantes,real,,192.51108938179513
-2026-03-01,EMAE · Hoteles y restaurantes,real,,154.10761590759506
-2026-04-01,EMAE · Hoteles y restaurantes,real,,127.12688907175327
-2026-05-01,EMAE · Hoteles y restaurantes,real,,163.45872481221218
-2026-06-01,EMAE · Hoteles y restaurantes,real,,192.26525281106984
-2026-07-01,EMAE · Hoteles y restaurantes,real,,171.8312938061768
-2026-08-01,EMAE · Hoteles y restaurantes,real,,187.5173817839257
+2026-01-01,EMAE · Hoteles y restaurantes,real,,199.30518633810564
+2026-02-01,EMAE · Hoteles y restaurantes,real,,192.49701842071178
+2026-03-01,EMAE · Hoteles y restaurantes,real,,154.14847620022556
+2026-04-01,EMAE · Hoteles y restaurantes,real,,127.1412929054577
+2026-05-01,EMAE · Hoteles y restaurantes,real,,163.2866357829427
+2026-06-01,EMAE · Hoteles y restaurantes,real,,192.42293800663487
+2026-07-01,EMAE · Hoteles y restaurantes,real,,171.86163580544692
+2026-08-01,EMAE · Hoteles y restaurantes,real,,187.7672059475676
+2026-09-01,EMAE · Hoteles y restaurantes,real,,172.22187131144284
 2004-01-01,EMAE · Impuestos netos de subsidios,real,,98.3148555955895
 2004-02-01,EMAE · Impuestos netos de subsidios,real,,89.72999976417917
 2004-03-01,EMAE · Impuestos netos de subsidios,real,,99.1391189515047
@@ -37090,14 +37103,15 @@
 2025-10-01,EMAE · Impuestos netos de subsidios,real,,189.79245190012875
 2025-11-01,EMAE · Impuestos netos de subsidios,real,,179.87747537281444
 2025-12-01,EMAE · Impuestos netos de subsidios,real,,183.42959740642672
-2026-01-01,EMAE · Impuestos netos de subsidios,real,,186.729009171829
-2026-02-01,EMAE · Impuestos netos de subsidios,real,,161.75533202661393
-2026-03-01,EMAE · Impuestos netos de subsidios,real,,182.61150161008302
-2026-04-01,EMAE · Impuestos netos de subsidios,real,,186.7936899038833
-2026-05-01,EMAE · Impuestos netos de subsidios,real,,179.33827647695992
-2026-06-01,EMAE · Impuestos netos de subsidios,real,,178.2498772771747
-2026-07-01,EMAE · Impuestos netos de subsidios,real,,177.98950317022639
-2026-08-01,EMAE · Impuestos netos de subsidios,real,,177.95515656923666
+2026-01-01,EMAE · Impuestos netos de subsidios,real,,186.72453489777135
+2026-02-01,EMAE · Impuestos netos de subsidios,real,,161.8012874193426
+2026-03-01,EMAE · Impuestos netos de subsidios,real,,182.57002049141062
+2026-04-01,EMAE · Impuestos netos de subsidios,real,,186.83505531815106
+2026-05-01,EMAE · Impuestos netos de subsidios,real,,179.35342447336583
+2026-06-01,EMAE · Impuestos netos de subsidios,real,,178.19336386649834
+2026-07-01,EMAE · Impuestos netos de subsidios,real,,177.89093262419294
+2026-08-01,EMAE · Impuestos netos de subsidios,real,,177.87737275745147
+2026-09-01,EMAE · Impuestos netos de subsidios,real,,188.3235105936163
 2004-01-01,EMAE · Industria manufacturera,real,,91.45461030871807
 2004-02-01,EMAE · Industria manufacturera,real,,89.42485185270863
 2004-03-01,EMAE · Industria manufacturera,real,,101.42643285289911
@@ -37362,14 +37376,15 @@
 2025-10-01,EMAE · Industria manufacturera,real,,130.39940098937294
 2025-11-01,EMAE · Industria manufacturera,real,,120.13921727152892
 2025-12-01,EMAE · Industria manufacturera,real,,117.31991366603664
-2026-01-01,EMAE · Industria manufacturera,real,,104.16916666711364
-2026-02-01,EMAE · Industria manufacturera,real,,98.60704761400508
-2026-03-01,EMAE · Industria manufacturera,real,,121.97864735238714
-2026-04-01,EMAE · Industria manufacturera,real,,115.81656639183235
-2026-05-01,EMAE · Industria manufacturera,real,,114.39218801355324
-2026-06-01,EMAE · Industria manufacturera,real,,118.63523464856965
-2026-07-01,EMAE · Industria manufacturera,real,,119.09346037100322
-2026-08-01,EMAE · Industria manufacturera,real,,118.74779893122758
+2026-01-01,EMAE · Industria manufacturera,real,,104.06553935403815
+2026-02-01,EMAE · Industria manufacturera,real,,98.69799442919286
+2026-03-01,EMAE · Industria manufacturera,real,,121.99132785027452
+2026-04-01,EMAE · Industria manufacturera,real,,115.78273396677174
+2026-05-01,EMAE · Industria manufacturera,real,,114.40087824011329
+2026-06-01,EMAE · Industria manufacturera,real,,118.66037684707021
+2026-07-01,EMAE · Industria manufacturera,real,,118.92143088692426
+2026-08-01,EMAE · Industria manufacturera,real,,118.63468736039312
+2026-09-01,EMAE · Industria manufacturera,real,,121.6460905481312
 2004-01-01,EMAE · Inmobiliarias y empresariales,real,,91.41838181645646
 2004-02-01,EMAE · Inmobiliarias y empresariales,real,,94.04697785156941
 2004-03-01,EMAE · Inmobiliarias y empresariales,real,,99.64872482538144
@@ -37634,14 +37649,15 @@
 2025-10-01,EMAE · Inmobiliarias y empresariales,real,,163.27805607437455
 2025-11-01,EMAE · Inmobiliarias y empresariales,real,,158.7708225767162
 2025-12-01,EMAE · Inmobiliarias y empresariales,real,,163.24455865790114
-2026-01-01,EMAE · Inmobiliarias y empresariales,real,,153.676362047342
-2026-02-01,EMAE · Inmobiliarias y empresariales,real,,153.60929338286851
-2026-03-01,EMAE · Inmobiliarias y empresariales,real,,159.01570755299653
-2026-04-01,EMAE · Inmobiliarias y empresariales,real,,160.8865384846897
-2026-05-01,EMAE · Inmobiliarias y empresariales,real,,159.88394851832274
-2026-06-01,EMAE · Inmobiliarias y empresariales,real,,163.08026624814354
-2026-07-01,EMAE · Inmobiliarias y empresariales,real,,158.40824764381415
-2026-08-01,EMAE · Inmobiliarias y empresariales,real,,159.73414135374924
+2026-01-01,EMAE · Inmobiliarias y empresariales,real,,153.67370277585718
+2026-02-01,EMAE · Inmobiliarias y empresariales,real,,153.61175240622453
+2026-03-01,EMAE · Inmobiliarias y empresariales,real,,159.0159078011252
+2026-04-01,EMAE · Inmobiliarias y empresariales,real,,160.88991931460538
+2026-05-01,EMAE · Inmobiliarias y empresariales,real,,159.87290686943578
+2026-06-01,EMAE · Inmobiliarias y empresariales,real,,163.087927067115
+2026-07-01,EMAE · Inmobiliarias y empresariales,real,,158.78156646070212
+2026-08-01,EMAE · Inmobiliarias y empresariales,real,,159.15714742026861
+2026-09-01,EMAE · Inmobiliarias y empresariales,real,,160.5786338001836
 2004-01-01,EMAE · Intermediación financiera,real,,103.8902559331949
 2004-02-01,EMAE · Intermediación financiera,real,,96.48146398756707
 2004-03-01,EMAE · Intermediación financiera,real,,98.30456801948347
@@ -37906,14 +37922,15 @@
 2025-10-01,EMAE · Intermediación financiera,real,,210.79881854007175
 2025-11-01,EMAE · Intermediación financiera,real,,196.2764528966126
 2025-12-01,EMAE · Intermediación financiera,real,,201.54471044015878
-2026-01-01,EMAE · Intermediación financiera,real,,198.7295886271345
-2026-02-01,EMAE · Intermediación financiera,real,,187.60373004544186
-2026-03-01,EMAE · Intermediación financiera,real,,209.27323312424488
-2026-04-01,EMAE · Intermediación financiera,real,,205.5714896549666
-2026-05-01,EMAE · Intermediación financiera,real,,181.33552446293555
-2026-06-01,EMAE · Intermediación financiera,real,,195.59941417901368
-2026-07-01,EMAE · Intermediación financiera,real,,189.8329854505796
-2026-08-01,EMAE · Intermediación financiera,real,,195.43232477081662
+2026-01-01,EMAE · Intermediación financiera,real,,198.7300570683567
+2026-02-01,EMAE · Intermediación financiera,real,,187.60508361313285
+2026-03-01,EMAE · Intermediación financiera,real,,209.27141111533177
+2026-04-01,EMAE · Intermediación financiera,real,,205.57212311304144
+2026-05-01,EMAE · Intermediación financiera,real,,181.33549176253473
+2026-06-01,EMAE · Intermediación financiera,real,,195.59881342133903
+2026-07-01,EMAE · Intermediación financiera,real,,189.88472644117405
+2026-08-01,EMAE · Intermediación financiera,real,,195.46805006610722
+2026-09-01,EMAE · Intermediación financiera,real,,198.23119320588296
 2004-01-01,EMAE · Otros servicios comunitarios,real,,97.00617764220874
 2004-02-01,EMAE · Otros servicios comunitarios,real,,96.83613489123869
 2004-03-01,EMAE · Otros servicios comunitarios,real,,96.15504322897569
@@ -38178,14 +38195,15 @@
 2025-10-01,EMAE · Otros servicios comunitarios,real,,128.8472963948685
 2025-11-01,EMAE · Otros servicios comunitarios,real,,123.25284659781595
 2025-12-01,EMAE · Otros servicios comunitarios,real,,128.82112625586268
-2026-01-01,EMAE · Otros servicios comunitarios,real,,141.51754477392717
-2026-02-01,EMAE · Otros servicios comunitarios,real,,139.26897974256005
-2026-03-01,EMAE · Otros servicios comunitarios,real,,139.6423599785755
-2026-04-01,EMAE · Otros servicios comunitarios,real,,120.72723109330286
-2026-05-01,EMAE · Otros servicios comunitarios,real,,116.50948568651228
-2026-06-01,EMAE · Otros servicios comunitarios,real,,118.27787923251864
-2026-07-01,EMAE · Otros servicios comunitarios,real,,131.5378447133807
-2026-08-01,EMAE · Otros servicios comunitarios,real,,125.28984774070796
+2026-01-01,EMAE · Otros servicios comunitarios,real,,141.47169308705827
+2026-02-01,EMAE · Otros servicios comunitarios,real,,139.26564123425237
+2026-03-01,EMAE · Otros servicios comunitarios,real,,139.69155017375127
+2026-04-01,EMAE · Otros servicios comunitarios,real,,120.72397309444152
+2026-05-01,EMAE · Otros servicios comunitarios,real,,116.44690166060919
+2026-06-01,EMAE · Otros servicios comunitarios,real,,118.34372125728387
+2026-07-01,EMAE · Otros servicios comunitarios,real,,131.83739549851896
+2026-08-01,EMAE · Otros servicios comunitarios,real,,124.98773777703927
+2026-09-01,EMAE · Otros servicios comunitarios,real,,120.26874992176921
 2004-01-01,EMAE · Pesca,real,,42.54786775960567
 2004-02-01,EMAE · Pesca,real,,62.440770600668316
 2004-03-01,EMAE · Pesca,real,,174.08464601017343
@@ -38450,14 +38468,15 @@
 2025-10-01,EMAE · Pesca,real,,118.44066364840708
 2025-11-01,EMAE · Pesca,real,,120.43156076267306
 2025-12-01,EMAE · Pesca,real,,136.12064507484186
-2026-01-01,EMAE · Pesca,real,,229.4319574876168
-2026-02-01,EMAE · Pesca,real,,252.6498460847773
-2026-03-01,EMAE · Pesca,real,,169.00716874978897
-2026-04-01,EMAE · Pesca,real,,121.95389350037316
-2026-05-01,EMAE · Pesca,real,,116.15793023196777
-2026-06-01,EMAE · Pesca,real,,327.5644763484944
-2026-07-01,EMAE · Pesca,real,,407.24832596721365
-2026-08-01,EMAE · Pesca,real,,247.13642009880616
+2026-01-01,EMAE · Pesca,real,,229.4320673541729
+2026-02-01,EMAE · Pesca,real,,252.6505384117206
+2026-03-01,EMAE · Pesca,real,,169.00636655628963
+2026-04-01,EMAE · Pesca,real,,121.9532401974303
+2026-05-01,EMAE · Pesca,real,,116.15763537207057
+2026-06-01,EMAE · Pesca,real,,327.56542451133515
+2026-07-01,EMAE · Pesca,real,,326.2048454419282
+2026-08-01,EMAE · Pesca,real,,252.18684807586578
+2026-09-01,EMAE · Pesca,real,,148.18752386315794
 2004-01-01,EMAE · Servicios sociales y de salud,real,,94.19839355990248
 2004-02-01,EMAE · Servicios sociales y de salud,real,,90.31346220534452
 2004-03-01,EMAE · Servicios sociales y de salud,real,,98.0814880028068
@@ -38722,14 +38741,15 @@
 2025-10-01,EMAE · Servicios sociales y de salud,real,,177.42492730749396
 2025-11-01,EMAE · Servicios sociales y de salud,real,,176.50431437850955
 2025-12-01,EMAE · Servicios sociales y de salud,real,,169.714383320505
-2026-01-01,EMAE · Servicios sociales y de salud,real,,187.32954675161798
-2026-02-01,EMAE · Servicios sociales y de salud,real,,176.98102863243227
-2026-03-01,EMAE · Servicios sociales y de salud,real,,191.50307791936268
-2026-04-01,EMAE · Servicios sociales y de salud,real,,195.3286454353799
-2026-05-01,EMAE · Servicios sociales y de salud,real,,197.69982541332067
-2026-06-01,EMAE · Servicios sociales y de salud,real,,204.66893753471174
-2026-07-01,EMAE · Servicios sociales y de salud,real,,186.12572523624013
-2026-08-01,EMAE · Servicios sociales y de salud,real,,186.27803991655833
+2026-01-01,EMAE · Servicios sociales y de salud,real,,187.30655001435946
+2026-02-01,EMAE · Servicios sociales y de salud,real,,176.98818221634497
+2026-03-01,EMAE · Servicios sociales y de salud,real,,191.51892107270848
+2026-04-01,EMAE · Servicios sociales y de salud,real,,195.4028200654069
+2026-05-01,EMAE · Servicios sociales y de salud,real,,197.6336085699534
+2026-06-01,EMAE · Servicios sociales y de salud,real,,204.66097974805209
+2026-07-01,EMAE · Servicios sociales y de salud,real,,186.32210297000867
+2026-08-01,EMAE · Servicios sociales y de salud,real,,185.54017648659402
+2026-09-01,EMAE · Servicios sociales y de salud,real,,183.648178805707
 2004-01-01,EMAE · Transporte y comunicaciones,real,,95.50672550581247
 2004-02-01,EMAE · Transporte y comunicaciones,real,,90.73641381150813
 2004-03-01,EMAE · Transporte y comunicaciones,real,,97.17580912674539
@@ -38994,14 +39014,15 @@
 2025-10-01,EMAE · Transporte y comunicaciones,real,,187.5674744198488
 2025-11-01,EMAE · Transporte y comunicaciones,real,,185.51960182626522
 2025-12-01,EMAE · Transporte y comunicaciones,real,,185.809987244129
-2026-01-01,EMAE · Transporte y comunicaciones,real,,186.701854429655
-2026-02-01,EMAE · Transporte y comunicaciones,real,,175.53870842344173
-2026-03-01,EMAE · Transporte y comunicaciones,real,,194.44392607923496
-2026-04-01,EMAE · Transporte y comunicaciones,real,,193.78774579010133
-2026-05-01,EMAE · Transporte y comunicaciones,real,,197.90650662277633
-2026-06-01,EMAE · Transporte y comunicaciones,real,,192.39051063999204
-2026-07-01,EMAE · Transporte y comunicaciones,real,,184.10761478323283
-2026-08-01,EMAE · Transporte y comunicaciones,real,,179.42321888763246
+2026-01-01,EMAE · Transporte y comunicaciones,real,,186.70665929538106
+2026-02-01,EMAE · Transporte y comunicaciones,real,,175.531686386745
+2026-03-01,EMAE · Transporte y comunicaciones,real,,194.44614325020527
+2026-04-01,EMAE · Transporte y comunicaciones,real,,193.75971480633007
+2026-05-01,EMAE · Transporte y comunicaciones,real,,197.92413569085494
+2026-06-01,EMAE · Transporte y comunicaciones,real,,192.4009125556847
+2026-07-01,EMAE · Transporte y comunicaciones,real,,185.45269583052527
+2026-08-01,EMAE · Transporte y comunicaciones,real,,181.4123881096321
+2026-09-01,EMAE · Transporte y comunicaciones,real,,184.6000270600178
 2016-01-01,Empleo registrado: Administración pública y defensa,real,miles de puestos,1557.6748438619377
 2016-04-01,Empleo registrado: Administración pública y defensa,real,miles de puestos,1554.3565673253097
 2016-07-01,Empleo registrado: Administración pública y defensa,real,miles de puestos,1561.9468520985383
