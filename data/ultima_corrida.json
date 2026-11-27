@@ -1,9 +1,9 @@
 {
   "fecha": "2026-11-27",
-  "hora": "06:35:05",
+  "hora": "16:19:11",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "ok",
-  "disparo": "workflow_dispatch",
+  "disparo": "schedule",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
@@ -484,7 +484,7 @@
         "Transferencia de utilidades del BCRA",
         "Transferencia de utilidades del BCRA (pesos constantes)"
       ],
-      "racha": 42
+      "racha": 43
     },
     "331.1_OTRAS_OPERIOS__58": {
       "motivo": "coherencia: 331.1_OTRAS_OPERDES__39, de la misma distribución, sale del CSV en la card 'Asistencia monetaria del BCRA al Tesoro'",
@@ -492,42 +492,42 @@
         "Adelantos transitorios al Tesoro",
         "Adelantos transitorios al Tesoro (pesos constantes)"
       ],
-      "racha": 42
+      "racha": 43
     },
     "332.2_BANCOS_PRIADA__51": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: bancos privados"
       ],
-      "racha": 20
+      "racha": 21
     },
     "332.2_BANCOS_PUBADA__55": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: bancos públicos"
       ],
-      "racha": 20
+      "racha": 21
     },
     "332.2_SISTEMA_FIADA__53": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: sistema financiero"
       ],
-      "racha": 20
+      "racha": 21
     },
     "379.9_GTOS_CORR_017__40_84": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Intereses netos de deuda pública"
       ],
-      "racha": 15
+      "racha": 16
     },
     "379.9_RESULTADO_017__18_38": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Resultado financiero (Sector Público Nacional)"
       ],
-      "racha": 15
+      "racha": 16
     },
     "379.9_RESULTADO_017__31_73": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
@@ -535,42 +535,42 @@
         "Resultado primario (Sector Público Nacional)",
         "Resultado primario acumulado 12 meses"
       ],
-      "racha": 15
+      "racha": 16
     },
     "52.2_ASDJ_0_0_37": {
       "motivo": "la API devolvió 91 de 93 filas (historia cortada)",
       "indicadores": [
         "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"
       ],
-      "racha": 42
+      "racha": 43
     },
     "90.1_AMTM3_0_0_31": {
       "motivo": "los últimos 12 períodos difieren del CSV un 2.8% (tolerancia 1%)",
       "indicadores": [
         "M3 (agregado amplio)"
       ],
-      "racha": 20
+      "racha": 21
     },
     "90.1_BMCMP_0_0_44": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 20
+      "racha": 21
     },
     "90.1_DCCT_0_0_32": {
       "motivo": "los últimos 12 períodos difieren del CSV un 5.6% (tolerancia 1%)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 20
+      "racha": 21
     },
     "91.1_DETALLE_PRDOC_0_0_47": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 20
+      "racha": 21
     },
     "91.1_PEFPC_0_0_35": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
@@ -578,21 +578,21 @@
         "Préstamos al sector privado",
         "Préstamos al sector privado, variación % real mensual"
       ],
-      "racha": 20
+      "racha": 21
     },
     "91.1_PEFPC_0_0_41": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 20
+      "racha": 21
     },
     "91.1_PEFPD_0_0_45": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Empresas (Comerciales)"
       ],
-      "racha": 20
+      "racha": 21
     }
   },
   "datos_gob_csv_descartados": {
