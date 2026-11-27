@@ -2,22 +2,22 @@
   "activas": [],
   "avisos": {},
   "ultima": {
-    "fecha": "2026-11-26",
+    "fecha": "2026-11-27",
     "resumen": {
       "bono:AL30": {
         "desde": "2026-07-10",
-        "filas": 93,
-        "ultimo": "2026-11-25"
+        "filas": 94,
+        "ultimo": "2026-11-26"
       },
       "bono:GD30": {
         "desde": "2026-07-10",
-        "filas": 93,
-        "ultimo": "2026-11-25"
+        "filas": 94,
+        "ultimo": "2026-11-26"
       },
       "bono:GD35": {
         "desde": "2026-07-10",
-        "filas": 93,
-        "ultimo": "2026-11-25"
+        "filas": 94,
+        "ultimo": "2026-11-26"
       },
       "extra:Dólar futuro (DDF)": {
         "estado": "ok"

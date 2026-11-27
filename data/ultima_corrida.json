@@ -1,9 +1,9 @@
 {
-  "fecha": "2026-11-26",
-  "hora": "16:25:27",
+  "fecha": "2026-11-27",
+  "hora": "06:35:05",
   "zona": "America/Argentina/Buenos_Aires",
   "estado": "ok",
-  "disparo": "schedule",
+  "disparo": "workflow_dispatch",
   "por_fuente": {
     "argentinadatos": {
       "ok": 1,
@@ -484,7 +484,7 @@
         "Transferencia de utilidades del BCRA",
         "Transferencia de utilidades del BCRA (pesos constantes)"
       ],
-      "racha": 41
+      "racha": 42
     },
     "331.1_OTRAS_OPERIOS__58": {
       "motivo": "coherencia: 331.1_OTRAS_OPERDES__39, de la misma distribución, sale del CSV en la card 'Asistencia monetaria del BCRA al Tesoro'",
@@ -492,42 +492,42 @@
         "Adelantos transitorios al Tesoro",
         "Adelantos transitorios al Tesoro (pesos constantes)"
       ],
-      "racha": 41
+      "racha": 42
     },
     "332.2_BANCOS_PRIADA__51": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: bancos privados"
       ],
-      "racha": 19
+      "racha": 20
     },
     "332.2_BANCOS_PUBADA__55": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: bancos públicos"
       ],
-      "racha": 19
+      "racha": 20
     },
     "332.2_SISTEMA_FIADA__53": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-05, API hasta 2026-04)",
       "indicadores": [
         "Morosidad: sistema financiero"
       ],
-      "racha": 19
+      "racha": 20
     },
     "379.9_GTOS_CORR_017__40_84": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Intereses netos de deuda pública"
       ],
-      "racha": 14
+      "racha": 15
     },
     "379.9_RESULTADO_017__18_38": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Resultado financiero (Sector Público Nacional)"
       ],
-      "racha": 14
+      "racha": 15
     },
     "379.9_RESULTADO_017__31_73": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
@@ -535,42 +535,42 @@
         "Resultado primario (Sector Público Nacional)",
         "Resultado primario acumulado 12 meses"
       ],
-      "racha": 14
+      "racha": 15
     },
     "52.2_ASDJ_0_0_37": {
       "motivo": "la API devolvió 91 de 93 filas (historia cortada)",
       "indicadores": [
         "Tasa de informalidad laboral (asalariados sin descuento jubilatorio)"
       ],
-      "racha": 41
+      "racha": 42
     },
     "90.1_AMTM3_0_0_31": {
       "motivo": "los últimos 12 períodos difieren del CSV un 2.8% (tolerancia 1%)",
       "indicadores": [
         "M3 (agregado amplio)"
       ],
-      "racha": 19
+      "racha": 20
     },
     "90.1_BMCMP_0_0_44": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 19
+      "racha": 20
     },
     "90.1_DCCT_0_0_32": {
       "motivo": "los últimos 12 períodos difieren del CSV un 5.6% (tolerancia 1%)",
       "indicadores": [
         "M1 (circulante + cta. cte.)"
       ],
-      "racha": 19
+      "racha": 20
     },
     "91.1_DETALLE_PRDOC_0_0_47": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 19
+      "racha": 20
     },
     "91.1_PEFPC_0_0_35": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
@@ -578,21 +578,21 @@
         "Préstamos al sector privado",
         "Préstamos al sector privado, variación % real mensual"
       ],
-      "racha": 19
+      "racha": 20
     },
     "91.1_PEFPC_0_0_41": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Familias (Consumo + Garantía real)"
       ],
-      "racha": 19
+      "racha": 20
     },
     "91.1_PEFPD_0_0_45": {
       "motivo": "el CSV tiene períodos más nuevos que la API (CSV hasta 2026-10, API hasta 2026-09)",
       "indicadores": [
         "Préstamos a Empresas (Comerciales)"
       ],
-      "racha": 19
+      "racha": 20
     }
   },
   "datos_gob_csv_descartados": {
@@ -618,19 +618,19 @@
   },
   "mercados": {
     "bono:AL30": {
-      "filas": 93,
+      "filas": 94,
       "desde": "2026-07-10",
-      "ultimo": "2026-11-25"
+      "ultimo": "2026-11-26"
     },
     "bono:GD30": {
-      "filas": 93,
+      "filas": 94,
       "desde": "2026-07-10",
-      "ultimo": "2026-11-25"
+      "ultimo": "2026-11-26"
     },
     "bono:GD35": {
-      "filas": 93,
+      "filas": 94,
       "desde": "2026-07-10",
-      "ultimo": "2026-11-25"
+      "ultimo": "2026-11-26"
     },
     "ust:6 Mo": {
       "fuente": "tesoro",
@@ -658,20 +658,12 @@
   },
   "agenda": {
     "calendario": {
-      "fecha": "2026-11-26",
+      "fecha": "2026-11-27",
       "estado": "ok",
       "bajado": null,
       "feriado_hoy": null,
       "primer_habil_semana": false,
-      "hoy": [
-        {
-          "titulo": "Licitación del Tesoro — 26/11 (resultados el mismo día por la tarde)",
-          "fuente": "Finanzas",
-          "hora": "",
-          "externo": true,
-          "url": "https://www.argentina.gob.ar/noticias/llamado-licitacion-de-instrumentos-del-tesoro-nacional-denominados-en-pesos-y-en-dolares-17"
-        }
-      ],
+      "hoy": [],
       "semana": [
         {
           "dia": "lun 30/11",
@@ -680,12 +672,12 @@
             "Liquidación de la licitación del Tesoro — 26/11"
           ],
           "urls": [
-            "https://www.argentina.gob.ar/noticias/llamado-licitacion-de-instrumentos-del-tesoro-nacional-denominados-en-pesos-y-en-dolares-17"
+            "https://www.argentina.gob.ar/noticias/resultado-de-la-licitacion-por-efectivo-de-instrumentos-del-tesoro-nacional-denominados-18"
           ],
           "fuente": "Finanzas"
         }
       ],
-      "hasta": "mié 02/12",
+      "hasta": "jue 03/12",
       "proxima": null
     },
     "publicaciones": {
@@ -869,31 +861,31 @@
         "clave": "Tipo de cambio real multilateral|28/01/26",
         "nombre": "Tipo de cambio real multilateral",
         "texto": "⏸ Tipo de cambio real multilateral: 28/01/26 · sin datos nuevos hace 9 meses · sin calendario oficial",
-        "dias": 302
+        "dias": 303
       },
       {
         "clave": "Compras netas de divisas por contraparte|may-26",
         "nombre": "Compras netas de divisas por contraparte",
         "texto": "⏸ Compras netas de divisas por contraparte: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 179
+        "dias": 180
       },
       {
         "clave": "Compras netas de divisas del BCRA|may-26",
         "nombre": "Compras netas de divisas del BCRA",
         "texto": "⏸ Compras netas de divisas del BCRA: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 179
+        "dias": 180
       },
       {
         "clave": "Asistencia monetaria del BCRA al Tesoro|may-26",
         "nombre": "Asistencia monetaria del BCRA al Tesoro",
         "texto": "⏸ Asistencia monetaria del BCRA al Tesoro: may-26 · sin datos nuevos hace 5 meses · sin calendario oficial",
-        "dias": 179
+        "dias": 180
       },
       {
         "clave": "Reservas ajustadas (swap China + organismos internacionales)|jun-26",
         "nombre": "Reservas ajustadas (swap China + organismos internacionales)",
         "texto": "⏸ Reservas ajustadas (swap China + organismos internacionales): jun-26 · sin datos nuevos hace 4 meses · sin calendario oficial",
-        "dias": 149
+        "dias": 150
       }
     ]
   }
